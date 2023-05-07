@@ -1,0 +1,51 @@
+# IsTrainingJobRunningResponse
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**IsTrainingJobRunning** | **bool** |  | 
+
+## Methods
+
+### NewIsTrainingJobRunningResponse
+
+`func NewIsTrainingJobRunningResponse(isTrainingJobRunning bool, ) *IsTrainingJobRunningResponse`
+
+NewIsTrainingJobRunningResponse instantiates a new IsTrainingJobRunningResponse object
+This constructor will assign default values to properties that have it defined,
+and makes sure properties required by API are set, but the set of arguments
+will change when the set of required properties is changed
+
+### NewIsTrainingJobRunningResponseWithDefaults
+
+`func NewIsTrainingJobRunningResponseWithDefaults() *IsTrainingJobRunningResponse`
+
+NewIsTrainingJobRunningResponseWithDefaults instantiates a new IsTrainingJobRunningResponse object
+This constructor will only assign default values to properties that have it defined,
+but it doesn't guarantee that properties required by API are set
+
+### GetIsTrainingJobRunning
+
+`func (o *IsTrainingJobRunningResponse) GetIsTrainingJobRunning() bool`
+
+GetIsTrainingJobRunning returns the IsTrainingJobRunning field if non-nil, zero value otherwise.
+
+### GetIsTrainingJobRunningOk
+
+`func (o *IsTrainingJobRunningResponse) GetIsTrainingJobRunningOk() (*bool, bool)`
+
+GetIsTrainingJobRunningOk returns a tuple with the IsTrainingJobRunning field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsTrainingJobRunning
+
+`func (o *IsTrainingJobRunningResponse) SetIsTrainingJobRunning(v bool)`
+
+SetIsTrainingJobRunning sets IsTrainingJobRunning field to given value.
+
+
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
