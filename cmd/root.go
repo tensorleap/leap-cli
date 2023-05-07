@@ -22,7 +22,7 @@ Complete documentation is available at http://docs.tensoleap.ai`,
 func init() {
 	RootCmd.PersistentFlags().StringP("author", "a", "YOUR NAME", "Author name for copyright attribution")
 	RootCmd.AddCommand(auth.AuthCommand)
-	RootCmd.AddCommand(local.LocalInstallCommand)
+	RootCmd.AddCommand(local.LocalCommand)
 }
 
 func Execute() {
