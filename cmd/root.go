@@ -7,6 +7,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/cli-go/cmd/auth"
 	"github.com/tensorleap/cli-go/cmd/local"
+  k3d "github.com/k3d-io/k3d/v5/cmd"
 )
 
 var RootCmd = &cobra.Command{
@@ -22,6 +23,7 @@ Complete documentation is available at http://docs.tensoleap.ai`,
 func init() {
 	RootCmd.AddCommand(auth.AuthCommand)
 	RootCmd.AddCommand(local.LocalCommand)
+  RootCmd.AddCommand(k3d.NewCmdK3d())
 }
 
 func Execute() {
