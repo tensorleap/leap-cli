@@ -14,4 +14,4 @@ func getClient() *tensorleapapi.DefaultApiService {
   return tensorleapapi.NewAPIClient(cfg).DefaultApi
 }
 
-var Client = getClient()
+var ApiClient = getClient()
