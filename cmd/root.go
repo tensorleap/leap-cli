@@ -12,7 +12,7 @@ import (
 )
 
 var RootCommand = &cobra.Command{
-	Use:   "leap",
+	Use:   "tensorleap",
 	Short: "Tensorleap - Deepbug your models!",
 	Long: `A debugger and analyzer for your DNNs.
 Complete documentation is available at http://docs.tensoleap.ai`,
