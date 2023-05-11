@@ -8,9 +8,6 @@ var LocalCommand = &cobra.Command{
 	Use:   "local",
   Short: "Manage local installation of Tensorleap",
 	Long:  `Manage local installation of Tensorleap`,
-	Run: func(cmd *cobra.Command, args []string) {
-    cmd.Usage();
-	},
 }
 
 func init() {

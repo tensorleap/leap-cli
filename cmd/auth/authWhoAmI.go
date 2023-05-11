@@ -11,7 +11,7 @@ var AuthWhoAmICommand = &cobra.Command{
   Short: "Get information about the authenticated user",
 	Long:  `Get information about the authenticated user`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Install command")
+		fmt.Println("WhoAmI command")
     userData, resp, err := ApiClient.WhoAmI(cmd.Context()).Execute()
 		fmt.Println(userData)
 		fmt.Println(resp)

@@ -15,9 +15,6 @@ var RootCmd = &cobra.Command{
 	Short: "Tensorleap - Deepbug your models!",
 	Long: `A debugger and analyzer for your DNNs.
 Complete documentation is available at http://docs.tensoleap.ai`,
-	Run: func(cmd *cobra.Command, args []string) {
-		cmd.Usage()
-	},
 }
 
 func init() {
