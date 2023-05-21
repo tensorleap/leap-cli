@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VersionId** | **string** |  | 
-**SessionRunId** | **string** |  | 
+**SessionId** | **string** |  | 
 
 ## Methods
 
 ### NewIsTrainingJobRunningParams
 
-`func NewIsTrainingJobRunningParams(versionId string, sessionRunId string, ) *IsTrainingJobRunningParams`
+`func NewIsTrainingJobRunningParams(versionId string, sessionId string, ) *IsTrainingJobRunningParams`
 
 NewIsTrainingJobRunningParams instantiates a new IsTrainingJobRunningParams object
 This constructor will assign default values to properties that have it defined,
@@ -46,24 +46,24 @@ and a boolean to check if the value has been set.
 SetVersionId sets VersionId field to given value.
 
 
-### GetSessionRunId
+### GetSessionId
 
-`func (o *IsTrainingJobRunningParams) GetSessionRunId() string`
+`func (o *IsTrainingJobRunningParams) GetSessionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetSessionId returns the SessionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetSessionIdOk
 
-`func (o *IsTrainingJobRunningParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *IsTrainingJobRunningParams) GetSessionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetSessionIdOk returns a tuple with the SessionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetSessionId
 
-`func (o *IsTrainingJobRunningParams) SetSessionRunId(v string)`
+`func (o *IsTrainingJobRunningParams) SetSessionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetSessionId sets SessionId field to given value.
 
 
 

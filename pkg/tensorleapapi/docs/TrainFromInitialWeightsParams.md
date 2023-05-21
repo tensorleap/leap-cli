@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VersionId** | **string** |  | 
-**FromSessionRunId** | **string** |  | 
+**FromSessionId** | **string** |  | 
 **FromEpoch** | **float64** |  | 
 **ModelName** | **string** |  | 
 **TrainingParams** | [**TrainingParams**](TrainingParams.md) |  | 
@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewTrainFromInitialWeightsParams
 
-`func NewTrainFromInitialWeightsParams(versionId string, fromSessionRunId string, fromEpoch float64, modelName string, trainingParams TrainingParams, shouldRunPopulationExploration bool, ) *TrainFromInitialWeightsParams`
+`func NewTrainFromInitialWeightsParams(versionId string, fromSessionId string, fromEpoch float64, modelName string, trainingParams TrainingParams, shouldRunPopulationExploration bool, ) *TrainFromInitialWeightsParams`
 
 NewTrainFromInitialWeightsParams instantiates a new TrainFromInitialWeightsParams object
 This constructor will assign default values to properties that have it defined,
@@ -50,24 +50,24 @@ and a boolean to check if the value has been set.
 SetVersionId sets VersionId field to given value.
 
 
-### GetFromSessionRunId
+### GetFromSessionId
 
-`func (o *TrainFromInitialWeightsParams) GetFromSessionRunId() string`
+`func (o *TrainFromInitialWeightsParams) GetFromSessionId() string`
 
-GetFromSessionRunId returns the FromSessionRunId field if non-nil, zero value otherwise.
+GetFromSessionId returns the FromSessionId field if non-nil, zero value otherwise.
 
-### GetFromSessionRunIdOk
+### GetFromSessionIdOk
 
-`func (o *TrainFromInitialWeightsParams) GetFromSessionRunIdOk() (*string, bool)`
+`func (o *TrainFromInitialWeightsParams) GetFromSessionIdOk() (*string, bool)`
 
-GetFromSessionRunIdOk returns a tuple with the FromSessionRunId field if it's non-nil, zero value otherwise
+GetFromSessionIdOk returns a tuple with the FromSessionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFromSessionRunId
+### SetFromSessionId
 
-`func (o *TrainFromInitialWeightsParams) SetFromSessionRunId(v string)`
+`func (o *TrainFromInitialWeightsParams) SetFromSessionId(v string)`
 
-SetFromSessionRunId sets FromSessionRunId field to given value.
+SetFromSessionId sets FromSessionId field to given value.
 
 
 ### GetFromEpoch

@@ -8,18 +8,19 @@ Name | Type | Description | Notes
 **CreatedBy** | **string** |  | 
 **Version** | **string** |  | 
 **Type** | [**JobTypeEnum**](JobTypeEnum.md) |  | 
+**SubType** | Pointer to [**JobSubType**](JobSubType.md) |  | [optional] 
 **Status** | [**JobStatus**](JobStatus.md) |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 **Params** | Pointer to [**JobParams**](JobParams.md) |  | [optional] 
-**SessionRun** | **NullableString** |  | 
+**SessionRunId** | Pointer to **string** |  | [optional] 
 **Organization** | **string** |  | 
 
 ## Methods
 
 ### NewJob
 
-`func NewJob(id string, createdBy string, version string, type_ JobTypeEnum, status JobStatus, createdAt time.Time, updatedAt time.Time, sessionRun NullableString, organization string, ) *Job`
+`func NewJob(id string, createdBy string, version string, type_ JobTypeEnum, status JobStatus, createdAt time.Time, updatedAt time.Time, organization string, ) *Job`
 
 NewJob instantiates a new Job object
 This constructor will assign default values to properties that have it defined,
@@ -114,6 +115,31 @@ and a boolean to check if the value has been set.
 SetType sets Type field to given value.
 
 
+### GetSubType
+
+`func (o *Job) GetSubType() JobSubType`
+
+GetSubType returns the SubType field if non-nil, zero value otherwise.
+
+### GetSubTypeOk
+
+`func (o *Job) GetSubTypeOk() (*JobSubType, bool)`
+
+GetSubTypeOk returns a tuple with the SubType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubType
+
+`func (o *Job) SetSubType(v JobSubType)`
+
+SetSubType sets SubType field to given value.
+
+### HasSubType
+
+`func (o *Job) HasSubType() bool`
+
+HasSubType returns a boolean if a field has been set.
+
 ### GetStatus
 
 `func (o *Job) GetStatus() JobStatus`
@@ -199,36 +225,31 @@ SetParams sets Params field to given value.
 
 HasParams returns a boolean if a field has been set.
 
-### GetSessionRun
+### GetSessionRunId
 
-`func (o *Job) GetSessionRun() string`
+`func (o *Job) GetSessionRunId() string`
 
-GetSessionRun returns the SessionRun field if non-nil, zero value otherwise.
+GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
 
-### GetSessionRunOk
+### GetSessionRunIdOk
 
-`func (o *Job) GetSessionRunOk() (*string, bool)`
+`func (o *Job) GetSessionRunIdOk() (*string, bool)`
 
-GetSessionRunOk returns a tuple with the SessionRun field if it's non-nil, zero value otherwise
+GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRun
+### SetSessionRunId
 
-`func (o *Job) SetSessionRun(v string)`
+`func (o *Job) SetSessionRunId(v string)`
 
-SetSessionRun sets SessionRun field to given value.
+SetSessionRunId sets SessionRunId field to given value.
 
+### HasSessionRunId
 
-### SetSessionRunNil
+`func (o *Job) HasSessionRunId() bool`
 
-`func (o *Job) SetSessionRunNil(b bool)`
+HasSessionRunId returns a boolean if a field has been set.
 
- SetSessionRunNil sets the value for SessionRun to be an explicit nil
-
-### UnsetSessionRun
-`func (o *Job) UnsetSessionRun()`
-
-UnsetSessionRun ensures that no value is present for SessionRun, not even an explicit nil
 ### GetOrganization
 
 `func (o *Job) GetOrganization() string`

@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | [**ScatterInsightType**](ScatterInsightType.md) |  | 
 **Filter** | [**ScatterFilter**](ScatterFilter.md) |  | 
+**MutualInfoElements** | Pointer to [**[]MutualInformationElement**](MutualInformationElement.md) |  | [optional] 
 **NSamplesValidation** | **float64** |  | 
 **NSamplesTraining** | **float64** |  | 
 **AvgMetricValidation** | **float64** |  | 
@@ -17,12 +18,14 @@ Name | Type | Description | Notes
 **OverRepresentationNSamples** | **float64** |  | 
 **NSamples** | **float64** |  | 
 **AvgMetric** | **float64** |  | 
+**NDuplicateSamples** | **float64** |  | 
+**NCrossSubsetDuplications** | **float64** |  | 
 
 ## Methods
 
 ### NewInsightType
 
-`func NewInsightType(type_ ScatterInsightType, filter ScatterFilter, nSamplesValidation float64, nSamplesTraining float64, avgMetricValidation float64, avgMetricTraining float64, metricName string, underRepresentationDataset DataStateType, underRepresentationNSamples float64, overRepresentationDataset DataStateType, overRepresentationNSamples float64, nSamples float64, avgMetric float64, ) *InsightType`
+`func NewInsightType(type_ ScatterInsightType, filter ScatterFilter, nSamplesValidation float64, nSamplesTraining float64, avgMetricValidation float64, avgMetricTraining float64, metricName string, underRepresentationDataset DataStateType, underRepresentationNSamples float64, overRepresentationDataset DataStateType, overRepresentationNSamples float64, nSamples float64, avgMetric float64, nDuplicateSamples float64, nCrossSubsetDuplications float64, ) *InsightType`
 
 NewInsightType instantiates a new InsightType object
 This constructor will assign default values to properties that have it defined,
@@ -76,6 +79,31 @@ and a boolean to check if the value has been set.
 
 SetFilter sets Filter field to given value.
 
+
+### GetMutualInfoElements
+
+`func (o *InsightType) GetMutualInfoElements() []MutualInformationElement`
+
+GetMutualInfoElements returns the MutualInfoElements field if non-nil, zero value otherwise.
+
+### GetMutualInfoElementsOk
+
+`func (o *InsightType) GetMutualInfoElementsOk() (*[]MutualInformationElement, bool)`
+
+GetMutualInfoElementsOk returns a tuple with the MutualInfoElements field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMutualInfoElements
+
+`func (o *InsightType) SetMutualInfoElements(v []MutualInformationElement)`
+
+SetMutualInfoElements sets MutualInfoElements field to given value.
+
+### HasMutualInfoElements
+
+`func (o *InsightType) HasMutualInfoElements() bool`
+
+HasMutualInfoElements returns a boolean if a field has been set.
 
 ### GetNSamplesValidation
 
@@ -295,6 +323,46 @@ and a boolean to check if the value has been set.
 `func (o *InsightType) SetAvgMetric(v float64)`
 
 SetAvgMetric sets AvgMetric field to given value.
+
+
+### GetNDuplicateSamples
+
+`func (o *InsightType) GetNDuplicateSamples() float64`
+
+GetNDuplicateSamples returns the NDuplicateSamples field if non-nil, zero value otherwise.
+
+### GetNDuplicateSamplesOk
+
+`func (o *InsightType) GetNDuplicateSamplesOk() (*float64, bool)`
+
+GetNDuplicateSamplesOk returns a tuple with the NDuplicateSamples field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNDuplicateSamples
+
+`func (o *InsightType) SetNDuplicateSamples(v float64)`
+
+SetNDuplicateSamples sets NDuplicateSamples field to given value.
+
+
+### GetNCrossSubsetDuplications
+
+`func (o *InsightType) GetNCrossSubsetDuplications() float64`
+
+GetNCrossSubsetDuplications returns the NCrossSubsetDuplications field if non-nil, zero value otherwise.
+
+### GetNCrossSubsetDuplicationsOk
+
+`func (o *InsightType) GetNCrossSubsetDuplicationsOk() (*float64, bool)`
+
+GetNCrossSubsetDuplicationsOk returns a tuple with the NCrossSubsetDuplications field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNCrossSubsetDuplications
+
+`func (o *InsightType) SetNCrossSubsetDuplications(v float64)`
+
+SetNCrossSubsetDuplications sets NCrossSubsetDuplications field to given value.
 
 
 

@@ -1,15 +1,11 @@
-# ModelType
+# Direction
 
 ## Enum
 
 
-* `TRAINING` (value: `"TRAINING"`)
+* `UP` (value: `"up"`)
 
-* `RETRAIN` (value: `"RETRAIN"`)
-
-* `IMPORT_MODEL` (value: `"IMPORT_MODEL"`)
-
-* `EVALUATE` (value: `"EVALUATE"`)
+* `DOWN` (value: `"down"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

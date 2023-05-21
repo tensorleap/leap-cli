@@ -273,6 +273,8 @@
 
 * `ONNX_HARD_SIGMOID` (value: `"OnnxHardSigmoid"`)
 
+* `ONNX_LSTM` (value: `"OnnxLSTM"`)
+
 * `ONNX_REDUCE_MEAN` (value: `"OnnxReduceMean"`)
 
 * `ONNX_SQRT` (value: `"OnnxSqrt"`)

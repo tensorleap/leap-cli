@@ -7,20 +7,19 @@ Name | Type | Description | Notes
 **Id** | **string** |  | 
 **ExtId** | Pointer to **string** |  | [optional] 
 **ModelName** | **string** |  | 
-**Type** | [**ModelType**](ModelType.md) |  | 
 **CreatedAt** | **time.Time** |  | 
 **CreatedBy** | Pointer to **string** |  | [optional] 
 **Organization** | **string** |  | 
 **Hash** | Pointer to **NullableString** |  | [optional] 
 **TrainingParams** | Pointer to [**TrainingParams**](TrainingParams.md) |  | [optional] 
-**SavedData** | Pointer to [**[]SessionSaveData**](SessionSaveData.md) |  | [optional] 
 **SessionRuns** | Pointer to [**[]SessionRunData**](SessionRunData.md) |  | [optional] 
+**SessionWeights** | Pointer to [**[]SessionWeightData**](SessionWeightData.md) |  | [optional] 
 
 ## Methods
 
 ### NewSessionPopulatedJob
 
-`func NewSessionPopulatedJob(id string, modelName string, type_ ModelType, createdAt time.Time, organization string, ) *SessionPopulatedJob`
+`func NewSessionPopulatedJob(id string, modelName string, createdAt time.Time, organization string, ) *SessionPopulatedJob`
 
 NewSessionPopulatedJob instantiates a new SessionPopulatedJob object
 This constructor will assign default values to properties that have it defined,
@@ -98,26 +97,6 @@ and a boolean to check if the value has been set.
 `func (o *SessionPopulatedJob) SetModelName(v string)`
 
 SetModelName sets ModelName field to given value.
-
-
-### GetType
-
-`func (o *SessionPopulatedJob) GetType() ModelType`
-
-GetType returns the Type field if non-nil, zero value otherwise.
-
-### GetTypeOk
-
-`func (o *SessionPopulatedJob) GetTypeOk() (*ModelType, bool)`
-
-GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetType
-
-`func (o *SessionPopulatedJob) SetType(v ModelType)`
-
-SetType sets Type field to given value.
 
 
 ### GetCreatedAt
@@ -245,31 +224,6 @@ SetTrainingParams sets TrainingParams field to given value.
 
 HasTrainingParams returns a boolean if a field has been set.
 
-### GetSavedData
-
-`func (o *SessionPopulatedJob) GetSavedData() []SessionSaveData`
-
-GetSavedData returns the SavedData field if non-nil, zero value otherwise.
-
-### GetSavedDataOk
-
-`func (o *SessionPopulatedJob) GetSavedDataOk() (*[]SessionSaveData, bool)`
-
-GetSavedDataOk returns a tuple with the SavedData field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSavedData
-
-`func (o *SessionPopulatedJob) SetSavedData(v []SessionSaveData)`
-
-SetSavedData sets SavedData field to given value.
-
-### HasSavedData
-
-`func (o *SessionPopulatedJob) HasSavedData() bool`
-
-HasSavedData returns a boolean if a field has been set.
-
 ### GetSessionRuns
 
 `func (o *SessionPopulatedJob) GetSessionRuns() []SessionRunData`
@@ -294,6 +248,31 @@ SetSessionRuns sets SessionRuns field to given value.
 `func (o *SessionPopulatedJob) HasSessionRuns() bool`
 
 HasSessionRuns returns a boolean if a field has been set.
+
+### GetSessionWeights
+
+`func (o *SessionPopulatedJob) GetSessionWeights() []SessionWeightData`
+
+GetSessionWeights returns the SessionWeights field if non-nil, zero value otherwise.
+
+### GetSessionWeightsOk
+
+`func (o *SessionPopulatedJob) GetSessionWeightsOk() (*[]SessionWeightData, bool)`
+
+GetSessionWeightsOk returns a tuple with the SessionWeights field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSessionWeights
+
+`func (o *SessionPopulatedJob) SetSessionWeights(v []SessionWeightData)`
+
+SetSessionWeights sets SessionWeights field to given value.
+
+### HasSessionWeights
+
+`func (o *SessionPopulatedJob) HasSessionWeights() bool`
+
+HasSessionWeights returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

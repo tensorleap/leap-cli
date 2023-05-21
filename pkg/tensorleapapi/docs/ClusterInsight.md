@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | [**ScatterInsightType**](ScatterInsightType.md) |  | 
 **Filter** | [**ScatterFilter**](ScatterFilter.md) |  | 
+**MutualInfoElements** | Pointer to [**[]MutualInformationElement**](MutualInformationElement.md) |  | [optional] 
 **NSamples** | **float64** |  | 
 **AvgMetric** | **float64** |  | 
 **MetricName** | **string** |  | 
@@ -68,6 +69,31 @@ and a boolean to check if the value has been set.
 
 SetFilter sets Filter field to given value.
 
+
+### GetMutualInfoElements
+
+`func (o *ClusterInsight) GetMutualInfoElements() []MutualInformationElement`
+
+GetMutualInfoElements returns the MutualInfoElements field if non-nil, zero value otherwise.
+
+### GetMutualInfoElementsOk
+
+`func (o *ClusterInsight) GetMutualInfoElementsOk() (*[]MutualInformationElement, bool)`
+
+GetMutualInfoElementsOk returns a tuple with the MutualInfoElements field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMutualInfoElements
+
+`func (o *ClusterInsight) SetMutualInfoElements(v []MutualInformationElement)`
+
+SetMutualInfoElements sets MutualInfoElements field to given value.
+
+### HasMutualInfoElements
+
+`func (o *ClusterInsight) HasMutualInfoElements() bool`
+
+HasMutualInfoElements returns a boolean if a field has been set.
 
 ### GetNSamples
 

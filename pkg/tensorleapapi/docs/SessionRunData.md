@@ -8,16 +8,16 @@ Name | Type | Description | Notes
 **SessionId** | **string** |  | 
 **Name** | **string** |  | 
 **Organization** | **string** |  | 
+**IsEvaluate** | **bool** |  | 
 **CreatedAt** | **time.Time** |  | 
 **CreatedBy** | **string** |  | 
-**Weights** | [**[]SessionWeight**](SessionWeight.md) |  | 
-**IsHidden** | **bool** |  | 
+**WeightAssets** | [**[]WeightAssetData**](WeightAssetData.md) |  | 
 
 ## Methods
 
 ### NewSessionRunData
 
-`func NewSessionRunData(id string, sessionId string, name string, organization string, createdAt time.Time, createdBy string, weights []SessionWeight, isHidden bool, ) *SessionRunData`
+`func NewSessionRunData(id string, sessionId string, name string, organization string, isEvaluate bool, createdAt time.Time, createdBy string, weightAssets []WeightAssetData, ) *SessionRunData`
 
 NewSessionRunData instantiates a new SessionRunData object
 This constructor will assign default values to properties that have it defined,
@@ -112,6 +112,26 @@ and a boolean to check if the value has been set.
 SetOrganization sets Organization field to given value.
 
 
+### GetIsEvaluate
+
+`func (o *SessionRunData) GetIsEvaluate() bool`
+
+GetIsEvaluate returns the IsEvaluate field if non-nil, zero value otherwise.
+
+### GetIsEvaluateOk
+
+`func (o *SessionRunData) GetIsEvaluateOk() (*bool, bool)`
+
+GetIsEvaluateOk returns a tuple with the IsEvaluate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsEvaluate
+
+`func (o *SessionRunData) SetIsEvaluate(v bool)`
+
+SetIsEvaluate sets IsEvaluate field to given value.
+
+
 ### GetCreatedAt
 
 `func (o *SessionRunData) GetCreatedAt() time.Time`
@@ -152,44 +172,24 @@ and a boolean to check if the value has been set.
 SetCreatedBy sets CreatedBy field to given value.
 
 
-### GetWeights
+### GetWeightAssets
 
-`func (o *SessionRunData) GetWeights() []SessionWeight`
+`func (o *SessionRunData) GetWeightAssets() []WeightAssetData`
 
-GetWeights returns the Weights field if non-nil, zero value otherwise.
+GetWeightAssets returns the WeightAssets field if non-nil, zero value otherwise.
 
-### GetWeightsOk
+### GetWeightAssetsOk
 
-`func (o *SessionRunData) GetWeightsOk() (*[]SessionWeight, bool)`
+`func (o *SessionRunData) GetWeightAssetsOk() (*[]WeightAssetData, bool)`
 
-GetWeightsOk returns a tuple with the Weights field if it's non-nil, zero value otherwise
+GetWeightAssetsOk returns a tuple with the WeightAssets field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetWeights
+### SetWeightAssets
 
-`func (o *SessionRunData) SetWeights(v []SessionWeight)`
+`func (o *SessionRunData) SetWeightAssets(v []WeightAssetData)`
 
-SetWeights sets Weights field to given value.
-
-
-### GetIsHidden
-
-`func (o *SessionRunData) GetIsHidden() bool`
-
-GetIsHidden returns the IsHidden field if non-nil, zero value otherwise.
-
-### GetIsHiddenOk
-
-`func (o *SessionRunData) GetIsHiddenOk() (*bool, bool)`
-
-GetIsHiddenOk returns a tuple with the IsHidden field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetIsHidden
-
-`func (o *SessionRunData) SetIsHidden(v bool)`
-
-SetIsHidden sets IsHidden field to given value.
+SetWeightAssets sets WeightAssets field to given value.
 
 
 

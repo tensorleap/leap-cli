@@ -4,28 +4,10 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.285
+  version: 0.0.301
 servers:
 - url: /api/v2
 paths:
-  /auth/keylogin:
-    post:
-      operationId: KeyLogin
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/KeyLoginParams'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserData'
-          description: Ok
-      security: []
   /auth/login:
     post:
       operationId: Login
@@ -246,6 +228,12 @@ paths:
     post:
       operationId: GetDashletFields
       parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetDashletFieldsParams'
+        required: true
       responses:
         "200":
           content:
@@ -913,6 +901,20 @@ paths:
       security:
       - jwt:
         - admin-only
+  /metadata/getEnvironmentInfo:
+    post:
+      operationId: GetEnvironmentInfo
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEnvironmentInfoResponse'
+          description: Ok
+      security:
+      - jwt:
+        - admin-only
   /sessions-tests/createSessionTest:
     post:
       operationId: CreateSessionTest
@@ -1084,6 +1086,12 @@ paths:
     post:
       operationId: GetConfusionMetricNames
       parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfusionMetricNamesParams'
+        required: true
       responses:
         "200":
           content:
@@ -2064,20 +2072,6 @@ components:
       - recordSession
       - role
       type: object
-    KeyLoginParams:
-      additionalProperties: false
-      example:
-        apiKey: apiKey
-        apiId: apiId
-      properties:
-        apiId:
-          type: string
-        apiKey:
-          type: string
-      required:
-      - apiId
-      - apiKey
-      type: object
     LoginParams:
       additionalProperties: false
       example:
@@ -2096,14 +2090,10 @@ components:
       additionalProperties: false
       example:
         apiKey: apiKey
-        apiId: apiId
       properties:
-        apiId:
-          type: string
         apiKey:
           type: string
       required:
-      - apiId
       - apiKey
       type: object
     SignupResponse:
@@ -2535,6 +2525,16 @@ components:
       - aggregatableFields
       - numericFields
       - stringFields
+      type: object
+    GetDashletFieldsParams:
+      additionalProperties: false
+      example:
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+      required:
+      - projectId
       type: object
     DatasetAccess:
       enum:
@@ -5257,6 +5257,7 @@ components:
       - weak_cluster
       - under_representation_cluster
       - overfitting_cluster
+      - duplication_insight
       type: string
     OperatorEnum:
       enum:
@@ -5287,6 +5288,27 @@ components:
       - operator
       - value
       type: object
+    Direction:
+      enum:
+      - up
+      - down
+      type: string
+    MutualInformationElement:
+      additionalProperties: false
+      properties:
+        feature_name:
+          type: string
+        feature_value:
+          type: string
+        direction:
+          $ref: '#/components/schemas/Direction'
+        is_categorical:
+          type: boolean
+      required:
+      - direction
+      - feature_name
+      - is_categorical
+      type: object
     OverfittingInsight:
       additionalProperties: false
       properties:
@@ -5294,6 +5316,10 @@ components:
           $ref: '#/components/schemas/ScatterInsightType'
         filter:
           $ref: '#/components/schemas/ScatterFilter'
+        mutual_info_elements:
+          items:
+            $ref: '#/components/schemas/MutualInformationElement'
+          type: array
         n_samples_validation:
           format: double
           type: number
@@ -5324,6 +5350,10 @@ components:
           $ref: '#/components/schemas/ScatterInsightType'
         filter:
           $ref: '#/components/schemas/ScatterFilter'
+        mutual_info_elements:
+          items:
+            $ref: '#/components/schemas/MutualInformationElement'
+          type: array
         under_representation_dataset:
           $ref: '#/components/schemas/DataStateType'
         under_representation_n_samples:
@@ -5349,6 +5379,10 @@ components:
           $ref: '#/components/schemas/ScatterInsightType'
         filter:
           $ref: '#/components/schemas/ScatterFilter'
+        mutual_info_elements:
+          items:
+            $ref: '#/components/schemas/MutualInformationElement'
+          type: array
         n_samples:
           format: double
           type: number
@@ -5364,11 +5398,35 @@ components:
       - n_samples
       - type
       type: object
+    DuplicationInsight:
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/ScatterInsightType'
+        filter:
+          $ref: '#/components/schemas/ScatterFilter'
+        mutual_info_elements:
+          items:
+            $ref: '#/components/schemas/MutualInformationElement'
+          type: array
+        n_duplicate_samples:
+          format: double
+          type: number
+        n_cross_subset_duplications:
+          format: double
+          type: number
+      required:
+      - filter
+      - n_cross_subset_duplications
+      - n_duplicate_samples
+      - type
+      type: object
     InsightType:
       anyOf:
       - $ref: '#/components/schemas/OverfittingInsight'
       - $ref: '#/components/schemas/UnderRepresentationInsight'
       - $ref: '#/components/schemas/ClusterInsight'
+      - $ref: '#/components/schemas/DuplicationInsight'
     Insight:
       additionalProperties: false
       example:
@@ -5910,6 +5968,16 @@ components:
       - EXPORT_MODEL
       - DATASET_PARSE
       type: string
+    JobSubType:
+      enum:
+      - Evaluate
+      - Train From Scratch
+      - Continue Training
+      - Train From Initial Weights
+      - Population Exploration
+      - Sample Selection
+      - Sample Analysis
+      type: string
     EarlyStopParams:
       additionalProperties: false
       example:
@@ -6018,9 +6086,10 @@ components:
       additionalProperties: false
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
+        sessionRunId: sessionRunId
         createdBy: createdBy
         organization: organization
-        sessionRun: sessionRun
+        subType: null
         _id: _id
         type: null
         params: null
@@ -6036,6 +6105,8 @@ components:
           type: string
         type:
           $ref: '#/components/schemas/JobTypeEnum'
+        subType:
+          $ref: '#/components/schemas/JobSubType'
         status:
           $ref: '#/components/schemas/JobStatus'
         createdAt:
@@ -6046,8 +6117,7 @@ components:
           type: string
         params:
           $ref: '#/components/schemas/JobParams'
-        sessionRun:
-          nullable: true
+        sessionRunId:
           type: string
         organization:
           type: string
@@ -6056,7 +6126,6 @@ components:
       - createdAt
       - createdBy
       - organization
-      - sessionRun
       - status
       - type
       - updatedAt
@@ -6069,9 +6138,10 @@ components:
         mapVersionToProjectName: "{}"
         jobs:
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          sessionRunId: sessionRunId
           createdBy: createdBy
           organization: organization
-          sessionRun: sessionRun
+          subType: null
           _id: _id
           type: null
           params: null
@@ -6079,9 +6149,10 @@ components:
           status: null
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          sessionRunId: sessionRunId
           createdBy: createdBy
           organization: organization
-          sessionRun: sessionRun
+          subType: null
           _id: _id
           type: null
           params: null
@@ -6149,14 +6220,14 @@ components:
       additionalProperties: false
       example:
         versionId: versionId
-        sessionRunId: sessionRunId
+        sessionId: sessionId
       properties:
         versionId:
           type: string
-        sessionRunId:
+        sessionId:
           type: string
       required:
-      - sessionRunId
+      - sessionId
       - versionId
       type: object
     GetOrganizationJobsParams:
@@ -6251,8 +6322,8 @@ components:
     TrainFromScratchParams:
       additionalProperties: false
       example:
-        modelName: modelName
         versionId: versionId
+        sessionName: sessionName
         trainingParams:
           batch_size: 6.027456183070403
           epochs: 0.8008281904610115
@@ -6262,14 +6333,14 @@ components:
       properties:
         versionId:
           type: string
-        modelName:
+        sessionName:
           type: string
         trainingParams:
           $ref: '#/components/schemas/TrainingParams'
         shouldRunPopulationExploration:
           type: boolean
       required:
-      - modelName
+      - sessionName
       - shouldRunPopulationExploration
       - trainingParams
       - versionId
@@ -6279,17 +6350,17 @@ components:
       example:
         fromEpoch: 0.8008281904610115
         versionId: versionId
-        sessionRunId: sessionRunId
         trainingParams:
           batch_size: 6.027456183070403
           epochs: 0.8008281904610115
           early_stop_params:
             patience: 1.4658129805029452
         shouldRunPopulationExploration: true
+        sessionId: sessionId
       properties:
         versionId:
           type: string
-        sessionRunId:
+        sessionId:
           type: string
         fromEpoch:
           format: double
@@ -6300,7 +6371,7 @@ components:
           type: boolean
       required:
       - fromEpoch
-      - sessionRunId
+      - sessionId
       - shouldRunPopulationExploration
       - trainingParams
       - versionId
@@ -6317,11 +6388,11 @@ components:
           early_stop_params:
             patience: 1.4658129805029452
         shouldRunPopulationExploration: true
-        fromSessionRunId: fromSessionRunId
+        fromSessionId: fromSessionId
       properties:
         versionId:
           type: string
-        fromSessionRunId:
+        fromSessionId:
           type: string
         fromEpoch:
           format: double
@@ -6334,7 +6405,7 @@ components:
           type: boolean
       required:
       - fromEpoch
-      - fromSessionRunId
+      - fromSessionId
       - modelName
       - shouldRunPopulationExploration
       - trainingParams
@@ -6350,17 +6421,17 @@ components:
       additionalProperties: false
       example:
         versionId: versionId
-        sessionRunId: sessionRunId
         dataStates:
         - null
         - null
         shouldRunPopulationExploration: true
+        sessionId: sessionId
         batchSize: 0.8008281904610115
         evaluatedEpoch: 6.027456183070403
       properties:
         versionId:
           type: string
-        sessionRunId:
+        sessionId:
           type: string
         batchSize:
           format: double
@@ -6378,7 +6449,7 @@ components:
       - batchSize
       - dataStates
       - evaluatedEpoch
-      - sessionRunId
+      - sessionId
       - shouldRunPopulationExploration
       - versionId
       type: object
@@ -6561,6 +6632,16 @@ components:
       - projects
       - sessions
       - tests
+      type: object
+    GetEnvironmentInfoResponse:
+      additionalProperties: false
+      example:
+        clientStoragePrefixUrl: clientStoragePrefixUrl
+      properties:
+        clientStoragePrefixUrl:
+          type: string
+      required:
+      - clientStoragePrefixUrl
       type: object
     FilterOperatorType:
       enum:
@@ -7406,6 +7487,15 @@ components:
       items:
         $ref: '#/components/schemas/GetConfusionMetricNamesObject'
       type: array
+    ConfusionMetricNamesParams:
+      example:
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+      required:
+      - projectId
+      type: object
     EsBatchAggregationType:
       enum:
       - histogram
@@ -7752,6 +7842,7 @@ components:
       - OnnxAbs
       - OnnxErf
       - OnnxHardSigmoid
+      - OnnxLSTM
       - OnnxReduceMean
       - OnnxSqrt
       - Dataset
@@ -8547,88 +8638,35 @@ components:
       required:
       - data
       type: object
-    ModelType:
-      enum:
-      - TRAINING
-      - RETRAIN
-      - IMPORT_MODEL
-      - EVALUATE
-      type: string
-    SessionSaveData:
+    WeightAssetData:
       additionalProperties: false
       example:
-        globalStep: 6.027456183070403
-        trainRunNumber: 1.4658129805029452
-        epoch: 0.8008281904610115
+        esMetricIndex: esMetricIndex
+        sessionWeightId: sessionWeightId
       properties:
-        epoch:
-          format: double
-          type: number
-        globalStep:
-          format: double
-          type: number
-        trainRunNumber:
-          format: double
-          type: number
-      required:
-      - epoch
-      - globalStep
-      - trainRunNumber
-      type: object
-    StatusEnum:
-      enum:
-      - FAILED
-      - STARTED
-      - FINISHED
-      type: string
-    SessionWeight:
-      additionalProperties: false
-      example:
-        blobName: blobName
-        globalStep: 5.637376656633329
-        identifier: identifier
-        epoch: 5.962133916683182
-        status: null
-      properties:
-        identifier:
+        sessionWeightId:
           type: string
-        blobName:
+        esMetricIndex:
           type: string
-        epoch:
-          format: double
-          type: number
-        status:
-          $ref: '#/components/schemas/StatusEnum'
-        globalStep:
-          format: double
-          type: number
       required:
-      - epoch
-      - globalStep
-      - identifier
-      - status
+      - esMetricIndex
+      - sessionWeightId
       type: object
     SessionRunData:
       additionalProperties: false
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
+        weightAssets:
+        - esMetricIndex: esMetricIndex
+          sessionWeightId: sessionWeightId
+        - esMetricIndex: esMetricIndex
+          sessionWeightId: sessionWeightId
         createdBy: createdBy
         organization: organization
         name: name
         _id: _id
         sessionId: sessionId
-        weights:
-        - blobName: blobName
-          globalStep: 5.637376656633329
-          identifier: identifier
-          epoch: 5.962133916683182
-          status: null
-        - blobName: blobName
-          globalStep: 5.637376656633329
-          identifier: identifier
-          epoch: 5.962133916683182
-          status: null
-        isHidden: true
+        isEvaluate: true
       properties:
         _id:
           type: string
@@ -8638,26 +8676,73 @@ components:
           type: string
         organization:
           type: string
+        isEvaluate:
+          type: boolean
         createdAt:
           format: date-time
           type: string
         createdBy:
           type: string
-        weights:
+        weightAssets:
           items:
-            $ref: '#/components/schemas/SessionWeight'
+            $ref: '#/components/schemas/WeightAssetData'
           type: array
-        isHidden:
-          type: boolean
       required:
       - _id
       - createdAt
       - createdBy
-      - isHidden
+      - isEvaluate
       - name
       - organization
       - sessionId
-      - weights
+      - weightAssets
+      type: object
+    StatusEnum:
+      enum:
+      - FAILED
+      - STARTED
+      - FINISHED
+      type: string
+    SessionWeightData:
+      additionalProperties: false
+      example:
+        globalStep: 6.027456183070403
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        createdBy: createdBy
+        organization: organization
+        epoch: 0.8008281904610115
+        _id: _id
+        sessionId: sessionId
+        status: null
+      properties:
+        _id:
+          type: string
+        sessionId:
+          type: string
+        epoch:
+          format: double
+          type: number
+        globalStep:
+          format: double
+          type: number
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        organization:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        createdBy:
+          type: string
+      required:
+      - _id
+      - createdAt
+      - createdBy
+      - epoch
+      - globalStep
+      - organization
+      - sessionId
+      - status
       type: object
     SessionPopulatedJob:
       additionalProperties: false
@@ -8667,41 +8752,29 @@ components:
         createdBy: createdBy
         sessionRuns:
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          weightAssets:
+          - esMetricIndex: esMetricIndex
+            sessionWeightId: sessionWeightId
+          - esMetricIndex: esMetricIndex
+            sessionWeightId: sessionWeightId
           createdBy: createdBy
           organization: organization
           name: name
           _id: _id
           sessionId: sessionId
-          weights:
-          - blobName: blobName
-            globalStep: 5.637376656633329
-            identifier: identifier
-            epoch: 5.962133916683182
-            status: null
-          - blobName: blobName
-            globalStep: 5.637376656633329
-            identifier: identifier
-            epoch: 5.962133916683182
-            status: null
-          isHidden: true
+          isEvaluate: true
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          weightAssets:
+          - esMetricIndex: esMetricIndex
+            sessionWeightId: sessionWeightId
+          - esMetricIndex: esMetricIndex
+            sessionWeightId: sessionWeightId
           createdBy: createdBy
           organization: organization
           name: name
           _id: _id
           sessionId: sessionId
-          weights:
-          - blobName: blobName
-            globalStep: 5.637376656633329
-            identifier: identifier
-            epoch: 5.962133916683182
-            status: null
-          - blobName: blobName
-            globalStep: 5.637376656633329
-            identifier: identifier
-            epoch: 5.962133916683182
-            status: null
-          isHidden: true
+          isEvaluate: true
         organization: organization
         trainingParams:
           batch_size: 6.027456183070403
@@ -8710,14 +8783,23 @@ components:
             patience: 1.4658129805029452
         _id: _id
         extId: extId
-        savedData:
+        sessionWeights:
         - globalStep: 6.027456183070403
-          trainRunNumber: 1.4658129805029452
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          organization: organization
           epoch: 0.8008281904610115
+          _id: _id
+          sessionId: sessionId
+          status: null
         - globalStep: 6.027456183070403
-          trainRunNumber: 1.4658129805029452
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          organization: organization
           epoch: 0.8008281904610115
-        type: null
+          _id: _id
+          sessionId: sessionId
+          status: null
         hash: hash
       properties:
         _id:
@@ -8726,8 +8808,6 @@ components:
           type: string
         modelName:
           type: string
-        type:
-          $ref: '#/components/schemas/ModelType'
         createdAt:
           format: date-time
           type: string
@@ -8740,20 +8820,19 @@ components:
           type: string
         trainingParams:
           $ref: '#/components/schemas/TrainingParams'
-        savedData:
-          items:
-            $ref: '#/components/schemas/SessionSaveData'
-          type: array
         sessionRuns:
           items:
             $ref: '#/components/schemas/SessionRunData'
+          type: array
+        sessionWeights:
+          items:
+            $ref: '#/components/schemas/SessionWeightData'
           type: array
       required:
       - _id
       - createdAt
       - modelName
       - organization
-      - type
       type: object
     LoadSessionResponse:
       additionalProperties: false
@@ -8764,41 +8843,29 @@ components:
           createdBy: createdBy
           sessionRuns:
           - createdAt: 2000-01-23T04:56:07.000+00:00
+            weightAssets:
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
             createdBy: createdBy
             organization: organization
             name: name
             _id: _id
             sessionId: sessionId
-            weights:
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            isHidden: true
+            isEvaluate: true
           - createdAt: 2000-01-23T04:56:07.000+00:00
+            weightAssets:
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
             createdBy: createdBy
             organization: organization
             name: name
             _id: _id
             sessionId: sessionId
-            weights:
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            isHidden: true
+            isEvaluate: true
           organization: organization
           trainingParams:
             batch_size: 6.027456183070403
@@ -8807,14 +8874,23 @@ components:
               patience: 1.4658129805029452
           _id: _id
           extId: extId
-          savedData:
+          sessionWeights:
           - globalStep: 6.027456183070403
-            trainRunNumber: 1.4658129805029452
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            organization: organization
             epoch: 0.8008281904610115
+            _id: _id
+            sessionId: sessionId
+            status: null
           - globalStep: 6.027456183070403
-            trainRunNumber: 1.4658129805029452
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            organization: organization
             epoch: 0.8008281904610115
-          type: null
+            _id: _id
+            sessionId: sessionId
+            status: null
           hash: hash
       properties:
         session:
@@ -8991,41 +9067,29 @@ components:
         createdBy: createdBy
         sessionRuns:
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          weightAssets:
+          - esMetricIndex: esMetricIndex
+            sessionWeightId: sessionWeightId
+          - esMetricIndex: esMetricIndex
+            sessionWeightId: sessionWeightId
           createdBy: createdBy
           organization: organization
           name: name
           _id: _id
           sessionId: sessionId
-          weights:
-          - blobName: blobName
-            globalStep: 5.637376656633329
-            identifier: identifier
-            epoch: 5.962133916683182
-            status: null
-          - blobName: blobName
-            globalStep: 5.637376656633329
-            identifier: identifier
-            epoch: 5.962133916683182
-            status: null
-          isHidden: true
+          isEvaluate: true
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          weightAssets:
+          - esMetricIndex: esMetricIndex
+            sessionWeightId: sessionWeightId
+          - esMetricIndex: esMetricIndex
+            sessionWeightId: sessionWeightId
           createdBy: createdBy
           organization: organization
           name: name
           _id: _id
           sessionId: sessionId
-          weights:
-          - blobName: blobName
-            globalStep: 5.637376656633329
-            identifier: identifier
-            epoch: 5.962133916683182
-            status: null
-          - blobName: blobName
-            globalStep: 5.637376656633329
-            identifier: identifier
-            epoch: 5.962133916683182
-            status: null
-          isHidden: true
+          isEvaluate: true
         organization: organization
         trainingParams:
           batch_size: 6.027456183070403
@@ -9034,7 +9098,23 @@ components:
             patience: 1.4658129805029452
         _id: _id
         extId: extId
-        type: null
+        sessionWeights:
+        - globalStep: 6.027456183070403
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          organization: organization
+          epoch: 0.8008281904610115
+          _id: _id
+          sessionId: sessionId
+          status: null
+        - globalStep: 6.027456183070403
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          organization: organization
+          epoch: 0.8008281904610115
+          _id: _id
+          sessionId: sessionId
+          status: null
         hash: hash
       properties:
         _id:
@@ -9043,8 +9123,6 @@ components:
           type: string
         modelName:
           type: string
-        type:
-          $ref: '#/components/schemas/ModelType'
         createdAt:
           format: date-time
           type: string
@@ -9061,12 +9139,15 @@ components:
           items:
             $ref: '#/components/schemas/SessionRunData'
           type: array
+        sessionWeights:
+          items:
+            $ref: '#/components/schemas/SessionWeightData'
+          type: array
       required:
       - _id
       - createdAt
       - modelName
       - organization
-      - type
       type: object
     SessionsResponse:
       additionalProperties: false
@@ -9077,41 +9158,29 @@ components:
           createdBy: createdBy
           sessionRuns:
           - createdAt: 2000-01-23T04:56:07.000+00:00
+            weightAssets:
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
             createdBy: createdBy
             organization: organization
             name: name
             _id: _id
             sessionId: sessionId
-            weights:
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            isHidden: true
+            isEvaluate: true
           - createdAt: 2000-01-23T04:56:07.000+00:00
+            weightAssets:
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
             createdBy: createdBy
             organization: organization
             name: name
             _id: _id
             sessionId: sessionId
-            weights:
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            isHidden: true
+            isEvaluate: true
           organization: organization
           trainingParams:
             batch_size: 6.027456183070403
@@ -9120,48 +9189,52 @@ components:
               patience: 1.4658129805029452
           _id: _id
           extId: extId
-          type: null
+          sessionWeights:
+          - globalStep: 6.027456183070403
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            organization: organization
+            epoch: 0.8008281904610115
+            _id: _id
+            sessionId: sessionId
+            status: null
+          - globalStep: 6.027456183070403
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            organization: organization
+            epoch: 0.8008281904610115
+            _id: _id
+            sessionId: sessionId
+            status: null
           hash: hash
         - modelName: modelName
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
           sessionRuns:
           - createdAt: 2000-01-23T04:56:07.000+00:00
+            weightAssets:
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
             createdBy: createdBy
             organization: organization
             name: name
             _id: _id
             sessionId: sessionId
-            weights:
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            isHidden: true
+            isEvaluate: true
           - createdAt: 2000-01-23T04:56:07.000+00:00
+            weightAssets:
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
             createdBy: createdBy
             organization: organization
             name: name
             _id: _id
             sessionId: sessionId
-            weights:
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            isHidden: true
+            isEvaluate: true
           organization: organization
           trainingParams:
             batch_size: 6.027456183070403
@@ -9170,7 +9243,23 @@ components:
               patience: 1.4658129805029452
           _id: _id
           extId: extId
-          type: null
+          sessionWeights:
+          - globalStep: 6.027456183070403
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            organization: organization
+            epoch: 0.8008281904610115
+            _id: _id
+            sessionId: sessionId
+            status: null
+          - globalStep: 6.027456183070403
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            organization: organization
+            epoch: 0.8008281904610115
+            _id: _id
+            sessionId: sessionId
+            status: null
           hash: hash
       properties:
         sessions:
@@ -9209,41 +9298,29 @@ components:
           createdBy: createdBy
           sessionRuns:
           - createdAt: 2000-01-23T04:56:07.000+00:00
+            weightAssets:
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
             createdBy: createdBy
             organization: organization
             name: name
             _id: _id
             sessionId: sessionId
-            weights:
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            isHidden: true
+            isEvaluate: true
           - createdAt: 2000-01-23T04:56:07.000+00:00
+            weightAssets:
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
             createdBy: createdBy
             organization: organization
             name: name
             _id: _id
             sessionId: sessionId
-            weights:
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            isHidden: true
+            isEvaluate: true
           organization: organization
           trainingParams:
             batch_size: 6.027456183070403
@@ -9252,55 +9329,52 @@ components:
               patience: 1.4658129805029452
           _id: _id
           extId: extId
-          savedData:
+          sessionWeights:
           - globalStep: 6.027456183070403
-            trainRunNumber: 1.4658129805029452
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            organization: organization
             epoch: 0.8008281904610115
+            _id: _id
+            sessionId: sessionId
+            status: null
           - globalStep: 6.027456183070403
-            trainRunNumber: 1.4658129805029452
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            organization: organization
             epoch: 0.8008281904610115
-          type: null
+            _id: _id
+            sessionId: sessionId
+            status: null
           hash: hash
         - modelName: modelName
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
           sessionRuns:
           - createdAt: 2000-01-23T04:56:07.000+00:00
+            weightAssets:
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
             createdBy: createdBy
             organization: organization
             name: name
             _id: _id
             sessionId: sessionId
-            weights:
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            isHidden: true
+            isEvaluate: true
           - createdAt: 2000-01-23T04:56:07.000+00:00
+            weightAssets:
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
             createdBy: createdBy
             organization: organization
             name: name
             _id: _id
             sessionId: sessionId
-            weights:
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            isHidden: true
+            isEvaluate: true
           organization: organization
           trainingParams:
             batch_size: 6.027456183070403
@@ -9309,14 +9383,23 @@ components:
               patience: 1.4658129805029452
           _id: _id
           extId: extId
-          savedData:
+          sessionWeights:
           - globalStep: 6.027456183070403
-            trainRunNumber: 1.4658129805029452
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            organization: organization
             epoch: 0.8008281904610115
+            _id: _id
+            sessionId: sessionId
+            status: null
           - globalStep: 6.027456183070403
-            trainRunNumber: 1.4658129805029452
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            organization: organization
             epoch: 0.8008281904610115
-          type: null
+            _id: _id
+            sessionId: sessionId
+            status: null
           hash: hash
       properties:
         sessions:
@@ -10034,41 +10117,29 @@ components:
           createdBy: createdBy
           sessionRuns:
           - createdAt: 2000-01-23T04:56:07.000+00:00
+            weightAssets:
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
             createdBy: createdBy
             organization: organization
             name: name
             _id: _id
             sessionId: sessionId
-            weights:
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            isHidden: true
+            isEvaluate: true
           - createdAt: 2000-01-23T04:56:07.000+00:00
+            weightAssets:
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
             createdBy: createdBy
             organization: organization
             name: name
             _id: _id
             sessionId: sessionId
-            weights:
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            isHidden: true
+            isEvaluate: true
           organization: organization
           trainingParams:
             batch_size: 6.027456183070403
@@ -10077,48 +10148,52 @@ components:
               patience: 1.4658129805029452
           _id: _id
           extId: extId
-          type: null
+          sessionWeights:
+          - globalStep: 6.027456183070403
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            organization: organization
+            epoch: 0.8008281904610115
+            _id: _id
+            sessionId: sessionId
+            status: null
+          - globalStep: 6.027456183070403
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            organization: organization
+            epoch: 0.8008281904610115
+            _id: _id
+            sessionId: sessionId
+            status: null
           hash: hash
         - modelName: modelName
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
           sessionRuns:
           - createdAt: 2000-01-23T04:56:07.000+00:00
+            weightAssets:
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
             createdBy: createdBy
             organization: organization
             name: name
             _id: _id
             sessionId: sessionId
-            weights:
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            isHidden: true
+            isEvaluate: true
           - createdAt: 2000-01-23T04:56:07.000+00:00
+            weightAssets:
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
             createdBy: createdBy
             organization: organization
             name: name
             _id: _id
             sessionId: sessionId
-            weights:
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            - blobName: blobName
-              globalStep: 5.637376656633329
-              identifier: identifier
-              epoch: 5.962133916683182
-              status: null
-            isHidden: true
+            isEvaluate: true
           organization: organization
           trainingParams:
             batch_size: 6.027456183070403
@@ -10127,7 +10202,23 @@ components:
               patience: 1.4658129805029452
           _id: _id
           extId: extId
-          type: null
+          sessionWeights:
+          - globalStep: 6.027456183070403
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            organization: organization
+            epoch: 0.8008281904610115
+            _id: _id
+            sessionId: sessionId
+            status: null
+          - globalStep: 6.027456183070403
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            organization: organization
+            epoch: 0.8008281904610115
+            _id: _id
+            sessionId: sessionId
+            status: null
           hash: hash
         notes: notes
         datasetSetup:
@@ -10257,41 +10348,29 @@ components:
             createdBy: createdBy
             sessionRuns:
             - createdAt: 2000-01-23T04:56:07.000+00:00
+              weightAssets:
+              - esMetricIndex: esMetricIndex
+                sessionWeightId: sessionWeightId
+              - esMetricIndex: esMetricIndex
+                sessionWeightId: sessionWeightId
               createdBy: createdBy
               organization: organization
               name: name
               _id: _id
               sessionId: sessionId
-              weights:
-              - blobName: blobName
-                globalStep: 5.637376656633329
-                identifier: identifier
-                epoch: 5.962133916683182
-                status: null
-              - blobName: blobName
-                globalStep: 5.637376656633329
-                identifier: identifier
-                epoch: 5.962133916683182
-                status: null
-              isHidden: true
+              isEvaluate: true
             - createdAt: 2000-01-23T04:56:07.000+00:00
+              weightAssets:
+              - esMetricIndex: esMetricIndex
+                sessionWeightId: sessionWeightId
+              - esMetricIndex: esMetricIndex
+                sessionWeightId: sessionWeightId
               createdBy: createdBy
               organization: organization
               name: name
               _id: _id
               sessionId: sessionId
-              weights:
-              - blobName: blobName
-                globalStep: 5.637376656633329
-                identifier: identifier
-                epoch: 5.962133916683182
-                status: null
-              - blobName: blobName
-                globalStep: 5.637376656633329
-                identifier: identifier
-                epoch: 5.962133916683182
-                status: null
-              isHidden: true
+              isEvaluate: true
             organization: organization
             trainingParams:
               batch_size: 6.027456183070403
@@ -10300,48 +10379,52 @@ components:
                 patience: 1.4658129805029452
             _id: _id
             extId: extId
-            type: null
+            sessionWeights:
+            - globalStep: 6.027456183070403
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              createdBy: createdBy
+              organization: organization
+              epoch: 0.8008281904610115
+              _id: _id
+              sessionId: sessionId
+              status: null
+            - globalStep: 6.027456183070403
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              createdBy: createdBy
+              organization: organization
+              epoch: 0.8008281904610115
+              _id: _id
+              sessionId: sessionId
+              status: null
             hash: hash
           - modelName: modelName
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             sessionRuns:
             - createdAt: 2000-01-23T04:56:07.000+00:00
+              weightAssets:
+              - esMetricIndex: esMetricIndex
+                sessionWeightId: sessionWeightId
+              - esMetricIndex: esMetricIndex
+                sessionWeightId: sessionWeightId
               createdBy: createdBy
               organization: organization
               name: name
               _id: _id
               sessionId: sessionId
-              weights:
-              - blobName: blobName
-                globalStep: 5.637376656633329
-                identifier: identifier
-                epoch: 5.962133916683182
-                status: null
-              - blobName: blobName
-                globalStep: 5.637376656633329
-                identifier: identifier
-                epoch: 5.962133916683182
-                status: null
-              isHidden: true
+              isEvaluate: true
             - createdAt: 2000-01-23T04:56:07.000+00:00
+              weightAssets:
+              - esMetricIndex: esMetricIndex
+                sessionWeightId: sessionWeightId
+              - esMetricIndex: esMetricIndex
+                sessionWeightId: sessionWeightId
               createdBy: createdBy
               organization: organization
               name: name
               _id: _id
               sessionId: sessionId
-              weights:
-              - blobName: blobName
-                globalStep: 5.637376656633329
-                identifier: identifier
-                epoch: 5.962133916683182
-                status: null
-              - blobName: blobName
-                globalStep: 5.637376656633329
-                identifier: identifier
-                epoch: 5.962133916683182
-                status: null
-              isHidden: true
+              isEvaluate: true
             organization: organization
             trainingParams:
               batch_size: 6.027456183070403
@@ -10350,7 +10433,23 @@ components:
                 patience: 1.4658129805029452
             _id: _id
             extId: extId
-            type: null
+            sessionWeights:
+            - globalStep: 6.027456183070403
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              createdBy: createdBy
+              organization: organization
+              epoch: 0.8008281904610115
+              _id: _id
+              sessionId: sessionId
+              status: null
+            - globalStep: 6.027456183070403
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              createdBy: createdBy
+              organization: organization
+              epoch: 0.8008281904610115
+              _id: _id
+              sessionId: sessionId
+              status: null
             hash: hash
           notes: notes
           datasetSetup:
@@ -10435,41 +10534,29 @@ components:
             createdBy: createdBy
             sessionRuns:
             - createdAt: 2000-01-23T04:56:07.000+00:00
+              weightAssets:
+              - esMetricIndex: esMetricIndex
+                sessionWeightId: sessionWeightId
+              - esMetricIndex: esMetricIndex
+                sessionWeightId: sessionWeightId
               createdBy: createdBy
               organization: organization
               name: name
               _id: _id
               sessionId: sessionId
-              weights:
-              - blobName: blobName
-                globalStep: 5.637376656633329
-                identifier: identifier
-                epoch: 5.962133916683182
-                status: null
-              - blobName: blobName
-                globalStep: 5.637376656633329
-                identifier: identifier
-                epoch: 5.962133916683182
-                status: null
-              isHidden: true
+              isEvaluate: true
             - createdAt: 2000-01-23T04:56:07.000+00:00
+              weightAssets:
+              - esMetricIndex: esMetricIndex
+                sessionWeightId: sessionWeightId
+              - esMetricIndex: esMetricIndex
+                sessionWeightId: sessionWeightId
               createdBy: createdBy
               organization: organization
               name: name
               _id: _id
               sessionId: sessionId
-              weights:
-              - blobName: blobName
-                globalStep: 5.637376656633329
-                identifier: identifier
-                epoch: 5.962133916683182
-                status: null
-              - blobName: blobName
-                globalStep: 5.637376656633329
-                identifier: identifier
-                epoch: 5.962133916683182
-                status: null
-              isHidden: true
+              isEvaluate: true
             organization: organization
             trainingParams:
               batch_size: 6.027456183070403
@@ -10478,48 +10565,52 @@ components:
                 patience: 1.4658129805029452
             _id: _id
             extId: extId
-            type: null
+            sessionWeights:
+            - globalStep: 6.027456183070403
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              createdBy: createdBy
+              organization: organization
+              epoch: 0.8008281904610115
+              _id: _id
+              sessionId: sessionId
+              status: null
+            - globalStep: 6.027456183070403
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              createdBy: createdBy
+              organization: organization
+              epoch: 0.8008281904610115
+              _id: _id
+              sessionId: sessionId
+              status: null
             hash: hash
           - modelName: modelName
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             sessionRuns:
             - createdAt: 2000-01-23T04:56:07.000+00:00
+              weightAssets:
+              - esMetricIndex: esMetricIndex
+                sessionWeightId: sessionWeightId
+              - esMetricIndex: esMetricIndex
+                sessionWeightId: sessionWeightId
               createdBy: createdBy
               organization: organization
               name: name
               _id: _id
               sessionId: sessionId
-              weights:
-              - blobName: blobName
-                globalStep: 5.637376656633329
-                identifier: identifier
-                epoch: 5.962133916683182
-                status: null
-              - blobName: blobName
-                globalStep: 5.637376656633329
-                identifier: identifier
-                epoch: 5.962133916683182
-                status: null
-              isHidden: true
+              isEvaluate: true
             - createdAt: 2000-01-23T04:56:07.000+00:00
+              weightAssets:
+              - esMetricIndex: esMetricIndex
+                sessionWeightId: sessionWeightId
+              - esMetricIndex: esMetricIndex
+                sessionWeightId: sessionWeightId
               createdBy: createdBy
               organization: organization
               name: name
               _id: _id
               sessionId: sessionId
-              weights:
-              - blobName: blobName
-                globalStep: 5.637376656633329
-                identifier: identifier
-                epoch: 5.962133916683182
-                status: null
-              - blobName: blobName
-                globalStep: 5.637376656633329
-                identifier: identifier
-                epoch: 5.962133916683182
-                status: null
-              isHidden: true
+              isEvaluate: true
             organization: organization
             trainingParams:
               batch_size: 6.027456183070403
@@ -10528,7 +10619,23 @@ components:
                 patience: 1.4658129805029452
             _id: _id
             extId: extId
-            type: null
+            sessionWeights:
+            - globalStep: 6.027456183070403
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              createdBy: createdBy
+              organization: organization
+              epoch: 0.8008281904610115
+              _id: _id
+              sessionId: sessionId
+              status: null
+            - globalStep: 6.027456183070403
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              createdBy: createdBy
+              organization: organization
+              epoch: 0.8008281904610115
+              _id: _id
+              sessionId: sessionId
+              status: null
             hash: hash
           notes: notes
           datasetSetup:
@@ -10995,6 +11102,10 @@ components:
       description: Construct a type with a set of properties K of type T
       properties: {}
       type: object
+    Record_string.Record_string.Array_MutualInformationElement___:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
     ScatterVizDataState:
       additionalProperties: false
       properties:
@@ -11016,6 +11127,10 @@ components:
             $ref: '#/components/schemas/SampleIdentity'
           type: array
         metadata:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+        mi_by_cluster:
           description: Construct a type with a set of properties K of type T
           properties: {}
           type: object
@@ -11974,4 +12089,7 @@ components:
       required:
       - success
       type: object
-  securitySchemes: {}
+  securitySchemes:
+    jwt:
+      scheme: bearer
+      type: http

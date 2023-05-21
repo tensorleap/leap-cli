@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | [**ScatterInsightType**](ScatterInsightType.md) |  | 
 **Filter** | [**ScatterFilter**](ScatterFilter.md) |  | 
+**MutualInfoElements** | Pointer to [**[]MutualInformationElement**](MutualInformationElement.md) |  | [optional] 
 **UnderRepresentationDataset** | [**DataStateType**](DataStateType.md) |  | 
 **UnderRepresentationNSamples** | **float64** |  | 
 **OverRepresentationDataset** | [**DataStateType**](DataStateType.md) |  | 
@@ -69,6 +70,31 @@ and a boolean to check if the value has been set.
 
 SetFilter sets Filter field to given value.
 
+
+### GetMutualInfoElements
+
+`func (o *UnderRepresentationInsight) GetMutualInfoElements() []MutualInformationElement`
+
+GetMutualInfoElements returns the MutualInfoElements field if non-nil, zero value otherwise.
+
+### GetMutualInfoElementsOk
+
+`func (o *UnderRepresentationInsight) GetMutualInfoElementsOk() (*[]MutualInformationElement, bool)`
+
+GetMutualInfoElementsOk returns a tuple with the MutualInfoElements field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMutualInfoElements
+
+`func (o *UnderRepresentationInsight) SetMutualInfoElements(v []MutualInformationElement)`
+
+SetMutualInfoElements sets MutualInfoElements field to given value.
+
+### HasMutualInfoElements
+
+`func (o *UnderRepresentationInsight) HasMutualInfoElements() bool`
+
+HasMutualInfoElements returns a boolean if a field has been set.
 
 ### GetUnderRepresentationDataset
 

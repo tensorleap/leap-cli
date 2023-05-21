@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VersionId** | **string** |  | 
-**ModelName** | **string** |  | 
+**SessionName** | **string** |  | 
 **TrainingParams** | [**TrainingParams**](TrainingParams.md) |  | 
 **ShouldRunPopulationExploration** | **bool** |  | 
 
@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewTrainFromScratchParams
 
-`func NewTrainFromScratchParams(versionId string, modelName string, trainingParams TrainingParams, shouldRunPopulationExploration bool, ) *TrainFromScratchParams`
+`func NewTrainFromScratchParams(versionId string, sessionName string, trainingParams TrainingParams, shouldRunPopulationExploration bool, ) *TrainFromScratchParams`
 
 NewTrainFromScratchParams instantiates a new TrainFromScratchParams object
 This constructor will assign default values to properties that have it defined,
@@ -48,24 +48,24 @@ and a boolean to check if the value has been set.
 SetVersionId sets VersionId field to given value.
 
 
-### GetModelName
+### GetSessionName
 
-`func (o *TrainFromScratchParams) GetModelName() string`
+`func (o *TrainFromScratchParams) GetSessionName() string`
 
-GetModelName returns the ModelName field if non-nil, zero value otherwise.
+GetSessionName returns the SessionName field if non-nil, zero value otherwise.
 
-### GetModelNameOk
+### GetSessionNameOk
 
-`func (o *TrainFromScratchParams) GetModelNameOk() (*string, bool)`
+`func (o *TrainFromScratchParams) GetSessionNameOk() (*string, bool)`
 
-GetModelNameOk returns a tuple with the ModelName field if it's non-nil, zero value otherwise
+GetSessionNameOk returns a tuple with the SessionName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetModelName
+### SetSessionName
 
-`func (o *TrainFromScratchParams) SetModelName(v string)`
+`func (o *TrainFromScratchParams) SetSessionName(v string)`
 
-SetModelName sets ModelName field to given value.
+SetSessionName sets SessionName field to given value.
 
 
 ### GetTrainingParams

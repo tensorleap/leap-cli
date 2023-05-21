@@ -38,6 +38,7 @@ Method | HTTP request | Description
 [**GetDatasetVersionUploadUrl**](DefaultApi.md#GetDatasetVersionUploadUrl) | **Post** /datasets/getDatasetVersionUploadUrl | 
 [**GetDatasetVersions**](DefaultApi.md#GetDatasetVersions) | **Post** /datasets/getDatasetVersions | 
 [**GetDatasets**](DefaultApi.md#GetDatasets) | **Post** /datasets/getDatasets | 
+[**GetEnvironmentInfo**](DefaultApi.md#GetEnvironmentInfo) | **Post** /metadata/getEnvironmentInfo | 
 [**GetExportedSessionJobs**](DefaultApi.md#GetExportedSessionJobs) | **Post** /exportedsessionruns/getExportedSessionRunJobs | 
 [**GetF1Score**](DefaultApi.md#GetF1Score) | **Post** /sessionmetrics/getF1Score | 
 [**GetHeatmapChart**](DefaultApi.md#GetHeatmapChart) | **Post** /sessionmetrics/getHeatmapChart | 
@@ -77,7 +78,6 @@ Method | HTTP request | Description
 [**ImportModel**](DefaultApi.md#ImportModel) | **Post** /versions/importModel | 
 [**IsTrainingJobRunning**](DefaultApi.md#IsTrainingJobRunning) | **Post** /jobs/isTrainingJobRunning | 
 [**KeyGen**](DefaultApi.md#KeyGen) | **Post** /auth/keygen | 
-[**KeyLogin**](DefaultApi.md#KeyLogin) | **Post** /auth/keylogin | 
 [**LoadModel**](DefaultApi.md#LoadModel) | **Post** /projects/loadModel | 
 [**LoadVersion**](DefaultApi.md#LoadVersion) | **Post** /versions/loadVersion | 
 [**Login**](DefaultApi.md#Login) | **Post** /auth/login | 
@@ -231,7 +231,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -295,7 +295,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -359,7 +359,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -423,7 +423,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -487,7 +487,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -551,7 +551,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -615,7 +615,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -646,7 +646,7 @@ import (
 )
 
 func main() {
-    continueTrainParams := *openapiclient.NewContinueTrainParams("VersionId_example", "SessionRunId_example", float64(123), *openapiclient.NewTrainingParams(float64(123), float64(123)), false) // ContinueTrainParams | 
+    continueTrainParams := *openapiclient.NewContinueTrainParams("VersionId_example", "SessionId_example", float64(123), *openapiclient.NewTrainingParams(float64(123), float64(123)), false) // ContinueTrainParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -679,7 +679,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -743,7 +743,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -807,7 +807,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -869,7 +869,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -931,7 +931,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -993,7 +993,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -1055,7 +1055,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -1117,7 +1117,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -1179,7 +1179,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -1241,7 +1241,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -1303,7 +1303,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -1365,7 +1365,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -1427,7 +1427,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -1458,7 +1458,7 @@ import (
 )
 
 func main() {
-    evaluateParams := *openapiclient.NewEvaluateParams("VersionId_example", "SessionRunId_example", float64(123), []openapiclient.DataStateForEval{openapiclient.DataStateForEval("training")}, false, float64(123)) // EvaluateParams | 
+    evaluateParams := *openapiclient.NewEvaluateParams("VersionId_example", "SessionId_example", float64(123), []openapiclient.DataStateForEval{openapiclient.DataStateForEval("training")}, false, float64(123)) // EvaluateParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1491,7 +1491,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -1555,7 +1555,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -1619,7 +1619,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -1678,7 +1678,7 @@ Other parameters are passed through a pointer to a apiGetAllSlimUserDataRequest 
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -1742,7 +1742,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -1756,7 +1756,7 @@ No authorization required
 
 ## GetConfusionMetricNames
 
-> []GetConfusionMetricNamesObject GetConfusionMetricNames(ctx).Execute()
+> []GetConfusionMetricNamesObject GetConfusionMetricNames(ctx).ConfusionMetricNamesParams(confusionMetricNamesParams).Execute()
 
 
 
@@ -1773,10 +1773,11 @@ import (
 )
 
 func main() {
+    confusionMetricNamesParams := *openapiclient.NewConfusionMetricNamesParams("ProjectId_example") // ConfusionMetricNamesParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetConfusionMetricNames(context.Background()).Execute()
+    resp, r, err := apiClient.DefaultApi.GetConfusionMetricNames(context.Background()).ConfusionMetricNamesParams(confusionMetricNamesParams).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetConfusionMetricNames``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1788,12 +1789,16 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetConfusionMetricNamesRequest struct via the builder pattern
 
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **confusionMetricNamesParams** | [**ConfusionMetricNamesParams**](ConfusionMetricNamesParams.md) |  | 
 
 ### Return type
 
@@ -1801,11 +1806,11 @@ Other parameters are passed through a pointer to a apiGetConfusionMetricNamesReq
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1865,7 +1870,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -1929,7 +1934,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -1943,7 +1948,7 @@ No authorization required
 
 ## GetDashletFields
 
-> GetDashletFieldsResponse GetDashletFields(ctx).Execute()
+> GetDashletFieldsResponse GetDashletFields(ctx).GetDashletFieldsParams(getDashletFieldsParams).Execute()
 
 
 
@@ -1960,10 +1965,11 @@ import (
 )
 
 func main() {
+    getDashletFieldsParams := *openapiclient.NewGetDashletFieldsParams("ProjectId_example") // GetDashletFieldsParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetDashletFields(context.Background()).Execute()
+    resp, r, err := apiClient.DefaultApi.GetDashletFields(context.Background()).GetDashletFieldsParams(getDashletFieldsParams).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetDashletFields``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1975,12 +1981,16 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetDashletFieldsRequest struct via the builder pattern
 
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getDashletFieldsParams** | [**GetDashletFieldsParams**](GetDashletFieldsParams.md) |  | 
 
 ### Return type
 
@@ -1988,11 +1998,11 @@ Other parameters are passed through a pointer to a apiGetDashletFieldsRequest st
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -2052,7 +2062,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -2111,7 +2121,7 @@ Other parameters are passed through a pointer to a apiGetDatasetVersionUploadUrl
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -2175,7 +2185,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -2234,7 +2244,66 @@ Other parameters are passed through a pointer to a apiGetDatasetsRequest struct 
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetEnvironmentInfo
+
+> GetEnvironmentInfoResponse GetEnvironmentInfo(ctx).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+)
+
+func main() {
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetEnvironmentInfo(context.Background()).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetEnvironmentInfo``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetEnvironmentInfo`: GetEnvironmentInfoResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetEnvironmentInfo`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetEnvironmentInfoRequest struct via the builder pattern
+
+
+### Return type
+
+[**GetEnvironmentInfoResponse**](GetEnvironmentInfoResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -2298,7 +2367,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -2362,7 +2431,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -2426,7 +2495,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -2490,7 +2559,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -2554,7 +2623,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -2613,7 +2682,7 @@ Other parameters are passed through a pointer to a apiGetMachineTypesRequest str
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -2672,7 +2741,7 @@ Other parameters are passed through a pointer to a apiGetMaxActiveUsersRequest s
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -2731,7 +2800,7 @@ Other parameters are passed through a pointer to a apiGetNotificationsRequest st
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -2795,7 +2864,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -2859,7 +2928,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -2918,7 +2987,7 @@ Other parameters are passed through a pointer to a apiGetOrganizationsRequest st
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -2982,7 +3051,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -3046,7 +3115,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -3110,7 +3179,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -3174,7 +3243,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -3233,7 +3302,7 @@ Other parameters are passed through a pointer to a apiGetProjectsRequest struct 
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -3297,7 +3366,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -3361,7 +3430,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -3420,7 +3489,7 @@ Other parameters are passed through a pointer to a apiGetSecretManagerListReques
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -3484,7 +3553,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -3548,7 +3617,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -3612,7 +3681,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -3676,7 +3745,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -3740,7 +3809,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -3804,7 +3873,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -3868,7 +3937,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -3932,7 +4001,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -3996,7 +4065,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -4055,7 +4124,7 @@ Other parameters are passed through a pointer to a apiGetStatisticsRequest struc
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -4119,7 +4188,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -4183,7 +4252,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -4247,7 +4316,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -4311,7 +4380,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -4375,7 +4444,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -4439,7 +4508,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -4562,7 +4631,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -4593,7 +4662,7 @@ import (
 )
 
 func main() {
-    isTrainingJobRunningParams := *openapiclient.NewIsTrainingJobRunningParams("VersionId_example", "SessionRunId_example") // IsTrainingJobRunningParams | 
+    isTrainingJobRunningParams := *openapiclient.NewIsTrainingJobRunningParams("VersionId_example", "SessionId_example") // IsTrainingJobRunningParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4626,7 +4695,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -4685,75 +4754,11 @@ Other parameters are passed through a pointer to a apiKeyGenRequest struct via t
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## KeyLogin
-
-> UserData KeyLogin(ctx).KeyLoginParams(keyLoginParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
-)
-
-func main() {
-    keyLoginParams := *openapiclient.NewKeyLoginParams("ApiId_example", "ApiKey_example") // KeyLoginParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.KeyLogin(context.Background()).KeyLoginParams(keyLoginParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.KeyLogin``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `KeyLogin`: UserData
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.KeyLogin`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiKeyLoginRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **keyLoginParams** | [**KeyLoginParams**](KeyLoginParams.md) |  | 
-
-### Return type
-
-[**UserData**](UserData.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -4813,7 +4818,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -4877,7 +4882,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -4998,7 +5003,7 @@ Other parameters are passed through a pointer to a apiLogoutRequest struct via t
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -5062,7 +5067,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -5126,7 +5131,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -5190,7 +5195,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -5254,7 +5259,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -5316,7 +5321,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -5380,7 +5385,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -5444,7 +5449,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -5506,7 +5511,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -5568,7 +5573,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -5627,7 +5632,7 @@ Other parameters are passed through a pointer to a apiSetUserNotificationsAsRead
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -5755,7 +5760,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -5819,7 +5824,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -5883,7 +5888,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -5914,7 +5919,7 @@ import (
 )
 
 func main() {
-    trainFromInitialWeightsParams := *openapiclient.NewTrainFromInitialWeightsParams("VersionId_example", "FromSessionRunId_example", float64(123), "ModelName_example", *openapiclient.NewTrainingParams(float64(123), float64(123)), false) // TrainFromInitialWeightsParams | 
+    trainFromInitialWeightsParams := *openapiclient.NewTrainFromInitialWeightsParams("VersionId_example", "FromSessionId_example", float64(123), "ModelName_example", *openapiclient.NewTrainingParams(float64(123), float64(123)), false) // TrainFromInitialWeightsParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5947,7 +5952,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -5978,7 +5983,7 @@ import (
 )
 
 func main() {
-    trainFromScratchParams := *openapiclient.NewTrainFromScratchParams("VersionId_example", "ModelName_example", *openapiclient.NewTrainingParams(float64(123), float64(123)), false) // TrainFromScratchParams | 
+    trainFromScratchParams := *openapiclient.NewTrainFromScratchParams("VersionId_example", "SessionName_example", *openapiclient.NewTrainingParams(float64(123), float64(123)), false) // TrainFromScratchParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6011,7 +6016,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -6075,7 +6080,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -6139,7 +6144,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -6201,7 +6206,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -6265,7 +6270,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -6327,7 +6332,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -6391,7 +6396,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -6453,7 +6458,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -6517,7 +6522,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -6581,7 +6586,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -6645,7 +6650,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -6709,7 +6714,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -6773,7 +6778,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -6830,7 +6835,7 @@ Other parameters are passed through a pointer to a apiWarmupRequest struct via t
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -6889,7 +6894,7 @@ Other parameters are passed through a pointer to a apiWhoAmIRequest struct via t
 
 ### Authorization
 
-No authorization required
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 

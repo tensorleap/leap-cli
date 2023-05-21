@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Labels** | [**[]ScatterLabel**](ScatterLabel.md) |  | 
 **Samples** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
 **Metadata** | **map[string]interface{}** | Construct a type with a set of properties K of type T | 
+**MiByCluster** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
 
 ## Methods
 
@@ -133,6 +134,31 @@ and a boolean to check if the value has been set.
 
 SetMetadata sets Metadata field to given value.
 
+
+### GetMiByCluster
+
+`func (o *ScatterVizDataState) GetMiByCluster() map[string]interface{}`
+
+GetMiByCluster returns the MiByCluster field if non-nil, zero value otherwise.
+
+### GetMiByClusterOk
+
+`func (o *ScatterVizDataState) GetMiByClusterOk() (*map[string]interface{}, bool)`
+
+GetMiByClusterOk returns a tuple with the MiByCluster field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMiByCluster
+
+`func (o *ScatterVizDataState) SetMiByCluster(v map[string]interface{})`
+
+SetMiByCluster sets MiByCluster field to given value.
+
+### HasMiByCluster
+
+`func (o *ScatterVizDataState) HasMiByCluster() bool`
+
+HasMiByCluster returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

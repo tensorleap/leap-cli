@@ -7,19 +7,19 @@ Name | Type | Description | Notes
 **Id** | **string** |  | 
 **ExtId** | Pointer to **string** |  | [optional] 
 **ModelName** | **string** |  | 
-**Type** | [**ModelType**](ModelType.md) |  | 
 **CreatedAt** | **time.Time** |  | 
 **CreatedBy** | Pointer to **string** |  | [optional] 
 **Organization** | **string** |  | 
 **Hash** | Pointer to **NullableString** |  | [optional] 
 **TrainingParams** | Pointer to [**TrainingParams**](TrainingParams.md) |  | [optional] 
 **SessionRuns** | Pointer to [**[]SessionRunData**](SessionRunData.md) |  | [optional] 
+**SessionWeights** | Pointer to [**[]SessionWeightData**](SessionWeightData.md) |  | [optional] 
 
 ## Methods
 
 ### NewSession
 
-`func NewSession(id string, modelName string, type_ ModelType, createdAt time.Time, organization string, ) *Session`
+`func NewSession(id string, modelName string, createdAt time.Time, organization string, ) *Session`
 
 NewSession instantiates a new Session object
 This constructor will assign default values to properties that have it defined,
@@ -97,26 +97,6 @@ and a boolean to check if the value has been set.
 `func (o *Session) SetModelName(v string)`
 
 SetModelName sets ModelName field to given value.
-
-
-### GetType
-
-`func (o *Session) GetType() ModelType`
-
-GetType returns the Type field if non-nil, zero value otherwise.
-
-### GetTypeOk
-
-`func (o *Session) GetTypeOk() (*ModelType, bool)`
-
-GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetType
-
-`func (o *Session) SetType(v ModelType)`
-
-SetType sets Type field to given value.
 
 
 ### GetCreatedAt
@@ -268,6 +248,31 @@ SetSessionRuns sets SessionRuns field to given value.
 `func (o *Session) HasSessionRuns() bool`
 
 HasSessionRuns returns a boolean if a field has been set.
+
+### GetSessionWeights
+
+`func (o *Session) GetSessionWeights() []SessionWeightData`
+
+GetSessionWeights returns the SessionWeights field if non-nil, zero value otherwise.
+
+### GetSessionWeightsOk
+
+`func (o *Session) GetSessionWeightsOk() (*[]SessionWeightData, bool)`
+
+GetSessionWeightsOk returns a tuple with the SessionWeights field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSessionWeights
+
+`func (o *Session) SetSessionWeights(v []SessionWeightData)`
+
+SetSessionWeights sets SessionWeights field to given value.
+
+### HasSessionWeights
+
+`func (o *Session) HasSessionWeights() bool`
+
+HasSessionWeights returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

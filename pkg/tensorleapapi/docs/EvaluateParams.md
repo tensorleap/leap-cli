@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VersionId** | **string** |  | 
-**SessionRunId** | **string** |  | 
+**SessionId** | **string** |  | 
 **BatchSize** | **float64** |  | 
 **DataStates** | [**[]DataStateForEval**](DataStateForEval.md) |  | 
 **ShouldRunPopulationExploration** | **bool** |  | 
@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewEvaluateParams
 
-`func NewEvaluateParams(versionId string, sessionRunId string, batchSize float64, dataStates []DataStateForEval, shouldRunPopulationExploration bool, evaluatedEpoch float64, ) *EvaluateParams`
+`func NewEvaluateParams(versionId string, sessionId string, batchSize float64, dataStates []DataStateForEval, shouldRunPopulationExploration bool, evaluatedEpoch float64, ) *EvaluateParams`
 
 NewEvaluateParams instantiates a new EvaluateParams object
 This constructor will assign default values to properties that have it defined,
@@ -50,24 +50,24 @@ and a boolean to check if the value has been set.
 SetVersionId sets VersionId field to given value.
 
 
-### GetSessionRunId
+### GetSessionId
 
-`func (o *EvaluateParams) GetSessionRunId() string`
+`func (o *EvaluateParams) GetSessionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetSessionId returns the SessionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetSessionIdOk
 
-`func (o *EvaluateParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *EvaluateParams) GetSessionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetSessionIdOk returns a tuple with the SessionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetSessionId
 
-`func (o *EvaluateParams) SetSessionRunId(v string)`
+`func (o *EvaluateParams) SetSessionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetSessionId sets SessionId field to given value.
 
 
 ### GetBatchSize

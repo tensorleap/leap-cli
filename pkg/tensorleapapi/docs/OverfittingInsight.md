@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | [**ScatterInsightType**](ScatterInsightType.md) |  | 
 **Filter** | [**ScatterFilter**](ScatterFilter.md) |  | 
+**MutualInfoElements** | Pointer to [**[]MutualInformationElement**](MutualInformationElement.md) |  | [optional] 
 **NSamplesValidation** | **float64** |  | 
 **NSamplesTraining** | **float64** |  | 
 **AvgMetricValidation** | **float64** |  | 
@@ -70,6 +71,31 @@ and a boolean to check if the value has been set.
 
 SetFilter sets Filter field to given value.
 
+
+### GetMutualInfoElements
+
+`func (o *OverfittingInsight) GetMutualInfoElements() []MutualInformationElement`
+
+GetMutualInfoElements returns the MutualInfoElements field if non-nil, zero value otherwise.
+
+### GetMutualInfoElementsOk
+
+`func (o *OverfittingInsight) GetMutualInfoElementsOk() (*[]MutualInformationElement, bool)`
+
+GetMutualInfoElementsOk returns a tuple with the MutualInfoElements field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMutualInfoElements
+
+`func (o *OverfittingInsight) SetMutualInfoElements(v []MutualInformationElement)`
+
+SetMutualInfoElements sets MutualInfoElements field to given value.
+
+### HasMutualInfoElements
+
+`func (o *OverfittingInsight) HasMutualInfoElements() bool`
+
+HasMutualInfoElements returns a boolean if a field has been set.
 
 ### GetNSamplesValidation
 

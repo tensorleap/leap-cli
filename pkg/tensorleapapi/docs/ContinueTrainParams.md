@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VersionId** | **string** |  | 
-**SessionRunId** | **string** |  | 
+**SessionId** | **string** |  | 
 **FromEpoch** | **float64** |  | 
 **TrainingParams** | [**TrainingParams**](TrainingParams.md) |  | 
 **ShouldRunPopulationExploration** | **bool** |  | 
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewContinueTrainParams
 
-`func NewContinueTrainParams(versionId string, sessionRunId string, fromEpoch float64, trainingParams TrainingParams, shouldRunPopulationExploration bool, ) *ContinueTrainParams`
+`func NewContinueTrainParams(versionId string, sessionId string, fromEpoch float64, trainingParams TrainingParams, shouldRunPopulationExploration bool, ) *ContinueTrainParams`
 
 NewContinueTrainParams instantiates a new ContinueTrainParams object
 This constructor will assign default values to properties that have it defined,
@@ -49,24 +49,24 @@ and a boolean to check if the value has been set.
 SetVersionId sets VersionId field to given value.
 
 
-### GetSessionRunId
+### GetSessionId
 
-`func (o *ContinueTrainParams) GetSessionRunId() string`
+`func (o *ContinueTrainParams) GetSessionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetSessionId returns the SessionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetSessionIdOk
 
-`func (o *ContinueTrainParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *ContinueTrainParams) GetSessionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetSessionIdOk returns a tuple with the SessionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetSessionId
 
-`func (o *ContinueTrainParams) SetSessionRunId(v string)`
+`func (o *ContinueTrainParams) SetSessionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetSessionId sets SessionId field to given value.
 
 
 ### GetFromEpoch
