@@ -1,17 +1,30 @@
 package api
 
 import (
-	"github.com/tensorleap/cli-go/pkg/tensorleapapi"
+	"context"
+
+	. "github.com/tensorleap/cli-go/pkg/tensorleapapi"
 )
 
-func getClient() *tensorleapapi.DefaultApiService {
-  cfg := tensorleapapi.NewConfiguration()
-  cfg.Servers = tensorleapapi.ServerConfigurations{
-    {
-      URL: "http://127.0.0.1:4589/api/v2",
-    },
-  }
-  return tensorleapapi.NewAPIClient(cfg).DefaultApi
+func CreateAuthenticatedContext(parentCtx context.Context, baseUrl string, apiKey string) context.Context {
+    ctx := context.WithValue(parentCtx, ContextServerVariables, map[string]string{
+      "baseUrl": baseUrl,
+    })
+    ctx = context.WithValue(ctx, ContextAccessToken, apiKey)
+    return ctx
 }
 
-var ApiClient = getClient()
+func getApiClient() *DefaultApiService {
+  cfg := NewConfiguration()
+  cfg.Servers = ServerConfigurations{
+    {
+      URL: "{baseUrl}",
+      Variables: map[string]ServerVariable{
+        "baseUrl": {},
+      },
+    },
+  }
+  return NewAPIClient(cfg).DefaultApi
+}
+
+var ApiClient = getApiClient()
