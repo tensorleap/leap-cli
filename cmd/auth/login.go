@@ -6,6 +6,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	. "github.com/tensorleap/cli-go/pkg/api"
+	"github.com/tensorleap/cli-go/pkg/config"
 )
 
 var cmd = &cobra.Command{
@@ -23,8 +24,8 @@ var cmd = &cobra.Command{
     fmt.Println("User email: " + userData.Local.Email)
     fmt.Println("Team name: " + userData.OrganizationName)
 
-    viper.Set("auth.api_url", baseUrl)
-    viper.Set("auth.api_key", apiKey)
+    viper.Set(config.API_URL_CONFIG_PATH, baseUrl)
+    viper.Set(config.API_KEY_CONFIG_PATH, apiKey)
     err := viper.SafeWriteConfig()
     if (err != nil) {
       _, ok := err.(viper.ConfigFileAlreadyExistsError)

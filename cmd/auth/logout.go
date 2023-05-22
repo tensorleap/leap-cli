@@ -3,6 +3,7 @@ package auth
 import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/tensorleap/cli-go/pkg/config"
 )
 
 
@@ -12,7 +13,7 @@ func init() {
     Short: "Remove api key from the machine",
     Long:  `Remove api key from the machine`,
     Run: func(cmd *cobra.Command, args []string) {
-      viper.Set("auth.api_key", "")
+      viper.Set(config.API_KEY_CONFIG_PATH, "")
       err := viper.WriteConfig()
       cobra.CheckErr(err)
     },

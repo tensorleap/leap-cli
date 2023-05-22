@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"path"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -12,6 +11,7 @@ import (
 	"github.com/tensorleap/cli-go/cmd/local"
 	"github.com/tensorleap/cli-go/cmd/models"
 	. "github.com/tensorleap/cli-go/pkg/api"
+	"github.com/tensorleap/cli-go/pkg/config"
 )
 
 var RootCommand = &cobra.Command{
@@ -22,8 +22,8 @@ Complete documentation is available at http://docs.tensoleap.ai`,
   PersistentPreRun: func(cmd *cobra.Command, args []string) {
     cmd.SetContext(CreateAuthenticatedContext(
       cmd.Context(),
-      viper.GetString("auth.api_url"),
-      viper.GetString("auth.api_key")))
+      config.GetApiUrl(),
+      config.GetApiKey()))
   },
 }
 
@@ -37,8 +37,8 @@ func init() {
 	RootCommand.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/tensorleap/config.yaml)")
 	RootCommand.PersistentFlags().StringVar(&apiKey, "apiKey", "", "Tensorleap Api key")
 	RootCommand.PersistentFlags().StringVar(&apiUrl, "apiUrl", "", "Tensorleap api url")
-  viper.BindPFlag("auth.api_key", RootCommand.PersistentFlags().Lookup("apiKey"))
-  viper.BindPFlag("auth.api_url", RootCommand.PersistentFlags().Lookup("apiUrl"))
+  viper.BindPFlag(config.API_KEY_CONFIG_PATH, RootCommand.PersistentFlags().Lookup("apiKey"))
+  viper.BindPFlag(config.API_URL_CONFIG_PATH, RootCommand.PersistentFlags().Lookup("apiUrl"))
 
 	RootCommand.AddCommand(auth.RootCommand)
 	RootCommand.AddCommand(local.RootCommand)
@@ -54,21 +54,6 @@ func Execute() {
 }
 
 func initConfig() {
-	if cfgFile != "" {
-		viper.SetConfigFile(cfgFile)
-	} else {
-		homeDir, err := os.UserHomeDir()
-		cobra.CheckErr(err)
-
-    configDir := path.Join(homeDir, ".config", "tensorleap")
-		viper.AddConfigPath(configDir)
-		viper.SetConfigType("yaml")
-		viper.SetConfigName("config")
-
-    os.MkdirAll(configDir, os.ModePerm)
-	}
-
-	viper.AutomaticEnv()
-  viper.ReadInConfig()
+  config.InitConfig(cfgFile)
 }
 

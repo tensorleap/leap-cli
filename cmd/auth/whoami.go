@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	. "github.com/tensorleap/cli-go/pkg/api"
+	"github.com/tensorleap/cli-go/pkg/config"
 )
 
 func init() {
@@ -14,11 +14,9 @@ func init() {
     Short: "Get information about the authenticated user",
     Long:  `Get information about the authenticated user`,
     Run: func(cmd *cobra.Command, args []string) {
-      apiUrl := viper.GetString("auth.api_url")
-      if (len(apiUrl) == 0) {
-        cobra.CheckErr("Not logged in!")
-      }
-      fmt.Println("API Url: " + apiUrl)
+      config.VerifyLoggedIn()
+      fmt.Println("API Url: " + config.GetApiUrl())
+
       userData, _, err := ApiClient.WhoAmI(cmd.Context()).Execute()
       cobra.CheckErr(err)
       fmt.Println("User email: " + userData.Local.Email)
