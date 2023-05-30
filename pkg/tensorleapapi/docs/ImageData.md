@@ -4,7 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Src** | **string** |  | 
 **Blob** | **string** |  | 
 **Type** | [**DataTypeEnum**](DataTypeEnum.md) |  | 
 
@@ -12,7 +11,7 @@ Name | Type | Description | Notes
 
 ### NewImageData
 
-`func NewImageData(src string, blob string, type_ DataTypeEnum, ) *ImageData`
+`func NewImageData(blob string, type_ DataTypeEnum, ) *ImageData`
 
 NewImageData instantiates a new ImageData object
 This constructor will assign default values to properties that have it defined,
@@ -26,26 +25,6 @@ will change when the set of required properties is changed
 NewImageDataWithDefaults instantiates a new ImageData object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetSrc
-
-`func (o *ImageData) GetSrc() string`
-
-GetSrc returns the Src field if non-nil, zero value otherwise.
-
-### GetSrcOk
-
-`func (o *ImageData) GetSrcOk() (*string, bool)`
-
-GetSrcOk returns a tuple with the Src field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSrc
-
-`func (o *ImageData) SetSrc(v string)`
-
-SetSrc sets Src field to given value.
-
 
 ### GetBlob
 

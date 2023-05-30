@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**AddProject**](DefaultApi.md#AddProject) | **Post** /projects/addProject | 
 [**AddSecretManager**](DefaultApi.md#AddSecretManager) | **Post** /secret-manager/addSecretManager | 
 [**AddVersion**](DefaultApi.md#AddVersion) | **Post** /versions/addVersion | 
+[**AnalyzeGraph**](DefaultApi.md#AnalyzeGraph) | **Post** /jobs/analyzeGraph | 
 [**ContinueTrain**](DefaultApi.md#ContinueTrain) | **Post** /jobs/continueTrain | 
 [**CreateOrganization**](DefaultApi.md#CreateOrganization) | **Post** /organizations/createOrganization | 
 [**CreateSessionTest**](DefaultApi.md#CreateSessionTest) | **Post** /sessions-tests/createSessionTest | 
@@ -63,12 +64,11 @@ Method | HTTP request | Description
 [**GetSessionVisualizations**](DefaultApi.md#GetSessionVisualizations) | **Post** /visualizations/getSessionVisualizations | 
 [**GetSessionsByHash**](DefaultApi.md#GetSessionsByHash) | **Post** /sessions/getSessionsByHash | 
 [**GetSessionsByVersionId**](DefaultApi.md#GetSessionsByVersionId) | **Post** /sessions/getSessionsByVersionId | 
-[**GetSignedStoredResourceUrl**](DefaultApi.md#GetSignedStoredResourceUrl) | **Post** /visualizations/getSignedStoredResourceUrl | 
-[**GetSignedStoredUrlByVisualizationId**](DefaultApi.md#GetSignedStoredUrlByVisualizationId) | **Post** /visualizations/getSignedStoredUrlByVisualizationId | 
 [**GetSingleIssue**](DefaultApi.md#GetSingleIssue) | **Post** /issues/getSingleIssue | 
 [**GetSingleSessionTest**](DefaultApi.md#GetSingleSessionTest) | **Post** /sessions-tests/getSingleSessionTest | 
+[**GetSlimVisualization**](DefaultApi.md#GetSlimVisualization) | **Post** /visualizations/getSlimVisualization | 
 [**GetStatistics**](DefaultApi.md#GetStatistics) | **Post** /metadata/getStatistics | 
-[**GetStoredExportedSessionRunResourceUrl**](DefaultApi.md#GetStoredExportedSessionRunResourceUrl) | **Post** /exportedsessionruns/getStoredExportedSessionRunResourceUrl | 
+[**GetStoredExportedSessionRunBlob**](DefaultApi.md#GetStoredExportedSessionRunBlob) | **Post** /exportedsessionruns/getStoredExportedSessionRunBlob | 
 [**GetTableChart**](DefaultApi.md#GetTableChart) | **Post** /sessionmetrics/getTableChart | 
 [**GetTrainingJobs**](DefaultApi.md#GetTrainingJobs) | **Post** /jobs/getTrainingJobs | 
 [**GetUploadSignedUrl**](DefaultApi.md#GetUploadSignedUrl) | **Post** /versions/getUploadSignedUrl | 
@@ -76,6 +76,7 @@ Method | HTTP request | Description
 [**GetXYChart**](DefaultApi.md#GetXYChart) | **Post** /sessionmetrics/getXYChart | 
 [**HealthCheck**](DefaultApi.md#HealthCheck) | **Get** /monitor/healthCheck | 
 [**ImportModel**](DefaultApi.md#ImportModel) | **Post** /versions/importModel | 
+[**ImportProject**](DefaultApi.md#ImportProject) | **Post** /projects/importProject | 
 [**IsTrainingJobRunning**](DefaultApi.md#IsTrainingJobRunning) | **Post** /jobs/isTrainingJobRunning | 
 [**KeyGen**](DefaultApi.md#KeyGen) | **Post** /auth/keygen | 
 [**LoadModel**](DefaultApi.md#LoadModel) | **Post** /projects/loadModel | 
@@ -103,6 +104,7 @@ Method | HTTP request | Description
 [**UpdateDashboard**](DefaultApi.md#UpdateDashboard) | **Post** /dashboards/updateDashboard | 
 [**UpdateIssue**](DefaultApi.md#UpdateIssue) | **Post** /issues/updateIssue | 
 [**UpdateOrganizationPublicName**](DefaultApi.md#UpdateOrganizationPublicName) | **Post** /organizations/updateOrganizationPublicName | 
+[**UpdateProjectMeta**](DefaultApi.md#UpdateProjectMeta) | **Post** /projects/updateProjectMeta | 
 [**UpdateSecretManager**](DefaultApi.md#UpdateSecretManager) | **Post** /secret-manager/updateSecretManager | 
 [**UpdateSessionTest**](DefaultApi.md#UpdateSessionTest) | **Post** /sessions-tests/updateSessionTest | 
 [**UpdateUserName**](DefaultApi.md#UpdateUserName) | **Post** /users/updateUserName | 
@@ -130,7 +132,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -194,7 +196,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -258,7 +260,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -322,7 +324,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -386,7 +388,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -437,7 +439,7 @@ Name | Type | Description  | Notes
 
 ## AddProject
 
-> AddProjectResponse AddProject(ctx).AddProjectParams(addProjectParams).Execute()
+> AddProjectResponse AddProject(ctx).ProjectMeta(projectMeta).Execute()
 
 
 
@@ -450,15 +452,15 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    addProjectParams := *openapiclient.NewAddProjectParams("Name_example", "Description_example") // AddProjectParams | 
+    projectMeta := *openapiclient.NewProjectMeta("Name_example", "Description_example", []string{"Tags_example"}, openapiclient.HubPublishPolicy("public")) // ProjectMeta | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.AddProject(context.Background()).AddProjectParams(addProjectParams).Execute()
+    resp, r, err := apiClient.DefaultApi.AddProject(context.Background()).ProjectMeta(projectMeta).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.AddProject``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -479,7 +481,7 @@ Other parameters are passed through a pointer to a apiAddProjectRequest struct v
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **addProjectParams** | [**AddProjectParams**](AddProjectParams.md) |  | 
+ **projectMeta** | [**ProjectMeta**](ProjectMeta.md) |  | 
 
 ### Return type
 
@@ -514,7 +516,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -578,7 +580,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -627,6 +629,68 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## AnalyzeGraph
+
+> AnalyzeGraph(ctx).AnalyzeGraphParams(analyzeGraphParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    analyzeGraphParams := *openapiclient.NewAnalyzeGraphParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "DatasetVersionId_example", "ProjectId_example", "RequestToken_example") // AnalyzeGraphParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.DefaultApi.AnalyzeGraph(context.Background()).AnalyzeGraphParams(analyzeGraphParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.AnalyzeGraph``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiAnalyzeGraphRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **analyzeGraphParams** | [**AnalyzeGraphParams**](AnalyzeGraphParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ContinueTrain
 
 > Job ContinueTrain(ctx).ContinueTrainParams(continueTrainParams).Execute()
@@ -642,7 +706,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -706,7 +770,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -770,7 +834,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -834,7 +898,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -896,7 +960,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -958,7 +1022,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -1020,7 +1084,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -1082,7 +1146,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -1144,7 +1208,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -1206,7 +1270,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -1268,7 +1332,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -1330,7 +1394,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -1392,7 +1456,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -1454,7 +1518,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -1518,7 +1582,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -1582,7 +1646,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -1646,7 +1710,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -1705,7 +1769,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -1769,7 +1833,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -1833,7 +1897,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -1897,7 +1961,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -1961,7 +2025,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2025,7 +2089,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2089,7 +2153,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2148,7 +2212,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2212,7 +2276,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2271,7 +2335,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2330,7 +2394,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2394,7 +2458,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2458,7 +2522,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2522,7 +2586,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2586,7 +2650,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2650,7 +2714,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2709,7 +2773,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2768,7 +2832,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2827,7 +2891,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2891,7 +2955,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2955,7 +3019,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -3014,7 +3078,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -3078,7 +3142,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -3142,7 +3206,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -3206,7 +3270,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -3270,7 +3334,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -3329,7 +3393,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -3393,7 +3457,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -3457,7 +3521,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -3516,7 +3580,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -3580,7 +3644,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -3644,7 +3708,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -3708,7 +3772,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -3772,7 +3836,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -3821,134 +3885,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetSignedStoredResourceUrl
-
-> SignedStoredResourseUrl GetSignedStoredResourceUrl(ctx).GetStoredResourceUrlParams(getStoredResourceUrlParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
-)
-
-func main() {
-    getStoredResourceUrlParams := *openapiclient.NewGetStoredResourceUrlParams("FileName_example") // GetStoredResourceUrlParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetSignedStoredResourceUrl(context.Background()).GetStoredResourceUrlParams(getStoredResourceUrlParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSignedStoredResourceUrl``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetSignedStoredResourceUrl`: SignedStoredResourseUrl
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSignedStoredResourceUrl`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetSignedStoredResourceUrlRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getStoredResourceUrlParams** | [**GetStoredResourceUrlParams**](GetStoredResourceUrlParams.md) |  | 
-
-### Return type
-
-[**SignedStoredResourseUrl**](SignedStoredResourseUrl.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GetSignedStoredUrlByVisualizationId
-
-> SignedStoredVisualization GetSignedStoredUrlByVisualizationId(ctx).GetVisualizationParams(getVisualizationParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
-)
-
-func main() {
-    getVisualizationParams := *openapiclient.NewGetVisualizationParams("VisualizationId_example") // GetVisualizationParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetSignedStoredUrlByVisualizationId(context.Background()).GetVisualizationParams(getVisualizationParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSignedStoredUrlByVisualizationId``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetSignedStoredUrlByVisualizationId`: SignedStoredVisualization
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSignedStoredUrlByVisualizationId`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetSignedStoredUrlByVisualizationIdRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getVisualizationParams** | [**GetVisualizationParams**](GetVisualizationParams.md) |  | 
-
-### Return type
-
-[**SignedStoredVisualization**](SignedStoredVisualization.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## GetSingleIssue
 
 > Issue GetSingleIssue(ctx).GetSingleIssueParams(getSingleIssueParams).Execute()
@@ -3964,7 +3900,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4028,7 +3964,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4077,6 +4013,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetSlimVisualization
+
+> GetSlimVisualizationResponse GetSlimVisualization(ctx).GetSlimVisualizationParams(getSlimVisualizationParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    getSlimVisualizationParams := *openapiclient.NewGetSlimVisualizationParams("VisualizationId_example") // GetSlimVisualizationParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetSlimVisualization(context.Background()).GetSlimVisualizationParams(getSlimVisualizationParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSlimVisualization``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetSlimVisualization`: GetSlimVisualizationResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSlimVisualization`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetSlimVisualizationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getSlimVisualizationParams** | [**GetSlimVisualizationParams**](GetSlimVisualizationParams.md) |  | 
+
+### Return type
+
+[**GetSlimVisualizationResponse**](GetSlimVisualizationResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetStatistics
 
 > GetStatisticsResponse GetStatistics(ctx).Execute()
@@ -4092,7 +4092,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4136,9 +4136,9 @@ Other parameters are passed through a pointer to a apiGetStatisticsRequest struc
 [[Back to README]](../README.md)
 
 
-## GetStoredExportedSessionRunResourceUrl
+## GetStoredExportedSessionRunBlob
 
-> GetStoredExportedSessionRunResourceUrlResponse GetStoredExportedSessionRunResourceUrl(ctx).GetStoredExportedSessionRunResourceUrlParams(getStoredExportedSessionRunResourceUrlParams).Execute()
+> string GetStoredExportedSessionRunBlob(ctx).GetStoredExportedSessionRunResourceUrlParams(getStoredExportedSessionRunResourceUrlParams).Execute()
 
 
 
@@ -4151,7 +4151,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4159,13 +4159,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetStoredExportedSessionRunResourceUrl(context.Background()).GetStoredExportedSessionRunResourceUrlParams(getStoredExportedSessionRunResourceUrlParams).Execute()
+    resp, r, err := apiClient.DefaultApi.GetStoredExportedSessionRunBlob(context.Background()).GetStoredExportedSessionRunResourceUrlParams(getStoredExportedSessionRunResourceUrlParams).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetStoredExportedSessionRunResourceUrl``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetStoredExportedSessionRunBlob``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `GetStoredExportedSessionRunResourceUrl`: GetStoredExportedSessionRunResourceUrlResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetStoredExportedSessionRunResourceUrl`: %v\n", resp)
+    // response from `GetStoredExportedSessionRunBlob`: string
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetStoredExportedSessionRunBlob`: %v\n", resp)
 }
 ```
 
@@ -4175,7 +4175,7 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiGetStoredExportedSessionRunResourceUrlRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetStoredExportedSessionRunBlobRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -4184,7 +4184,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetStoredExportedSessionRunResourceUrlResponse**](GetStoredExportedSessionRunResourceUrlResponse.md)
+**string**
 
 ### Authorization
 
@@ -4215,7 +4215,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4279,7 +4279,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4343,7 +4343,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4394,7 +4394,7 @@ Name | Type | Description  | Notes
 
 ## GetVisualization
 
-> Visualization GetVisualization(ctx).GetVisualizationParams(getVisualizationParams).Execute()
+> Visualization GetVisualization(ctx).GetSlimVisualizationParams(getSlimVisualizationParams).Execute()
 
 
 
@@ -4407,15 +4407,15 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getVisualizationParams := *openapiclient.NewGetVisualizationParams("VisualizationId_example") // GetVisualizationParams | 
+    getSlimVisualizationParams := *openapiclient.NewGetSlimVisualizationParams("VisualizationId_example") // GetSlimVisualizationParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetVisualization(context.Background()).GetVisualizationParams(getVisualizationParams).Execute()
+    resp, r, err := apiClient.DefaultApi.GetVisualization(context.Background()).GetSlimVisualizationParams(getSlimVisualizationParams).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetVisualization``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -4436,7 +4436,7 @@ Other parameters are passed through a pointer to a apiGetVisualizationRequest st
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **getVisualizationParams** | [**GetVisualizationParams**](GetVisualizationParams.md) |  | 
+ **getSlimVisualizationParams** | [**GetSlimVisualizationParams**](GetSlimVisualizationParams.md) |  | 
 
 ### Return type
 
@@ -4471,7 +4471,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4535,7 +4535,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4594,7 +4594,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4643,6 +4643,68 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ImportProject
+
+> ImportProject(ctx).ImportProjectRequest(importProjectRequest).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    importProjectRequest := *openapiclient.NewImportProjectRequest("Name_example", "Description_example", []string{"Tags_example"}, openapiclient.HubPublishPolicy("public"), "ImportUrl_example") // ImportProjectRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.DefaultApi.ImportProject(context.Background()).ImportProjectRequest(importProjectRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ImportProject``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiImportProjectRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **importProjectRequest** | [**ImportProjectRequest**](ImportProjectRequest.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## IsTrainingJobRunning
 
 > IsTrainingJobRunningResponse IsTrainingJobRunning(ctx).IsTrainingJobRunningParams(isTrainingJobRunningParams).Execute()
@@ -4658,7 +4720,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4722,7 +4784,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4781,7 +4843,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4845,7 +4907,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4909,7 +4971,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4973,7 +5035,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -5030,7 +5092,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -5094,7 +5156,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -5158,7 +5220,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -5222,7 +5284,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -5286,7 +5348,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -5348,7 +5410,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -5412,7 +5474,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -5476,7 +5538,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -5538,7 +5600,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -5600,7 +5662,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -5659,7 +5721,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -5723,7 +5785,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -5787,7 +5849,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -5851,7 +5913,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -5915,7 +5977,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -5979,7 +6041,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -6043,7 +6105,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -6107,7 +6169,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -6171,7 +6233,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -6233,7 +6295,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -6297,7 +6359,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -6344,6 +6406,68 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## UpdateProjectMeta
+
+> UpdateProjectMeta(ctx).UpdateProjectMetaRequest(updateProjectMetaRequest).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    updateProjectMetaRequest := *openapiclient.NewUpdateProjectMetaRequest("Name_example", "Description_example", []string{"Tags_example"}, openapiclient.HubPublishPolicy("public"), "ProjectId_example") // UpdateProjectMetaRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.DefaultApi.UpdateProjectMeta(context.Background()).UpdateProjectMetaRequest(updateProjectMetaRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateProjectMeta``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateProjectMetaRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **updateProjectMetaRequest** | [**UpdateProjectMetaRequest**](UpdateProjectMetaRequest.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## UpdateSecretManager
 
 > UpdateSecretManagerResponse UpdateSecretManager(ctx).UpdateSecretManagerParams(updateSecretManagerParams).Execute()
@@ -6359,7 +6483,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -6423,7 +6547,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -6485,7 +6609,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -6549,7 +6673,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -6613,7 +6737,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -6677,7 +6801,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -6741,7 +6865,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -6805,7 +6929,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -6862,7 +6986,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {

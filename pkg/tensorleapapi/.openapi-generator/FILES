@@ -15,7 +15,6 @@ docs/AddDashboardResponse.md
 docs/AddDatasetResponse.md
 docs/AddExportModelJobParams.md
 docs/AddIssueParams.md
-docs/AddProjectParams.md
 docs/AddProjectResponse.md
 docs/AddSecretManagerParams.md
 docs/AddSecretManagerResponse.md
@@ -24,6 +23,7 @@ docs/AddVersionResponse.md
 docs/AggregationMethod.md
 docs/Aggregations.md
 docs/AllSessionsTestResults.md
+docs/AnalyzeGraphParams.md
 docs/AnalyzeParams.md
 docs/AnalyzeTypeEnum.md
 docs/BBoxImageData.md
@@ -142,13 +142,12 @@ docs/GetSessionVisualizationsParams.md
 docs/GetSessionVisualizationsResponse.md
 docs/GetSingleIssueParams.md
 docs/GetSingleSessionTestRequest.md
+docs/GetSlimVisualizationParams.md
+docs/GetSlimVisualizationResponse.md
 docs/GetStatisticsResponse.md
 docs/GetStoredExportedSessionRunResourceUrlParams.md
-docs/GetStoredExportedSessionRunResourceUrlResponse.md
-docs/GetStoredResourceUrlParams.md
 docs/GetTrainingJobParams.md
 docs/GetUploadSignedUrlParams.md
-docs/GetVisualizationParams.md
 docs/GradsAnalysis.md
 docs/GradsItem.md
 docs/GraphData.md
@@ -163,11 +162,13 @@ docs/HorizontalBarData.md
 docs/HorizontalBarScatterLabel.md
 docs/HorizontalBarViz.md
 docs/HorizontalCharts.md
+docs/HubPublishPolicy.md
 docs/ImageData.md
 docs/ImageScatterLabel.md
 docs/ImageViz.md
 docs/ImportModelType.md
 docs/ImportNewModelParams.md
+docs/ImportProjectRequest.md
 docs/Insight.md
 docs/InsightType.md
 docs/IsTrainingJobRunningParams.md
@@ -230,6 +231,7 @@ docs/PopulationExplorationParams.md
 docs/PredictionTypeInstance.md
 docs/Project.md
 docs/ProjectAccess.md
+docs/ProjectMeta.md
 docs/ProjectStatus.md
 docs/RecentOrganizationSessionsRequestParams.md
 docs/RecentSessionsResponse.md
@@ -267,8 +269,6 @@ docs/SessionsResponse.md
 docs/SetDefaultOrganizationRequest.md
 docs/SetOrganizationMachineTypeParams.md
 docs/SetUserNotificationsAsRead200Response.md
-docs/SignedStoredResourseUrl.md
-docs/SignedStoredVisualization.md
 docs/SignupParams.md
 docs/SignupResponse.md
 docs/SingleUserModeSettings.md
@@ -299,6 +299,7 @@ docs/UnderRepresentationInsight.md
 docs/UpdateDashboardParams.md
 docs/UpdateIssueParams.md
 docs/UpdateOrganizationPublicNameRequest.md
+docs/UpdateProjectMetaRequest.md
 docs/UpdateSecretManagerParams.md
 docs/UpdateSecretManagerResponse.md
 docs/UpdateSessionTestRequest.md
@@ -317,7 +318,6 @@ docs/VerticalCharts.md
 docs/VisData.md
 docs/Visualization.md
 docs/VisualizationData.md
-docs/VisualizationEntityResponse.md
 docs/VisualizationItem.md
 docs/VisualizationResponse.md
 docs/VisualizedItem.md
@@ -338,7 +338,6 @@ model_add_dashboard_response.go
 model_add_dataset_response.go
 model_add_export_model_job_params.go
 model_add_issue_params.go
-model_add_project_params.go
 model_add_project_response.go
 model_add_secret_manager_params.go
 model_add_secret_manager_response.go
@@ -347,6 +346,7 @@ model_add_version_response.go
 model_aggregation_method.go
 model_aggregations.go
 model_all_sessions_test_results.go
+model_analyze_graph_params.go
 model_analyze_params.go
 model_analyze_type_enum.go
 model_b_box_image_data.go
@@ -464,13 +464,12 @@ model_get_session_visualizations_params.go
 model_get_session_visualizations_response.go
 model_get_single_issue_params.go
 model_get_single_session_test_request.go
+model_get_slim_visualization_params.go
+model_get_slim_visualization_response.go
 model_get_statistics_response.go
 model_get_stored_exported_session_run_resource_url_params.go
-model_get_stored_exported_session_run_resource_url_response.go
-model_get_stored_resource_url_params.go
 model_get_training_job_params.go
 model_get_upload_signed_url_params.go
-model_get_visualization_params.go
 model_grads_analysis.go
 model_grads_item.go
 model_graph_data.go
@@ -485,11 +484,13 @@ model_horizontal_bar_data.go
 model_horizontal_bar_scatter_label.go
 model_horizontal_bar_viz.go
 model_horizontal_charts.go
+model_hub_publish_policy.go
 model_image_data.go
 model_image_scatter_label.go
 model_image_viz.go
 model_import_model_type.go
 model_import_new_model_params.go
+model_import_project_request.go
 model_insight.go
 model_insight_type.go
 model_is_training_job_running_params.go
@@ -552,6 +553,7 @@ model_population_exploration_params.go
 model_prediction_type_instance.go
 model_project.go
 model_project_access.go
+model_project_meta.go
 model_project_status.go
 model_recent_organization_sessions_request_params.go
 model_recent_sessions_response.go
@@ -589,8 +591,6 @@ model_sessions_response.go
 model_set_default_organization_request.go
 model_set_organization_machine_type_params.go
 model_set_user_notifications_as_read_200_response.go
-model_signed_stored_resourse_url.go
-model_signed_stored_visualization.go
 model_signup_params.go
 model_signup_response.go
 model_single_user_mode_settings.go
@@ -621,6 +621,7 @@ model_under_representation_insight.go
 model_update_dashboard_params.go
 model_update_issue_params.go
 model_update_organization_public_name_request.go
+model_update_project_meta_request.go
 model_update_secret_manager_params.go
 model_update_secret_manager_response.go
 model_update_session_test_request.go
@@ -639,7 +640,6 @@ model_vertical_charts.go
 model_vis_data.go
 model_visualization.go
 model_visualization_data.go
-model_visualization_entity_response.go
 model_visualization_item.go
 model_visualization_response.go
 model_visualized_item.go

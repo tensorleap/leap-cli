@@ -4,9 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Src** | **string** |  | 
 **Blob** | **string** |  | 
-**MaskSrc** | **string** |  | 
 **MaskBlob** | **string** |  | 
 **Labels** | **[]string** |  | 
 **Type** | [**DataTypeEnum**](DataTypeEnum.md) |  | 
@@ -15,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewMaskImageData
 
-`func NewMaskImageData(src string, blob string, maskSrc string, maskBlob string, labels []string, type_ DataTypeEnum, ) *MaskImageData`
+`func NewMaskImageData(blob string, maskBlob string, labels []string, type_ DataTypeEnum, ) *MaskImageData`
 
 NewMaskImageData instantiates a new MaskImageData object
 This constructor will assign default values to properties that have it defined,
@@ -29,26 +27,6 @@ will change when the set of required properties is changed
 NewMaskImageDataWithDefaults instantiates a new MaskImageData object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetSrc
-
-`func (o *MaskImageData) GetSrc() string`
-
-GetSrc returns the Src field if non-nil, zero value otherwise.
-
-### GetSrcOk
-
-`func (o *MaskImageData) GetSrcOk() (*string, bool)`
-
-GetSrcOk returns a tuple with the Src field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSrc
-
-`func (o *MaskImageData) SetSrc(v string)`
-
-SetSrc sets Src field to given value.
-
 
 ### GetBlob
 
@@ -68,26 +46,6 @@ and a boolean to check if the value has been set.
 `func (o *MaskImageData) SetBlob(v string)`
 
 SetBlob sets Blob field to given value.
-
-
-### GetMaskSrc
-
-`func (o *MaskImageData) GetMaskSrc() string`
-
-GetMaskSrc returns the MaskSrc field if non-nil, zero value otherwise.
-
-### GetMaskSrcOk
-
-`func (o *MaskImageData) GetMaskSrcOk() (*string, bool)`
-
-GetMaskSrcOk returns a tuple with the MaskSrc field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMaskSrc
-
-`func (o *MaskImageData) SetMaskSrc(v string)`
-
-SetMaskSrc sets MaskSrc field to given value.
 
 
 ### GetMaskBlob

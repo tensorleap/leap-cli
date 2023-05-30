@@ -12,13 +12,16 @@ Name | Type | Description | Notes
 **LastAccessed** | **time.Time** |  | 
 **Status** | [**ProjectStatus**](ProjectStatus.md) |  | 
 **Access** | [**ProjectAccess**](ProjectAccess.md) |  | 
+**Tags** | **[]string** |  | 
+**BgImagePath** | Pointer to **string** |  | [optional] 
+**HubPublishPolicy** | [**HubPublishPolicy**](HubPublishPolicy.md) |  | 
 **Description** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewProject
 
-`func NewProject(id string, organization string, createdBy string, createdAt NullableTime, name string, lastAccessed time.Time, status ProjectStatus, access ProjectAccess, ) *Project`
+`func NewProject(id string, organization string, createdBy string, createdAt NullableTime, name string, lastAccessed time.Time, status ProjectStatus, access ProjectAccess, tags []string, hubPublishPolicy HubPublishPolicy, ) *Project`
 
 NewProject instantiates a new Project object
 This constructor will assign default values to properties that have it defined,
@@ -201,6 +204,71 @@ and a boolean to check if the value has been set.
 `func (o *Project) SetAccess(v ProjectAccess)`
 
 SetAccess sets Access field to given value.
+
+
+### GetTags
+
+`func (o *Project) GetTags() []string`
+
+GetTags returns the Tags field if non-nil, zero value otherwise.
+
+### GetTagsOk
+
+`func (o *Project) GetTagsOk() (*[]string, bool)`
+
+GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTags
+
+`func (o *Project) SetTags(v []string)`
+
+SetTags sets Tags field to given value.
+
+
+### GetBgImagePath
+
+`func (o *Project) GetBgImagePath() string`
+
+GetBgImagePath returns the BgImagePath field if non-nil, zero value otherwise.
+
+### GetBgImagePathOk
+
+`func (o *Project) GetBgImagePathOk() (*string, bool)`
+
+GetBgImagePathOk returns a tuple with the BgImagePath field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBgImagePath
+
+`func (o *Project) SetBgImagePath(v string)`
+
+SetBgImagePath sets BgImagePath field to given value.
+
+### HasBgImagePath
+
+`func (o *Project) HasBgImagePath() bool`
+
+HasBgImagePath returns a boolean if a field has been set.
+
+### GetHubPublishPolicy
+
+`func (o *Project) GetHubPublishPolicy() HubPublishPolicy`
+
+GetHubPublishPolicy returns the HubPublishPolicy field if non-nil, zero value otherwise.
+
+### GetHubPublishPolicyOk
+
+`func (o *Project) GetHubPublishPolicyOk() (*HubPublishPolicy, bool)`
+
+GetHubPublishPolicyOk returns a tuple with the HubPublishPolicy field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHubPublishPolicy
+
+`func (o *Project) SetHubPublishPolicy(v HubPublishPolicy)`
+
+SetHubPublishPolicy sets HubPublishPolicy field to given value.
 
 
 ### GetDescription

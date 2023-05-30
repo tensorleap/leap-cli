@@ -8,7 +8,6 @@ Name | Type | Description | Notes
 **Title** | **string** |  | 
 **SubTitle** | **string** |  | 
 **Guid** | **string** |  | 
-**Src** | **string** |  | 
 **Blob** | **string** |  | 
 **Labels** | Pointer to **[]string** |  | [optional] 
 
@@ -16,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewImageViz
 
-`func NewImageViz(type_ string, title string, subTitle string, guid string, src string, blob string, ) *ImageViz`
+`func NewImageViz(type_ string, title string, subTitle string, guid string, blob string, ) *ImageViz`
 
 NewImageViz instantiates a new ImageViz object
 This constructor will assign default values to properties that have it defined,
@@ -109,26 +108,6 @@ and a boolean to check if the value has been set.
 `func (o *ImageViz) SetGuid(v string)`
 
 SetGuid sets Guid field to given value.
-
-
-### GetSrc
-
-`func (o *ImageViz) GetSrc() string`
-
-GetSrc returns the Src field if non-nil, zero value otherwise.
-
-### GetSrcOk
-
-`func (o *ImageViz) GetSrcOk() (*string, bool)`
-
-GetSrcOk returns a tuple with the Src field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSrc
-
-`func (o *ImageViz) SetSrc(v string)`
-
-SetSrc sets Src field to given value.
 
 
 ### GetBlob

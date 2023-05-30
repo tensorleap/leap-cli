@@ -4,7 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Src** | **string** |  | 
 **Blob** | **string** |  | 
 **BoundingBox** | [**[]BoundingBox**](BoundingBox.md) |  | 
 **Type** | [**DataTypeEnum**](DataTypeEnum.md) |  | 
@@ -13,7 +12,7 @@ Name | Type | Description | Notes
 
 ### NewBBoxImageData
 
-`func NewBBoxImageData(src string, blob string, boundingBox []BoundingBox, type_ DataTypeEnum, ) *BBoxImageData`
+`func NewBBoxImageData(blob string, boundingBox []BoundingBox, type_ DataTypeEnum, ) *BBoxImageData`
 
 NewBBoxImageData instantiates a new BBoxImageData object
 This constructor will assign default values to properties that have it defined,
@@ -27,26 +26,6 @@ will change when the set of required properties is changed
 NewBBoxImageDataWithDefaults instantiates a new BBoxImageData object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetSrc
-
-`func (o *BBoxImageData) GetSrc() string`
-
-GetSrc returns the Src field if non-nil, zero value otherwise.
-
-### GetSrcOk
-
-`func (o *BBoxImageData) GetSrcOk() (*string, bool)`
-
-GetSrcOk returns a tuple with the Src field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSrc
-
-`func (o *BBoxImageData) SetSrc(v string)`
-
-SetSrc sets Src field to given value.
-
 
 ### GetBlob
 

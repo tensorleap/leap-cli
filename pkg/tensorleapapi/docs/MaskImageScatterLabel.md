@@ -5,10 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Data** | **[][]float64** |  | 
-**Src** | **string** |  | 
 **Blob** | **string** |  | 
 **Type** | **string** |  | 
-**MaskSrc** | **string** |  | 
 **MaskBlob** | **string** |  | 
 **Labels** | **[]string** |  | 
 **InputName** | Pointer to **string** |  | [optional] 
@@ -17,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewMaskImageScatterLabel
 
-`func NewMaskImageScatterLabel(data [][]float64, src string, blob string, type_ string, maskSrc string, maskBlob string, labels []string, ) *MaskImageScatterLabel`
+`func NewMaskImageScatterLabel(data [][]float64, blob string, type_ string, maskBlob string, labels []string, ) *MaskImageScatterLabel`
 
 NewMaskImageScatterLabel instantiates a new MaskImageScatterLabel object
 This constructor will assign default values to properties that have it defined,
@@ -50,26 +48,6 @@ and a boolean to check if the value has been set.
 `func (o *MaskImageScatterLabel) SetData(v [][]float64)`
 
 SetData sets Data field to given value.
-
-
-### GetSrc
-
-`func (o *MaskImageScatterLabel) GetSrc() string`
-
-GetSrc returns the Src field if non-nil, zero value otherwise.
-
-### GetSrcOk
-
-`func (o *MaskImageScatterLabel) GetSrcOk() (*string, bool)`
-
-GetSrcOk returns a tuple with the Src field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSrc
-
-`func (o *MaskImageScatterLabel) SetSrc(v string)`
-
-SetSrc sets Src field to given value.
 
 
 ### GetBlob
@@ -110,26 +88,6 @@ and a boolean to check if the value has been set.
 `func (o *MaskImageScatterLabel) SetType(v string)`
 
 SetType sets Type field to given value.
-
-
-### GetMaskSrc
-
-`func (o *MaskImageScatterLabel) GetMaskSrc() string`
-
-GetMaskSrc returns the MaskSrc field if non-nil, zero value otherwise.
-
-### GetMaskSrcOk
-
-`func (o *MaskImageScatterLabel) GetMaskSrcOk() (*string, bool)`
-
-GetMaskSrcOk returns a tuple with the MaskSrc field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMaskSrc
-
-`func (o *MaskImageScatterLabel) SetMaskSrc(v string)`
-
-SetMaskSrc sets MaskSrc field to given value.
 
 
 ### GetMaskBlob

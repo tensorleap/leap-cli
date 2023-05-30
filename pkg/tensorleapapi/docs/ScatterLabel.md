@@ -8,12 +8,10 @@ Name | Type | Description | Notes
 **TextVisualizations** | [**[]TextViz**](TextViz.md) |  | 
 **InputName** | Pointer to **string** |  | [optional] 
 **Data** | **[][]float64** |  | 
-**Src** | **string** |  | 
 **Blob** | **string** |  | 
 **GraphVisualizations** | [**[]GraphViz**](GraphViz.md) |  | 
 **HorizontalBarVisualizations** | [**[]HorizontalBarViz**](HorizontalBarViz.md) |  | 
 **BoundingBoxes** | [**[][]BoundingBox**]([]BoundingBox.md) |  | 
-**MaskSrc** | **string** |  | 
 **MaskBlob** | **string** |  | 
 **Labels** | **[]string** |  | 
 **Mask** | **[][]float64** |  | 
@@ -22,7 +20,7 @@ Name | Type | Description | Notes
 
 ### NewScatterLabel
 
-`func NewScatterLabel(type_ string, textVisualizations []TextViz, data [][]float64, src string, blob string, graphVisualizations []GraphViz, horizontalBarVisualizations []HorizontalBarViz, boundingBoxes [][]BoundingBox, maskSrc string, maskBlob string, labels []string, mask [][]float64, ) *ScatterLabel`
+`func NewScatterLabel(type_ string, textVisualizations []TextViz, data [][]float64, blob string, graphVisualizations []GraphViz, horizontalBarVisualizations []HorizontalBarViz, boundingBoxes [][]BoundingBox, maskBlob string, labels []string, mask [][]float64, ) *ScatterLabel`
 
 NewScatterLabel instantiates a new ScatterLabel object
 This constructor will assign default values to properties that have it defined,
@@ -122,26 +120,6 @@ and a boolean to check if the value has been set.
 SetData sets Data field to given value.
 
 
-### GetSrc
-
-`func (o *ScatterLabel) GetSrc() string`
-
-GetSrc returns the Src field if non-nil, zero value otherwise.
-
-### GetSrcOk
-
-`func (o *ScatterLabel) GetSrcOk() (*string, bool)`
-
-GetSrcOk returns a tuple with the Src field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSrc
-
-`func (o *ScatterLabel) SetSrc(v string)`
-
-SetSrc sets Src field to given value.
-
-
 ### GetBlob
 
 `func (o *ScatterLabel) GetBlob() string`
@@ -220,26 +198,6 @@ and a boolean to check if the value has been set.
 `func (o *ScatterLabel) SetBoundingBoxes(v [][]BoundingBox)`
 
 SetBoundingBoxes sets BoundingBoxes field to given value.
-
-
-### GetMaskSrc
-
-`func (o *ScatterLabel) GetMaskSrc() string`
-
-GetMaskSrc returns the MaskSrc field if non-nil, zero value otherwise.
-
-### GetMaskSrcOk
-
-`func (o *ScatterLabel) GetMaskSrcOk() (*string, bool)`
-
-GetMaskSrcOk returns a tuple with the MaskSrc field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMaskSrc
-
-`func (o *ScatterLabel) SetMaskSrc(v string)`
-
-SetMaskSrc sets MaskSrc field to given value.
 
 
 ### GetMaskBlob

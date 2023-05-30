@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.301
+  version: 0.0.321
 servers:
 - url: /api/v2
 paths:
@@ -426,9 +426,9 @@ paths:
           description: Ok
       security:
       - jwt: []
-  /exportedsessionruns/getStoredExportedSessionRunResourceUrl:
+  /exportedsessionruns/getStoredExportedSessionRunBlob:
     post:
-      operationId: GetStoredExportedSessionRunResourceUrl
+      operationId: GetStoredExportedSessionRunBlob
       parameters: []
       requestBody:
         content:
@@ -441,7 +441,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetStoredExportedSessionRunResourceUrlResponse'
+                type: string
           description: Ok
       security:
       - jwt:
@@ -873,6 +873,22 @@ paths:
       security:
       - jwt:
         - admin-only
+  /jobs/analyzeGraph:
+    post:
+      operationId: AnalyzeGraph
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalyzeGraphParams'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt:
+        - not-demo
   /metadata/getMaxActiveUsers:
     post:
       operationId: GetMaxActiveUsers
@@ -913,8 +929,7 @@ paths:
                 $ref: '#/components/schemas/GetEnvironmentInfoResponse'
           description: Ok
       security:
-      - jwt:
-        - admin-only
+      - jwt: []
   /sessions-tests/createSessionTest:
     post:
       operationId: CreateSessionTest
@@ -1305,7 +1320,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddProjectParams'
+              $ref: '#/components/schemas/ProjectMeta'
         required: true
       responses:
         "200":
@@ -1317,6 +1332,36 @@ paths:
       security:
       - jwt:
         - not-demo
+  /projects/updateProjectMeta:
+    post:
+      operationId: UpdateProjectMeta
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProjectMetaRequest'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
+  /projects/importProject:
+    post:
+      operationId: ImportProject
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportProjectRequest'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
   /projects/getProjects:
     post:
       operationId: GetProjects
@@ -1832,7 +1877,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GetVisualizationParams'
+              $ref: '#/components/schemas/GetSlimVisualizationParams'
         required: true
       responses:
         "200":
@@ -1859,6 +1904,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetSessionVisualizationsResponse'
+          description: Ok
+      security:
+      - jwt: []
+  /visualizations/getSlimVisualization:
+    post:
+      operationId: GetSlimVisualization
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSlimVisualizationParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSlimVisualizationResponse'
           description: Ok
       security:
       - jwt: []
@@ -1894,44 +1958,6 @@ paths:
       security:
       - jwt:
         - not-demo
-  /visualizations/getSignedStoredResourceUrl:
-    post:
-      operationId: GetSignedStoredResourceUrl
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GetStoredResourceUrlParams'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SignedStoredResourseUrl'
-          description: Ok
-      security:
-      - jwt: []
-  /visualizations/getSignedStoredUrlByVisualizationId:
-    post:
-      operationId: GetSignedStoredUrlByVisualizationId
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GetVisualizationParams'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SignedStoredVisualization'
-          description: Ok
-      security:
-      - jwt: []
 components:
   examples: {}
   headers: {}
@@ -3059,7 +3085,6 @@ components:
       example:
         note: note
         createdAt: createdAt
-        codeUrl: codeUrl
         metadata:
           setupStatus:
             generalError: generalError
@@ -3165,6 +3190,7 @@ components:
         organization: organization
         testStatus: null
         datasetId: datasetId
+        blobPath: blobPath
         _id: _id
         codeEntryFile: codeEntryFile
       properties:
@@ -3184,14 +3210,14 @@ components:
           $ref: '#/components/schemas/TestStatus'
         metadata:
           $ref: '#/components/schemas/DatasetMetadata'
-        codeUrl:
+        blobPath:
           type: string
         codeEntryFile:
           type: string
       required:
       - _id
+      - blobPath
       - codeEntryFile
-      - codeUrl
       - createdAt
       - createdBy
       - datasetId
@@ -3208,7 +3234,6 @@ components:
         latestVersion:
           note: note
           createdAt: createdAt
-          codeUrl: codeUrl
           metadata:
             setupStatus:
               generalError: generalError
@@ -3314,6 +3339,7 @@ components:
           organization: organization
           testStatus: null
           datasetId: datasetId
+          blobPath: blobPath
           _id: _id
           codeEntryFile: codeEntryFile
         organization: organization
@@ -3323,7 +3349,6 @@ components:
         latestValidVersion:
           note: note
           createdAt: createdAt
-          codeUrl: codeUrl
           metadata:
             setupStatus:
               generalError: generalError
@@ -3429,6 +3454,7 @@ components:
           organization: organization
           testStatus: null
           datasetId: datasetId
+          blobPath: blobPath
           _id: _id
           codeEntryFile: codeEntryFile
       properties:
@@ -3465,7 +3491,6 @@ components:
           latestVersion:
             note: note
             createdAt: createdAt
-            codeUrl: codeUrl
             metadata:
               setupStatus:
                 generalError: generalError
@@ -3571,6 +3596,7 @@ components:
             organization: organization
             testStatus: null
             datasetId: datasetId
+            blobPath: blobPath
             _id: _id
             codeEntryFile: codeEntryFile
           organization: organization
@@ -3580,7 +3606,6 @@ components:
           latestValidVersion:
             note: note
             createdAt: createdAt
-            codeUrl: codeUrl
             metadata:
               setupStatus:
                 generalError: generalError
@@ -3686,6 +3711,7 @@ components:
             organization: organization
             testStatus: null
             datasetId: datasetId
+            blobPath: blobPath
             _id: _id
             codeEntryFile: codeEntryFile
         - createdAt: createdAt
@@ -3693,7 +3719,6 @@ components:
           latestVersion:
             note: note
             createdAt: createdAt
-            codeUrl: codeUrl
             metadata:
               setupStatus:
                 generalError: generalError
@@ -3799,6 +3824,7 @@ components:
             organization: organization
             testStatus: null
             datasetId: datasetId
+            blobPath: blobPath
             _id: _id
             codeEntryFile: codeEntryFile
           organization: organization
@@ -3808,7 +3834,6 @@ components:
           latestValidVersion:
             note: note
             createdAt: createdAt
-            codeUrl: codeUrl
             metadata:
               setupStatus:
                 generalError: generalError
@@ -3914,6 +3939,7 @@ components:
             organization: organization
             testStatus: null
             datasetId: datasetId
+            blobPath: blobPath
             _id: _id
             codeEntryFile: codeEntryFile
       properties:
@@ -3933,7 +3959,6 @@ components:
           latestVersion:
             note: note
             createdAt: createdAt
-            codeUrl: codeUrl
             metadata:
               setupStatus:
                 generalError: generalError
@@ -4039,6 +4064,7 @@ components:
             organization: organization
             testStatus: null
             datasetId: datasetId
+            blobPath: blobPath
             _id: _id
             codeEntryFile: codeEntryFile
           organization: organization
@@ -4048,7 +4074,6 @@ components:
           latestValidVersion:
             note: note
             createdAt: createdAt
-            codeUrl: codeUrl
             metadata:
               setupStatus:
                 generalError: generalError
@@ -4154,6 +4179,7 @@ components:
             organization: organization
             testStatus: null
             datasetId: datasetId
+            blobPath: blobPath
             _id: _id
             codeEntryFile: codeEntryFile
       properties:
@@ -4192,7 +4218,6 @@ components:
           latestVersion:
             note: note
             createdAt: createdAt
-            codeUrl: codeUrl
             metadata:
               setupStatus:
                 generalError: generalError
@@ -4298,6 +4323,7 @@ components:
             organization: organization
             testStatus: null
             datasetId: datasetId
+            blobPath: blobPath
             _id: _id
             codeEntryFile: codeEntryFile
           organization: organization
@@ -4307,7 +4333,6 @@ components:
           latestValidVersion:
             note: note
             createdAt: createdAt
-            codeUrl: codeUrl
             metadata:
               setupStatus:
                 generalError: generalError
@@ -4413,6 +4438,7 @@ components:
             organization: organization
             testStatus: null
             datasetId: datasetId
+            blobPath: blobPath
             _id: _id
             codeEntryFile: codeEntryFile
       properties:
@@ -4520,7 +4546,6 @@ components:
         datasetVersion:
           note: note
           createdAt: createdAt
-          codeUrl: codeUrl
           metadata:
             setupStatus:
               generalError: generalError
@@ -4626,6 +4651,7 @@ components:
           organization: organization
           testStatus: null
           datasetId: datasetId
+          blobPath: blobPath
           _id: _id
           codeEntryFile: codeEntryFile
       properties:
@@ -4654,7 +4680,6 @@ components:
         datasetVersion:
           note: note
           createdAt: createdAt
-          codeUrl: codeUrl
           metadata:
             setupStatus:
               generalError: generalError
@@ -4760,6 +4785,7 @@ components:
           organization: organization
           testStatus: null
           datasetId: datasetId
+          blobPath: blobPath
           _id: _id
           codeEntryFile: codeEntryFile
       properties:
@@ -4784,7 +4810,6 @@ components:
         latestVersion:
           note: note
           createdAt: createdAt
-          codeUrl: codeUrl
           metadata:
             setupStatus:
               generalError: generalError
@@ -4890,6 +4915,7 @@ components:
           organization: organization
           testStatus: null
           datasetId: datasetId
+          blobPath: blobPath
           _id: _id
           codeEntryFile: codeEntryFile
       properties:
@@ -4912,7 +4938,6 @@ components:
         datasetVersions:
         - note: note
           createdAt: createdAt
-          codeUrl: codeUrl
           metadata:
             setupStatus:
               generalError: generalError
@@ -5018,11 +5043,11 @@ components:
           organization: organization
           testStatus: null
           datasetId: datasetId
+          blobPath: blobPath
           _id: _id
           codeEntryFile: codeEntryFile
         - note: note
           createdAt: createdAt
-          codeUrl: codeUrl
           metadata:
             setupStatus:
               generalError: generalError
@@ -5128,6 +5153,7 @@ components:
           organization: organization
           testStatus: null
           datasetId: datasetId
+          blobPath: blobPath
           _id: _id
           codeEntryFile: codeEntryFile
       properties:
@@ -5230,16 +5256,6 @@ components:
           type: string
       required:
       - sessionRunId
-      type: object
-    GetStoredExportedSessionRunResourceUrlResponse:
-      additionalProperties: false
-      example:
-        url: url
-      properties:
-        url:
-          type: string
-      required:
-      - url
       type: object
     GetStoredExportedSessionRunResourceUrlParams:
       additionalProperties: false
@@ -5967,6 +5983,7 @@ components:
       - TEST_CUSTOM_LOSS
       - EXPORT_MODEL
       - DATASET_PARSE
+      - ANALYZE_GRAPH
       type: string
     JobSubType:
       enum:
@@ -6586,6 +6603,50 @@ components:
       - machineTypeId
       - organizationId
       type: object
+    Record_string.Node_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
+    ModelGraph:
+      additionalProperties: false
+      example:
+        nodes: "{}"
+        id: id
+      properties:
+        id:
+          type: string
+        nodes:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+      required:
+      - id
+      - nodes
+      type: object
+    AnalyzeGraphParams:
+      additionalProperties: false
+      example:
+        requestToken: requestToken
+        projectId: projectId
+        graph:
+          nodes: "{}"
+          id: id
+        datasetVersionId: datasetVersionId
+      properties:
+        graph:
+          $ref: '#/components/schemas/ModelGraph'
+        datasetVersionId:
+          type: string
+        projectId:
+          type: string
+        requestToken:
+          type: string
+      required:
+      - datasetVersionId
+      - graph
+      - projectId
+      - requestToken
+      type: object
     GetMaxActiveUsersResponse:
       additionalProperties: false
       example:
@@ -6636,12 +6697,25 @@ components:
     GetEnvironmentInfoResponse:
       additionalProperties: false
       example:
+        schemaVersion: 0.8008281904610115
+        hubDefaultNamespace: hubDefaultNamespace
+        hubUrl: hubUrl
         clientStoragePrefixUrl: clientStoragePrefixUrl
       properties:
         clientStoragePrefixUrl:
           type: string
+        schemaVersion:
+          format: double
+          type: number
+        hubDefaultNamespace:
+          type: string
+        hubUrl:
+          type: string
       required:
       - clientStoragePrefixUrl
+      - hubDefaultNamespace
+      - hubUrl
+      - schemaVersion
       type: object
     FilterOperatorType:
       enum:
@@ -8292,18 +8366,29 @@ components:
       - public
       - local
       type: string
+    HubPublishPolicy:
+      enum:
+      - public
+      - alpha
+      - no_publish
+      type: string
     Project:
       additionalProperties: false
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
+        hubPublishPolicy: null
         access: null
         createdBy: createdBy
         organization: organization
         name: name
         description: description
         lastAccessed: 2000-01-23T04:56:07.000+00:00
+        bgImagePath: bgImagePath
         _id: _id
         status: null
+        tags:
+        - tags
+        - tags
       properties:
         _id:
           type: string
@@ -8324,6 +8409,14 @@ components:
           $ref: '#/components/schemas/ProjectStatus'
         access:
           $ref: '#/components/schemas/ProjectAccess'
+        tags:
+          items:
+            type: string
+          type: array
+        bgImagePath:
+          type: string
+        hubPublishPolicy:
+          $ref: '#/components/schemas/HubPublishPolicy'
         description:
           type: string
       required:
@@ -8331,30 +8424,12 @@ components:
       - access
       - createdAt
       - createdBy
+      - hubPublishPolicy
       - lastAccessed
       - name
       - organization
       - status
-      type: object
-    Record_string.Node_:
-      description: Construct a type with a set of properties K of type T
-      properties: {}
-      type: object
-    ModelGraph:
-      additionalProperties: false
-      example:
-        nodes: "{}"
-        id: id
-      properties:
-        id:
-          type: string
-        nodes:
-          description: Construct a type with a set of properties K of type T
-          properties: {}
-          type: object
-      required:
-      - id
-      - nodes
+      - tags
       type: object
     Version:
       additionalProperties: false
@@ -8494,14 +8569,19 @@ components:
       example:
         project:
           createdAt: 2000-01-23T04:56:07.000+00:00
+          hubPublishPolicy: null
           access: null
           createdBy: createdBy
           organization: organization
           name: name
           description: description
           lastAccessed: 2000-01-23T04:56:07.000+00:00
+          bgImagePath: bgImagePath
           _id: _id
           status: null
+          tags:
+          - tags
+          - tags
         version:
           notes: notes
           data:
@@ -8594,42 +8674,133 @@ components:
       - project
       - version
       type: object
-    AddProjectParams:
+    ProjectMeta:
       additionalProperties: false
       example:
+        hubPublishPolicy: null
         name: name
         description: description
+        bgImageUrl: bgImageUrl
+        tags:
+        - tags
+        - tags
       properties:
         name:
           type: string
         description:
           type: string
+        tags:
+          items:
+            type: string
+          type: array
+        hubPublishPolicy:
+          $ref: '#/components/schemas/HubPublishPolicy'
+        bgImageUrl:
+          type: string
       required:
       - description
+      - hubPublishPolicy
       - name
+      - tags
+      type: object
+    UpdateProjectMetaRequest:
+      additionalProperties: false
+      example:
+        hubPublishPolicy: null
+        name: name
+        description: description
+        bgImageUrl: bgImageUrl
+        projectId: projectId
+        tags:
+        - tags
+        - tags
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        hubPublishPolicy:
+          $ref: '#/components/schemas/HubPublishPolicy'
+        bgImageUrl:
+          type: string
+        projectId:
+          type: string
+      required:
+      - description
+      - hubPublishPolicy
+      - name
+      - projectId
+      - tags
+      type: object
+    ImportProjectRequest:
+      additionalProperties: false
+      example:
+        hubPublishPolicy: null
+        name: name
+        description: description
+        bgImageUrl: bgImageUrl
+        importUrl: importUrl
+        tags:
+        - tags
+        - tags
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        hubPublishPolicy:
+          $ref: '#/components/schemas/HubPublishPolicy'
+        bgImageUrl:
+          type: string
+        importUrl:
+          type: string
+      required:
+      - description
+      - hubPublishPolicy
+      - importUrl
+      - name
+      - tags
       type: object
     GetProjectsResponse:
       additionalProperties: false
       example:
         data:
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          hubPublishPolicy: null
           access: null
           createdBy: createdBy
           organization: organization
           name: name
           description: description
           lastAccessed: 2000-01-23T04:56:07.000+00:00
+          bgImagePath: bgImagePath
           _id: _id
           status: null
+          tags:
+          - tags
+          - tags
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          hubPublishPolicy: null
           access: null
           createdBy: createdBy
           organization: organization
           name: name
           description: description
           lastAccessed: 2000-01-23T04:56:07.000+00:00
+          bgImagePath: bgImagePath
           _id: _id
           status: null
+          tags:
+          - tags
+          - tags
       properties:
         data:
           items:
@@ -9859,6 +10030,7 @@ components:
         description: description
         projectId: projectId
         codeIntegrationVersionId: codeIntegrationVersionId
+        hash: hash
       properties:
         projectId:
           type: string
@@ -9872,6 +10044,8 @@ components:
           type: string
         datasetSetup:
           $ref: '#/components/schemas/DatasetSetup'
+        hash:
+          type: string
       required:
       - branchName
       - datasetSetup
@@ -9884,14 +10058,19 @@ components:
       example:
         project:
           createdAt: 2000-01-23T04:56:07.000+00:00
+          hubPublishPolicy: null
           access: null
           createdBy: createdBy
           organization: organization
           name: name
           description: description
           lastAccessed: 2000-01-23T04:56:07.000+00:00
+          bgImagePath: bgImagePath
           _id: _id
           status: null
+          tags:
+          - tags
+          - tags
         version:
           notes: notes
           data:
@@ -10090,6 +10269,7 @@ components:
             type: null
         overrideHash: true
         codeIntegrationVersionId: codeIntegrationVersionId
+        hash: hash
       properties:
         versionId:
           type: string
@@ -10101,6 +10281,8 @@ components:
           $ref: '#/components/schemas/DatasetSetup'
         overrideHash:
           type: boolean
+        hash:
+          type: string
       required:
       - data
       - datasetSetup
@@ -10766,8 +10948,6 @@ components:
           type: string
         guid:
           type: string
-        src:
-          type: string
         blob:
           type: string
         labels:
@@ -10777,7 +10957,6 @@ components:
       required:
       - blob
       - guid
-      - src
       - sub_title
       - title
       - type
@@ -10895,8 +11074,6 @@ components:
               type: number
             type: array
           type: array
-        src:
-          type: string
         blob:
           type: string
         type:
@@ -10906,7 +11083,6 @@ components:
       required:
       - blob
       - data
-      - src
       - type
       type: object
     GraphScatterLabel:
@@ -11005,8 +11181,6 @@ components:
               type: number
             type: array
           type: array
-        src:
-          type: string
         blob:
           type: string
         type:
@@ -11023,7 +11197,6 @@ components:
       - blob
       - bounding_boxes
       - data
-      - src
       - type
       type: object
     MaskImageScatterLabel:
@@ -11036,13 +11209,9 @@ components:
               type: number
             type: array
           type: array
-        src:
-          type: string
         blob:
           type: string
         type:
-          type: string
-        mask_src:
           type: string
         mask_blob:
           type: string
@@ -11057,8 +11226,6 @@ components:
       - data
       - labels
       - mask_blob
-      - mask_src
-      - src
       - type
       type: object
     TextMaskScatterLabel:
@@ -11200,15 +11367,12 @@ components:
     ImageData:
       additionalProperties: false
       properties:
-        src:
-          type: string
         blob:
           type: string
         type:
           $ref: '#/components/schemas/DataTypeEnum'
       required:
       - blob
-      - src
       - type
       type: object
     TextData:
@@ -11266,8 +11430,6 @@ components:
     BBoxImageData:
       additionalProperties: false
       properties:
-        src:
-          type: string
         blob:
           type: string
         bounding_box:
@@ -11279,17 +11441,12 @@ components:
       required:
       - blob
       - bounding_box
-      - src
       - type
       type: object
     MaskImageData:
       additionalProperties: false
       properties:
-        src:
-          type: string
         blob:
-          type: string
-        mask_src:
           type: string
         mask_blob:
           type: string
@@ -11303,8 +11460,6 @@ components:
       - blob
       - labels
       - mask_blob
-      - mask_src
-      - src
       - type
       type: object
     MaskTextData:
@@ -11620,6 +11775,7 @@ components:
         jobId: jobId
         createdAt: 2000-01-23T04:56:07.000+00:00
         sessionRunId: sessionRunId
+        blob: blob
         data:
           data:
             payload:
@@ -11659,10 +11815,13 @@ components:
           $ref: '#/components/schemas/SizedLayout'
         visualizationUuid:
           type: string
+        blob:
+          type: string
         data:
           $ref: '#/components/schemas/VisualizationResponse'
       required:
       - _id
+      - blob
       - createdAt
       - data
       - epoch
@@ -11671,7 +11830,7 @@ components:
       - type
       - visualizationUuid
       type: object
-    GetVisualizationParams:
+    GetSlimVisualizationParams:
       additionalProperties: false
       example:
         visualizationId: visualizationId
@@ -11708,6 +11867,7 @@ components:
         jobId: jobId
         createdAt: 2000-01-23T04:56:07.000+00:00
         sessionRunId: sessionRunId
+        blob: blob
         sampleId: 6.027456183070403
         visualizationUuid: visualizationUuid
         jobParms: null
@@ -11738,8 +11898,11 @@ components:
           $ref: '#/components/schemas/SizedLayout'
         visualizationUuid:
           type: string
+        blob:
+          type: string
       required:
       - _id
+      - blob
       - createdAt
       - epoch
       - jobId
@@ -11775,6 +11938,7 @@ components:
           jobId: jobId
           createdAt: 2000-01-23T04:56:07.000+00:00
           sessionRunId: sessionRunId
+          blob: blob
           sampleId: 6.027456183070403
           visualizationUuid: visualizationUuid
           jobParms: null
@@ -11805,6 +11969,7 @@ components:
           jobId: jobId
           createdAt: 2000-01-23T04:56:07.000+00:00
           sessionRunId: sessionRunId
+          blob: blob
           sampleId: 6.027456183070403
           visualizationUuid: visualizationUuid
           jobParms: null
@@ -11828,6 +11993,47 @@ components:
           type: string
       required:
       - sessionRunId
+      type: object
+    GetSlimVisualizationResponse:
+      additionalProperties: false
+      example:
+        slimVisualization:
+          layout:
+            md:
+              w: 5.637376656633329
+              x: 1.4658129805029452
+              h: 2.3021358869347655
+              "y": 5.962133916683182
+            sm:
+              w: 5.637376656633329
+              x: 1.4658129805029452
+              h: 2.3021358869347655
+              "y": 5.962133916683182
+            xs:
+              w: 5.637376656633329
+              x: 1.4658129805029452
+              h: 2.3021358869347655
+              "y": 5.962133916683182
+            lg:
+              w: 5.637376656633329
+              x: 1.4658129805029452
+              h: 2.3021358869347655
+              "y": 5.962133916683182
+          jobId: jobId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          sessionRunId: sessionRunId
+          blob: blob
+          sampleId: 6.027456183070403
+          visualizationUuid: visualizationUuid
+          jobParms: null
+          epoch: 0.8008281904610115
+          _id: _id
+          type: null
+      properties:
+        slimVisualization:
+          $ref: '#/components/schemas/SlimVisualization'
+      required:
+      - slimVisualization
       type: object
     PanelLayout:
       additionalProperties: false
@@ -11932,150 +12138,6 @@ components:
           type: array
       required:
       - visualizationIdsToDelete
-      type: object
-    SignedStoredResourseUrl:
-      additionalProperties: false
-      example:
-        fileUrl: fileUrl
-      properties:
-        fileUrl:
-          type: string
-      required:
-      - fileUrl
-      type: object
-    GetStoredResourceUrlParams:
-      additionalProperties: false
-      example:
-        fileName: fileName
-      properties:
-        fileName:
-          type: string
-      required:
-      - fileName
-      type: object
-    VisualizationEntityResponse:
-      additionalProperties: false
-      example:
-        blobName: blobName
-        visualizationUuid: visualizationUuid
-        jobParams: null
-        epoch: 0.8008281904610115
-        type: null
-        version: version
-        organizationId: organizationId
-        layout:
-          md:
-            w: 5.637376656633329
-            x: 1.4658129805029452
-            h: 2.3021358869347655
-            "y": 5.962133916683182
-          sm:
-            w: 5.637376656633329
-            x: 1.4658129805029452
-            h: 2.3021358869347655
-            "y": 5.962133916683182
-          xs:
-            w: 5.637376656633329
-            x: 1.4658129805029452
-            h: 2.3021358869347655
-            "y": 5.962133916683182
-          lg:
-            w: 5.637376656633329
-            x: 1.4658129805029452
-            h: 2.3021358869347655
-            "y": 5.962133916683182
-        jobId: jobId
-        createdAt: 2000-01-23T04:56:07.000+00:00
-        sessionRunId: sessionRunId
-        createdBy: createdBy
-        _id: _id
-      properties:
-        _id:
-          type: string
-        jobId:
-          type: string
-        jobParams:
-          $ref: '#/components/schemas/JobParams'
-        epoch:
-          format: double
-          type: number
-        blobName:
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-        version:
-          type: string
-        sessionRunId:
-          type: string
-        visualizationUuid:
-          type: string
-        organizationId:
-          type: string
-        type:
-          $ref: '#/components/schemas/AnalyzeTypeEnum'
-        createdBy:
-          type: string
-        layout:
-          $ref: '#/components/schemas/SizedLayout'
-      required:
-      - _id
-      - blobName
-      - createdAt
-      - epoch
-      - jobId
-      - organizationId
-      - sessionRunId
-      - type
-      - version
-      - visualizationUuid
-      type: object
-    SignedStoredVisualization:
-      additionalProperties: false
-      example:
-        visualizationEntity:
-          blobName: blobName
-          visualizationUuid: visualizationUuid
-          jobParams: null
-          epoch: 0.8008281904610115
-          type: null
-          version: version
-          organizationId: organizationId
-          layout:
-            md:
-              w: 5.637376656633329
-              x: 1.4658129805029452
-              h: 2.3021358869347655
-              "y": 5.962133916683182
-            sm:
-              w: 5.637376656633329
-              x: 1.4658129805029452
-              h: 2.3021358869347655
-              "y": 5.962133916683182
-            xs:
-              w: 5.637376656633329
-              x: 1.4658129805029452
-              h: 2.3021358869347655
-              "y": 5.962133916683182
-            lg:
-              w: 5.637376656633329
-              x: 1.4658129805029452
-              h: 2.3021358869347655
-              "y": 5.962133916683182
-          jobId: jobId
-          createdAt: 2000-01-23T04:56:07.000+00:00
-          sessionRunId: sessionRunId
-          createdBy: createdBy
-          _id: _id
-        signedUrl: signedUrl
-      properties:
-        signedUrl:
-          type: string
-        visualizationEntity:
-          $ref: '#/components/schemas/VisualizationEntityResponse'
-      required:
-      - signedUrl
-      - visualizationEntity
       type: object
     SetUserNotificationsAsRead_200_response:
       example:

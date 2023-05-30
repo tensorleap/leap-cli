@@ -8,7 +8,6 @@ Name | Type | Description | Notes
 **Title** | **string** |  | 
 **SubTitle** | **string** |  | 
 **Guid** | **string** |  | 
-**Src** | **string** |  | 
 **Blob** | **string** |  | 
 **Labels** | **[]string** |  | 
 **Body** | **[]float64** |  | 
@@ -25,7 +24,7 @@ Name | Type | Description | Notes
 
 ### NewVizType
 
-`func NewVizType(type_ string, title string, subTitle string, guid string, src string, blob string, labels []string, body []float64, scatterData ScatterVizDataState, boundingBoxes []BoundingBox, visualizedItems []VisualizedItem, gradsAnalysis GradsAnalysis, featureImportance FeatureImportance, metadataMap map[string]interface{}, ) *VizType`
+`func NewVizType(type_ string, title string, subTitle string, guid string, blob string, labels []string, body []float64, scatterData ScatterVizDataState, boundingBoxes []BoundingBox, visualizedItems []VisualizedItem, gradsAnalysis GradsAnalysis, featureImportance FeatureImportance, metadataMap map[string]interface{}, ) *VizType`
 
 NewVizType instantiates a new VizType object
 This constructor will assign default values to properties that have it defined,
@@ -118,26 +117,6 @@ and a boolean to check if the value has been set.
 `func (o *VizType) SetGuid(v string)`
 
 SetGuid sets Guid field to given value.
-
-
-### GetSrc
-
-`func (o *VizType) GetSrc() string`
-
-GetSrc returns the Src field if non-nil, zero value otherwise.
-
-### GetSrcOk
-
-`func (o *VizType) GetSrcOk() (*string, bool)`
-
-GetSrcOk returns a tuple with the Src field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSrc
-
-`func (o *VizType) SetSrc(v string)`
-
-SetSrc sets Src field to given value.
 
 
 ### GetBlob

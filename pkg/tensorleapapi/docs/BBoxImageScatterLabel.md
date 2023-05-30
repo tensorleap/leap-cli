@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Data** | **[][]float64** |  | 
-**Src** | **string** |  | 
 **Blob** | **string** |  | 
 **Type** | **string** |  | 
 **BoundingBoxes** | [**[][]BoundingBox**]([]BoundingBox.md) |  | 
@@ -15,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewBBoxImageScatterLabel
 
-`func NewBBoxImageScatterLabel(data [][]float64, src string, blob string, type_ string, boundingBoxes [][]BoundingBox, ) *BBoxImageScatterLabel`
+`func NewBBoxImageScatterLabel(data [][]float64, blob string, type_ string, boundingBoxes [][]BoundingBox, ) *BBoxImageScatterLabel`
 
 NewBBoxImageScatterLabel instantiates a new BBoxImageScatterLabel object
 This constructor will assign default values to properties that have it defined,
@@ -48,26 +47,6 @@ and a boolean to check if the value has been set.
 `func (o *BBoxImageScatterLabel) SetData(v [][]float64)`
 
 SetData sets Data field to given value.
-
-
-### GetSrc
-
-`func (o *BBoxImageScatterLabel) GetSrc() string`
-
-GetSrc returns the Src field if non-nil, zero value otherwise.
-
-### GetSrcOk
-
-`func (o *BBoxImageScatterLabel) GetSrcOk() (*string, bool)`
-
-GetSrcOk returns a tuple with the Src field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSrc
-
-`func (o *BBoxImageScatterLabel) SetSrc(v string)`
-
-SetSrc sets Src field to given value.
 
 
 ### GetBlob

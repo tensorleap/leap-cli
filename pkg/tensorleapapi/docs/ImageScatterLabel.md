@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Data** | **[][]float64** |  | 
-**Src** | **string** |  | 
 **Blob** | **string** |  | 
 **Type** | **string** |  | 
 **InputName** | Pointer to **string** |  | [optional] 
@@ -14,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewImageScatterLabel
 
-`func NewImageScatterLabel(data [][]float64, src string, blob string, type_ string, ) *ImageScatterLabel`
+`func NewImageScatterLabel(data [][]float64, blob string, type_ string, ) *ImageScatterLabel`
 
 NewImageScatterLabel instantiates a new ImageScatterLabel object
 This constructor will assign default values to properties that have it defined,
@@ -47,26 +46,6 @@ and a boolean to check if the value has been set.
 `func (o *ImageScatterLabel) SetData(v [][]float64)`
 
 SetData sets Data field to given value.
-
-
-### GetSrc
-
-`func (o *ImageScatterLabel) GetSrc() string`
-
-GetSrc returns the Src field if non-nil, zero value otherwise.
-
-### GetSrcOk
-
-`func (o *ImageScatterLabel) GetSrcOk() (*string, bool)`
-
-GetSrcOk returns a tuple with the Src field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSrc
-
-`func (o *ImageScatterLabel) SetSrc(v string)`
-
-SetSrc sets Src field to given value.
 
 
 ### GetBlob

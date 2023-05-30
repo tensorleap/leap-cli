@@ -12,14 +12,14 @@ Name | Type | Description | Notes
 **CreatedBy** | **string** |  | 
 **TestStatus** | [**TestStatus**](TestStatus.md) |  | 
 **Metadata** | [**DatasetMetadata**](DatasetMetadata.md) |  | 
-**CodeUrl** | **string** |  | 
+**BlobPath** | **string** |  | 
 **CodeEntryFile** | **string** |  | 
 
 ## Methods
 
 ### NewDatasetVersion
 
-`func NewDatasetVersion(id string, organization string, datasetId string, note string, createdAt string, createdBy string, testStatus TestStatus, metadata DatasetMetadata, codeUrl string, codeEntryFile string, ) *DatasetVersion`
+`func NewDatasetVersion(id string, organization string, datasetId string, note string, createdAt string, createdBy string, testStatus TestStatus, metadata DatasetMetadata, blobPath string, codeEntryFile string, ) *DatasetVersion`
 
 NewDatasetVersion instantiates a new DatasetVersion object
 This constructor will assign default values to properties that have it defined,
@@ -194,24 +194,24 @@ and a boolean to check if the value has been set.
 SetMetadata sets Metadata field to given value.
 
 
-### GetCodeUrl
+### GetBlobPath
 
-`func (o *DatasetVersion) GetCodeUrl() string`
+`func (o *DatasetVersion) GetBlobPath() string`
 
-GetCodeUrl returns the CodeUrl field if non-nil, zero value otherwise.
+GetBlobPath returns the BlobPath field if non-nil, zero value otherwise.
 
-### GetCodeUrlOk
+### GetBlobPathOk
 
-`func (o *DatasetVersion) GetCodeUrlOk() (*string, bool)`
+`func (o *DatasetVersion) GetBlobPathOk() (*string, bool)`
 
-GetCodeUrlOk returns a tuple with the CodeUrl field if it's non-nil, zero value otherwise
+GetBlobPathOk returns a tuple with the BlobPath field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCodeUrl
+### SetBlobPath
 
-`func (o *DatasetVersion) SetCodeUrl(v string)`
+`func (o *DatasetVersion) SetBlobPath(v string)`
 
-SetCodeUrl sets CodeUrl field to given value.
+SetBlobPath sets BlobPath field to given value.
 
 
 ### GetCodeEntryFile

@@ -14,13 +14,14 @@ Name | Type | Description | Notes
 **SampleId** | Pointer to **float64** |  | [optional] 
 **Layout** | Pointer to [**SizedLayout**](SizedLayout.md) |  | [optional] 
 **VisualizationUuid** | **string** |  | 
+**Blob** | **string** |  | 
 **Data** | [**VisualizationResponse**](VisualizationResponse.md) |  | 
 
 ## Methods
 
 ### NewVisualization
 
-`func NewVisualization(id string, jobId string, sessionRunId string, type_ AnalyzeTypeEnum, createdAt time.Time, epoch float64, visualizationUuid string, data VisualizationResponse, ) *Visualization`
+`func NewVisualization(id string, jobId string, sessionRunId string, type_ AnalyzeTypeEnum, createdAt time.Time, epoch float64, visualizationUuid string, blob string, data VisualizationResponse, ) *Visualization`
 
 NewVisualization instantiates a new Visualization object
 This constructor will assign default values to properties that have it defined,
@@ -248,6 +249,26 @@ and a boolean to check if the value has been set.
 `func (o *Visualization) SetVisualizationUuid(v string)`
 
 SetVisualizationUuid sets VisualizationUuid field to given value.
+
+
+### GetBlob
+
+`func (o *Visualization) GetBlob() string`
+
+GetBlob returns the Blob field if non-nil, zero value otherwise.
+
+### GetBlobOk
+
+`func (o *Visualization) GetBlobOk() (*string, bool)`
+
+GetBlobOk returns a tuple with the Blob field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBlob
+
+`func (o *Visualization) SetBlob(v string)`
+
+SetBlob sets Blob field to given value.
 
 
 ### GetData

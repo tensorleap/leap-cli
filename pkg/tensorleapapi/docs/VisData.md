@@ -4,14 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Src** | **string** |  | 
 **Blob** | **string** |  | 
 **Type** | [**DataTypeEnum**](DataTypeEnum.md) |  | 
 **Body** | **[][]float64** |  | 
 **Heatmap** | Pointer to [**Heatmap**](Heatmap.md) |  | [optional] 
 **Labels** | **[]string** |  | 
 **BoundingBox** | [**[]BoundingBox**](BoundingBox.md) |  | 
-**MaskSrc** | **string** |  | 
 **MaskBlob** | **string** |  | 
 **Text** | **[]string** |  | 
 **Mask** | **[]float64** |  | 
@@ -20,7 +18,7 @@ Name | Type | Description | Notes
 
 ### NewVisData
 
-`func NewVisData(src string, blob string, type_ DataTypeEnum, body [][]float64, labels []string, boundingBox []BoundingBox, maskSrc string, maskBlob string, text []string, mask []float64, ) *VisData`
+`func NewVisData(blob string, type_ DataTypeEnum, body [][]float64, labels []string, boundingBox []BoundingBox, maskBlob string, text []string, mask []float64, ) *VisData`
 
 NewVisData instantiates a new VisData object
 This constructor will assign default values to properties that have it defined,
@@ -34,26 +32,6 @@ will change when the set of required properties is changed
 NewVisDataWithDefaults instantiates a new VisData object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetSrc
-
-`func (o *VisData) GetSrc() string`
-
-GetSrc returns the Src field if non-nil, zero value otherwise.
-
-### GetSrcOk
-
-`func (o *VisData) GetSrcOk() (*string, bool)`
-
-GetSrcOk returns a tuple with the Src field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSrc
-
-`func (o *VisData) SetSrc(v string)`
-
-SetSrc sets Src field to given value.
-
 
 ### GetBlob
 
@@ -178,26 +156,6 @@ and a boolean to check if the value has been set.
 `func (o *VisData) SetBoundingBox(v []BoundingBox)`
 
 SetBoundingBox sets BoundingBox field to given value.
-
-
-### GetMaskSrc
-
-`func (o *VisData) GetMaskSrc() string`
-
-GetMaskSrc returns the MaskSrc field if non-nil, zero value otherwise.
-
-### GetMaskSrcOk
-
-`func (o *VisData) GetMaskSrcOk() (*string, bool)`
-
-GetMaskSrcOk returns a tuple with the MaskSrc field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMaskSrc
-
-`func (o *VisData) SetMaskSrc(v string)`
-
-SetMaskSrc sets MaskSrc field to given value.
 
 
 ### GetMaskBlob

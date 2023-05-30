@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **CodeIntegrationVersionId** | Pointer to **string** |  | [optional] 
 **DatasetSetup** | [**DatasetSetup**](DatasetSetup.md) |  | 
 **OverrideHash** | **bool** |  | 
+**Hash** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -133,6 +134,31 @@ and a boolean to check if the value has been set.
 
 SetOverrideHash sets OverrideHash field to given value.
 
+
+### GetHash
+
+`func (o *UpdateVersionParams) GetHash() string`
+
+GetHash returns the Hash field if non-nil, zero value otherwise.
+
+### GetHashOk
+
+`func (o *UpdateVersionParams) GetHashOk() (*string, bool)`
+
+GetHashOk returns a tuple with the Hash field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHash
+
+`func (o *UpdateVersionParams) SetHash(v string)`
+
+SetHash sets Hash field to given value.
+
+### HasHash
+
+`func (o *UpdateVersionParams) HasHash() bool`
+
+HasHash returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

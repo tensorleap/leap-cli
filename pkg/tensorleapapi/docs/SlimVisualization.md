@@ -14,12 +14,13 @@ Name | Type | Description | Notes
 **SampleId** | Pointer to **float64** |  | [optional] 
 **Layout** | Pointer to [**SizedLayout**](SizedLayout.md) |  | [optional] 
 **VisualizationUuid** | **string** |  | 
+**Blob** | **string** |  | 
 
 ## Methods
 
 ### NewSlimVisualization
 
-`func NewSlimVisualization(id string, jobId string, sessionRunId string, type_ AnalyzeTypeEnum, createdAt time.Time, epoch float64, visualizationUuid string, ) *SlimVisualization`
+`func NewSlimVisualization(id string, jobId string, sessionRunId string, type_ AnalyzeTypeEnum, createdAt time.Time, epoch float64, visualizationUuid string, blob string, ) *SlimVisualization`
 
 NewSlimVisualization instantiates a new SlimVisualization object
 This constructor will assign default values to properties that have it defined,
@@ -247,6 +248,26 @@ and a boolean to check if the value has been set.
 `func (o *SlimVisualization) SetVisualizationUuid(v string)`
 
 SetVisualizationUuid sets VisualizationUuid field to given value.
+
+
+### GetBlob
+
+`func (o *SlimVisualization) GetBlob() string`
+
+GetBlob returns the Blob field if non-nil, zero value otherwise.
+
+### GetBlobOk
+
+`func (o *SlimVisualization) GetBlobOk() (*string, bool)`
+
+GetBlobOk returns a tuple with the Blob field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBlob
+
+`func (o *SlimVisualization) SetBlob(v string)`
+
+SetBlob sets Blob field to given value.
 
 
 
