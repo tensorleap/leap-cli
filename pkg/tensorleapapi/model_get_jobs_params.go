@@ -19,9 +19,9 @@ var _ MappedNullable = &GetJobsParams{}
 
 // GetJobsParams struct for GetJobsParams
 type GetJobsParams struct {
-	BranchId *string `json:"branchId,omitempty"`
+	BranchId     *string `json:"branchId,omitempty"`
 	SessionRunId *string `json:"sessionRunId,omitempty"`
-	LastUpdated *string `json:"lastUpdated,omitempty"`
+	LastUpdated  *string `json:"lastUpdated,omitempty"`
 }
 
 // NewGetJobsParams instantiates a new GetJobsParams object
@@ -138,7 +138,7 @@ func (o *GetJobsParams) SetLastUpdated(v string) {
 }
 
 func (o GetJobsParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -194,5 +194,3 @@ func (v *NullableGetJobsParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

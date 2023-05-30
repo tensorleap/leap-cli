@@ -19,13 +19,13 @@ var _ MappedNullable = &ImageViz{}
 
 // ImageViz struct for ImageViz
 type ImageViz struct {
-	Type string `json:"type"`
-	Title string `json:"title"`
-	SubTitle string `json:"sub_title"`
-	Guid string `json:"guid"`
-	Src string `json:"src"`
-	Blob string `json:"blob"`
-	Labels []string `json:"labels,omitempty"`
+	Type     string   `json:"type"`
+	Title    string   `json:"title"`
+	SubTitle string   `json:"sub_title"`
+	Guid     string   `json:"guid"`
+	Src      string   `json:"src"`
+	Blob     string   `json:"blob"`
+	Labels   []string `json:"labels,omitempty"`
 }
 
 // NewImageViz instantiates a new ImageViz object
@@ -228,7 +228,7 @@ func (o *ImageViz) SetLabels(v []string) {
 }
 
 func (o ImageViz) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -284,5 +284,3 @@ func (v *NullableImageViz) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

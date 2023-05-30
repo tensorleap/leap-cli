@@ -20,12 +20,12 @@ type CustomVisualizationType string
 
 // List of CustomVisualizationType
 const (
-	CUSTOMVISUALIZATIONTYPE_BAR CustomVisualizationType = "Bar"
-	CUSTOMVISUALIZATIONTYPE_LINE CustomVisualizationType = "Line"
-	CUSTOMVISUALIZATIONTYPE_AREA CustomVisualizationType = "Area"
-	CUSTOMVISUALIZATIONTYPE_TABLE CustomVisualizationType = "Table"
-	CUSTOMVISUALIZATIONTYPE_HEATMAP CustomVisualizationType = "Heatmap"
-	CUSTOMVISUALIZATIONTYPE_DONUT CustomVisualizationType = "Donut"
+	CUSTOMVISUALIZATIONTYPE_BAR              CustomVisualizationType = "Bar"
+	CUSTOMVISUALIZATIONTYPE_LINE             CustomVisualizationType = "Line"
+	CUSTOMVISUALIZATIONTYPE_AREA             CustomVisualizationType = "Area"
+	CUSTOMVISUALIZATIONTYPE_TABLE            CustomVisualizationType = "Table"
+	CUSTOMVISUALIZATIONTYPE_HEATMAP          CustomVisualizationType = "Heatmap"
+	CUSTOMVISUALIZATIONTYPE_DONUT            CustomVisualizationType = "Donut"
 	CUSTOMVISUALIZATIONTYPE_CONFUSION_MATRIX CustomVisualizationType = "Confusion Matrix"
 )
 
@@ -118,4 +118,3 @@ func (v *NullableCustomVisualizationType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

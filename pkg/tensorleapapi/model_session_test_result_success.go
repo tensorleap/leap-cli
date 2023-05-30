@@ -19,13 +19,13 @@ var _ MappedNullable = &SessionTestResultSuccess{}
 
 // SessionTestResultSuccess struct for SessionTestResultSuccess
 type SessionTestResultSuccess struct {
-	TestSucceeded bool `json:"testSucceeded"`
-	SessionRunId string `json:"sessionRunId"`
-	Aggregation float64 `json:"aggregation"`
+	TestSucceeded    bool    `json:"testSucceeded"`
+	SessionRunId     string  `json:"sessionRunId"`
+	Aggregation      float64 `json:"aggregation"`
 	SuccefullSamples float64 `json:"succefullSamples"`
-	AllSamples float64 `json:"allSamples"`
-	Epoch float64 `json:"epoch"`
-	QueryStatus string `json:"queryStatus"`
+	AllSamples       float64 `json:"allSamples"`
+	Epoch            float64 `json:"epoch"`
+	QueryStatus      string  `json:"queryStatus"`
 }
 
 // NewSessionTestResultSuccess instantiates a new SessionTestResultSuccess object
@@ -221,7 +221,7 @@ func (o *SessionTestResultSuccess) SetQueryStatus(v string) {
 }
 
 func (o SessionTestResultSuccess) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -275,5 +275,3 @@ func (v *NullableSessionTestResultSuccess) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

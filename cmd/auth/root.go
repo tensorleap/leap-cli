@@ -6,7 +6,6 @@ import (
 
 var RootCommand = &cobra.Command{
 	Use:   "auth",
-  Short: "auth commands",
+	Short: "auth commands",
 	Long:  `auth commands`,
 }
-

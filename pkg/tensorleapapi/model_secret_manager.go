@@ -20,8 +20,8 @@ var _ MappedNullable = &SecretManager{}
 
 // SecretManager struct for SecretManager
 type SecretManager struct {
-	Id string `json:"_id"`
-	Name string `json:"name"`
+	Id        string    `json:"_id"`
+	Name      string    `json:"name"`
 	CreatedAt time.Time `json:"createdAt"`
 }
 
@@ -118,7 +118,7 @@ func (o *SecretManager) SetCreatedAt(v time.Time) {
 }
 
 func (o SecretManager) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -168,5 +168,3 @@ func (v *NullableSecretManager) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

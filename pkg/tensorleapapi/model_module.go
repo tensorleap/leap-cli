@@ -20,12 +20,12 @@ type Module string
 
 // List of Module
 const (
-	MODULE_GENERAL Module = "General"
-	MODULE_NODE Module = "Node"
-	MODULE_DATASET Module = "Dataset"
-	MODULE_VISUALIZERS Module = "Visualizers"
-	MODULE_LOSS Module = "Loss"
-	MODULE_METRIC Module = "Metric"
+	MODULE_GENERAL      Module = "General"
+	MODULE_NODE         Module = "Node"
+	MODULE_DATASET      Module = "Dataset"
+	MODULE_VISUALIZERS  Module = "Visualizers"
+	MODULE_LOSS         Module = "Loss"
+	MODULE_METRIC       Module = "Metric"
 	MODULE_IMPORT_MODEL Module = "ImportModel"
 )
 
@@ -118,4 +118,3 @@ func (v *NullableModule) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

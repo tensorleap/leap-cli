@@ -20,16 +20,16 @@ var _ MappedNullable = &Insight{}
 
 // Insight struct for Insight
 type Insight struct {
-	Id string `json:"_id"`
-	SessionRunId string `json:"sessionRunId"`
-	ModelEpoch float64 `json:"modelEpoch"`
-	ModelExtId string `json:"modelExtId"`
-	OrganizationId string `json:"organizationId"`
-	CreatedBy string `json:"createdBy"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
-	VisualizationUuid string `json:"visualizationUuid"`
-	Data InsightType `json:"data"`
+	Id                string      `json:"_id"`
+	SessionRunId      string      `json:"sessionRunId"`
+	ModelEpoch        float64     `json:"modelEpoch"`
+	ModelExtId        string      `json:"modelExtId"`
+	OrganizationId    string      `json:"organizationId"`
+	CreatedBy         string      `json:"createdBy"`
+	CreatedAt         time.Time   `json:"createdAt"`
+	UpdatedAt         time.Time   `json:"updatedAt"`
+	VisualizationUuid string      `json:"visualizationUuid"`
+	Data              InsightType `json:"data"`
 }
 
 // NewInsight instantiates a new Insight object
@@ -300,7 +300,7 @@ func (o *Insight) SetData(v InsightType) {
 }
 
 func (o Insight) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -357,5 +357,3 @@ func (v *NullableInsight) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

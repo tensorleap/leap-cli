@@ -19,9 +19,9 @@ var _ MappedNullable = &GraphScatterLabel{}
 
 // GraphScatterLabel struct for GraphScatterLabel
 type GraphScatterLabel struct {
-	Type string `json:"type"`
+	Type                string     `json:"type"`
 	GraphVisualizations []GraphViz `json:"graph_visualizations"`
-	InputName *string `json:"input_name,omitempty"`
+	InputName           *string    `json:"input_name,omitempty"`
 }
 
 // NewGraphScatterLabel instantiates a new GraphScatterLabel object
@@ -124,7 +124,7 @@ func (o *GraphScatterLabel) SetInputName(v string) {
 }
 
 func (o GraphScatterLabel) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -176,5 +176,3 @@ func (v *NullableGraphScatterLabel) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

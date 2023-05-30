@@ -20,13 +20,13 @@ type JobSubType string
 
 // List of JobSubType
 const (
-	JOBSUBTYPE_EVALUATE JobSubType = "Evaluate"
-	JOBSUBTYPE_TRAIN_FROM_SCRATCH JobSubType = "Train From Scratch"
-	JOBSUBTYPE_CONTINUE_TRAINING JobSubType = "Continue Training"
+	JOBSUBTYPE_EVALUATE                   JobSubType = "Evaluate"
+	JOBSUBTYPE_TRAIN_FROM_SCRATCH         JobSubType = "Train From Scratch"
+	JOBSUBTYPE_CONTINUE_TRAINING          JobSubType = "Continue Training"
 	JOBSUBTYPE_TRAIN_FROM_INITIAL_WEIGHTS JobSubType = "Train From Initial Weights"
-	JOBSUBTYPE_POPULATION_EXPLORATION JobSubType = "Population Exploration"
-	JOBSUBTYPE_SAMPLE_SELECTION JobSubType = "Sample Selection"
-	JOBSUBTYPE_SAMPLE_ANALYSIS JobSubType = "Sample Analysis"
+	JOBSUBTYPE_POPULATION_EXPLORATION     JobSubType = "Population Exploration"
+	JOBSUBTYPE_SAMPLE_SELECTION           JobSubType = "Sample Selection"
+	JOBSUBTYPE_SAMPLE_ANALYSIS            JobSubType = "Sample Analysis"
 )
 
 // All allowed values of JobSubType enum
@@ -118,4 +118,3 @@ func (v *NullableJobSubType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

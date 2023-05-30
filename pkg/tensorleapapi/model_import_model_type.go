@@ -21,9 +21,9 @@ type ImportModelType string
 // List of ImportModelType
 const (
 	IMPORTMODELTYPE_JSON_TF2 ImportModelType = "JSON_TF2"
-	IMPORTMODELTYPE_ONNX ImportModelType = "ONNX"
-	IMPORTMODELTYPE_PB_TF2 ImportModelType = "PB_TF2"
-	IMPORTMODELTYPE_H5_TF2 ImportModelType = "H5_TF2"
+	IMPORTMODELTYPE_ONNX     ImportModelType = "ONNX"
+	IMPORTMODELTYPE_PB_TF2   ImportModelType = "PB_TF2"
+	IMPORTMODELTYPE_H5_TF2   ImportModelType = "H5_TF2"
 )
 
 // All allowed values of ImportModelType enum
@@ -112,4 +112,3 @@ func (v *NullableImportModelType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

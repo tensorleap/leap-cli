@@ -19,14 +19,14 @@ var _ MappedNullable = &MaskImageScatterLabel{}
 
 // MaskImageScatterLabel struct for MaskImageScatterLabel
 type MaskImageScatterLabel struct {
-	Data [][]float64 `json:"data"`
-	Src string `json:"src"`
-	Blob string `json:"blob"`
-	Type string `json:"type"`
-	MaskSrc string `json:"mask_src"`
-	MaskBlob string `json:"mask_blob"`
-	Labels []string `json:"labels"`
-	InputName *string `json:"input_name,omitempty"`
+	Data      [][]float64 `json:"data"`
+	Src       string      `json:"src"`
+	Blob      string      `json:"blob"`
+	Type      string      `json:"type"`
+	MaskSrc   string      `json:"mask_src"`
+	MaskBlob  string      `json:"mask_blob"`
+	Labels    []string    `json:"labels"`
+	InputName *string     `json:"input_name,omitempty"`
 }
 
 // NewMaskImageScatterLabel instantiates a new MaskImageScatterLabel object
@@ -254,7 +254,7 @@ func (o *MaskImageScatterLabel) SetInputName(v string) {
 }
 
 func (o MaskImageScatterLabel) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -311,5 +311,3 @@ func (v *NullableMaskImageScatterLabel) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

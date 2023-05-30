@@ -19,13 +19,13 @@ var _ MappedNullable = &TextViz{}
 
 // TextViz struct for TextViz
 type TextViz struct {
-	Type string `json:"type"`
-	Title string `json:"title"`
-	SubTitle string `json:"sub_title"`
-	Guid string `json:"guid"`
-	Body []string `json:"body"`
+	Type     string    `json:"type"`
+	Title    string    `json:"title"`
+	SubTitle string    `json:"sub_title"`
+	Guid     string    `json:"guid"`
+	Body     []string  `json:"body"`
 	Clusters *Clusters `json:"clusters,omitempty"`
-	Heatmap *Heatmap `json:"heatmap,omitempty"`
+	Heatmap  *Heatmap  `json:"heatmap,omitempty"`
 }
 
 // NewTextViz instantiates a new TextViz object
@@ -235,7 +235,7 @@ func (o *TextViz) SetHeatmap(v Heatmap) {
 }
 
 func (o TextViz) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -293,5 +293,3 @@ func (v *NullableTextViz) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

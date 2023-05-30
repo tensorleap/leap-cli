@@ -19,11 +19,11 @@ var _ MappedNullable = &NodeMessageParams{}
 
 // NodeMessageParams struct for NodeMessageParams
 type NodeMessageParams struct {
-	Message string `json:"message"`
-	MessageCode *string `json:"message_code,omitempty"`
-	LayerName string `json:"layer_name"`
-	LayerType NodeType `json:"layer_type"`
-	Module Module `json:"module"`
+	Message     string   `json:"message"`
+	MessageCode *string  `json:"message_code,omitempty"`
+	LayerName   string   `json:"layer_name"`
+	LayerType   NodeType `json:"layer_type"`
+	Module      Module   `json:"module"`
 }
 
 // NewNodeMessageParams instantiates a new NodeMessageParams object
@@ -176,7 +176,7 @@ func (o *NodeMessageParams) SetModule(v Module) {
 }
 
 func (o NodeMessageParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -230,5 +230,3 @@ func (v *NullableNodeMessageParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

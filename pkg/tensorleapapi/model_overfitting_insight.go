@@ -19,14 +19,14 @@ var _ MappedNullable = &OverfittingInsight{}
 
 // OverfittingInsight struct for OverfittingInsight
 type OverfittingInsight struct {
-	Type ScatterInsightType `json:"type"`
-	Filter ScatterFilter `json:"filter"`
-	MutualInfoElements []MutualInformationElement `json:"mutual_info_elements,omitempty"`
-	NSamplesValidation float64 `json:"n_samples_validation"`
-	NSamplesTraining float64 `json:"n_samples_training"`
-	AvgMetricValidation float64 `json:"avg_metric_validation"`
-	AvgMetricTraining float64 `json:"avg_metric_training"`
-	MetricName string `json:"metric_name"`
+	Type                ScatterInsightType         `json:"type"`
+	Filter              ScatterFilter              `json:"filter"`
+	MutualInfoElements  []MutualInformationElement `json:"mutual_info_elements,omitempty"`
+	NSamplesValidation  float64                    `json:"n_samples_validation"`
+	NSamplesTraining    float64                    `json:"n_samples_training"`
+	AvgMetricValidation float64                    `json:"avg_metric_validation"`
+	AvgMetricTraining   float64                    `json:"avg_metric_training"`
+	MetricName          string                     `json:"metric_name"`
 }
 
 // NewOverfittingInsight instantiates a new OverfittingInsight object
@@ -254,7 +254,7 @@ func (o *OverfittingInsight) SetMetricName(v string) {
 }
 
 func (o OverfittingInsight) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -311,5 +311,3 @@ func (v *NullableOverfittingInsight) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -19,12 +19,12 @@ var _ MappedNullable = &ExportedSessionRunJobUi{}
 
 // ExportedSessionRunJobUi struct for ExportedSessionRunJobUi
 type ExportedSessionRunJobUi struct {
-	Id string `json:"_id"`
-	SessionRunId string `json:"sessionRunId"`
-	Status JobStatus `json:"status"`
-	CreatedAt string `json:"createdAt"`
-	Title string `json:"title"`
-	ExportedSessionRunId string `json:"exportedSessionRunId"`
+	Id                   string    `json:"_id"`
+	SessionRunId         string    `json:"sessionRunId"`
+	Status               JobStatus `json:"status"`
+	CreatedAt            string    `json:"createdAt"`
+	Title                string    `json:"title"`
+	ExportedSessionRunId string    `json:"exportedSessionRunId"`
 }
 
 // NewExportedSessionRunJobUi instantiates a new ExportedSessionRunJobUi object
@@ -195,7 +195,7 @@ func (o *ExportedSessionRunJobUi) SetExportedSessionRunId(v string) {
 }
 
 func (o ExportedSessionRunJobUi) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -248,5 +248,3 @@ func (v *NullableExportedSessionRunJobUi) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -19,9 +19,9 @@ var _ MappedNullable = &GraphData{}
 
 // GraphData struct for GraphData
 type GraphData struct {
-	Body [][]float64 `json:"body"`
-	Heatmap *Heatmap `json:"heatmap,omitempty"`
-	Type DataTypeEnum `json:"type"`
+	Body    [][]float64  `json:"body"`
+	Heatmap *Heatmap     `json:"heatmap,omitempty"`
+	Type    DataTypeEnum `json:"type"`
 }
 
 // NewGraphData instantiates a new GraphData object
@@ -124,7 +124,7 @@ func (o *GraphData) SetType(v DataTypeEnum) {
 }
 
 func (o GraphData) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -176,5 +176,3 @@ func (v *NullableGraphData) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

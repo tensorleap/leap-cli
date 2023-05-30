@@ -20,7 +20,7 @@ var _ MappedNullable = &ModifyDatasetVersionNoteParams{}
 // ModifyDatasetVersionNoteParams struct for ModifyDatasetVersionNoteParams
 type ModifyDatasetVersionNoteParams struct {
 	DatasetVersionId string `json:"datasetVersionId"`
-	Note string `json:"note"`
+	Note             string `json:"note"`
 }
 
 // NewModifyDatasetVersionNoteParams instantiates a new ModifyDatasetVersionNoteParams object
@@ -91,7 +91,7 @@ func (o *ModifyDatasetVersionNoteParams) SetNote(v string) {
 }
 
 func (o ModifyDatasetVersionNoteParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableModifyDatasetVersionNoteParams) UnmarshalJSON(src []byte) error
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

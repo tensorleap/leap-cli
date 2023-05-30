@@ -19,19 +19,19 @@ var _ MappedNullable = &MultiChartsParams{}
 
 // MultiChartsParams struct for MultiChartsParams
 type MultiChartsParams struct {
-	XField string `json:"xField"`
-	YField string `json:"yField"`
-	AggregationMethod AggregationMethod `json:"aggregationMethod"`
-	SessionRunIds []string `json:"sessionRunIds"`
-	VerticalSplit *string `json:"verticalSplit,omitempty"`
-	HorizontalSplit *string `json:"horizontalSplit,omitempty"`
-	InnerSplit *string `json:"innerSplit,omitempty"`
-	Filters []ESFilter `json:"filters,omitempty"`
+	XField               string               `json:"xField"`
+	YField               string               `json:"yField"`
+	AggregationMethod    AggregationMethod    `json:"aggregationMethod"`
+	SessionRunIds        []string             `json:"sessionRunIds"`
+	VerticalSplit        *string              `json:"verticalSplit,omitempty"`
+	HorizontalSplit      *string              `json:"horizontalSplit,omitempty"`
+	InnerSplit           *string              `json:"innerSplit,omitempty"`
+	Filters              []ESFilter           `json:"filters,omitempty"`
 	DataDistributionType DataDistributionType `json:"dataDistributionType"`
-	OrderByParam *string `json:"orderByParam,omitempty"`
-	OrderParams *OrderType `json:"orderParams,omitempty"`
-	XAxisSizeInterval float64 `json:"xAxisSizeInterval"`
-	LastEpochOnly *bool `json:"lastEpochOnly,omitempty"`
+	OrderByParam         *string              `json:"orderByParam,omitempty"`
+	OrderParams          *OrderType           `json:"orderParams,omitempty"`
+	XAxisSizeInterval    float64              `json:"xAxisSizeInterval"`
+	LastEpochOnly        *bool                `json:"lastEpochOnly,omitempty"`
 }
 
 // NewMultiChartsParams instantiates a new MultiChartsParams object
@@ -426,7 +426,7 @@ func (o *MultiChartsParams) SetLastEpochOnly(v bool) {
 }
 
 func (o MultiChartsParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -500,5 +500,3 @@ func (v *NullableMultiChartsParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

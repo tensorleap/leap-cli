@@ -20,14 +20,14 @@ type JobTypeEnum string
 
 // List of JobTypeEnum
 const (
-	JOBTYPEENUM_TRAINING JobTypeEnum = "TRAINING"
-	JOBTYPEENUM_IMPORT_MODEL JobTypeEnum = "IMPORT_MODEL"
-	JOBTYPEENUM_ANALYZE JobTypeEnum = "ANALYZE"
-	JOBTYPEENUM_WARMUP JobTypeEnum = "WARMUP"
+	JOBTYPEENUM_TRAINING           JobTypeEnum = "TRAINING"
+	JOBTYPEENUM_IMPORT_MODEL       JobTypeEnum = "IMPORT_MODEL"
+	JOBTYPEENUM_ANALYZE            JobTypeEnum = "ANALYZE"
+	JOBTYPEENUM_WARMUP             JobTypeEnum = "WARMUP"
 	JOBTYPEENUM_TEST_STUB_FUNCTION JobTypeEnum = "TEST_STUB_FUNCTION"
-	JOBTYPEENUM_TEST_CUSTOM_LOSS JobTypeEnum = "TEST_CUSTOM_LOSS"
-	JOBTYPEENUM_EXPORT_MODEL JobTypeEnum = "EXPORT_MODEL"
-	JOBTYPEENUM_DATASET_PARSE JobTypeEnum = "DATASET_PARSE"
+	JOBTYPEENUM_TEST_CUSTOM_LOSS   JobTypeEnum = "TEST_CUSTOM_LOSS"
+	JOBTYPEENUM_EXPORT_MODEL       JobTypeEnum = "EXPORT_MODEL"
+	JOBTYPEENUM_DATASET_PARSE      JobTypeEnum = "DATASET_PARSE"
 )
 
 // All allowed values of JobTypeEnum enum
@@ -120,4 +120,3 @@ func (v *NullableJobTypeEnum) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

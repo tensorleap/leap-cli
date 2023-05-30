@@ -19,8 +19,8 @@ var _ MappedNullable = &SessionTestData{}
 
 // SessionTestData struct for SessionTestData
 type SessionTestData struct {
-	SessionRunId string `json:"sessionRunId"`
-	Epoch float64 `json:"epoch"`
+	SessionRunId string  `json:"sessionRunId"`
+	Epoch        float64 `json:"epoch"`
 }
 
 // NewSessionTestData instantiates a new SessionTestData object
@@ -91,7 +91,7 @@ func (o *SessionTestData) SetEpoch(v float64) {
 }
 
 func (o SessionTestData) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableSessionTestData) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

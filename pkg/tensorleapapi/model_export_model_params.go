@@ -19,9 +19,9 @@ var _ MappedNullable = &ExportModelParams{}
 
 // ExportModelParams struct for ExportModelParams
 type ExportModelParams struct {
-	Type ExportModelTypeEnum `json:"type"`
-	Title string `json:"title"`
-	Epoch float64 `json:"epoch"`
+	Type  ExportModelTypeEnum `json:"type"`
+	Title string              `json:"title"`
+	Epoch float64             `json:"epoch"`
 }
 
 // NewExportModelParams instantiates a new ExportModelParams object
@@ -117,7 +117,7 @@ func (o *ExportModelParams) SetEpoch(v float64) {
 }
 
 func (o ExportModelParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -167,5 +167,3 @@ func (v *NullableExportModelParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

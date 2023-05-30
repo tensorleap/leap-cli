@@ -20,15 +20,15 @@ var _ MappedNullable = &Notification{}
 
 // Notification struct for Notification
 type Notification struct {
-	Id string `json:"_id"`
-	Organization string `json:"organization"`
-	User string `json:"user"`
-	Title string `json:"title"`
-	MessageData CustomMessageData `json:"messageData"`
-	Identifier string `json:"identifier"`
-	Context JobNotificationContext `json:"context"`
-	CreatedAt time.Time `json:"createdAt"`
-	IsRead bool `json:"isRead"`
+	Id           string                 `json:"_id"`
+	Organization string                 `json:"organization"`
+	User         string                 `json:"user"`
+	Title        string                 `json:"title"`
+	MessageData  CustomMessageData      `json:"messageData"`
+	Identifier   string                 `json:"identifier"`
+	Context      JobNotificationContext `json:"context"`
+	CreatedAt    time.Time              `json:"createdAt"`
+	IsRead       bool                   `json:"isRead"`
 }
 
 // NewNotification instantiates a new Notification object
@@ -274,7 +274,7 @@ func (o *Notification) SetIsRead(v bool) {
 }
 
 func (o Notification) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -330,5 +330,3 @@ func (v *NullableNotification) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

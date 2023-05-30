@@ -19,12 +19,12 @@ var _ MappedNullable = &ClusterInsight{}
 
 // ClusterInsight struct for ClusterInsight
 type ClusterInsight struct {
-	Type ScatterInsightType `json:"type"`
-	Filter ScatterFilter `json:"filter"`
+	Type               ScatterInsightType         `json:"type"`
+	Filter             ScatterFilter              `json:"filter"`
 	MutualInfoElements []MutualInformationElement `json:"mutual_info_elements,omitempty"`
-	NSamples float64 `json:"n_samples"`
-	AvgMetric float64 `json:"avg_metric"`
-	MetricName string `json:"metric_name"`
+	NSamples           float64                    `json:"n_samples"`
+	AvgMetric          float64                    `json:"avg_metric"`
+	MetricName         string                     `json:"metric_name"`
 }
 
 // NewClusterInsight instantiates a new ClusterInsight object
@@ -202,7 +202,7 @@ func (o *ClusterInsight) SetMetricName(v string) {
 }
 
 func (o ClusterInsight) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -257,5 +257,3 @@ func (v *NullableClusterInsight) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

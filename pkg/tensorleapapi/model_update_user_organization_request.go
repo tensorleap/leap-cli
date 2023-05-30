@@ -19,7 +19,7 @@ var _ MappedNullable = &UpdateUserOrganizationRequest{}
 
 // UpdateUserOrganizationRequest struct for UpdateUserOrganizationRequest
 type UpdateUserOrganizationRequest struct {
-	UserId string `json:"userId"`
+	UserId         string `json:"userId"`
 	OrganizationId string `json:"organizationId"`
 }
 
@@ -91,7 +91,7 @@ func (o *UpdateUserOrganizationRequest) SetOrganizationId(v string) {
 }
 
 func (o UpdateUserOrganizationRequest) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableUpdateUserOrganizationRequest) UnmarshalJSON(src []byte) error 
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

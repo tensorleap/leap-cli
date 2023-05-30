@@ -19,8 +19,8 @@ var _ MappedNullable = &TrainingParams{}
 
 // TrainingParams struct for TrainingParams
 type TrainingParams struct {
-	Epochs float64 `json:"epochs"`
-	BatchSize float64 `json:"batch_size"`
+	Epochs          float64          `json:"epochs"`
+	BatchSize       float64          `json:"batch_size"`
 	EarlyStopParams *EarlyStopParams `json:"early_stop_params,omitempty"`
 }
 
@@ -124,7 +124,7 @@ func (o *TrainingParams) SetEarlyStopParams(v EarlyStopParams) {
 }
 
 func (o TrainingParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -176,5 +176,3 @@ func (v *NullableTrainingParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

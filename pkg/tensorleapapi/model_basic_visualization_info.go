@@ -19,9 +19,9 @@ var _ MappedNullable = &BasicVisualizationInfo{}
 
 // BasicVisualizationInfo struct for BasicVisualizationInfo
 type BasicVisualizationInfo struct {
-	JobType JobTypeEnum `json:"job_type"`
+	JobType     JobTypeEnum     `json:"job_type"`
 	AnalyzeType AnalyzeTypeEnum `json:"analyze_type"`
-	Guid string `json:"guid"`
+	Guid        string          `json:"guid"`
 }
 
 // NewBasicVisualizationInfo instantiates a new BasicVisualizationInfo object
@@ -117,7 +117,7 @@ func (o *BasicVisualizationInfo) SetGuid(v string) {
 }
 
 func (o BasicVisualizationInfo) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -167,5 +167,3 @@ func (v *NullableBasicVisualizationInfo) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

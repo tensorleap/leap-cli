@@ -18,13 +18,12 @@ import (
 	"net/url"
 )
 
-
 // DefaultApiService DefaultApi service
 type DefaultApiService service
 
 type ApiActivateRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx              context.Context
+	ApiService       *DefaultApiService
 	activationParams *ActivationParams
 }
 
@@ -40,24 +39,25 @@ func (r ApiActivateRequest) Execute() (*UserData, *http.Response, error) {
 /*
 Activate Method for Activate
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiActivateRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiActivateRequest
 */
 func (a *DefaultApiService) Activate(ctx context.Context) ApiActivateRequest {
 	return ApiActivateRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return UserData
+//
+//	@return UserData
 func (a *DefaultApiService) ActivateExecute(r ApiActivateRequest) (*UserData, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *UserData
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *UserData
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.Activate")
@@ -131,8 +131,8 @@ func (a *DefaultApiService) ActivateExecute(r ApiActivateRequest) (*UserData, *h
 }
 
 type ApiAddDashboardRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                context.Context
+	ApiService         *DefaultApiService
 	addDashboardParams *AddDashboardParams
 }
 
@@ -148,24 +148,25 @@ func (r ApiAddDashboardRequest) Execute() (*AddDashboardResponse, *http.Response
 /*
 AddDashboard Method for AddDashboard
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAddDashboardRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiAddDashboardRequest
 */
 func (a *DefaultApiService) AddDashboard(ctx context.Context) ApiAddDashboardRequest {
 	return ApiAddDashboardRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return AddDashboardResponse
+//
+//	@return AddDashboardResponse
 func (a *DefaultApiService) AddDashboardExecute(r ApiAddDashboardRequest) (*AddDashboardResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *AddDashboardResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AddDashboardResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.AddDashboard")
@@ -239,8 +240,8 @@ func (a *DefaultApiService) AddDashboardExecute(r ApiAddDashboardRequest) (*AddD
 }
 
 type ApiAddDatasetRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx              context.Context
+	ApiService       *DefaultApiService
 	newDatasetParams *NewDatasetParams
 }
 
@@ -256,24 +257,25 @@ func (r ApiAddDatasetRequest) Execute() (*AddDatasetResponse, *http.Response, er
 /*
 AddDataset Method for AddDataset
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAddDatasetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiAddDatasetRequest
 */
 func (a *DefaultApiService) AddDataset(ctx context.Context) ApiAddDatasetRequest {
 	return ApiAddDatasetRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return AddDatasetResponse
+//
+//	@return AddDatasetResponse
 func (a *DefaultApiService) AddDatasetExecute(r ApiAddDatasetRequest) (*AddDatasetResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *AddDatasetResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AddDatasetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.AddDataset")
@@ -347,8 +349,8 @@ func (a *DefaultApiService) AddDatasetExecute(r ApiAddDatasetRequest) (*AddDatas
 }
 
 type ApiAddExportModelJobRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                     context.Context
+	ApiService              *DefaultApiService
 	addExportModelJobParams *AddExportModelJobParams
 }
 
@@ -364,24 +366,25 @@ func (r ApiAddExportModelJobRequest) Execute() (*Job, *http.Response, error) {
 /*
 AddExportModelJob Method for AddExportModelJob
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAddExportModelJobRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiAddExportModelJobRequest
 */
 func (a *DefaultApiService) AddExportModelJob(ctx context.Context) ApiAddExportModelJobRequest {
 	return ApiAddExportModelJobRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return Job
+//
+//	@return Job
 func (a *DefaultApiService) AddExportModelJobExecute(r ApiAddExportModelJobRequest) (*Job, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Job
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Job
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.AddExportModelJob")
@@ -455,8 +458,8 @@ func (a *DefaultApiService) AddExportModelJobExecute(r ApiAddExportModelJobReque
 }
 
 type ApiAddIssueRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx            context.Context
+	ApiService     *DefaultApiService
 	addIssueParams *AddIssueParams
 }
 
@@ -472,24 +475,25 @@ func (r ApiAddIssueRequest) Execute() (*Issue, *http.Response, error) {
 /*
 AddIssue Method for AddIssue
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAddIssueRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiAddIssueRequest
 */
 func (a *DefaultApiService) AddIssue(ctx context.Context) ApiAddIssueRequest {
 	return ApiAddIssueRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return Issue
+//
+//	@return Issue
 func (a *DefaultApiService) AddIssueExecute(r ApiAddIssueRequest) (*Issue, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Issue
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Issue
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.AddIssue")
@@ -563,8 +567,8 @@ func (a *DefaultApiService) AddIssueExecute(r ApiAddIssueRequest) (*Issue, *http
 }
 
 type ApiAddProjectRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx              context.Context
+	ApiService       *DefaultApiService
 	addProjectParams *AddProjectParams
 }
 
@@ -580,24 +584,25 @@ func (r ApiAddProjectRequest) Execute() (*AddProjectResponse, *http.Response, er
 /*
 AddProject Method for AddProject
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAddProjectRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiAddProjectRequest
 */
 func (a *DefaultApiService) AddProject(ctx context.Context) ApiAddProjectRequest {
 	return ApiAddProjectRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return AddProjectResponse
+//
+//	@return AddProjectResponse
 func (a *DefaultApiService) AddProjectExecute(r ApiAddProjectRequest) (*AddProjectResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *AddProjectResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AddProjectResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.AddProject")
@@ -671,8 +676,8 @@ func (a *DefaultApiService) AddProjectExecute(r ApiAddProjectRequest) (*AddProje
 }
 
 type ApiAddSecretManagerRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                    context.Context
+	ApiService             *DefaultApiService
 	addSecretManagerParams *AddSecretManagerParams
 }
 
@@ -688,24 +693,25 @@ func (r ApiAddSecretManagerRequest) Execute() (*AddSecretManagerResponse, *http.
 /*
 AddSecretManager Method for AddSecretManager
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAddSecretManagerRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiAddSecretManagerRequest
 */
 func (a *DefaultApiService) AddSecretManager(ctx context.Context) ApiAddSecretManagerRequest {
 	return ApiAddSecretManagerRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return AddSecretManagerResponse
+//
+//	@return AddSecretManagerResponse
 func (a *DefaultApiService) AddSecretManagerExecute(r ApiAddSecretManagerRequest) (*AddSecretManagerResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *AddSecretManagerResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AddSecretManagerResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.AddSecretManager")
@@ -779,8 +785,8 @@ func (a *DefaultApiService) AddSecretManagerExecute(r ApiAddSecretManagerRequest
 }
 
 type ApiAddVersionRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx              context.Context
+	ApiService       *DefaultApiService
 	addVersionParams *AddVersionParams
 }
 
@@ -796,24 +802,25 @@ func (r ApiAddVersionRequest) Execute() (*AddVersionResponse, *http.Response, er
 /*
 AddVersion Method for AddVersion
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiAddVersionRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiAddVersionRequest
 */
 func (a *DefaultApiService) AddVersion(ctx context.Context) ApiAddVersionRequest {
 	return ApiAddVersionRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return AddVersionResponse
+//
+//	@return AddVersionResponse
 func (a *DefaultApiService) AddVersionExecute(r ApiAddVersionRequest) (*AddVersionResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *AddVersionResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AddVersionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.AddVersion")
@@ -887,8 +894,8 @@ func (a *DefaultApiService) AddVersionExecute(r ApiAddVersionRequest) (*AddVersi
 }
 
 type ApiContinueTrainRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                 context.Context
+	ApiService          *DefaultApiService
 	continueTrainParams *ContinueTrainParams
 }
 
@@ -904,24 +911,25 @@ func (r ApiContinueTrainRequest) Execute() (*Job, *http.Response, error) {
 /*
 ContinueTrain Method for ContinueTrain
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiContinueTrainRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiContinueTrainRequest
 */
 func (a *DefaultApiService) ContinueTrain(ctx context.Context) ApiContinueTrainRequest {
 	return ApiContinueTrainRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return Job
+//
+//	@return Job
 func (a *DefaultApiService) ContinueTrainExecute(r ApiContinueTrainRequest) (*Job, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Job
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Job
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.ContinueTrain")
@@ -995,8 +1003,8 @@ func (a *DefaultApiService) ContinueTrainExecute(r ApiContinueTrainRequest) (*Jo
 }
 
 type ApiCreateOrganizationRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                       context.Context
+	ApiService                *DefaultApiService
 	createOrganizationRequest *CreateOrganizationRequest
 }
 
@@ -1012,24 +1020,25 @@ func (r ApiCreateOrganizationRequest) Execute() (*CreateOrganizationResponse, *h
 /*
 CreateOrganization Method for CreateOrganization
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiCreateOrganizationRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateOrganizationRequest
 */
 func (a *DefaultApiService) CreateOrganization(ctx context.Context) ApiCreateOrganizationRequest {
 	return ApiCreateOrganizationRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return CreateOrganizationResponse
+//
+//	@return CreateOrganizationResponse
 func (a *DefaultApiService) CreateOrganizationExecute(r ApiCreateOrganizationRequest) (*CreateOrganizationResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *CreateOrganizationResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *CreateOrganizationResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreateOrganization")
@@ -1103,8 +1112,8 @@ func (a *DefaultApiService) CreateOrganizationExecute(r ApiCreateOrganizationReq
 }
 
 type ApiCreateSessionTestRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                      context.Context
+	ApiService               *DefaultApiService
 	createSessionTestRequest *CreateSessionTestRequest
 }
 
@@ -1120,24 +1129,25 @@ func (r ApiCreateSessionTestRequest) Execute() (string, *http.Response, error) {
 /*
 CreateSessionTest Method for CreateSessionTest
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiCreateSessionTestRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateSessionTestRequest
 */
 func (a *DefaultApiService) CreateSessionTest(ctx context.Context) ApiCreateSessionTestRequest {
 	return ApiCreateSessionTestRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return string
+//
+//	@return string
 func (a *DefaultApiService) CreateSessionTestExecute(r ApiCreateSessionTestRequest) (string, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  string
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue string
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.CreateSessionTest")
@@ -1211,8 +1221,8 @@ func (a *DefaultApiService) CreateSessionTestExecute(r ApiCreateSessionTestReque
 }
 
 type ApiDeleteDashboardRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                   context.Context
+	ApiService            *DefaultApiService
 	deleteDashboardParams *DeleteDashboardParams
 }
 
@@ -1228,22 +1238,22 @@ func (r ApiDeleteDashboardRequest) Execute() (*http.Response, error) {
 /*
 DeleteDashboard Method for DeleteDashboard
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiDeleteDashboardRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiDeleteDashboardRequest
 */
 func (a *DefaultApiService) DeleteDashboard(ctx context.Context) ApiDeleteDashboardRequest {
 	return ApiDeleteDashboardRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *DefaultApiService) DeleteDashboardExecute(r ApiDeleteDashboardRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteDashboard")
@@ -1308,8 +1318,8 @@ func (a *DefaultApiService) DeleteDashboardExecute(r ApiDeleteDashboardRequest) 
 }
 
 type ApiDeleteIssueRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx               context.Context
+	ApiService        *DefaultApiService
 	deleteIssueParams *DeleteIssueParams
 }
 
@@ -1325,22 +1335,22 @@ func (r ApiDeleteIssueRequest) Execute() (*http.Response, error) {
 /*
 DeleteIssue Method for DeleteIssue
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiDeleteIssueRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiDeleteIssueRequest
 */
 func (a *DefaultApiService) DeleteIssue(ctx context.Context) ApiDeleteIssueRequest {
 	return ApiDeleteIssueRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *DefaultApiService) DeleteIssueExecute(r ApiDeleteIssueRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteIssue")
@@ -1405,8 +1415,8 @@ func (a *DefaultApiService) DeleteIssueExecute(r ApiDeleteIssueRequest) (*http.R
 }
 
 type ApiDeleteOrganizationRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                       context.Context
+	ApiService                *DefaultApiService
 	deleteOrganizationRequest *DeleteOrganizationRequest
 }
 
@@ -1422,22 +1432,22 @@ func (r ApiDeleteOrganizationRequest) Execute() (*http.Response, error) {
 /*
 DeleteOrganization Method for DeleteOrganization
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiDeleteOrganizationRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiDeleteOrganizationRequest
 */
 func (a *DefaultApiService) DeleteOrganization(ctx context.Context) ApiDeleteOrganizationRequest {
 	return ApiDeleteOrganizationRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *DefaultApiService) DeleteOrganizationExecute(r ApiDeleteOrganizationRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteOrganization")
@@ -1502,8 +1512,8 @@ func (a *DefaultApiService) DeleteOrganizationExecute(r ApiDeleteOrganizationReq
 }
 
 type ApiDeleteProjectRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                 context.Context
+	ApiService          *DefaultApiService
 	deleteProjectParams *DeleteProjectParams
 }
 
@@ -1519,22 +1529,22 @@ func (r ApiDeleteProjectRequest) Execute() (*http.Response, error) {
 /*
 DeleteProject Method for DeleteProject
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiDeleteProjectRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiDeleteProjectRequest
 */
 func (a *DefaultApiService) DeleteProject(ctx context.Context) ApiDeleteProjectRequest {
 	return ApiDeleteProjectRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *DefaultApiService) DeleteProjectExecute(r ApiDeleteProjectRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteProject")
@@ -1599,8 +1609,8 @@ func (a *DefaultApiService) DeleteProjectExecute(r ApiDeleteProjectRequest) (*ht
 }
 
 type ApiDeleteSessionRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                 context.Context
+	ApiService          *DefaultApiService
 	deleteSessionParams *DeleteSessionParams
 }
 
@@ -1616,22 +1626,22 @@ func (r ApiDeleteSessionRequest) Execute() (*http.Response, error) {
 /*
 DeleteSession Method for DeleteSession
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiDeleteSessionRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiDeleteSessionRequest
 */
 func (a *DefaultApiService) DeleteSession(ctx context.Context) ApiDeleteSessionRequest {
 	return ApiDeleteSessionRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *DefaultApiService) DeleteSessionExecute(r ApiDeleteSessionRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteSession")
@@ -1696,8 +1706,8 @@ func (a *DefaultApiService) DeleteSessionExecute(r ApiDeleteSessionRequest) (*ht
 }
 
 type ApiDeleteSessionRunRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                    context.Context
+	ApiService             *DefaultApiService
 	deleteSessionRunParams *DeleteSessionRunParams
 }
 
@@ -1713,22 +1723,22 @@ func (r ApiDeleteSessionRunRequest) Execute() (*http.Response, error) {
 /*
 DeleteSessionRun Method for DeleteSessionRun
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiDeleteSessionRunRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiDeleteSessionRunRequest
 */
 func (a *DefaultApiService) DeleteSessionRun(ctx context.Context) ApiDeleteSessionRunRequest {
 	return ApiDeleteSessionRunRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *DefaultApiService) DeleteSessionRunExecute(r ApiDeleteSessionRunRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteSessionRun")
@@ -1793,8 +1803,8 @@ func (a *DefaultApiService) DeleteSessionRunExecute(r ApiDeleteSessionRunRequest
 }
 
 type ApiDeleteSessionTestRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                      context.Context
+	ApiService               *DefaultApiService
 	deleteSessionTestRequest *DeleteSessionTestRequest
 }
 
@@ -1810,22 +1820,22 @@ func (r ApiDeleteSessionTestRequest) Execute() (*http.Response, error) {
 /*
 DeleteSessionTest Method for DeleteSessionTest
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiDeleteSessionTestRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiDeleteSessionTestRequest
 */
 func (a *DefaultApiService) DeleteSessionTest(ctx context.Context) ApiDeleteSessionTestRequest {
 	return ApiDeleteSessionTestRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *DefaultApiService) DeleteSessionTestExecute(r ApiDeleteSessionTestRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteSessionTest")
@@ -1890,8 +1900,8 @@ func (a *DefaultApiService) DeleteSessionTestExecute(r ApiDeleteSessionTestReque
 }
 
 type ApiDeleteUserByIdRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                   context.Context
+	ApiService            *DefaultApiService
 	deleteUserByIdRequest *DeleteUserByIdRequest
 }
 
@@ -1907,22 +1917,22 @@ func (r ApiDeleteUserByIdRequest) Execute() (*http.Response, error) {
 /*
 DeleteUserById Method for DeleteUserById
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiDeleteUserByIdRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiDeleteUserByIdRequest
 */
 func (a *DefaultApiService) DeleteUserById(ctx context.Context) ApiDeleteUserByIdRequest {
 	return ApiDeleteUserByIdRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *DefaultApiService) DeleteUserByIdExecute(r ApiDeleteUserByIdRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteUserById")
@@ -1987,8 +1997,8 @@ func (a *DefaultApiService) DeleteUserByIdExecute(r ApiDeleteUserByIdRequest) (*
 }
 
 type ApiDeleteVersionRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                 context.Context
+	ApiService          *DefaultApiService
 	deleteVersionParams *DeleteVersionParams
 }
 
@@ -2004,22 +2014,22 @@ func (r ApiDeleteVersionRequest) Execute() (*http.Response, error) {
 /*
 DeleteVersion Method for DeleteVersion
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiDeleteVersionRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiDeleteVersionRequest
 */
 func (a *DefaultApiService) DeleteVersion(ctx context.Context) ApiDeleteVersionRequest {
 	return ApiDeleteVersionRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *DefaultApiService) DeleteVersionExecute(r ApiDeleteVersionRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteVersion")
@@ -2084,8 +2094,8 @@ func (a *DefaultApiService) DeleteVersionExecute(r ApiDeleteVersionRequest) (*ht
 }
 
 type ApiDeleteVisualizationsRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                        context.Context
+	ApiService                 *DefaultApiService
 	deleteVisualizationsParams *DeleteVisualizationsParams
 }
 
@@ -2101,22 +2111,22 @@ func (r ApiDeleteVisualizationsRequest) Execute() (*http.Response, error) {
 /*
 DeleteVisualizations Method for DeleteVisualizations
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiDeleteVisualizationsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiDeleteVisualizationsRequest
 */
 func (a *DefaultApiService) DeleteVisualizations(ctx context.Context) ApiDeleteVisualizationsRequest {
 	return ApiDeleteVisualizationsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *DefaultApiService) DeleteVisualizationsExecute(r ApiDeleteVisualizationsRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.DeleteVisualizations")
@@ -2181,8 +2191,8 @@ func (a *DefaultApiService) DeleteVisualizationsExecute(r ApiDeleteVisualization
 }
 
 type ApiEvaluateRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx            context.Context
+	ApiService     *DefaultApiService
 	evaluateParams *EvaluateParams
 }
 
@@ -2198,24 +2208,25 @@ func (r ApiEvaluateRequest) Execute() (*Job, *http.Response, error) {
 /*
 Evaluate Method for Evaluate
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiEvaluateRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiEvaluateRequest
 */
 func (a *DefaultApiService) Evaluate(ctx context.Context) ApiEvaluateRequest {
 	return ApiEvaluateRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return Job
+//
+//	@return Job
 func (a *DefaultApiService) EvaluateExecute(r ApiEvaluateRequest) (*Job, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Job
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Job
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.Evaluate")
@@ -2289,8 +2300,8 @@ func (a *DefaultApiService) EvaluateExecute(r ApiEvaluateRequest) (*Job, *http.R
 }
 
 type ApiExtendTrialRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx               context.Context
+	ApiService        *DefaultApiService
 	extendTrialParams *ExtendTrialParams
 }
 
@@ -2306,24 +2317,25 @@ func (r ApiExtendTrialRequest) Execute() (*ExtendTrialResponse, *http.Response, 
 /*
 ExtendTrial Method for ExtendTrial
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiExtendTrialRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiExtendTrialRequest
 */
 func (a *DefaultApiService) ExtendTrial(ctx context.Context) ApiExtendTrialRequest {
 	return ApiExtendTrialRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return ExtendTrialResponse
+//
+//	@return ExtendTrialResponse
 func (a *DefaultApiService) ExtendTrialExecute(r ApiExtendTrialRequest) (*ExtendTrialResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ExtendTrialResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ExtendTrialResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.ExtendTrial")
@@ -2397,8 +2409,8 @@ func (a *DefaultApiService) ExtendTrialExecute(r ApiExtendTrialRequest) (*Extend
 }
 
 type ApiGetAllProjectSessionTestsRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                              context.Context
+	ApiService                       *DefaultApiService
 	getAllProjectSessionTestsRequest *GetAllProjectSessionTestsRequest
 }
 
@@ -2414,24 +2426,25 @@ func (r ApiGetAllProjectSessionTestsRequest) Execute() ([]SessionTest, *http.Res
 /*
 GetAllProjectSessionTests Method for GetAllProjectSessionTests
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetAllProjectSessionTestsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetAllProjectSessionTestsRequest
 */
 func (a *DefaultApiService) GetAllProjectSessionTests(ctx context.Context) ApiGetAllProjectSessionTestsRequest {
 	return ApiGetAllProjectSessionTestsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return []SessionTest
+//
+//	@return []SessionTest
 func (a *DefaultApiService) GetAllProjectSessionTestsExecute(r ApiGetAllProjectSessionTestsRequest) ([]SessionTest, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []SessionTest
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []SessionTest
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetAllProjectSessionTests")
@@ -2505,7 +2518,7 @@ func (a *DefaultApiService) GetAllProjectSessionTestsExecute(r ApiGetAllProjectS
 }
 
 type ApiGetAllSlimUserDataRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
 }
 
@@ -2516,24 +2529,25 @@ func (r ApiGetAllSlimUserDataRequest) Execute() (*GetOrganizationUsersResponse, 
 /*
 GetAllSlimUserData Method for GetAllSlimUserData
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetAllSlimUserDataRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetAllSlimUserDataRequest
 */
 func (a *DefaultApiService) GetAllSlimUserData(ctx context.Context) ApiGetAllSlimUserDataRequest {
 	return ApiGetAllSlimUserDataRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetOrganizationUsersResponse
+//
+//	@return GetOrganizationUsersResponse
 func (a *DefaultApiService) GetAllSlimUserDataExecute(r ApiGetAllSlimUserDataRequest) (*GetOrganizationUsersResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetOrganizationUsersResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetOrganizationUsersResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetAllSlimUserData")
@@ -2602,9 +2616,9 @@ func (a *DefaultApiService) GetAllSlimUserDataExecute(r ApiGetAllSlimUserDataReq
 }
 
 type ApiGetBalancedAccuracyRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
-	body *ConfusionMatrixParams
+	body       *ConfusionMatrixParams
 }
 
 func (r ApiGetBalancedAccuracyRequest) Body(body ConfusionMatrixParams) ApiGetBalancedAccuracyRequest {
@@ -2619,24 +2633,25 @@ func (r ApiGetBalancedAccuracyRequest) Execute() (*MultiChartsResponse, *http.Re
 /*
 GetBalancedAccuracy Method for GetBalancedAccuracy
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetBalancedAccuracyRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetBalancedAccuracyRequest
 */
 func (a *DefaultApiService) GetBalancedAccuracy(ctx context.Context) ApiGetBalancedAccuracyRequest {
 	return ApiGetBalancedAccuracyRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return MultiChartsResponse
+//
+//	@return MultiChartsResponse
 func (a *DefaultApiService) GetBalancedAccuracyExecute(r ApiGetBalancedAccuracyRequest) (*MultiChartsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *MultiChartsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *MultiChartsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetBalancedAccuracy")
@@ -2710,8 +2725,8 @@ func (a *DefaultApiService) GetBalancedAccuracyExecute(r ApiGetBalancedAccuracyR
 }
 
 type ApiGetConfusionMetricNamesRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                        context.Context
+	ApiService                 *DefaultApiService
 	confusionMetricNamesParams *ConfusionMetricNamesParams
 }
 
@@ -2727,24 +2742,25 @@ func (r ApiGetConfusionMetricNamesRequest) Execute() ([]GetConfusionMetricNamesO
 /*
 GetConfusionMetricNames Method for GetConfusionMetricNames
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetConfusionMetricNamesRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetConfusionMetricNamesRequest
 */
 func (a *DefaultApiService) GetConfusionMetricNames(ctx context.Context) ApiGetConfusionMetricNamesRequest {
 	return ApiGetConfusionMetricNamesRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return []GetConfusionMetricNamesObject
+//
+//	@return []GetConfusionMetricNamesObject
 func (a *DefaultApiService) GetConfusionMetricNamesExecute(r ApiGetConfusionMetricNamesRequest) ([]GetConfusionMetricNamesObject, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []GetConfusionMetricNamesObject
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []GetConfusionMetricNamesObject
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetConfusionMetricNames")
@@ -2818,8 +2834,8 @@ func (a *DefaultApiService) GetConfusionMetricNamesExecute(r ApiGetConfusionMetr
 }
 
 type ApiGetCurrentProjectVersionRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                            context.Context
+	ApiService                     *DefaultApiService
 	getCurrentProjectVersionParams *GetCurrentProjectVersionParams
 }
 
@@ -2835,24 +2851,25 @@ func (r ApiGetCurrentProjectVersionRequest) Execute() (*GetCurrentProjectVersion
 /*
 GetCurrentProjectVersion Method for GetCurrentProjectVersion
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetCurrentProjectVersionRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetCurrentProjectVersionRequest
 */
 func (a *DefaultApiService) GetCurrentProjectVersion(ctx context.Context) ApiGetCurrentProjectVersionRequest {
 	return ApiGetCurrentProjectVersionRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetCurrentProjectVersionResponse
+//
+//	@return GetCurrentProjectVersionResponse
 func (a *DefaultApiService) GetCurrentProjectVersionExecute(r ApiGetCurrentProjectVersionRequest) (*GetCurrentProjectVersionResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetCurrentProjectVersionResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetCurrentProjectVersionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetCurrentProjectVersion")
@@ -2926,8 +2943,8 @@ func (a *DefaultApiService) GetCurrentProjectVersionExecute(r ApiGetCurrentProje
 }
 
 type ApiGetDashboardRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                context.Context
+	ApiService         *DefaultApiService
 	getDashboardParams *GetDashboardParams
 }
 
@@ -2943,24 +2960,25 @@ func (r ApiGetDashboardRequest) Execute() (*GetDashboardResponse, *http.Response
 /*
 GetDashboard Method for GetDashboard
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetDashboardRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetDashboardRequest
 */
 func (a *DefaultApiService) GetDashboard(ctx context.Context) ApiGetDashboardRequest {
 	return ApiGetDashboardRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetDashboardResponse
+//
+//	@return GetDashboardResponse
 func (a *DefaultApiService) GetDashboardExecute(r ApiGetDashboardRequest) (*GetDashboardResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetDashboardResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetDashboardResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetDashboard")
@@ -3034,8 +3052,8 @@ func (a *DefaultApiService) GetDashboardExecute(r ApiGetDashboardRequest) (*GetD
 }
 
 type ApiGetDashletFieldsRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                    context.Context
+	ApiService             *DefaultApiService
 	getDashletFieldsParams *GetDashletFieldsParams
 }
 
@@ -3051,24 +3069,25 @@ func (r ApiGetDashletFieldsRequest) Execute() (*GetDashletFieldsResponse, *http.
 /*
 GetDashletFields Method for GetDashletFields
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetDashletFieldsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetDashletFieldsRequest
 */
 func (a *DefaultApiService) GetDashletFields(ctx context.Context) ApiGetDashletFieldsRequest {
 	return ApiGetDashletFieldsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetDashletFieldsResponse
+//
+//	@return GetDashletFieldsResponse
 func (a *DefaultApiService) GetDashletFieldsExecute(r ApiGetDashletFieldsRequest) (*GetDashletFieldsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetDashletFieldsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetDashletFieldsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetDashletFields")
@@ -3142,8 +3161,8 @@ func (a *DefaultApiService) GetDashletFieldsExecute(r ApiGetDashletFieldsRequest
 }
 
 type ApiGetDatasetVersionRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                     context.Context
+	ApiService              *DefaultApiService
 	getDatasetVersionParams *GetDatasetVersionParams
 }
 
@@ -3159,24 +3178,25 @@ func (r ApiGetDatasetVersionRequest) Execute() (*GetDatasetVersionResponse, *htt
 /*
 GetDatasetVersion Method for GetDatasetVersion
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetDatasetVersionRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetDatasetVersionRequest
 */
 func (a *DefaultApiService) GetDatasetVersion(ctx context.Context) ApiGetDatasetVersionRequest {
 	return ApiGetDatasetVersionRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetDatasetVersionResponse
+//
+//	@return GetDatasetVersionResponse
 func (a *DefaultApiService) GetDatasetVersionExecute(r ApiGetDatasetVersionRequest) (*GetDatasetVersionResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetDatasetVersionResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetDatasetVersionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetDatasetVersion")
@@ -3250,7 +3270,7 @@ func (a *DefaultApiService) GetDatasetVersionExecute(r ApiGetDatasetVersionReque
 }
 
 type ApiGetDatasetVersionUploadUrlRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
 }
 
@@ -3261,24 +3281,25 @@ func (r ApiGetDatasetVersionUploadUrlRequest) Execute() (*DatasetVersionUploadUr
 /*
 GetDatasetVersionUploadUrl Method for GetDatasetVersionUploadUrl
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetDatasetVersionUploadUrlRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetDatasetVersionUploadUrlRequest
 */
 func (a *DefaultApiService) GetDatasetVersionUploadUrl(ctx context.Context) ApiGetDatasetVersionUploadUrlRequest {
 	return ApiGetDatasetVersionUploadUrlRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return DatasetVersionUploadUrlResponse
+//
+//	@return DatasetVersionUploadUrlResponse
 func (a *DefaultApiService) GetDatasetVersionUploadUrlExecute(r ApiGetDatasetVersionUploadUrlRequest) (*DatasetVersionUploadUrlResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *DatasetVersionUploadUrlResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DatasetVersionUploadUrlResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetDatasetVersionUploadUrl")
@@ -3347,8 +3368,8 @@ func (a *DefaultApiService) GetDatasetVersionUploadUrlExecute(r ApiGetDatasetVer
 }
 
 type ApiGetDatasetVersionsRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                      context.Context
+	ApiService               *DefaultApiService
 	getDatasetVersionsParams *GetDatasetVersionsParams
 }
 
@@ -3364,24 +3385,25 @@ func (r ApiGetDatasetVersionsRequest) Execute() (*GetDatasetVersionsResponse, *h
 /*
 GetDatasetVersions Method for GetDatasetVersions
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetDatasetVersionsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetDatasetVersionsRequest
 */
 func (a *DefaultApiService) GetDatasetVersions(ctx context.Context) ApiGetDatasetVersionsRequest {
 	return ApiGetDatasetVersionsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetDatasetVersionsResponse
+//
+//	@return GetDatasetVersionsResponse
 func (a *DefaultApiService) GetDatasetVersionsExecute(r ApiGetDatasetVersionsRequest) (*GetDatasetVersionsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetDatasetVersionsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetDatasetVersionsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetDatasetVersions")
@@ -3455,7 +3477,7 @@ func (a *DefaultApiService) GetDatasetVersionsExecute(r ApiGetDatasetVersionsReq
 }
 
 type ApiGetDatasetsRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
 }
 
@@ -3466,24 +3488,25 @@ func (r ApiGetDatasetsRequest) Execute() (*GetDatasetsResponse, *http.Response, 
 /*
 GetDatasets Method for GetDatasets
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetDatasetsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetDatasetsRequest
 */
 func (a *DefaultApiService) GetDatasets(ctx context.Context) ApiGetDatasetsRequest {
 	return ApiGetDatasetsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetDatasetsResponse
+//
+//	@return GetDatasetsResponse
 func (a *DefaultApiService) GetDatasetsExecute(r ApiGetDatasetsRequest) (*GetDatasetsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetDatasetsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetDatasetsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetDatasets")
@@ -3552,7 +3575,7 @@ func (a *DefaultApiService) GetDatasetsExecute(r ApiGetDatasetsRequest) (*GetDat
 }
 
 type ApiGetEnvironmentInfoRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
 }
 
@@ -3563,24 +3586,25 @@ func (r ApiGetEnvironmentInfoRequest) Execute() (*GetEnvironmentInfoResponse, *h
 /*
 GetEnvironmentInfo Method for GetEnvironmentInfo
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetEnvironmentInfoRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetEnvironmentInfoRequest
 */
 func (a *DefaultApiService) GetEnvironmentInfo(ctx context.Context) ApiGetEnvironmentInfoRequest {
 	return ApiGetEnvironmentInfoRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetEnvironmentInfoResponse
+//
+//	@return GetEnvironmentInfoResponse
 func (a *DefaultApiService) GetEnvironmentInfoExecute(r ApiGetEnvironmentInfoRequest) (*GetEnvironmentInfoResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetEnvironmentInfoResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetEnvironmentInfoResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetEnvironmentInfo")
@@ -3649,8 +3673,8 @@ func (a *DefaultApiService) GetEnvironmentInfoExecute(r ApiGetEnvironmentInfoReq
 }
 
 type ApiGetExportedSessionJobsRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                             context.Context
+	ApiService                      *DefaultApiService
 	getExportedSessionRunJobsParams *GetExportedSessionRunJobsParams
 }
 
@@ -3666,24 +3690,25 @@ func (r ApiGetExportedSessionJobsRequest) Execute() (*GetExportedSessionRunJobsR
 /*
 GetExportedSessionJobs Method for GetExportedSessionJobs
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetExportedSessionJobsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetExportedSessionJobsRequest
 */
 func (a *DefaultApiService) GetExportedSessionJobs(ctx context.Context) ApiGetExportedSessionJobsRequest {
 	return ApiGetExportedSessionJobsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetExportedSessionRunJobsResponse
+//
+//	@return GetExportedSessionRunJobsResponse
 func (a *DefaultApiService) GetExportedSessionJobsExecute(r ApiGetExportedSessionJobsRequest) (*GetExportedSessionRunJobsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetExportedSessionRunJobsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetExportedSessionRunJobsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetExportedSessionJobs")
@@ -3757,9 +3782,9 @@ func (a *DefaultApiService) GetExportedSessionJobsExecute(r ApiGetExportedSessio
 }
 
 type ApiGetF1ScoreRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
-	body *ConfusionMatrixParams
+	body       *ConfusionMatrixParams
 }
 
 func (r ApiGetF1ScoreRequest) Body(body ConfusionMatrixParams) ApiGetF1ScoreRequest {
@@ -3774,24 +3799,25 @@ func (r ApiGetF1ScoreRequest) Execute() (*MultiChartsResponse, *http.Response, e
 /*
 GetF1Score Method for GetF1Score
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetF1ScoreRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetF1ScoreRequest
 */
 func (a *DefaultApiService) GetF1Score(ctx context.Context) ApiGetF1ScoreRequest {
 	return ApiGetF1ScoreRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return MultiChartsResponse
+//
+//	@return MultiChartsResponse
 func (a *DefaultApiService) GetF1ScoreExecute(r ApiGetF1ScoreRequest) (*MultiChartsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *MultiChartsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *MultiChartsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetF1Score")
@@ -3865,8 +3891,8 @@ func (a *DefaultApiService) GetF1ScoreExecute(r ApiGetF1ScoreRequest) (*MultiCha
 }
 
 type ApiGetHeatmapChartRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                 context.Context
+	ApiService          *DefaultApiService
 	heatmapChartsParams *HeatmapChartsParams
 }
 
@@ -3882,24 +3908,25 @@ func (r ApiGetHeatmapChartRequest) Execute() (*MultiChartsResponse, *http.Respon
 /*
 GetHeatmapChart Method for GetHeatmapChart
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetHeatmapChartRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetHeatmapChartRequest
 */
 func (a *DefaultApiService) GetHeatmapChart(ctx context.Context) ApiGetHeatmapChartRequest {
 	return ApiGetHeatmapChartRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return MultiChartsResponse
+//
+//	@return MultiChartsResponse
 func (a *DefaultApiService) GetHeatmapChartExecute(r ApiGetHeatmapChartRequest) (*MultiChartsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *MultiChartsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *MultiChartsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetHeatmapChart")
@@ -3973,8 +4000,8 @@ func (a *DefaultApiService) GetHeatmapChartExecute(r ApiGetHeatmapChartRequest) 
 }
 
 type ApiGetJobsRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx           context.Context
+	ApiService    *DefaultApiService
 	getJobsParams *GetJobsParams
 }
 
@@ -3990,24 +4017,25 @@ func (r ApiGetJobsRequest) Execute() (*GetJobsResponse, *http.Response, error) {
 /*
 GetJobs Method for GetJobs
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetJobsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetJobsRequest
 */
 func (a *DefaultApiService) GetJobs(ctx context.Context) ApiGetJobsRequest {
 	return ApiGetJobsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetJobsResponse
+//
+//	@return GetJobsResponse
 func (a *DefaultApiService) GetJobsExecute(r ApiGetJobsRequest) (*GetJobsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetJobsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetJobsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetJobs")
@@ -4081,8 +4109,8 @@ func (a *DefaultApiService) GetJobsExecute(r ApiGetJobsRequest) (*GetJobsRespons
 }
 
 type ApiGetLatestDatasetVersionRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                           context.Context
+	ApiService                    *DefaultApiService
 	getLatestDatasetVersionParams *GetLatestDatasetVersionParams
 }
 
@@ -4098,24 +4126,25 @@ func (r ApiGetLatestDatasetVersionRequest) Execute() (*GetLatestDatasetVersionRe
 /*
 GetLatestDatasetVersion Method for GetLatestDatasetVersion
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetLatestDatasetVersionRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetLatestDatasetVersionRequest
 */
 func (a *DefaultApiService) GetLatestDatasetVersion(ctx context.Context) ApiGetLatestDatasetVersionRequest {
 	return ApiGetLatestDatasetVersionRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetLatestDatasetVersionResponse
+//
+//	@return GetLatestDatasetVersionResponse
 func (a *DefaultApiService) GetLatestDatasetVersionExecute(r ApiGetLatestDatasetVersionRequest) (*GetLatestDatasetVersionResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetLatestDatasetVersionResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetLatestDatasetVersionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetLatestDatasetVersion")
@@ -4189,7 +4218,7 @@ func (a *DefaultApiService) GetLatestDatasetVersionExecute(r ApiGetLatestDataset
 }
 
 type ApiGetMachineTypesRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
 }
 
@@ -4200,24 +4229,25 @@ func (r ApiGetMachineTypesRequest) Execute() (*GetMachineTypesResponse, *http.Re
 /*
 GetMachineTypes Method for GetMachineTypes
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetMachineTypesRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetMachineTypesRequest
 */
 func (a *DefaultApiService) GetMachineTypes(ctx context.Context) ApiGetMachineTypesRequest {
 	return ApiGetMachineTypesRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetMachineTypesResponse
+//
+//	@return GetMachineTypesResponse
 func (a *DefaultApiService) GetMachineTypesExecute(r ApiGetMachineTypesRequest) (*GetMachineTypesResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetMachineTypesResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetMachineTypesResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetMachineTypes")
@@ -4286,7 +4316,7 @@ func (a *DefaultApiService) GetMachineTypesExecute(r ApiGetMachineTypesRequest) 
 }
 
 type ApiGetMaxActiveUsersRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
 }
 
@@ -4297,24 +4327,25 @@ func (r ApiGetMaxActiveUsersRequest) Execute() (*GetMaxActiveUsersResponse, *htt
 /*
 GetMaxActiveUsers Method for GetMaxActiveUsers
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetMaxActiveUsersRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetMaxActiveUsersRequest
 */
 func (a *DefaultApiService) GetMaxActiveUsers(ctx context.Context) ApiGetMaxActiveUsersRequest {
 	return ApiGetMaxActiveUsersRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetMaxActiveUsersResponse
+//
+//	@return GetMaxActiveUsersResponse
 func (a *DefaultApiService) GetMaxActiveUsersExecute(r ApiGetMaxActiveUsersRequest) (*GetMaxActiveUsersResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetMaxActiveUsersResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetMaxActiveUsersResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetMaxActiveUsers")
@@ -4383,7 +4414,7 @@ func (a *DefaultApiService) GetMaxActiveUsersExecute(r ApiGetMaxActiveUsersReque
 }
 
 type ApiGetNotificationsRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
 }
 
@@ -4394,24 +4425,25 @@ func (r ApiGetNotificationsRequest) Execute() (*GetNotificationsResponse, *http.
 /*
 GetNotifications Method for GetNotifications
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetNotificationsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetNotificationsRequest
 */
 func (a *DefaultApiService) GetNotifications(ctx context.Context) ApiGetNotificationsRequest {
 	return ApiGetNotificationsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetNotificationsResponse
+//
+//	@return GetNotificationsResponse
 func (a *DefaultApiService) GetNotificationsExecute(r ApiGetNotificationsRequest) (*GetNotificationsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetNotificationsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetNotificationsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetNotifications")
@@ -4480,8 +4512,8 @@ func (a *DefaultApiService) GetNotificationsExecute(r ApiGetNotificationsRequest
 }
 
 type ApiGetOrganizationJobsRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                       context.Context
+	ApiService                *DefaultApiService
 	getOrganizationJobsParams *GetOrganizationJobsParams
 }
 
@@ -4497,24 +4529,25 @@ func (r ApiGetOrganizationJobsRequest) Execute() (*GetJobsResponse, *http.Respon
 /*
 GetOrganizationJobs Method for GetOrganizationJobs
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetOrganizationJobsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetOrganizationJobsRequest
 */
 func (a *DefaultApiService) GetOrganizationJobs(ctx context.Context) ApiGetOrganizationJobsRequest {
 	return ApiGetOrganizationJobsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetJobsResponse
+//
+//	@return GetJobsResponse
 func (a *DefaultApiService) GetOrganizationJobsExecute(r ApiGetOrganizationJobsRequest) (*GetJobsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetJobsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetJobsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetOrganizationJobs")
@@ -4588,8 +4621,8 @@ func (a *DefaultApiService) GetOrganizationJobsExecute(r ApiGetOrganizationJobsR
 }
 
 type ApiGetOrganizationSlimUserDataRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                         context.Context
+	ApiService                  *DefaultApiService
 	getOrganizationUsersRequest *GetOrganizationUsersRequest
 }
 
@@ -4605,24 +4638,25 @@ func (r ApiGetOrganizationSlimUserDataRequest) Execute() (*GetOrganizationUsersR
 /*
 GetOrganizationSlimUserData Method for GetOrganizationSlimUserData
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetOrganizationSlimUserDataRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetOrganizationSlimUserDataRequest
 */
 func (a *DefaultApiService) GetOrganizationSlimUserData(ctx context.Context) ApiGetOrganizationSlimUserDataRequest {
 	return ApiGetOrganizationSlimUserDataRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetOrganizationUsersResponse
+//
+//	@return GetOrganizationUsersResponse
 func (a *DefaultApiService) GetOrganizationSlimUserDataExecute(r ApiGetOrganizationSlimUserDataRequest) (*GetOrganizationUsersResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetOrganizationUsersResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetOrganizationUsersResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetOrganizationSlimUserData")
@@ -4696,7 +4730,7 @@ func (a *DefaultApiService) GetOrganizationSlimUserDataExecute(r ApiGetOrganizat
 }
 
 type ApiGetOrganizationsRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
 }
 
@@ -4707,24 +4741,25 @@ func (r ApiGetOrganizationsRequest) Execute() (*GetOrganizationsResponse, *http.
 /*
 GetOrganizations Method for GetOrganizations
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetOrganizationsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetOrganizationsRequest
 */
 func (a *DefaultApiService) GetOrganizations(ctx context.Context) ApiGetOrganizationsRequest {
 	return ApiGetOrganizationsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetOrganizationsResponse
+//
+//	@return GetOrganizationsResponse
 func (a *DefaultApiService) GetOrganizationsExecute(r ApiGetOrganizationsRequest) (*GetOrganizationsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetOrganizationsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetOrganizationsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetOrganizations")
@@ -4793,9 +4828,9 @@ func (a *DefaultApiService) GetOrganizationsExecute(r ApiGetOrganizationsRequest
 }
 
 type ApiGetPrCurveRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
-	body *MultiThresholdConfusionMatrixParams
+	body       *MultiThresholdConfusionMatrixParams
 }
 
 func (r ApiGetPrCurveRequest) Body(body MultiThresholdConfusionMatrixParams) ApiGetPrCurveRequest {
@@ -4810,24 +4845,25 @@ func (r ApiGetPrCurveRequest) Execute() (*MultiChartsResponse, *http.Response, e
 /*
 GetPrCurve Method for GetPrCurve
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetPrCurveRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetPrCurveRequest
 */
 func (a *DefaultApiService) GetPrCurve(ctx context.Context) ApiGetPrCurveRequest {
 	return ApiGetPrCurveRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return MultiChartsResponse
+//
+//	@return MultiChartsResponse
 func (a *DefaultApiService) GetPrCurveExecute(r ApiGetPrCurveRequest) (*MultiChartsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *MultiChartsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *MultiChartsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetPrCurve")
@@ -4901,8 +4937,8 @@ func (a *DefaultApiService) GetPrCurveExecute(r ApiGetPrCurveRequest) (*MultiCha
 }
 
 type ApiGetProjectDashboardsRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                        context.Context
+	ApiService                 *DefaultApiService
 	getProjectDashboardsParams *GetProjectDashboardsParams
 }
 
@@ -4918,24 +4954,25 @@ func (r ApiGetProjectDashboardsRequest) Execute() (*GetProjectDashboardsResponse
 /*
 GetProjectDashboards Method for GetProjectDashboards
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetProjectDashboardsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetProjectDashboardsRequest
 */
 func (a *DefaultApiService) GetProjectDashboards(ctx context.Context) ApiGetProjectDashboardsRequest {
 	return ApiGetProjectDashboardsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetProjectDashboardsResponse
+//
+//	@return GetProjectDashboardsResponse
 func (a *DefaultApiService) GetProjectDashboardsExecute(r ApiGetProjectDashboardsRequest) (*GetProjectDashboardsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetProjectDashboardsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetProjectDashboardsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetProjectDashboards")
@@ -5009,8 +5046,8 @@ func (a *DefaultApiService) GetProjectDashboardsExecute(r ApiGetProjectDashboard
 }
 
 type ApiGetProjectIssuesRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                    context.Context
+	ApiService             *DefaultApiService
 	getProjectIssuesParams *GetProjectIssuesParams
 }
 
@@ -5026,24 +5063,25 @@ func (r ApiGetProjectIssuesRequest) Execute() (*GetProjectIssuesResponse, *http.
 /*
 GetProjectIssues Method for GetProjectIssues
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetProjectIssuesRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetProjectIssuesRequest
 */
 func (a *DefaultApiService) GetProjectIssues(ctx context.Context) ApiGetProjectIssuesRequest {
 	return ApiGetProjectIssuesRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetProjectIssuesResponse
+//
+//	@return GetProjectIssuesResponse
 func (a *DefaultApiService) GetProjectIssuesExecute(r ApiGetProjectIssuesRequest) (*GetProjectIssuesResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetProjectIssuesResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetProjectIssuesResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetProjectIssues")
@@ -5117,8 +5155,8 @@ func (a *DefaultApiService) GetProjectIssuesExecute(r ApiGetProjectIssuesRequest
 }
 
 type ApiGetProjectSlimVersionsRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                      context.Context
+	ApiService               *DefaultApiService
 	getProjectVersionsParams *GetProjectVersionsParams
 }
 
@@ -5134,24 +5172,25 @@ func (r ApiGetProjectSlimVersionsRequest) Execute() (*GetProjectSlimVersionsResp
 /*
 GetProjectSlimVersions Method for GetProjectSlimVersions
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetProjectSlimVersionsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetProjectSlimVersionsRequest
 */
 func (a *DefaultApiService) GetProjectSlimVersions(ctx context.Context) ApiGetProjectSlimVersionsRequest {
 	return ApiGetProjectSlimVersionsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetProjectSlimVersionsResponse
+//
+//	@return GetProjectSlimVersionsResponse
 func (a *DefaultApiService) GetProjectSlimVersionsExecute(r ApiGetProjectSlimVersionsRequest) (*GetProjectSlimVersionsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetProjectSlimVersionsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetProjectSlimVersionsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetProjectSlimVersions")
@@ -5225,7 +5264,7 @@ func (a *DefaultApiService) GetProjectSlimVersionsExecute(r ApiGetProjectSlimVer
 }
 
 type ApiGetProjectsRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
 }
 
@@ -5236,24 +5275,25 @@ func (r ApiGetProjectsRequest) Execute() (*GetProjectsResponse, *http.Response, 
 /*
 GetProjects Method for GetProjects
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetProjectsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetProjectsRequest
 */
 func (a *DefaultApiService) GetProjects(ctx context.Context) ApiGetProjectsRequest {
 	return ApiGetProjectsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetProjectsResponse
+//
+//	@return GetProjectsResponse
 func (a *DefaultApiService) GetProjectsExecute(r ApiGetProjectsRequest) (*GetProjectsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetProjectsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetProjectsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetProjects")
@@ -5322,8 +5362,8 @@ func (a *DefaultApiService) GetProjectsExecute(r ApiGetProjectsRequest) (*GetPro
 }
 
 type ApiGetRecentOrganizationSessionsRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                                     context.Context
+	ApiService                              *DefaultApiService
 	recentOrganizationSessionsRequestParams *RecentOrganizationSessionsRequestParams
 }
 
@@ -5339,24 +5379,25 @@ func (r ApiGetRecentOrganizationSessionsRequest) Execute() (*RecentSessionsRespo
 /*
 GetRecentOrganizationSessions Method for GetRecentOrganizationSessions
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetRecentOrganizationSessionsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetRecentOrganizationSessionsRequest
 */
 func (a *DefaultApiService) GetRecentOrganizationSessions(ctx context.Context) ApiGetRecentOrganizationSessionsRequest {
 	return ApiGetRecentOrganizationSessionsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return RecentSessionsResponse
+//
+//	@return RecentSessionsResponse
 func (a *DefaultApiService) GetRecentOrganizationSessionsExecute(r ApiGetRecentOrganizationSessionsRequest) (*RecentSessionsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *RecentSessionsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *RecentSessionsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetRecentOrganizationSessions")
@@ -5430,9 +5471,9 @@ func (a *DefaultApiService) GetRecentOrganizationSessionsExecute(r ApiGetRecentO
 }
 
 type ApiGetRocRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
-	body *MultiThresholdConfusionMatrixParams
+	body       *MultiThresholdConfusionMatrixParams
 }
 
 func (r ApiGetRocRequest) Body(body MultiThresholdConfusionMatrixParams) ApiGetRocRequest {
@@ -5447,24 +5488,25 @@ func (r ApiGetRocRequest) Execute() (*MultiChartsResponse, *http.Response, error
 /*
 GetRoc Method for GetRoc
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetRocRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetRocRequest
 */
 func (a *DefaultApiService) GetRoc(ctx context.Context) ApiGetRocRequest {
 	return ApiGetRocRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return MultiChartsResponse
+//
+//	@return MultiChartsResponse
 func (a *DefaultApiService) GetRocExecute(r ApiGetRocRequest) (*MultiChartsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *MultiChartsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *MultiChartsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetRoc")
@@ -5538,7 +5580,7 @@ func (a *DefaultApiService) GetRocExecute(r ApiGetRocRequest) (*MultiChartsRespo
 }
 
 type ApiGetSecretManagerListRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
 }
 
@@ -5549,24 +5591,25 @@ func (r ApiGetSecretManagerListRequest) Execute() (*GetSecretManagerListResponse
 /*
 GetSecretManagerList Method for GetSecretManagerList
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetSecretManagerListRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetSecretManagerListRequest
 */
 func (a *DefaultApiService) GetSecretManagerList(ctx context.Context) ApiGetSecretManagerListRequest {
 	return ApiGetSecretManagerListRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetSecretManagerListResponse
+//
+//	@return GetSecretManagerListResponse
 func (a *DefaultApiService) GetSecretManagerListExecute(r ApiGetSecretManagerListRequest) (*GetSecretManagerListResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetSecretManagerListResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetSecretManagerListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetSecretManagerList")
@@ -5635,8 +5678,8 @@ func (a *DefaultApiService) GetSecretManagerListExecute(r ApiGetSecretManagerLis
 }
 
 type ApiGetSessionInsightsRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                      context.Context
+	ApiService               *DefaultApiService
 	getSessionInsightsParams *GetSessionInsightsParams
 }
 
@@ -5652,24 +5695,25 @@ func (r ApiGetSessionInsightsRequest) Execute() (*GetSessionInsightsResponse, *h
 /*
 GetSessionInsights Method for GetSessionInsights
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetSessionInsightsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetSessionInsightsRequest
 */
 func (a *DefaultApiService) GetSessionInsights(ctx context.Context) ApiGetSessionInsightsRequest {
 	return ApiGetSessionInsightsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetSessionInsightsResponse
+//
+//	@return GetSessionInsightsResponse
 func (a *DefaultApiService) GetSessionInsightsExecute(r ApiGetSessionInsightsRequest) (*GetSessionInsightsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetSessionInsightsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetSessionInsightsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetSessionInsights")
@@ -5743,8 +5787,8 @@ func (a *DefaultApiService) GetSessionInsightsExecute(r ApiGetSessionInsightsReq
 }
 
 type ApiGetSessionTestResultRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                          context.Context
+	ApiService                   *DefaultApiService
 	getSessionTestResultsRequest *GetSessionTestResultsRequest
 }
 
@@ -5760,24 +5804,25 @@ func (r ApiGetSessionTestResultRequest) Execute() ([]AllSessionsTestResults, *ht
 /*
 GetSessionTestResult Method for GetSessionTestResult
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetSessionTestResultRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetSessionTestResultRequest
 */
 func (a *DefaultApiService) GetSessionTestResult(ctx context.Context) ApiGetSessionTestResultRequest {
 	return ApiGetSessionTestResultRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return []AllSessionsTestResults
+//
+//	@return []AllSessionsTestResults
 func (a *DefaultApiService) GetSessionTestResultExecute(r ApiGetSessionTestResultRequest) ([]AllSessionsTestResults, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []AllSessionsTestResults
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []AllSessionsTestResults
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetSessionTestResult")
@@ -5851,8 +5896,8 @@ func (a *DefaultApiService) GetSessionTestResultExecute(r ApiGetSessionTestResul
 }
 
 type ApiGetSessionVisualizationsRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                            context.Context
+	ApiService                     *DefaultApiService
 	getSessionVisualizationsParams *GetSessionVisualizationsParams
 }
 
@@ -5868,24 +5913,25 @@ func (r ApiGetSessionVisualizationsRequest) Execute() (*GetSessionVisualizations
 /*
 GetSessionVisualizations Method for GetSessionVisualizations
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetSessionVisualizationsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetSessionVisualizationsRequest
 */
 func (a *DefaultApiService) GetSessionVisualizations(ctx context.Context) ApiGetSessionVisualizationsRequest {
 	return ApiGetSessionVisualizationsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetSessionVisualizationsResponse
+//
+//	@return GetSessionVisualizationsResponse
 func (a *DefaultApiService) GetSessionVisualizationsExecute(r ApiGetSessionVisualizationsRequest) (*GetSessionVisualizationsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetSessionVisualizationsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetSessionVisualizationsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetSessionVisualizations")
@@ -5959,8 +6005,8 @@ func (a *DefaultApiService) GetSessionVisualizationsExecute(r ApiGetSessionVisua
 }
 
 type ApiGetSessionsByHashRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                      context.Context
+	ApiService               *DefaultApiService
 	sessionHashRequestParams *SessionHashRequestParams
 }
 
@@ -5976,24 +6022,25 @@ func (r ApiGetSessionsByHashRequest) Execute() (*SessionsResponse, *http.Respons
 /*
 GetSessionsByHash Method for GetSessionsByHash
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetSessionsByHashRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetSessionsByHashRequest
 */
 func (a *DefaultApiService) GetSessionsByHash(ctx context.Context) ApiGetSessionsByHashRequest {
 	return ApiGetSessionsByHashRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return SessionsResponse
+//
+//	@return SessionsResponse
 func (a *DefaultApiService) GetSessionsByHashExecute(r ApiGetSessionsByHashRequest) (*SessionsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *SessionsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *SessionsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetSessionsByHash")
@@ -6067,8 +6114,8 @@ func (a *DefaultApiService) GetSessionsByHashExecute(r ApiGetSessionsByHashReque
 }
 
 type ApiGetSessionsByVersionIdRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                           context.Context
+	ApiService                    *DefaultApiService
 	sessionVersionIdRequestParams *SessionVersionIdRequestParams
 }
 
@@ -6084,24 +6131,25 @@ func (r ApiGetSessionsByVersionIdRequest) Execute() (*SessionsResponse, *http.Re
 /*
 GetSessionsByVersionId Method for GetSessionsByVersionId
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetSessionsByVersionIdRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetSessionsByVersionIdRequest
 */
 func (a *DefaultApiService) GetSessionsByVersionId(ctx context.Context) ApiGetSessionsByVersionIdRequest {
 	return ApiGetSessionsByVersionIdRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return SessionsResponse
+//
+//	@return SessionsResponse
 func (a *DefaultApiService) GetSessionsByVersionIdExecute(r ApiGetSessionsByVersionIdRequest) (*SessionsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *SessionsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *SessionsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetSessionsByVersionId")
@@ -6175,8 +6223,8 @@ func (a *DefaultApiService) GetSessionsByVersionIdExecute(r ApiGetSessionsByVers
 }
 
 type ApiGetSignedStoredResourceUrlRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                        context.Context
+	ApiService                 *DefaultApiService
 	getStoredResourceUrlParams *GetStoredResourceUrlParams
 }
 
@@ -6192,24 +6240,25 @@ func (r ApiGetSignedStoredResourceUrlRequest) Execute() (*SignedStoredResourseUr
 /*
 GetSignedStoredResourceUrl Method for GetSignedStoredResourceUrl
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetSignedStoredResourceUrlRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetSignedStoredResourceUrlRequest
 */
 func (a *DefaultApiService) GetSignedStoredResourceUrl(ctx context.Context) ApiGetSignedStoredResourceUrlRequest {
 	return ApiGetSignedStoredResourceUrlRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return SignedStoredResourseUrl
+//
+//	@return SignedStoredResourseUrl
 func (a *DefaultApiService) GetSignedStoredResourceUrlExecute(r ApiGetSignedStoredResourceUrlRequest) (*SignedStoredResourseUrl, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *SignedStoredResourseUrl
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *SignedStoredResourseUrl
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetSignedStoredResourceUrl")
@@ -6283,8 +6332,8 @@ func (a *DefaultApiService) GetSignedStoredResourceUrlExecute(r ApiGetSignedStor
 }
 
 type ApiGetSignedStoredUrlByVisualizationIdRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                    context.Context
+	ApiService             *DefaultApiService
 	getVisualizationParams *GetVisualizationParams
 }
 
@@ -6300,24 +6349,25 @@ func (r ApiGetSignedStoredUrlByVisualizationIdRequest) Execute() (*SignedStoredV
 /*
 GetSignedStoredUrlByVisualizationId Method for GetSignedStoredUrlByVisualizationId
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetSignedStoredUrlByVisualizationIdRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetSignedStoredUrlByVisualizationIdRequest
 */
 func (a *DefaultApiService) GetSignedStoredUrlByVisualizationId(ctx context.Context) ApiGetSignedStoredUrlByVisualizationIdRequest {
 	return ApiGetSignedStoredUrlByVisualizationIdRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return SignedStoredVisualization
+//
+//	@return SignedStoredVisualization
 func (a *DefaultApiService) GetSignedStoredUrlByVisualizationIdExecute(r ApiGetSignedStoredUrlByVisualizationIdRequest) (*SignedStoredVisualization, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *SignedStoredVisualization
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *SignedStoredVisualization
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetSignedStoredUrlByVisualizationId")
@@ -6391,8 +6441,8 @@ func (a *DefaultApiService) GetSignedStoredUrlByVisualizationIdExecute(r ApiGetS
 }
 
 type ApiGetSingleIssueRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                  context.Context
+	ApiService           *DefaultApiService
 	getSingleIssueParams *GetSingleIssueParams
 }
 
@@ -6408,24 +6458,25 @@ func (r ApiGetSingleIssueRequest) Execute() (*Issue, *http.Response, error) {
 /*
 GetSingleIssue Method for GetSingleIssue
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetSingleIssueRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetSingleIssueRequest
 */
 func (a *DefaultApiService) GetSingleIssue(ctx context.Context) ApiGetSingleIssueRequest {
 	return ApiGetSingleIssueRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return Issue
+//
+//	@return Issue
 func (a *DefaultApiService) GetSingleIssueExecute(r ApiGetSingleIssueRequest) (*Issue, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Issue
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Issue
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetSingleIssue")
@@ -6499,8 +6550,8 @@ func (a *DefaultApiService) GetSingleIssueExecute(r ApiGetSingleIssueRequest) (*
 }
 
 type ApiGetSingleSessionTestRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                         context.Context
+	ApiService                  *DefaultApiService
 	getSingleSessionTestRequest *GetSingleSessionTestRequest
 }
 
@@ -6516,24 +6567,25 @@ func (r ApiGetSingleSessionTestRequest) Execute() (*SessionTest, *http.Response,
 /*
 GetSingleSessionTest Method for GetSingleSessionTest
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetSingleSessionTestRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetSingleSessionTestRequest
 */
 func (a *DefaultApiService) GetSingleSessionTest(ctx context.Context) ApiGetSingleSessionTestRequest {
 	return ApiGetSingleSessionTestRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return SessionTest
+//
+//	@return SessionTest
 func (a *DefaultApiService) GetSingleSessionTestExecute(r ApiGetSingleSessionTestRequest) (*SessionTest, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *SessionTest
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *SessionTest
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetSingleSessionTest")
@@ -6607,7 +6659,7 @@ func (a *DefaultApiService) GetSingleSessionTestExecute(r ApiGetSingleSessionTes
 }
 
 type ApiGetStatisticsRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
 }
 
@@ -6618,24 +6670,25 @@ func (r ApiGetStatisticsRequest) Execute() (*GetStatisticsResponse, *http.Respon
 /*
 GetStatistics Method for GetStatistics
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetStatisticsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetStatisticsRequest
 */
 func (a *DefaultApiService) GetStatistics(ctx context.Context) ApiGetStatisticsRequest {
 	return ApiGetStatisticsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetStatisticsResponse
+//
+//	@return GetStatisticsResponse
 func (a *DefaultApiService) GetStatisticsExecute(r ApiGetStatisticsRequest) (*GetStatisticsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetStatisticsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetStatisticsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetStatistics")
@@ -6704,8 +6757,8 @@ func (a *DefaultApiService) GetStatisticsExecute(r ApiGetStatisticsRequest) (*Ge
 }
 
 type ApiGetStoredExportedSessionRunResourceUrlRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                                          context.Context
+	ApiService                                   *DefaultApiService
 	getStoredExportedSessionRunResourceUrlParams *GetStoredExportedSessionRunResourceUrlParams
 }
 
@@ -6721,24 +6774,25 @@ func (r ApiGetStoredExportedSessionRunResourceUrlRequest) Execute() (*GetStoredE
 /*
 GetStoredExportedSessionRunResourceUrl Method for GetStoredExportedSessionRunResourceUrl
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetStoredExportedSessionRunResourceUrlRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetStoredExportedSessionRunResourceUrlRequest
 */
 func (a *DefaultApiService) GetStoredExportedSessionRunResourceUrl(ctx context.Context) ApiGetStoredExportedSessionRunResourceUrlRequest {
 	return ApiGetStoredExportedSessionRunResourceUrlRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetStoredExportedSessionRunResourceUrlResponse
+//
+//	@return GetStoredExportedSessionRunResourceUrlResponse
 func (a *DefaultApiService) GetStoredExportedSessionRunResourceUrlExecute(r ApiGetStoredExportedSessionRunResourceUrlRequest) (*GetStoredExportedSessionRunResourceUrlResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetStoredExportedSessionRunResourceUrlResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetStoredExportedSessionRunResourceUrlResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetStoredExportedSessionRunResourceUrl")
@@ -6812,8 +6866,8 @@ func (a *DefaultApiService) GetStoredExportedSessionRunResourceUrlExecute(r ApiG
 }
 
 type ApiGetTableChartRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                    context.Context
+	ApiService             *DefaultApiService
 	genericDataQueryParams *GenericDataQueryParams
 }
 
@@ -6829,24 +6883,25 @@ func (r ApiGetTableChartRequest) Execute() (*MultiChartsResponse, *http.Response
 /*
 GetTableChart Method for GetTableChart
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetTableChartRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetTableChartRequest
 */
 func (a *DefaultApiService) GetTableChart(ctx context.Context) ApiGetTableChartRequest {
 	return ApiGetTableChartRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return MultiChartsResponse
+//
+//	@return MultiChartsResponse
 func (a *DefaultApiService) GetTableChartExecute(r ApiGetTableChartRequest) (*MultiChartsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *MultiChartsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *MultiChartsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetTableChart")
@@ -6920,8 +6975,8 @@ func (a *DefaultApiService) GetTableChartExecute(r ApiGetTableChartRequest) (*Mu
 }
 
 type ApiGetTrainingJobsRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                  context.Context
+	ApiService           *DefaultApiService
 	getTrainingJobParams *GetTrainingJobParams
 }
 
@@ -6937,24 +6992,25 @@ func (r ApiGetTrainingJobsRequest) Execute() ([]Job, *http.Response, error) {
 /*
 GetTrainingJobs Method for GetTrainingJobs
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetTrainingJobsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetTrainingJobsRequest
 */
 func (a *DefaultApiService) GetTrainingJobs(ctx context.Context) ApiGetTrainingJobsRequest {
 	return ApiGetTrainingJobsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return []Job
+//
+//	@return []Job
 func (a *DefaultApiService) GetTrainingJobsExecute(r ApiGetTrainingJobsRequest) ([]Job, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []Job
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []Job
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetTrainingJobs")
@@ -7028,8 +7084,8 @@ func (a *DefaultApiService) GetTrainingJobsExecute(r ApiGetTrainingJobsRequest) 
 }
 
 type ApiGetUploadSignedUrlRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                      context.Context
+	ApiService               *DefaultApiService
 	getUploadSignedUrlParams *GetUploadSignedUrlParams
 }
 
@@ -7045,24 +7101,25 @@ func (r ApiGetUploadSignedUrlRequest) Execute() (*ExternalImportModelStorage, *h
 /*
 GetUploadSignedUrl Method for GetUploadSignedUrl
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetUploadSignedUrlRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetUploadSignedUrlRequest
 */
 func (a *DefaultApiService) GetUploadSignedUrl(ctx context.Context) ApiGetUploadSignedUrlRequest {
 	return ApiGetUploadSignedUrlRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return ExternalImportModelStorage
+//
+//	@return ExternalImportModelStorage
 func (a *DefaultApiService) GetUploadSignedUrlExecute(r ApiGetUploadSignedUrlRequest) (*ExternalImportModelStorage, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ExternalImportModelStorage
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ExternalImportModelStorage
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetUploadSignedUrl")
@@ -7136,8 +7193,8 @@ func (a *DefaultApiService) GetUploadSignedUrlExecute(r ApiGetUploadSignedUrlReq
 }
 
 type ApiGetVisualizationRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                    context.Context
+	ApiService             *DefaultApiService
 	getVisualizationParams *GetVisualizationParams
 }
 
@@ -7153,24 +7210,25 @@ func (r ApiGetVisualizationRequest) Execute() (*Visualization, *http.Response, e
 /*
 GetVisualization Method for GetVisualization
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetVisualizationRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetVisualizationRequest
 */
 func (a *DefaultApiService) GetVisualization(ctx context.Context) ApiGetVisualizationRequest {
 	return ApiGetVisualizationRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return Visualization
+//
+//	@return Visualization
 func (a *DefaultApiService) GetVisualizationExecute(r ApiGetVisualizationRequest) (*Visualization, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Visualization
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Visualization
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetVisualization")
@@ -7244,8 +7302,8 @@ func (a *DefaultApiService) GetVisualizationExecute(r ApiGetVisualizationRequest
 }
 
 type ApiGetXYChartRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx               context.Context
+	ApiService        *DefaultApiService
 	multiChartsParams *MultiChartsParams
 }
 
@@ -7261,24 +7319,25 @@ func (r ApiGetXYChartRequest) Execute() (*MultiChartsResponse, *http.Response, e
 /*
 GetXYChart Method for GetXYChart
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetXYChartRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetXYChartRequest
 */
 func (a *DefaultApiService) GetXYChart(ctx context.Context) ApiGetXYChartRequest {
 	return ApiGetXYChartRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return MultiChartsResponse
+//
+//	@return MultiChartsResponse
 func (a *DefaultApiService) GetXYChartExecute(r ApiGetXYChartRequest) (*MultiChartsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *MultiChartsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *MultiChartsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.GetXYChart")
@@ -7352,7 +7411,7 @@ func (a *DefaultApiService) GetXYChartExecute(r ApiGetXYChartRequest) (*MultiCha
 }
 
 type ApiHealthCheckRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
 }
 
@@ -7363,24 +7422,25 @@ func (r ApiHealthCheckRequest) Execute() (*HealthCheckResponse, *http.Response, 
 /*
 HealthCheck Method for HealthCheck
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiHealthCheckRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiHealthCheckRequest
 */
 func (a *DefaultApiService) HealthCheck(ctx context.Context) ApiHealthCheckRequest {
 	return ApiHealthCheckRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return HealthCheckResponse
+//
+//	@return HealthCheckResponse
 func (a *DefaultApiService) HealthCheckExecute(r ApiHealthCheckRequest) (*HealthCheckResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *HealthCheckResponse
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *HealthCheckResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.HealthCheck")
@@ -7449,8 +7509,8 @@ func (a *DefaultApiService) HealthCheckExecute(r ApiHealthCheckRequest) (*Health
 }
 
 type ApiImportModelRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                  context.Context
+	ApiService           *DefaultApiService
 	importNewModelParams *ImportNewModelParams
 }
 
@@ -7466,24 +7526,25 @@ func (r ApiImportModelRequest) Execute() (*ExternalImportModelStorageResponse, *
 /*
 ImportModel Method for ImportModel
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiImportModelRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiImportModelRequest
 */
 func (a *DefaultApiService) ImportModel(ctx context.Context) ApiImportModelRequest {
 	return ApiImportModelRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return ExternalImportModelStorageResponse
+//
+//	@return ExternalImportModelStorageResponse
 func (a *DefaultApiService) ImportModelExecute(r ApiImportModelRequest) (*ExternalImportModelStorageResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ExternalImportModelStorageResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ExternalImportModelStorageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.ImportModel")
@@ -7557,8 +7618,8 @@ func (a *DefaultApiService) ImportModelExecute(r ApiImportModelRequest) (*Extern
 }
 
 type ApiIsTrainingJobRunningRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                        context.Context
+	ApiService                 *DefaultApiService
 	isTrainingJobRunningParams *IsTrainingJobRunningParams
 }
 
@@ -7574,24 +7635,25 @@ func (r ApiIsTrainingJobRunningRequest) Execute() (*IsTrainingJobRunningResponse
 /*
 IsTrainingJobRunning Method for IsTrainingJobRunning
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiIsTrainingJobRunningRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiIsTrainingJobRunningRequest
 */
 func (a *DefaultApiService) IsTrainingJobRunning(ctx context.Context) ApiIsTrainingJobRunningRequest {
 	return ApiIsTrainingJobRunningRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return IsTrainingJobRunningResponse
+//
+//	@return IsTrainingJobRunningResponse
 func (a *DefaultApiService) IsTrainingJobRunningExecute(r ApiIsTrainingJobRunningRequest) (*IsTrainingJobRunningResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *IsTrainingJobRunningResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *IsTrainingJobRunningResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.IsTrainingJobRunning")
@@ -7665,7 +7727,7 @@ func (a *DefaultApiService) IsTrainingJobRunningExecute(r ApiIsTrainingJobRunnin
 }
 
 type ApiKeyGenRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
 }
 
@@ -7676,24 +7738,25 @@ func (r ApiKeyGenRequest) Execute() (*RotateApiKeyResponse, *http.Response, erro
 /*
 KeyGen Method for KeyGen
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiKeyGenRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiKeyGenRequest
 */
 func (a *DefaultApiService) KeyGen(ctx context.Context) ApiKeyGenRequest {
 	return ApiKeyGenRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return RotateApiKeyResponse
+//
+//	@return RotateApiKeyResponse
 func (a *DefaultApiService) KeyGenExecute(r ApiKeyGenRequest) (*RotateApiKeyResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *RotateApiKeyResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *RotateApiKeyResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.KeyGen")
@@ -7762,8 +7825,8 @@ func (a *DefaultApiService) KeyGenExecute(r ApiKeyGenRequest) (*RotateApiKeyResp
 }
 
 type ApiLoadModelRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx               context.Context
+	ApiService        *DefaultApiService
 	loadSessionParams *LoadSessionParams
 }
 
@@ -7779,24 +7842,25 @@ func (r ApiLoadModelRequest) Execute() (*LoadSessionResponse, *http.Response, er
 /*
 LoadModel Method for LoadModel
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiLoadModelRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiLoadModelRequest
 */
 func (a *DefaultApiService) LoadModel(ctx context.Context) ApiLoadModelRequest {
 	return ApiLoadModelRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return LoadSessionResponse
+//
+//	@return LoadSessionResponse
 func (a *DefaultApiService) LoadModelExecute(r ApiLoadModelRequest) (*LoadSessionResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *LoadSessionResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *LoadSessionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.LoadModel")
@@ -7870,8 +7934,8 @@ func (a *DefaultApiService) LoadModelExecute(r ApiLoadModelRequest) (*LoadSessio
 }
 
 type ApiLoadVersionRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx               context.Context
+	ApiService        *DefaultApiService
 	loadVersionParams *LoadVersionParams
 }
 
@@ -7887,24 +7951,25 @@ func (r ApiLoadVersionRequest) Execute() (*LoadVersionResponse, *http.Response, 
 /*
 LoadVersion Method for LoadVersion
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiLoadVersionRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiLoadVersionRequest
 */
 func (a *DefaultApiService) LoadVersion(ctx context.Context) ApiLoadVersionRequest {
 	return ApiLoadVersionRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return LoadVersionResponse
+//
+//	@return LoadVersionResponse
 func (a *DefaultApiService) LoadVersionExecute(r ApiLoadVersionRequest) (*LoadVersionResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *LoadVersionResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *LoadVersionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.LoadVersion")
@@ -7978,8 +8043,8 @@ func (a *DefaultApiService) LoadVersionExecute(r ApiLoadVersionRequest) (*LoadVe
 }
 
 type ApiLoginRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx         context.Context
+	ApiService  *DefaultApiService
 	loginParams *LoginParams
 }
 
@@ -7995,24 +8060,25 @@ func (r ApiLoginRequest) Execute() (*UserData, *http.Response, error) {
 /*
 Login Method for Login
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiLoginRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiLoginRequest
 */
 func (a *DefaultApiService) Login(ctx context.Context) ApiLoginRequest {
 	return ApiLoginRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return UserData
+//
+//	@return UserData
 func (a *DefaultApiService) LoginExecute(r ApiLoginRequest) (*UserData, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *UserData
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *UserData
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.Login")
@@ -8086,7 +8152,7 @@ func (a *DefaultApiService) LoginExecute(r ApiLoginRequest) (*UserData, *http.Re
 }
 
 type ApiLogoutRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
 }
 
@@ -8097,22 +8163,22 @@ func (r ApiLogoutRequest) Execute() (*http.Response, error) {
 /*
 Logout Method for Logout
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiLogoutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiLogoutRequest
 */
 func (a *DefaultApiService) Logout(ctx context.Context) ApiLogoutRequest {
 	return ApiLogoutRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *DefaultApiService) LogoutExecute(r ApiLogoutRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.Logout")
@@ -8172,8 +8238,8 @@ func (a *DefaultApiService) LogoutExecute(r ApiLogoutRequest) (*http.Response, e
 }
 
 type ApiModifyDatasetVersionNoteRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                            context.Context
+	ApiService                     *DefaultApiService
 	modifyDatasetVersionNoteParams *ModifyDatasetVersionNoteParams
 }
 
@@ -8189,24 +8255,25 @@ func (r ApiModifyDatasetVersionNoteRequest) Execute() (*ModifyDatasetVersionNote
 /*
 ModifyDatasetVersionNote Method for ModifyDatasetVersionNote
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiModifyDatasetVersionNoteRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiModifyDatasetVersionNoteRequest
 */
 func (a *DefaultApiService) ModifyDatasetVersionNote(ctx context.Context) ApiModifyDatasetVersionNoteRequest {
 	return ApiModifyDatasetVersionNoteRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return ModifyDatasetVersionNoteResponse
+//
+//	@return ModifyDatasetVersionNoteResponse
 func (a *DefaultApiService) ModifyDatasetVersionNoteExecute(r ApiModifyDatasetVersionNoteRequest) (*ModifyDatasetVersionNoteResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ModifyDatasetVersionNoteResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ModifyDatasetVersionNoteResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.ModifyDatasetVersionNote")
@@ -8280,8 +8347,8 @@ func (a *DefaultApiService) ModifyDatasetVersionNoteExecute(r ApiModifyDatasetVe
 }
 
 type ApiPopulationExplorationRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                         context.Context
+	ApiService                  *DefaultApiService
 	populationExplorationParams *PopulationExplorationParams
 }
 
@@ -8297,24 +8364,25 @@ func (r ApiPopulationExplorationRequest) Execute() (*Job, *http.Response, error)
 /*
 PopulationExploration Method for PopulationExploration
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiPopulationExplorationRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiPopulationExplorationRequest
 */
 func (a *DefaultApiService) PopulationExploration(ctx context.Context) ApiPopulationExplorationRequest {
 	return ApiPopulationExplorationRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return Job
+//
+//	@return Job
 func (a *DefaultApiService) PopulationExplorationExecute(r ApiPopulationExplorationRequest) (*Job, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Job
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Job
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.PopulationExploration")
@@ -8388,8 +8456,8 @@ func (a *DefaultApiService) PopulationExplorationExecute(r ApiPopulationExplorat
 }
 
 type ApiSampleAnalysisRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                  context.Context
+	ApiService           *DefaultApiService
 	sampleAnalysisParams *SampleAnalysisParams
 }
 
@@ -8405,24 +8473,25 @@ func (r ApiSampleAnalysisRequest) Execute() (*Job, *http.Response, error) {
 /*
 SampleAnalysis Method for SampleAnalysis
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSampleAnalysisRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiSampleAnalysisRequest
 */
 func (a *DefaultApiService) SampleAnalysis(ctx context.Context) ApiSampleAnalysisRequest {
 	return ApiSampleAnalysisRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return Job
+//
+//	@return Job
 func (a *DefaultApiService) SampleAnalysisExecute(r ApiSampleAnalysisRequest) (*Job, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Job
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Job
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.SampleAnalysis")
@@ -8496,8 +8565,8 @@ func (a *DefaultApiService) SampleAnalysisExecute(r ApiSampleAnalysisRequest) (*
 }
 
 type ApiSampleSelectionRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                   context.Context
+	ApiService            *DefaultApiService
 	sampleSelectionParams *SampleSelectionParams
 }
 
@@ -8513,24 +8582,25 @@ func (r ApiSampleSelectionRequest) Execute() (*Job, *http.Response, error) {
 /*
 SampleSelection Method for SampleSelection
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSampleSelectionRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiSampleSelectionRequest
 */
 func (a *DefaultApiService) SampleSelection(ctx context.Context) ApiSampleSelectionRequest {
 	return ApiSampleSelectionRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return Job
+//
+//	@return Job
 func (a *DefaultApiService) SampleSelectionExecute(r ApiSampleSelectionRequest) (*Job, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Job
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Job
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.SampleSelection")
@@ -8604,8 +8674,8 @@ func (a *DefaultApiService) SampleSelectionExecute(r ApiSampleSelectionRequest) 
 }
 
 type ApiSaveAnalyzerLayoutRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                      context.Context
+	ApiService               *DefaultApiService
 	saveAnalyzerLayoutParams *SaveAnalyzerLayoutParams
 }
 
@@ -8621,22 +8691,22 @@ func (r ApiSaveAnalyzerLayoutRequest) Execute() (*http.Response, error) {
 /*
 SaveAnalyzerLayout Method for SaveAnalyzerLayout
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSaveAnalyzerLayoutRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiSaveAnalyzerLayoutRequest
 */
 func (a *DefaultApiService) SaveAnalyzerLayout(ctx context.Context) ApiSaveAnalyzerLayoutRequest {
 	return ApiSaveAnalyzerLayoutRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *DefaultApiService) SaveAnalyzerLayoutExecute(r ApiSaveAnalyzerLayoutRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.SaveAnalyzerLayout")
@@ -8701,8 +8771,8 @@ func (a *DefaultApiService) SaveAnalyzerLayoutExecute(r ApiSaveAnalyzerLayoutReq
 }
 
 type ApiSaveDatasetVersionRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                      context.Context
+	ApiService               *DefaultApiService
 	saveDatasetVersionParams *SaveDatasetVersionParams
 }
 
@@ -8718,24 +8788,25 @@ func (r ApiSaveDatasetVersionRequest) Execute() (*SaveDatasetSetupResponse, *htt
 /*
 SaveDatasetVersion Method for SaveDatasetVersion
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSaveDatasetVersionRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiSaveDatasetVersionRequest
 */
 func (a *DefaultApiService) SaveDatasetVersion(ctx context.Context) ApiSaveDatasetVersionRequest {
 	return ApiSaveDatasetVersionRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return SaveDatasetSetupResponse
+//
+//	@return SaveDatasetSetupResponse
 func (a *DefaultApiService) SaveDatasetVersionExecute(r ApiSaveDatasetVersionRequest) (*SaveDatasetSetupResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *SaveDatasetSetupResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *SaveDatasetSetupResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.SaveDatasetVersion")
@@ -8809,8 +8880,8 @@ func (a *DefaultApiService) SaveDatasetVersionExecute(r ApiSaveDatasetVersionReq
 }
 
 type ApiSendUserMessageRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                   context.Context
+	ApiService            *DefaultApiService
 	sendUserMessageParams *SendUserMessageParams
 }
 
@@ -8826,24 +8897,25 @@ func (r ApiSendUserMessageRequest) Execute() (*SendUserMessageResponse, *http.Re
 /*
 SendUserMessage Method for SendUserMessage
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSendUserMessageRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiSendUserMessageRequest
 */
 func (a *DefaultApiService) SendUserMessage(ctx context.Context) ApiSendUserMessageRequest {
 	return ApiSendUserMessageRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return SendUserMessageResponse
+//
+//	@return SendUserMessageResponse
 func (a *DefaultApiService) SendUserMessageExecute(r ApiSendUserMessageRequest) (*SendUserMessageResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *SendUserMessageResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *SendUserMessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.SendUserMessage")
@@ -8917,8 +8989,8 @@ func (a *DefaultApiService) SendUserMessageExecute(r ApiSendUserMessageRequest) 
 }
 
 type ApiSetDefaultOrganizationRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                           context.Context
+	ApiService                    *DefaultApiService
 	setDefaultOrganizationRequest *SetDefaultOrganizationRequest
 }
 
@@ -8934,22 +9006,22 @@ func (r ApiSetDefaultOrganizationRequest) Execute() (*http.Response, error) {
 /*
 SetDefaultOrganization Method for SetDefaultOrganization
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSetDefaultOrganizationRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiSetDefaultOrganizationRequest
 */
 func (a *DefaultApiService) SetDefaultOrganization(ctx context.Context) ApiSetDefaultOrganizationRequest {
 	return ApiSetDefaultOrganizationRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *DefaultApiService) SetDefaultOrganizationExecute(r ApiSetDefaultOrganizationRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.SetDefaultOrganization")
@@ -9014,8 +9086,8 @@ func (a *DefaultApiService) SetDefaultOrganizationExecute(r ApiSetDefaultOrganiz
 }
 
 type ApiSetOrganizationMachineTypeRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                              context.Context
+	ApiService                       *DefaultApiService
 	setOrganizationMachineTypeParams *SetOrganizationMachineTypeParams
 }
 
@@ -9031,22 +9103,22 @@ func (r ApiSetOrganizationMachineTypeRequest) Execute() (*http.Response, error) 
 /*
 SetOrganizationMachineType Method for SetOrganizationMachineType
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSetOrganizationMachineTypeRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiSetOrganizationMachineTypeRequest
 */
 func (a *DefaultApiService) SetOrganizationMachineType(ctx context.Context) ApiSetOrganizationMachineTypeRequest {
 	return ApiSetOrganizationMachineTypeRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *DefaultApiService) SetOrganizationMachineTypeExecute(r ApiSetOrganizationMachineTypeRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.SetOrganizationMachineType")
@@ -9111,7 +9183,7 @@ func (a *DefaultApiService) SetOrganizationMachineTypeExecute(r ApiSetOrganizati
 }
 
 type ApiSetUserNotificationsAsReadRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
 }
 
@@ -9122,24 +9194,25 @@ func (r ApiSetUserNotificationsAsReadRequest) Execute() (*SetUserNotificationsAs
 /*
 SetUserNotificationsAsRead Method for SetUserNotificationsAsRead
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSetUserNotificationsAsReadRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiSetUserNotificationsAsReadRequest
 */
 func (a *DefaultApiService) SetUserNotificationsAsRead(ctx context.Context) ApiSetUserNotificationsAsReadRequest {
 	return ApiSetUserNotificationsAsReadRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return SetUserNotificationsAsRead200Response
+//
+//	@return SetUserNotificationsAsRead200Response
 func (a *DefaultApiService) SetUserNotificationsAsReadExecute(r ApiSetUserNotificationsAsReadRequest) (*SetUserNotificationsAsRead200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *SetUserNotificationsAsRead200Response
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *SetUserNotificationsAsRead200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.SetUserNotificationsAsRead")
@@ -9208,8 +9281,8 @@ func (a *DefaultApiService) SetUserNotificationsAsReadExecute(r ApiSetUserNotifi
 }
 
 type ApiSignupRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx          context.Context
+	ApiService   *DefaultApiService
 	signupParams *SignupParams
 }
 
@@ -9225,24 +9298,25 @@ func (r ApiSignupRequest) Execute() (*SignupResponse, *http.Response, error) {
 /*
 Signup Method for Signup
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSignupRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiSignupRequest
 */
 func (a *DefaultApiService) Signup(ctx context.Context) ApiSignupRequest {
 	return ApiSignupRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return SignupResponse
+//
+//	@return SignupResponse
 func (a *DefaultApiService) SignupExecute(r ApiSignupRequest) (*SignupResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *SignupResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *SignupResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.Signup")
@@ -9316,8 +9390,8 @@ func (a *DefaultApiService) SignupExecute(r ApiSignupRequest) (*SignupResponse, 
 }
 
 type ApiStartTrialRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx              context.Context
+	ApiService       *DefaultApiService
 	startTrialParams *StartTrialParams
 }
 
@@ -9333,24 +9407,25 @@ func (r ApiStartTrialRequest) Execute() (*UserData, *http.Response, error) {
 /*
 StartTrial Method for StartTrial
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiStartTrialRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiStartTrialRequest
 */
 func (a *DefaultApiService) StartTrial(ctx context.Context) ApiStartTrialRequest {
 	return ApiStartTrialRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return UserData
+//
+//	@return UserData
 func (a *DefaultApiService) StartTrialExecute(r ApiStartTrialRequest) (*UserData, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *UserData
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *UserData
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.StartTrial")
@@ -9424,8 +9499,8 @@ func (a *DefaultApiService) StartTrialExecute(r ApiStartTrialRequest) (*UserData
 }
 
 type ApiStopJobRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx           context.Context
+	ApiService    *DefaultApiService
 	stopJobParams *StopJobParams
 }
 
@@ -9441,24 +9516,25 @@ func (r ApiStopJobRequest) Execute() (*StopJobResponse, *http.Response, error) {
 /*
 StopJob Method for StopJob
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiStopJobRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiStopJobRequest
 */
 func (a *DefaultApiService) StopJob(ctx context.Context) ApiStopJobRequest {
 	return ApiStopJobRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return StopJobResponse
+//
+//	@return StopJobResponse
 func (a *DefaultApiService) StopJobExecute(r ApiStopJobRequest) (*StopJobResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *StopJobResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *StopJobResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.StopJob")
@@ -9532,8 +9608,8 @@ func (a *DefaultApiService) StopJobExecute(r ApiStopJobRequest) (*StopJobRespons
 }
 
 type ApiTerminateJobRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                context.Context
+	ApiService         *DefaultApiService
 	terminateJobParams *TerminateJobParams
 }
 
@@ -9549,24 +9625,25 @@ func (r ApiTerminateJobRequest) Execute() (*TerminateJobResponse, *http.Response
 /*
 TerminateJob Method for TerminateJob
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiTerminateJobRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiTerminateJobRequest
 */
 func (a *DefaultApiService) TerminateJob(ctx context.Context) ApiTerminateJobRequest {
 	return ApiTerminateJobRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return TerminateJobResponse
+//
+//	@return TerminateJobResponse
 func (a *DefaultApiService) TerminateJobExecute(r ApiTerminateJobRequest) (*TerminateJobResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *TerminateJobResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *TerminateJobResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.TerminateJob")
@@ -9640,8 +9717,8 @@ func (a *DefaultApiService) TerminateJobExecute(r ApiTerminateJobRequest) (*Term
 }
 
 type ApiTrainFromInitialWeightsRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                           context.Context
+	ApiService                    *DefaultApiService
 	trainFromInitialWeightsParams *TrainFromInitialWeightsParams
 }
 
@@ -9657,24 +9734,25 @@ func (r ApiTrainFromInitialWeightsRequest) Execute() (*Job, *http.Response, erro
 /*
 TrainFromInitialWeights Method for TrainFromInitialWeights
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiTrainFromInitialWeightsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiTrainFromInitialWeightsRequest
 */
 func (a *DefaultApiService) TrainFromInitialWeights(ctx context.Context) ApiTrainFromInitialWeightsRequest {
 	return ApiTrainFromInitialWeightsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return Job
+//
+//	@return Job
 func (a *DefaultApiService) TrainFromInitialWeightsExecute(r ApiTrainFromInitialWeightsRequest) (*Job, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Job
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Job
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.TrainFromInitialWeights")
@@ -9748,8 +9826,8 @@ func (a *DefaultApiService) TrainFromInitialWeightsExecute(r ApiTrainFromInitial
 }
 
 type ApiTrainFromScratchRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                    context.Context
+	ApiService             *DefaultApiService
 	trainFromScratchParams *TrainFromScratchParams
 }
 
@@ -9765,24 +9843,25 @@ func (r ApiTrainFromScratchRequest) Execute() (*Job, *http.Response, error) {
 /*
 TrainFromScratch Method for TrainFromScratch
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiTrainFromScratchRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiTrainFromScratchRequest
 */
 func (a *DefaultApiService) TrainFromScratch(ctx context.Context) ApiTrainFromScratchRequest {
 	return ApiTrainFromScratchRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return Job
+//
+//	@return Job
 func (a *DefaultApiService) TrainFromScratchExecute(r ApiTrainFromScratchRequest) (*Job, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Job
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Job
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.TrainFromScratch")
@@ -9856,8 +9935,8 @@ func (a *DefaultApiService) TrainFromScratchExecute(r ApiTrainFromScratchRequest
 }
 
 type ApiTrashDatasetRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                context.Context
+	ApiService         *DefaultApiService
 	trashDatasetParams *TrashDatasetParams
 }
 
@@ -9873,24 +9952,25 @@ func (r ApiTrashDatasetRequest) Execute() (*GetDatasetsResponse, *http.Response,
 /*
 TrashDataset Method for TrashDataset
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiTrashDatasetRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiTrashDatasetRequest
 */
 func (a *DefaultApiService) TrashDataset(ctx context.Context) ApiTrashDatasetRequest {
 	return ApiTrashDatasetRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetDatasetsResponse
+//
+//	@return GetDatasetsResponse
 func (a *DefaultApiService) TrashDatasetExecute(r ApiTrashDatasetRequest) (*GetDatasetsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetDatasetsResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetDatasetsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.TrashDataset")
@@ -9964,8 +10044,8 @@ func (a *DefaultApiService) TrashDatasetExecute(r ApiTrashDatasetRequest) (*GetD
 }
 
 type ApiTrashSecretManagerRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                      context.Context
+	ApiService               *DefaultApiService
 	trashSecretManagerParams *TrashSecretManagerParams
 }
 
@@ -9981,24 +10061,25 @@ func (r ApiTrashSecretManagerRequest) Execute() (*TrashSecretManagerResponse, *h
 /*
 TrashSecretManager Method for TrashSecretManager
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiTrashSecretManagerRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiTrashSecretManagerRequest
 */
 func (a *DefaultApiService) TrashSecretManager(ctx context.Context) ApiTrashSecretManagerRequest {
 	return ApiTrashSecretManagerRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return TrashSecretManagerResponse
+//
+//	@return TrashSecretManagerResponse
 func (a *DefaultApiService) TrashSecretManagerExecute(r ApiTrashSecretManagerRequest) (*TrashSecretManagerResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *TrashSecretManagerResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *TrashSecretManagerResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.TrashSecretManager")
@@ -10072,8 +10153,8 @@ func (a *DefaultApiService) TrashSecretManagerExecute(r ApiTrashSecretManagerReq
 }
 
 type ApiUpdateDashboardRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                   context.Context
+	ApiService            *DefaultApiService
 	updateDashboardParams *UpdateDashboardParams
 }
 
@@ -10089,22 +10170,22 @@ func (r ApiUpdateDashboardRequest) Execute() (*http.Response, error) {
 /*
 UpdateDashboard Method for UpdateDashboard
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiUpdateDashboardRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiUpdateDashboardRequest
 */
 func (a *DefaultApiService) UpdateDashboard(ctx context.Context) ApiUpdateDashboardRequest {
 	return ApiUpdateDashboardRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *DefaultApiService) UpdateDashboardExecute(r ApiUpdateDashboardRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdateDashboard")
@@ -10169,8 +10250,8 @@ func (a *DefaultApiService) UpdateDashboardExecute(r ApiUpdateDashboardRequest) 
 }
 
 type ApiUpdateIssueRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx               context.Context
+	ApiService        *DefaultApiService
 	updateIssueParams *UpdateIssueParams
 }
 
@@ -10186,24 +10267,25 @@ func (r ApiUpdateIssueRequest) Execute() (*Issue, *http.Response, error) {
 /*
 UpdateIssue Method for UpdateIssue
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiUpdateIssueRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiUpdateIssueRequest
 */
 func (a *DefaultApiService) UpdateIssue(ctx context.Context) ApiUpdateIssueRequest {
 	return ApiUpdateIssueRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return Issue
+//
+//	@return Issue
 func (a *DefaultApiService) UpdateIssueExecute(r ApiUpdateIssueRequest) (*Issue, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Issue
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Issue
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdateIssue")
@@ -10277,8 +10359,8 @@ func (a *DefaultApiService) UpdateIssueExecute(r ApiUpdateIssueRequest) (*Issue,
 }
 
 type ApiUpdateOrganizationPublicNameRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                                 context.Context
+	ApiService                          *DefaultApiService
 	updateOrganizationPublicNameRequest *UpdateOrganizationPublicNameRequest
 }
 
@@ -10294,22 +10376,22 @@ func (r ApiUpdateOrganizationPublicNameRequest) Execute() (*http.Response, error
 /*
 UpdateOrganizationPublicName Method for UpdateOrganizationPublicName
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiUpdateOrganizationPublicNameRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiUpdateOrganizationPublicNameRequest
 */
 func (a *DefaultApiService) UpdateOrganizationPublicName(ctx context.Context) ApiUpdateOrganizationPublicNameRequest {
 	return ApiUpdateOrganizationPublicNameRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *DefaultApiService) UpdateOrganizationPublicNameExecute(r ApiUpdateOrganizationPublicNameRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdateOrganizationPublicName")
@@ -10374,8 +10456,8 @@ func (a *DefaultApiService) UpdateOrganizationPublicNameExecute(r ApiUpdateOrgan
 }
 
 type ApiUpdateSecretManagerRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                       context.Context
+	ApiService                *DefaultApiService
 	updateSecretManagerParams *UpdateSecretManagerParams
 }
 
@@ -10391,24 +10473,25 @@ func (r ApiUpdateSecretManagerRequest) Execute() (*UpdateSecretManagerResponse, 
 /*
 UpdateSecretManager Method for UpdateSecretManager
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiUpdateSecretManagerRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiUpdateSecretManagerRequest
 */
 func (a *DefaultApiService) UpdateSecretManager(ctx context.Context) ApiUpdateSecretManagerRequest {
 	return ApiUpdateSecretManagerRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return UpdateSecretManagerResponse
+//
+//	@return UpdateSecretManagerResponse
 func (a *DefaultApiService) UpdateSecretManagerExecute(r ApiUpdateSecretManagerRequest) (*UpdateSecretManagerResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *UpdateSecretManagerResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *UpdateSecretManagerResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdateSecretManager")
@@ -10482,8 +10565,8 @@ func (a *DefaultApiService) UpdateSecretManagerExecute(r ApiUpdateSecretManagerR
 }
 
 type ApiUpdateSessionTestRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                      context.Context
+	ApiService               *DefaultApiService
 	updateSessionTestRequest *UpdateSessionTestRequest
 }
 
@@ -10499,22 +10582,22 @@ func (r ApiUpdateSessionTestRequest) Execute() (*http.Response, error) {
 /*
 UpdateSessionTest Method for UpdateSessionTest
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiUpdateSessionTestRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiUpdateSessionTestRequest
 */
 func (a *DefaultApiService) UpdateSessionTest(ctx context.Context) ApiUpdateSessionTestRequest {
 	return ApiUpdateSessionTestRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *DefaultApiService) UpdateSessionTestExecute(r ApiUpdateSessionTestRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdateSessionTest")
@@ -10579,8 +10662,8 @@ func (a *DefaultApiService) UpdateSessionTestExecute(r ApiUpdateSessionTestReque
 }
 
 type ApiUpdateUserNameRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                   context.Context
+	ApiService            *DefaultApiService
 	updateUserNameRequest *UpdateUserNameRequest
 }
 
@@ -10596,24 +10679,25 @@ func (r ApiUpdateUserNameRequest) Execute() (*UserData, *http.Response, error) {
 /*
 UpdateUserName Method for UpdateUserName
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiUpdateUserNameRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiUpdateUserNameRequest
 */
 func (a *DefaultApiService) UpdateUserName(ctx context.Context) ApiUpdateUserNameRequest {
 	return ApiUpdateUserNameRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return UserData
+//
+//	@return UserData
 func (a *DefaultApiService) UpdateUserNameExecute(r ApiUpdateUserNameRequest) (*UserData, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *UserData
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *UserData
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdateUserName")
@@ -10687,8 +10771,8 @@ func (a *DefaultApiService) UpdateUserNameExecute(r ApiUpdateUserNameRequest) (*
 }
 
 type ApiUpdateUserOrganizationRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                           context.Context
+	ApiService                    *DefaultApiService
 	updateUserOrganizationRequest *UpdateUserOrganizationRequest
 }
 
@@ -10704,24 +10788,25 @@ func (r ApiUpdateUserOrganizationRequest) Execute() (*SlimUserData, *http.Respon
 /*
 UpdateUserOrganization Method for UpdateUserOrganization
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiUpdateUserOrganizationRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiUpdateUserOrganizationRequest
 */
 func (a *DefaultApiService) UpdateUserOrganization(ctx context.Context) ApiUpdateUserOrganizationRequest {
 	return ApiUpdateUserOrganizationRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return SlimUserData
+//
+//	@return SlimUserData
 func (a *DefaultApiService) UpdateUserOrganizationExecute(r ApiUpdateUserOrganizationRequest) (*SlimUserData, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *SlimUserData
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *SlimUserData
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdateUserOrganization")
@@ -10795,8 +10880,8 @@ func (a *DefaultApiService) UpdateUserOrganizationExecute(r ApiUpdateUserOrganiz
 }
 
 type ApiUpdateUserRoleRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                   context.Context
+	ApiService            *DefaultApiService
 	updateUserRoleRequest *UpdateUserRoleRequest
 }
 
@@ -10812,24 +10897,25 @@ func (r ApiUpdateUserRoleRequest) Execute() (*SlimUserData, *http.Response, erro
 /*
 UpdateUserRole Method for UpdateUserRole
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiUpdateUserRoleRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiUpdateUserRoleRequest
 */
 func (a *DefaultApiService) UpdateUserRole(ctx context.Context) ApiUpdateUserRoleRequest {
 	return ApiUpdateUserRoleRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return SlimUserData
+//
+//	@return SlimUserData
 func (a *DefaultApiService) UpdateUserRoleExecute(r ApiUpdateUserRoleRequest) (*SlimUserData, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *SlimUserData
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *SlimUserData
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdateUserRole")
@@ -10903,8 +10989,8 @@ func (a *DefaultApiService) UpdateUserRoleExecute(r ApiUpdateUserRoleRequest) (*
 }
 
 type ApiUpdateUserStatusRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                     context.Context
+	ApiService              *DefaultApiService
 	updateUserStatusRequest *UpdateUserStatusRequest
 }
 
@@ -10920,24 +11006,25 @@ func (r ApiUpdateUserStatusRequest) Execute() (*SlimUserData, *http.Response, er
 /*
 UpdateUserStatus Method for UpdateUserStatus
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiUpdateUserStatusRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiUpdateUserStatusRequest
 */
 func (a *DefaultApiService) UpdateUserStatus(ctx context.Context) ApiUpdateUserStatusRequest {
 	return ApiUpdateUserStatusRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return SlimUserData
+//
+//	@return SlimUserData
 func (a *DefaultApiService) UpdateUserStatusExecute(r ApiUpdateUserStatusRequest) (*SlimUserData, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *SlimUserData
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *SlimUserData
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdateUserStatus")
@@ -11011,8 +11098,8 @@ func (a *DefaultApiService) UpdateUserStatusExecute(r ApiUpdateUserStatusRequest
 }
 
 type ApiUpdateVersionRequest struct {
-	ctx context.Context
-	ApiService *DefaultApiService
+	ctx                 context.Context
+	ApiService          *DefaultApiService
 	updateVersionParams *UpdateVersionParams
 }
 
@@ -11028,24 +11115,25 @@ func (r ApiUpdateVersionRequest) Execute() (*UpdateVersionResponse, *http.Respon
 /*
 UpdateVersion Method for UpdateVersion
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiUpdateVersionRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiUpdateVersionRequest
 */
 func (a *DefaultApiService) UpdateVersion(ctx context.Context) ApiUpdateVersionRequest {
 	return ApiUpdateVersionRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return UpdateVersionResponse
+//
+//	@return UpdateVersionResponse
 func (a *DefaultApiService) UpdateVersionExecute(r ApiUpdateVersionRequest) (*UpdateVersionResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *UpdateVersionResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *UpdateVersionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.UpdateVersion")
@@ -11119,7 +11207,7 @@ func (a *DefaultApiService) UpdateVersionExecute(r ApiUpdateVersionRequest) (*Up
 }
 
 type ApiWarmupRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
 }
 
@@ -11130,22 +11218,22 @@ func (r ApiWarmupRequest) Execute() (*http.Response, error) {
 /*
 Warmup Method for Warmup
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiWarmupRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiWarmupRequest
 */
 func (a *DefaultApiService) Warmup(ctx context.Context) ApiWarmupRequest {
 	return ApiWarmupRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *DefaultApiService) WarmupExecute(r ApiWarmupRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.Warmup")
@@ -11205,7 +11293,7 @@ func (a *DefaultApiService) WarmupExecute(r ApiWarmupRequest) (*http.Response, e
 }
 
 type ApiWhoAmIRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *DefaultApiService
 }
 
@@ -11216,24 +11304,25 @@ func (r ApiWhoAmIRequest) Execute() (*UserData, *http.Response, error) {
 /*
 WhoAmI Method for WhoAmI
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiWhoAmIRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiWhoAmIRequest
 */
 func (a *DefaultApiService) WhoAmI(ctx context.Context) ApiWhoAmIRequest {
 	return ApiWhoAmIRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return UserData
+//
+//	@return UserData
 func (a *DefaultApiService) WhoAmIExecute(r ApiWhoAmIRequest) (*UserData, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *UserData
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *UserData
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultApiService.WhoAmI")

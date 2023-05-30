@@ -20,7 +20,7 @@ var _ MappedNullable = &SetOrganizationMachineTypeParams{}
 // SetOrganizationMachineTypeParams struct for SetOrganizationMachineTypeParams
 type SetOrganizationMachineTypeParams struct {
 	OrganizationId string `json:"organizationId"`
-	MachineTypeId string `json:"machineTypeId"`
+	MachineTypeId  string `json:"machineTypeId"`
 }
 
 // NewSetOrganizationMachineTypeParams instantiates a new SetOrganizationMachineTypeParams object
@@ -91,7 +91,7 @@ func (o *SetOrganizationMachineTypeParams) SetMachineTypeId(v string) {
 }
 
 func (o SetOrganizationMachineTypeParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableSetOrganizationMachineTypeParams) UnmarshalJSON(src []byte) err
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

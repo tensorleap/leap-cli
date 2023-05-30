@@ -19,11 +19,11 @@ var _ MappedNullable = &AddExportModelJobParams{}
 
 // AddExportModelJobParams struct for AddExportModelJobParams
 type AddExportModelJobParams struct {
-	TargetSessionRunId string `json:"targetSessionRunId"`
-	ExportModelType ExportModelTypeEnum `json:"exportModelType"`
-	Title string `json:"title"`
-	PruneModel bool `json:"pruneModel"`
-	FromEpoch float64 `json:"fromEpoch"`
+	TargetSessionRunId string              `json:"targetSessionRunId"`
+	ExportModelType    ExportModelTypeEnum `json:"exportModelType"`
+	Title              string              `json:"title"`
+	PruneModel         bool                `json:"pruneModel"`
+	FromEpoch          float64             `json:"fromEpoch"`
 }
 
 // NewAddExportModelJobParams instantiates a new AddExportModelJobParams object
@@ -169,7 +169,7 @@ func (o *AddExportModelJobParams) SetFromEpoch(v float64) {
 }
 
 func (o AddExportModelJobParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -221,5 +221,3 @@ func (v *NullableAddExportModelJobParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -65,7 +65,7 @@ func (o *RecentOrganizationSessionsRequestParams) SetTopSessions(v float64) {
 }
 
 func (o RecentOrganizationSessionsRequestParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -113,5 +113,3 @@ func (v *NullableRecentOrganizationSessionsRequestParams) UnmarshalJSON(src []by
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -20,15 +20,15 @@ var _ MappedNullable = &SessionPopulatedJob{}
 
 // SessionPopulatedJob struct for SessionPopulatedJob
 type SessionPopulatedJob struct {
-	Id string `json:"_id"`
-	ExtId *string `json:"extId,omitempty"`
-	ModelName string `json:"modelName"`
-	CreatedAt time.Time `json:"createdAt"`
-	CreatedBy *string `json:"createdBy,omitempty"`
-	Organization string `json:"organization"`
-	Hash NullableString `json:"hash,omitempty"`
-	TrainingParams *TrainingParams `json:"trainingParams,omitempty"`
-	SessionRuns []SessionRunData `json:"sessionRuns,omitempty"`
+	Id             string              `json:"_id"`
+	ExtId          *string             `json:"extId,omitempty"`
+	ModelName      string              `json:"modelName"`
+	CreatedAt      time.Time           `json:"createdAt"`
+	CreatedBy      *string             `json:"createdBy,omitempty"`
+	Organization   string              `json:"organization"`
+	Hash           NullableString      `json:"hash,omitempty"`
+	TrainingParams *TrainingParams     `json:"trainingParams,omitempty"`
+	SessionRuns    []SessionRunData    `json:"sessionRuns,omitempty"`
 	SessionWeights []SessionWeightData `json:"sessionWeights,omitempty"`
 }
 
@@ -245,6 +245,7 @@ func (o *SessionPopulatedJob) HasHash() bool {
 func (o *SessionPopulatedJob) SetHash(v string) {
 	o.Hash.Set(&v)
 }
+
 // SetHashNil sets the value for Hash to be an explicit nil
 func (o *SessionPopulatedJob) SetHashNil() {
 	o.Hash.Set(nil)
@@ -352,7 +353,7 @@ func (o *SessionPopulatedJob) SetSessionWeights(v []SessionWeightData) {
 }
 
 func (o SessionPopulatedJob) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -421,5 +422,3 @@ func (v *NullableSessionPopulatedJob) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

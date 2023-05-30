@@ -6,12 +6,12 @@ import (
 )
 
 func init() {
-  RootCommand.AddCommand(&cobra.Command{
-    Use:   "save",
-    Short: "Save dataset script",
-    Long:  `Save dataset script`,
-    Run: func(cmd *cobra.Command, args []string) {
-      fmt.Println("Save command")
-    },
-  })
+	RootCommand.AddCommand(&cobra.Command{
+		Use:   "save",
+		Short: "Save dataset script",
+		Long:  `Save dataset script`,
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println("Save command")
+		},
+	})
 }

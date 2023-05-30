@@ -19,12 +19,12 @@ var _ MappedNullable = &SampleSelectionParams{}
 
 // SampleSelectionParams struct for SampleSelectionParams
 type SampleSelectionParams struct {
-	SessionRunId string `json:"sessionRunId"`
-	SampleIdentity SampleIdentity `json:"sampleIdentity"`
-	FromDatasetSlice DataStateType `json:"fromDatasetSlice"`
-	BatchSize float64 `json:"batchSize"`
-	NumOfSamples float64 `json:"numOfSamples"`
-	FromEpoch float64 `json:"fromEpoch"`
+	SessionRunId     string         `json:"sessionRunId"`
+	SampleIdentity   SampleIdentity `json:"sampleIdentity"`
+	FromDatasetSlice DataStateType  `json:"fromDatasetSlice"`
+	BatchSize        float64        `json:"batchSize"`
+	NumOfSamples     float64        `json:"numOfSamples"`
+	FromEpoch        float64        `json:"fromEpoch"`
 }
 
 // NewSampleSelectionParams instantiates a new SampleSelectionParams object
@@ -195,7 +195,7 @@ func (o *SampleSelectionParams) SetFromEpoch(v float64) {
 }
 
 func (o SampleSelectionParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -248,5 +248,3 @@ func (v *NullableSampleSelectionParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

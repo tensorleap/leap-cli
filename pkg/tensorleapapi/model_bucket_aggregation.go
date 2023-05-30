@@ -19,10 +19,10 @@ var _ MappedNullable = &BucketAggregation{}
 
 // BucketAggregation struct for BucketAggregation
 type BucketAggregation struct {
-	XField string `json:"xField"`
+	XField               string               `json:"xField"`
 	DataDistributionType DataDistributionType `json:"dataDistributionType"`
-	XAxisSizeInterval float64 `json:"xAxisSizeInterval"`
-	OrderParams string `json:"orderParams"`
+	XAxisSizeInterval    float64              `json:"xAxisSizeInterval"`
+	OrderParams          string               `json:"orderParams"`
 }
 
 // NewBucketAggregation instantiates a new BucketAggregation object
@@ -143,7 +143,7 @@ func (o *BucketAggregation) SetOrderParams(v string) {
 }
 
 func (o BucketAggregation) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -194,5 +194,3 @@ func (v *NullableBucketAggregation) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

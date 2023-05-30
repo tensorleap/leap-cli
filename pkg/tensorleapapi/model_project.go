@@ -20,15 +20,15 @@ var _ MappedNullable = &Project{}
 
 // Project struct for Project
 type Project struct {
-	Id string `json:"_id"`
-	Organization string `json:"organization"`
-	CreatedBy string `json:"createdBy"`
-	CreatedAt NullableTime `json:"createdAt"`
-	Name string `json:"name"`
-	LastAccessed time.Time `json:"lastAccessed"`
-	Status ProjectStatus `json:"status"`
-	Access ProjectAccess `json:"access"`
-	Description *string `json:"description,omitempty"`
+	Id           string        `json:"_id"`
+	Organization string        `json:"organization"`
+	CreatedBy    string        `json:"createdBy"`
+	CreatedAt    NullableTime  `json:"createdAt"`
+	Name         string        `json:"name"`
+	LastAccessed time.Time     `json:"lastAccessed"`
+	Status       ProjectStatus `json:"status"`
+	Access       ProjectAccess `json:"access"`
+	Description  *string       `json:"description,omitempty"`
 }
 
 // NewProject instantiates a new Project object
@@ -283,7 +283,7 @@ func (o *Project) SetDescription(v string) {
 }
 
 func (o Project) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -341,5 +341,3 @@ func (v *NullableProject) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

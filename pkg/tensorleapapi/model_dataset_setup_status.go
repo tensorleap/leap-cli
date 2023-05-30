@@ -19,8 +19,8 @@ var _ MappedNullable = &DatasetSetupStatus{}
 
 // DatasetSetupStatus struct for DatasetSetupStatus
 type DatasetSetupStatus struct {
-	GeneralError *string `json:"generalError,omitempty"`
-	PrintLog *string `json:"printLog,omitempty"`
+	GeneralError  *string                    `json:"generalError,omitempty"`
+	PrintLog      *string                    `json:"printLog,omitempty"`
 	BindersStatus []DatasetTestResultPayload `json:"bindersStatus"`
 }
 
@@ -131,7 +131,7 @@ func (o *DatasetSetupStatus) SetBindersStatus(v []DatasetTestResultPayload) {
 }
 
 func (o DatasetSetupStatus) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -185,5 +185,3 @@ func (v *NullableDatasetSetupStatus) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -20,13 +20,13 @@ var _ MappedNullable = &SessionRunData{}
 
 // SessionRunData struct for SessionRunData
 type SessionRunData struct {
-	Id string `json:"_id"`
-	SessionId string `json:"sessionId"`
-	Name string `json:"name"`
-	Organization string `json:"organization"`
-	IsEvaluate bool `json:"isEvaluate"`
-	CreatedAt time.Time `json:"createdAt"`
-	CreatedBy string `json:"createdBy"`
+	Id           string            `json:"_id"`
+	SessionId    string            `json:"sessionId"`
+	Name         string            `json:"name"`
+	Organization string            `json:"organization"`
+	IsEvaluate   bool              `json:"isEvaluate"`
+	CreatedAt    time.Time         `json:"createdAt"`
+	CreatedBy    string            `json:"createdBy"`
 	WeightAssets []WeightAssetData `json:"weightAssets"`
 }
 
@@ -248,7 +248,7 @@ func (o *SessionRunData) SetWeightAssets(v []WeightAssetData) {
 }
 
 func (o SessionRunData) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -303,5 +303,3 @@ func (v *NullableSessionRunData) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

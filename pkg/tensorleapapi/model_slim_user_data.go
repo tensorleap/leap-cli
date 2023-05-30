@@ -20,11 +20,11 @@ var _ MappedNullable = &SlimUserData{}
 
 // SlimUserData struct for SlimUserData
 type SlimUserData struct {
-	Id string `json:"_id"`
-	Role string `json:"role"`
-	RecordSession bool `json:"recordSession"`
-	Local SlimUserDataLocal `json:"local"`
-	CreatedAt time.Time `json:"createdAt"`
+	Id            string            `json:"_id"`
+	Role          string            `json:"role"`
+	RecordSession bool              `json:"recordSession"`
+	Local         SlimUserDataLocal `json:"local"`
+	CreatedAt     time.Time         `json:"createdAt"`
 }
 
 // NewSlimUserData instantiates a new SlimUserData object
@@ -170,7 +170,7 @@ func (o *SlimUserData) SetCreatedAt(v time.Time) {
 }
 
 func (o SlimUserData) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -222,5 +222,3 @@ func (v *NullableSlimUserData) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -19,10 +19,10 @@ var _ MappedNullable = &UserDataLocal{}
 
 // UserDataLocal struct for UserDataLocal
 type UserDataLocal struct {
-	Email string `json:"email"`
-	Name string `json:"name"`
-	Organization string `json:"organization"`
-	TrialRequested *bool `json:"trialRequested,omitempty"`
+	Email          string `json:"email"`
+	Name           string `json:"name"`
+	Organization   string `json:"organization"`
+	TrialRequested *bool  `json:"trialRequested,omitempty"`
 }
 
 // NewUserDataLocal instantiates a new UserDataLocal object
@@ -150,7 +150,7 @@ func (o *UserDataLocal) SetTrialRequested(v bool) {
 }
 
 func (o UserDataLocal) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -203,5 +203,3 @@ func (v *NullableUserDataLocal) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

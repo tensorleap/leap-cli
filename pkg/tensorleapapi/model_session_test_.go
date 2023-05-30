@@ -20,15 +20,15 @@ var _ MappedNullable = &SessionTest{}
 
 // SessionTest struct for SessionTest
 type SessionTest struct {
-	Id string `json:"_id"`
-	ProjectId string `json:"projectId"`
-	OrganizationId string `json:"organizationId"`
-	Name string `json:"name"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
-	CreatedBy string `json:"createdBy"`
-	TestFilter ClientFilterParams `json:"testFilter"`
-	DatasetFilter []ESFilter `json:"datasetFilter"`
+	Id             string             `json:"_id"`
+	ProjectId      string             `json:"projectId"`
+	OrganizationId string             `json:"organizationId"`
+	Name           string             `json:"name"`
+	CreatedAt      time.Time          `json:"createdAt"`
+	UpdatedAt      time.Time          `json:"updatedAt"`
+	CreatedBy      string             `json:"createdBy"`
+	TestFilter     ClientFilterParams `json:"testFilter"`
+	DatasetFilter  []ESFilter         `json:"datasetFilter"`
 }
 
 // NewSessionTest instantiates a new SessionTest object
@@ -274,7 +274,7 @@ func (o *SessionTest) SetDatasetFilter(v []ESFilter) {
 }
 
 func (o SessionTest) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -330,5 +330,3 @@ func (v *NullableSessionTest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

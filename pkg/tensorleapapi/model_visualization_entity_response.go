@@ -20,19 +20,19 @@ var _ MappedNullable = &VisualizationEntityResponse{}
 
 // VisualizationEntityResponse struct for VisualizationEntityResponse
 type VisualizationEntityResponse struct {
-	Id string `json:"_id"`
-	JobId string `json:"jobId"`
-	JobParams *JobParams `json:"jobParams,omitempty"`
-	Epoch float64 `json:"epoch"`
-	BlobName string `json:"blobName"`
-	CreatedAt time.Time `json:"createdAt"`
-	Version string `json:"version"`
-	SessionRunId string `json:"sessionRunId"`
-	VisualizationUuid string `json:"visualizationUuid"`
-	OrganizationId string `json:"organizationId"`
-	Type AnalyzeTypeEnum `json:"type"`
-	CreatedBy *string `json:"createdBy,omitempty"`
-	Layout *SizedLayout `json:"layout,omitempty"`
+	Id                string          `json:"_id"`
+	JobId             string          `json:"jobId"`
+	JobParams         *JobParams      `json:"jobParams,omitempty"`
+	Epoch             float64         `json:"epoch"`
+	BlobName          string          `json:"blobName"`
+	CreatedAt         time.Time       `json:"createdAt"`
+	Version           string          `json:"version"`
+	SessionRunId      string          `json:"sessionRunId"`
+	VisualizationUuid string          `json:"visualizationUuid"`
+	OrganizationId    string          `json:"organizationId"`
+	Type              AnalyzeTypeEnum `json:"type"`
+	CreatedBy         *string         `json:"createdBy,omitempty"`
+	Layout            *SizedLayout    `json:"layout,omitempty"`
 }
 
 // NewVisualizationEntityResponse instantiates a new VisualizationEntityResponse object
@@ -399,7 +399,7 @@ func (o *VisualizationEntityResponse) SetLayout(v SizedLayout) {
 }
 
 func (o VisualizationEntityResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -465,5 +465,3 @@ func (v *NullableVisualizationEntityResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

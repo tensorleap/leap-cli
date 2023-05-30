@@ -20,8 +20,8 @@ var _ MappedNullable = &VisualizationData{}
 // VisualizationData struct for VisualizationData
 type VisualizationData struct {
 	Payload []VizType `json:"payload"`
-	Title string `json:"title"`
-	Epoch float64 `json:"epoch"`
+	Title   string    `json:"title"`
+	Epoch   float64   `json:"epoch"`
 }
 
 // NewVisualizationData instantiates a new VisualizationData object
@@ -117,7 +117,7 @@ func (o *VisualizationData) SetEpoch(v float64) {
 }
 
 func (o VisualizationData) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -167,5 +167,3 @@ func (v *NullableVisualizationData) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

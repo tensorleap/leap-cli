@@ -9,19 +9,19 @@ import (
 )
 
 func init() {
-  cmd := &cobra.Command{
-    Use:   "whoami",
-    Short: "Get information about the authenticated user",
-    Long:  `Get information about the authenticated user`,
-    Run: func(cmd *cobra.Command, args []string) {
-      config.VerifyLoggedIn()
-      fmt.Println("API Url: " + config.GetApiUrl())
+	cmd := &cobra.Command{
+		Use:   "whoami",
+		Short: "Get information about the authenticated user",
+		Long:  `Get information about the authenticated user`,
+		Run: func(cmd *cobra.Command, args []string) {
+			config.VerifyLoggedIn()
+			fmt.Println("API Url: " + config.GetApiUrl())
 
-      userData, _, err := ApiClient.WhoAmI(cmd.Context()).Execute()
-      cobra.CheckErr(err)
-      fmt.Println("User email: " + userData.Local.Email)
-      fmt.Println("Team name: " + userData.OrganizationName)
-    },
-  }
-  RootCommand.AddCommand(cmd)
+			userData, _, err := ApiClient.WhoAmI(cmd.Context()).Execute()
+			cobra.CheckErr(err)
+			fmt.Println("User email: " + userData.Local.Email)
+			fmt.Println("Team name: " + userData.OrganizationName)
+		},
+	}
+	RootCommand.AddCommand(cmd)
 }

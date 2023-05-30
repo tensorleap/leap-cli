@@ -6,6 +6,6 @@ import (
 
 var RootCommand = &cobra.Command{
 	Use:   "models",
-  Short: "Manage tensorleap models",
+	Short: "Manage tensorleap models",
 	Long:  `Manage tensorleap models`,
 }

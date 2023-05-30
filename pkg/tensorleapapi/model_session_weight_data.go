@@ -20,14 +20,14 @@ var _ MappedNullable = &SessionWeightData{}
 
 // SessionWeightData struct for SessionWeightData
 type SessionWeightData struct {
-	Id string `json:"_id"`
-	SessionId string `json:"sessionId"`
-	Epoch float64 `json:"epoch"`
-	GlobalStep float64 `json:"globalStep"`
-	Status StatusEnum `json:"status"`
-	Organization string `json:"organization"`
-	CreatedAt time.Time `json:"createdAt"`
-	CreatedBy string `json:"createdBy"`
+	Id           string     `json:"_id"`
+	SessionId    string     `json:"sessionId"`
+	Epoch        float64    `json:"epoch"`
+	GlobalStep   float64    `json:"globalStep"`
+	Status       StatusEnum `json:"status"`
+	Organization string     `json:"organization"`
+	CreatedAt    time.Time  `json:"createdAt"`
+	CreatedBy    string     `json:"createdBy"`
 }
 
 // NewSessionWeightData instantiates a new SessionWeightData object
@@ -248,7 +248,7 @@ func (o *SessionWeightData) SetCreatedBy(v string) {
 }
 
 func (o SessionWeightData) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -303,5 +303,3 @@ func (v *NullableSessionWeightData) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -20,16 +20,16 @@ var _ MappedNullable = &SlimVisualization{}
 
 // SlimVisualization struct for SlimVisualization
 type SlimVisualization struct {
-	Id string `json:"_id"`
-	JobId string `json:"jobId"`
-	SessionRunId string `json:"sessionRunId"`
-	JobParms *JobParams `json:"jobParms,omitempty"`
-	Type AnalyzeTypeEnum `json:"type"`
-	CreatedAt time.Time `json:"createdAt"`
-	Epoch float64 `json:"epoch"`
-	SampleId *float64 `json:"sampleId,omitempty"`
-	Layout *SizedLayout `json:"layout,omitempty"`
-	VisualizationUuid string `json:"visualizationUuid"`
+	Id                string          `json:"_id"`
+	JobId             string          `json:"jobId"`
+	SessionRunId      string          `json:"sessionRunId"`
+	JobParms          *JobParams      `json:"jobParms,omitempty"`
+	Type              AnalyzeTypeEnum `json:"type"`
+	CreatedAt         time.Time       `json:"createdAt"`
+	Epoch             float64         `json:"epoch"`
+	SampleId          *float64        `json:"sampleId,omitempty"`
+	Layout            *SizedLayout    `json:"layout,omitempty"`
+	VisualizationUuid string          `json:"visualizationUuid"`
 }
 
 // NewSlimVisualization instantiates a new SlimVisualization object
@@ -321,7 +321,7 @@ func (o *SlimVisualization) SetVisualizationUuid(v string) {
 }
 
 func (o SlimVisualization) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -384,5 +384,3 @@ func (v *NullableSlimVisualization) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

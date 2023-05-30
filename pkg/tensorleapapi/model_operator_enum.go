@@ -21,8 +21,8 @@ type OperatorEnum string
 // List of OperatorEnum
 const (
 	OPERATORENUM_SMALLER_THAN OperatorEnum = "smaller_than"
-	OPERATORENUM_EQUAL_TO OperatorEnum = "equal_to"
-	OPERATORENUM_LARGER_THAN OperatorEnum = "larger_than"
+	OPERATORENUM_EQUAL_TO     OperatorEnum = "equal_to"
+	OPERATORENUM_LARGER_THAN  OperatorEnum = "larger_than"
 )
 
 // All allowed values of OperatorEnum enum
@@ -110,4 +110,3 @@ func (v *NullableOperatorEnum) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

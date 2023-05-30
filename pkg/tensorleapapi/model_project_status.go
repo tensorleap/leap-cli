@@ -21,7 +21,7 @@ type ProjectStatus string
 // List of ProjectStatus
 const (
 	PROJECTSTATUS_VISIBLE ProjectStatus = "visible"
-	PROJECTSTATUS_TRASH ProjectStatus = "trash"
+	PROJECTSTATUS_TRASH   ProjectStatus = "trash"
 )
 
 // All allowed values of ProjectStatus enum
@@ -108,4 +108,3 @@ func (v *NullableProjectStatus) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

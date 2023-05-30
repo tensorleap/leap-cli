@@ -6,6 +6,6 @@ import (
 
 var RootCommand = &cobra.Command{
 	Use:   "local",
-  Short: "Manage local installation of Tensorleap",
+	Short: "Manage local installation of Tensorleap",
 	Long:  `Manage local installation of Tensorleap`,
 }

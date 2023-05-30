@@ -19,7 +19,7 @@ var _ MappedNullable = &SignedStoredVisualization{}
 
 // SignedStoredVisualization struct for SignedStoredVisualization
 type SignedStoredVisualization struct {
-	SignedUrl string `json:"signedUrl"`
+	SignedUrl           string                      `json:"signedUrl"`
 	VisualizationEntity VisualizationEntityResponse `json:"visualizationEntity"`
 }
 
@@ -91,7 +91,7 @@ func (o *SignedStoredVisualization) SetVisualizationEntity(v VisualizationEntity
 }
 
 func (o SignedStoredVisualization) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableSignedStoredVisualization) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

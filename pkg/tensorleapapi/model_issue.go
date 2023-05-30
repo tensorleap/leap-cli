@@ -20,19 +20,19 @@ var _ MappedNullable = &Issue{}
 
 // Issue struct for Issue
 type Issue struct {
-	Id string `json:"_id"`
-	Index float64 `json:"index"`
-	CreatedAt time.Time `json:"createdAt"`
-	CreatedBy string `json:"createdBy"`
-	UpdatedAt time.Time `json:"updatedAt"`
-	OrganizationId string `json:"organizationId"`
-	ProjectId string `json:"projectId"`
-	Title string `json:"title"`
-	Status IssueStatus `json:"status"`
-	Branch string `json:"branch"`
-	Tags []string `json:"tags"`
-	Assignment *string `json:"assignment,omitempty"`
-	Activities []IssueActivity `json:"activities"`
+	Id             string          `json:"_id"`
+	Index          float64         `json:"index"`
+	CreatedAt      time.Time       `json:"createdAt"`
+	CreatedBy      string          `json:"createdBy"`
+	UpdatedAt      time.Time       `json:"updatedAt"`
+	OrganizationId string          `json:"organizationId"`
+	ProjectId      string          `json:"projectId"`
+	Title          string          `json:"title"`
+	Status         IssueStatus     `json:"status"`
+	Branch         string          `json:"branch"`
+	Tags           []string        `json:"tags"`
+	Assignment     *string         `json:"assignment,omitempty"`
+	Activities     []IssueActivity `json:"activities"`
 }
 
 // NewIssue instantiates a new Issue object
@@ -385,7 +385,7 @@ func (o *Issue) SetActivities(v []IssueActivity) {
 }
 
 func (o Issue) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -447,5 +447,3 @@ func (v *NullableIssue) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

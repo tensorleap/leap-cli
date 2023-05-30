@@ -19,10 +19,10 @@ var _ MappedNullable = &ScatterViz{}
 
 // ScatterViz struct for ScatterViz
 type ScatterViz struct {
-	Type string `json:"type"`
-	Title string `json:"title"`
-	SubTitle string `json:"sub_title"`
-	Guid string `json:"guid"`
+	Type        string              `json:"type"`
+	Title       string              `json:"title"`
+	SubTitle    string              `json:"sub_title"`
+	Guid        string              `json:"guid"`
 	ScatterData ScatterVizDataState `json:"scatter_data"`
 }
 
@@ -169,7 +169,7 @@ func (o *ScatterViz) SetScatterData(v ScatterVizDataState) {
 }
 
 func (o ScatterViz) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -221,5 +221,3 @@ func (v *NullableScatterViz) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

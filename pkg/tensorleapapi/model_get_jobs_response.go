@@ -22,8 +22,8 @@ type GetJobsResponse struct {
 	Jobs []Job `json:"jobs"`
 	// Construct a type with a set of properties K of type T
 	MapVersionToProjectName map[string]interface{} `json:"mapVersionToProjectName"`
-	IncludeProject bool `json:"includeProject"`
-	IsModelJobs bool `json:"isModelJobs"`
+	IncludeProject          bool                   `json:"includeProject"`
+	IsModelJobs             bool                   `json:"isModelJobs"`
 }
 
 // NewGetJobsResponse instantiates a new GetJobsResponse object
@@ -144,7 +144,7 @@ func (o *GetJobsResponse) SetIsModelJobs(v bool) {
 }
 
 func (o GetJobsResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -195,5 +195,3 @@ func (v *NullableGetJobsResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

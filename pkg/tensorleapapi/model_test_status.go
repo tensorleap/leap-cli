@@ -20,10 +20,10 @@ type TestStatus string
 
 // List of TestStatus
 const (
-	TESTSTATUS_BEFORE_TEST TestStatus = "beforeTest"
-	TESTSTATUS_DURING_TEST TestStatus = "duringTest"
+	TESTSTATUS_BEFORE_TEST  TestStatus = "beforeTest"
+	TESTSTATUS_DURING_TEST  TestStatus = "duringTest"
 	TESTSTATUS_TEST_SUCCESS TestStatus = "testSuccess"
-	TESTSTATUS_TEST_FAIL TestStatus = "testFail"
+	TESTSTATUS_TEST_FAIL    TestStatus = "testFail"
 )
 
 // All allowed values of TestStatus enum
@@ -112,4 +112,3 @@ func (v *NullableTestStatus) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

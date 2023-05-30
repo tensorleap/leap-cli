@@ -19,10 +19,10 @@ var _ MappedNullable = &UpdateDashboardParams{}
 
 // UpdateDashboardParams struct for UpdateDashboardParams
 type UpdateDashboardParams struct {
-	DashboardId string `json:"dashboardId"`
-	Name string `json:"name"`
-	Items []DashboardItem `json:"items"`
-	Description *string `json:"description,omitempty"`
+	DashboardId string          `json:"dashboardId"`
+	Name        string          `json:"name"`
+	Items       []DashboardItem `json:"items"`
+	Description *string         `json:"description,omitempty"`
 }
 
 // NewUpdateDashboardParams instantiates a new UpdateDashboardParams object
@@ -150,7 +150,7 @@ func (o *UpdateDashboardParams) SetDescription(v string) {
 }
 
 func (o UpdateDashboardParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -203,5 +203,3 @@ func (v *NullableUpdateDashboardParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

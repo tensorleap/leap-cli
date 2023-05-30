@@ -20,20 +20,20 @@ var _ MappedNullable = &Version{}
 
 // Version struct for Version
 type Version struct {
-	Id string `json:"_id"`
-	ExtId string `json:"extId"`
-	CreatedBy string `json:"createdBy"`
-	Organization string `json:"organization"`
-	Project string `json:"project"`
-	Branch string `json:"branch"`
-	Tag string `json:"tag"`
-	Data ModelGraph `json:"data"`
-	CreatedAt time.Time `json:"createdAt"`
-	Notes string `json:"notes"`
-	Status string `json:"status"`
-	IsFavourite bool `json:"isFavourite"`
-	CodeIntegrationVersionId *string `json:"codeIntegrationVersionId,omitempty"`
-	DatasetSetup DatasetSetup `json:"datasetSetup"`
+	Id                       string       `json:"_id"`
+	ExtId                    string       `json:"extId"`
+	CreatedBy                string       `json:"createdBy"`
+	Organization             string       `json:"organization"`
+	Project                  string       `json:"project"`
+	Branch                   string       `json:"branch"`
+	Tag                      string       `json:"tag"`
+	Data                     ModelGraph   `json:"data"`
+	CreatedAt                time.Time    `json:"createdAt"`
+	Notes                    string       `json:"notes"`
+	Status                   string       `json:"status"`
+	IsFavourite              bool         `json:"isFavourite"`
+	CodeIntegrationVersionId *string      `json:"codeIntegrationVersionId,omitempty"`
+	DatasetSetup             DatasetSetup `json:"datasetSetup"`
 }
 
 // NewVersion instantiates a new Version object
@@ -411,7 +411,7 @@ func (o *Version) SetDatasetSetup(v DatasetSetup) {
 }
 
 func (o Version) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -474,5 +474,3 @@ func (v *NullableVersion) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

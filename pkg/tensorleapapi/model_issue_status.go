@@ -20,9 +20,9 @@ type IssueStatus string
 
 // List of IssueStatus
 const (
-	ISSUESTATUS_OPEN IssueStatus = "Open"
+	ISSUESTATUS_OPEN    IssueStatus = "Open"
 	ISSUESTATUS_AT_WORK IssueStatus = "AtWork"
-	ISSUESTATUS_CLOSED IssueStatus = "Closed"
+	ISSUESTATUS_CLOSED  IssueStatus = "Closed"
 )
 
 // All allowed values of IssueStatus enum
@@ -110,4 +110,3 @@ func (v *NullableIssueStatus) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
