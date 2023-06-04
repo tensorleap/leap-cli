@@ -1,19 +1,21 @@
-## tensorleap datasets save
+## tensorleap datasets init
 
-Save dataset script
+Create a .tensorleap.yaml file in the current directory
 
 ### Synopsis
 
-Save dataset script
+Create a .tensorleap.yaml file in the current directory
 
 ```
-tensorleap datasets save [flags]
+tensorleap datasets init [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for save
+      --datasetId string   DatasetId of existing dataset
+  -h, --help               help for init
+      --new string         Name for new database
 ```
 
 ### Options inherited from parent commands
