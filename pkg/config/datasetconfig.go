@@ -7,10 +7,17 @@ import (
 	"text/template"
 
 	"github.com/spf13/cobra"
+	"gopkg.in/yaml.v3"
 )
 
 //go:embed template/*
 var templateDir embed.FS
+
+type DatasetConfig struct {
+	DatasetId       string   `yaml:"datasetId"`
+	EntryFile       string   `yaml:"entryFile"`
+	IncludePatterns []string `yaml:"include"`
+}
 
 type InitTemplateValues struct {
 	DatasetId string
@@ -28,6 +35,7 @@ func CreateDatasetConfig(datasetId string) {
 			tmpl, _ := template.New(fileName).Parse(string(templateContent))
 			targetFile, err := os.Create(fileName)
 			cobra.CheckErr(err)
+			defer targetFile.Close()
 
 			err = tmpl.Execute(targetFile, &InitTemplateValues{
 				DatasetId: datasetId,
@@ -35,4 +43,14 @@ func CreateDatasetConfig(datasetId string) {
 			cobra.CheckErr(err)
 		}
 	}
+}
+
+func GetDatasetConfig() (*DatasetConfig, error) {
+	content, err := os.ReadFile(".tensorleap.yaml")
+	if err != nil {
+		return nil, err
+	}
+	datasetConfig := DatasetConfig{}
+	err = yaml.Unmarshal(content, &datasetConfig)
+	return &datasetConfig, err
 }
