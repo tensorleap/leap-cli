@@ -18,14 +18,16 @@ jobs:
       - name: Install gox
         run: go install github.com/mitchellh/gox@latest
 
-      - name: Build for all platforms
-        run: make build-cross
-
       - name: Extract Tag from Ref
         if: startsWith(github.ref, 'refs/tags/')
         id: tag
         run: echo VERSION=${GITHUB_REF/refs\/tags\//} >> $GITHUB_OUTPUT
         shell: bash
+
+      - name: Build for all platforms
+        env:
+          CLI_BUILD_VERSION: ${{ steps.tag.outputs.VERSION }}
+        run: make build-cross
 
       - uses: apexskier/github-semver-parse@v1
         if: startsWith(github.ref, 'refs/tags/')
