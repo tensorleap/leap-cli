@@ -12,7 +12,13 @@ import (
 	"github.com/tensorleap/cli-go/cmd/models"
 	. "github.com/tensorleap/cli-go/pkg/api"
 	"github.com/tensorleap/cli-go/pkg/config"
+	"github.com/tensorleap/cli-go/pkg/version"
 )
+
+var cfgFile string
+var apiKey string
+var apiUrl string
+var showVersionInfo bool
 
 var RootCommand = &cobra.Command{
 	Use:   "tensorleap",
@@ -25,15 +31,21 @@ Complete documentation is available at http://docs.tensoleap.ai`,
 			config.GetApiUrl(),
 			config.GetApiKey()))
 	},
-}
+	Run: func(cmd *cobra.Command, args []string) {
+		if !showVersionInfo {
+			cmd.Help()
+			return
+		}
 
-var cfgFile string
-var apiKey string
-var apiUrl string
+		fmt.Println(version.CliVersion)
+		// TODO: Print local installation version
+	},
+}
 
 func init() {
 	cobra.OnInitialize(initConfig)
 
+	RootCommand.Flags().BoolVar(&showVersionInfo, "version", false, "Show version information")
 	RootCommand.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/tensorleap/config.yaml)")
 	RootCommand.PersistentFlags().StringVar(&apiKey, "apiKey", "", "Tensorleap Api key")
 	RootCommand.PersistentFlags().StringVar(&apiUrl, "apiUrl", "", "Tensorleap api url")
