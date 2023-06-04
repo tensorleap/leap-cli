@@ -26,3 +26,8 @@ you can also run `go run .` to compile and run the source
 ```sh
 make docgen
 ```
+
+### Uninstall
+```sh
+sudo rm $(which tensorleap)
+```
