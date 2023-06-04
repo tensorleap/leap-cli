@@ -16,3 +16,12 @@ jobs:
       - name: Build
         run: go build .
 
+  lint-install-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Run ShellCheck
+        run: shellcheck ./install.sh
+
