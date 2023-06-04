@@ -5,11 +5,13 @@ LDFLAGS := -X 'github.com/tensorleap/cli-go/pkg/version.CliVersion=$(CLI_BUILD_V
 
 .PHONY: build-cross
 build-cross:
-	echo $(LDFLAGS)
 	gox \
 		-output  "./dist/tensorleap-{{.OS}}-{{.Arch}}" \
 		-osarch "$(OSARCH)" \
 		-ldflags "$(LDFLAGS)" \
 		.
 
-
+.PHONY: docgen
+docgen:
+	rm -rf docs/*
+	go run docgen/docgen.go

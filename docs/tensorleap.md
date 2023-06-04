@@ -5,7 +5,7 @@ Tensorleap - Deepbug your models!
 ### Synopsis
 
 A debugger and analyzer for your DNNs.
-Complete documentation is available at http://docs.tensoleap.ai
+Complete documentation is available at https://docs.tensorleap.ai
 
 ```
 tensorleap [flags]

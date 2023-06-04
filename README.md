@@ -20,3 +20,9 @@ In order to enabled shell completions, add `source <(tensorleap completion zsh)`
 2. Run `go build .` (the built file will be named `cli-go`)
 
 you can also run `go run .` to compile and run the source
+
+### Updating docs 
+
+```sh
+make docgen
+```
