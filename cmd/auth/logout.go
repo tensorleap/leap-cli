@@ -11,10 +11,9 @@ func init() {
 		Use:   "logout",
 		Short: "Remove api key from the machine",
 		Long:  `Remove api key from the machine`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			viper.Set(config.API_KEY_CONFIG_PATH, "")
-			err := viper.WriteConfig()
-			cobra.CheckErr(err)
+			return viper.WriteConfig()
 		},
 	})
 }

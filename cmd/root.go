@@ -66,5 +66,6 @@ func Execute() {
 }
 
 func initConfig() {
-	config.InitConfig(cfgFile)
+	err := config.InitConfig(cfgFile)
+	cobra.CheckErr(err)
 }

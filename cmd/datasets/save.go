@@ -20,40 +20,54 @@ func init() {
 		Use:   "save",
 		Short: "Save dataset script",
 		Long:  `Save dataset script`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			datasetConfig, err := config.GetDatasetConfig()
-			cobra.CheckErr(err)
-			config.VerifyLoggedIn()
+			if err != nil {
+				return err
+			}
+			if err := config.CheckLoggedIn(); err != nil {
+				return err
+			}
 
 			filePaths, err := getDatasetFiles(datasetConfig)
-			cobra.CheckErr(err)
+			if err != nil {
+				return err
+			}
 
 			tarGzFile, err := os.CreateTemp("", "tensorleap-*.tar.gz")
-			cobra.CheckErr(err)
+			if err != nil {
+				return err
+			}
 			defer cleanupTempFile(tarGzFile)
 
-			err = createTarGzFile(filePaths, tarGzFile)
-			cobra.CheckErr(err)
+			if err := createTarGzFile(filePaths, tarGzFile); err != nil {
+				return err
+			}
 
 			data, _, err := ApiClient.GetDatasetVersionUploadUrl(cmd.Context()).Execute()
-			cobra.CheckErr(err)
+			if err != nil {
+				return err
+			}
 
 			tarGzFile.Seek(0, 0)
 			uploadUrl := data.GetUrl()
-			err = uploadFile(uploadUrl, tarGzFile)
-			cobra.CheckErr(err)
+			if err := uploadFile(uploadUrl, tarGzFile); err != nil {
+				return err
+			}
 
 			fmt.Println("Creating new dataset version...")
-			_, _, err = ApiClient.SaveDatasetVersion(cmd.Context()).
+			if _, _, err = ApiClient.SaveDatasetVersion(cmd.Context()).
 				SaveDatasetVersionParams(*tensorleapapi.NewSaveDatasetVersionParams(
 					datasetConfig.DatasetId,
 					uploadUrl,
 					datasetConfig.EntryFile,
 				)).
-				Execute()
-			cobra.CheckErr(err)
+				Execute(); err != nil {
+				return err
+			}
 
 			fmt.Println("Done!")
+			return nil
 		},
 	})
 }
@@ -69,7 +83,7 @@ func uploadFile(url string, file *os.File) error {
 	go func() {
 		defer writer.Close()
 		_, err := io.Copy(writer, file)
-		cobra.CheckErr(err)
+		writer.CloseWithError(err)
 	}()
 	req, err := http.NewRequest(http.MethodPut, url, reader)
 	if err != nil {

@@ -13,13 +13,19 @@ func init() {
 		Use:   "list",
 		Short: "List available datasets",
 		Long:  `List available datasets`,
-		Run: func(cmd *cobra.Command, args []string) {
-			config.VerifyLoggedIn()
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := config.CheckLoggedIn(); err != nil {
+				return err
+			}
 			data, _, err := ApiClient.GetDatasets(cmd.Context()).Execute()
-			cobra.CheckErr(err)
+			if err != nil {
+				return err
+			}
 			for _, dataset := range data.Datasets {
 				fmt.Println(dataset.GetId(), "-", dataset.GetName())
 			}
+
+			return nil
 		},
 	})
 }

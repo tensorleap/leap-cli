@@ -13,14 +13,19 @@ func init() {
 		Use:   "whoami",
 		Short: "Get information about the authenticated user",
 		Long:  `Get information about the authenticated user`,
-		Run: func(cmd *cobra.Command, args []string) {
-			config.VerifyLoggedIn()
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := config.CheckLoggedIn(); err != nil {
+				return err
+			}
 			fmt.Println("API Url: " + config.GetApiUrl())
 
 			userData, _, err := ApiClient.WhoAmI(cmd.Context()).Execute()
-			cobra.CheckErr(err)
+			if err != nil {
+				return err
+			}
 			fmt.Println("User email: " + userData.Local.Email)
 			fmt.Println("Team name: " + userData.OrganizationName)
+			return nil
 		},
 	}
 	RootCommand.AddCommand(cmd)

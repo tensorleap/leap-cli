@@ -14,27 +14,32 @@ var cmd = &cobra.Command{
 	Args:  cobra.ExactArgs(2),
 	Short: "Loging with Tensorleap API key",
 	Long:  `Loging with Tensorleap API key`,
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		apiKey := args[0]
 		baseUrl := args[1]
 		ctx := CreateAuthenticatedContext(cmd.Context(), baseUrl, apiKey)
 
-		userData, _, apiErr := ApiClient.WhoAmI(ctx).Execute()
-		cobra.CheckErr(apiErr)
+		userData, _, err := ApiClient.WhoAmI(ctx).Execute()
+		if err != nil {
+			return err
+		}
 		fmt.Println("User email: " + userData.Local.Email)
 		fmt.Println("Team name: " + userData.OrganizationName)
 
 		viper.Set(config.API_URL_CONFIG_PATH, baseUrl)
 		viper.Set(config.API_KEY_CONFIG_PATH, apiKey)
-		err := viper.SafeWriteConfig()
+		err = viper.SafeWriteConfig()
 		if err != nil {
 			_, ok := err.(viper.ConfigFileAlreadyExistsError)
 			if ok {
 				err = viper.WriteConfig()
 			}
 		}
-		cobra.CheckErr(err)
+		if err != nil {
+			return err
+		}
 		fmt.Println("Saved credentials to: ", viper.ConfigFileUsed())
+		return nil
 	},
 }
 

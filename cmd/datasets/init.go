@@ -1,6 +1,7 @@
 package datasets
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/spf13/cobra"
@@ -17,26 +18,28 @@ func init() {
 		Use:   "init",
 		Short: "Create a .tensorleap.yaml file in the current directory",
 		Long:  `Create a .tensorleap.yaml file in the current directory`,
-		PreRun: func(cmd *cobra.Command, args []string) {
+		PreRunE: func(cmd *cobra.Command, args []string) error {
 			if len(datasetId) == 0 && len(newDatasetName) == 0 {
-				msg := "Error: flag(s) \"datasetId\" or \"new\" must be set"
-				fmt.Println(msg)
-				cmd.Usage()
-				cobra.CheckErr(msg)
+				return errors.New("Error: flag(s) \"datasetId\" or \"new\" must be set")
 			}
+			return nil
 		},
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(newDatasetName) > 0 {
 				fmt.Println("Creating dataset:", newDatasetName)
 				data, _, err := ApiClient.AddDataset(cmd.Context()).
 					NewDatasetParams(*tensorleapapi.NewNewDatasetParams(
 						*tensorleapapi.NewNullableString(&newDatasetName))).
 					Execute()
-				cobra.CheckErr(err)
+				if err != nil {
+					return err
+				}
 				datasetId = data.Dataset.GetId()
 			} else if len(datasetId) > 0 {
 				data, _, err := ApiClient.GetDatasets(cmd.Context()).Execute()
-				cobra.CheckErr(err)
+				if err != nil {
+					return err
+				}
 				found := false
 				for _, dataset := range data.Datasets {
 					if dataset.GetId() == datasetId {
@@ -46,10 +49,10 @@ func init() {
 					}
 				}
 				if !found {
-					cobra.CheckErr("Didn't find dataset with id: " + datasetId)
+					return fmt.Errorf("Didn't find dataset with id: %v", datasetId)
 				}
 			}
-			config.CreateDatasetConfig(datasetId)
+			return config.CreateDatasetConfig(datasetId)
 		},
 	}
 

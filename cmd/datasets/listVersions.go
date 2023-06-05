@@ -16,16 +16,21 @@ func init() {
 		Use:   "list-versions",
 		Short: "List available dataset versions",
 		Long:  `List available dataset versions`,
-		Run: func(cmd *cobra.Command, args []string) {
-			config.VerifyLoggedIn()
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := config.CheckLoggedIn(); err != nil {
+				return err
+			}
 			params := *tensorleapapi.NewGetDatasetVersionsParams(datasetId)
 			data, _, err := ApiClient.GetDatasetVersions(cmd.Context()).
 				GetDatasetVersionsParams(params).
 				Execute()
-			cobra.CheckErr(err)
+			if err != nil {
+				return err
+			}
 			for _, datasetVersion := range data.DatasetVersions {
 				fmt.Println(datasetVersion.GetId())
 			}
+			return nil
 		},
 	}
 

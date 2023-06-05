@@ -3,11 +3,9 @@ package config
 import (
 	"embed"
 	"fmt"
+	"gopkg.in/yaml.v3"
 	"os"
 	"text/template"
-
-	"github.com/spf13/cobra"
-	"gopkg.in/yaml.v3"
 )
 
 //go:embed template/*
@@ -23,7 +21,7 @@ type InitTemplateValues struct {
 	DatasetId string
 }
 
-func CreateDatasetConfig(datasetId string) {
+func CreateDatasetConfig(datasetId string) error {
 	files, _ := templateDir.ReadDir("template")
 	for _, f := range files {
 		fileName := f.Name()
@@ -34,15 +32,19 @@ func CreateDatasetConfig(datasetId string) {
 			templateContent, _ := templateDir.ReadFile("template/" + fileName)
 			tmpl, _ := template.New(fileName).Parse(string(templateContent))
 			targetFile, err := os.Create(fileName)
-			cobra.CheckErr(err)
+			if err != nil {
+				return err
+			}
 			defer targetFile.Close()
 
-			err = tmpl.Execute(targetFile, &InitTemplateValues{
+			if err := tmpl.Execute(targetFile, &InitTemplateValues{
 				DatasetId: datasetId,
-			})
-			cobra.CheckErr(err)
+			}); err != nil {
+				return err
+			}
 		}
 	}
+	return nil
 }
 
 func GetDatasetConfig() (*DatasetConfig, error) {
