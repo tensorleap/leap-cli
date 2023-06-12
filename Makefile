@@ -5,6 +5,8 @@ CLI_BUILD_VERSION ?= cli version not set
 # See available flags by running: go tool link
 LDFLAGS := -w -s -X 'github.com/tensorleap/cli-go/pkg/version.CliVersion=$(CLI_BUILD_VERSION)'
 
+export CGO_ENABLED=0
+
 .PHONY: build-cross
 build-cross:
 	gox \
