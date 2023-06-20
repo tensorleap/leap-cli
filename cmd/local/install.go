@@ -2,10 +2,14 @@ package local
 
 import (
 	"fmt"
+	"io"
 	"log"
+	"net/http"
 	"os"
 	"os/exec"
 	"path"
+	"strings"
+	"sync"
 
 	"github.com/spf13/cobra"
 
@@ -30,14 +34,30 @@ func init() {
 
 			ctx := cmd.Context()
 
-			regVolumeDir := path.Join(VAR_DIR, "registry")
-			if err := k3d.CreateRegistry(
-				ctx,
-				registryPort,
-				[]string{fmt.Sprintf("%v:%v", regVolumeDir, "/var/lib/registry")},
-			); err != nil {
+			registryVolumes := []string{
+				fmt.Sprintf("%v:%v", path.Join(VAR_DIR, "registry"), "/var/lib/registry"),
+			}
+			registry, err := k3d.CreateLocalRegistry(ctx, registryPort, registryVolumes)
+			if err != nil {
 				return err
 			}
+
+			imagesToCache, err := getLatestImages()
+			if err != nil {
+				return err
+			}
+
+			var wg sync.WaitGroup
+			for _, img := range imagesToCache {
+				go func(img string) {
+					wg.Add(1)
+					defer wg.Done()
+					if err := k3d.CacheImage(ctx, img, registry); err != nil {
+						log.Fatalf("Failed to cache %s: %s", img, err)
+					}
+				}(img)
+			}
+			wg.Wait()
 
 			if err := k3d.CreateCluster(
 				ctx,
@@ -98,4 +118,46 @@ func initVarDir() error {
 	}
 
 	return nil
+}
+
+func getLatestImages() ([]string, error) {
+	resp, err := http.Get("https://raw.githubusercontent.com/tensorleap/helm-charts/master/images.txt")
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return nil, fmt.Errorf("Getting latest chart images returned bad status code: %v", resp.StatusCode)
+	}
+
+	tensorleapImages, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err = http.Get(fmt.Sprintf("https://github.com/k3s-io/k3s/releases/download/%s/k3s-images.txt", strings.Replace(k3d.K3sVersion, "-", "+", 1)))
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return nil, fmt.Errorf("Getting latest k3s images returned bad status code: %v", resp.StatusCode)
+	}
+
+	k3sImages, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	allImages := strings.Split(string(tensorleapImages), "\n")
+	allImages = append(allImages, strings.Split(string(k3sImages), "\n")...)
+
+	ret := []string{}
+	for _, img := range allImages {
+		if len(img) > 0 && !strings.Contains(img, "engine") {
+			ret = append(ret, img)
+		}
+	}
+
+	return ret, nil
 }

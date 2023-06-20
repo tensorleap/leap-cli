@@ -47,6 +47,8 @@ func CreateCluster(ctx context.Context, port uint, volumes []string) error {
 	return nil
 }
 
+var K3sVersion = version.K3sVersion
+
 func createClusterConfig(ctx context.Context, port uint, volumes []string) *conf.ClusterConfig {
 	freePort, err := cliutil.GetFreePort()
 	if err != nil {
