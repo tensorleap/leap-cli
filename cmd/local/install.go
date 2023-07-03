@@ -113,7 +113,7 @@ func initVarDir() error {
 		_, err := os.Stat(fullPath)
 		if os.IsNotExist(err) {
 			log.Printf("Creating directory: %s", fullPath)
-			if err := os.MkdirAll(fullPath, 777); err != nil {
+			if err := os.MkdirAll(fullPath, 0777); err != nil {
 				return err
 			}
 		} else if err != nil {
