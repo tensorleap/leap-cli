@@ -43,7 +43,7 @@ func init() {
 				return err
 			}
 
-			imagesToCache, err := local.GetLatestImages(useGpu)
+			imagesToCache, _, err := local.GetLatestImages(useGpu)
 			if err != nil {
 				return err
 			}
