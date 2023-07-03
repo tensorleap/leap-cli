@@ -56,11 +56,11 @@ func InstallLatestTensorleapChartVersion(
 	return nil
 }
 
-
-func CreateTensorleapChartValues(useGpu bool) (Record) {
-	return Record {
-		"tensorleap-engine": Record {
-			"gpu": useGpu,
+func CreateTensorleapChartValues(useGpu bool, dataDir string) Record {
+	return Record{
+		"tensorleap-engine": Record{
+			"gpu":                useGpu,
+			"localDataDirectory": dataDir,
 		},
 	}
 }

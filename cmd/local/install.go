@@ -22,6 +22,7 @@ const VAR_DIR = "/var/lib/tensorleap/standalone"
 var port uint
 var registryPort uint
 var useGpu bool
+var dataVolume string
 
 func init() {
 	cmd := &cobra.Command{
@@ -30,6 +31,10 @@ func init() {
 		Long:  `Installs tensorleap on the local machine, running in a docker container`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := initVarDir(); err != nil {
+				return err
+			}
+
+			if err := initDataVolumeDir(); err != nil {
 				return err
 			}
 
@@ -63,17 +68,18 @@ func init() {
 			if err := k3d.CreateCluster(
 				ctx,
 				port,
-				[]string{fmt.Sprintf("%v:%v", VAR_DIR, VAR_DIR)},
+				[]string{fmt.Sprintf("%v:%v", VAR_DIR, VAR_DIR), dataVolume},
 				useGpu,
 			); err != nil {
 				return err
 			}
 
+			dataContainerPath := strings.Split(dataVolume, ":")[1]
 			if err := helm.InstallLatestTensorleapChartVersion(
 				ctx,
 				"k3d-tensorleap",
 				"tensorleap",
-				helm.CreateTensorleapChartValues(useGpu),
+				helm.CreateTensorleapChartValues(useGpu, dataContainerPath),
 			); err != nil {
 				return err
 			}
@@ -86,6 +92,7 @@ func init() {
 	cmd.Flags().UintVarP(&port, "port", "p", 4589, "Port to be used for tensorleap installation")
 	cmd.Flags().UintVar(&registryPort, "registry-port", 5699, "Port to be used for docker registry")
 	cmd.Flags().BoolVar(&useGpu, "gpu", false, "Enable GPU usage for training and evaluating")
+	cmd.Flags().StringVar(&dataVolume, "data-volume", getDefaultDataVolume(), "Data Volume maps the user's local directory to the container's directory, enabling access to datasets for training and evaluation")
 
 	RootCommand.AddCommand(cmd)
 }
@@ -122,6 +129,11 @@ func initVarDir() error {
 	}
 
 	return nil
+}
+
+func initDataVolumeDir() error {
+	dataPath := strings.Split(dataVolume, ":")[0]
+	return os.MkdirAll(dataPath, 0777)
 }
 
 func getLatestImages(useGpu bool) ([]string, error) {
@@ -168,4 +180,18 @@ func getLatestImages(useGpu bool) ([]string, error) {
 	}
 
 	return ret, nil
+}
+
+func getDefaultDataVolume() string {
+	defaultDataPath := fmt.Sprintf("%s/tensorleap/data", getHomePath())
+	return fmt.Sprintf("%s:%s", defaultDataPath, defaultDataPath)
+}
+
+func getHomePath() string {
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		panic(fmt.Errorf("Failed to get home directory: %w", err))
+	}
+
+	return homeDir
 }
