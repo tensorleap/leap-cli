@@ -108,7 +108,7 @@ func initVarDir() error {
 		return err
 	}
 
-	for _, dir := range []string{"manifests", "storage", "registry"} {
+	for _, dir := range []string{"storage", "registry"} {
 		fullPath := path.Join(VAR_DIR, dir)
 		_, err := os.Stat(fullPath)
 		if os.IsNotExist(err) {
