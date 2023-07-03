@@ -10,7 +10,14 @@ import (
 	"helm.sh/helm/v3/pkg/cli"
 )
 
-func InstallLatestTensorleapChartVersion(ctx context.Context, kubeContext string, namespace string) error {
+type Record = map[string]interface{}
+
+func InstallLatestTensorleapChartVersion(
+	ctx context.Context,
+	kubeContext string,
+	namespace string,
+	values Record,
+) error {
 	settings := cli.New()
 	settings.SetNamespace(namespace)
 	settings.KubeContext = kubeContext
@@ -39,9 +46,7 @@ func InstallLatestTensorleapChartVersion(ctx context.Context, kubeContext string
 		return err
 	}
 
-	vals := make(map[string]interface{})
-
-	_, err = client.RunWithContext(ctx, chartRequested, vals)
+	_, err = client.RunWithContext(ctx, chartRequested, values)
 	if err != nil {
 		return err
 	}
@@ -49,4 +54,13 @@ func InstallLatestTensorleapChartVersion(ctx context.Context, kubeContext string
 	log.Printf("Tensorleap installed on local k3d cluster! version: %s", chartRequested.Metadata.Version)
 
 	return nil
+}
+
+
+func CreateTensorleapChartValues(useGpu bool) (Record) {
+	return Record {
+		"tensorleap-engine": Record {
+			"gpu": useGpu,
+		},
+	}
 }

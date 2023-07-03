@@ -17,8 +17,15 @@ import (
 	"github.com/k3d-io/k3d/v5/version"
 )
 
-func CreateCluster(ctx context.Context, port uint, volumes []string) error {
-	clusterConfig := createClusterConfig(ctx, port, volumes)
+var (
+	K3sVersion    = version.K3sVersion
+	K3sImage      = fmt.Sprintf("%s:%s", k3d.DefaultK3sImageRepo, K3sVersion)
+	K3sGpuVersion = "v1.23.8-k3s1"
+	K3sGpuImage   = fmt.Sprintf("us-central1-docker.pkg.dev/tensorleap/main/k3s:%s-cuda", K3sGpuVersion)
+)
+
+func CreateCluster(ctx context.Context, port uint, volumes []string, useGpu bool) error {
+	clusterConfig := createClusterConfig(ctx, port, volumes, useGpu)
 
 	if _, err := k3dCluster.ClusterGet(ctx, runtimes.SelectedRuntime, &clusterConfig.Cluster); err == nil {
 		log.Println("Found existing tensorleap cluster!")
@@ -47,12 +54,15 @@ func CreateCluster(ctx context.Context, port uint, volumes []string) error {
 	return nil
 }
 
-var K3sVersion = version.K3sVersion
-
-func createClusterConfig(ctx context.Context, port uint, volumes []string) *conf.ClusterConfig {
+func createClusterConfig(ctx context.Context, port uint, volumes []string, useGpu bool) *conf.ClusterConfig {
 	freePort, err := cliutil.GetFreePort()
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	image := K3sImage
+	if useGpu {
+		image = K3sGpuImage
 	}
 
 	simpleK3dConfig := conf.SimpleConfig{
@@ -67,7 +77,7 @@ func createClusterConfig(ctx context.Context, port uint, volumes []string) *conf
 		ExposeAPI: conf.SimpleExposureOpts{
 			HostPort: strconv.Itoa(freePort),
 		},
-		Image:   fmt.Sprintf("%s:%s", k3d.DefaultK3sImageRepo, version.K3sVersion),
+		Image:   image,
 		Volumes: make([]conf.VolumeWithNodeFilters, len(volumes)),
 		Ports: []conf.PortWithNodeFilters{{
 			Port:        fmt.Sprintf("%v:80", port),
