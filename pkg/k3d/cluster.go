@@ -6,13 +6,16 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 
+	dockerTypes "github.com/docker/docker/api/types"
 	cliutil "github.com/k3d-io/k3d/v5/cmd/util"
 	k3dCluster "github.com/k3d-io/k3d/v5/pkg/client"
 	"github.com/k3d-io/k3d/v5/pkg/config"
 	k3dConfTypes "github.com/k3d-io/k3d/v5/pkg/config/types"
 	conf "github.com/k3d-io/k3d/v5/pkg/config/v1alpha5"
 	"github.com/k3d-io/k3d/v5/pkg/runtimes"
+	docker "github.com/k3d-io/k3d/v5/pkg/runtimes/docker"
 	k3d "github.com/k3d-io/k3d/v5/pkg/types"
 	"github.com/k3d-io/k3d/v5/version"
 )
@@ -177,4 +180,32 @@ mirrors:
 	}
 
 	return k3dClusterConfig
+}
+
+func CacheImageInTheBackground(ctx context.Context, image string) error {
+	dockerClient, err := docker.GetDockerClient()
+	if err != nil {
+		return err
+	}
+
+	const CONTAINER_NAME = "k3d-tensorleap-server-0"
+	const REGISTRY_DOMAIN = "k3d-tensorleap-registry:5000"
+	urlLength := strings.IndexRune(image, '/')
+	targetImage := REGISTRY_DOMAIN + image[urlLength:]
+
+	shellScript := strings.Join([]string{
+		fmt.Sprintf("crictl pull %s", image),
+		fmt.Sprintf("ctr image convert %s %s", image, targetImage),
+		fmt.Sprintf("ctr image push --plain-http %s", targetImage),
+	}, " && ")
+	exec, err := dockerClient.ContainerExecCreate(ctx, CONTAINER_NAME, dockerTypes.ExecConfig{
+		Privileged: true,
+		Detach:     true,
+		Cmd:        []string{"sh", "-c", shellScript},
+	})
+	if err != nil {
+		return fmt.Errorf("docker failed to create exec config for node '%s': %w", CONTAINER_NAME, err)
+	}
+
+	return dockerClient.ContainerExecStart(ctx, exec.ID, dockerTypes.ExecStartCheck{})
 }

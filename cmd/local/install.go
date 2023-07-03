@@ -43,7 +43,7 @@ func init() {
 				return err
 			}
 
-			imagesToCache, _, err := local.GetLatestImages(useGpu)
+			imagesToCache, engineImage, err := local.GetLatestImages(useGpu)
 			if err != nil {
 				return err
 			}
@@ -78,6 +78,8 @@ func init() {
 			); err != nil {
 				return err
 			}
+
+			k3d.CacheImageInTheBackground(ctx, engineImage)
 
 			return nil
 
