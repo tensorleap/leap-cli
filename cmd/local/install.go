@@ -21,6 +21,7 @@ const VAR_DIR = "/var/lib/tensorleap/standalone"
 
 var port uint
 var registryPort uint
+var useGpu bool
 
 func init() {
 	cmd := &cobra.Command{
@@ -42,7 +43,7 @@ func init() {
 				return err
 			}
 
-			imagesToCache, err := getLatestImages()
+			imagesToCache, err := getLatestImages(useGpu)
 			if err != nil {
 				return err
 			}
@@ -63,6 +64,7 @@ func init() {
 				ctx,
 				port,
 				[]string{fmt.Sprintf("%v:%v", VAR_DIR, VAR_DIR)},
+				useGpu,
 			); err != nil {
 				return err
 			}
@@ -71,6 +73,7 @@ func init() {
 				ctx,
 				"k3d-tensorleap",
 				"tensorleap",
+				helm.CreateTensorleapChartValues(useGpu),
 			); err != nil {
 				return err
 			}
@@ -81,7 +84,8 @@ func init() {
 	}
 
 	cmd.Flags().UintVarP(&port, "port", "p", 4589, "Port to be used for tensorleap installation")
-	cmd.Flags().UintVar(&registryPort, "registry-port", 5699, "Port to be used for docker registyr")
+	cmd.Flags().UintVar(&registryPort, "registry-port", 5699, "Port to be used for docker registry")
+	cmd.Flags().BoolVar(&useGpu, "gpu", false, "Enable GPU usage for training and evaluating")
 
 	RootCommand.AddCommand(cmd)
 }
@@ -120,7 +124,7 @@ func initVarDir() error {
 	return nil
 }
 
-func getLatestImages() ([]string, error) {
+func getLatestImages(useGpu bool) ([]string, error) {
 	resp, err := http.Get("https://raw.githubusercontent.com/tensorleap/helm-charts/master/images.txt")
 	if err != nil {
 		return nil, err
@@ -134,8 +138,12 @@ func getLatestImages() ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
+	k3sVersion := k3d.K3sVersion
+	if useGpu {
+		k3sVersion = k3d.K3sGpuVersion
+	}
 
-	resp, err = http.Get(fmt.Sprintf("https://github.com/k3s-io/k3s/releases/download/%s/k3s-images.txt", strings.Replace(k3d.K3sVersion, "-", "+", 1)))
+	resp, err = http.Get(fmt.Sprintf("https://github.com/k3s-io/k3s/releases/download/%s/k3s-images.txt", strings.Replace(k3sVersion, "-", "+", 1)))
 	if err != nil {
 		return nil, err
 	}
