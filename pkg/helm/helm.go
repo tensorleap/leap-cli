@@ -10,8 +10,6 @@ import (
 	"helm.sh/helm/v3/pkg/cli"
 )
 
-type Record = map[string]interface{}
-
 func InstallLatestTensorleapChartVersion(
 	ctx context.Context,
 	kubeContext string,
@@ -29,14 +27,14 @@ func InstallLatestTensorleapChartVersion(
 	}
 
 	client := action.NewInstall(actionConfig)
-	client.ChartPathOptions.RepoURL = "https://helm.tensorleap.ai"
+	client.ChartPathOptions.RepoURL = REPO_URL
 	client.Namespace = settings.Namespace()
 	client.CreateNamespace = true
 	client.Wait = true
-	client.ReleaseName = "tensorleap"
+	client.ReleaseName = RELEASE_NAME
 
 	// client := action.NewPull()
-	cp, err := client.ChartPathOptions.LocateChart("tensorleap", settings)
+	cp, err := client.ChartPathOptions.LocateChart(CHART_NAME, settings)
 	if err != nil {
 		return err
 	}
@@ -56,11 +54,3 @@ func InstallLatestTensorleapChartVersion(
 	return nil
 }
 
-func CreateTensorleapChartValues(useGpu bool, dataDir string) Record {
-	return Record{
-		"tensorleap-engine": Record{
-			"gpu":                useGpu,
-			"localDataDirectory": dataDir,
-		},
-	}
-}
