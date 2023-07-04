@@ -34,7 +34,7 @@ func init() {
 				if err != nil {
 					return err
 				}
-				datasetId = data.Dataset.GetId()
+				datasetId = data.Dataset.GetCid()
 			} else if len(datasetId) > 0 {
 				data, _, err := ApiClient.GetDatasets(cmd.Context()).Execute()
 				if err != nil {
@@ -42,7 +42,7 @@ func init() {
 				}
 				found := false
 				for _, dataset := range data.Datasets {
-					if dataset.GetId() == datasetId {
+					if dataset.GetCid() == datasetId {
 						fmt.Println("Found dataset:", dataset.GetName())
 						found = true
 						break

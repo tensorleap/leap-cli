@@ -24,7 +24,7 @@ func init() {
 				return err
 			}
 			fmt.Println("User email: " + userData.Local.Email)
-			fmt.Println("Team name: " + userData.OrganizationName)
+			fmt.Println("Team name: " + userData.TeamName)
 			return nil
 		},
 	}

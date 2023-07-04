@@ -28,7 +28,7 @@ func init() {
 				return err
 			}
 			for _, datasetVersion := range data.DatasetVersions {
-				fmt.Println(datasetVersion.GetId())
+				fmt.Println(datasetVersion.GetCid())
 			}
 			return nil
 		},
