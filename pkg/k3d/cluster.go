@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 
 	cliutil "github.com/k3d-io/k3d/v5/cmd/util"
 	k3dCluster "github.com/k3d-io/k3d/v5/pkg/client"
@@ -17,12 +18,32 @@ import (
 	"github.com/k3d-io/k3d/v5/version"
 )
 
+type Cluster = k3d.Cluster
+
+const CLUSTER_NAME = "tensorleap"
+
 var (
 	K3sVersion    = version.K3sVersion
 	K3sImage      = fmt.Sprintf("%s:%s", k3d.DefaultK3sImageRepo, K3sVersion)
 	K3sGpuVersion = "v1.23.8-k3s1"
-	K3sGpuImage   = fmt.Sprintf("us-central1-docker.pkg.dev/tensorleap/main/k3s:%s-cuda", K3sGpuVersion)
+	K3sGpuVersionSuffix = "cuda"
+	K3sGpuImage   = fmt.Sprintf("us-central1-docker.pkg.dev/tensorleap/main/k3s:%s-%s", K3sGpuVersion, K3sGpuVersionSuffix)
 )
+
+func GetCluster(ctx context.Context) (*Cluster, error) {
+	clusters, err := k3dCluster.ClusterList(ctx, runtimes.SelectedRuntime)
+	if (err != nil) {
+		return  nil, err
+	}
+
+	for _, cluster := range clusters {
+		if cluster.Name == CLUSTER_NAME {
+			return cluster, nil
+		}
+	}
+	
+	return nil, nil
+}
 
 func CreateCluster(ctx context.Context, port uint, volumes []string, useGpu bool) error {
 	clusterConfig := createClusterConfig(ctx, port, volumes, useGpu)
@@ -54,6 +75,13 @@ func CreateCluster(ctx context.Context, port uint, volumes []string, useGpu bool
 	return nil
 }
 
+func IsGpuCluster(cluster *Cluster) bool {
+	if len(cluster.Nodes) > 0 {
+		return strings.HasSuffix(cluster.Nodes[0].Image, K3sGpuVersionSuffix)
+	}
+	return false
+}
+
 func createClusterConfig(ctx context.Context, port uint, volumes []string, useGpu bool) *conf.ClusterConfig {
 	freePort, err := cliutil.GetFreePort()
 	if err != nil {
@@ -71,7 +99,7 @@ func createClusterConfig(ctx context.Context, port uint, volumes []string, useGp
 			APIVersion: "k3d.io/v1alpha5",
 		},
 		ObjectMeta: k3dConfTypes.ObjectMeta{
-			Name: "tensorleap",
+			Name: CLUSTER_NAME,
 		},
 		Servers: 1,
 		ExposeAPI: conf.SimpleExposureOpts{

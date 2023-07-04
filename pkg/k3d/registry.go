@@ -24,6 +24,14 @@ const REGISTRY_NAME = "k3d-tensorleap-registry"
 const CONTAINER_NAME = "k3d-tensorleap-server-0"
 const REGISTRY_DOMAIN = "k3d-tensorleap-registry:5000"
 
+func GetRegistry(ctx context.Context) (*Registry, error) {
+	registry, err := client.RegistryGet(ctx, runtimes.SelectedRuntime, REGISTRY_NAME)
+	if err != nil {
+		return nil, err
+	}
+	return registry, nil
+}
+
 func CreateLocalRegistry(ctx context.Context, port uint, volumes []string) (*Registry, error) {
 	if existingRegistry, _ := client.RegistryGet(ctx, runtimes.SelectedRuntime, REGISTRY_NAME); existingRegistry != nil {
 		log.Println("Found existing registry!")
