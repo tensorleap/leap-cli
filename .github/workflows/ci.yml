@@ -16,6 +16,9 @@ jobs:
       - name: Build
         run: go build .
 
+      - name: Test
+        run: go test ./...
+
   lint-install-script:
     runs-on: ubuntu-latest
     steps:
