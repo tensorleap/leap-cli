@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.321
+  version: 0.0.342
 servers:
 - url: /api/v2
 paths:
@@ -296,7 +296,7 @@ paths:
       security:
       - jwt:
         - not-demo
-  /datasets/saveDatasetVersion:
+  /datasetVersions/saveDatasetVersion:
     post:
       operationId: SaveDatasetVersion
       parameters: []
@@ -316,7 +316,7 @@ paths:
       security:
       - jwt:
         - not-demo
-  /datasets/modifyDatasetVersionNote:
+  /datasetVersions/modifyDatasetVersionNote:
     post:
       operationId: ModifyDatasetVersionNote
       parameters: []
@@ -336,7 +336,7 @@ paths:
       security:
       - jwt:
         - not-demo
-  /datasets/getDatasetVersion:
+  /datasetVersions/getDatasetVersion:
     post:
       operationId: GetDatasetVersion
       parameters: []
@@ -355,7 +355,7 @@ paths:
           description: Ok
       security:
       - jwt: []
-  /datasets/getLatestDatasetVersion:
+  /datasetVersions/getLatestDatasetVersion:
     post:
       operationId: GetLatestDatasetVersion
       parameters: []
@@ -374,7 +374,7 @@ paths:
           description: Ok
       security:
       - jwt: []
-  /datasets/getDatasetVersions:
+  /datasetVersions/getDatasetVersions:
     post:
       operationId: GetDatasetVersions
       parameters: []
@@ -393,7 +393,7 @@ paths:
           description: Ok
       security:
       - jwt: []
-  /datasets/getDatasetVersionUploadUrl:
+  /datasetVersions/getDatasetVersionUploadUrl:
     post:
       operationId: GetDatasetVersionUploadUrl
       parameters: []
@@ -407,7 +407,43 @@ paths:
       security:
       - jwt:
         - not-demo
-  /exportedsessionruns/getExportedSessionRunJobs:
+  /evaluate/evaluate:
+    post:
+      operationId: Evaluate
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EvaluateParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /evaluate/analyzeGraph:
+    post:
+      operationId: AnalyzeGraph
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalyzeGraphParams'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt:
+        - not-demo
+  /exportedsessionruns/getExportedSessionJobs:
     post:
       operationId: GetExportedSessionJobs
       parameters: []
@@ -426,22 +462,22 @@ paths:
           description: Ok
       security:
       - jwt: []
-  /exportedsessionruns/getStoredExportedSessionRunBlob:
+  /exportedsessionruns/addExportModelJob:
     post:
-      operationId: GetStoredExportedSessionRunBlob
+      operationId: AddExportModelJob
       parameters: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GetStoredExportedSessionRunResourceUrlParams'
+              $ref: '#/components/schemas/AddExportModelJobParams'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/Job'
           description: Ok
       security:
       - jwt:
@@ -556,75 +592,10 @@ paths:
           description: No content
       security:
       - jwt: []
-  /jobs/getJobs:
+  /jobs/getTeamJobs:
     post:
-      operationId: GetJobs
+      operationId: GetTeamJobs
       parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GetJobsParams'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetJobsResponse'
-          description: Ok
-      security:
-      - jwt: []
-  /jobs/getTrainingJobs:
-    post:
-      operationId: GetTrainingJobs
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GetTrainingJobParams'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/Job'
-                type: array
-          description: Ok
-      security:
-      - jwt: []
-  /jobs/isTrainingJobRunning:
-    post:
-      operationId: IsTrainingJobRunning
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/IsTrainingJobRunningParams'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IsTrainingJobRunningResponse'
-          description: Ok
-      security:
-      - jwt: []
-  /jobs/getOrganizationJobs:
-    post:
-      operationId: GetOrganizationJobs
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GetOrganizationJobsParams'
-        required: true
       responses:
         "200":
           content:
@@ -683,212 +654,6 @@ paths:
           description: No content
       security:
       - jwt: []
-  /jobs/addExportModelJob:
-    post:
-      operationId: AddExportModelJob
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AddExportModelJobParams'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Job'
-          description: Ok
-      security:
-      - jwt:
-        - not-demo
-  /jobs/trainFromScratch:
-    post:
-      operationId: TrainFromScratch
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TrainFromScratchParams'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Job'
-          description: Ok
-      security:
-      - jwt:
-        - not-demo
-  /jobs/continueTrain:
-    post:
-      operationId: ContinueTrain
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ContinueTrainParams'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Job'
-          description: Ok
-      security:
-      - jwt:
-        - not-demo
-  /jobs/trainFromInitialWeights:
-    post:
-      operationId: TrainFromInitialWeights
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TrainFromInitialWeightsParams'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Job'
-          description: Ok
-      security:
-      - jwt:
-        - not-demo
-  /jobs/evaluate:
-    post:
-      operationId: Evaluate
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EvaluateParams'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Job'
-          description: Ok
-      security:
-      - jwt:
-        - not-demo
-  /jobs/sampleAnalysis:
-    post:
-      operationId: SampleAnalysis
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SampleAnalysisParams'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Job'
-          description: Ok
-      security:
-      - jwt:
-        - not-demo
-  /jobs/populationExploration:
-    post:
-      operationId: PopulationExploration
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PopulationExplorationParams'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Job'
-          description: Ok
-      security:
-      - jwt:
-        - not-demo
-  /jobs/sampleSelection:
-    post:
-      operationId: SampleSelection
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SampleSelectionParams'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Job'
-          description: Ok
-      security:
-      - jwt:
-        - not-demo
-  /jobs/getMachineTypes:
-    post:
-      operationId: GetMachineTypes
-      parameters: []
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetMachineTypesResponse'
-          description: Ok
-      security:
-      - jwt:
-        - admin-only
-  /jobs/setMachineType:
-    post:
-      operationId: SetOrganizationMachineType
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SetOrganizationMachineTypeParams'
-        required: true
-      responses:
-        "204":
-          description: No content
-      security:
-      - jwt:
-        - admin-only
-  /jobs/analyzeGraph:
-    post:
-      operationId: AnalyzeGraph
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AnalyzeGraphParams'
-        required: true
-      responses:
-        "204":
-          description: No content
-      security:
-      - jwt:
-        - not-demo
   /metadata/getMaxActiveUsers:
     post:
       operationId: GetMaxActiveUsers
@@ -907,6 +672,12 @@ paths:
     post:
       operationId: GetStatistics
       parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetStatisticsParams'
+        required: true
       responses:
         "200":
           content:
@@ -927,116 +698,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetEnvironmentInfoResponse'
-          description: Ok
-      security:
-      - jwt: []
-  /sessions-tests/createSessionTest:
-    post:
-      operationId: CreateSessionTest
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateSessionTestRequest'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                type: string
-          description: Ok
-      security:
-      - jwt: []
-  /sessions-tests/updateSessionTest:
-    post:
-      operationId: UpdateSessionTest
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateSessionTestRequest'
-        required: true
-      responses:
-        "204":
-          description: No content
-      security:
-      - jwt: []
-  /sessions-tests/getSingleSessionTest:
-    post:
-      operationId: GetSingleSessionTest
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GetSingleSessionTestRequest'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SessionTest'
-          description: Ok
-      security:
-      - jwt: []
-  /sessions-tests/getAllProjectSessionTests:
-    post:
-      operationId: GetAllProjectSessionTests
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GetAllProjectSessionTestsRequest'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/SessionTest'
-                type: array
-          description: Ok
-      security:
-      - jwt: []
-  /sessions-tests/deleteSessionTest:
-    post:
-      operationId: DeleteSessionTest
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DeleteSessionTestRequest'
-        required: true
-      responses:
-        "204":
-          description: No content
-      security:
-      - jwt: []
-  /sessions-tests/getSessionTestResult:
-    post:
-      operationId: GetSessionTestResult
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GetSessionTestResultsRequest'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/AllSessionsTestResults'
-                type: array
           description: Ok
       security:
       - jwt: []
@@ -1230,88 +891,6 @@ paths:
           description: Ok
       security:
       - jwt: []
-  /organizations/getOrganizations:
-    post:
-      operationId: GetOrganizations
-      parameters: []
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetOrganizationsResponse'
-          description: Ok
-      security:
-      - jwt:
-        - admin-only
-  /organizations/updateOrganizationPublicName:
-    post:
-      operationId: UpdateOrganizationPublicName
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateOrganizationPublicNameRequest'
-        required: true
-      responses:
-        "204":
-          description: No content
-      security:
-      - jwt:
-        - admin-only
-  /organizations/createOrganization:
-    post:
-      operationId: CreateOrganization
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateOrganizationRequest'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreateOrganizationResponse'
-          description: Ok
-      security:
-      - jwt:
-        - admin-only
-  /organizations/deleteOrganization:
-    post:
-      operationId: DeleteOrganization
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DeleteOrganizationRequest'
-        required: true
-      responses:
-        "204":
-          description: No content
-      security:
-      - jwt:
-        - admin-only
-  /organizations/setDefaultOrganization:
-    post:
-      operationId: SetDefaultOrganization
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SetDefaultOrganizationRequest'
-        required: true
-      responses:
-        "204":
-          description: No content
-      security:
-      - jwt:
-        - admin-only
   /projects/addProject:
     post:
       operationId: AddProject
@@ -1428,6 +1007,46 @@ paths:
           description: Ok
       security:
       - jwt: []
+  /projects/downloadProject/{projectId}:
+    get:
+      operationId: Download
+      parameters:
+      - explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
+  /projects/uploadProject/{projectName}:
+    put:
+      operationId: Upload
+      parameters:
+      - explode: false
+        in: path
+        name: projectName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: description
+        required: false
+        schema:
+          default: ""
+          type: string
+        style: form
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
   /secret-manager/addSecretManager:
     post:
       operationId: AddSecretManager
@@ -1539,15 +1158,15 @@ paths:
           description: Ok
       security:
       - jwt: []
-  /sessions/getRecentOrganizationSessions:
+  /sessions/getRecentTeamSessions:
     post:
-      operationId: GetRecentOrganizationSessions
+      operationId: GetRecentTeamSessions
       parameters: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RecentOrganizationSessionsRequestParams'
+              $ref: '#/components/schemas/RecentTeamSessionsRequestParams'
         required: true
       responses:
         "200":
@@ -1588,22 +1207,298 @@ paths:
           description: No content
       security:
       - jwt: []
-  /users/getOrganizationSlimUserData:
+  /sessions-tests/createSessionTest:
     post:
-      operationId: GetOrganizationSlimUserData
+      operationId: CreateSessionTest
       parameters: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GetOrganizationUsersRequest'
+              $ref: '#/components/schemas/CreateSessionTestRequest'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetOrganizationUsersResponse'
+                type: string
+          description: Ok
+      security:
+      - jwt: []
+  /sessions-tests/updateSessionTest:
+    post:
+      operationId: UpdateSessionTest
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSessionTestRequest'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
+  /sessions-tests/getSingleSessionTest:
+    post:
+      operationId: GetSingleSessionTest
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSingleSessionTestRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionTest'
+          description: Ok
+      security:
+      - jwt: []
+  /sessions-tests/getAllProjectSessionTests:
+    post:
+      operationId: GetAllProjectSessionTests
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetAllProjectSessionTestsRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SessionTest'
+                type: array
+          description: Ok
+      security:
+      - jwt: []
+  /sessions-tests/deleteSessionTest:
+    post:
+      operationId: DeleteSessionTest
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteSessionTestRequest'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
+  /sessions-tests/getSessionTestResult:
+    post:
+      operationId: GetSessionTestResult
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSessionTestResultsRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AllSessionsTestResults'
+                type: array
+          description: Ok
+      security:
+      - jwt: []
+  /teams/getTeams:
+    post:
+      operationId: GetTeams
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTeamsResponse'
+          description: Ok
+      security:
+      - jwt:
+        - admin-only
+  /teams/updateTeamPublicName:
+    post:
+      operationId: UpdateTeamPublicName
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTeamPublicNameRequest'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt:
+        - admin-only
+  /teams/createTeam:
+    post:
+      operationId: CreateTeam
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTeamResponse'
+          description: Ok
+      security:
+      - jwt:
+        - admin-only
+  /teams/deleteTeam:
+    post:
+      operationId: DeleteTeam
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteTeamRequest'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt:
+        - admin-only
+  /teams/setDefaultTeam:
+    post:
+      operationId: SetDefaultTeam
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetDefaultTeamRequest'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt:
+        - admin-only
+  /teams/getMachineTypes:
+    post:
+      operationId: GetMachineTypes
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMachineTypesResponse'
+          description: Ok
+      security:
+      - jwt:
+        - admin-only
+  /teams/setMachineType:
+    post:
+      operationId: SetMachineType
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetTeamMachineTypeParams'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt:
+        - admin-only
+  /train/trainFromScratch:
+    post:
+      operationId: TrainFromScratch
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TrainFromScratchParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /train/continueTrain:
+    post:
+      operationId: ContinueTrain
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContinueTrainParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /train/trainFromInitialWeights:
+    post:
+      operationId: TrainFromInitialWeights
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TrainFromInitialWeightsParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /users/getTeamSlimUserData:
+    post:
+      operationId: GetTeamSlimUserData
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTeamUsersResponse'
           description: Ok
       security:
       - jwt:
@@ -1617,7 +1512,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetOrganizationUsersResponse'
+                $ref: '#/components/schemas/GetTeamUsersResponse'
           description: Ok
       security:
       - jwt:
@@ -1642,15 +1537,15 @@ paths:
       security:
       - jwt:
         - admin-only
-  /users/updateUserOrganization:
+  /users/updateUserTeam:
     post:
-      operationId: UpdateUserOrganization
+      operationId: UpdateUserTeam
       parameters: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateUserOrganizationRequest'
+              $ref: '#/components/schemas/UpdateUserTeamRequest'
         required: true
       responses:
         "200":
@@ -1958,6 +1853,66 @@ paths:
       security:
       - jwt:
         - not-demo
+  /visualizations/sampleAnalysis:
+    post:
+      operationId: SampleAnalysis
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SampleAnalysisParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /visualizations/populationExploration:
+    post:
+      operationId: PopulationExploration
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PopulationExplorationParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /visualizations/sampleSelection:
+    post:
+      operationId: SampleSelection
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SampleSelectionParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
 components:
   examples: {}
   headers: {}
@@ -1976,7 +1931,7 @@ components:
     UserDataLocal:
       additionalProperties: false
       example:
-        organization: organization
+        teamId: teamId
         name: name
         email: email
         trialRequested: true
@@ -1985,14 +1940,14 @@ components:
           type: string
         name:
           type: string
-        organization:
+        teamId:
           type: string
         trialRequested:
           type: boolean
       required:
       - email
       - name
-      - organization
+      - teamId
       type: object
     UserDataMetadata:
       additionalProperties: false
@@ -2049,17 +2004,16 @@ components:
     UserData:
       additionalProperties: false
       example:
+        teamName: teamName
         metadata:
           dnnLevel: dnnLevel
           company: company
           title: title
           companySize: companySize
         role: null
-        organizationName: organizationName
         recordSession: true
-        _id: _id
         local:
-          organization: organization
+          teamId: teamId
           name: name
           email: email
           trialRequested: true
@@ -2072,9 +2026,10 @@ components:
           trialStarted: true
           email: email
           expirationDate: 2000-01-23T04:56:07.000+00:00
+        cid: cid
         activated: true
       properties:
-        _id:
+        cid:
           type: string
         recordSession:
           type: boolean
@@ -2084,19 +2039,19 @@ components:
           $ref: '#/components/schemas/UserDataLocal'
         metadata:
           $ref: '#/components/schemas/UserDataMetadata'
-        organizationName:
+        teamName:
           type: string
         singleUserMode:
           $ref: '#/components/schemas/SingleUserModeSettings'
         activated:
           type: boolean
       required:
-      - _id
       - activated
+      - cid
       - local
-      - organizationName
       - recordSession
       - role
+      - teamName
       type: object
     LoginParams:
       additionalProperties: false
@@ -2306,7 +2261,7 @@ components:
     CustomVisualizationItem:
       additionalProperties: false
       properties:
-        _id:
+        cid:
           type: string
         layout:
           $ref: '#/components/schemas/SizedLayout'
@@ -2318,7 +2273,7 @@ components:
         data:
           $ref: '#/components/schemas/CustomVisualizationData'
       required:
-      - _id
+      - cid
       - data
       - layout
       - type
@@ -2326,7 +2281,7 @@ components:
     VisualizationItem:
       additionalProperties: false
       properties:
-        _id:
+        cid:
           type: string
         layout:
           $ref: '#/components/schemas/SizedLayout'
@@ -2336,7 +2291,7 @@ components:
           nullable: false
           type: string
       required:
-      - _id
+      - cid
       - layout
       - type
       type: object
@@ -2351,13 +2306,16 @@ components:
         createdBy: createdBy
         name: name
         description: description
-        _id: _id
+        projectId: projectId
         items:
         - null
         - null
+        cid: cid
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
-        _id:
+        cid:
+          type: string
+        projectId:
           type: string
         createdAt:
           format: date-time
@@ -2376,11 +2334,12 @@ components:
         description:
           type: string
       required:
-      - _id
+      - cid
       - createdAt
       - createdBy
       - items
       - name
+      - projectId
       - updatedAt
       type: object
     GetProjectDashboardsResponse:
@@ -2391,19 +2350,21 @@ components:
           createdBy: createdBy
           name: name
           description: description
-          _id: _id
+          projectId: projectId
           items:
           - null
           - null
+          cid: cid
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
           name: name
           description: description
-          _id: _id
+          projectId: projectId
           items:
           - null
           - null
+          cid: cid
           updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         dashboards:
@@ -2431,10 +2392,11 @@ components:
           createdBy: createdBy
           name: name
           description: description
-          _id: _id
+          projectId: projectId
           items:
           - null
           - null
+          cid: cid
           updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         dashboard:
@@ -2446,11 +2408,15 @@ components:
       additionalProperties: false
       example:
         dashboardId: dashboardId
+        projectId: projectId
       properties:
         dashboardId:
           type: string
+        projectId:
+          type: string
       required:
       - dashboardId
+      - projectId
       type: object
     AddDashboardResponse:
       additionalProperties: false
@@ -2491,11 +2457,15 @@ components:
       additionalProperties: false
       example:
         dashboardId: dashboardId
+        projectId: projectId
       properties:
         dashboardId:
           type: string
+        projectId:
+          type: string
       required:
       - dashboardId
+      - projectId
       type: object
     UpdateDashboardParams:
       additionalProperties: false
@@ -2506,6 +2476,7 @@ components:
         items:
         - null
         - null
+        projectId: projectId
       properties:
         dashboardId:
           type: string
@@ -2517,10 +2488,13 @@ components:
           type: array
         description:
           type: string
+        projectId:
+          type: string
       required:
       - dashboardId
       - items
       - name
+      - projectId
       type: object
     GetDashletFieldsResponse:
       additionalProperties: false
@@ -3187,16 +3161,16 @@ components:
               - call_arg_names
               - call_arg_names
         createdBy: createdBy
-        organization: organization
+        teamId: teamId
         testStatus: null
         datasetId: datasetId
         blobPath: blobPath
-        _id: _id
         codeEntryFile: codeEntryFile
+        cid: cid
       properties:
-        _id:
+        cid:
           type: string
-        organization:
+        teamId:
           type: string
         datasetId:
           type: string
@@ -3215,15 +3189,15 @@ components:
         codeEntryFile:
           type: string
       required:
-      - _id
       - blobPath
+      - cid
       - codeEntryFile
       - createdAt
       - createdBy
       - datasetId
       - metadata
       - note
-      - organization
+      - teamId
       - testStatus
       type: object
     Dataset:
@@ -3336,16 +3310,15 @@ components:
                 - call_arg_names
                 - call_arg_names
           createdBy: createdBy
-          organization: organization
+          teamId: teamId
           testStatus: null
           datasetId: datasetId
           blobPath: blobPath
-          _id: _id
           codeEntryFile: codeEntryFile
-        organization: organization
+          cid: cid
+        teamId: teamId
         name: name
         sourceDatasetId: sourceDatasetId
-        _id: _id
         latestValidVersion:
           note: note
           createdAt: createdAt
@@ -3451,19 +3424,20 @@ components:
                 - call_arg_names
                 - call_arg_names
           createdBy: createdBy
-          organization: organization
+          teamId: teamId
           testStatus: null
           datasetId: datasetId
           blobPath: blobPath
-          _id: _id
           codeEntryFile: codeEntryFile
+          cid: cid
+        cid: cid
       properties:
-        _id:
+        cid:
           type: string
         name:
           nullable: true
           type: string
-        organization:
+        teamId:
           type: string
         sourceDatasetId:
           type: string
@@ -3476,11 +3450,11 @@ components:
         latestVersion:
           $ref: '#/components/schemas/DatasetVersion'
       required:
-      - _id
       - access
+      - cid
       - createdAt
       - name
-      - organization
+      - teamId
       type: object
     GetDatasetsResponse:
       additionalProperties: false
@@ -3593,16 +3567,15 @@ components:
                   - call_arg_names
                   - call_arg_names
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             testStatus: null
             datasetId: datasetId
             blobPath: blobPath
-            _id: _id
             codeEntryFile: codeEntryFile
-          organization: organization
+            cid: cid
+          teamId: teamId
           name: name
           sourceDatasetId: sourceDatasetId
-          _id: _id
           latestValidVersion:
             note: note
             createdAt: createdAt
@@ -3708,12 +3681,13 @@ components:
                   - call_arg_names
                   - call_arg_names
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             testStatus: null
             datasetId: datasetId
             blobPath: blobPath
-            _id: _id
             codeEntryFile: codeEntryFile
+            cid: cid
+          cid: cid
         - createdAt: createdAt
           access: null
           latestVersion:
@@ -3821,16 +3795,15 @@ components:
                   - call_arg_names
                   - call_arg_names
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             testStatus: null
             datasetId: datasetId
             blobPath: blobPath
-            _id: _id
             codeEntryFile: codeEntryFile
-          organization: organization
+            cid: cid
+          teamId: teamId
           name: name
           sourceDatasetId: sourceDatasetId
-          _id: _id
           latestValidVersion:
             note: note
             createdAt: createdAt
@@ -3936,12 +3909,13 @@ components:
                   - call_arg_names
                   - call_arg_names
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             testStatus: null
             datasetId: datasetId
             blobPath: blobPath
-            _id: _id
             codeEntryFile: codeEntryFile
+            cid: cid
+          cid: cid
       properties:
         datasets:
           items:
@@ -4061,16 +4035,15 @@ components:
                   - call_arg_names
                   - call_arg_names
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             testStatus: null
             datasetId: datasetId
             blobPath: blobPath
-            _id: _id
             codeEntryFile: codeEntryFile
-          organization: organization
+            cid: cid
+          teamId: teamId
           name: name
           sourceDatasetId: sourceDatasetId
-          _id: _id
           latestValidVersion:
             note: note
             createdAt: createdAt
@@ -4176,12 +4149,13 @@ components:
                   - call_arg_names
                   - call_arg_names
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             testStatus: null
             datasetId: datasetId
             blobPath: blobPath
-            _id: _id
             codeEntryFile: codeEntryFile
+            cid: cid
+          cid: cid
       properties:
         dataset:
           $ref: '#/components/schemas/Dataset'
@@ -4320,16 +4294,15 @@ components:
                   - call_arg_names
                   - call_arg_names
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             testStatus: null
             datasetId: datasetId
             blobPath: blobPath
-            _id: _id
             codeEntryFile: codeEntryFile
-          organization: organization
+            cid: cid
+          teamId: teamId
           name: name
           sourceDatasetId: sourceDatasetId
-          _id: _id
           latestValidVersion:
             note: note
             createdAt: createdAt
@@ -4435,12 +4408,13 @@ components:
                   - call_arg_names
                   - call_arg_names
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             testStatus: null
             datasetId: datasetId
             blobPath: blobPath
-            _id: _id
             codeEntryFile: codeEntryFile
+            cid: cid
+          cid: cid
       properties:
         dataset:
           $ref: '#/components/schemas/Dataset'
@@ -4648,12 +4622,12 @@ components:
                 - call_arg_names
                 - call_arg_names
           createdBy: createdBy
-          organization: organization
+          teamId: teamId
           testStatus: null
           datasetId: datasetId
           blobPath: blobPath
-          _id: _id
           codeEntryFile: codeEntryFile
+          cid: cid
       properties:
         datasetVersion:
           $ref: '#/components/schemas/DatasetVersion'
@@ -4782,12 +4756,12 @@ components:
                 - call_arg_names
                 - call_arg_names
           createdBy: createdBy
-          organization: organization
+          teamId: teamId
           testStatus: null
           datasetId: datasetId
           blobPath: blobPath
-          _id: _id
           codeEntryFile: codeEntryFile
+          cid: cid
       properties:
         datasetVersion:
           $ref: '#/components/schemas/DatasetVersion'
@@ -4912,12 +4886,12 @@ components:
                 - call_arg_names
                 - call_arg_names
           createdBy: createdBy
-          organization: organization
+          teamId: teamId
           testStatus: null
           datasetId: datasetId
           blobPath: blobPath
-          _id: _id
           codeEntryFile: codeEntryFile
+          cid: cid
       properties:
         latestVersion:
           $ref: '#/components/schemas/DatasetVersion'
@@ -5040,12 +5014,12 @@ components:
                 - call_arg_names
                 - call_arg_names
           createdBy: createdBy
-          organization: organization
+          teamId: teamId
           testStatus: null
           datasetId: datasetId
           blobPath: blobPath
-          _id: _id
           codeEntryFile: codeEntryFile
+          cid: cid
         - note: note
           createdAt: createdAt
           metadata:
@@ -5150,12 +5124,12 @@ components:
                 - call_arg_names
                 - call_arg_names
           createdBy: createdBy
-          organization: organization
+          teamId: teamId
           testStatus: null
           datasetId: datasetId
           blobPath: blobPath
-          _id: _id
           codeEntryFile: codeEntryFile
+          cid: cid
       properties:
         datasetVersions:
           items:
@@ -5184,6 +5158,28 @@ components:
       required:
       - url
       type: object
+    JobTypeEnum:
+      enum:
+      - TRAINING
+      - IMPORT_MODEL
+      - ANALYZE
+      - WARMUP
+      - TEST_STUB_FUNCTION
+      - TEST_CUSTOM_LOSS
+      - EXPORT_MODEL
+      - DATASET_PARSE
+      - ANALYZE_GRAPH
+      type: string
+    JobSubType:
+      enum:
+      - Evaluate
+      - Train From Scratch
+      - Continue Training
+      - Train From Initial Weights
+      - Population Exploration
+      - Sample Selection
+      - Sample Analysis
+      type: string
     JobStatus:
       enum:
       - STARTED
@@ -5193,79 +5189,388 @@ components:
       - FINISHED
       - FAILED
       type: string
-    ExportedSessionRunJobUi:
+    EarlyStopParams:
       additionalProperties: false
       example:
-        createdAt: createdAt
-        sessionRunId: sessionRunId
-        _id: _id
-        title: title
-        exportedSessionRunId: exportedSessionRunId
-        status: null
+        patience: 1.4658129805029452
       properties:
-        _id:
+        patience:
+          format: double
+          type: number
+      required:
+      - patience
+      type: object
+    TrainingParams:
+      additionalProperties: false
+      example:
+        batch_size: 6.027456183070403
+        epochs: 0.8008281904610115
+        early_stop_params:
+          patience: 1.4658129805029452
+      properties:
+        epochs:
+          format: double
+          type: number
+        batch_size:
+          format: double
+          type: number
+        early_stop_params:
+          $ref: '#/components/schemas/EarlyStopParams'
+      required:
+      - batch_size
+      - epochs
+      type: object
+    AnalyzeTypeEnum:
+      enum:
+      - population_exploration
+      - sample_selection
+      - sample_analysis
+      type: string
+    DataStateType:
+      enum:
+      - training
+      - validation
+      - test
+      - unlabeled
+      type: string
+    SampleIdentity:
+      additionalProperties: false
+      example:
+        index: 0.8008281904610115
+        state: null
+      properties:
+        state:
+          $ref: '#/components/schemas/DataStateType'
+        index:
+          format: double
+          type: number
+      required:
+      - index
+      - state
+      type: object
+    AnalyzeParams:
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/AnalyzeTypeEnum'
+        fromEpoch:
+          format: double
+          type: number
+        numOfSamples:
+          format: double
+          type: number
+        batchSize:
+          format: double
+          type: number
+        sampleIdentity:
+          $ref: '#/components/schemas/SampleIdentity'
+        fromDatasetSlice:
+          $ref: '#/components/schemas/DataStateType'
+        extId:
           type: string
-        sessionRunId:
+      required:
+      - extId
+      - fromEpoch
+      - type
+      type: object
+    ExportModelTypeEnum:
+      enum:
+      - JSON_TF2
+      - H5_TF2
+      - ONNX
+      - SavedModel_TF2
+      type: string
+    ExportModelParams:
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/ExportModelTypeEnum'
+        title:
           type: string
+        epoch:
+          format: double
+          type: number
+      required:
+      - epoch
+      - title
+      - type
+      type: object
+    JobParams:
+      anyOf:
+      - $ref: '#/components/schemas/TrainingParams'
+      - $ref: '#/components/schemas/AnalyzeParams'
+      - $ref: '#/components/schemas/ExportModelParams'
+    Job:
+      additionalProperties: false
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        sessionRunId: sessionRunId
+        createdBy: createdBy
+        teamId: teamId
+        subType: null
+        type: null
+        params: null
+        projectId: projectId
+        version: version
+        cid: cid
+        status: null
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        projectId:
+          type: string
+        cid:
+          type: string
+        createdBy:
+          type: string
+        version:
+          type: string
+        type:
+          $ref: '#/components/schemas/JobTypeEnum'
+        subType:
+          $ref: '#/components/schemas/JobSubType'
         status:
           $ref: '#/components/schemas/JobStatus'
         createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        params:
+          $ref: '#/components/schemas/JobParams'
+        sessionRunId:
+          type: string
+        teamId:
+          type: string
+      required:
+      - cid
+      - createdAt
+      - createdBy
+      - projectId
+      - status
+      - teamId
+      - type
+      - updatedAt
+      - version
+      type: object
+    DataStateForEval:
+      enum:
+      - training
+      - validation
+      - test
+      type: string
+    EvaluateParams:
+      additionalProperties: false
+      example:
+        versionId: versionId
+        dataStates:
+        - null
+        - null
+        shouldRunPopulationExploration: true
+        sessionId: sessionId
+        batchSize: 0.8008281904610115
+        evaluatedEpoch: 6.027456183070403
+        projectId: projectId
+      properties:
+        versionId:
+          type: string
+        projectId:
+          type: string
+        sessionId:
+          type: string
+        batchSize:
+          format: double
+          type: number
+        dataStates:
+          items:
+            $ref: '#/components/schemas/DataStateForEval'
+          type: array
+        shouldRunPopulationExploration:
+          type: boolean
+        evaluatedEpoch:
+          format: double
+          type: number
+      required:
+      - batchSize
+      - dataStates
+      - evaluatedEpoch
+      - projectId
+      - sessionId
+      - shouldRunPopulationExploration
+      - versionId
+      type: object
+    Record_string.Node_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
+    ModelGraph:
+      additionalProperties: false
+      example:
+        nodes: "{}"
+        id: id
+      properties:
+        id:
+          type: string
+        nodes:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+      required:
+      - id
+      - nodes
+      type: object
+    AnalyzeGraphParams:
+      additionalProperties: false
+      example:
+        versionId: versionId
+        requestToken: requestToken
+        projectId: projectId
+        graph:
+          nodes: "{}"
+          id: id
+        datasetVersionId: datasetVersionId
+      properties:
+        graph:
+          $ref: '#/components/schemas/ModelGraph'
+        datasetVersionId:
+          type: string
+        versionId:
+          type: string
+        projectId:
+          type: string
+        requestToken:
+          type: string
+      required:
+      - graph
+      - projectId
+      - requestToken
+      - versionId
+      type: object
+    ExportedModelData:
+      additionalProperties: false
+      example:
+        jobId: jobId
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        blob: blob
+        sessionWeightId: sessionWeightId
+        createdBy: createdBy
+        sessionId: sessionId
+        title: title
+        fileType: fileType
+        cid: cid
+        status: status
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        cid:
+          type: string
+        jobId:
+          type: string
+        sessionWeightId:
+          type: string
+        blob:
+          type: string
+        status:
+          type: string
+        sessionId:
           type: string
         title:
           type: string
-        exportedSessionRunId:
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        createdBy:
+          type: string
+        fileType:
           type: string
       required:
-      - _id
+      - blob
+      - cid
       - createdAt
-      - exportedSessionRunId
-      - sessionRunId
+      - createdBy
+      - fileType
+      - jobId
+      - sessionId
+      - sessionWeightId
       - status
       - title
+      - updatedAt
       type: object
     GetExportedSessionRunJobsResponse:
       additionalProperties: false
       example:
-        exportedSessionRunJobs:
-        - createdAt: createdAt
-          sessionRunId: sessionRunId
-          _id: _id
+        exportedModelData:
+        - jobId: jobId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          blob: blob
+          sessionWeightId: sessionWeightId
+          createdBy: createdBy
+          sessionId: sessionId
           title: title
-          exportedSessionRunId: exportedSessionRunId
-          status: null
-        - createdAt: createdAt
-          sessionRunId: sessionRunId
-          _id: _id
+          fileType: fileType
+          cid: cid
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - jobId: jobId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          blob: blob
+          sessionWeightId: sessionWeightId
+          createdBy: createdBy
+          sessionId: sessionId
           title: title
-          exportedSessionRunId: exportedSessionRunId
-          status: null
+          fileType: fileType
+          cid: cid
+          status: status
+          updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
-        exportedSessionRunJobs:
+        exportedModelData:
           items:
-            $ref: '#/components/schemas/ExportedSessionRunJobUi'
+            $ref: '#/components/schemas/ExportedModelData'
           type: array
       required:
-      - exportedSessionRunJobs
+      - exportedModelData
       type: object
     GetExportedSessionRunJobsParams:
       additionalProperties: false
       example:
-        sessionRunId: sessionRunId
+        sessionId: sessionId
+        projectId: projectId
       properties:
-        sessionRunId:
+        sessionId:
+          type: string
+        projectId:
           type: string
       required:
-      - sessionRunId
+      - projectId
+      - sessionId
       type: object
-    GetStoredExportedSessionRunResourceUrlParams:
+    AddExportModelJobParams:
       additionalProperties: false
       example:
-        exportedSessionRunId: exportedSessionRunId
+        pruneModel: true
+        sessionWeightId: sessionWeightId
+        exportModelType: null
+        title: title
+        projectId: projectId
       properties:
-        exportedSessionRunId:
+        projectId:
           type: string
+        sessionWeightId:
+          type: string
+        exportModelType:
+          $ref: '#/components/schemas/ExportModelTypeEnum'
+        title:
+          type: string
+        pruneModel:
+          type: boolean
       required:
-      - exportedSessionRunId
+      - exportModelType
+      - projectId
+      - pruneModel
+      - sessionWeightId
+      - title
       type: object
     ScatterInsightType:
       enum:
@@ -5280,13 +5585,6 @@ components:
       - smaller_than
       - equal_to
       - larger_than
-      type: string
-    DataStateType:
-      enum:
-      - training
-      - validation
-      - test
-      - unlabeled
       type: string
     ScatterFilter:
       additionalProperties: false
@@ -5446,18 +5744,21 @@ components:
     Insight:
       additionalProperties: false
       example:
-        organizationId: organizationId
         createdAt: 2000-01-23T04:56:07.000+00:00
         sessionRunId: sessionRunId
         data: null
         createdBy: createdBy
+        teamId: teamId
         modelEpoch: 0.8008281904610115
         visualizationUuid: visualizationUuid
-        _id: _id
+        projectId: projectId
+        cid: cid
         modelExtId: modelExtId
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
-        _id:
+        projectId:
+          type: string
+        cid:
           type: string
         sessionRunId:
           type: string
@@ -5466,7 +5767,7 @@ components:
           type: number
         modelExtId:
           type: string
-        organizationId:
+        teamId:
           type: string
         createdBy:
           type: string
@@ -5481,14 +5782,15 @@ components:
         data:
           $ref: '#/components/schemas/InsightType'
       required:
-      - _id
+      - cid
       - createdAt
       - createdBy
       - data
       - modelEpoch
       - modelExtId
-      - organizationId
+      - projectId
       - sessionRunId
+      - teamId
       - updatedAt
       - visualizationUuid
       type: object
@@ -5496,24 +5798,26 @@ components:
       additionalProperties: false
       example:
         insights:
-        - organizationId: organizationId
-          createdAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
           sessionRunId: sessionRunId
           data: null
           createdBy: createdBy
+          teamId: teamId
           modelEpoch: 0.8008281904610115
           visualizationUuid: visualizationUuid
-          _id: _id
+          projectId: projectId
+          cid: cid
           modelExtId: modelExtId
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        - organizationId: organizationId
-          createdAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
           sessionRunId: sessionRunId
           data: null
           createdBy: createdBy
+          teamId: teamId
           modelEpoch: 0.8008281904610115
           visualizationUuid: visualizationUuid
-          _id: _id
+          projectId: projectId
+          cid: cid
           modelExtId: modelExtId
           updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -5528,10 +5832,14 @@ components:
       additionalProperties: false
       example:
         sessionRunId: sessionRunId
+        projectId: projectId
       properties:
         sessionRunId:
           type: string
+        projectId:
+          type: string
       required:
+      - projectId
       - sessionRunId
       type: object
     IssueStatus:
@@ -5645,7 +5953,6 @@ components:
         tags:
         - tags
         - tags
-        organizationId: organizationId
         createdAt: 2000-01-23T04:56:07.000+00:00
         createdBy: createdBy
         activities:
@@ -5675,12 +5982,13 @@ components:
             comment:
               message: message
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        _id: _id
+        teamId: teamId
         projectId: projectId
+        cid: cid
         updatedAt: 2000-01-23T04:56:07.000+00:00
         status: null
       properties:
-        _id:
+        cid:
           type: string
         index:
           format: double
@@ -5693,7 +6001,7 @@ components:
         updatedAt:
           format: date-time
           type: string
-        organizationId:
+        teamId:
           type: string
         projectId:
           type: string
@@ -5714,16 +6022,16 @@ components:
             $ref: '#/components/schemas/IssueActivity'
           type: array
       required:
-      - _id
       - activities
       - branch
+      - cid
       - createdAt
       - createdBy
       - index
-      - organizationId
       - projectId
       - status
       - tags
+      - teamId
       - title
       - updatedAt
       type: object
@@ -5738,7 +6046,6 @@ components:
           tags:
           - tags
           - tags
-          organizationId: organizationId
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
           activities:
@@ -5768,8 +6075,9 @@ components:
               comment:
                 message: message
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          _id: _id
+          teamId: teamId
           projectId: projectId
+          cid: cid
           updatedAt: 2000-01-23T04:56:07.000+00:00
           status: null
         - assignment: assignment
@@ -5779,7 +6087,6 @@ components:
           tags:
           - tags
           - tags
-          organizationId: organizationId
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
           activities:
@@ -5809,8 +6116,9 @@ components:
               comment:
                 message: message
             updatedAt: 2000-01-23T04:56:07.000+00:00
-          _id: _id
+          teamId: teamId
           projectId: projectId
+          cid: cid
           updatedAt: 2000-01-23T04:56:07.000+00:00
           status: null
       properties:
@@ -5834,12 +6142,16 @@ components:
     GetSingleIssueParams:
       additionalProperties: false
       example:
-        _id: _id
+        projectId: projectId
+        cid: cid
       properties:
-        _id:
+        cid:
+          type: string
+        projectId:
           type: string
       required:
-      - _id
+      - cid
+      - projectId
       type: object
     UpdateIssueParams:
       additionalProperties: false
@@ -5872,15 +6184,18 @@ components:
             comment:
               message: message
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        _id: _id
         title: title
+        projectId: projectId
         branch: branch
+        cid: cid
         status: null
         tags:
         - tags
         - tags
       properties:
-        _id:
+        cid:
+          type: string
+        projectId:
           type: string
         title:
           type: string
@@ -5899,7 +6214,8 @@ components:
             $ref: '#/components/schemas/IssueActivity'
           type: array
       required:
-      - _id
+      - cid
+      - projectId
       type: object
     AddIssueParams:
       additionalProperties: false
@@ -5966,294 +6282,76 @@ components:
     DeleteIssueParams:
       additionalProperties: false
       example:
-        issueId: issueId
+        projectId: projectId
+        cid: cid
       properties:
-        issueId:
+        cid:
+          type: string
+        projectId:
           type: string
       required:
-      - issueId
+      - cid
+      - projectId
       type: object
-    JobTypeEnum:
-      enum:
-      - TRAINING
-      - IMPORT_MODEL
-      - ANALYZE
-      - WARMUP
-      - TEST_STUB_FUNCTION
-      - TEST_CUSTOM_LOSS
-      - EXPORT_MODEL
-      - DATASET_PARSE
-      - ANALYZE_GRAPH
-      type: string
-    JobSubType:
-      enum:
-      - Evaluate
-      - Train From Scratch
-      - Continue Training
-      - Train From Initial Weights
-      - Population Exploration
-      - Sample Selection
-      - Sample Analysis
-      type: string
-    EarlyStopParams:
+    RunProcess:
       additionalProperties: false
       example:
-        patience: 1.4658129805029452
-      properties:
-        patience:
-          format: double
-          type: number
-      required:
-      - patience
-      type: object
-    TrainingParams:
-      additionalProperties: false
-      example:
-        batch_size: 6.027456183070403
-        epochs: 0.8008281904610115
-        early_stop_params:
-          patience: 1.4658129805029452
-      properties:
-        epochs:
-          format: double
-          type: number
-        batch_size:
-          format: double
-          type: number
-        early_stop_params:
-          $ref: '#/components/schemas/EarlyStopParams'
-      required:
-      - batch_size
-      - epochs
-      type: object
-    AnalyzeTypeEnum:
-      enum:
-      - population_exploration
-      - sample_selection
-      - sample_analysis
-      type: string
-    SampleIdentity:
-      additionalProperties: false
-      example:
-        index: 0.8008281904610115
-        state: null
-      properties:
-        state:
-          $ref: '#/components/schemas/DataStateType'
-        index:
-          format: double
-          type: number
-      required:
-      - index
-      - state
-      type: object
-    AnalyzeParams:
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/AnalyzeTypeEnum'
-        fromEpoch:
-          format: double
-          type: number
-        numOfSamples:
-          format: double
-          type: number
-        batchSize:
-          format: double
-          type: number
-        sampleIdentity:
-          $ref: '#/components/schemas/SampleIdentity'
-        fromDatasetSlice:
-          $ref: '#/components/schemas/DataStateType'
-        extId:
-          type: string
-      required:
-      - extId
-      - fromEpoch
-      - type
-      type: object
-    ExportModelTypeEnum:
-      enum:
-      - JSON_TF2
-      - H5_TF2
-      - ONNX
-      - SavedModel_TF2
-      type: string
-    ExportModelParams:
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/ExportModelTypeEnum'
-        title:
-          type: string
-        epoch:
-          format: double
-          type: number
-      required:
-      - epoch
-      - title
-      - type
-      type: object
-    JobParams:
-      anyOf:
-      - $ref: '#/components/schemas/TrainingParams'
-      - $ref: '#/components/schemas/AnalyzeParams'
-      - $ref: '#/components/schemas/ExportModelParams'
-    Job:
-      additionalProperties: false
-      example:
-        createdAt: 2000-01-23T04:56:07.000+00:00
-        sessionRunId: sessionRunId
-        createdBy: createdBy
-        organization: organization
-        subType: null
-        _id: _id
-        type: null
-        params: null
-        version: version
+        jobId: jobId
+        createdAt: createdAt
+        versionName: versionName
+        projectName: projectName
+        jobType: jobType
         status: null
-        updatedAt: 2000-01-23T04:56:07.000+00:00
+        updatedAt: updatedAt
       properties:
-        _id:
+        jobId:
           type: string
-        createdBy:
+        versionName:
           type: string
-        version:
+        projectName:
           type: string
-        type:
-          $ref: '#/components/schemas/JobTypeEnum'
-        subType:
-          $ref: '#/components/schemas/JobSubType'
+        jobType:
+          type: string
         status:
           $ref: '#/components/schemas/JobStatus'
         createdAt:
-          format: date-time
           type: string
         updatedAt:
-          format: date-time
-          type: string
-        params:
-          $ref: '#/components/schemas/JobParams'
-        sessionRunId:
-          type: string
-        organization:
           type: string
       required:
-      - _id
       - createdAt
-      - createdBy
-      - organization
+      - jobId
+      - jobType
+      - projectName
       - status
-      - type
       - updatedAt
-      - version
+      - versionName
       type: object
     GetJobsResponse:
       additionalProperties: false
       example:
-        isModelJobs: true
-        mapVersionToProjectName: "{}"
-        jobs:
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          sessionRunId: sessionRunId
-          createdBy: createdBy
-          organization: organization
-          subType: null
-          _id: _id
-          type: null
-          params: null
-          version: version
+        processes:
+        - jobId: jobId
+          createdAt: createdAt
+          versionName: versionName
+          projectName: projectName
+          jobType: jobType
           status: null
-          updatedAt: 2000-01-23T04:56:07.000+00:00
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          sessionRunId: sessionRunId
-          createdBy: createdBy
-          organization: organization
-          subType: null
-          _id: _id
-          type: null
-          params: null
-          version: version
+          updatedAt: updatedAt
+        - jobId: jobId
+          createdAt: createdAt
+          versionName: versionName
+          projectName: projectName
+          jobType: jobType
           status: null
-          updatedAt: 2000-01-23T04:56:07.000+00:00
-        includeProject: true
+          updatedAt: updatedAt
       properties:
-        jobs:
+        processes:
           items:
-            $ref: '#/components/schemas/Job'
+            $ref: '#/components/schemas/RunProcess'
           type: array
-        mapVersionToProjectName:
-          description: Construct a type with a set of properties K of type T
-          properties: {}
-          type: object
-        includeProject:
-          type: boolean
-        isModelJobs:
-          enum:
-          - false
-          nullable: false
-          type: boolean
       required:
-      - includeProject
-      - isModelJobs
-      - jobs
-      - mapVersionToProjectName
-      type: object
-    GetJobsParams:
-      additionalProperties: false
-      example:
-        branchId: branchId
-        lastUpdated: lastUpdated
-        sessionRunId: sessionRunId
-      properties:
-        branchId:
-          type: string
-        sessionRunId:
-          type: string
-        lastUpdated:
-          type: string
-      type: object
-    GetTrainingJobParams:
-      additionalProperties: false
-      example:
-        versionId: versionId
-      properties:
-        versionId:
-          type: string
-      required:
-      - versionId
-      type: object
-    IsTrainingJobRunningResponse:
-      additionalProperties: false
-      example:
-        isTrainingJobRunning: true
-      properties:
-        isTrainingJobRunning:
-          type: boolean
-      required:
-      - isTrainingJobRunning
-      type: object
-    IsTrainingJobRunningParams:
-      additionalProperties: false
-      example:
-        versionId: versionId
-        sessionId: sessionId
-      properties:
-        versionId:
-          type: string
-        sessionId:
-          type: string
-      required:
-      - sessionId
-      - versionId
-      type: object
-    GetOrganizationJobsParams:
-      additionalProperties: false
-      example:
-        lastUpdated: lastUpdated
-      properties:
-        lastUpdated:
-          type: string
+      - processes
       type: object
     StopJobResponse:
       additionalProperties: false
@@ -6309,344 +6407,6 @@ components:
       required:
       - jobId
       type: object
-    AddExportModelJobParams:
-      additionalProperties: false
-      example:
-        fromEpoch: 0.8008281904610115
-        targetSessionRunId: targetSessionRunId
-        pruneModel: true
-        exportModelType: null
-        title: title
-      properties:
-        targetSessionRunId:
-          type: string
-        exportModelType:
-          $ref: '#/components/schemas/ExportModelTypeEnum'
-        title:
-          type: string
-        pruneModel:
-          type: boolean
-        fromEpoch:
-          format: double
-          type: number
-      required:
-      - exportModelType
-      - fromEpoch
-      - pruneModel
-      - targetSessionRunId
-      - title
-      type: object
-    TrainFromScratchParams:
-      additionalProperties: false
-      example:
-        versionId: versionId
-        sessionName: sessionName
-        trainingParams:
-          batch_size: 6.027456183070403
-          epochs: 0.8008281904610115
-          early_stop_params:
-            patience: 1.4658129805029452
-        shouldRunPopulationExploration: true
-      properties:
-        versionId:
-          type: string
-        sessionName:
-          type: string
-        trainingParams:
-          $ref: '#/components/schemas/TrainingParams'
-        shouldRunPopulationExploration:
-          type: boolean
-      required:
-      - sessionName
-      - shouldRunPopulationExploration
-      - trainingParams
-      - versionId
-      type: object
-    ContinueTrainParams:
-      additionalProperties: false
-      example:
-        fromEpoch: 0.8008281904610115
-        versionId: versionId
-        trainingParams:
-          batch_size: 6.027456183070403
-          epochs: 0.8008281904610115
-          early_stop_params:
-            patience: 1.4658129805029452
-        shouldRunPopulationExploration: true
-        sessionId: sessionId
-      properties:
-        versionId:
-          type: string
-        sessionId:
-          type: string
-        fromEpoch:
-          format: double
-          type: number
-        trainingParams:
-          $ref: '#/components/schemas/TrainingParams'
-        shouldRunPopulationExploration:
-          type: boolean
-      required:
-      - fromEpoch
-      - sessionId
-      - shouldRunPopulationExploration
-      - trainingParams
-      - versionId
-      type: object
-    TrainFromInitialWeightsParams:
-      additionalProperties: false
-      example:
-        fromEpoch: 0.8008281904610115
-        modelName: modelName
-        versionId: versionId
-        trainingParams:
-          batch_size: 6.027456183070403
-          epochs: 0.8008281904610115
-          early_stop_params:
-            patience: 1.4658129805029452
-        shouldRunPopulationExploration: true
-        fromSessionId: fromSessionId
-      properties:
-        versionId:
-          type: string
-        fromSessionId:
-          type: string
-        fromEpoch:
-          format: double
-          type: number
-        modelName:
-          type: string
-        trainingParams:
-          $ref: '#/components/schemas/TrainingParams'
-        shouldRunPopulationExploration:
-          type: boolean
-      required:
-      - fromEpoch
-      - fromSessionId
-      - modelName
-      - shouldRunPopulationExploration
-      - trainingParams
-      - versionId
-      type: object
-    DataStateForEval:
-      enum:
-      - training
-      - validation
-      - test
-      type: string
-    EvaluateParams:
-      additionalProperties: false
-      example:
-        versionId: versionId
-        dataStates:
-        - null
-        - null
-        shouldRunPopulationExploration: true
-        sessionId: sessionId
-        batchSize: 0.8008281904610115
-        evaluatedEpoch: 6.027456183070403
-      properties:
-        versionId:
-          type: string
-        sessionId:
-          type: string
-        batchSize:
-          format: double
-          type: number
-        dataStates:
-          items:
-            $ref: '#/components/schemas/DataStateForEval'
-          type: array
-        shouldRunPopulationExploration:
-          type: boolean
-        evaluatedEpoch:
-          format: double
-          type: number
-      required:
-      - batchSize
-      - dataStates
-      - evaluatedEpoch
-      - sessionId
-      - shouldRunPopulationExploration
-      - versionId
-      type: object
-    SampleAnalysisParams:
-      additionalProperties: false
-      example:
-        fromEpoch: 6.027456183070403
-        sessionRunId: sessionRunId
-        sampleIdentity:
-          index: 0.8008281904610115
-          state: null
-      properties:
-        sessionRunId:
-          type: string
-        sampleIdentity:
-          $ref: '#/components/schemas/SampleIdentity'
-        fromEpoch:
-          format: double
-          type: number
-      required:
-      - fromEpoch
-      - sampleIdentity
-      - sessionRunId
-      type: object
-    PopulationExplorationParams:
-      additionalProperties: false
-      example:
-        fromEpoch: 1.4658129805029452
-        sessionRunId: sessionRunId
-        numOfSamples: 6.027456183070403
-        batchSize: 0.8008281904610115
-      properties:
-        sessionRunId:
-          type: string
-        batchSize:
-          format: double
-          type: number
-        numOfSamples:
-          format: double
-          type: number
-        fromEpoch:
-          format: double
-          type: number
-      required:
-      - batchSize
-      - fromEpoch
-      - numOfSamples
-      - sessionRunId
-      type: object
-    SampleSelectionParams:
-      additionalProperties: false
-      example:
-        fromEpoch: 1.4658129805029452
-        sessionRunId: sessionRunId
-        fromDatasetSlice: null
-        numOfSamples: 6.027456183070403
-        batchSize: 0.8008281904610115
-        sampleIdentity:
-          index: 0.8008281904610115
-          state: null
-      properties:
-        sessionRunId:
-          type: string
-        sampleIdentity:
-          $ref: '#/components/schemas/SampleIdentity'
-        fromDatasetSlice:
-          $ref: '#/components/schemas/DataStateType'
-        batchSize:
-          format: double
-          type: number
-        numOfSamples:
-          format: double
-          type: number
-        fromEpoch:
-          format: double
-          type: number
-      required:
-      - batchSize
-      - fromDatasetSlice
-      - fromEpoch
-      - numOfSamples
-      - sampleIdentity
-      - sessionRunId
-      type: object
-    MachineTypeOption:
-      additionalProperties: false
-      example:
-        displayName: displayName
-        id: id
-      properties:
-        id:
-          type: string
-        displayName:
-          type: string
-      required:
-      - displayName
-      - id
-      type: object
-    GetMachineTypesResponse:
-      additionalProperties: false
-      example:
-        defaultCpuType: defaultCpuType
-        options:
-        - displayName: displayName
-          id: id
-        - displayName: displayName
-          id: id
-        defaultGpuType: defaultGpuType
-      properties:
-        options:
-          items:
-            $ref: '#/components/schemas/MachineTypeOption'
-          type: array
-        defaultCpuType:
-          type: string
-        defaultGpuType:
-          type: string
-      required:
-      - defaultCpuType
-      - defaultGpuType
-      - options
-      type: object
-    SetOrganizationMachineTypeParams:
-      additionalProperties: false
-      example:
-        organizationId: organizationId
-        machineTypeId: machineTypeId
-      properties:
-        organizationId:
-          type: string
-        machineTypeId:
-          type: string
-      required:
-      - machineTypeId
-      - organizationId
-      type: object
-    Record_string.Node_:
-      description: Construct a type with a set of properties K of type T
-      properties: {}
-      type: object
-    ModelGraph:
-      additionalProperties: false
-      example:
-        nodes: "{}"
-        id: id
-      properties:
-        id:
-          type: string
-        nodes:
-          description: Construct a type with a set of properties K of type T
-          properties: {}
-          type: object
-      required:
-      - id
-      - nodes
-      type: object
-    AnalyzeGraphParams:
-      additionalProperties: false
-      example:
-        requestToken: requestToken
-        projectId: projectId
-        graph:
-          nodes: "{}"
-          id: id
-        datasetVersionId: datasetVersionId
-      properties:
-        graph:
-          $ref: '#/components/schemas/ModelGraph'
-        datasetVersionId:
-          type: string
-        projectId:
-          type: string
-        requestToken:
-          type: string
-      required:
-      - datasetVersionId
-      - graph
-      - projectId
-      - requestToken
-      type: object
     GetMaxActiveUsersResponse:
       additionalProperties: false
       example:
@@ -6694,6 +6454,16 @@ components:
       - sessions
       - tests
       type: object
+    GetStatisticsParams:
+      additionalProperties: false
+      example:
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+      required:
+      - projectId
+      type: object
     GetEnvironmentInfoResponse:
       additionalProperties: false
       example:
@@ -6716,404 +6486,6 @@ components:
       - hubDefaultNamespace
       - hubUrl
       - schemaVersion
-      type: object
-    FilterOperatorType:
-      enum:
-      - between
-      - not-between
-      - equal
-      - not-equal
-      - in
-      - greater-than
-      - less-than
-      type: string
-    ClientFilterParams:
-      additionalProperties: false
-      example:
-        field: field
-        disable: true
-        value: 0.8008281904610115
-        operator: null
-      properties:
-        field:
-          type: string
-        operator:
-          $ref: '#/components/schemas/FilterOperatorType'
-        value:
-          format: double
-          type: number
-        disable:
-          type: boolean
-      required:
-      - field
-      - operator
-      - value
-      type: object
-    NumberOrString:
-      anyOf:
-      - format: double
-        type: number
-      - type: string
-    ESFilterValue:
-      additionalProperties: false
-      example:
-        lt: 1.4658129805029452
-        eq: null
-        lst:
-        - null
-        - null
-        gt: 6.027456183070403
-      properties:
-        gt:
-          format: double
-          type: number
-        lt:
-          format: double
-          type: number
-        eq:
-          $ref: '#/components/schemas/NumberOrString'
-        lst:
-          items:
-            $ref: '#/components/schemas/NumberOrString'
-          type: array
-      type: object
-    ESFilter:
-      additionalProperties: false
-      example:
-        field: field
-        disable: true
-        value:
-          lt: 1.4658129805029452
-          eq: null
-          lst:
-          - null
-          - null
-          gt: 6.027456183070403
-        operator: null
-      properties:
-        operator:
-          $ref: '#/components/schemas/FilterOperatorType'
-        field:
-          type: string
-        disable:
-          type: boolean
-        value:
-          $ref: '#/components/schemas/ESFilterValue'
-      required:
-      - field
-      - operator
-      - value
-      type: object
-    CreateSessionTestRequest:
-      additionalProperties: false
-      example:
-        testFilter:
-          field: field
-          disable: true
-          value: 0.8008281904610115
-          operator: null
-        name: name
-        datasetFilter:
-        - field: field
-          disable: true
-          value:
-            lt: 1.4658129805029452
-            eq: null
-            lst:
-            - null
-            - null
-            gt: 6.027456183070403
-          operator: null
-        - field: field
-          disable: true
-          value:
-            lt: 1.4658129805029452
-            eq: null
-            lst:
-            - null
-            - null
-            gt: 6.027456183070403
-          operator: null
-        projectId: projectId
-      properties:
-        projectId:
-          type: string
-        name:
-          type: string
-        testFilter:
-          $ref: '#/components/schemas/ClientFilterParams'
-        datasetFilter:
-          items:
-            $ref: '#/components/schemas/ESFilter'
-          type: array
-      required:
-      - name
-      - projectId
-      - testFilter
-      type: object
-    UpdateSessionTestRequest:
-      additionalProperties: false
-      example:
-        testFilter:
-          field: field
-          disable: true
-          value: 0.8008281904610115
-          operator: null
-        name: name
-        datasetFilter:
-        - field: field
-          disable: true
-          value:
-            lt: 1.4658129805029452
-            eq: null
-            lst:
-            - null
-            - null
-            gt: 6.027456183070403
-          operator: null
-        - field: field
-          disable: true
-          value:
-            lt: 1.4658129805029452
-            eq: null
-            lst:
-            - null
-            - null
-            gt: 6.027456183070403
-          operator: null
-        _id: _id
-      properties:
-        _id:
-          type: string
-        name:
-          type: string
-        testFilter:
-          $ref: '#/components/schemas/ClientFilterParams'
-        datasetFilter:
-          items:
-            $ref: '#/components/schemas/ESFilter'
-          type: array
-      required:
-      - _id
-      type: object
-    SessionTest:
-      additionalProperties: false
-      example:
-        organizationId: organizationId
-        createdAt: 2000-01-23T04:56:07.000+00:00
-        testFilter:
-          field: field
-          disable: true
-          value: 0.8008281904610115
-          operator: null
-        createdBy: createdBy
-        name: name
-        datasetFilter:
-        - field: field
-          disable: true
-          value:
-            lt: 1.4658129805029452
-            eq: null
-            lst:
-            - null
-            - null
-            gt: 6.027456183070403
-          operator: null
-        - field: field
-          disable: true
-          value:
-            lt: 1.4658129805029452
-            eq: null
-            lst:
-            - null
-            - null
-            gt: 6.027456183070403
-          operator: null
-        _id: _id
-        projectId: projectId
-        updatedAt: 2000-01-23T04:56:07.000+00:00
-      properties:
-        _id:
-          type: string
-        projectId:
-          type: string
-        organizationId:
-          type: string
-        name:
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-        updatedAt:
-          format: date-time
-          type: string
-        createdBy:
-          type: string
-        testFilter:
-          $ref: '#/components/schemas/ClientFilterParams'
-        datasetFilter:
-          items:
-            $ref: '#/components/schemas/ESFilter'
-          type: array
-      required:
-      - _id
-      - createdAt
-      - createdBy
-      - datasetFilter
-      - name
-      - organizationId
-      - projectId
-      - testFilter
-      - updatedAt
-      type: object
-    GetSingleSessionTestRequest:
-      additionalProperties: false
-      example:
-        _id: _id
-      properties:
-        _id:
-          type: string
-      required:
-      - _id
-      type: object
-    GetAllProjectSessionTestsRequest:
-      additionalProperties: false
-      example:
-        projectId: projectId
-      properties:
-        projectId:
-          type: string
-      required:
-      - projectId
-      type: object
-    DeleteSessionTestRequest:
-      additionalProperties: false
-      example:
-        _id: _id
-      properties:
-        _id:
-          type: string
-      required:
-      - _id
-      type: object
-    SessionTestResultSuccess:
-      additionalProperties: false
-      properties:
-        testSucceeded:
-          type: boolean
-        sessionRunId:
-          type: string
-        aggregation:
-          format: double
-          type: number
-        succefullSamples:
-          format: double
-          type: number
-        allSamples:
-          format: double
-          type: number
-        epoch:
-          format: double
-          type: number
-        queryStatus:
-          enum:
-          - success
-          nullable: false
-          type: string
-      required:
-      - aggregation
-      - allSamples
-      - epoch
-      - queryStatus
-      - sessionRunId
-      - succefullSamples
-      - testSucceeded
-      type: object
-    SessionTestResultError:
-      additionalProperties: false
-      properties:
-        sessionRunId:
-          type: string
-        queryStatus:
-          enum:
-          - error
-          nullable: false
-          type: string
-      required:
-      - queryStatus
-      - sessionRunId
-      type: object
-    SessionTestResultNotFound:
-      additionalProperties: false
-      properties:
-        sessionRunId:
-          type: string
-        queryStatus:
-          enum:
-          - notFound
-          nullable: false
-          type: string
-      required:
-      - queryStatus
-      - sessionRunId
-      type: object
-    SessionTestResult:
-      anyOf:
-      - $ref: '#/components/schemas/SessionTestResultSuccess'
-      - $ref: '#/components/schemas/SessionTestResultError'
-      - $ref: '#/components/schemas/SessionTestResultNotFound'
-    AllSessionsTestResults:
-      additionalProperties: false
-      example:
-        testId: testId
-        sessionsResults:
-        - null
-        - null
-      properties:
-        testId:
-          type: string
-        sessionsResults:
-          items:
-            $ref: '#/components/schemas/SessionTestResult'
-          type: array
-      required:
-      - sessionsResults
-      - testId
-      type: object
-    SessionTestData:
-      additionalProperties: false
-      example:
-        sessionRunId: sessionRunId
-        epoch: 0.8008281904610115
-      properties:
-        sessionRunId:
-          type: string
-        epoch:
-          format: double
-          type: number
-      required:
-      - epoch
-      - sessionRunId
-      type: object
-    GetSessionTestResultsRequest:
-      additionalProperties: false
-      example:
-        sessionsTestData:
-        - sessionRunId: sessionRunId
-          epoch: 0.8008281904610115
-        - sessionRunId: sessionRunId
-          epoch: 0.8008281904610115
-        projectId: projectId
-      properties:
-        projectId:
-          type: string
-        sessionsTestData:
-          items:
-            $ref: '#/components/schemas/SessionTestData'
-          type: array
-      required:
-      - projectId
-      - sessionsTestData
       type: object
     Record_NumberOrString.NumberOrString_:
       description: Construct a type with a set of properties K of type T
@@ -7251,6 +6623,71 @@ components:
       - Min
       - Max
       type: string
+    FilterOperatorType:
+      enum:
+      - between
+      - not-between
+      - equal
+      - not-equal
+      - in
+      - greater-than
+      - less-than
+      type: string
+    NumberOrString:
+      anyOf:
+      - format: double
+        type: number
+      - type: string
+    ESFilterValue:
+      additionalProperties: false
+      example:
+        lt: 6.027456183070403
+        eq: null
+        lst:
+        - null
+        - null
+        gt: 0.8008281904610115
+      properties:
+        gt:
+          format: double
+          type: number
+        lt:
+          format: double
+          type: number
+        eq:
+          $ref: '#/components/schemas/NumberOrString'
+        lst:
+          items:
+            $ref: '#/components/schemas/NumberOrString'
+          type: array
+      type: object
+    ESFilter:
+      additionalProperties: false
+      example:
+        field: field
+        disable: true
+        value:
+          lt: 6.027456183070403
+          eq: null
+          lst:
+          - null
+          - null
+          gt: 0.8008281904610115
+        operator: null
+      properties:
+        operator:
+          $ref: '#/components/schemas/FilterOperatorType'
+        field:
+          type: string
+        disable:
+          type: boolean
+        value:
+          $ref: '#/components/schemas/ESFilterValue'
+      required:
+      - field
+      - operator
+      - value
+      type: object
     DataDistributionType:
       enum:
       - distinct
@@ -7269,37 +6706,40 @@ components:
         innerSplit: innerSplit
         dataDistributionType: null
         verticalSplit: verticalSplit
-        xAxisSizeInterval: 0.8008281904610115
+        xAxisSizeInterval: 1.4658129805029452
         filters:
         - field: field
           disable: true
           value:
-            lt: 1.4658129805029452
+            lt: 6.027456183070403
             eq: null
             lst:
             - null
             - null
-            gt: 6.027456183070403
+            gt: 0.8008281904610115
           operator: null
         - field: field
           disable: true
           value:
-            lt: 1.4658129805029452
+            lt: 6.027456183070403
             eq: null
             lst:
             - null
             - null
-            gt: 6.027456183070403
+            gt: 0.8008281904610115
           operator: null
         lastEpochOnly: true
         orderParams: null
         xField: xField
         orderByParam: orderByParam
         aggregationMethod: null
+        projectId: projectId
         sessionRunIds:
         - sessionRunIds
         - sessionRunIds
       properties:
+        projectId:
+          type: string
         xField:
           type: string
         yField:
@@ -7334,6 +6774,7 @@ components:
       required:
       - aggregationMethod
       - dataDistributionType
+      - projectId
       - sessionRunIds
       - xAxisSizeInterval
       - xField
@@ -7353,22 +6794,22 @@ components:
         - field: field
           disable: true
           value:
-            lt: 1.4658129805029452
+            lt: 6.027456183070403
             eq: null
             lst:
             - null
             - null
-            gt: 6.027456183070403
+            gt: 0.8008281904610115
           operator: null
         - field: field
           disable: true
           value:
-            lt: 1.4658129805029452
+            lt: 6.027456183070403
             eq: null
             lst:
             - null
             - null
-            gt: 6.027456183070403
+            gt: 0.8008281904610115
           operator: null
         lastEpochOnly: true
         colorField: colorField
@@ -7376,10 +6817,13 @@ components:
         xField: xField
         xDataDistributionType: null
         yOrderParams: null
+        projectId: projectId
         sessionRunIds:
         - sessionRunIds
         - sessionRunIds
       properties:
+        projectId:
+          type: string
         xField:
           type: string
         xAxisSizeInterval:
@@ -7419,6 +6863,7 @@ components:
       required:
       - colorAggregationMethod
       - colorField
+      - projectId
       - sessionRunIds
       - xAxisSizeInterval
       - xDataDistributionType
@@ -7485,23 +6930,24 @@ components:
         - field: field
           disable: true
           value:
-            lt: 1.4658129805029452
+            lt: 6.027456183070403
             eq: null
             lst:
             - null
             - null
-            gt: 6.027456183070403
+            gt: 0.8008281904610115
           operator: null
         - field: field
           disable: true
           value:
-            lt: 1.4658129805029452
+            lt: 6.027456183070403
             eq: null
             lst:
             - null
             - null
-            gt: 6.027456183070403
+            gt: 0.8008281904610115
           operator: null
+        projectId: projectId
         sessionRunIds:
         - sessionRunIds
         - sessionRunIds
@@ -7512,6 +6958,8 @@ components:
           aggregation: null
         lastEpochOnly: true
       properties:
+        projectId:
+          type: string
         sessionRunIds:
           items:
             type: string
@@ -7537,6 +6985,7 @@ components:
       required:
       - aggregations
       - buckets
+      - projectId
       - sessionRunIds
       type: object
     GetConfusionMetricNamesObject:
@@ -7588,32 +7037,35 @@ components:
         - field: field
           disable: true
           value:
-            lt: 1.4658129805029452
+            lt: 6.027456183070403
             eq: null
             lst:
             - null
             - null
-            gt: 6.027456183070403
+            gt: 0.8008281904610115
           operator: null
         - field: field
           disable: true
           value:
-            lt: 1.4658129805029452
+            lt: 6.027456183070403
             eq: null
             lst:
             - null
             - null
-            gt: 6.027456183070403
+            gt: 0.8008281904610115
           operator: null
         lastEpochOnly: true
         customMetricName: customMetricName
         orderParams: null
         xField: xField
         orderByParam: orderByParam
+        projectId: projectId
         sessionRunIds:
         - sessionRunIds
         - sessionRunIds
       properties:
+        projectId:
+          type: string
         xField:
           type: string
         sessionRunIds:
@@ -7648,6 +7100,7 @@ components:
           type: boolean
       required:
       - customMetricName
+      - projectId
       - sessionRunIds
       - xAxisSizeInterval
       - xField
@@ -7665,32 +7118,35 @@ components:
         - field: field
           disable: true
           value:
-            lt: 1.4658129805029452
+            lt: 6.027456183070403
             eq: null
             lst:
             - null
             - null
-            gt: 6.027456183070403
+            gt: 0.8008281904610115
           operator: null
         - field: field
           disable: true
           value:
-            lt: 1.4658129805029452
+            lt: 6.027456183070403
             eq: null
             lst:
             - null
             - null
-            gt: 6.027456183070403
+            gt: 0.8008281904610115
           operator: null
         sessionRunIds:
         - sessionRunIds
         - sessionRunIds
+        projectId: projectId
         customMetricName: customMetricName
       properties:
         sessionRunIds:
           items:
             type: string
           type: array
+        projectId:
+          type: string
         customMetricName:
           type: string
         verticalSplit:
@@ -7703,6 +7159,7 @@ components:
           type: array
       required:
       - customMetricName
+      - projectId
       - sessionRunIds
       type: object
     GetPrCurveParams:
@@ -8171,19 +7628,22 @@ components:
       example:
         identifier: identifier
         createdAt: 2000-01-23T04:56:07.000+00:00
-        organization: organization
+        teamId: teamId
         context: null
         isRead: true
-        _id: _id
         title: title
+        projectId: projectId
         user: user
+        cid: cid
         messageData:
           level: null
           params: null
       properties:
-        _id:
+        projectId:
           type: string
-        organization:
+        cid:
+          type: string
+        teamId:
           type: string
         user:
           type: string
@@ -8201,13 +7661,13 @@ components:
         isRead:
           type: boolean
       required:
-      - _id
+      - cid
       - context
       - createdAt
       - identifier
       - isRead
       - messageData
-      - organization
+      - teamId
       - title
       - user
       type: object
@@ -8217,23 +7677,25 @@ components:
         notifications:
         - identifier: identifier
           createdAt: 2000-01-23T04:56:07.000+00:00
-          organization: organization
+          teamId: teamId
           context: null
           isRead: true
-          _id: _id
           title: title
+          projectId: projectId
           user: user
+          cid: cid
           messageData:
             level: null
             params: null
         - identifier: identifier
           createdAt: 2000-01-23T04:56:07.000+00:00
-          organization: organization
+          teamId: teamId
           context: null
           isRead: true
-          _id: _id
           title: title
+          projectId: projectId
           user: user
+          cid: cid
           messageData:
             level: null
             params: null
@@ -8245,121 +7707,11 @@ components:
       required:
       - notifications
       type: object
-    SlimOrganization:
-      additionalProperties: false
-      example:
-        machineTypeId: machineTypeId
-        isDefault: true
-        publicName: publicName
-        name: name
-        _id: _id
-        type: type
-      properties:
-        _id:
-          type: string
-        name:
-          type: string
-        publicName:
-          type: string
-        type:
-          type: string
-        isDefault:
-          type: boolean
-        machineTypeId:
-          type: string
-      required:
-      - _id
-      - isDefault
-      - name
-      - publicName
-      - type
-      type: object
-    GetOrganizationsResponse:
-      additionalProperties: false
-      example:
-        organizations:
-        - machineTypeId: machineTypeId
-          isDefault: true
-          publicName: publicName
-          name: name
-          _id: _id
-          type: type
-        - machineTypeId: machineTypeId
-          isDefault: true
-          publicName: publicName
-          name: name
-          _id: _id
-          type: type
-      properties:
-        organizations:
-          items:
-            $ref: '#/components/schemas/SlimOrganization'
-          type: array
-      required:
-      - organizations
-      type: object
-    UpdateOrganizationPublicNameRequest:
-      additionalProperties: false
-      example:
-        publicName: publicName
-        _id: _id
-      properties:
-        _id:
-          type: string
-        publicName:
-          type: string
-      required:
-      - _id
-      - publicName
-      type: object
-    CreateOrganizationResponse:
-      additionalProperties: false
-      example:
-        organizationId: organizationId
-      properties:
-        organizationId:
-          type: string
-      required:
-      - organizationId
-      type: object
-    CreateOrganizationRequest:
-      additionalProperties: false
-      example:
-        publicName: publicName
-        name: name
-      properties:
-        name:
-          type: string
-        publicName:
-          type: string
-      required:
-      - name
-      - publicName
-      type: object
-    DeleteOrganizationRequest:
-      additionalProperties: false
-      example:
-        _id: _id
-      properties:
-        _id:
-          type: string
-      required:
-      - _id
-      type: object
-    SetDefaultOrganizationRequest:
-      additionalProperties: false
-      example:
-        _id: _id
-      properties:
-        _id:
-          type: string
-      required:
-      - _id
-      type: object
     ProjectStatus:
       enum:
       - visible
       - trash
+      - importing
       type: string
     ProjectAccess:
       enum:
@@ -8372,27 +7724,32 @@ components:
       - alpha
       - no_publish
       type: string
+    Record_string.string-or-string-Array_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
     Project:
       additionalProperties: false
       example:
-        createdAt: 2000-01-23T04:56:07.000+00:00
         hubPublishPolicy: null
         access: null
-        createdBy: createdBy
-        organization: organization
-        name: name
         description: description
-        lastAccessed: 2000-01-23T04:56:07.000+00:00
         bgImagePath: bgImagePath
-        _id: _id
-        status: null
         tags:
         - tags
         - tags
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        createdBy: createdBy
+        teamId: teamId
+        name: name
+        lastAccessed: 2000-01-23T04:56:07.000+00:00
+        categories: "{}"
+        cid: cid
+        status: null
       properties:
-        _id:
+        cid:
           type: string
-        organization:
+        teamId:
           type: string
         createdBy:
           type: string
@@ -8417,19 +7774,23 @@ components:
           type: string
         hubPublishPolicy:
           $ref: '#/components/schemas/HubPublishPolicy'
+        categories:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
         description:
           type: string
       required:
-      - _id
       - access
+      - cid
       - createdAt
       - createdBy
       - hubPublishPolicy
       - lastAccessed
       - name
-      - organization
       - status
       - tags
+      - teamId
       type: object
     Version:
       additionalProperties: false
@@ -8438,7 +7799,6 @@ components:
         data:
           nodes: "{}"
           id: id
-        project: project
         branch: branch
         codeIntegrationVersionId: codeIntegrationVersionId
         createdAt: 2000-01-23T04:56:07.000+00:00
@@ -8510,22 +7870,24 @@ components:
             name: name
             type: null
         createdBy: createdBy
-        organization: organization
-        _id: _id
+        teamId: teamId
         extId: extId
         tag: tag
+        projectId: projectId
         isFavourite: true
+        hash: hash
+        cid: cid
         status: visible
       properties:
-        _id:
+        cid:
           type: string
         extId:
           type: string
         createdBy:
           type: string
-        organization:
+        teamId:
           type: string
-        project:
+        projectId:
           type: string
         branch:
           type: string
@@ -8549,9 +7911,11 @@ components:
           type: string
         datasetSetup:
           $ref: '#/components/schemas/DatasetSetup'
+        hash:
+          type: string
       required:
-      - _id
       - branch
+      - cid
       - createdAt
       - createdBy
       - data
@@ -8559,35 +7923,35 @@ components:
       - extId
       - isFavourite
       - notes
-      - organization
-      - project
+      - projectId
       - status
       - tag
+      - teamId
       type: object
     AddProjectResponse:
       additionalProperties: false
       example:
         project:
-          createdAt: 2000-01-23T04:56:07.000+00:00
           hubPublishPolicy: null
           access: null
-          createdBy: createdBy
-          organization: organization
-          name: name
           description: description
-          lastAccessed: 2000-01-23T04:56:07.000+00:00
           bgImagePath: bgImagePath
-          _id: _id
-          status: null
           tags:
           - tags
           - tags
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          teamId: teamId
+          name: name
+          lastAccessed: 2000-01-23T04:56:07.000+00:00
+          categories: "{}"
+          cid: cid
+          status: null
         version:
           notes: notes
           data:
             nodes: "{}"
             id: id
-          project: project
           branch: branch
           codeIntegrationVersionId: codeIntegrationVersionId
           createdAt: 2000-01-23T04:56:07.000+00:00
@@ -8659,11 +8023,13 @@ components:
               name: name
               type: null
           createdBy: createdBy
-          organization: organization
-          _id: _id
+          teamId: teamId
           extId: extId
           tag: tag
+          projectId: projectId
           isFavourite: true
+          hash: hash
+          cid: cid
           status: visible
       properties:
         project:
@@ -8681,6 +8047,7 @@ components:
         name: name
         description: description
         bgImageUrl: bgImageUrl
+        categories: "{}"
         tags:
         - tags
         - tags
@@ -8697,6 +8064,10 @@ components:
           $ref: '#/components/schemas/HubPublishPolicy'
         bgImageUrl:
           type: string
+        categories:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
       required:
       - description
       - hubPublishPolicy
@@ -8710,6 +8081,7 @@ components:
         name: name
         description: description
         bgImageUrl: bgImageUrl
+        categories: "{}"
         projectId: projectId
         tags:
         - tags
@@ -8727,6 +8099,10 @@ components:
           $ref: '#/components/schemas/HubPublishPolicy'
         bgImageUrl:
           type: string
+        categories:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
         projectId:
           type: string
       required:
@@ -8743,6 +8119,7 @@ components:
         name: name
         description: description
         bgImageUrl: bgImageUrl
+        categories: "{}"
         importUrl: importUrl
         tags:
         - tags
@@ -8760,6 +8137,10 @@ components:
           $ref: '#/components/schemas/HubPublishPolicy'
         bgImageUrl:
           type: string
+        categories:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
         importUrl:
           type: string
       required:
@@ -8773,34 +8154,36 @@ components:
       additionalProperties: false
       example:
         data:
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          hubPublishPolicy: null
+        - hubPublishPolicy: null
           access: null
-          createdBy: createdBy
-          organization: organization
-          name: name
           description: description
-          lastAccessed: 2000-01-23T04:56:07.000+00:00
           bgImagePath: bgImagePath
-          _id: _id
-          status: null
           tags:
           - tags
           - tags
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          hubPublishPolicy: null
-          access: null
+          createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
-          organization: organization
+          teamId: teamId
           name: name
-          description: description
           lastAccessed: 2000-01-23T04:56:07.000+00:00
-          bgImagePath: bgImagePath
-          _id: _id
+          categories: "{}"
+          cid: cid
           status: null
+        - hubPublishPolicy: null
+          access: null
+          description: description
+          bgImagePath: bgImagePath
           tags:
           - tags
           - tags
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          teamId: teamId
+          name: name
+          lastAccessed: 2000-01-23T04:56:07.000+00:00
+          categories: "{}"
+          cid: cid
+          status: null
       properties:
         data:
           items:
@@ -8833,19 +8216,22 @@ components:
         - esMetricIndex: esMetricIndex
           sessionWeightId: sessionWeightId
         createdBy: createdBy
-        organization: organization
+        teamId: teamId
         name: name
-        _id: _id
         sessionId: sessionId
+        projectId: projectId
+        cid: cid
         isEvaluate: true
       properties:
-        _id:
+        projectId:
+          type: string
+        cid:
           type: string
         sessionId:
           type: string
         name:
           type: string
-        organization:
+        teamId:
           type: string
         isEvaluate:
           type: boolean
@@ -8859,13 +8245,14 @@ components:
             $ref: '#/components/schemas/WeightAssetData'
           type: array
       required:
-      - _id
+      - cid
       - createdAt
       - createdBy
       - isEvaluate
       - name
-      - organization
+      - projectId
       - sessionId
+      - teamId
       - weightAssets
       type: object
     StatusEnum:
@@ -8877,16 +8264,16 @@ components:
     SessionWeightData:
       additionalProperties: false
       example:
-        globalStep: 6.027456183070403
+        globalStep: 5.637376656633329
         createdAt: 2000-01-23T04:56:07.000+00:00
         createdBy: createdBy
-        organization: organization
-        epoch: 0.8008281904610115
-        _id: _id
+        teamId: teamId
+        epoch: 5.962133916683182
         sessionId: sessionId
+        cid: cid
         status: null
       properties:
-        _id:
+        cid:
           type: string
         sessionId:
           type: string
@@ -8898,7 +8285,7 @@ components:
           type: number
         status:
           $ref: '#/components/schemas/StatusEnum'
-        organization:
+        teamId:
           type: string
         createdAt:
           format: date-time
@@ -8906,14 +8293,14 @@ components:
         createdBy:
           type: string
       required:
-      - _id
+      - cid
       - createdAt
       - createdBy
       - epoch
       - globalStep
-      - organization
       - sessionId
       - status
+      - teamId
       type: object
     SessionPopulatedJob:
       additionalProperties: false
@@ -8929,10 +8316,11 @@ components:
           - esMetricIndex: esMetricIndex
             sessionWeightId: sessionWeightId
           createdBy: createdBy
-          organization: organization
+          teamId: teamId
           name: name
-          _id: _id
           sessionId: sessionId
+          projectId: projectId
+          cid: cid
           isEvaluate: true
         - createdAt: 2000-01-23T04:56:07.000+00:00
           weightAssets:
@@ -8941,39 +8329,40 @@ components:
           - esMetricIndex: esMetricIndex
             sessionWeightId: sessionWeightId
           createdBy: createdBy
-          organization: organization
+          teamId: teamId
           name: name
-          _id: _id
           sessionId: sessionId
+          projectId: projectId
+          cid: cid
           isEvaluate: true
-        organization: organization
+        teamId: teamId
         trainingParams:
           batch_size: 6.027456183070403
           epochs: 0.8008281904610115
           early_stop_params:
             patience: 1.4658129805029452
-        _id: _id
         extId: extId
         sessionWeights:
-        - globalStep: 6.027456183070403
+        - globalStep: 5.637376656633329
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
-          organization: organization
-          epoch: 0.8008281904610115
-          _id: _id
+          teamId: teamId
+          epoch: 5.962133916683182
           sessionId: sessionId
+          cid: cid
           status: null
-        - globalStep: 6.027456183070403
+        - globalStep: 5.637376656633329
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
-          organization: organization
-          epoch: 0.8008281904610115
-          _id: _id
+          teamId: teamId
+          epoch: 5.962133916683182
           sessionId: sessionId
+          cid: cid
           status: null
         hash: hash
+        cid: cid
       properties:
-        _id:
+        cid:
           type: string
         extId:
           type: string
@@ -8984,7 +8373,7 @@ components:
           type: string
         createdBy:
           type: string
-        organization:
+        teamId:
           type: string
         hash:
           nullable: true
@@ -9000,10 +8389,10 @@ components:
             $ref: '#/components/schemas/SessionWeightData'
           type: array
       required:
-      - _id
+      - cid
       - createdAt
       - modelName
-      - organization
+      - teamId
       type: object
     LoadSessionResponse:
       additionalProperties: false
@@ -9020,10 +8409,11 @@ components:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             name: name
-            _id: _id
             sessionId: sessionId
+            projectId: projectId
+            cid: cid
             isEvaluate: true
           - createdAt: 2000-01-23T04:56:07.000+00:00
             weightAssets:
@@ -9032,37 +8422,38 @@ components:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             name: name
-            _id: _id
             sessionId: sessionId
+            projectId: projectId
+            cid: cid
             isEvaluate: true
-          organization: organization
+          teamId: teamId
           trainingParams:
             batch_size: 6.027456183070403
             epochs: 0.8008281904610115
             early_stop_params:
               patience: 1.4658129805029452
-          _id: _id
           extId: extId
           sessionWeights:
-          - globalStep: 6.027456183070403
+          - globalStep: 5.637376656633329
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
-            organization: organization
-            epoch: 0.8008281904610115
-            _id: _id
+            teamId: teamId
+            epoch: 5.962133916683182
             sessionId: sessionId
+            cid: cid
             status: null
-          - globalStep: 6.027456183070403
+          - globalStep: 5.637376656633329
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
-            organization: organization
-            epoch: 0.8008281904610115
-            _id: _id
+            teamId: teamId
+            epoch: 5.962133916683182
             sessionId: sessionId
+            cid: cid
             status: null
           hash: hash
+          cid: cid
       properties:
         session:
           $ref: '#/components/schemas/SessionPopulatedJob'
@@ -9073,10 +8464,14 @@ components:
       additionalProperties: false
       example:
         sessionId: sessionId
+        projectId: projectId
       properties:
         sessionId:
           type: string
+        projectId:
+          type: string
       required:
+      - projectId
       - sessionId
       type: object
     DeleteProjectParams:
@@ -9168,9 +8563,9 @@ components:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
         name: name
-        _id: _id
+        cid: cid
       properties:
-        _id:
+        cid:
           type: string
         name:
           type: string
@@ -9178,7 +8573,7 @@ components:
           format: date-time
           type: string
       required:
-      - _id
+      - cid
       - createdAt
       - name
       type: object
@@ -9188,10 +8583,10 @@ components:
         results:
         - createdAt: 2000-01-23T04:56:07.000+00:00
           name: name
-          _id: _id
+          cid: cid
         - createdAt: 2000-01-23T04:56:07.000+00:00
           name: name
-          _id: _id
+          cid: cid
       properties:
         results:
           items:
@@ -9218,16 +8613,16 @@ components:
       example:
         authData: authData
         name: name
-        _id: _id
+        cid: cid
       properties:
-        _id:
+        cid:
           type: string
         name:
           type: string
         authData:
           type: string
       required:
-      - _id
+      - cid
       - name
       type: object
     Session:
@@ -9244,10 +8639,11 @@ components:
           - esMetricIndex: esMetricIndex
             sessionWeightId: sessionWeightId
           createdBy: createdBy
-          organization: organization
+          teamId: teamId
           name: name
-          _id: _id
           sessionId: sessionId
+          projectId: projectId
+          cid: cid
           isEvaluate: true
         - createdAt: 2000-01-23T04:56:07.000+00:00
           weightAssets:
@@ -9256,39 +8652,43 @@ components:
           - esMetricIndex: esMetricIndex
             sessionWeightId: sessionWeightId
           createdBy: createdBy
-          organization: organization
+          teamId: teamId
           name: name
-          _id: _id
           sessionId: sessionId
+          projectId: projectId
+          cid: cid
           isEvaluate: true
-        organization: organization
+        teamId: teamId
         trainingParams:
           batch_size: 6.027456183070403
           epochs: 0.8008281904610115
           early_stop_params:
             patience: 1.4658129805029452
-        _id: _id
         extId: extId
         sessionWeights:
-        - globalStep: 6.027456183070403
+        - globalStep: 5.637376656633329
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
-          organization: organization
-          epoch: 0.8008281904610115
-          _id: _id
+          teamId: teamId
+          epoch: 5.962133916683182
           sessionId: sessionId
+          cid: cid
           status: null
-        - globalStep: 6.027456183070403
+        - globalStep: 5.637376656633329
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
-          organization: organization
-          epoch: 0.8008281904610115
-          _id: _id
+          teamId: teamId
+          epoch: 5.962133916683182
           sessionId: sessionId
+          cid: cid
           status: null
+        projectId: projectId
         hash: hash
+        cid: cid
       properties:
-        _id:
+        projectId:
+          type: string
+        cid:
           type: string
         extId:
           type: string
@@ -9299,7 +8699,7 @@ components:
           type: string
         createdBy:
           type: string
-        organization:
+        teamId:
           type: string
         hash:
           nullable: true
@@ -9315,10 +8715,11 @@ components:
             $ref: '#/components/schemas/SessionWeightData'
           type: array
       required:
-      - _id
+      - cid
       - createdAt
       - modelName
-      - organization
+      - projectId
+      - teamId
       type: object
     SessionsResponse:
       additionalProperties: false
@@ -9335,10 +8736,11 @@ components:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             name: name
-            _id: _id
             sessionId: sessionId
+            projectId: projectId
+            cid: cid
             isEvaluate: true
           - createdAt: 2000-01-23T04:56:07.000+00:00
             weightAssets:
@@ -9347,37 +8749,39 @@ components:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             name: name
-            _id: _id
             sessionId: sessionId
+            projectId: projectId
+            cid: cid
             isEvaluate: true
-          organization: organization
+          teamId: teamId
           trainingParams:
             batch_size: 6.027456183070403
             epochs: 0.8008281904610115
             early_stop_params:
               patience: 1.4658129805029452
-          _id: _id
           extId: extId
           sessionWeights:
-          - globalStep: 6.027456183070403
+          - globalStep: 5.637376656633329
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
-            organization: organization
-            epoch: 0.8008281904610115
-            _id: _id
+            teamId: teamId
+            epoch: 5.962133916683182
             sessionId: sessionId
+            cid: cid
             status: null
-          - globalStep: 6.027456183070403
+          - globalStep: 5.637376656633329
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
-            organization: organization
-            epoch: 0.8008281904610115
-            _id: _id
+            teamId: teamId
+            epoch: 5.962133916683182
             sessionId: sessionId
+            cid: cid
             status: null
+          projectId: projectId
           hash: hash
+          cid: cid
         - modelName: modelName
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
@@ -9389,10 +8793,11 @@ components:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             name: name
-            _id: _id
             sessionId: sessionId
+            projectId: projectId
+            cid: cid
             isEvaluate: true
           - createdAt: 2000-01-23T04:56:07.000+00:00
             weightAssets:
@@ -9401,37 +8806,39 @@ components:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             name: name
-            _id: _id
             sessionId: sessionId
+            projectId: projectId
+            cid: cid
             isEvaluate: true
-          organization: organization
+          teamId: teamId
           trainingParams:
             batch_size: 6.027456183070403
             epochs: 0.8008281904610115
             early_stop_params:
               patience: 1.4658129805029452
-          _id: _id
           extId: extId
           sessionWeights:
-          - globalStep: 6.027456183070403
+          - globalStep: 5.637376656633329
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
-            organization: organization
-            epoch: 0.8008281904610115
-            _id: _id
+            teamId: teamId
+            epoch: 5.962133916683182
             sessionId: sessionId
+            cid: cid
             status: null
-          - globalStep: 6.027456183070403
+          - globalStep: 5.637376656633329
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
-            organization: organization
-            epoch: 0.8008281904610115
-            _id: _id
+            teamId: teamId
+            epoch: 5.962133916683182
             sessionId: sessionId
+            cid: cid
             status: null
+          projectId: projectId
           hash: hash
+          cid: cid
       properties:
         sessions:
           items:
@@ -9443,21 +8850,29 @@ components:
     SessionHashRequestParams:
       additionalProperties: false
       example:
+        projectId: projectId
         hash: hash
       properties:
         hash:
           type: string
+        projectId:
+          type: string
       required:
       - hash
+      - projectId
       type: object
     SessionVersionIdRequestParams:
       additionalProperties: false
       example:
         versionId: versionId
+        projectId: projectId
       properties:
         versionId:
           type: string
+        projectId:
+          type: string
       required:
+      - projectId
       - versionId
       type: object
     RecentSessionsResponse:
@@ -9475,10 +8890,11 @@ components:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             name: name
-            _id: _id
             sessionId: sessionId
+            projectId: projectId
+            cid: cid
             isEvaluate: true
           - createdAt: 2000-01-23T04:56:07.000+00:00
             weightAssets:
@@ -9487,37 +8903,38 @@ components:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             name: name
-            _id: _id
             sessionId: sessionId
+            projectId: projectId
+            cid: cid
             isEvaluate: true
-          organization: organization
+          teamId: teamId
           trainingParams:
             batch_size: 6.027456183070403
             epochs: 0.8008281904610115
             early_stop_params:
               patience: 1.4658129805029452
-          _id: _id
           extId: extId
           sessionWeights:
-          - globalStep: 6.027456183070403
+          - globalStep: 5.637376656633329
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
-            organization: organization
-            epoch: 0.8008281904610115
-            _id: _id
+            teamId: teamId
+            epoch: 5.962133916683182
             sessionId: sessionId
+            cid: cid
             status: null
-          - globalStep: 6.027456183070403
+          - globalStep: 5.637376656633329
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
-            organization: organization
-            epoch: 0.8008281904610115
-            _id: _id
+            teamId: teamId
+            epoch: 5.962133916683182
             sessionId: sessionId
+            cid: cid
             status: null
           hash: hash
+          cid: cid
         - modelName: modelName
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
@@ -9529,10 +8946,11 @@ components:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             name: name
-            _id: _id
             sessionId: sessionId
+            projectId: projectId
+            cid: cid
             isEvaluate: true
           - createdAt: 2000-01-23T04:56:07.000+00:00
             weightAssets:
@@ -9541,37 +8959,38 @@ components:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             name: name
-            _id: _id
             sessionId: sessionId
+            projectId: projectId
+            cid: cid
             isEvaluate: true
-          organization: organization
+          teamId: teamId
           trainingParams:
             batch_size: 6.027456183070403
             epochs: 0.8008281904610115
             early_stop_params:
               patience: 1.4658129805029452
-          _id: _id
           extId: extId
           sessionWeights:
-          - globalStep: 6.027456183070403
+          - globalStep: 5.637376656633329
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
-            organization: organization
-            epoch: 0.8008281904610115
-            _id: _id
+            teamId: teamId
+            epoch: 5.962133916683182
             sessionId: sessionId
+            cid: cid
             status: null
-          - globalStep: 6.027456183070403
+          - globalStep: 5.637376656633329
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
-            organization: organization
-            epoch: 0.8008281904610115
-            _id: _id
+            teamId: teamId
+            epoch: 5.962133916683182
             sessionId: sessionId
+            cid: cid
             status: null
           hash: hash
+          cid: cid
       properties:
         sessions:
           items:
@@ -9580,41 +8999,667 @@ components:
       required:
       - sessions
       type: object
-    RecentOrganizationSessionsRequestParams:
+    RecentTeamSessionsRequestParams:
       additionalProperties: false
       example:
         topSessions: 0.8008281904610115
+        projectId: projectId
       properties:
         topSessions:
           format: double
           type: number
+        projectId:
+          type: string
       required:
+      - projectId
       - topSessions
       type: object
     DeleteSessionParams:
       additionalProperties: false
       example:
         sessionId: sessionId
+        projectId: projectId
       properties:
         sessionId:
           type: string
+        projectId:
+          type: string
       required:
+      - projectId
       - sessionId
       type: object
     DeleteSessionRunParams:
       additionalProperties: false
       example:
         sessionRunId: sessionRunId
+        projectId: projectId
       properties:
         sessionRunId:
           type: string
+        projectId:
+          type: string
       required:
+      - projectId
       - sessionRunId
+      type: object
+    ClientFilterParams:
+      additionalProperties: false
+      example:
+        field: field
+        disable: true
+        value: 0.8008281904610115
+        operator: null
+      properties:
+        field:
+          type: string
+        operator:
+          $ref: '#/components/schemas/FilterOperatorType'
+        value:
+          format: double
+          type: number
+        disable:
+          type: boolean
+      required:
+      - field
+      - operator
+      - value
+      type: object
+    CreateSessionTestRequest:
+      additionalProperties: false
+      example:
+        testFilter:
+          field: field
+          disable: true
+          value: 0.8008281904610115
+          operator: null
+        name: name
+        datasetFilter:
+        - field: field
+          disable: true
+          value:
+            lt: 6.027456183070403
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 0.8008281904610115
+          operator: null
+        - field: field
+          disable: true
+          value:
+            lt: 6.027456183070403
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 0.8008281904610115
+          operator: null
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        name:
+          type: string
+        testFilter:
+          $ref: '#/components/schemas/ClientFilterParams'
+        datasetFilter:
+          items:
+            $ref: '#/components/schemas/ESFilter'
+          type: array
+      required:
+      - name
+      - projectId
+      - testFilter
+      type: object
+    UpdateSessionTestRequest:
+      additionalProperties: false
+      example:
+        testFilter:
+          field: field
+          disable: true
+          value: 0.8008281904610115
+          operator: null
+        name: name
+        datasetFilter:
+        - field: field
+          disable: true
+          value:
+            lt: 6.027456183070403
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 0.8008281904610115
+          operator: null
+        - field: field
+          disable: true
+          value:
+            lt: 6.027456183070403
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 0.8008281904610115
+          operator: null
+        projectId: projectId
+        cid: cid
+      properties:
+        cid:
+          type: string
+        projectId:
+          type: string
+        name:
+          type: string
+        testFilter:
+          $ref: '#/components/schemas/ClientFilterParams'
+        datasetFilter:
+          items:
+            $ref: '#/components/schemas/ESFilter'
+          type: array
+      required:
+      - cid
+      - projectId
+      type: object
+    SessionTest:
+      additionalProperties: false
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        testFilter:
+          field: field
+          disable: true
+          value: 0.8008281904610115
+          operator: null
+        createdBy: createdBy
+        teamId: teamId
+        name: name
+        datasetFilter:
+        - field: field
+          disable: true
+          value:
+            lt: 6.027456183070403
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 0.8008281904610115
+          operator: null
+        - field: field
+          disable: true
+          value:
+            lt: 6.027456183070403
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 0.8008281904610115
+          operator: null
+        projectId: projectId
+        cid: cid
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        cid:
+          type: string
+        projectId:
+          type: string
+        teamId:
+          type: string
+        name:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        createdBy:
+          type: string
+        testFilter:
+          $ref: '#/components/schemas/ClientFilterParams'
+        datasetFilter:
+          items:
+            $ref: '#/components/schemas/ESFilter'
+          type: array
+      required:
+      - cid
+      - createdAt
+      - createdBy
+      - datasetFilter
+      - name
+      - projectId
+      - teamId
+      - testFilter
+      - updatedAt
+      type: object
+    GetSingleSessionTestRequest:
+      additionalProperties: false
+      example:
+        projectId: projectId
+        cid: cid
+      properties:
+        cid:
+          type: string
+        projectId:
+          type: string
+      required:
+      - cid
+      - projectId
+      type: object
+    GetAllProjectSessionTestsRequest:
+      additionalProperties: false
+      example:
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+      required:
+      - projectId
+      type: object
+    DeleteSessionTestRequest:
+      additionalProperties: false
+      example:
+        projectId: projectId
+        cid: cid
+      properties:
+        cid:
+          type: string
+        projectId:
+          type: string
+      required:
+      - cid
+      - projectId
+      type: object
+    SessionTestResultSuccess:
+      additionalProperties: false
+      properties:
+        testSucceeded:
+          type: boolean
+        sessionRunId:
+          type: string
+        aggregation:
+          format: double
+          type: number
+        succefullSamples:
+          format: double
+          type: number
+        allSamples:
+          format: double
+          type: number
+        epoch:
+          format: double
+          type: number
+        queryStatus:
+          enum:
+          - success
+          nullable: false
+          type: string
+      required:
+      - aggregation
+      - allSamples
+      - epoch
+      - queryStatus
+      - sessionRunId
+      - succefullSamples
+      - testSucceeded
+      type: object
+    SessionTestResultError:
+      additionalProperties: false
+      properties:
+        sessionRunId:
+          type: string
+        queryStatus:
+          enum:
+          - error
+          nullable: false
+          type: string
+      required:
+      - queryStatus
+      - sessionRunId
+      type: object
+    SessionTestResultNotFound:
+      additionalProperties: false
+      properties:
+        sessionRunId:
+          type: string
+        queryStatus:
+          enum:
+          - notFound
+          nullable: false
+          type: string
+      required:
+      - queryStatus
+      - sessionRunId
+      type: object
+    SessionTestResult:
+      anyOf:
+      - $ref: '#/components/schemas/SessionTestResultSuccess'
+      - $ref: '#/components/schemas/SessionTestResultError'
+      - $ref: '#/components/schemas/SessionTestResultNotFound'
+    AllSessionsTestResults:
+      additionalProperties: false
+      example:
+        testId: testId
+        sessionsResults:
+        - null
+        - null
+      properties:
+        testId:
+          type: string
+        sessionsResults:
+          items:
+            $ref: '#/components/schemas/SessionTestResult'
+          type: array
+      required:
+      - sessionsResults
+      - testId
+      type: object
+    SessionTestData:
+      additionalProperties: false
+      example:
+        sessionRunId: sessionRunId
+        epoch: 0.8008281904610115
+        projectId: projectId
+      properties:
+        sessionRunId:
+          type: string
+        projectId:
+          type: string
+        epoch:
+          format: double
+          type: number
+      required:
+      - epoch
+      - projectId
+      - sessionRunId
+      type: object
+    GetSessionTestResultsRequest:
+      additionalProperties: false
+      example:
+        sessionsTestData:
+        - sessionRunId: sessionRunId
+          epoch: 0.8008281904610115
+          projectId: projectId
+        - sessionRunId: sessionRunId
+          epoch: 0.8008281904610115
+          projectId: projectId
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        sessionsTestData:
+          items:
+            $ref: '#/components/schemas/SessionTestData'
+          type: array
+      required:
+      - projectId
+      - sessionsTestData
+      type: object
+    SlimTeam:
+      additionalProperties: false
+      example:
+        machineTypeId: machineTypeId
+        isDefault: true
+        publicName: publicName
+        name: name
+        type: type
+        cid: cid
+      properties:
+        cid:
+          type: string
+        name:
+          type: string
+        publicName:
+          type: string
+        type:
+          type: string
+        isDefault:
+          type: boolean
+        machineTypeId:
+          type: string
+      required:
+      - cid
+      - isDefault
+      - name
+      - publicName
+      - type
+      type: object
+    GetTeamsResponse:
+      additionalProperties: false
+      example:
+        teams:
+        - machineTypeId: machineTypeId
+          isDefault: true
+          publicName: publicName
+          name: name
+          type: type
+          cid: cid
+        - machineTypeId: machineTypeId
+          isDefault: true
+          publicName: publicName
+          name: name
+          type: type
+          cid: cid
+      properties:
+        teams:
+          items:
+            $ref: '#/components/schemas/SlimTeam'
+          type: array
+      required:
+      - teams
+      type: object
+    UpdateTeamPublicNameRequest:
+      additionalProperties: false
+      example:
+        publicName: publicName
+        cid: cid
+      properties:
+        cid:
+          type: string
+        publicName:
+          type: string
+      required:
+      - cid
+      - publicName
+      type: object
+    CreateTeamResponse:
+      additionalProperties: false
+      example:
+        teamId: teamId
+      properties:
+        teamId:
+          type: string
+      required:
+      - teamId
+      type: object
+    CreateTeamRequest:
+      additionalProperties: false
+      example:
+        publicName: publicName
+        name: name
+      properties:
+        name:
+          type: string
+        publicName:
+          type: string
+      required:
+      - name
+      - publicName
+      type: object
+    DeleteTeamRequest:
+      additionalProperties: false
+      example:
+        cid: cid
+      properties:
+        cid:
+          type: string
+      required:
+      - cid
+      type: object
+    SetDefaultTeamRequest:
+      additionalProperties: false
+      example:
+        cid: cid
+      properties:
+        cid:
+          type: string
+      required:
+      - cid
+      type: object
+    MachineTypeOption:
+      additionalProperties: false
+      example:
+        displayName: displayName
+        id: id
+      properties:
+        id:
+          type: string
+        displayName:
+          type: string
+      required:
+      - displayName
+      - id
+      type: object
+    GetMachineTypesResponse:
+      additionalProperties: false
+      example:
+        defaultCpuType: defaultCpuType
+        options:
+        - displayName: displayName
+          id: id
+        - displayName: displayName
+          id: id
+        defaultGpuType: defaultGpuType
+      properties:
+        options:
+          items:
+            $ref: '#/components/schemas/MachineTypeOption'
+          type: array
+        defaultCpuType:
+          type: string
+        defaultGpuType:
+          type: string
+      required:
+      - defaultCpuType
+      - defaultGpuType
+      - options
+      type: object
+    SetTeamMachineTypeParams:
+      additionalProperties: false
+      example:
+        machineTypeId: machineTypeId
+      properties:
+        machineTypeId:
+          type: string
+      required:
+      - machineTypeId
+      type: object
+    TrainFromScratchParams:
+      additionalProperties: false
+      example:
+        versionId: versionId
+        sessionName: sessionName
+        trainingParams:
+          batch_size: 6.027456183070403
+          epochs: 0.8008281904610115
+          early_stop_params:
+            patience: 1.4658129805029452
+        shouldRunPopulationExploration: true
+        projectId: projectId
+      properties:
+        versionId:
+          type: string
+        projectId:
+          type: string
+        sessionName:
+          type: string
+        trainingParams:
+          $ref: '#/components/schemas/TrainingParams'
+        shouldRunPopulationExploration:
+          type: boolean
+      required:
+      - projectId
+      - sessionName
+      - shouldRunPopulationExploration
+      - trainingParams
+      - versionId
+      type: object
+    ContinueTrainParams:
+      additionalProperties: false
+      example:
+        fromEpoch: 0.8008281904610115
+        versionId: versionId
+        trainingParams:
+          batch_size: 6.027456183070403
+          epochs: 0.8008281904610115
+          early_stop_params:
+            patience: 1.4658129805029452
+        shouldRunPopulationExploration: true
+        sessionId: sessionId
+        projectId: projectId
+      properties:
+        versionId:
+          type: string
+        sessionId:
+          type: string
+        projectId:
+          type: string
+        fromEpoch:
+          format: double
+          type: number
+        trainingParams:
+          $ref: '#/components/schemas/TrainingParams'
+        shouldRunPopulationExploration:
+          type: boolean
+      required:
+      - fromEpoch
+      - projectId
+      - sessionId
+      - shouldRunPopulationExploration
+      - trainingParams
+      - versionId
+      type: object
+    TrainFromInitialWeightsParams:
+      additionalProperties: false
+      example:
+        fromEpoch: 0.8008281904610115
+        modelName: modelName
+        versionId: versionId
+        trainingParams:
+          batch_size: 6.027456183070403
+          epochs: 0.8008281904610115
+          early_stop_params:
+            patience: 1.4658129805029452
+        shouldRunPopulationExploration: true
+        fromSessionId: fromSessionId
+        projectId: projectId
+      properties:
+        versionId:
+          type: string
+        projectId:
+          type: string
+        fromSessionId:
+          type: string
+        fromEpoch:
+          format: double
+          type: number
+        modelName:
+          type: string
+        trainingParams:
+          $ref: '#/components/schemas/TrainingParams'
+        shouldRunPopulationExploration:
+          type: boolean
+      required:
+      - fromEpoch
+      - fromSessionId
+      - modelName
+      - projectId
+      - shouldRunPopulationExploration
+      - trainingParams
+      - versionId
       type: object
     SlimUserDataLocal:
       additionalProperties: false
       example:
-        organization: organization
+        teamId: teamId
         name: name
         email: email
         activated: true
@@ -9623,7 +9668,7 @@ components:
           type: string
         email:
           type: string
-        organization:
+        teamId:
           type: string
         activated:
           type: boolean
@@ -9631,7 +9676,7 @@ components:
       - activated
       - email
       - name
-      - organization
+      - teamId
       type: object
     SlimUserData:
       additionalProperties: false
@@ -9639,14 +9684,14 @@ components:
         createdAt: 2000-01-23T04:56:07.000+00:00
         role: role
         recordSession: true
-        _id: _id
         local:
-          organization: organization
+          teamId: teamId
           name: name
           email: email
           activated: true
+        cid: cid
       properties:
-        _id:
+        cid:
           type: string
         role:
           type: string
@@ -9658,34 +9703,34 @@ components:
           format: date-time
           type: string
       required:
-      - _id
+      - cid
       - createdAt
       - local
       - recordSession
       - role
       type: object
-    GetOrganizationUsersResponse:
+    GetTeamUsersResponse:
       additionalProperties: false
       example:
         users:
         - createdAt: 2000-01-23T04:56:07.000+00:00
           role: role
           recordSession: true
-          _id: _id
           local:
-            organization: organization
+            teamId: teamId
             name: name
             email: email
             activated: true
+          cid: cid
         - createdAt: 2000-01-23T04:56:07.000+00:00
           role: role
           recordSession: true
-          _id: _id
           local:
-            organization: organization
+            teamId: teamId
             name: name
             email: email
             activated: true
+          cid: cid
       properties:
         users:
           items:
@@ -9693,16 +9738,6 @@ components:
           type: array
       required:
       - users
-      type: object
-    GetOrganizationUsersRequest:
-      additionalProperties: false
-      example:
-        organizationId: organizationId
-      properties:
-        organizationId:
-          type: string
-      required:
-      - organizationId
       type: object
     UpdateUserStatusRequest:
       additionalProperties: false
@@ -9718,18 +9753,18 @@ components:
       - active
       - userId
       type: object
-    UpdateUserOrganizationRequest:
+    UpdateUserTeamRequest:
       additionalProperties: false
       example:
-        organizationId: organizationId
+        teamId: teamId
         userId: userId
       properties:
         userId:
           type: string
-        organizationId:
+        teamId:
           type: string
       required:
-      - organizationId
+      - teamId
       - userId
       type: object
     UpdateUserRoleRequest:
@@ -9869,7 +9904,6 @@ components:
           data:
             nodes: "{}"
             id: id
-          project: project
           branch: branch
           codeIntegrationVersionId: codeIntegrationVersionId
           createdAt: 2000-01-23T04:56:07.000+00:00
@@ -9941,11 +9975,13 @@ components:
               name: name
               type: null
           createdBy: createdBy
-          organization: organization
-          _id: _id
+          teamId: teamId
           extId: extId
           tag: tag
+          projectId: projectId
           isFavourite: true
+          hash: hash
+          cid: cid
           status: visible
       properties:
         version:
@@ -10057,26 +10093,26 @@ components:
       additionalProperties: false
       example:
         project:
-          createdAt: 2000-01-23T04:56:07.000+00:00
           hubPublishPolicy: null
           access: null
-          createdBy: createdBy
-          organization: organization
-          name: name
           description: description
-          lastAccessed: 2000-01-23T04:56:07.000+00:00
           bgImagePath: bgImagePath
-          _id: _id
-          status: null
           tags:
           - tags
           - tags
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          teamId: teamId
+          name: name
+          lastAccessed: 2000-01-23T04:56:07.000+00:00
+          categories: "{}"
+          cid: cid
+          status: null
         version:
           notes: notes
           data:
             nodes: "{}"
             id: id
-          project: project
           branch: branch
           codeIntegrationVersionId: codeIntegrationVersionId
           createdAt: 2000-01-23T04:56:07.000+00:00
@@ -10148,11 +10184,13 @@ components:
               name: name
               type: null
           createdBy: createdBy
-          organization: organization
-          _id: _id
+          teamId: teamId
           extId: extId
           tag: tag
+          projectId: projectId
           isFavourite: true
+          hash: hash
+          cid: cid
           status: visible
       properties:
         project:
@@ -10167,20 +10205,28 @@ components:
       additionalProperties: false
       example:
         versionId: versionId
+        projectId: projectId
       properties:
         versionId:
           type: string
+        projectId:
+          type: string
       required:
+      - projectId
       - versionId
       type: object
     DeleteVersionParams:
       additionalProperties: false
       example:
         versionId: versionId
+        projectId: projectId
       properties:
         versionId:
           type: string
+        projectId:
+          type: string
       required:
+      - projectId
       - versionId
       type: object
     UpdateVersionResponse:
@@ -10267,11 +10313,13 @@ components:
             - arg_names
             name: name
             type: null
-        overrideHash: true
+        projectId: projectId
         codeIntegrationVersionId: codeIntegrationVersionId
         hash: hash
       properties:
         versionId:
+          type: string
+        projectId:
           type: string
         data:
           $ref: '#/components/schemas/ModelGraph'
@@ -10279,14 +10327,11 @@ components:
           type: string
         datasetSetup:
           $ref: '#/components/schemas/DatasetSetup'
-        overrideHash:
-          type: boolean
         hash:
           type: string
       required:
       - data
-      - datasetSetup
-      - overrideHash
+      - projectId
       - versionId
       type: object
     SlimVersion:
@@ -10305,10 +10350,11 @@ components:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             name: name
-            _id: _id
             sessionId: sessionId
+            projectId: projectId
+            cid: cid
             isEvaluate: true
           - createdAt: 2000-01-23T04:56:07.000+00:00
             weightAssets:
@@ -10317,37 +10363,39 @@ components:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             name: name
-            _id: _id
             sessionId: sessionId
+            projectId: projectId
+            cid: cid
             isEvaluate: true
-          organization: organization
+          teamId: teamId
           trainingParams:
             batch_size: 6.027456183070403
             epochs: 0.8008281904610115
             early_stop_params:
               patience: 1.4658129805029452
-          _id: _id
           extId: extId
           sessionWeights:
-          - globalStep: 6.027456183070403
+          - globalStep: 5.637376656633329
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
-            organization: organization
-            epoch: 0.8008281904610115
-            _id: _id
+            teamId: teamId
+            epoch: 5.962133916683182
             sessionId: sessionId
+            cid: cid
             status: null
-          - globalStep: 6.027456183070403
+          - globalStep: 5.637376656633329
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
-            organization: organization
-            epoch: 0.8008281904610115
-            _id: _id
+            teamId: teamId
+            epoch: 5.962133916683182
             sessionId: sessionId
+            cid: cid
             status: null
+          projectId: projectId
           hash: hash
+          cid: cid
         - modelName: modelName
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
@@ -10359,10 +10407,11 @@ components:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             name: name
-            _id: _id
             sessionId: sessionId
+            projectId: projectId
+            cid: cid
             isEvaluate: true
           - createdAt: 2000-01-23T04:56:07.000+00:00
             weightAssets:
@@ -10371,37 +10420,39 @@ components:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             createdBy: createdBy
-            organization: organization
+            teamId: teamId
             name: name
-            _id: _id
             sessionId: sessionId
+            projectId: projectId
+            cid: cid
             isEvaluate: true
-          organization: organization
+          teamId: teamId
           trainingParams:
             batch_size: 6.027456183070403
             epochs: 0.8008281904610115
             early_stop_params:
               patience: 1.4658129805029452
-          _id: _id
           extId: extId
           sessionWeights:
-          - globalStep: 6.027456183070403
+          - globalStep: 5.637376656633329
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
-            organization: organization
-            epoch: 0.8008281904610115
-            _id: _id
+            teamId: teamId
+            epoch: 5.962133916683182
             sessionId: sessionId
+            cid: cid
             status: null
-          - globalStep: 6.027456183070403
+          - globalStep: 5.637376656633329
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
-            organization: organization
-            epoch: 0.8008281904610115
-            _id: _id
+            teamId: teamId
+            epoch: 5.962133916683182
             sessionId: sessionId
+            cid: cid
             status: null
+          projectId: projectId
           hash: hash
+          cid: cid
         notes: notes
         datasetSetup:
           outputs:
@@ -10471,19 +10522,19 @@ components:
             name: name
             type: null
         createdBy: createdBy
-        project: project
         branchName: branchName
-        _id: _id
+        projectId: projectId
         isFavourite: true
         codeIntegrationVersionId: codeIntegrationVersionId
         hash: hash
+        cid: cid
         tags: tags
       properties:
-        _id:
+        cid:
           type: string
         createdBy:
           type: string
-        project:
+        projectId:
           type: string
         branchName:
           type: string
@@ -10508,14 +10559,14 @@ components:
             $ref: '#/components/schemas/Session'
           type: array
       required:
-      - _id
       - branchName
+      - cid
       - createdAt
       - createdBy
       - datasetSetup
       - isFavourite
       - notes
-      - project
+      - projectId
       - sessions
       - tags
       type: object
@@ -10536,10 +10587,11 @@ components:
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
               createdBy: createdBy
-              organization: organization
+              teamId: teamId
               name: name
-              _id: _id
               sessionId: sessionId
+              projectId: projectId
+              cid: cid
               isEvaluate: true
             - createdAt: 2000-01-23T04:56:07.000+00:00
               weightAssets:
@@ -10548,37 +10600,39 @@ components:
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
               createdBy: createdBy
-              organization: organization
+              teamId: teamId
               name: name
-              _id: _id
               sessionId: sessionId
+              projectId: projectId
+              cid: cid
               isEvaluate: true
-            organization: organization
+            teamId: teamId
             trainingParams:
               batch_size: 6.027456183070403
               epochs: 0.8008281904610115
               early_stop_params:
                 patience: 1.4658129805029452
-            _id: _id
             extId: extId
             sessionWeights:
-            - globalStep: 6.027456183070403
+            - globalStep: 5.637376656633329
               createdAt: 2000-01-23T04:56:07.000+00:00
               createdBy: createdBy
-              organization: organization
-              epoch: 0.8008281904610115
-              _id: _id
+              teamId: teamId
+              epoch: 5.962133916683182
               sessionId: sessionId
+              cid: cid
               status: null
-            - globalStep: 6.027456183070403
+            - globalStep: 5.637376656633329
               createdAt: 2000-01-23T04:56:07.000+00:00
               createdBy: createdBy
-              organization: organization
-              epoch: 0.8008281904610115
-              _id: _id
+              teamId: teamId
+              epoch: 5.962133916683182
               sessionId: sessionId
+              cid: cid
               status: null
+            projectId: projectId
             hash: hash
+            cid: cid
           - modelName: modelName
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
@@ -10590,10 +10644,11 @@ components:
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
               createdBy: createdBy
-              organization: organization
+              teamId: teamId
               name: name
-              _id: _id
               sessionId: sessionId
+              projectId: projectId
+              cid: cid
               isEvaluate: true
             - createdAt: 2000-01-23T04:56:07.000+00:00
               weightAssets:
@@ -10602,37 +10657,39 @@ components:
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
               createdBy: createdBy
-              organization: organization
+              teamId: teamId
               name: name
-              _id: _id
               sessionId: sessionId
+              projectId: projectId
+              cid: cid
               isEvaluate: true
-            organization: organization
+            teamId: teamId
             trainingParams:
               batch_size: 6.027456183070403
               epochs: 0.8008281904610115
               early_stop_params:
                 patience: 1.4658129805029452
-            _id: _id
             extId: extId
             sessionWeights:
-            - globalStep: 6.027456183070403
+            - globalStep: 5.637376656633329
               createdAt: 2000-01-23T04:56:07.000+00:00
               createdBy: createdBy
-              organization: organization
-              epoch: 0.8008281904610115
-              _id: _id
+              teamId: teamId
+              epoch: 5.962133916683182
               sessionId: sessionId
+              cid: cid
               status: null
-            - globalStep: 6.027456183070403
+            - globalStep: 5.637376656633329
               createdAt: 2000-01-23T04:56:07.000+00:00
               createdBy: createdBy
-              organization: organization
-              epoch: 0.8008281904610115
-              _id: _id
+              teamId: teamId
+              epoch: 5.962133916683182
               sessionId: sessionId
+              cid: cid
               status: null
+            projectId: projectId
             hash: hash
+            cid: cid
           notes: notes
           datasetSetup:
             outputs:
@@ -10702,12 +10759,12 @@ components:
               name: name
               type: null
           createdBy: createdBy
-          project: project
           branchName: branchName
-          _id: _id
+          projectId: projectId
           isFavourite: true
           codeIntegrationVersionId: codeIntegrationVersionId
           hash: hash
+          cid: cid
           tags: tags
         - createdAt: 2000-01-23T04:56:07.000+00:00
           sessions:
@@ -10722,10 +10779,11 @@ components:
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
               createdBy: createdBy
-              organization: organization
+              teamId: teamId
               name: name
-              _id: _id
               sessionId: sessionId
+              projectId: projectId
+              cid: cid
               isEvaluate: true
             - createdAt: 2000-01-23T04:56:07.000+00:00
               weightAssets:
@@ -10734,37 +10792,39 @@ components:
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
               createdBy: createdBy
-              organization: organization
+              teamId: teamId
               name: name
-              _id: _id
               sessionId: sessionId
+              projectId: projectId
+              cid: cid
               isEvaluate: true
-            organization: organization
+            teamId: teamId
             trainingParams:
               batch_size: 6.027456183070403
               epochs: 0.8008281904610115
               early_stop_params:
                 patience: 1.4658129805029452
-            _id: _id
             extId: extId
             sessionWeights:
-            - globalStep: 6.027456183070403
+            - globalStep: 5.637376656633329
               createdAt: 2000-01-23T04:56:07.000+00:00
               createdBy: createdBy
-              organization: organization
-              epoch: 0.8008281904610115
-              _id: _id
+              teamId: teamId
+              epoch: 5.962133916683182
               sessionId: sessionId
+              cid: cid
               status: null
-            - globalStep: 6.027456183070403
+            - globalStep: 5.637376656633329
               createdAt: 2000-01-23T04:56:07.000+00:00
               createdBy: createdBy
-              organization: organization
-              epoch: 0.8008281904610115
-              _id: _id
+              teamId: teamId
+              epoch: 5.962133916683182
               sessionId: sessionId
+              cid: cid
               status: null
+            projectId: projectId
             hash: hash
+            cid: cid
           - modelName: modelName
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
@@ -10776,10 +10836,11 @@ components:
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
               createdBy: createdBy
-              organization: organization
+              teamId: teamId
               name: name
-              _id: _id
               sessionId: sessionId
+              projectId: projectId
+              cid: cid
               isEvaluate: true
             - createdAt: 2000-01-23T04:56:07.000+00:00
               weightAssets:
@@ -10788,37 +10849,39 @@ components:
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
               createdBy: createdBy
-              organization: organization
+              teamId: teamId
               name: name
-              _id: _id
               sessionId: sessionId
+              projectId: projectId
+              cid: cid
               isEvaluate: true
-            organization: organization
+            teamId: teamId
             trainingParams:
               batch_size: 6.027456183070403
               epochs: 0.8008281904610115
               early_stop_params:
                 patience: 1.4658129805029452
-            _id: _id
             extId: extId
             sessionWeights:
-            - globalStep: 6.027456183070403
+            - globalStep: 5.637376656633329
               createdAt: 2000-01-23T04:56:07.000+00:00
               createdBy: createdBy
-              organization: organization
-              epoch: 0.8008281904610115
-              _id: _id
+              teamId: teamId
+              epoch: 5.962133916683182
               sessionId: sessionId
+              cid: cid
               status: null
-            - globalStep: 6.027456183070403
+            - globalStep: 5.637376656633329
               createdAt: 2000-01-23T04:56:07.000+00:00
               createdBy: createdBy
-              organization: organization
-              epoch: 0.8008281904610115
-              _id: _id
+              teamId: teamId
+              epoch: 5.962133916683182
               sessionId: sessionId
+              cid: cid
               status: null
+            projectId: projectId
             hash: hash
+            cid: cid
           notes: notes
           datasetSetup:
             outputs:
@@ -10888,12 +10951,12 @@ components:
               name: name
               type: null
           createdBy: createdBy
-          project: project
           branchName: branchName
-          _id: _id
+          projectId: projectId
           isFavourite: true
           codeIntegrationVersionId: codeIntegrationVersionId
           hash: hash
+          cid: cid
           tags: tags
       properties:
         versions:
@@ -11751,6 +11814,20 @@ components:
     Visualization:
       additionalProperties: false
       example:
+        data:
+          data:
+            payload:
+            - null
+            - null
+            epoch: 7.061401241503109
+            title: title
+          source: source
+          info: null
+        sampleId: 6.027456183070403
+        visualizationUuid: visualizationUuid
+        jobParms: null
+        epoch: 0.8008281904610115
+        type: null
         layout:
           md:
             w: 5.637376656633329
@@ -11776,23 +11853,12 @@ components:
         createdAt: 2000-01-23T04:56:07.000+00:00
         sessionRunId: sessionRunId
         blob: blob
-        data:
-          data:
-            payload:
-            - null
-            - null
-            epoch: 7.061401241503109
-            title: title
-          source: source
-          info: null
-        sampleId: 6.027456183070403
-        visualizationUuid: visualizationUuid
-        jobParms: null
-        epoch: 0.8008281904610115
-        _id: _id
-        type: null
+        projectId: projectId
+        cid: cid
       properties:
-        _id:
+        projectId:
+          type: string
+        cid:
           type: string
         jobId:
           type: string
@@ -11820,12 +11886,13 @@ components:
         data:
           $ref: '#/components/schemas/VisualizationResponse'
       required:
-      - _id
       - blob
+      - cid
       - createdAt
       - data
       - epoch
       - jobId
+      - projectId
       - sessionRunId
       - type
       - visualizationUuid
@@ -11834,10 +11901,14 @@ components:
       additionalProperties: false
       example:
         visualizationId: visualizationId
+        projectId: projectId
       properties:
         visualizationId:
           type: string
+        projectId:
+          type: string
       required:
+      - projectId
       - visualizationId
       type: object
     SlimVisualization:
@@ -11872,10 +11943,13 @@ components:
         visualizationUuid: visualizationUuid
         jobParms: null
         epoch: 0.8008281904610115
-        _id: _id
         type: null
+        projectId: projectId
+        cid: cid
       properties:
-        _id:
+        projectId:
+          type: string
+        cid:
           type: string
         jobId:
           type: string
@@ -11901,11 +11975,12 @@ components:
         blob:
           type: string
       required:
-      - _id
       - blob
+      - cid
       - createdAt
       - epoch
       - jobId
+      - projectId
       - sessionRunId
       - type
       - visualizationUuid
@@ -11943,8 +12018,9 @@ components:
           visualizationUuid: visualizationUuid
           jobParms: null
           epoch: 0.8008281904610115
-          _id: _id
           type: null
+          projectId: projectId
+          cid: cid
         - layout:
             md:
               w: 5.637376656633329
@@ -11974,8 +12050,9 @@ components:
           visualizationUuid: visualizationUuid
           jobParms: null
           epoch: 0.8008281904610115
-          _id: _id
           type: null
+          projectId: projectId
+          cid: cid
       properties:
         slimVisualizations:
           items:
@@ -11988,10 +12065,14 @@ components:
       additionalProperties: false
       example:
         sessionRunId: sessionRunId
+        projectId: projectId
       properties:
         sessionRunId:
           type: string
+        projectId:
+          type: string
       required:
+      - projectId
       - sessionRunId
       type: object
     GetSlimVisualizationResponse:
@@ -12027,8 +12108,9 @@ components:
           visualizationUuid: visualizationUuid
           jobParms: null
           epoch: 0.8008281904610115
-          _id: _id
           type: null
+          projectId: projectId
+          cid: cid
       properties:
         slimVisualization:
           $ref: '#/components/schemas/SlimVisualization'
@@ -12117,13 +12199,17 @@ components:
               h: 2.3021358869347655
               "y": 5.962133916683182
           visualizationId: visualizationId
+        projectId: projectId
       properties:
         panelsLayouts:
           items:
             $ref: '#/components/schemas/PanelLayout'
           type: array
+        projectId:
+          type: string
       required:
       - panelsLayouts
+      - projectId
       type: object
     DeleteVisualizationsParams:
       additionalProperties: false
@@ -12131,13 +12217,110 @@ components:
         visualizationIdsToDelete:
         - visualizationIdsToDelete
         - visualizationIdsToDelete
+        projectId: projectId
       properties:
         visualizationIdsToDelete:
           items:
             type: string
           type: array
+        projectId:
+          type: string
       required:
+      - projectId
       - visualizationIdsToDelete
+      type: object
+    SampleAnalysisParams:
+      additionalProperties: false
+      example:
+        fromEpoch: 6.027456183070403
+        sessionRunId: sessionRunId
+        projectId: projectId
+        sampleIdentity:
+          index: 0.8008281904610115
+          state: null
+      properties:
+        sessionRunId:
+          type: string
+        projectId:
+          type: string
+        sampleIdentity:
+          $ref: '#/components/schemas/SampleIdentity'
+        fromEpoch:
+          format: double
+          type: number
+      required:
+      - fromEpoch
+      - projectId
+      - sampleIdentity
+      - sessionRunId
+      type: object
+    PopulationExplorationParams:
+      additionalProperties: false
+      example:
+        fromEpoch: 1.4658129805029452
+        sessionRunId: sessionRunId
+        numOfSamples: 6.027456183070403
+        batchSize: 0.8008281904610115
+        projectId: projectId
+      properties:
+        sessionRunId:
+          type: string
+        projectId:
+          type: string
+        batchSize:
+          format: double
+          type: number
+        numOfSamples:
+          format: double
+          type: number
+        fromEpoch:
+          format: double
+          type: number
+      required:
+      - batchSize
+      - fromEpoch
+      - numOfSamples
+      - projectId
+      - sessionRunId
+      type: object
+    SampleSelectionParams:
+      additionalProperties: false
+      example:
+        fromEpoch: 1.4658129805029452
+        sessionRunId: sessionRunId
+        fromDatasetSlice: null
+        numOfSamples: 6.027456183070403
+        batchSize: 0.8008281904610115
+        projectId: projectId
+        sampleIdentity:
+          index: 0.8008281904610115
+          state: null
+      properties:
+        sessionRunId:
+          type: string
+        projectId:
+          type: string
+        sampleIdentity:
+          $ref: '#/components/schemas/SampleIdentity'
+        fromDatasetSlice:
+          $ref: '#/components/schemas/DataStateType'
+        batchSize:
+          format: double
+          type: number
+        numOfSamples:
+          format: double
+          type: number
+        fromEpoch:
+          format: double
+          type: number
+      required:
+      - batchSize
+      - fromDatasetSlice
+      - fromEpoch
+      - numOfSamples
+      - projectId
+      - sampleIdentity
+      - sessionRunId
       type: object
     SetUserNotificationsAsRead_200_response:
       example:

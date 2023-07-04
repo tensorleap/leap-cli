@@ -4,12 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**Cid** | **string** |  | 
 **RecordSession** | **bool** |  | 
 **Role** | [**UserRole**](UserRole.md) |  | 
 **Local** | [**UserDataLocal**](UserDataLocal.md) |  | 
 **Metadata** | Pointer to [**UserDataMetadata**](UserDataMetadata.md) |  | [optional] 
-**OrganizationName** | **string** |  | 
+**TeamName** | **string** |  | 
 **SingleUserMode** | Pointer to [**SingleUserModeSettings**](SingleUserModeSettings.md) |  | [optional] 
 **Activated** | **bool** |  | 
 
@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 
 ### NewUserData
 
-`func NewUserData(id string, recordSession bool, role UserRole, local UserDataLocal, organizationName string, activated bool, ) *UserData`
+`func NewUserData(cid string, recordSession bool, role UserRole, local UserDataLocal, teamName string, activated bool, ) *UserData`
 
 NewUserData instantiates a new UserData object
 This constructor will assign default values to properties that have it defined,
@@ -32,24 +32,24 @@ NewUserDataWithDefaults instantiates a new UserData object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetCid
 
-`func (o *UserData) GetId() string`
+`func (o *UserData) GetCid() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetCid returns the Cid field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetCidOk
 
-`func (o *UserData) GetIdOk() (*string, bool)`
+`func (o *UserData) GetCidOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetCid
 
-`func (o *UserData) SetId(v string)`
+`func (o *UserData) SetCid(v string)`
 
-SetId sets Id field to given value.
+SetCid sets Cid field to given value.
 
 
 ### GetRecordSession
@@ -137,24 +137,24 @@ SetMetadata sets Metadata field to given value.
 
 HasMetadata returns a boolean if a field has been set.
 
-### GetOrganizationName
+### GetTeamName
 
-`func (o *UserData) GetOrganizationName() string`
+`func (o *UserData) GetTeamName() string`
 
-GetOrganizationName returns the OrganizationName field if non-nil, zero value otherwise.
+GetTeamName returns the TeamName field if non-nil, zero value otherwise.
 
-### GetOrganizationNameOk
+### GetTeamNameOk
 
-`func (o *UserData) GetOrganizationNameOk() (*string, bool)`
+`func (o *UserData) GetTeamNameOk() (*string, bool)`
 
-GetOrganizationNameOk returns a tuple with the OrganizationName field if it's non-nil, zero value otherwise
+GetTeamNameOk returns a tuple with the TeamName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrganizationName
+### SetTeamName
 
-`func (o *UserData) SetOrganizationName(v string)`
+`func (o *UserData) SetTeamName(v string)`
 
-SetOrganizationName sets OrganizationName field to given value.
+SetTeamName sets TeamName field to given value.
 
 
 ### GetSingleUserMode

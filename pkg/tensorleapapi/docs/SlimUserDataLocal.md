@@ -6,14 +6,14 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** |  | 
 **Email** | **string** |  | 
-**Organization** | **string** |  | 
+**TeamId** | **string** |  | 
 **Activated** | **bool** |  | 
 
 ## Methods
 
 ### NewSlimUserDataLocal
 
-`func NewSlimUserDataLocal(name string, email string, organization string, activated bool, ) *SlimUserDataLocal`
+`func NewSlimUserDataLocal(name string, email string, teamId string, activated bool, ) *SlimUserDataLocal`
 
 NewSlimUserDataLocal instantiates a new SlimUserDataLocal object
 This constructor will assign default values to properties that have it defined,
@@ -68,24 +68,24 @@ and a boolean to check if the value has been set.
 SetEmail sets Email field to given value.
 
 
-### GetOrganization
+### GetTeamId
 
-`func (o *SlimUserDataLocal) GetOrganization() string`
+`func (o *SlimUserDataLocal) GetTeamId() string`
 
-GetOrganization returns the Organization field if non-nil, zero value otherwise.
+GetTeamId returns the TeamId field if non-nil, zero value otherwise.
 
-### GetOrganizationOk
+### GetTeamIdOk
 
-`func (o *SlimUserDataLocal) GetOrganizationOk() (*string, bool)`
+`func (o *SlimUserDataLocal) GetTeamIdOk() (*string, bool)`
 
-GetOrganizationOk returns a tuple with the Organization field if it's non-nil, zero value otherwise
+GetTeamIdOk returns a tuple with the TeamId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrganization
+### SetTeamId
 
-`func (o *SlimUserDataLocal) SetOrganization(v string)`
+`func (o *SlimUserDataLocal) SetTeamId(v string)`
 
-SetOrganization sets Organization field to given value.
+SetTeamId sets TeamId field to given value.
 
 
 ### GetActivated

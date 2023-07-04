@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
-**Organization** | **string** |  | 
+**Cid** | **string** |  | 
+**TeamId** | **string** |  | 
 **DatasetId** | **string** |  | 
 **Note** | **string** |  | 
 **CreatedAt** | **string** |  | 
@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewDatasetVersion
 
-`func NewDatasetVersion(id string, organization string, datasetId string, note string, createdAt string, createdBy string, testStatus TestStatus, metadata DatasetMetadata, blobPath string, codeEntryFile string, ) *DatasetVersion`
+`func NewDatasetVersion(cid string, teamId string, datasetId string, note string, createdAt string, createdBy string, testStatus TestStatus, metadata DatasetMetadata, blobPath string, codeEntryFile string, ) *DatasetVersion`
 
 NewDatasetVersion instantiates a new DatasetVersion object
 This constructor will assign default values to properties that have it defined,
@@ -34,44 +34,44 @@ NewDatasetVersionWithDefaults instantiates a new DatasetVersion object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetCid
 
-`func (o *DatasetVersion) GetId() string`
+`func (o *DatasetVersion) GetCid() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetCid returns the Cid field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetCidOk
 
-`func (o *DatasetVersion) GetIdOk() (*string, bool)`
+`func (o *DatasetVersion) GetCidOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetCid
 
-`func (o *DatasetVersion) SetId(v string)`
+`func (o *DatasetVersion) SetCid(v string)`
 
-SetId sets Id field to given value.
+SetCid sets Cid field to given value.
 
 
-### GetOrganization
+### GetTeamId
 
-`func (o *DatasetVersion) GetOrganization() string`
+`func (o *DatasetVersion) GetTeamId() string`
 
-GetOrganization returns the Organization field if non-nil, zero value otherwise.
+GetTeamId returns the TeamId field if non-nil, zero value otherwise.
 
-### GetOrganizationOk
+### GetTeamIdOk
 
-`func (o *DatasetVersion) GetOrganizationOk() (*string, bool)`
+`func (o *DatasetVersion) GetTeamIdOk() (*string, bool)`
 
-GetOrganizationOk returns a tuple with the Organization field if it's non-nil, zero value otherwise
+GetTeamIdOk returns a tuple with the TeamId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrganization
+### SetTeamId
 
-`func (o *DatasetVersion) SetOrganization(v string)`
+`func (o *DatasetVersion) SetTeamId(v string)`
 
-SetOrganization sets Organization field to given value.
+SetTeamId sets TeamId field to given value.
 
 
 ### GetDatasetId

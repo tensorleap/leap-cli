@@ -5,12 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VersionId** | **string** |  | 
+**ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewLoadVersionParams
 
-`func NewLoadVersionParams(versionId string, ) *LoadVersionParams`
+`func NewLoadVersionParams(versionId string, projectId string, ) *LoadVersionParams`
 
 NewLoadVersionParams instantiates a new LoadVersionParams object
 This constructor will assign default values to properties that have it defined,
@@ -43,6 +44,26 @@ and a boolean to check if the value has been set.
 `func (o *LoadVersionParams) SetVersionId(v string)`
 
 SetVersionId sets VersionId field to given value.
+
+
+### GetProjectId
+
+`func (o *LoadVersionParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *LoadVersionParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *LoadVersionParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
 
 
 

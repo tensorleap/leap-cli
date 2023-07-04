@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**Cid** | **string** |  | 
 **Name** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
 
@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 
 ### NewSecretManager
 
-`func NewSecretManager(id string, name string, createdAt time.Time, ) *SecretManager`
+`func NewSecretManager(cid string, name string, createdAt time.Time, ) *SecretManager`
 
 NewSecretManager instantiates a new SecretManager object
 This constructor will assign default values to properties that have it defined,
@@ -27,24 +27,24 @@ NewSecretManagerWithDefaults instantiates a new SecretManager object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetCid
 
-`func (o *SecretManager) GetId() string`
+`func (o *SecretManager) GetCid() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetCid returns the Cid field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetCidOk
 
-`func (o *SecretManager) GetIdOk() (*string, bool)`
+`func (o *SecretManager) GetCidOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetCid
 
-`func (o *SecretManager) SetId(v string)`
+`func (o *SecretManager) SetCid(v string)`
 
-SetId sets Id field to given value.
+SetCid sets Cid field to given value.
 
 
 ### GetName

@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
-**Organization** | **string** |  | 
+**Cid** | **string** |  | 
+**TeamId** | **string** |  | 
 **CreatedBy** | **string** |  | 
 **CreatedAt** | **NullableTime** |  | 
 **Name** | **string** |  | 
@@ -15,13 +15,14 @@ Name | Type | Description | Notes
 **Tags** | **[]string** |  | 
 **BgImagePath** | Pointer to **string** |  | [optional] 
 **HubPublishPolicy** | [**HubPublishPolicy**](HubPublishPolicy.md) |  | 
+**Categories** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
 **Description** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewProject
 
-`func NewProject(id string, organization string, createdBy string, createdAt NullableTime, name string, lastAccessed time.Time, status ProjectStatus, access ProjectAccess, tags []string, hubPublishPolicy HubPublishPolicy, ) *Project`
+`func NewProject(cid string, teamId string, createdBy string, createdAt NullableTime, name string, lastAccessed time.Time, status ProjectStatus, access ProjectAccess, tags []string, hubPublishPolicy HubPublishPolicy, ) *Project`
 
 NewProject instantiates a new Project object
 This constructor will assign default values to properties that have it defined,
@@ -36,44 +37,44 @@ NewProjectWithDefaults instantiates a new Project object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetCid
 
-`func (o *Project) GetId() string`
+`func (o *Project) GetCid() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetCid returns the Cid field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetCidOk
 
-`func (o *Project) GetIdOk() (*string, bool)`
+`func (o *Project) GetCidOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetCid
 
-`func (o *Project) SetId(v string)`
+`func (o *Project) SetCid(v string)`
 
-SetId sets Id field to given value.
+SetCid sets Cid field to given value.
 
 
-### GetOrganization
+### GetTeamId
 
-`func (o *Project) GetOrganization() string`
+`func (o *Project) GetTeamId() string`
 
-GetOrganization returns the Organization field if non-nil, zero value otherwise.
+GetTeamId returns the TeamId field if non-nil, zero value otherwise.
 
-### GetOrganizationOk
+### GetTeamIdOk
 
-`func (o *Project) GetOrganizationOk() (*string, bool)`
+`func (o *Project) GetTeamIdOk() (*string, bool)`
 
-GetOrganizationOk returns a tuple with the Organization field if it's non-nil, zero value otherwise
+GetTeamIdOk returns a tuple with the TeamId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrganization
+### SetTeamId
 
-`func (o *Project) SetOrganization(v string)`
+`func (o *Project) SetTeamId(v string)`
 
-SetOrganization sets Organization field to given value.
+SetTeamId sets TeamId field to given value.
 
 
 ### GetCreatedBy
@@ -270,6 +271,31 @@ and a boolean to check if the value has been set.
 
 SetHubPublishPolicy sets HubPublishPolicy field to given value.
 
+
+### GetCategories
+
+`func (o *Project) GetCategories() map[string]interface{}`
+
+GetCategories returns the Categories field if non-nil, zero value otherwise.
+
+### GetCategoriesOk
+
+`func (o *Project) GetCategoriesOk() (*map[string]interface{}, bool)`
+
+GetCategoriesOk returns a tuple with the Categories field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCategories
+
+`func (o *Project) SetCategories(v map[string]interface{})`
+
+SetCategories sets Categories field to given value.
+
+### HasCategories
+
+`func (o *Project) HasCategories() bool`
+
+HasCategories returns a boolean if a field has been set.
 
 ### GetDescription
 

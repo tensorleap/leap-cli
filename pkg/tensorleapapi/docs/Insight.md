@@ -4,11 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**ProjectId** | **string** |  | 
+**Cid** | **string** |  | 
 **SessionRunId** | **string** |  | 
 **ModelEpoch** | **float64** |  | 
 **ModelExtId** | **string** |  | 
-**OrganizationId** | **string** |  | 
+**TeamId** | **string** |  | 
 **CreatedBy** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
@@ -19,7 +20,7 @@ Name | Type | Description | Notes
 
 ### NewInsight
 
-`func NewInsight(id string, sessionRunId string, modelEpoch float64, modelExtId string, organizationId string, createdBy string, createdAt time.Time, updatedAt time.Time, visualizationUuid string, data InsightType, ) *Insight`
+`func NewInsight(projectId string, cid string, sessionRunId string, modelEpoch float64, modelExtId string, teamId string, createdBy string, createdAt time.Time, updatedAt time.Time, visualizationUuid string, data InsightType, ) *Insight`
 
 NewInsight instantiates a new Insight object
 This constructor will assign default values to properties that have it defined,
@@ -34,24 +35,44 @@ NewInsightWithDefaults instantiates a new Insight object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetProjectId
 
-`func (o *Insight) GetId() string`
+`func (o *Insight) GetProjectId() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetProjectIdOk
 
-`func (o *Insight) GetIdOk() (*string, bool)`
+`func (o *Insight) GetProjectIdOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetProjectId
 
-`func (o *Insight) SetId(v string)`
+`func (o *Insight) SetProjectId(v string)`
 
-SetId sets Id field to given value.
+SetProjectId sets ProjectId field to given value.
+
+
+### GetCid
+
+`func (o *Insight) GetCid() string`
+
+GetCid returns the Cid field if non-nil, zero value otherwise.
+
+### GetCidOk
+
+`func (o *Insight) GetCidOk() (*string, bool)`
+
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCid
+
+`func (o *Insight) SetCid(v string)`
+
+SetCid sets Cid field to given value.
 
 
 ### GetSessionRunId
@@ -114,24 +135,24 @@ and a boolean to check if the value has been set.
 SetModelExtId sets ModelExtId field to given value.
 
 
-### GetOrganizationId
+### GetTeamId
 
-`func (o *Insight) GetOrganizationId() string`
+`func (o *Insight) GetTeamId() string`
 
-GetOrganizationId returns the OrganizationId field if non-nil, zero value otherwise.
+GetTeamId returns the TeamId field if non-nil, zero value otherwise.
 
-### GetOrganizationIdOk
+### GetTeamIdOk
 
-`func (o *Insight) GetOrganizationIdOk() (*string, bool)`
+`func (o *Insight) GetTeamIdOk() (*string, bool)`
 
-GetOrganizationIdOk returns a tuple with the OrganizationId field if it's non-nil, zero value otherwise
+GetTeamIdOk returns a tuple with the TeamId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrganizationId
+### SetTeamId
 
-`func (o *Insight) SetOrganizationId(v string)`
+`func (o *Insight) SetTeamId(v string)`
 
-SetOrganizationId sets OrganizationId field to given value.
+SetTeamId sets TeamId field to given value.
 
 
 ### GetCreatedBy

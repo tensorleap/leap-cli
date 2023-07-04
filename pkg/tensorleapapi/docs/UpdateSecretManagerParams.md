@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**Cid** | **string** |  | 
 **Name** | **string** |  | 
 **AuthData** | Pointer to **string** |  | [optional] 
 
@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 
 ### NewUpdateSecretManagerParams
 
-`func NewUpdateSecretManagerParams(id string, name string, ) *UpdateSecretManagerParams`
+`func NewUpdateSecretManagerParams(cid string, name string, ) *UpdateSecretManagerParams`
 
 NewUpdateSecretManagerParams instantiates a new UpdateSecretManagerParams object
 This constructor will assign default values to properties that have it defined,
@@ -27,24 +27,24 @@ NewUpdateSecretManagerParamsWithDefaults instantiates a new UpdateSecretManagerP
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetCid
 
-`func (o *UpdateSecretManagerParams) GetId() string`
+`func (o *UpdateSecretManagerParams) GetCid() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetCid returns the Cid field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetCidOk
 
-`func (o *UpdateSecretManagerParams) GetIdOk() (*string, bool)`
+`func (o *UpdateSecretManagerParams) GetCidOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetCid
 
-`func (o *UpdateSecretManagerParams) SetId(v string)`
+`func (o *UpdateSecretManagerParams) SetCid(v string)`
 
-SetId sets Id field to given value.
+SetCid sets Cid field to given value.
 
 
 ### GetName

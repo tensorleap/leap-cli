@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**ProjectId** | **string** |  | 
 **SessionRunIds** | **[]string** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **VerticalSplit** | Pointer to **string** |  | [optional] 
@@ -16,7 +17,7 @@ Name | Type | Description | Notes
 
 ### NewGenericDataQueryParams
 
-`func NewGenericDataQueryParams(sessionRunIds []string, aggregations []Aggregations, buckets []BucketAggregation, ) *GenericDataQueryParams`
+`func NewGenericDataQueryParams(projectId string, sessionRunIds []string, aggregations []Aggregations, buckets []BucketAggregation, ) *GenericDataQueryParams`
 
 NewGenericDataQueryParams instantiates a new GenericDataQueryParams object
 This constructor will assign default values to properties that have it defined,
@@ -30,6 +31,26 @@ will change when the set of required properties is changed
 NewGenericDataQueryParamsWithDefaults instantiates a new GenericDataQueryParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetProjectId
+
+`func (o *GenericDataQueryParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *GenericDataQueryParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *GenericDataQueryParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
+
 
 ### GetSessionRunIds
 

@@ -5,12 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SessionId** | **string** |  | 
+**ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewDeleteSessionParams
 
-`func NewDeleteSessionParams(sessionId string, ) *DeleteSessionParams`
+`func NewDeleteSessionParams(sessionId string, projectId string, ) *DeleteSessionParams`
 
 NewDeleteSessionParams instantiates a new DeleteSessionParams object
 This constructor will assign default values to properties that have it defined,
@@ -43,6 +44,26 @@ and a boolean to check if the value has been set.
 `func (o *DeleteSessionParams) SetSessionId(v string)`
 
 SetSessionId sets SessionId field to given value.
+
+
+### GetProjectId
+
+`func (o *DeleteSessionParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *DeleteSessionParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *DeleteSessionParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
 
 
 

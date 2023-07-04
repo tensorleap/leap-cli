@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**ProjectId** | **string** |  | 
 **XField** | **string** |  | 
 **YField** | **string** |  | 
 **AggregationMethod** | [**AggregationMethod**](AggregationMethod.md) |  | 
@@ -22,7 +23,7 @@ Name | Type | Description | Notes
 
 ### NewMultiChartsParams
 
-`func NewMultiChartsParams(xField string, yField string, aggregationMethod AggregationMethod, sessionRunIds []string, dataDistributionType DataDistributionType, xAxisSizeInterval float64, ) *MultiChartsParams`
+`func NewMultiChartsParams(projectId string, xField string, yField string, aggregationMethod AggregationMethod, sessionRunIds []string, dataDistributionType DataDistributionType, xAxisSizeInterval float64, ) *MultiChartsParams`
 
 NewMultiChartsParams instantiates a new MultiChartsParams object
 This constructor will assign default values to properties that have it defined,
@@ -36,6 +37,26 @@ will change when the set of required properties is changed
 NewMultiChartsParamsWithDefaults instantiates a new MultiChartsParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetProjectId
+
+`func (o *MultiChartsParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *MultiChartsParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *MultiChartsParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
+
 
 ### GetXField
 

@@ -4,10 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**ProjectId** | **string** |  | 
+**Cid** | **string** |  | 
 **SessionId** | **string** |  | 
 **Name** | **string** |  | 
-**Organization** | **string** |  | 
+**TeamId** | **string** |  | 
 **IsEvaluate** | **bool** |  | 
 **CreatedAt** | **time.Time** |  | 
 **CreatedBy** | **string** |  | 
@@ -17,7 +18,7 @@ Name | Type | Description | Notes
 
 ### NewSessionRunData
 
-`func NewSessionRunData(id string, sessionId string, name string, organization string, isEvaluate bool, createdAt time.Time, createdBy string, weightAssets []WeightAssetData, ) *SessionRunData`
+`func NewSessionRunData(projectId string, cid string, sessionId string, name string, teamId string, isEvaluate bool, createdAt time.Time, createdBy string, weightAssets []WeightAssetData, ) *SessionRunData`
 
 NewSessionRunData instantiates a new SessionRunData object
 This constructor will assign default values to properties that have it defined,
@@ -32,24 +33,44 @@ NewSessionRunDataWithDefaults instantiates a new SessionRunData object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetProjectId
 
-`func (o *SessionRunData) GetId() string`
+`func (o *SessionRunData) GetProjectId() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetProjectIdOk
 
-`func (o *SessionRunData) GetIdOk() (*string, bool)`
+`func (o *SessionRunData) GetProjectIdOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetProjectId
 
-`func (o *SessionRunData) SetId(v string)`
+`func (o *SessionRunData) SetProjectId(v string)`
 
-SetId sets Id field to given value.
+SetProjectId sets ProjectId field to given value.
+
+
+### GetCid
+
+`func (o *SessionRunData) GetCid() string`
+
+GetCid returns the Cid field if non-nil, zero value otherwise.
+
+### GetCidOk
+
+`func (o *SessionRunData) GetCidOk() (*string, bool)`
+
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCid
+
+`func (o *SessionRunData) SetCid(v string)`
+
+SetCid sets Cid field to given value.
 
 
 ### GetSessionId
@@ -92,24 +113,24 @@ and a boolean to check if the value has been set.
 SetName sets Name field to given value.
 
 
-### GetOrganization
+### GetTeamId
 
-`func (o *SessionRunData) GetOrganization() string`
+`func (o *SessionRunData) GetTeamId() string`
 
-GetOrganization returns the Organization field if non-nil, zero value otherwise.
+GetTeamId returns the TeamId field if non-nil, zero value otherwise.
 
-### GetOrganizationOk
+### GetTeamIdOk
 
-`func (o *SessionRunData) GetOrganizationOk() (*string, bool)`
+`func (o *SessionRunData) GetTeamIdOk() (*string, bool)`
 
-GetOrganizationOk returns a tuple with the Organization field if it's non-nil, zero value otherwise
+GetTeamIdOk returns a tuple with the TeamId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrganization
+### SetTeamId
 
-`func (o *SessionRunData) SetOrganization(v string)`
+`func (o *SessionRunData) SetTeamId(v string)`
 
-SetOrganization sets Organization field to given value.
+SetTeamId sets TeamId field to given value.
 
 
 ### GetIsEvaluate

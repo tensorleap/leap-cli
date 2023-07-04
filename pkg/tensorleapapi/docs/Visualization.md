@@ -4,7 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**ProjectId** | **string** |  | 
+**Cid** | **string** |  | 
 **JobId** | **string** |  | 
 **SessionRunId** | **string** |  | 
 **JobParms** | Pointer to [**JobParams**](JobParams.md) |  | [optional] 
@@ -21,7 +22,7 @@ Name | Type | Description | Notes
 
 ### NewVisualization
 
-`func NewVisualization(id string, jobId string, sessionRunId string, type_ AnalyzeTypeEnum, createdAt time.Time, epoch float64, visualizationUuid string, blob string, data VisualizationResponse, ) *Visualization`
+`func NewVisualization(projectId string, cid string, jobId string, sessionRunId string, type_ AnalyzeTypeEnum, createdAt time.Time, epoch float64, visualizationUuid string, blob string, data VisualizationResponse, ) *Visualization`
 
 NewVisualization instantiates a new Visualization object
 This constructor will assign default values to properties that have it defined,
@@ -36,24 +37,44 @@ NewVisualizationWithDefaults instantiates a new Visualization object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetProjectId
 
-`func (o *Visualization) GetId() string`
+`func (o *Visualization) GetProjectId() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetProjectIdOk
 
-`func (o *Visualization) GetIdOk() (*string, bool)`
+`func (o *Visualization) GetProjectIdOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetProjectId
 
-`func (o *Visualization) SetId(v string)`
+`func (o *Visualization) SetProjectId(v string)`
 
-SetId sets Id field to given value.
+SetProjectId sets ProjectId field to given value.
+
+
+### GetCid
+
+`func (o *Visualization) GetCid() string`
+
+GetCid returns the Cid field if non-nil, zero value otherwise.
+
+### GetCidOk
+
+`func (o *Visualization) GetCidOk() (*string, bool)`
+
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCid
+
+`func (o *Visualization) SetCid(v string)`
+
+SetCid sets Cid field to given value.
 
 
 ### GetJobId

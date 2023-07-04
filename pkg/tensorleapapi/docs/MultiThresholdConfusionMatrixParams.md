@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SessionRunIds** | **[]string** |  | 
+**ProjectId** | **string** |  | 
 **CustomMetricName** | **string** |  | 
 **VerticalSplit** | Pointer to **string** |  | [optional] 
 **HorizontalSplit** | Pointer to **string** |  | [optional] 
@@ -14,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewMultiThresholdConfusionMatrixParams
 
-`func NewMultiThresholdConfusionMatrixParams(sessionRunIds []string, customMetricName string, ) *MultiThresholdConfusionMatrixParams`
+`func NewMultiThresholdConfusionMatrixParams(sessionRunIds []string, projectId string, customMetricName string, ) *MultiThresholdConfusionMatrixParams`
 
 NewMultiThresholdConfusionMatrixParams instantiates a new MultiThresholdConfusionMatrixParams object
 This constructor will assign default values to properties that have it defined,
@@ -47,6 +48,26 @@ and a boolean to check if the value has been set.
 `func (o *MultiThresholdConfusionMatrixParams) SetSessionRunIds(v []string)`
 
 SetSessionRunIds sets SessionRunIds field to given value.
+
+
+### GetProjectId
+
+`func (o *MultiThresholdConfusionMatrixParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *MultiThresholdConfusionMatrixParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *MultiThresholdConfusionMatrixParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
 
 
 ### GetCustomMetricName

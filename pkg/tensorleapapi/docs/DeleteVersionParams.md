@@ -5,12 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VersionId** | **string** |  | 
+**ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewDeleteVersionParams
 
-`func NewDeleteVersionParams(versionId string, ) *DeleteVersionParams`
+`func NewDeleteVersionParams(versionId string, projectId string, ) *DeleteVersionParams`
 
 NewDeleteVersionParams instantiates a new DeleteVersionParams object
 This constructor will assign default values to properties that have it defined,
@@ -43,6 +44,26 @@ and a boolean to check if the value has been set.
 `func (o *DeleteVersionParams) SetVersionId(v string)`
 
 SetVersionId sets VersionId field to given value.
+
+
+### GetProjectId
+
+`func (o *DeleteVersionParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *DeleteVersionParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *DeleteVersionParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
 
 
 

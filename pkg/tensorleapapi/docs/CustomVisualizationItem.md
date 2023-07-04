@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**Cid** | **string** |  | 
 **Layout** | [**SizedLayout**](SizedLayout.md) |  | 
 **Type** | **string** |  | 
 **Data** | [**CustomVisualizationData**](CustomVisualizationData.md) |  | 
@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewCustomVisualizationItem
 
-`func NewCustomVisualizationItem(id string, layout SizedLayout, type_ string, data CustomVisualizationData, ) *CustomVisualizationItem`
+`func NewCustomVisualizationItem(cid string, layout SizedLayout, type_ string, data CustomVisualizationData, ) *CustomVisualizationItem`
 
 NewCustomVisualizationItem instantiates a new CustomVisualizationItem object
 This constructor will assign default values to properties that have it defined,
@@ -28,24 +28,24 @@ NewCustomVisualizationItemWithDefaults instantiates a new CustomVisualizationIte
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetCid
 
-`func (o *CustomVisualizationItem) GetId() string`
+`func (o *CustomVisualizationItem) GetCid() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetCid returns the Cid field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetCidOk
 
-`func (o *CustomVisualizationItem) GetIdOk() (*string, bool)`
+`func (o *CustomVisualizationItem) GetCidOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetCid
 
-`func (o *CustomVisualizationItem) SetId(v string)`
+`func (o *CustomVisualizationItem) SetCid(v string)`
 
-SetId sets Id field to given value.
+SetCid sets Cid field to given value.
 
 
 ### GetLayout

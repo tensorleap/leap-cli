@@ -4,8 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
-**Organization** | **string** |  | 
+**ProjectId** | Pointer to **string** |  | [optional] 
+**Cid** | **string** |  | 
+**TeamId** | **string** |  | 
 **User** | **string** |  | 
 **Title** | **string** |  | 
 **MessageData** | [**CustomMessageData**](CustomMessageData.md) |  | 
@@ -18,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewNotification
 
-`func NewNotification(id string, organization string, user string, title string, messageData CustomMessageData, identifier string, context JobNotificationContext, createdAt time.Time, isRead bool, ) *Notification`
+`func NewNotification(cid string, teamId string, user string, title string, messageData CustomMessageData, identifier string, context JobNotificationContext, createdAt time.Time, isRead bool, ) *Notification`
 
 NewNotification instantiates a new Notification object
 This constructor will assign default values to properties that have it defined,
@@ -33,44 +34,69 @@ NewNotificationWithDefaults instantiates a new Notification object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetProjectId
 
-`func (o *Notification) GetId() string`
+`func (o *Notification) GetProjectId() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetProjectIdOk
 
-`func (o *Notification) GetIdOk() (*string, bool)`
+`func (o *Notification) GetProjectIdOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetProjectId
 
-`func (o *Notification) SetId(v string)`
+`func (o *Notification) SetProjectId(v string)`
 
-SetId sets Id field to given value.
+SetProjectId sets ProjectId field to given value.
 
+### HasProjectId
 
-### GetOrganization
+`func (o *Notification) HasProjectId() bool`
 
-`func (o *Notification) GetOrganization() string`
+HasProjectId returns a boolean if a field has been set.
 
-GetOrganization returns the Organization field if non-nil, zero value otherwise.
+### GetCid
 
-### GetOrganizationOk
+`func (o *Notification) GetCid() string`
 
-`func (o *Notification) GetOrganizationOk() (*string, bool)`
+GetCid returns the Cid field if non-nil, zero value otherwise.
 
-GetOrganizationOk returns a tuple with the Organization field if it's non-nil, zero value otherwise
+### GetCidOk
+
+`func (o *Notification) GetCidOk() (*string, bool)`
+
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrganization
+### SetCid
 
-`func (o *Notification) SetOrganization(v string)`
+`func (o *Notification) SetCid(v string)`
 
-SetOrganization sets Organization field to given value.
+SetCid sets Cid field to given value.
+
+
+### GetTeamId
+
+`func (o *Notification) GetTeamId() string`
+
+GetTeamId returns the TeamId field if non-nil, zero value otherwise.
+
+### GetTeamIdOk
+
+`func (o *Notification) GetTeamIdOk() (*string, bool)`
+
+GetTeamIdOk returns a tuple with the TeamId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTeamId
+
+`func (o *Notification) SetTeamId(v string)`
+
+SetTeamId sets TeamId field to given value.
 
 
 ### GetUser

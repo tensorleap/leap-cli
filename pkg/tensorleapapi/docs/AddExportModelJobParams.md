@@ -4,17 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TargetSessionRunId** | **string** |  | 
+**ProjectId** | **string** |  | 
+**SessionWeightId** | **string** |  | 
 **ExportModelType** | [**ExportModelTypeEnum**](ExportModelTypeEnum.md) |  | 
 **Title** | **string** |  | 
 **PruneModel** | **bool** |  | 
-**FromEpoch** | **float64** |  | 
 
 ## Methods
 
 ### NewAddExportModelJobParams
 
-`func NewAddExportModelJobParams(targetSessionRunId string, exportModelType ExportModelTypeEnum, title string, pruneModel bool, fromEpoch float64, ) *AddExportModelJobParams`
+`func NewAddExportModelJobParams(projectId string, sessionWeightId string, exportModelType ExportModelTypeEnum, title string, pruneModel bool, ) *AddExportModelJobParams`
 
 NewAddExportModelJobParams instantiates a new AddExportModelJobParams object
 This constructor will assign default values to properties that have it defined,
@@ -29,24 +29,44 @@ NewAddExportModelJobParamsWithDefaults instantiates a new AddExportModelJobParam
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetTargetSessionRunId
+### GetProjectId
 
-`func (o *AddExportModelJobParams) GetTargetSessionRunId() string`
+`func (o *AddExportModelJobParams) GetProjectId() string`
 
-GetTargetSessionRunId returns the TargetSessionRunId field if non-nil, zero value otherwise.
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
 
-### GetTargetSessionRunIdOk
+### GetProjectIdOk
 
-`func (o *AddExportModelJobParams) GetTargetSessionRunIdOk() (*string, bool)`
+`func (o *AddExportModelJobParams) GetProjectIdOk() (*string, bool)`
 
-GetTargetSessionRunIdOk returns a tuple with the TargetSessionRunId field if it's non-nil, zero value otherwise
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetTargetSessionRunId
+### SetProjectId
 
-`func (o *AddExportModelJobParams) SetTargetSessionRunId(v string)`
+`func (o *AddExportModelJobParams) SetProjectId(v string)`
 
-SetTargetSessionRunId sets TargetSessionRunId field to given value.
+SetProjectId sets ProjectId field to given value.
+
+
+### GetSessionWeightId
+
+`func (o *AddExportModelJobParams) GetSessionWeightId() string`
+
+GetSessionWeightId returns the SessionWeightId field if non-nil, zero value otherwise.
+
+### GetSessionWeightIdOk
+
+`func (o *AddExportModelJobParams) GetSessionWeightIdOk() (*string, bool)`
+
+GetSessionWeightIdOk returns a tuple with the SessionWeightId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSessionWeightId
+
+`func (o *AddExportModelJobParams) SetSessionWeightId(v string)`
+
+SetSessionWeightId sets SessionWeightId field to given value.
 
 
 ### GetExportModelType
@@ -107,26 +127,6 @@ and a boolean to check if the value has been set.
 `func (o *AddExportModelJobParams) SetPruneModel(v bool)`
 
 SetPruneModel sets PruneModel field to given value.
-
-
-### GetFromEpoch
-
-`func (o *AddExportModelJobParams) GetFromEpoch() float64`
-
-GetFromEpoch returns the FromEpoch field if non-nil, zero value otherwise.
-
-### GetFromEpochOk
-
-`func (o *AddExportModelJobParams) GetFromEpochOk() (*float64, bool)`
-
-GetFromEpochOk returns a tuple with the FromEpoch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFromEpoch
-
-`func (o *AddExportModelJobParams) SetFromEpoch(v float64)`
-
-SetFromEpoch sets FromEpoch field to given value.
 
 
 

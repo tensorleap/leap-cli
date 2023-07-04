@@ -7,26 +7,27 @@ Method | HTTP request | Description
 [**Activate**](DefaultApi.md#Activate) | **Post** /auth/activate | 
 [**AddDashboard**](DefaultApi.md#AddDashboard) | **Post** /dashboards/addDashboard | 
 [**AddDataset**](DefaultApi.md#AddDataset) | **Post** /datasets/addDataset | 
-[**AddExportModelJob**](DefaultApi.md#AddExportModelJob) | **Post** /jobs/addExportModelJob | 
+[**AddExportModelJob**](DefaultApi.md#AddExportModelJob) | **Post** /exportedsessionruns/addExportModelJob | 
 [**AddIssue**](DefaultApi.md#AddIssue) | **Post** /issues/addIssue | 
 [**AddProject**](DefaultApi.md#AddProject) | **Post** /projects/addProject | 
 [**AddSecretManager**](DefaultApi.md#AddSecretManager) | **Post** /secret-manager/addSecretManager | 
 [**AddVersion**](DefaultApi.md#AddVersion) | **Post** /versions/addVersion | 
-[**AnalyzeGraph**](DefaultApi.md#AnalyzeGraph) | **Post** /jobs/analyzeGraph | 
-[**ContinueTrain**](DefaultApi.md#ContinueTrain) | **Post** /jobs/continueTrain | 
-[**CreateOrganization**](DefaultApi.md#CreateOrganization) | **Post** /organizations/createOrganization | 
+[**AnalyzeGraph**](DefaultApi.md#AnalyzeGraph) | **Post** /evaluate/analyzeGraph | 
+[**ContinueTrain**](DefaultApi.md#ContinueTrain) | **Post** /train/continueTrain | 
 [**CreateSessionTest**](DefaultApi.md#CreateSessionTest) | **Post** /sessions-tests/createSessionTest | 
+[**CreateTeam**](DefaultApi.md#CreateTeam) | **Post** /teams/createTeam | 
 [**DeleteDashboard**](DefaultApi.md#DeleteDashboard) | **Post** /dashboards/deleteDashboard | 
 [**DeleteIssue**](DefaultApi.md#DeleteIssue) | **Post** /issues/deleteIssue | 
-[**DeleteOrganization**](DefaultApi.md#DeleteOrganization) | **Post** /organizations/deleteOrganization | 
 [**DeleteProject**](DefaultApi.md#DeleteProject) | **Post** /projects/deleteProject | 
 [**DeleteSession**](DefaultApi.md#DeleteSession) | **Post** /sessions/deleteSession | 
 [**DeleteSessionRun**](DefaultApi.md#DeleteSessionRun) | **Post** /sessions/deleteSessionRun | 
 [**DeleteSessionTest**](DefaultApi.md#DeleteSessionTest) | **Post** /sessions-tests/deleteSessionTest | 
+[**DeleteTeam**](DefaultApi.md#DeleteTeam) | **Post** /teams/deleteTeam | 
 [**DeleteUserById**](DefaultApi.md#DeleteUserById) | **Post** /users/deleteUserById | 
 [**DeleteVersion**](DefaultApi.md#DeleteVersion) | **Post** /versions/deleteVersion | 
 [**DeleteVisualizations**](DefaultApi.md#DeleteVisualizations) | **Post** /visualizations/deleteVisualizations | 
-[**Evaluate**](DefaultApi.md#Evaluate) | **Post** /jobs/evaluate | 
+[**Download**](DefaultApi.md#Download) | **Get** /projects/downloadProject/{projectId} | 
+[**Evaluate**](DefaultApi.md#Evaluate) | **Post** /evaluate/evaluate | 
 [**ExtendTrial**](DefaultApi.md#ExtendTrial) | **Post** /auth/extendTrial | 
 [**GetAllProjectSessionTests**](DefaultApi.md#GetAllProjectSessionTests) | **Post** /sessions-tests/getAllProjectSessionTests | 
 [**GetAllSlimUserData**](DefaultApi.md#GetAllSlimUserData) | **Post** /users/getAllSlimUserData | 
@@ -35,28 +36,24 @@ Method | HTTP request | Description
 [**GetCurrentProjectVersion**](DefaultApi.md#GetCurrentProjectVersion) | **Post** /projects/getCurrentProjectVersion | 
 [**GetDashboard**](DefaultApi.md#GetDashboard) | **Post** /dashboards/getDashboard | 
 [**GetDashletFields**](DefaultApi.md#GetDashletFields) | **Post** /dashboards/getDashletFields | 
-[**GetDatasetVersion**](DefaultApi.md#GetDatasetVersion) | **Post** /datasets/getDatasetVersion | 
-[**GetDatasetVersionUploadUrl**](DefaultApi.md#GetDatasetVersionUploadUrl) | **Post** /datasets/getDatasetVersionUploadUrl | 
-[**GetDatasetVersions**](DefaultApi.md#GetDatasetVersions) | **Post** /datasets/getDatasetVersions | 
+[**GetDatasetVersion**](DefaultApi.md#GetDatasetVersion) | **Post** /datasetVersions/getDatasetVersion | 
+[**GetDatasetVersionUploadUrl**](DefaultApi.md#GetDatasetVersionUploadUrl) | **Post** /datasetVersions/getDatasetVersionUploadUrl | 
+[**GetDatasetVersions**](DefaultApi.md#GetDatasetVersions) | **Post** /datasetVersions/getDatasetVersions | 
 [**GetDatasets**](DefaultApi.md#GetDatasets) | **Post** /datasets/getDatasets | 
 [**GetEnvironmentInfo**](DefaultApi.md#GetEnvironmentInfo) | **Post** /metadata/getEnvironmentInfo | 
-[**GetExportedSessionJobs**](DefaultApi.md#GetExportedSessionJobs) | **Post** /exportedsessionruns/getExportedSessionRunJobs | 
+[**GetExportedSessionJobs**](DefaultApi.md#GetExportedSessionJobs) | **Post** /exportedsessionruns/getExportedSessionJobs | 
 [**GetF1Score**](DefaultApi.md#GetF1Score) | **Post** /sessionmetrics/getF1Score | 
 [**GetHeatmapChart**](DefaultApi.md#GetHeatmapChart) | **Post** /sessionmetrics/getHeatmapChart | 
-[**GetJobs**](DefaultApi.md#GetJobs) | **Post** /jobs/getJobs | 
-[**GetLatestDatasetVersion**](DefaultApi.md#GetLatestDatasetVersion) | **Post** /datasets/getLatestDatasetVersion | 
-[**GetMachineTypes**](DefaultApi.md#GetMachineTypes) | **Post** /jobs/getMachineTypes | 
+[**GetLatestDatasetVersion**](DefaultApi.md#GetLatestDatasetVersion) | **Post** /datasetVersions/getLatestDatasetVersion | 
+[**GetMachineTypes**](DefaultApi.md#GetMachineTypes) | **Post** /teams/getMachineTypes | 
 [**GetMaxActiveUsers**](DefaultApi.md#GetMaxActiveUsers) | **Post** /metadata/getMaxActiveUsers | 
 [**GetNotifications**](DefaultApi.md#GetNotifications) | **Post** /notifications/getNotifications | 
-[**GetOrganizationJobs**](DefaultApi.md#GetOrganizationJobs) | **Post** /jobs/getOrganizationJobs | 
-[**GetOrganizationSlimUserData**](DefaultApi.md#GetOrganizationSlimUserData) | **Post** /users/getOrganizationSlimUserData | 
-[**GetOrganizations**](DefaultApi.md#GetOrganizations) | **Post** /organizations/getOrganizations | 
 [**GetPrCurve**](DefaultApi.md#GetPrCurve) | **Post** /sessionmetrics/getPrCurve | 
 [**GetProjectDashboards**](DefaultApi.md#GetProjectDashboards) | **Post** /dashboards/getProjectDashboards | 
 [**GetProjectIssues**](DefaultApi.md#GetProjectIssues) | **Post** /issues/getProjectIssues | 
 [**GetProjectSlimVersions**](DefaultApi.md#GetProjectSlimVersions) | **Post** /versions/getProjectSlimVersions | 
 [**GetProjects**](DefaultApi.md#GetProjects) | **Post** /projects/getProjects | 
-[**GetRecentOrganizationSessions**](DefaultApi.md#GetRecentOrganizationSessions) | **Post** /sessions/getRecentOrganizationSessions | 
+[**GetRecentTeamSessions**](DefaultApi.md#GetRecentTeamSessions) | **Post** /sessions/getRecentTeamSessions | 
 [**GetRoc**](DefaultApi.md#GetRoc) | **Post** /sessionmetrics/getRoc | 
 [**GetSecretManagerList**](DefaultApi.md#GetSecretManagerList) | **Post** /secret-manager/getSecretManagerList | 
 [**GetSessionInsights**](DefaultApi.md#GetSessionInsights) | **Post** /insights/getSessionInsights | 
@@ -68,50 +65,51 @@ Method | HTTP request | Description
 [**GetSingleSessionTest**](DefaultApi.md#GetSingleSessionTest) | **Post** /sessions-tests/getSingleSessionTest | 
 [**GetSlimVisualization**](DefaultApi.md#GetSlimVisualization) | **Post** /visualizations/getSlimVisualization | 
 [**GetStatistics**](DefaultApi.md#GetStatistics) | **Post** /metadata/getStatistics | 
-[**GetStoredExportedSessionRunBlob**](DefaultApi.md#GetStoredExportedSessionRunBlob) | **Post** /exportedsessionruns/getStoredExportedSessionRunBlob | 
 [**GetTableChart**](DefaultApi.md#GetTableChart) | **Post** /sessionmetrics/getTableChart | 
-[**GetTrainingJobs**](DefaultApi.md#GetTrainingJobs) | **Post** /jobs/getTrainingJobs | 
+[**GetTeamJobs**](DefaultApi.md#GetTeamJobs) | **Post** /jobs/getTeamJobs | 
+[**GetTeamSlimUserData**](DefaultApi.md#GetTeamSlimUserData) | **Post** /users/getTeamSlimUserData | 
+[**GetTeams**](DefaultApi.md#GetTeams) | **Post** /teams/getTeams | 
 [**GetUploadSignedUrl**](DefaultApi.md#GetUploadSignedUrl) | **Post** /versions/getUploadSignedUrl | 
 [**GetVisualization**](DefaultApi.md#GetVisualization) | **Post** /visualizations/getVisualization | 
 [**GetXYChart**](DefaultApi.md#GetXYChart) | **Post** /sessionmetrics/getXYChart | 
 [**HealthCheck**](DefaultApi.md#HealthCheck) | **Get** /monitor/healthCheck | 
 [**ImportModel**](DefaultApi.md#ImportModel) | **Post** /versions/importModel | 
 [**ImportProject**](DefaultApi.md#ImportProject) | **Post** /projects/importProject | 
-[**IsTrainingJobRunning**](DefaultApi.md#IsTrainingJobRunning) | **Post** /jobs/isTrainingJobRunning | 
 [**KeyGen**](DefaultApi.md#KeyGen) | **Post** /auth/keygen | 
 [**LoadModel**](DefaultApi.md#LoadModel) | **Post** /projects/loadModel | 
 [**LoadVersion**](DefaultApi.md#LoadVersion) | **Post** /versions/loadVersion | 
 [**Login**](DefaultApi.md#Login) | **Post** /auth/login | 
 [**Logout**](DefaultApi.md#Logout) | **Post** /auth/logout | 
-[**ModifyDatasetVersionNote**](DefaultApi.md#ModifyDatasetVersionNote) | **Post** /datasets/modifyDatasetVersionNote | 
-[**PopulationExploration**](DefaultApi.md#PopulationExploration) | **Post** /jobs/populationExploration | 
-[**SampleAnalysis**](DefaultApi.md#SampleAnalysis) | **Post** /jobs/sampleAnalysis | 
-[**SampleSelection**](DefaultApi.md#SampleSelection) | **Post** /jobs/sampleSelection | 
+[**ModifyDatasetVersionNote**](DefaultApi.md#ModifyDatasetVersionNote) | **Post** /datasetVersions/modifyDatasetVersionNote | 
+[**PopulationExploration**](DefaultApi.md#PopulationExploration) | **Post** /visualizations/populationExploration | 
+[**SampleAnalysis**](DefaultApi.md#SampleAnalysis) | **Post** /visualizations/sampleAnalysis | 
+[**SampleSelection**](DefaultApi.md#SampleSelection) | **Post** /visualizations/sampleSelection | 
 [**SaveAnalyzerLayout**](DefaultApi.md#SaveAnalyzerLayout) | **Post** /visualizations/saveAnalyzerLayout | 
-[**SaveDatasetVersion**](DefaultApi.md#SaveDatasetVersion) | **Post** /datasets/saveDatasetVersion | 
+[**SaveDatasetVersion**](DefaultApi.md#SaveDatasetVersion) | **Post** /datasetVersions/saveDatasetVersion | 
 [**SendUserMessage**](DefaultApi.md#SendUserMessage) | **Post** /users/sendUserMessage | 
-[**SetDefaultOrganization**](DefaultApi.md#SetDefaultOrganization) | **Post** /organizations/setDefaultOrganization | 
-[**SetOrganizationMachineType**](DefaultApi.md#SetOrganizationMachineType) | **Post** /jobs/setMachineType | 
+[**SetDefaultTeam**](DefaultApi.md#SetDefaultTeam) | **Post** /teams/setDefaultTeam | 
+[**SetMachineType**](DefaultApi.md#SetMachineType) | **Post** /teams/setMachineType | 
 [**SetUserNotificationsAsRead**](DefaultApi.md#SetUserNotificationsAsRead) | **Post** /notifications/setUserNotificationsAsRead | 
 [**Signup**](DefaultApi.md#Signup) | **Post** /auth/signup | 
 [**StartTrial**](DefaultApi.md#StartTrial) | **Post** /auth/startTrial | 
 [**StopJob**](DefaultApi.md#StopJob) | **Post** /jobs/stopJob | 
 [**TerminateJob**](DefaultApi.md#TerminateJob) | **Post** /jobs/terminateJob | 
-[**TrainFromInitialWeights**](DefaultApi.md#TrainFromInitialWeights) | **Post** /jobs/trainFromInitialWeights | 
-[**TrainFromScratch**](DefaultApi.md#TrainFromScratch) | **Post** /jobs/trainFromScratch | 
+[**TrainFromInitialWeights**](DefaultApi.md#TrainFromInitialWeights) | **Post** /train/trainFromInitialWeights | 
+[**TrainFromScratch**](DefaultApi.md#TrainFromScratch) | **Post** /train/trainFromScratch | 
 [**TrashDataset**](DefaultApi.md#TrashDataset) | **Post** /datasets/trashDataset | 
 [**TrashSecretManager**](DefaultApi.md#TrashSecretManager) | **Post** /secret-manager/trashSecretManager | 
 [**UpdateDashboard**](DefaultApi.md#UpdateDashboard) | **Post** /dashboards/updateDashboard | 
 [**UpdateIssue**](DefaultApi.md#UpdateIssue) | **Post** /issues/updateIssue | 
-[**UpdateOrganizationPublicName**](DefaultApi.md#UpdateOrganizationPublicName) | **Post** /organizations/updateOrganizationPublicName | 
 [**UpdateProjectMeta**](DefaultApi.md#UpdateProjectMeta) | **Post** /projects/updateProjectMeta | 
 [**UpdateSecretManager**](DefaultApi.md#UpdateSecretManager) | **Post** /secret-manager/updateSecretManager | 
 [**UpdateSessionTest**](DefaultApi.md#UpdateSessionTest) | **Post** /sessions-tests/updateSessionTest | 
+[**UpdateTeamPublicName**](DefaultApi.md#UpdateTeamPublicName) | **Post** /teams/updateTeamPublicName | 
 [**UpdateUserName**](DefaultApi.md#UpdateUserName) | **Post** /users/updateUserName | 
-[**UpdateUserOrganization**](DefaultApi.md#UpdateUserOrganization) | **Post** /users/updateUserOrganization | 
 [**UpdateUserRole**](DefaultApi.md#UpdateUserRole) | **Post** /users/updateUserRole | 
 [**UpdateUserStatus**](DefaultApi.md#UpdateUserStatus) | **Post** /users/updateUserStatus | 
+[**UpdateUserTeam**](DefaultApi.md#UpdateUserTeam) | **Post** /users/updateUserTeam | 
 [**UpdateVersion**](DefaultApi.md#UpdateVersion) | **Post** /versions/updateVersion | 
+[**Upload**](DefaultApi.md#Upload) | **Put** /projects/uploadProject/{projectName} | 
 [**Warmup**](DefaultApi.md#Warmup) | **Post** /jobs/warmup | 
 [**WhoAmI**](DefaultApi.md#WhoAmI) | **Post** /auth/whoAmI | 
 
@@ -200,7 +198,7 @@ import (
 )
 
 func main() {
-    addDashboardParams := *openapiclient.NewAddDashboardParams("ProjectId_example", "Name_example", []openapiclient.DashboardItem{*openapiclient.NewDashboardItem("Id_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))), "Type_example", *openapiclient.NewCustomVisualizationData(map[string]interface{}(123), "Name_example", openapiclient.CustomVisualizationType("Bar")))}) // AddDashboardParams | 
+    addDashboardParams := *openapiclient.NewAddDashboardParams("ProjectId_example", "Name_example", []openapiclient.DashboardItem{*openapiclient.NewDashboardItem("Cid_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))), "Type_example", *openapiclient.NewCustomVisualizationData(map[string]interface{}(123), "Name_example", openapiclient.CustomVisualizationType("Bar")))}) // AddDashboardParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -328,7 +326,7 @@ import (
 )
 
 func main() {
-    addExportModelJobParams := *openapiclient.NewAddExportModelJobParams("TargetSessionRunId_example", openapiclient.ExportModelTypeEnum("JSON_TF2"), "Title_example", false, float64(123)) // AddExportModelJobParams | 
+    addExportModelJobParams := *openapiclient.NewAddExportModelJobParams("ProjectId_example", "SessionWeightId_example", openapiclient.ExportModelTypeEnum("JSON_TF2"), "Title_example", false) // AddExportModelJobParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -648,7 +646,7 @@ import (
 )
 
 func main() {
-    analyzeGraphParams := *openapiclient.NewAnalyzeGraphParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "DatasetVersionId_example", "ProjectId_example", "RequestToken_example") // AnalyzeGraphParams | 
+    analyzeGraphParams := *openapiclient.NewAnalyzeGraphParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "VersionId_example", "ProjectId_example", "RequestToken_example") // AnalyzeGraphParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -710,7 +708,7 @@ import (
 )
 
 func main() {
-    continueTrainParams := *openapiclient.NewContinueTrainParams("VersionId_example", "SessionId_example", float64(123), *openapiclient.NewTrainingParams(float64(123), float64(123)), false) // ContinueTrainParams | 
+    continueTrainParams := *openapiclient.NewContinueTrainParams("VersionId_example", "SessionId_example", "ProjectId_example", float64(123), *openapiclient.NewTrainingParams(float64(123), float64(123)), false) // ContinueTrainParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -740,70 +738,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Job**](Job.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## CreateOrganization
-
-> CreateOrganizationResponse CreateOrganization(ctx).CreateOrganizationRequest(createOrganizationRequest).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    createOrganizationRequest := *openapiclient.NewCreateOrganizationRequest("Name_example", "PublicName_example") // CreateOrganizationRequest | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.CreateOrganization(context.Background()).CreateOrganizationRequest(createOrganizationRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateOrganization``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `CreateOrganization`: CreateOrganizationResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateOrganization`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiCreateOrganizationRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **createOrganizationRequest** | [**CreateOrganizationRequest**](CreateOrganizationRequest.md) |  | 
-
-### Return type
-
-[**CreateOrganizationResponse**](CreateOrganizationResponse.md)
 
 ### Authorization
 
@@ -883,6 +817,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## CreateTeam
+
+> CreateTeamResponse CreateTeam(ctx).CreateTeamRequest(createTeamRequest).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    createTeamRequest := *openapiclient.NewCreateTeamRequest("Name_example", "PublicName_example") // CreateTeamRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.CreateTeam(context.Background()).CreateTeamRequest(createTeamRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateTeam``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `CreateTeam`: CreateTeamResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateTeam`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateTeamRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createTeamRequest** | [**CreateTeamRequest**](CreateTeamRequest.md) |  | 
+
+### Return type
+
+[**CreateTeamResponse**](CreateTeamResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## DeleteDashboard
 
 > DeleteDashboard(ctx).DeleteDashboardParams(deleteDashboardParams).Execute()
@@ -902,7 +900,7 @@ import (
 )
 
 func main() {
-    deleteDashboardParams := *openapiclient.NewDeleteDashboardParams("DashboardId_example") // DeleteDashboardParams | 
+    deleteDashboardParams := *openapiclient.NewDeleteDashboardParams("DashboardId_example", "ProjectId_example") // DeleteDashboardParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -964,7 +962,7 @@ import (
 )
 
 func main() {
-    deleteIssueParams := *openapiclient.NewDeleteIssueParams("IssueId_example") // DeleteIssueParams | 
+    deleteIssueParams := *openapiclient.NewDeleteIssueParams("Cid_example", "ProjectId_example") // DeleteIssueParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -988,68 +986,6 @@ Other parameters are passed through a pointer to a apiDeleteIssueRequest struct 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **deleteIssueParams** | [**DeleteIssueParams**](DeleteIssueParams.md) |  | 
-
-### Return type
-
- (empty response body)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## DeleteOrganization
-
-> DeleteOrganization(ctx).DeleteOrganizationRequest(deleteOrganizationRequest).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    deleteOrganizationRequest := *openapiclient.NewDeleteOrganizationRequest("Id_example") // DeleteOrganizationRequest | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.DeleteOrganization(context.Background()).DeleteOrganizationRequest(deleteOrganizationRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteOrganization``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiDeleteOrganizationRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **deleteOrganizationRequest** | [**DeleteOrganizationRequest**](DeleteOrganizationRequest.md) |  | 
 
 ### Return type
 
@@ -1150,7 +1086,7 @@ import (
 )
 
 func main() {
-    deleteSessionParams := *openapiclient.NewDeleteSessionParams("SessionId_example") // DeleteSessionParams | 
+    deleteSessionParams := *openapiclient.NewDeleteSessionParams("SessionId_example", "ProjectId_example") // DeleteSessionParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1212,7 +1148,7 @@ import (
 )
 
 func main() {
-    deleteSessionRunParams := *openapiclient.NewDeleteSessionRunParams("SessionRunId_example") // DeleteSessionRunParams | 
+    deleteSessionRunParams := *openapiclient.NewDeleteSessionRunParams("SessionRunId_example", "ProjectId_example") // DeleteSessionRunParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1274,7 +1210,7 @@ import (
 )
 
 func main() {
-    deleteSessionTestRequest := *openapiclient.NewDeleteSessionTestRequest("Id_example") // DeleteSessionTestRequest | 
+    deleteSessionTestRequest := *openapiclient.NewDeleteSessionTestRequest("Cid_example", "ProjectId_example") // DeleteSessionTestRequest | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1298,6 +1234,68 @@ Other parameters are passed through a pointer to a apiDeleteSessionTestRequest s
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **deleteSessionTestRequest** | [**DeleteSessionTestRequest**](DeleteSessionTestRequest.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteTeam
+
+> DeleteTeam(ctx).DeleteTeamRequest(deleteTeamRequest).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    deleteTeamRequest := *openapiclient.NewDeleteTeamRequest("Cid_example") // DeleteTeamRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.DefaultApi.DeleteTeam(context.Background()).DeleteTeamRequest(deleteTeamRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteTeam``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteTeamRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **deleteTeamRequest** | [**DeleteTeamRequest**](DeleteTeamRequest.md) |  | 
 
 ### Return type
 
@@ -1398,7 +1396,7 @@ import (
 )
 
 func main() {
-    deleteVersionParams := *openapiclient.NewDeleteVersionParams("VersionId_example") // DeleteVersionParams | 
+    deleteVersionParams := *openapiclient.NewDeleteVersionParams("VersionId_example", "ProjectId_example") // DeleteVersionParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1460,7 +1458,7 @@ import (
 )
 
 func main() {
-    deleteVisualizationsParams := *openapiclient.NewDeleteVisualizationsParams([]string{"VisualizationIdsToDelete_example"}) // DeleteVisualizationsParams | 
+    deleteVisualizationsParams := *openapiclient.NewDeleteVisualizationsParams([]string{"VisualizationIdsToDelete_example"}, "ProjectId_example") // DeleteVisualizationsParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1503,6 +1501,72 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## Download
+
+> Download(ctx, projectId).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    projectId := "projectId_example" // string | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.DefaultApi.Download(context.Background(), projectId).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.Download``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**projectId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDownloadRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## Evaluate
 
 > Job Evaluate(ctx).EvaluateParams(evaluateParams).Execute()
@@ -1522,7 +1586,7 @@ import (
 )
 
 func main() {
-    evaluateParams := *openapiclient.NewEvaluateParams("VersionId_example", "SessionId_example", float64(123), []openapiclient.DataStateForEval{openapiclient.DataStateForEval("training")}, false, float64(123)) // EvaluateParams | 
+    evaluateParams := *openapiclient.NewEvaluateParams("VersionId_example", "ProjectId_example", "SessionId_example", float64(123), []openapiclient.DataStateForEval{openapiclient.DataStateForEval("training")}, false, float64(123)) // EvaluateParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1697,7 +1761,7 @@ Name | Type | Description  | Notes
 
 ## GetAllSlimUserData
 
-> GetOrganizationUsersResponse GetAllSlimUserData(ctx).Execute()
+> GetTeamUsersResponse GetAllSlimUserData(ctx).Execute()
 
 
 
@@ -1722,7 +1786,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetAllSlimUserData``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `GetAllSlimUserData`: GetOrganizationUsersResponse
+    // response from `GetAllSlimUserData`: GetTeamUsersResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetAllSlimUserData`: %v\n", resp)
 }
 ```
@@ -1738,7 +1802,7 @@ Other parameters are passed through a pointer to a apiGetAllSlimUserDataRequest 
 
 ### Return type
 
-[**GetOrganizationUsersResponse**](GetOrganizationUsersResponse.md)
+[**GetTeamUsersResponse**](GetTeamUsersResponse.md)
 
 ### Authorization
 
@@ -1965,7 +2029,7 @@ import (
 )
 
 func main() {
-    getDashboardParams := *openapiclient.NewGetDashboardParams("DashboardId_example") // GetDashboardParams | 
+    getDashboardParams := *openapiclient.NewGetDashboardParams("DashboardId_example", "ProjectId_example") // GetDashboardParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -2398,7 +2462,7 @@ import (
 )
 
 func main() {
-    getExportedSessionRunJobsParams := *openapiclient.NewGetExportedSessionRunJobsParams("SessionRunId_example") // GetExportedSessionRunJobsParams | 
+    getExportedSessionRunJobsParams := *openapiclient.NewGetExportedSessionRunJobsParams("SessionId_example", "ProjectId_example") // GetExportedSessionRunJobsParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -2526,7 +2590,7 @@ import (
 )
 
 func main() {
-    heatmapChartsParams := *openapiclient.NewHeatmapChartsParams("XField_example", float64(123), openapiclient.DataDistributionType("distinct"), "YField_example", float64(123), openapiclient.DataDistributionType("distinct"), "ColorField_example", openapiclient.AggregationMethod("Average"), []string{"SessionRunIds_example"}) // HeatmapChartsParams | 
+    heatmapChartsParams := *openapiclient.NewHeatmapChartsParams("ProjectId_example", "XField_example", float64(123), openapiclient.DataDistributionType("distinct"), "YField_example", float64(123), openapiclient.DataDistributionType("distinct"), "ColorField_example", openapiclient.AggregationMethod("Average"), []string{"SessionRunIds_example"}) // HeatmapChartsParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -2556,70 +2620,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**MultiChartsResponse**](MultiChartsResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GetJobs
-
-> GetJobsResponse GetJobs(ctx).GetJobsParams(getJobsParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    getJobsParams := *openapiclient.NewGetJobsParams() // GetJobsParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetJobs(context.Background()).GetJobsParams(getJobsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetJobs``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetJobs`: GetJobsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetJobs`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetJobsRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getJobsParams** | [**GetJobsParams**](GetJobsParams.md) |  | 
-
-### Return type
-
-[**GetJobsResponse**](GetJobsResponse.md)
 
 ### Authorization
 
@@ -2861,193 +2861,6 @@ Other parameters are passed through a pointer to a apiGetNotificationsRequest st
 ### Return type
 
 [**GetNotificationsResponse**](GetNotificationsResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GetOrganizationJobs
-
-> GetJobsResponse GetOrganizationJobs(ctx).GetOrganizationJobsParams(getOrganizationJobsParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    getOrganizationJobsParams := *openapiclient.NewGetOrganizationJobsParams() // GetOrganizationJobsParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetOrganizationJobs(context.Background()).GetOrganizationJobsParams(getOrganizationJobsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetOrganizationJobs``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetOrganizationJobs`: GetJobsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetOrganizationJobs`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetOrganizationJobsRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getOrganizationJobsParams** | [**GetOrganizationJobsParams**](GetOrganizationJobsParams.md) |  | 
-
-### Return type
-
-[**GetJobsResponse**](GetJobsResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GetOrganizationSlimUserData
-
-> GetOrganizationUsersResponse GetOrganizationSlimUserData(ctx).GetOrganizationUsersRequest(getOrganizationUsersRequest).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    getOrganizationUsersRequest := *openapiclient.NewGetOrganizationUsersRequest("OrganizationId_example") // GetOrganizationUsersRequest | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetOrganizationSlimUserData(context.Background()).GetOrganizationUsersRequest(getOrganizationUsersRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetOrganizationSlimUserData``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetOrganizationSlimUserData`: GetOrganizationUsersResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetOrganizationSlimUserData`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetOrganizationSlimUserDataRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getOrganizationUsersRequest** | [**GetOrganizationUsersRequest**](GetOrganizationUsersRequest.md) |  | 
-
-### Return type
-
-[**GetOrganizationUsersResponse**](GetOrganizationUsersResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GetOrganizations
-
-> GetOrganizationsResponse GetOrganizations(ctx).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetOrganizations(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetOrganizations``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetOrganizations`: GetOrganizationsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetOrganizations`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-This endpoint does not need any parameter.
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetOrganizationsRequest struct via the builder pattern
-
-
-### Return type
-
-[**GetOrganizationsResponse**](GetOrganizationsResponse.md)
 
 ### Authorization
 
@@ -3378,9 +3191,9 @@ Other parameters are passed through a pointer to a apiGetProjectsRequest struct 
 [[Back to README]](../README.md)
 
 
-## GetRecentOrganizationSessions
+## GetRecentTeamSessions
 
-> RecentSessionsResponse GetRecentOrganizationSessions(ctx).RecentOrganizationSessionsRequestParams(recentOrganizationSessionsRequestParams).Execute()
+> RecentSessionsResponse GetRecentTeamSessions(ctx).RecentTeamSessionsRequestParams(recentTeamSessionsRequestParams).Execute()
 
 
 
@@ -3397,17 +3210,17 @@ import (
 )
 
 func main() {
-    recentOrganizationSessionsRequestParams := *openapiclient.NewRecentOrganizationSessionsRequestParams(float64(123)) // RecentOrganizationSessionsRequestParams | 
+    recentTeamSessionsRequestParams := *openapiclient.NewRecentTeamSessionsRequestParams(float64(123), "ProjectId_example") // RecentTeamSessionsRequestParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetRecentOrganizationSessions(context.Background()).RecentOrganizationSessionsRequestParams(recentOrganizationSessionsRequestParams).Execute()
+    resp, r, err := apiClient.DefaultApi.GetRecentTeamSessions(context.Background()).RecentTeamSessionsRequestParams(recentTeamSessionsRequestParams).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetRecentOrganizationSessions``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetRecentTeamSessions``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `GetRecentOrganizationSessions`: RecentSessionsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetRecentOrganizationSessions`: %v\n", resp)
+    // response from `GetRecentTeamSessions`: RecentSessionsResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetRecentTeamSessions`: %v\n", resp)
 }
 ```
 
@@ -3417,12 +3230,12 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiGetRecentOrganizationSessionsRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetRecentTeamSessionsRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **recentOrganizationSessionsRequestParams** | [**RecentOrganizationSessionsRequestParams**](RecentOrganizationSessionsRequestParams.md) |  | 
+ **recentTeamSessionsRequestParams** | [**RecentTeamSessionsRequestParams**](RecentTeamSessionsRequestParams.md) |  | 
 
 ### Return type
 
@@ -3584,7 +3397,7 @@ import (
 )
 
 func main() {
-    getSessionInsightsParams := *openapiclient.NewGetSessionInsightsParams("SessionRunId_example") // GetSessionInsightsParams | 
+    getSessionInsightsParams := *openapiclient.NewGetSessionInsightsParams("SessionRunId_example", "ProjectId_example") // GetSessionInsightsParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3648,7 +3461,7 @@ import (
 )
 
 func main() {
-    getSessionTestResultsRequest := *openapiclient.NewGetSessionTestResultsRequest("ProjectId_example", []openapiclient.SessionTestData{*openapiclient.NewSessionTestData("SessionRunId_example", float64(123))}) // GetSessionTestResultsRequest | 
+    getSessionTestResultsRequest := *openapiclient.NewGetSessionTestResultsRequest("ProjectId_example", []openapiclient.SessionTestData{*openapiclient.NewSessionTestData("SessionRunId_example", "ProjectId_example", float64(123))}) // GetSessionTestResultsRequest | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3712,7 +3525,7 @@ import (
 )
 
 func main() {
-    getSessionVisualizationsParams := *openapiclient.NewGetSessionVisualizationsParams("SessionRunId_example") // GetSessionVisualizationsParams | 
+    getSessionVisualizationsParams := *openapiclient.NewGetSessionVisualizationsParams("SessionRunId_example", "ProjectId_example") // GetSessionVisualizationsParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3776,7 +3589,7 @@ import (
 )
 
 func main() {
-    sessionHashRequestParams := *openapiclient.NewSessionHashRequestParams("Hash_example") // SessionHashRequestParams | 
+    sessionHashRequestParams := *openapiclient.NewSessionHashRequestParams("Hash_example", "ProjectId_example") // SessionHashRequestParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3840,7 +3653,7 @@ import (
 )
 
 func main() {
-    sessionVersionIdRequestParams := *openapiclient.NewSessionVersionIdRequestParams("VersionId_example") // SessionVersionIdRequestParams | 
+    sessionVersionIdRequestParams := *openapiclient.NewSessionVersionIdRequestParams("VersionId_example", "ProjectId_example") // SessionVersionIdRequestParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3904,7 +3717,7 @@ import (
 )
 
 func main() {
-    getSingleIssueParams := *openapiclient.NewGetSingleIssueParams("Id_example") // GetSingleIssueParams | 
+    getSingleIssueParams := *openapiclient.NewGetSingleIssueParams("Cid_example", "ProjectId_example") // GetSingleIssueParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3968,7 +3781,7 @@ import (
 )
 
 func main() {
-    getSingleSessionTestRequest := *openapiclient.NewGetSingleSessionTestRequest("Id_example") // GetSingleSessionTestRequest | 
+    getSingleSessionTestRequest := *openapiclient.NewGetSingleSessionTestRequest("Cid_example", "ProjectId_example") // GetSingleSessionTestRequest | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4032,7 +3845,7 @@ import (
 )
 
 func main() {
-    getSlimVisualizationParams := *openapiclient.NewGetSlimVisualizationParams("VisualizationId_example") // GetSlimVisualizationParams | 
+    getSlimVisualizationParams := *openapiclient.NewGetSlimVisualizationParams("VisualizationId_example", "ProjectId_example") // GetSlimVisualizationParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4079,7 +3892,7 @@ Name | Type | Description  | Notes
 
 ## GetStatistics
 
-> GetStatisticsResponse GetStatistics(ctx).Execute()
+> GetStatisticsResponse GetStatistics(ctx).GetStatisticsParams(getStatisticsParams).Execute()
 
 
 
@@ -4096,10 +3909,11 @@ import (
 )
 
 func main() {
+    getStatisticsParams := *openapiclient.NewGetStatisticsParams("ProjectId_example") // GetStatisticsParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetStatistics(context.Background()).Execute()
+    resp, r, err := apiClient.DefaultApi.GetStatistics(context.Background()).GetStatisticsParams(getStatisticsParams).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetStatistics``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -4111,80 +3925,20 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetStatisticsRequest struct via the builder pattern
 
 
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getStatisticsParams** | [**GetStatisticsParams**](GetStatisticsParams.md) |  | 
+
 ### Return type
 
 [**GetStatisticsResponse**](GetStatisticsResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GetStoredExportedSessionRunBlob
-
-> string GetStoredExportedSessionRunBlob(ctx).GetStoredExportedSessionRunResourceUrlParams(getStoredExportedSessionRunResourceUrlParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    getStoredExportedSessionRunResourceUrlParams := *openapiclient.NewGetStoredExportedSessionRunResourceUrlParams("ExportedSessionRunId_example") // GetStoredExportedSessionRunResourceUrlParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetStoredExportedSessionRunBlob(context.Background()).GetStoredExportedSessionRunResourceUrlParams(getStoredExportedSessionRunResourceUrlParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetStoredExportedSessionRunBlob``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetStoredExportedSessionRunBlob`: string
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetStoredExportedSessionRunBlob`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetStoredExportedSessionRunBlobRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getStoredExportedSessionRunResourceUrlParams** | [**GetStoredExportedSessionRunResourceUrlParams**](GetStoredExportedSessionRunResourceUrlParams.md) |  | 
-
-### Return type
-
-**string**
 
 ### Authorization
 
@@ -4219,7 +3973,7 @@ import (
 )
 
 func main() {
-    genericDataQueryParams := *openapiclient.NewGenericDataQueryParams([]string{"SessionRunIds_example"}, []openapiclient.Aggregations{*openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average"))}, []openapiclient.BucketAggregation{*openapiclient.NewBucketAggregation("XField_example", openapiclient.DataDistributionType("distinct"), float64(123), "OrderParams_example")}) // GenericDataQueryParams | 
+    genericDataQueryParams := *openapiclient.NewGenericDataQueryParams("ProjectId_example", []string{"SessionRunIds_example"}, []openapiclient.Aggregations{*openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average"))}, []openapiclient.BucketAggregation{*openapiclient.NewBucketAggregation("XField_example", openapiclient.DataDistributionType("distinct"), float64(123), "OrderParams_example")}) // GenericDataQueryParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4264,9 +4018,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetTrainingJobs
+## GetTeamJobs
 
-> []Job GetTrainingJobs(ctx).GetTrainingJobParams(getTrainingJobParams).Execute()
+> GetJobsResponse GetTeamJobs(ctx).Execute()
 
 
 
@@ -4283,36 +4037,31 @@ import (
 )
 
 func main() {
-    getTrainingJobParams := *openapiclient.NewGetTrainingJobParams("VersionId_example") // GetTrainingJobParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetTrainingJobs(context.Background()).GetTrainingJobParams(getTrainingJobParams).Execute()
+    resp, r, err := apiClient.DefaultApi.GetTeamJobs(context.Background()).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetTrainingJobs``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetTeamJobs``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `GetTrainingJobs`: []Job
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetTrainingJobs`: %v\n", resp)
+    // response from `GetTeamJobs`: GetJobsResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetTeamJobs`: %v\n", resp)
 }
 ```
 
 ### Path Parameters
 
-
+This endpoint does not need any parameter.
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiGetTrainingJobsRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetTeamJobsRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getTrainingJobParams** | [**GetTrainingJobParams**](GetTrainingJobParams.md) |  | 
 
 ### Return type
 
-[**[]Job**](Job.md)
+[**GetJobsResponse**](GetJobsResponse.md)
 
 ### Authorization
 
@@ -4320,7 +4069,125 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetTeamSlimUserData
+
+> GetTeamUsersResponse GetTeamSlimUserData(ctx).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetTeamSlimUserData(context.Background()).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetTeamSlimUserData``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetTeamSlimUserData`: GetTeamUsersResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetTeamSlimUserData`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetTeamSlimUserDataRequest struct via the builder pattern
+
+
+### Return type
+
+[**GetTeamUsersResponse**](GetTeamUsersResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetTeams
+
+> GetTeamsResponse GetTeams(ctx).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetTeams(context.Background()).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetTeams``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetTeams`: GetTeamsResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetTeams`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetTeamsRequest struct via the builder pattern
+
+
+### Return type
+
+[**GetTeamsResponse**](GetTeamsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -4411,7 +4278,7 @@ import (
 )
 
 func main() {
-    getSlimVisualizationParams := *openapiclient.NewGetSlimVisualizationParams("VisualizationId_example") // GetSlimVisualizationParams | 
+    getSlimVisualizationParams := *openapiclient.NewGetSlimVisualizationParams("VisualizationId_example", "ProjectId_example") // GetSlimVisualizationParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4475,7 +4342,7 @@ import (
 )
 
 func main() {
-    multiChartsParams := *openapiclient.NewMultiChartsParams("XField_example", "YField_example", openapiclient.AggregationMethod("Average"), []string{"SessionRunIds_example"}, openapiclient.DataDistributionType("distinct"), float64(123)) // MultiChartsParams | 
+    multiChartsParams := *openapiclient.NewMultiChartsParams("ProjectId_example", "XField_example", "YField_example", openapiclient.AggregationMethod("Average"), []string{"SessionRunIds_example"}, openapiclient.DataDistributionType("distinct"), float64(123)) // MultiChartsParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4705,70 +4572,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## IsTrainingJobRunning
-
-> IsTrainingJobRunningResponse IsTrainingJobRunning(ctx).IsTrainingJobRunningParams(isTrainingJobRunningParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    isTrainingJobRunningParams := *openapiclient.NewIsTrainingJobRunningParams("VersionId_example", "SessionId_example") // IsTrainingJobRunningParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.IsTrainingJobRunning(context.Background()).IsTrainingJobRunningParams(isTrainingJobRunningParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.IsTrainingJobRunning``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `IsTrainingJobRunning`: IsTrainingJobRunningResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.IsTrainingJobRunning`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiIsTrainingJobRunningRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **isTrainingJobRunningParams** | [**IsTrainingJobRunningParams**](IsTrainingJobRunningParams.md) |  | 
-
-### Return type
-
-[**IsTrainingJobRunningResponse**](IsTrainingJobRunningResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## KeyGen
 
 > RotateApiKeyResponse KeyGen(ctx).Execute()
@@ -4847,7 +4650,7 @@ import (
 )
 
 func main() {
-    loadSessionParams := *openapiclient.NewLoadSessionParams("SessionId_example") // LoadSessionParams | 
+    loadSessionParams := *openapiclient.NewLoadSessionParams("SessionId_example", "ProjectId_example") // LoadSessionParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4911,7 +4714,7 @@ import (
 )
 
 func main() {
-    loadVersionParams := *openapiclient.NewLoadVersionParams("VersionId_example") // LoadVersionParams | 
+    loadVersionParams := *openapiclient.NewLoadVersionParams("VersionId_example", "ProjectId_example") // LoadVersionParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5160,7 +4963,7 @@ import (
 )
 
 func main() {
-    populationExplorationParams := *openapiclient.NewPopulationExplorationParams("SessionRunId_example", float64(123), float64(123), float64(123)) // PopulationExplorationParams | 
+    populationExplorationParams := *openapiclient.NewPopulationExplorationParams("SessionRunId_example", "ProjectId_example", float64(123), float64(123), float64(123)) // PopulationExplorationParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5224,7 +5027,7 @@ import (
 )
 
 func main() {
-    sampleAnalysisParams := *openapiclient.NewSampleAnalysisParams("SessionRunId_example", *openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), float64(123)), float64(123)) // SampleAnalysisParams | 
+    sampleAnalysisParams := *openapiclient.NewSampleAnalysisParams("SessionRunId_example", "ProjectId_example", *openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), float64(123)), float64(123)) // SampleAnalysisParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5288,7 +5091,7 @@ import (
 )
 
 func main() {
-    sampleSelectionParams := *openapiclient.NewSampleSelectionParams("SessionRunId_example", *openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), float64(123)), openapiclient.DataStateType("training"), float64(123), float64(123), float64(123)) // SampleSelectionParams | 
+    sampleSelectionParams := *openapiclient.NewSampleSelectionParams("SessionRunId_example", "ProjectId_example", *openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), float64(123)), openapiclient.DataStateType("training"), float64(123), float64(123), float64(123)) // SampleSelectionParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5352,7 +5155,7 @@ import (
 )
 
 func main() {
-    saveAnalyzerLayoutParams := *openapiclient.NewSaveAnalyzerLayoutParams([]openapiclient.PanelLayout{*openapiclient.NewPanelLayout("VisualizationId_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))))}) // SaveAnalyzerLayoutParams | 
+    saveAnalyzerLayoutParams := *openapiclient.NewSaveAnalyzerLayoutParams([]openapiclient.PanelLayout{*openapiclient.NewPanelLayout("VisualizationId_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))))}, "ProjectId_example") // SaveAnalyzerLayoutParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5523,9 +5326,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## SetDefaultOrganization
+## SetDefaultTeam
 
-> SetDefaultOrganization(ctx).SetDefaultOrganizationRequest(setDefaultOrganizationRequest).Execute()
+> SetDefaultTeam(ctx).SetDefaultTeamRequest(setDefaultTeamRequest).Execute()
 
 
 
@@ -5542,13 +5345,13 @@ import (
 )
 
 func main() {
-    setDefaultOrganizationRequest := *openapiclient.NewSetDefaultOrganizationRequest("Id_example") // SetDefaultOrganizationRequest | 
+    setDefaultTeamRequest := *openapiclient.NewSetDefaultTeamRequest("Cid_example") // SetDefaultTeamRequest | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.SetDefaultOrganization(context.Background()).SetDefaultOrganizationRequest(setDefaultOrganizationRequest).Execute()
+    r, err := apiClient.DefaultApi.SetDefaultTeam(context.Background()).SetDefaultTeamRequest(setDefaultTeamRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.SetDefaultOrganization``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.SetDefaultTeam``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -5560,12 +5363,12 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiSetDefaultOrganizationRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiSetDefaultTeamRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **setDefaultOrganizationRequest** | [**SetDefaultOrganizationRequest**](SetDefaultOrganizationRequest.md) |  | 
+ **setDefaultTeamRequest** | [**SetDefaultTeamRequest**](SetDefaultTeamRequest.md) |  | 
 
 ### Return type
 
@@ -5585,9 +5388,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## SetOrganizationMachineType
+## SetMachineType
 
-> SetOrganizationMachineType(ctx).SetOrganizationMachineTypeParams(setOrganizationMachineTypeParams).Execute()
+> SetMachineType(ctx).SetTeamMachineTypeParams(setTeamMachineTypeParams).Execute()
 
 
 
@@ -5604,13 +5407,13 @@ import (
 )
 
 func main() {
-    setOrganizationMachineTypeParams := *openapiclient.NewSetOrganizationMachineTypeParams("OrganizationId_example", "MachineTypeId_example") // SetOrganizationMachineTypeParams | 
+    setTeamMachineTypeParams := *openapiclient.NewSetTeamMachineTypeParams("MachineTypeId_example") // SetTeamMachineTypeParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.SetOrganizationMachineType(context.Background()).SetOrganizationMachineTypeParams(setOrganizationMachineTypeParams).Execute()
+    r, err := apiClient.DefaultApi.SetMachineType(context.Background()).SetTeamMachineTypeParams(setTeamMachineTypeParams).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.SetOrganizationMachineType``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.SetMachineType``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -5622,12 +5425,12 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiSetOrganizationMachineTypeRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiSetMachineTypeRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **setOrganizationMachineTypeParams** | [**SetOrganizationMachineTypeParams**](SetOrganizationMachineTypeParams.md) |  | 
+ **setTeamMachineTypeParams** | [**SetTeamMachineTypeParams**](SetTeamMachineTypeParams.md) |  | 
 
 ### Return type
 
@@ -5981,7 +5784,7 @@ import (
 )
 
 func main() {
-    trainFromInitialWeightsParams := *openapiclient.NewTrainFromInitialWeightsParams("VersionId_example", "FromSessionId_example", float64(123), "ModelName_example", *openapiclient.NewTrainingParams(float64(123), float64(123)), false) // TrainFromInitialWeightsParams | 
+    trainFromInitialWeightsParams := *openapiclient.NewTrainFromInitialWeightsParams("VersionId_example", "ProjectId_example", "FromSessionId_example", float64(123), "ModelName_example", *openapiclient.NewTrainingParams(float64(123), float64(123)), false) // TrainFromInitialWeightsParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6045,7 +5848,7 @@ import (
 )
 
 func main() {
-    trainFromScratchParams := *openapiclient.NewTrainFromScratchParams("VersionId_example", "SessionName_example", *openapiclient.NewTrainingParams(float64(123), float64(123)), false) // TrainFromScratchParams | 
+    trainFromScratchParams := *openapiclient.NewTrainFromScratchParams("VersionId_example", "ProjectId_example", "SessionName_example", *openapiclient.NewTrainingParams(float64(123), float64(123)), false) // TrainFromScratchParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6237,7 +6040,7 @@ import (
 )
 
 func main() {
-    updateDashboardParams := *openapiclient.NewUpdateDashboardParams("DashboardId_example", "Name_example", []openapiclient.DashboardItem{*openapiclient.NewDashboardItem("Id_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))), "Type_example", *openapiclient.NewCustomVisualizationData(map[string]interface{}(123), "Name_example", openapiclient.CustomVisualizationType("Bar")))}) // UpdateDashboardParams | 
+    updateDashboardParams := *openapiclient.NewUpdateDashboardParams("DashboardId_example", "Name_example", []openapiclient.DashboardItem{*openapiclient.NewDashboardItem("Cid_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))), "Type_example", *openapiclient.NewCustomVisualizationData(map[string]interface{}(123), "Name_example", openapiclient.CustomVisualizationType("Bar")))}, "ProjectId_example") // UpdateDashboardParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6299,7 +6102,7 @@ import (
 )
 
 func main() {
-    updateIssueParams := *openapiclient.NewUpdateIssueParams("Id_example") // UpdateIssueParams | 
+    updateIssueParams := *openapiclient.NewUpdateIssueParams("Cid_example", "ProjectId_example") // UpdateIssueParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6338,68 +6141,6 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## UpdateOrganizationPublicName
-
-> UpdateOrganizationPublicName(ctx).UpdateOrganizationPublicNameRequest(updateOrganizationPublicNameRequest).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    updateOrganizationPublicNameRequest := *openapiclient.NewUpdateOrganizationPublicNameRequest("Id_example", "PublicName_example") // UpdateOrganizationPublicNameRequest | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.UpdateOrganizationPublicName(context.Background()).UpdateOrganizationPublicNameRequest(updateOrganizationPublicNameRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateOrganizationPublicName``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiUpdateOrganizationPublicNameRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **updateOrganizationPublicNameRequest** | [**UpdateOrganizationPublicNameRequest**](UpdateOrganizationPublicNameRequest.md) |  | 
-
-### Return type
-
- (empty response body)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -6487,7 +6228,7 @@ import (
 )
 
 func main() {
-    updateSecretManagerParams := *openapiclient.NewUpdateSecretManagerParams("Id_example", "Name_example") // UpdateSecretManagerParams | 
+    updateSecretManagerParams := *openapiclient.NewUpdateSecretManagerParams("Cid_example", "Name_example") // UpdateSecretManagerParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6551,7 +6292,7 @@ import (
 )
 
 func main() {
-    updateSessionTestRequest := *openapiclient.NewUpdateSessionTestRequest("Id_example") // UpdateSessionTestRequest | 
+    updateSessionTestRequest := *openapiclient.NewUpdateSessionTestRequest("Cid_example", "ProjectId_example") // UpdateSessionTestRequest | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6575,6 +6316,68 @@ Other parameters are passed through a pointer to a apiUpdateSessionTestRequest s
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **updateSessionTestRequest** | [**UpdateSessionTestRequest**](UpdateSessionTestRequest.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateTeamPublicName
+
+> UpdateTeamPublicName(ctx).UpdateTeamPublicNameRequest(updateTeamPublicNameRequest).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    updateTeamPublicNameRequest := *openapiclient.NewUpdateTeamPublicNameRequest("Cid_example", "PublicName_example") // UpdateTeamPublicNameRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.DefaultApi.UpdateTeamPublicName(context.Background()).UpdateTeamPublicNameRequest(updateTeamPublicNameRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateTeamPublicName``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateTeamPublicNameRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **updateTeamPublicNameRequest** | [**UpdateTeamPublicNameRequest**](UpdateTeamPublicNameRequest.md) |  | 
 
 ### Return type
 
@@ -6643,70 +6446,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**UserData**](UserData.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## UpdateUserOrganization
-
-> SlimUserData UpdateUserOrganization(ctx).UpdateUserOrganizationRequest(updateUserOrganizationRequest).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    updateUserOrganizationRequest := *openapiclient.NewUpdateUserOrganizationRequest("UserId_example", "OrganizationId_example") // UpdateUserOrganizationRequest | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.UpdateUserOrganization(context.Background()).UpdateUserOrganizationRequest(updateUserOrganizationRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateUserOrganization``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `UpdateUserOrganization`: SlimUserData
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateUserOrganization`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiUpdateUserOrganizationRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **updateUserOrganizationRequest** | [**UpdateUserOrganizationRequest**](UpdateUserOrganizationRequest.md) |  | 
-
-### Return type
-
-[**SlimUserData**](SlimUserData.md)
 
 ### Authorization
 
@@ -6850,6 +6589,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## UpdateUserTeam
+
+> SlimUserData UpdateUserTeam(ctx).UpdateUserTeamRequest(updateUserTeamRequest).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    updateUserTeamRequest := *openapiclient.NewUpdateUserTeamRequest("UserId_example", "TeamId_example") // UpdateUserTeamRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.UpdateUserTeam(context.Background()).UpdateUserTeamRequest(updateUserTeamRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateUserTeam``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `UpdateUserTeam`: SlimUserData
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateUserTeam`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateUserTeamRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **updateUserTeamRequest** | [**UpdateUserTeamRequest**](UpdateUserTeamRequest.md) |  | 
+
+### Return type
+
+[**SlimUserData**](SlimUserData.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## UpdateVersion
 
 > UpdateVersionResponse UpdateVersion(ctx).UpdateVersionParams(updateVersionParams).Execute()
@@ -6869,7 +6672,7 @@ import (
 )
 
 func main() {
-    updateVersionParams := *openapiclient.NewUpdateVersionParams("VersionId_example", *openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), *openapiclient.NewDatasetSetup(*openapiclient.NewDatasetPreprocess(float64(123), float64(123)), []openapiclient.DatasetInputInstance{*openapiclient.NewDatasetInputInstance("Name_example", []float64{float64(123)})}, []openapiclient.DatasetMetadataInstance{*openapiclient.NewDatasetMetadataInstance("Name_example", openapiclient.DatasetMetadataType("float"))}, []openapiclient.DatasetOutputInstance{*openapiclient.NewDatasetOutputInstance("Name_example", []float64{float64(123)})}, []openapiclient.VisualizerInstance{*openapiclient.NewVisualizerInstance("Name_example", openapiclient.LeapDataType("Image"), []string{"ArgNames_example"})}, []openapiclient.PredictionTypeInstance{*openapiclient.NewPredictionTypeInstance("Name_example", []string{"Labels_example"})}, []openapiclient.CustomLossInstance{*openapiclient.NewCustomLossInstance("Name_example", []string{"ArgNames_example"})}, []openapiclient.MetricInstance{*openapiclient.NewMetricInstance("Name_example", []string{"ArgNames_example"})}), false) // UpdateVersionParams | 
+    updateVersionParams := *openapiclient.NewUpdateVersionParams("VersionId_example", "ProjectId_example", *openapiclient.NewModelGraph("Id_example", map[string]interface{}(123))) // UpdateVersionParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6908,6 +6711,74 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## Upload
+
+> Upload(ctx, projectName).Description(description).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    projectName := "projectName_example" // string | 
+    description := "description_example" // string |  (optional) (default to "")
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.DefaultApi.Upload(context.Background(), projectName).Description(description).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.Upload``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**projectName** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUploadRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **description** | **string** |  | [default to &quot;&quot;]
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

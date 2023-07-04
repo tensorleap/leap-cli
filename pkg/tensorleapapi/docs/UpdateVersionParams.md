@@ -5,17 +5,17 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VersionId** | **string** |  | 
+**ProjectId** | **string** |  | 
 **Data** | [**ModelGraph**](ModelGraph.md) |  | 
 **CodeIntegrationVersionId** | Pointer to **string** |  | [optional] 
-**DatasetSetup** | [**DatasetSetup**](DatasetSetup.md) |  | 
-**OverrideHash** | **bool** |  | 
+**DatasetSetup** | Pointer to [**DatasetSetup**](DatasetSetup.md) |  | [optional] 
 **Hash** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewUpdateVersionParams
 
-`func NewUpdateVersionParams(versionId string, data ModelGraph, datasetSetup DatasetSetup, overrideHash bool, ) *UpdateVersionParams`
+`func NewUpdateVersionParams(versionId string, projectId string, data ModelGraph, ) *UpdateVersionParams`
 
 NewUpdateVersionParams instantiates a new UpdateVersionParams object
 This constructor will assign default values to properties that have it defined,
@@ -48,6 +48,26 @@ and a boolean to check if the value has been set.
 `func (o *UpdateVersionParams) SetVersionId(v string)`
 
 SetVersionId sets VersionId field to given value.
+
+
+### GetProjectId
+
+`func (o *UpdateVersionParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *UpdateVersionParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *UpdateVersionParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
 
 
 ### GetData
@@ -114,26 +134,11 @@ and a boolean to check if the value has been set.
 
 SetDatasetSetup sets DatasetSetup field to given value.
 
+### HasDatasetSetup
 
-### GetOverrideHash
+`func (o *UpdateVersionParams) HasDatasetSetup() bool`
 
-`func (o *UpdateVersionParams) GetOverrideHash() bool`
-
-GetOverrideHash returns the OverrideHash field if non-nil, zero value otherwise.
-
-### GetOverrideHashOk
-
-`func (o *UpdateVersionParams) GetOverrideHashOk() (*bool, bool)`
-
-GetOverrideHashOk returns a tuple with the OverrideHash field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetOverrideHash
-
-`func (o *UpdateVersionParams) SetOverrideHash(v bool)`
-
-SetOverrideHash sets OverrideHash field to given value.
-
+HasDatasetSetup returns a boolean if a field has been set.
 
 ### GetHash
 

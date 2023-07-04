@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**ProjectId** | **string** |  | 
 **XField** | **string** |  | 
 **SessionRunIds** | **[]string** |  | 
 **VerticalSplit** | Pointer to **string** |  | [optional] 
@@ -22,7 +23,7 @@ Name | Type | Description | Notes
 
 ### NewConfusionMatrixParams
 
-`func NewConfusionMatrixParams(xField string, sessionRunIds []string, customMetricName string, xAxisSizeInterval float64, ) *ConfusionMatrixParams`
+`func NewConfusionMatrixParams(projectId string, xField string, sessionRunIds []string, customMetricName string, xAxisSizeInterval float64, ) *ConfusionMatrixParams`
 
 NewConfusionMatrixParams instantiates a new ConfusionMatrixParams object
 This constructor will assign default values to properties that have it defined,
@@ -36,6 +37,26 @@ will change when the set of required properties is changed
 NewConfusionMatrixParamsWithDefaults instantiates a new ConfusionMatrixParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetProjectId
+
+`func (o *ConfusionMatrixParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *ConfusionMatrixParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *ConfusionMatrixParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
+
 
 ### GetXField
 
