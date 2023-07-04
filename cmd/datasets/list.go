@@ -22,7 +22,7 @@ func init() {
 				return err
 			}
 			for _, dataset := range data.Datasets {
-				fmt.Println(dataset.GetId(), "-", dataset.GetName())
+				fmt.Println(dataset.GetCid(), "-", dataset.GetName())
 			}
 
 			return nil

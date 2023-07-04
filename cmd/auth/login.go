@@ -24,7 +24,7 @@ var cmd = &cobra.Command{
 			return err
 		}
 		fmt.Println("User email: " + userData.Local.Email)
-		fmt.Println("Team name: " + userData.OrganizationName)
+		fmt.Println("Team name: " + userData.TeamName)
 
 		viper.Set(config.API_URL_CONFIG_PATH, baseUrl)
 		viper.Set(config.API_KEY_CONFIG_PATH, apiKey)
