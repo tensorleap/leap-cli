@@ -5,12 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SessionRunId** | **string** |  | 
+**ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewGetSessionInsightsParams
 
-`func NewGetSessionInsightsParams(sessionRunId string, ) *GetSessionInsightsParams`
+`func NewGetSessionInsightsParams(sessionRunId string, projectId string, ) *GetSessionInsightsParams`
 
 NewGetSessionInsightsParams instantiates a new GetSessionInsightsParams object
 This constructor will assign default values to properties that have it defined,
@@ -43,6 +44,26 @@ and a boolean to check if the value has been set.
 `func (o *GetSessionInsightsParams) SetSessionRunId(v string)`
 
 SetSessionRunId sets SessionRunId field to given value.
+
+
+### GetProjectId
+
+`func (o *GetSessionInsightsParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *GetSessionInsightsParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *GetSessionInsightsParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
 
 
 

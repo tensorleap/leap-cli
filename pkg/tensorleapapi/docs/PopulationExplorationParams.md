@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SessionRunId** | **string** |  | 
+**ProjectId** | **string** |  | 
 **BatchSize** | **float64** |  | 
 **NumOfSamples** | **float64** |  | 
 **FromEpoch** | **float64** |  | 
@@ -13,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewPopulationExplorationParams
 
-`func NewPopulationExplorationParams(sessionRunId string, batchSize float64, numOfSamples float64, fromEpoch float64, ) *PopulationExplorationParams`
+`func NewPopulationExplorationParams(sessionRunId string, projectId string, batchSize float64, numOfSamples float64, fromEpoch float64, ) *PopulationExplorationParams`
 
 NewPopulationExplorationParams instantiates a new PopulationExplorationParams object
 This constructor will assign default values to properties that have it defined,
@@ -46,6 +47,26 @@ and a boolean to check if the value has been set.
 `func (o *PopulationExplorationParams) SetSessionRunId(v string)`
 
 SetSessionRunId sets SessionRunId field to given value.
+
+
+### GetProjectId
+
+`func (o *PopulationExplorationParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *PopulationExplorationParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *PopulationExplorationParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
 
 
 ### GetBatchSize

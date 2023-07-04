@@ -5,7 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Graph** | [**ModelGraph**](ModelGraph.md) |  | 
-**DatasetVersionId** | **string** |  | 
+**DatasetVersionId** | Pointer to **string** |  | [optional] 
+**VersionId** | **string** |  | 
 **ProjectId** | **string** |  | 
 **RequestToken** | **string** |  | 
 
@@ -13,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewAnalyzeGraphParams
 
-`func NewAnalyzeGraphParams(graph ModelGraph, datasetVersionId string, projectId string, requestToken string, ) *AnalyzeGraphParams`
+`func NewAnalyzeGraphParams(graph ModelGraph, versionId string, projectId string, requestToken string, ) *AnalyzeGraphParams`
 
 NewAnalyzeGraphParams instantiates a new AnalyzeGraphParams object
 This constructor will assign default values to properties that have it defined,
@@ -66,6 +67,31 @@ and a boolean to check if the value has been set.
 `func (o *AnalyzeGraphParams) SetDatasetVersionId(v string)`
 
 SetDatasetVersionId sets DatasetVersionId field to given value.
+
+### HasDatasetVersionId
+
+`func (o *AnalyzeGraphParams) HasDatasetVersionId() bool`
+
+HasDatasetVersionId returns a boolean if a field has been set.
+
+### GetVersionId
+
+`func (o *AnalyzeGraphParams) GetVersionId() string`
+
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
+
+### GetVersionIdOk
+
+`func (o *AnalyzeGraphParams) GetVersionIdOk() (*string, bool)`
+
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVersionId
+
+`func (o *AnalyzeGraphParams) SetVersionId(v string)`
+
+SetVersionId sets VersionId field to given value.
 
 
 ### GetProjectId

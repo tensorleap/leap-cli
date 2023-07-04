@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VersionId** | **string** |  | 
+**ProjectId** | **string** |  | 
 **SessionId** | **string** |  | 
 **BatchSize** | **float64** |  | 
 **DataStates** | [**[]DataStateForEval**](DataStateForEval.md) |  | 
@@ -15,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewEvaluateParams
 
-`func NewEvaluateParams(versionId string, sessionId string, batchSize float64, dataStates []DataStateForEval, shouldRunPopulationExploration bool, evaluatedEpoch float64, ) *EvaluateParams`
+`func NewEvaluateParams(versionId string, projectId string, sessionId string, batchSize float64, dataStates []DataStateForEval, shouldRunPopulationExploration bool, evaluatedEpoch float64, ) *EvaluateParams`
 
 NewEvaluateParams instantiates a new EvaluateParams object
 This constructor will assign default values to properties that have it defined,
@@ -48,6 +49,26 @@ and a boolean to check if the value has been set.
 `func (o *EvaluateParams) SetVersionId(v string)`
 
 SetVersionId sets VersionId field to given value.
+
+
+### GetProjectId
+
+`func (o *EvaluateParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *EvaluateParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *EvaluateParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
 
 
 ### GetSessionId

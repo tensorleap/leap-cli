@@ -4,13 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SessionRunId** | **string** |  | 
+**SessionId** | **string** |  | 
+**ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewGetExportedSessionRunJobsParams
 
-`func NewGetExportedSessionRunJobsParams(sessionRunId string, ) *GetExportedSessionRunJobsParams`
+`func NewGetExportedSessionRunJobsParams(sessionId string, projectId string, ) *GetExportedSessionRunJobsParams`
 
 NewGetExportedSessionRunJobsParams instantiates a new GetExportedSessionRunJobsParams object
 This constructor will assign default values to properties that have it defined,
@@ -25,24 +26,44 @@ NewGetExportedSessionRunJobsParamsWithDefaults instantiates a new GetExportedSes
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetSessionRunId
+### GetSessionId
 
-`func (o *GetExportedSessionRunJobsParams) GetSessionRunId() string`
+`func (o *GetExportedSessionRunJobsParams) GetSessionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetSessionId returns the SessionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetSessionIdOk
 
-`func (o *GetExportedSessionRunJobsParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *GetExportedSessionRunJobsParams) GetSessionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetSessionIdOk returns a tuple with the SessionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetSessionId
 
-`func (o *GetExportedSessionRunJobsParams) SetSessionRunId(v string)`
+`func (o *GetExportedSessionRunJobsParams) SetSessionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetSessionId sets SessionId field to given value.
+
+
+### GetProjectId
+
+`func (o *GetExportedSessionRunJobsParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *GetExportedSessionRunJobsParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *GetExportedSessionRunJobsParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
 
 
 

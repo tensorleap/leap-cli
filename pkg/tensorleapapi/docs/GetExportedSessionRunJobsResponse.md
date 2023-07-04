@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ExportedSessionRunJobs** | [**[]ExportedSessionRunJobUi**](ExportedSessionRunJobUi.md) |  | 
+**ExportedModelData** | [**[]ExportedModelData**](ExportedModelData.md) |  | 
 
 ## Methods
 
 ### NewGetExportedSessionRunJobsResponse
 
-`func NewGetExportedSessionRunJobsResponse(exportedSessionRunJobs []ExportedSessionRunJobUi, ) *GetExportedSessionRunJobsResponse`
+`func NewGetExportedSessionRunJobsResponse(exportedModelData []ExportedModelData, ) *GetExportedSessionRunJobsResponse`
 
 NewGetExportedSessionRunJobsResponse instantiates a new GetExportedSessionRunJobsResponse object
 This constructor will assign default values to properties that have it defined,
@@ -25,24 +25,24 @@ NewGetExportedSessionRunJobsResponseWithDefaults instantiates a new GetExportedS
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetExportedSessionRunJobs
+### GetExportedModelData
 
-`func (o *GetExportedSessionRunJobsResponse) GetExportedSessionRunJobs() []ExportedSessionRunJobUi`
+`func (o *GetExportedSessionRunJobsResponse) GetExportedModelData() []ExportedModelData`
 
-GetExportedSessionRunJobs returns the ExportedSessionRunJobs field if non-nil, zero value otherwise.
+GetExportedModelData returns the ExportedModelData field if non-nil, zero value otherwise.
 
-### GetExportedSessionRunJobsOk
+### GetExportedModelDataOk
 
-`func (o *GetExportedSessionRunJobsResponse) GetExportedSessionRunJobsOk() (*[]ExportedSessionRunJobUi, bool)`
+`func (o *GetExportedSessionRunJobsResponse) GetExportedModelDataOk() (*[]ExportedModelData, bool)`
 
-GetExportedSessionRunJobsOk returns a tuple with the ExportedSessionRunJobs field if it's non-nil, zero value otherwise
+GetExportedModelDataOk returns a tuple with the ExportedModelData field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetExportedSessionRunJobs
+### SetExportedModelData
 
-`func (o *GetExportedSessionRunJobsResponse) SetExportedSessionRunJobs(v []ExportedSessionRunJobUi)`
+`func (o *GetExportedSessionRunJobsResponse) SetExportedModelData(v []ExportedModelData)`
 
-SetExportedSessionRunJobs sets ExportedSessionRunJobs field to given value.
+SetExportedModelData sets ExportedModelData field to given value.
 
 
 

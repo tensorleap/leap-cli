@@ -4,7 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**Cid** | **string** |  | 
+**ProjectId** | **string** |  | 
 **Name** | Pointer to **string** |  | [optional] 
 **TestFilter** | Pointer to [**ClientFilterParams**](ClientFilterParams.md) |  | [optional] 
 **DatasetFilter** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
@@ -13,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewUpdateSessionTestRequest
 
-`func NewUpdateSessionTestRequest(id string, ) *UpdateSessionTestRequest`
+`func NewUpdateSessionTestRequest(cid string, projectId string, ) *UpdateSessionTestRequest`
 
 NewUpdateSessionTestRequest instantiates a new UpdateSessionTestRequest object
 This constructor will assign default values to properties that have it defined,
@@ -28,24 +29,44 @@ NewUpdateSessionTestRequestWithDefaults instantiates a new UpdateSessionTestRequ
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetCid
 
-`func (o *UpdateSessionTestRequest) GetId() string`
+`func (o *UpdateSessionTestRequest) GetCid() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetCid returns the Cid field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetCidOk
 
-`func (o *UpdateSessionTestRequest) GetIdOk() (*string, bool)`
+`func (o *UpdateSessionTestRequest) GetCidOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetCid
 
-`func (o *UpdateSessionTestRequest) SetId(v string)`
+`func (o *UpdateSessionTestRequest) SetCid(v string)`
 
-SetId sets Id field to given value.
+SetCid sets Cid field to given value.
+
+
+### GetProjectId
+
+`func (o *UpdateSessionTestRequest) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *UpdateSessionTestRequest) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *UpdateSessionTestRequest) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
 
 
 ### GetName

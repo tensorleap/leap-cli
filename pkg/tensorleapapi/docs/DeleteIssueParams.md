@@ -4,13 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**IssueId** | **string** |  | 
+**Cid** | **string** |  | 
+**ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewDeleteIssueParams
 
-`func NewDeleteIssueParams(issueId string, ) *DeleteIssueParams`
+`func NewDeleteIssueParams(cid string, projectId string, ) *DeleteIssueParams`
 
 NewDeleteIssueParams instantiates a new DeleteIssueParams object
 This constructor will assign default values to properties that have it defined,
@@ -25,24 +26,44 @@ NewDeleteIssueParamsWithDefaults instantiates a new DeleteIssueParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetIssueId
+### GetCid
 
-`func (o *DeleteIssueParams) GetIssueId() string`
+`func (o *DeleteIssueParams) GetCid() string`
 
-GetIssueId returns the IssueId field if non-nil, zero value otherwise.
+GetCid returns the Cid field if non-nil, zero value otherwise.
 
-### GetIssueIdOk
+### GetCidOk
 
-`func (o *DeleteIssueParams) GetIssueIdOk() (*string, bool)`
+`func (o *DeleteIssueParams) GetCidOk() (*string, bool)`
 
-GetIssueIdOk returns a tuple with the IssueId field if it's non-nil, zero value otherwise
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetIssueId
+### SetCid
 
-`func (o *DeleteIssueParams) SetIssueId(v string)`
+`func (o *DeleteIssueParams) SetCid(v string)`
 
-SetIssueId sets IssueId field to given value.
+SetCid sets Cid field to given value.
+
+
+### GetProjectId
+
+`func (o *DeleteIssueParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *DeleteIssueParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *DeleteIssueParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
 
 
 

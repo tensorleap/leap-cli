@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**ProjectId** | **string** |  | 
 **XField** | **string** |  | 
 **XAxisSizeInterval** | **float64** |  | 
 **XDataDistributionType** | [**DataDistributionType**](DataDistributionType.md) |  | 
@@ -24,7 +25,7 @@ Name | Type | Description | Notes
 
 ### NewHeatmapChartsParams
 
-`func NewHeatmapChartsParams(xField string, xAxisSizeInterval float64, xDataDistributionType DataDistributionType, yField string, yAxisSizeInterval float64, yDataDistributionType DataDistributionType, colorField string, colorAggregationMethod AggregationMethod, sessionRunIds []string, ) *HeatmapChartsParams`
+`func NewHeatmapChartsParams(projectId string, xField string, xAxisSizeInterval float64, xDataDistributionType DataDistributionType, yField string, yAxisSizeInterval float64, yDataDistributionType DataDistributionType, colorField string, colorAggregationMethod AggregationMethod, sessionRunIds []string, ) *HeatmapChartsParams`
 
 NewHeatmapChartsParams instantiates a new HeatmapChartsParams object
 This constructor will assign default values to properties that have it defined,
@@ -38,6 +39,26 @@ will change when the set of required properties is changed
 NewHeatmapChartsParamsWithDefaults instantiates a new HeatmapChartsParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetProjectId
+
+`func (o *HeatmapChartsParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *HeatmapChartsParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *HeatmapChartsParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
+
 
 ### GetXField
 

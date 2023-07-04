@@ -4,12 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**ProjectId** | **string** |  | 
+**Cid** | **string** |  | 
 **ExtId** | Pointer to **string** |  | [optional] 
 **ModelName** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
 **CreatedBy** | Pointer to **string** |  | [optional] 
-**Organization** | **string** |  | 
+**TeamId** | **string** |  | 
 **Hash** | Pointer to **NullableString** |  | [optional] 
 **TrainingParams** | Pointer to [**TrainingParams**](TrainingParams.md) |  | [optional] 
 **SessionRuns** | Pointer to [**[]SessionRunData**](SessionRunData.md) |  | [optional] 
@@ -19,7 +20,7 @@ Name | Type | Description | Notes
 
 ### NewSession
 
-`func NewSession(id string, modelName string, createdAt time.Time, organization string, ) *Session`
+`func NewSession(projectId string, cid string, modelName string, createdAt time.Time, teamId string, ) *Session`
 
 NewSession instantiates a new Session object
 This constructor will assign default values to properties that have it defined,
@@ -34,24 +35,44 @@ NewSessionWithDefaults instantiates a new Session object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetProjectId
 
-`func (o *Session) GetId() string`
+`func (o *Session) GetProjectId() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetProjectIdOk
 
-`func (o *Session) GetIdOk() (*string, bool)`
+`func (o *Session) GetProjectIdOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetProjectId
 
-`func (o *Session) SetId(v string)`
+`func (o *Session) SetProjectId(v string)`
 
-SetId sets Id field to given value.
+SetProjectId sets ProjectId field to given value.
+
+
+### GetCid
+
+`func (o *Session) GetCid() string`
+
+GetCid returns the Cid field if non-nil, zero value otherwise.
+
+### GetCidOk
+
+`func (o *Session) GetCidOk() (*string, bool)`
+
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCid
+
+`func (o *Session) SetCid(v string)`
+
+SetCid sets Cid field to given value.
 
 
 ### GetExtId
@@ -144,24 +165,24 @@ SetCreatedBy sets CreatedBy field to given value.
 
 HasCreatedBy returns a boolean if a field has been set.
 
-### GetOrganization
+### GetTeamId
 
-`func (o *Session) GetOrganization() string`
+`func (o *Session) GetTeamId() string`
 
-GetOrganization returns the Organization field if non-nil, zero value otherwise.
+GetTeamId returns the TeamId field if non-nil, zero value otherwise.
 
-### GetOrganizationOk
+### GetTeamIdOk
 
-`func (o *Session) GetOrganizationOk() (*string, bool)`
+`func (o *Session) GetTeamIdOk() (*string, bool)`
 
-GetOrganizationOk returns a tuple with the Organization field if it's non-nil, zero value otherwise
+GetTeamIdOk returns a tuple with the TeamId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrganization
+### SetTeamId
 
-`func (o *Session) SetOrganization(v string)`
+`func (o *Session) SetTeamId(v string)`
 
-SetOrganization sets Organization field to given value.
+SetTeamId sets TeamId field to given value.
 
 
 ### GetHash

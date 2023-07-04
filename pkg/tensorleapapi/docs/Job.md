@@ -4,7 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**ProjectId** | **string** |  | 
+**Cid** | **string** |  | 
 **CreatedBy** | **string** |  | 
 **Version** | **string** |  | 
 **Type** | [**JobTypeEnum**](JobTypeEnum.md) |  | 
@@ -14,13 +15,13 @@ Name | Type | Description | Notes
 **UpdatedAt** | **time.Time** |  | 
 **Params** | Pointer to [**JobParams**](JobParams.md) |  | [optional] 
 **SessionRunId** | Pointer to **string** |  | [optional] 
-**Organization** | **string** |  | 
+**TeamId** | **string** |  | 
 
 ## Methods
 
 ### NewJob
 
-`func NewJob(id string, createdBy string, version string, type_ JobTypeEnum, status JobStatus, createdAt time.Time, updatedAt time.Time, organization string, ) *Job`
+`func NewJob(projectId string, cid string, createdBy string, version string, type_ JobTypeEnum, status JobStatus, createdAt time.Time, updatedAt time.Time, teamId string, ) *Job`
 
 NewJob instantiates a new Job object
 This constructor will assign default values to properties that have it defined,
@@ -35,24 +36,44 @@ NewJobWithDefaults instantiates a new Job object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetProjectId
 
-`func (o *Job) GetId() string`
+`func (o *Job) GetProjectId() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetProjectIdOk
 
-`func (o *Job) GetIdOk() (*string, bool)`
+`func (o *Job) GetProjectIdOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetProjectId
 
-`func (o *Job) SetId(v string)`
+`func (o *Job) SetProjectId(v string)`
 
-SetId sets Id field to given value.
+SetProjectId sets ProjectId field to given value.
+
+
+### GetCid
+
+`func (o *Job) GetCid() string`
+
+GetCid returns the Cid field if non-nil, zero value otherwise.
+
+### GetCidOk
+
+`func (o *Job) GetCidOk() (*string, bool)`
+
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCid
+
+`func (o *Job) SetCid(v string)`
+
+SetCid sets Cid field to given value.
 
 
 ### GetCreatedBy
@@ -250,24 +271,24 @@ SetSessionRunId sets SessionRunId field to given value.
 
 HasSessionRunId returns a boolean if a field has been set.
 
-### GetOrganization
+### GetTeamId
 
-`func (o *Job) GetOrganization() string`
+`func (o *Job) GetTeamId() string`
 
-GetOrganization returns the Organization field if non-nil, zero value otherwise.
+GetTeamId returns the TeamId field if non-nil, zero value otherwise.
 
-### GetOrganizationOk
+### GetTeamIdOk
 
-`func (o *Job) GetOrganizationOk() (*string, bool)`
+`func (o *Job) GetTeamIdOk() (*string, bool)`
 
-GetOrganizationOk returns a tuple with the Organization field if it's non-nil, zero value otherwise
+GetTeamIdOk returns a tuple with the TeamId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrganization
+### SetTeamId
 
-`func (o *Job) SetOrganization(v string)`
+`func (o *Job) SetTeamId(v string)`
 
-SetOrganization sets Organization field to given value.
+SetTeamId sets TeamId field to given value.
 
 
 

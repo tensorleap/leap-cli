@@ -4,12 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**Cid** | **string** |  | 
 **ExtId** | Pointer to **string** |  | [optional] 
 **ModelName** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
 **CreatedBy** | Pointer to **string** |  | [optional] 
-**Organization** | **string** |  | 
+**TeamId** | **string** |  | 
 **Hash** | Pointer to **NullableString** |  | [optional] 
 **TrainingParams** | Pointer to [**TrainingParams**](TrainingParams.md) |  | [optional] 
 **SessionRuns** | Pointer to [**[]SessionRunData**](SessionRunData.md) |  | [optional] 
@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewSessionPopulatedJob
 
-`func NewSessionPopulatedJob(id string, modelName string, createdAt time.Time, organization string, ) *SessionPopulatedJob`
+`func NewSessionPopulatedJob(cid string, modelName string, createdAt time.Time, teamId string, ) *SessionPopulatedJob`
 
 NewSessionPopulatedJob instantiates a new SessionPopulatedJob object
 This constructor will assign default values to properties that have it defined,
@@ -34,24 +34,24 @@ NewSessionPopulatedJobWithDefaults instantiates a new SessionPopulatedJob object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetCid
 
-`func (o *SessionPopulatedJob) GetId() string`
+`func (o *SessionPopulatedJob) GetCid() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetCid returns the Cid field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetCidOk
 
-`func (o *SessionPopulatedJob) GetIdOk() (*string, bool)`
+`func (o *SessionPopulatedJob) GetCidOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetCid
 
-`func (o *SessionPopulatedJob) SetId(v string)`
+`func (o *SessionPopulatedJob) SetCid(v string)`
 
-SetId sets Id field to given value.
+SetCid sets Cid field to given value.
 
 
 ### GetExtId
@@ -144,24 +144,24 @@ SetCreatedBy sets CreatedBy field to given value.
 
 HasCreatedBy returns a boolean if a field has been set.
 
-### GetOrganization
+### GetTeamId
 
-`func (o *SessionPopulatedJob) GetOrganization() string`
+`func (o *SessionPopulatedJob) GetTeamId() string`
 
-GetOrganization returns the Organization field if non-nil, zero value otherwise.
+GetTeamId returns the TeamId field if non-nil, zero value otherwise.
 
-### GetOrganizationOk
+### GetTeamIdOk
 
-`func (o *SessionPopulatedJob) GetOrganizationOk() (*string, bool)`
+`func (o *SessionPopulatedJob) GetTeamIdOk() (*string, bool)`
 
-GetOrganizationOk returns a tuple with the Organization field if it's non-nil, zero value otherwise
+GetTeamIdOk returns a tuple with the TeamId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrganization
+### SetTeamId
 
-`func (o *SessionPopulatedJob) SetOrganization(v string)`
+`func (o *SessionPopulatedJob) SetTeamId(v string)`
 
-SetOrganization sets Organization field to given value.
+SetTeamId sets TeamId field to given value.
 
 
 ### GetHash

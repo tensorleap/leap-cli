@@ -6,14 +6,14 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Email** | **string** |  | 
 **Name** | **string** |  | 
-**Organization** | **string** |  | 
+**TeamId** | **string** |  | 
 **TrialRequested** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
 ### NewUserDataLocal
 
-`func NewUserDataLocal(email string, name string, organization string, ) *UserDataLocal`
+`func NewUserDataLocal(email string, name string, teamId string, ) *UserDataLocal`
 
 NewUserDataLocal instantiates a new UserDataLocal object
 This constructor will assign default values to properties that have it defined,
@@ -68,24 +68,24 @@ and a boolean to check if the value has been set.
 SetName sets Name field to given value.
 
 
-### GetOrganization
+### GetTeamId
 
-`func (o *UserDataLocal) GetOrganization() string`
+`func (o *UserDataLocal) GetTeamId() string`
 
-GetOrganization returns the Organization field if non-nil, zero value otherwise.
+GetTeamId returns the TeamId field if non-nil, zero value otherwise.
 
-### GetOrganizationOk
+### GetTeamIdOk
 
-`func (o *UserDataLocal) GetOrganizationOk() (*string, bool)`
+`func (o *UserDataLocal) GetTeamIdOk() (*string, bool)`
 
-GetOrganizationOk returns a tuple with the Organization field if it's non-nil, zero value otherwise
+GetTeamIdOk returns a tuple with the TeamId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrganization
+### SetTeamId
 
-`func (o *UserDataLocal) SetOrganization(v string)`
+`func (o *UserDataLocal) SetTeamId(v string)`
 
-SetOrganization sets Organization field to given value.
+SetTeamId sets TeamId field to given value.
 
 
 ### GetTrialRequested

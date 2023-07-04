@@ -4,12 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**Cid** | **string** |  | 
 **SessionId** | **string** |  | 
 **Epoch** | **float64** |  | 
 **GlobalStep** | **float64** |  | 
 **Status** | [**StatusEnum**](StatusEnum.md) |  | 
-**Organization** | **string** |  | 
+**TeamId** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
 **CreatedBy** | **string** |  | 
 
@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 
 ### NewSessionWeightData
 
-`func NewSessionWeightData(id string, sessionId string, epoch float64, globalStep float64, status StatusEnum, organization string, createdAt time.Time, createdBy string, ) *SessionWeightData`
+`func NewSessionWeightData(cid string, sessionId string, epoch float64, globalStep float64, status StatusEnum, teamId string, createdAt time.Time, createdBy string, ) *SessionWeightData`
 
 NewSessionWeightData instantiates a new SessionWeightData object
 This constructor will assign default values to properties that have it defined,
@@ -32,24 +32,24 @@ NewSessionWeightDataWithDefaults instantiates a new SessionWeightData object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetCid
 
-`func (o *SessionWeightData) GetId() string`
+`func (o *SessionWeightData) GetCid() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetCid returns the Cid field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetCidOk
 
-`func (o *SessionWeightData) GetIdOk() (*string, bool)`
+`func (o *SessionWeightData) GetCidOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetCid
 
-`func (o *SessionWeightData) SetId(v string)`
+`func (o *SessionWeightData) SetCid(v string)`
 
-SetId sets Id field to given value.
+SetCid sets Cid field to given value.
 
 
 ### GetSessionId
@@ -132,24 +132,24 @@ and a boolean to check if the value has been set.
 SetStatus sets Status field to given value.
 
 
-### GetOrganization
+### GetTeamId
 
-`func (o *SessionWeightData) GetOrganization() string`
+`func (o *SessionWeightData) GetTeamId() string`
 
-GetOrganization returns the Organization field if non-nil, zero value otherwise.
+GetTeamId returns the TeamId field if non-nil, zero value otherwise.
 
-### GetOrganizationOk
+### GetTeamIdOk
 
-`func (o *SessionWeightData) GetOrganizationOk() (*string, bool)`
+`func (o *SessionWeightData) GetTeamIdOk() (*string, bool)`
 
-GetOrganizationOk returns a tuple with the Organization field if it's non-nil, zero value otherwise
+GetTeamIdOk returns a tuple with the TeamId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrganization
+### SetTeamId
 
-`func (o *SessionWeightData) SetOrganization(v string)`
+`func (o *SessionWeightData) SetTeamId(v string)`
 
-SetOrganization sets Organization field to given value.
+SetTeamId sets TeamId field to given value.
 
 
 ### GetCreatedAt

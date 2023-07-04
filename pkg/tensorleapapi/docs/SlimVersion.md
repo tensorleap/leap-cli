@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**Cid** | **string** |  | 
 **CreatedBy** | **string** |  | 
-**Project** | **string** |  | 
+**ProjectId** | **string** |  | 
 **BranchName** | **string** |  | 
 **Tags** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewSlimVersion
 
-`func NewSlimVersion(id string, createdBy string, project string, branchName string, tags string, createdAt time.Time, notes string, datasetSetup DatasetSetup, isFavourite bool, sessions []Session, ) *SlimVersion`
+`func NewSlimVersion(cid string, createdBy string, projectId string, branchName string, tags string, createdAt time.Time, notes string, datasetSetup DatasetSetup, isFavourite bool, sessions []Session, ) *SlimVersion`
 
 NewSlimVersion instantiates a new SlimVersion object
 This constructor will assign default values to properties that have it defined,
@@ -36,24 +36,24 @@ NewSlimVersionWithDefaults instantiates a new SlimVersion object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetCid
 
-`func (o *SlimVersion) GetId() string`
+`func (o *SlimVersion) GetCid() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetCid returns the Cid field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetCidOk
 
-`func (o *SlimVersion) GetIdOk() (*string, bool)`
+`func (o *SlimVersion) GetCidOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetCid
 
-`func (o *SlimVersion) SetId(v string)`
+`func (o *SlimVersion) SetCid(v string)`
 
-SetId sets Id field to given value.
+SetCid sets Cid field to given value.
 
 
 ### GetCreatedBy
@@ -76,24 +76,24 @@ and a boolean to check if the value has been set.
 SetCreatedBy sets CreatedBy field to given value.
 
 
-### GetProject
+### GetProjectId
 
-`func (o *SlimVersion) GetProject() string`
+`func (o *SlimVersion) GetProjectId() string`
 
-GetProject returns the Project field if non-nil, zero value otherwise.
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
 
-### GetProjectOk
+### GetProjectIdOk
 
-`func (o *SlimVersion) GetProjectOk() (*string, bool)`
+`func (o *SlimVersion) GetProjectIdOk() (*string, bool)`
 
-GetProjectOk returns a tuple with the Project field if it's non-nil, zero value otherwise
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetProject
+### SetProjectId
 
-`func (o *SlimVersion) SetProject(v string)`
+`func (o *SlimVersion) SetProjectId(v string)`
 
-SetProject sets Project field to given value.
+SetProjectId sets ProjectId field to given value.
 
 
 ### GetBranchName

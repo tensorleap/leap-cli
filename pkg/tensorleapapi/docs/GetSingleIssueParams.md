@@ -4,13 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**Cid** | **string** |  | 
+**ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewGetSingleIssueParams
 
-`func NewGetSingleIssueParams(id string, ) *GetSingleIssueParams`
+`func NewGetSingleIssueParams(cid string, projectId string, ) *GetSingleIssueParams`
 
 NewGetSingleIssueParams instantiates a new GetSingleIssueParams object
 This constructor will assign default values to properties that have it defined,
@@ -25,24 +26,44 @@ NewGetSingleIssueParamsWithDefaults instantiates a new GetSingleIssueParams obje
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetCid
 
-`func (o *GetSingleIssueParams) GetId() string`
+`func (o *GetSingleIssueParams) GetCid() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetCid returns the Cid field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetCidOk
 
-`func (o *GetSingleIssueParams) GetIdOk() (*string, bool)`
+`func (o *GetSingleIssueParams) GetCidOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetCid
 
-`func (o *GetSingleIssueParams) SetId(v string)`
+`func (o *GetSingleIssueParams) SetCid(v string)`
 
-SetId sets Id field to given value.
+SetCid sets Cid field to given value.
+
+
+### GetProjectId
+
+`func (o *GetSingleIssueParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *GetSingleIssueParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *GetSingleIssueParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
 
 
 

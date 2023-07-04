@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**Cid** | **string** |  | 
 **Layout** | [**SizedLayout**](SizedLayout.md) |  | 
 **Type** | **string** |  | 
 **Data** | [**CustomVisualizationData**](CustomVisualizationData.md) |  | 
@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewDashboardItem
 
-`func NewDashboardItem(id string, layout SizedLayout, type_ string, data CustomVisualizationData, ) *DashboardItem`
+`func NewDashboardItem(cid string, layout SizedLayout, type_ string, data CustomVisualizationData, ) *DashboardItem`
 
 NewDashboardItem instantiates a new DashboardItem object
 This constructor will assign default values to properties that have it defined,
@@ -28,24 +28,24 @@ NewDashboardItemWithDefaults instantiates a new DashboardItem object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetCid
 
-`func (o *DashboardItem) GetId() string`
+`func (o *DashboardItem) GetCid() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetCid returns the Cid field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetCidOk
 
-`func (o *DashboardItem) GetIdOk() (*string, bool)`
+`func (o *DashboardItem) GetCidOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetCid
 
-`func (o *DashboardItem) SetId(v string)`
+`func (o *DashboardItem) SetCid(v string)`
 
-SetId sets Id field to given value.
+SetCid sets Cid field to given value.
 
 
 ### GetLayout

@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VersionId** | **string** |  | 
+**ProjectId** | **string** |  | 
 **FromSessionId** | **string** |  | 
 **FromEpoch** | **float64** |  | 
 **ModelName** | **string** |  | 
@@ -15,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewTrainFromInitialWeightsParams
 
-`func NewTrainFromInitialWeightsParams(versionId string, fromSessionId string, fromEpoch float64, modelName string, trainingParams TrainingParams, shouldRunPopulationExploration bool, ) *TrainFromInitialWeightsParams`
+`func NewTrainFromInitialWeightsParams(versionId string, projectId string, fromSessionId string, fromEpoch float64, modelName string, trainingParams TrainingParams, shouldRunPopulationExploration bool, ) *TrainFromInitialWeightsParams`
 
 NewTrainFromInitialWeightsParams instantiates a new TrainFromInitialWeightsParams object
 This constructor will assign default values to properties that have it defined,
@@ -48,6 +49,26 @@ and a boolean to check if the value has been set.
 `func (o *TrainFromInitialWeightsParams) SetVersionId(v string)`
 
 SetVersionId sets VersionId field to given value.
+
+
+### GetProjectId
+
+`func (o *TrainFromInitialWeightsParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *TrainFromInitialWeightsParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *TrainFromInitialWeightsParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
 
 
 ### GetFromSessionId

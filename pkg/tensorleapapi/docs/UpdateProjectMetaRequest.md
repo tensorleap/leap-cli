@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Tags** | **[]string** |  | 
 **HubPublishPolicy** | [**HubPublishPolicy**](HubPublishPolicy.md) |  | 
 **BgImageUrl** | Pointer to **string** |  | [optional] 
+**Categories** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
 **ProjectId** | **string** |  | 
 
 ## Methods
@@ -134,6 +135,31 @@ SetBgImageUrl sets BgImageUrl field to given value.
 `func (o *UpdateProjectMetaRequest) HasBgImageUrl() bool`
 
 HasBgImageUrl returns a boolean if a field has been set.
+
+### GetCategories
+
+`func (o *UpdateProjectMetaRequest) GetCategories() map[string]interface{}`
+
+GetCategories returns the Categories field if non-nil, zero value otherwise.
+
+### GetCategoriesOk
+
+`func (o *UpdateProjectMetaRequest) GetCategoriesOk() (*map[string]interface{}, bool)`
+
+GetCategoriesOk returns a tuple with the Categories field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCategories
+
+`func (o *UpdateProjectMetaRequest) SetCategories(v map[string]interface{})`
+
+SetCategories sets Categories field to given value.
+
+### HasCategories
+
+`func (o *UpdateProjectMetaRequest) HasCategories() bool`
+
+HasCategories returns a boolean if a field has been set.
 
 ### GetProjectId
 

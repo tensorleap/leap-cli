@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SessionRunId** | **string** |  | 
+**ProjectId** | **string** |  | 
 **SampleIdentity** | [**SampleIdentity**](SampleIdentity.md) |  | 
 **FromDatasetSlice** | [**DataStateType**](DataStateType.md) |  | 
 **BatchSize** | **float64** |  | 
@@ -15,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewSampleSelectionParams
 
-`func NewSampleSelectionParams(sessionRunId string, sampleIdentity SampleIdentity, fromDatasetSlice DataStateType, batchSize float64, numOfSamples float64, fromEpoch float64, ) *SampleSelectionParams`
+`func NewSampleSelectionParams(sessionRunId string, projectId string, sampleIdentity SampleIdentity, fromDatasetSlice DataStateType, batchSize float64, numOfSamples float64, fromEpoch float64, ) *SampleSelectionParams`
 
 NewSampleSelectionParams instantiates a new SampleSelectionParams object
 This constructor will assign default values to properties that have it defined,
@@ -48,6 +49,26 @@ and a boolean to check if the value has been set.
 `func (o *SampleSelectionParams) SetSessionRunId(v string)`
 
 SetSessionRunId sets SessionRunId field to given value.
+
+
+### GetProjectId
+
+`func (o *SampleSelectionParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *SampleSelectionParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *SampleSelectionParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
 
 
 ### GetSampleIdentity

@@ -5,12 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VisualizationId** | **string** |  | 
+**ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewGetSlimVisualizationParams
 
-`func NewGetSlimVisualizationParams(visualizationId string, ) *GetSlimVisualizationParams`
+`func NewGetSlimVisualizationParams(visualizationId string, projectId string, ) *GetSlimVisualizationParams`
 
 NewGetSlimVisualizationParams instantiates a new GetSlimVisualizationParams object
 This constructor will assign default values to properties that have it defined,
@@ -43,6 +44,26 @@ and a boolean to check if the value has been set.
 `func (o *GetSlimVisualizationParams) SetVisualizationId(v string)`
 
 SetVisualizationId sets VisualizationId field to given value.
+
+
+### GetProjectId
+
+`func (o *GetSlimVisualizationParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *GetSlimVisualizationParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *GetSlimVisualizationParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
 
 
 

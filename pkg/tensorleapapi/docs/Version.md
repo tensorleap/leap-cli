@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**Cid** | **string** |  | 
 **ExtId** | **string** |  | 
 **CreatedBy** | **string** |  | 
-**Organization** | **string** |  | 
-**Project** | **string** |  | 
+**TeamId** | **string** |  | 
+**ProjectId** | **string** |  | 
 **Branch** | **string** |  | 
 **Tag** | **string** |  | 
 **Data** | [**ModelGraph**](ModelGraph.md) |  | 
@@ -18,12 +18,13 @@ Name | Type | Description | Notes
 **IsFavourite** | **bool** |  | 
 **CodeIntegrationVersionId** | Pointer to **string** |  | [optional] 
 **DatasetSetup** | [**DatasetSetup**](DatasetSetup.md) |  | 
+**Hash** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewVersion
 
-`func NewVersion(id string, extId string, createdBy string, organization string, project string, branch string, tag string, data ModelGraph, createdAt time.Time, notes string, status string, isFavourite bool, datasetSetup DatasetSetup, ) *Version`
+`func NewVersion(cid string, extId string, createdBy string, teamId string, projectId string, branch string, tag string, data ModelGraph, createdAt time.Time, notes string, status string, isFavourite bool, datasetSetup DatasetSetup, ) *Version`
 
 NewVersion instantiates a new Version object
 This constructor will assign default values to properties that have it defined,
@@ -38,24 +39,24 @@ NewVersionWithDefaults instantiates a new Version object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetCid
 
-`func (o *Version) GetId() string`
+`func (o *Version) GetCid() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetCid returns the Cid field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetCidOk
 
-`func (o *Version) GetIdOk() (*string, bool)`
+`func (o *Version) GetCidOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetCid
 
-`func (o *Version) SetId(v string)`
+`func (o *Version) SetCid(v string)`
 
-SetId sets Id field to given value.
+SetCid sets Cid field to given value.
 
 
 ### GetExtId
@@ -98,44 +99,44 @@ and a boolean to check if the value has been set.
 SetCreatedBy sets CreatedBy field to given value.
 
 
-### GetOrganization
+### GetTeamId
 
-`func (o *Version) GetOrganization() string`
+`func (o *Version) GetTeamId() string`
 
-GetOrganization returns the Organization field if non-nil, zero value otherwise.
+GetTeamId returns the TeamId field if non-nil, zero value otherwise.
 
-### GetOrganizationOk
+### GetTeamIdOk
 
-`func (o *Version) GetOrganizationOk() (*string, bool)`
+`func (o *Version) GetTeamIdOk() (*string, bool)`
 
-GetOrganizationOk returns a tuple with the Organization field if it's non-nil, zero value otherwise
+GetTeamIdOk returns a tuple with the TeamId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrganization
+### SetTeamId
 
-`func (o *Version) SetOrganization(v string)`
+`func (o *Version) SetTeamId(v string)`
 
-SetOrganization sets Organization field to given value.
+SetTeamId sets TeamId field to given value.
 
 
-### GetProject
+### GetProjectId
 
-`func (o *Version) GetProject() string`
+`func (o *Version) GetProjectId() string`
 
-GetProject returns the Project field if non-nil, zero value otherwise.
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
 
-### GetProjectOk
+### GetProjectIdOk
 
-`func (o *Version) GetProjectOk() (*string, bool)`
+`func (o *Version) GetProjectIdOk() (*string, bool)`
 
-GetProjectOk returns a tuple with the Project field if it's non-nil, zero value otherwise
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetProject
+### SetProjectId
 
-`func (o *Version) SetProject(v string)`
+`func (o *Version) SetProjectId(v string)`
 
-SetProject sets Project field to given value.
+SetProjectId sets ProjectId field to given value.
 
 
 ### GetBranch
@@ -322,6 +323,31 @@ and a boolean to check if the value has been set.
 
 SetDatasetSetup sets DatasetSetup field to given value.
 
+
+### GetHash
+
+`func (o *Version) GetHash() string`
+
+GetHash returns the Hash field if non-nil, zero value otherwise.
+
+### GetHashOk
+
+`func (o *Version) GetHashOk() (*string, bool)`
+
+GetHashOk returns a tuple with the Hash field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHash
+
+`func (o *Version) SetHash(v string)`
+
+SetHash sets Hash field to given value.
+
+### HasHash
+
+`func (o *Version) HasHash() bool`
+
+HasHash returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

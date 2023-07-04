@@ -5,12 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DashboardId** | **string** |  | 
+**ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewGetDashboardParams
 
-`func NewGetDashboardParams(dashboardId string, ) *GetDashboardParams`
+`func NewGetDashboardParams(dashboardId string, projectId string, ) *GetDashboardParams`
 
 NewGetDashboardParams instantiates a new GetDashboardParams object
 This constructor will assign default values to properties that have it defined,
@@ -43,6 +44,26 @@ and a boolean to check if the value has been set.
 `func (o *GetDashboardParams) SetDashboardId(v string)`
 
 SetDashboardId sets DashboardId field to given value.
+
+
+### GetProjectId
+
+`func (o *GetDashboardParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *GetDashboardParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *GetDashboardParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
 
 
 

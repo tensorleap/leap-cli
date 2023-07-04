@@ -4,12 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**Cid** | **string** |  | 
 **Index** | **float64** |  | 
 **CreatedAt** | **time.Time** |  | 
 **CreatedBy** | **string** |  | 
 **UpdatedAt** | **time.Time** |  | 
-**OrganizationId** | **string** |  | 
+**TeamId** | **string** |  | 
 **ProjectId** | **string** |  | 
 **Title** | **string** |  | 
 **Status** | [**IssueStatus**](IssueStatus.md) |  | 
@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 
 ### NewIssue
 
-`func NewIssue(id string, index float64, createdAt time.Time, createdBy string, updatedAt time.Time, organizationId string, projectId string, title string, status IssueStatus, branch string, tags []string, activities []IssueActivity, ) *Issue`
+`func NewIssue(cid string, index float64, createdAt time.Time, createdBy string, updatedAt time.Time, teamId string, projectId string, title string, status IssueStatus, branch string, tags []string, activities []IssueActivity, ) *Issue`
 
 NewIssue instantiates a new Issue object
 This constructor will assign default values to properties that have it defined,
@@ -37,24 +37,24 @@ NewIssueWithDefaults instantiates a new Issue object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetCid
 
-`func (o *Issue) GetId() string`
+`func (o *Issue) GetCid() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetCid returns the Cid field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetCidOk
 
-`func (o *Issue) GetIdOk() (*string, bool)`
+`func (o *Issue) GetCidOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetCid
 
-`func (o *Issue) SetId(v string)`
+`func (o *Issue) SetCid(v string)`
 
-SetId sets Id field to given value.
+SetCid sets Cid field to given value.
 
 
 ### GetIndex
@@ -137,24 +137,24 @@ and a boolean to check if the value has been set.
 SetUpdatedAt sets UpdatedAt field to given value.
 
 
-### GetOrganizationId
+### GetTeamId
 
-`func (o *Issue) GetOrganizationId() string`
+`func (o *Issue) GetTeamId() string`
 
-GetOrganizationId returns the OrganizationId field if non-nil, zero value otherwise.
+GetTeamId returns the TeamId field if non-nil, zero value otherwise.
 
-### GetOrganizationIdOk
+### GetTeamIdOk
 
-`func (o *Issue) GetOrganizationIdOk() (*string, bool)`
+`func (o *Issue) GetTeamIdOk() (*string, bool)`
 
-GetOrganizationIdOk returns a tuple with the OrganizationId field if it's non-nil, zero value otherwise
+GetTeamIdOk returns a tuple with the TeamId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrganizationId
+### SetTeamId
 
-`func (o *Issue) SetOrganizationId(v string)`
+`func (o *Issue) SetTeamId(v string)`
 
-SetOrganizationId sets OrganizationId field to given value.
+SetTeamId sets TeamId field to given value.
 
 
 ### GetProjectId
