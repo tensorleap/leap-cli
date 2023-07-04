@@ -2,11 +2,7 @@ package local
 
 import (
 	"fmt"
-	"io"
 	"log"
-	"net/http"
-	"os"
-	"os/exec"
 	"path"
 	"strings"
 	"sync"
@@ -15,9 +11,8 @@ import (
 
 	"github.com/tensorleap/cli-go/pkg/helm"
 	"github.com/tensorleap/cli-go/pkg/k3d"
+	"github.com/tensorleap/cli-go/pkg/local"
 )
-
-const VAR_DIR = "/var/lib/tensorleap/standalone"
 
 var port uint
 var registryPort uint
@@ -30,25 +25,25 @@ func init() {
 		Short: "Installs tensorleap on the local machine, running in a docker container",
 		Long:  `Installs tensorleap on the local machine, running in a docker container`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := initVarDir(); err != nil {
+			if err := local.InitVarDir(); err != nil {
 				return err
 			}
 
-			if err := initDataVolumeDir(); err != nil {
+			if err := local.InitDataVolumeDir(dataVolume); err != nil {
 				return err
 			}
 
 			ctx := cmd.Context()
 
 			registryVolumes := []string{
-				fmt.Sprintf("%v:%v", path.Join(VAR_DIR, "registry"), "/var/lib/registry"),
+				fmt.Sprintf("%v:%v", path.Join(local.VAR_DIR, "registry"), "/var/lib/registry"),
 			}
 			registry, err := k3d.CreateLocalRegistry(ctx, registryPort, registryVolumes)
 			if err != nil {
 				return err
 			}
 
-			imagesToCache, err := getLatestImages(useGpu)
+			imagesToCache, err := local.GetLatestImages(useGpu)
 			if err != nil {
 				return err
 			}
@@ -68,7 +63,7 @@ func init() {
 			if err := k3d.CreateCluster(
 				ctx,
 				port,
-				[]string{fmt.Sprintf("%v:%v", VAR_DIR, VAR_DIR), dataVolume},
+				[]string{fmt.Sprintf("%v:%v", local.VAR_DIR, local.VAR_DIR), dataVolume},
 				useGpu,
 			); err != nil {
 				return err
@@ -92,106 +87,7 @@ func init() {
 	cmd.Flags().UintVarP(&port, "port", "p", 4589, "Port to be used for tensorleap installation")
 	cmd.Flags().UintVar(&registryPort, "registry-port", 5699, "Port to be used for docker registry")
 	cmd.Flags().BoolVar(&useGpu, "gpu", false, "Enable GPU usage for training and evaluating")
-	cmd.Flags().StringVar(&dataVolume, "data-volume", getDefaultDataVolume(), "Data Volume maps the user's local directory to the container's directory, enabling access to datasets for training and evaluation")
+	cmd.Flags().StringVar(&dataVolume, "data-volume", local.GetDefaultDataVolume(), "Data Volume maps the user's local directory to the container's directory, enabling access to datasets for training and evaluation")
 
 	RootCommand.AddCommand(cmd)
-}
-
-func initVarDir() error {
-	_, err := os.Stat(VAR_DIR)
-	if os.IsNotExist(err) {
-		log.Printf("Creating directory: %s (you may be asked to enter the root user password)", VAR_DIR)
-		mkdirCmd := exec.Command("/bin/sh", "-c", fmt.Sprintf("sudo mkdir -p %s", VAR_DIR))
-		if err := mkdirCmd.Run(); err != nil {
-			return err
-		}
-
-		log.Print("Setting directory permissions")
-		chmodCmd := exec.Command("/bin/sh", "-c", fmt.Sprintf("sudo chmod -R 777 %s", VAR_DIR))
-		if err := chmodCmd.Run(); err != nil {
-			return err
-		}
-	} else if err != nil {
-		return err
-	}
-
-	for _, dir := range []string{"storage", "registry"} {
-		fullPath := path.Join(VAR_DIR, dir)
-		_, err := os.Stat(fullPath)
-		if os.IsNotExist(err) {
-			log.Printf("Creating directory: %s", fullPath)
-			if err := os.MkdirAll(fullPath, 0777); err != nil {
-				return err
-			}
-		} else if err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func initDataVolumeDir() error {
-	dataPath := strings.Split(dataVolume, ":")[0]
-	return os.MkdirAll(dataPath, 0777)
-}
-
-func getLatestImages(useGpu bool) ([]string, error) {
-	resp, err := http.Get("https://raw.githubusercontent.com/tensorleap/helm-charts/master/images.txt")
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return nil, fmt.Errorf("Getting latest chart images returned bad status code: %v", resp.StatusCode)
-	}
-
-	tensorleapImages, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-	k3sVersion := k3d.K3sVersion
-	if useGpu {
-		k3sVersion = k3d.K3sGpuVersion
-	}
-
-	resp, err = http.Get(fmt.Sprintf("https://github.com/k3s-io/k3s/releases/download/%s/k3s-images.txt", strings.Replace(k3sVersion, "-", "+", 1)))
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return nil, fmt.Errorf("Getting latest k3s images returned bad status code: %v", resp.StatusCode)
-	}
-
-	k3sImages, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-
-	allImages := strings.Split(string(tensorleapImages), "\n")
-	allImages = append(allImages, strings.Split(string(k3sImages), "\n")...)
-
-	ret := []string{}
-	for _, img := range allImages {
-		if len(img) > 0 && !strings.Contains(img, "engine") {
-			ret = append(ret, img)
-		}
-	}
-
-	return ret, nil
-}
-
-func getDefaultDataVolume() string {
-	defaultDataPath := fmt.Sprintf("%s/tensorleap/data", getHomePath())
-	return fmt.Sprintf("%s:%s", defaultDataPath, defaultDataPath)
-}
-
-func getHomePath() string {
-	homeDir, err := os.UserHomeDir()
-	if err != nil {
-		panic(fmt.Errorf("Failed to get home directory: %w", err))
-	}
-
-	return homeDir
 }
