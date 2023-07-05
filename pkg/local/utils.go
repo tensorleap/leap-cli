@@ -11,7 +11,7 @@ import (
 
 const VAR_DIR = "/var/lib/tensorleap/standalone"
 
-func GetLatestImages(useGpu bool) ([]string, string, error) {
+func GetLatestImages(useGpu bool) (necessaryImages []string, backgroundImage string, err error) {
 	resp, err := http.Get("https://raw.githubusercontent.com/tensorleap/helm-charts/master/images.txt")
 	if err != nil {
 		return nil, "", err
@@ -32,32 +32,30 @@ func GetLatestImages(useGpu bool) ([]string, string, error) {
 
 	resp, err = http.Get(fmt.Sprintf("https://github.com/k3s-io/k3s/releases/download/%s/k3s-images.txt", strings.Replace(k3sVersion, "-", "+", 1)))
 	if err != nil {
-		return nil, "", err
+		return
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return nil, "", fmt.Errorf("Getting latest k3s images returned bad status code: %v", resp.StatusCode)
+		err = fmt.Errorf("Getting latest k3s images returned bad status code: %v", resp.StatusCode)
+		return
 	}
 
 	k3sImages, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, "", err
+		return
 	}
 
 	allImages := strings.Split(string(tensorleapImages), "\n")
 	allImages = append(allImages, strings.Split(string(k3sImages), "\n")...)
 
-	var engineImage string
-	ret := []string{}
+	necessaryImages = []string{}
 	for _, img := range allImages {
-		if len(img) > 0 {
-			if strings.Contains(img, "engine") {
-				engineImage = img
-			} else {
-				ret = append(ret, img)
-			}
+		if strings.Contains(img, "engine") {
+			backgroundImage = img
+		} else if len(img) > 0 {
+			necessaryImages = append(necessaryImages, img)
 		}
 	}
 
-	return ret, engineImage, nil
+	return
 }
