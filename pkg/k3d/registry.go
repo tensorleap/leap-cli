@@ -7,21 +7,24 @@ import (
 	"log"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/docker/docker/api/types"
+	dockerTypes "github.com/docker/docker/api/types"
 	cliutil "github.com/k3d-io/k3d/v5/cmd/util"
 	"github.com/k3d-io/k3d/v5/pkg/client"
 	"github.com/k3d-io/k3d/v5/pkg/runtimes"
 	docker "github.com/k3d-io/k3d/v5/pkg/runtimes/docker"
 	k3d "github.com/k3d-io/k3d/v5/pkg/types"
-	dockerTypes "github.com/docker/docker/api/types"
 )
+
+type Registry = k3d.Registry
 
 const REGISTRY_NAME = "k3d-tensorleap-registry"
 const CONTAINER_NAME = "k3d-tensorleap-server-0"
 const REGISTRY_DOMAIN = "k3d-tensorleap-registry:5000"
 
-func CreateLocalRegistry(ctx context.Context, port uint, volumes []string) (*k3d.Registry, error) {
+func CreateLocalRegistry(ctx context.Context, port uint, volumes []string) (*Registry, error) {
 	if existingRegistry, _ := client.RegistryGet(ctx, runtimes.SelectedRuntime, REGISTRY_NAME); existingRegistry != nil {
 		log.Println("Found existing registry!")
 		return existingRegistry, nil
@@ -35,13 +38,13 @@ func CreateLocalRegistry(ctx context.Context, port uint, volumes []string) (*k3d
 	return reg, nil
 }
 
-func createRegistryConfig(port uint, volumes []string) *k3d.Registry {
+func createRegistryConfig(port uint, volumes []string) *Registry {
 	exposePort, err := cliutil.ParsePortExposureSpec(strconv.FormatUint(uint64(port), 10), k3d.DefaultRegistryPort)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	reg := &k3d.Registry{
+	reg := &Registry{
 		Host:         REGISTRY_NAME,
 		Image:        fmt.Sprintf("%s:%s", k3d.DefaultRegistryImageRepo, k3d.DefaultRegistryImageTag),
 		ExposureOpts: *exposePort,
@@ -52,7 +55,7 @@ func createRegistryConfig(port uint, volumes []string) *k3d.Registry {
 	return reg
 }
 
-func CacheImage(ctx context.Context, image string, reg *k3d.Registry) error {
+func CacheImage(ctx context.Context, image string, reg *Registry) error {
 	dockerClient, err := docker.GetDockerClient()
 	if err != nil {
 		return err
@@ -110,6 +113,19 @@ func CacheImage(ctx context.Context, image string, reg *k3d.Registry) error {
 	return nil
 }
 
+func CacheImagesInParallel(ctx context.Context, images []string, registry *k3d.Registry) {
+	var wg sync.WaitGroup
+	for _, img := range images {
+		go func(img string) {
+			wg.Add(1)
+			defer wg.Done()
+			if err := CacheImage(ctx, img, registry); err != nil {
+				log.Fatalf("Failed to cache %s: %s", img, err)
+			}
+		}(img)
+	}
+	wg.Wait()
+}
 
 func CacheImageInTheBackground(ctx context.Context, image string) error {
 	dockerClient, err := docker.GetDockerClient()
