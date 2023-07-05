@@ -10,6 +10,8 @@ import (
 )
 
 const VAR_DIR = "/var/lib/tensorleap/standalone"
+const KUBE_CONTEXT = "k3d-tensorleap"
+const KUBE_NAMESPACE = "tensorleap"
 
 func GetLatestImages(useGpu bool) (necessaryImages []string, backgroundImage string, err error) {
 	resp, err := http.Get("https://raw.githubusercontent.com/tensorleap/helm-charts/master/images.txt")

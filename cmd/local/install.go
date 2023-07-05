@@ -59,8 +59,8 @@ func init() {
 			dataContainerPath := strings.Split(dataVolume, ":")[1]
 			if err := helm.InstallLatestTensorleapChartVersion(
 				ctx,
-				"k3d-tensorleap",
-				"tensorleap",
+				local.KUBE_CONTEXT,
+				local.KUBE_NAMESPACE,
 				helm.CreateTensorleapChartValues(useGpu, dataContainerPath),
 			); err != nil {
 				return err
