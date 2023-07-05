@@ -14,9 +14,12 @@ import (
 	"github.com/k3d-io/k3d/v5/pkg/runtimes"
 	docker "github.com/k3d-io/k3d/v5/pkg/runtimes/docker"
 	k3d "github.com/k3d-io/k3d/v5/pkg/types"
+	dockerTypes "github.com/docker/docker/api/types"
 )
 
 const REGISTRY_NAME = "k3d-tensorleap-registry"
+const CONTAINER_NAME = "k3d-tensorleap-server-0"
+const REGISTRY_DOMAIN = "k3d-tensorleap-registry:5000"
 
 func CreateLocalRegistry(ctx context.Context, port uint, volumes []string) (*k3d.Registry, error) {
 	if existingRegistry, _ := client.RegistryGet(ctx, runtimes.SelectedRuntime, REGISTRY_NAME); existingRegistry != nil {
@@ -105,4 +108,31 @@ func CacheImage(ctx context.Context, image string, reg *k3d.Registry) error {
 	log.Printf("Pushed image '%s'\n", targetImage)
 
 	return nil
+}
+
+
+func CacheImageInTheBackground(ctx context.Context, image string) error {
+	dockerClient, err := docker.GetDockerClient()
+	if err != nil {
+		return err
+	}
+
+	urlLength := strings.IndexRune(image, '/')
+	targetImage := REGISTRY_DOMAIN + image[urlLength:]
+
+	shellScript := strings.Join([]string{
+		fmt.Sprintf("crictl pull %s", image),
+		fmt.Sprintf("ctr image convert %s %s", image, targetImage),
+		fmt.Sprintf("ctr image push --plain-http %s", targetImage),
+	}, " && ")
+	exec, err := dockerClient.ContainerExecCreate(ctx, CONTAINER_NAME, dockerTypes.ExecConfig{
+		Privileged: true,
+		Detach:     true,
+		Cmd:        []string{"sh", "-c", shellScript},
+	})
+	if err != nil {
+		return fmt.Errorf("docker failed to create exec config for node '%s': %w", CONTAINER_NAME, err)
+	}
+
+	return dockerClient.ContainerExecStart(ctx, exec.ID, dockerTypes.ExecStartCheck{})
 }
