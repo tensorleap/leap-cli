@@ -17,9 +17,9 @@ import (
 
 func init() {
 	RootCommand.AddCommand(&cobra.Command{
-		Use:   "save",
-		Short: "Save dataset script",
-		Long:  `Save dataset script`,
+		Use:   "push",
+		Short: "Push dataset script",
+		Long:  `Push dataset script`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			datasetConfig, err := config.GetDatasetConfig()
 			if err != nil {
