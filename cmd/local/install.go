@@ -2,10 +2,8 @@ package local
 
 import (
 	"fmt"
-	"log"
 	"path"
 	"strings"
-	"sync"
 
 	"github.com/spf13/cobra"
 
@@ -43,22 +41,11 @@ func init() {
 				return err
 			}
 
-			imagesToCache, engineImage, err := local.GetLatestImages(useGpu)
+			imagesToCache, imageToCacheInTheBackground, err := local.GetLatestImages(useGpu)
 			if err != nil {
 				return err
 			}
-
-			var wg sync.WaitGroup
-			for _, img := range imagesToCache {
-				go func(img string) {
-					wg.Add(1)
-					defer wg.Done()
-					if err := k3d.CacheImage(ctx, img, registry); err != nil {
-						log.Fatalf("Failed to cache %s: %s", img, err)
-					}
-				}(img)
-			}
-			wg.Wait()
+			k3d.CacheImagesInParallel(ctx, imagesToCache, registry)
 
 			if err := k3d.CreateCluster(
 				ctx,
@@ -79,7 +66,7 @@ func init() {
 				return err
 			}
 
-			k3d.CacheImageInTheBackground(ctx, engineImage)
+			k3d.CacheImageInTheBackground(ctx, imageToCacheInTheBackground)
 
 			return nil
 
