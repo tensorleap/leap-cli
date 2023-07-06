@@ -2,8 +2,6 @@ package models
 
 import (
 	"fmt"
-	"io"
-	"net/http"
 	"os"
 	"path/filepath"
 
@@ -13,27 +11,6 @@ import (
 	"github.com/tensorleap/cli-go/pkg/config"
 	"github.com/tensorleap/cli-go/pkg/tensorleapapi"
 )
-
-func uploadFile(url string, file *os.File) error {
-	fmt.Println("Uploading...")
-	reader, writer := io.Pipe()
-	go func() {
-		defer writer.Close()
-		_, err := io.Copy(writer, file)
-		writer.CloseWithError(err)
-	}()
-	req, err := http.NewRequest(http.MethodPut, url, reader)
-	if err != nil {
-		return err
-	}
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-	return nil
-}
 
 func init() {
 	var projectId string
@@ -65,7 +42,7 @@ func init() {
 			defer file.Close()
 
 			uploadUrl := signedUrlData.GetUrl()
-			if err := uploadFile(uploadUrl, file); err != nil {
+			if err := UploadFile(uploadUrl, file); err != nil {
 				return err
 			}
 
