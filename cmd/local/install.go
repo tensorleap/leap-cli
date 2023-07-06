@@ -57,10 +57,13 @@ func init() {
 			}
 
 			dataContainerPath := strings.Split(dataVolume, ":")[1]
+			helmConfig, err := helm.CreateHelmConfig(local.KUBE_CONTEXT, local.KUBE_NAMESPACE)
+			if err != nil {
+				return err
+			}
 			if err := helm.InstallLatestTensorleapChartVersion(
 				ctx,
-				local.KUBE_CONTEXT,
-				local.KUBE_NAMESPACE,
+				helmConfig,
 				helm.CreateTensorleapChartValues(useGpu, dataContainerPath),
 			); err != nil {
 				return err
@@ -69,7 +72,6 @@ func init() {
 			k3d.CacheImageInTheBackground(ctx, imageToCacheInTheBackground)
 
 			return nil
-
 		},
 	}
 
