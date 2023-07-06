@@ -61,12 +61,27 @@ func init() {
 			if err != nil {
 				return err
 			}
-			if err := helm.InstallLatestTensorleapChartVersion(
-				ctx,
-				helmConfig,
-				helm.CreateTensorleapChartValues(useGpu, dataContainerPath),
-			); err != nil {
+
+			isHelmReleaseExisted, err := helm.IsHelmReleaseExists(helmConfig)
+			if err != nil {
 				return err
+			}
+			if isHelmReleaseExisted {
+				if err := helm.UpgradeTensorleapChartVersion(
+					ctx,
+					helmConfig,
+				); err != nil {
+					return err
+				}
+			} else {
+				values := helm.CreateTensorleapChartValues(useGpu, dataContainerPath)
+				if err := helm.InstallLatestTensorleapChartVersion(
+					ctx,
+					helmConfig,
+					values,
+				); err != nil {
+					return err
+				}
 			}
 
 			k3d.CacheImageInTheBackground(ctx, imageToCacheInTheBackground)

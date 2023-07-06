@@ -5,7 +5,6 @@ import (
 	"log"
 
 	"helm.sh/helm/v3/pkg/action"
-	"helm.sh/helm/v3/pkg/chart/loader"
 )
 
 func InstallLatestTensorleapChartVersion(
@@ -22,23 +21,17 @@ func InstallLatestTensorleapChartVersion(
 	client.Wait = true
 	client.ReleaseName = RELEASE_NAME
 
-	// client := action.NewPull()
-	cp, err := client.ChartPathOptions.LocateChart(CHART_NAME, config.Settings)
+	latestChart, err := getLatestChart(config, &client.ChartPathOptions)
 	if err != nil {
 		return err
 	}
 
-	chartRequested, err := loader.Load(cp)
+	_, err = client.RunWithContext(ctx, latestChart, values)
 	if err != nil {
 		return err
 	}
 
-	_, err = client.RunWithContext(ctx, chartRequested, values)
-	if err != nil {
-		return err
-	}
-
-	log.Printf("Tensorleap installed on local k3d cluster! version: %s", chartRequested.Metadata.Version)
+	log.Printf("Tensorleap installed on local k3d cluster! version: %s", latestChart.Metadata.Version)
 
 	return nil
 }
