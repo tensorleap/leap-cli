@@ -1,17 +1,27 @@
 package local
 
 import (
-	"fmt"
 	"github.com/spf13/cobra"
+	"github.com/tensorleap/cli-go/pkg/k3d"
 )
 
-func init() {
-	RootCommand.AddCommand(&cobra.Command{
+
+func NewUninstallCmd() *cobra.Command {
+	cmd := &cobra.Command{
 		Use:   "uninstall",
 		Short: "Remove local Tensorleap installation",
 		Long:  `Remove local Tensorleap installation`,
-		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("Uninstall command")
+		RunE: func(cmd *cobra.Command, args []string) error {
+			ctx := cmd.Context()
+			err := k3d.UninstallCluster(ctx)
+			return err
+
+			// todo: implement --cache and --data
 		},
-	})
+	}
+	return cmd
+}
+
+func init() {
+	RootCommand.AddCommand(NewUninstallCmd())
 }
