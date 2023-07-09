@@ -1,7 +1,6 @@
 package local
 
 import (
-	"context"
 	"fmt"
 	"log"
 	"os"
@@ -56,7 +55,7 @@ func GetDefaultDataVolume() string {
 	return fmt.Sprintf("%s:%s", defaultDataPath, defaultDataPath)
 }
 
-func InstallHelm(ctx context.Context, useGpu bool, dataContainerPath string) error {
+func InstallHelm(useGpu bool, dataContainerPath string) error {
 	helmConfig, err := helm.CreateHelmConfig(KUBE_CONTEXT, KUBE_NAMESPACE)
 	if err != nil {
 		return err
@@ -68,7 +67,6 @@ func InstallHelm(ctx context.Context, useGpu bool, dataContainerPath string) err
 	}
 	if isHelmReleaseExisted {
 		if err := helm.UpgradeTensorleapChartVersion(
-			ctx,
 			helmConfig,
 		); err != nil {
 			return err
@@ -76,7 +74,6 @@ func InstallHelm(ctx context.Context, useGpu bool, dataContainerPath string) err
 	} else {
 		values := helm.CreateTensorleapChartValues(useGpu, dataContainerPath)
 		if err := helm.InstallLatestTensorleapChartVersion(
-			ctx,
 			helmConfig,
 			values,
 		); err != nil {

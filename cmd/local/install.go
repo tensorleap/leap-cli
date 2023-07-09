@@ -56,7 +56,7 @@ func NewInstallCmd() *cobra.Command {
 			}
 
 			dataContainerPath := strings.Split(dataVolume, ":")[1]
-			if err := local.InstallHelm(ctx, useGpu, dataContainerPath); err != nil {
+			if err := local.InstallHelm(useGpu, dataContainerPath); err != nil {
 				return err
 			}
 

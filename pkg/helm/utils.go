@@ -1,6 +1,7 @@
 package helm
 
 import (
+	"context"
 	"log"
 	"os"
 
@@ -42,6 +43,7 @@ func CreateTensorleapChartValues(useGpu bool, dataDir string) Record {
 
 type HelmConfig struct {
 	Namespace    string
+	Context context.Context
 	ActionConfig *action.Configuration
 	Settings     *cli.EnvSettings
 }
@@ -51,12 +53,16 @@ func CreateHelmConfig(kubeContext, namespace string) (*HelmConfig, error) {
 	settings.SetNamespace(namespace)
 	settings.KubeContext = kubeContext
 
+	// Any other context with cancel will failed immediately when running helm actions, using background context solve it
+	ctx := context.Background()
+
 	actionConfig := new(action.Configuration)
 	if err := actionConfig.Init(settings.RESTClientGetter(), settings.Namespace(), os.Getenv("HELM_DRIVER"), log.Printf); err != nil {
 		return nil, err
 	}
 
 	return &HelmConfig{
+		Context: ctx,
 		Namespace:    namespace,
 		ActionConfig: actionConfig,
 		Settings:     settings,

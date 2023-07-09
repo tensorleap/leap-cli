@@ -1,14 +1,13 @@
 package helm
 
 import (
-	"context"
 	"log"
+	"time"
 
 	"helm.sh/helm/v3/pkg/action"
 )
 
 func UpgradeTensorleapChartVersion(
-	ctx context.Context,
 	config *HelmConfig,
 ) error {
 
@@ -23,7 +22,9 @@ func UpgradeTensorleapChartVersion(
 		return err
 	}
 
-	_, err = client.RunWithContext(ctx, RELEASE_NAME, latestChart, Record{})
+	client.Timeout = 5 * time.Minute;
+
+	_, err = client.RunWithContext(config.Context, RELEASE_NAME, latestChart, Record{})
 	if err != nil {
 		return err
 	}
