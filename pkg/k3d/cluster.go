@@ -2,6 +2,7 @@ package k3d
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -23,17 +24,17 @@ type Cluster = k3d.Cluster
 const CLUSTER_NAME = "tensorleap"
 
 var (
-	K3sVersion    = version.K3sVersion
-	K3sImage      = fmt.Sprintf("%s:%s", k3d.DefaultK3sImageRepo, K3sVersion)
-	K3sGpuVersion = "v1.23.8-k3s1"
+	K3sVersion          = version.K3sVersion
+	K3sImage            = fmt.Sprintf("%s:%s", k3d.DefaultK3sImageRepo, K3sVersion)
+	K3sGpuVersion       = "v1.23.8-k3s1"
 	K3sGpuVersionSuffix = "cuda"
-	K3sGpuImage   = fmt.Sprintf("us-central1-docker.pkg.dev/tensorleap/main/k3s:%s-%s", K3sGpuVersion, K3sGpuVersionSuffix)
+	K3sGpuImage         = fmt.Sprintf("us-central1-docker.pkg.dev/tensorleap/main/k3s:%s-%s", K3sGpuVersion, K3sGpuVersionSuffix)
 )
 
 func GetCluster(ctx context.Context) (*Cluster, error) {
 	clusters, err := k3dCluster.ClusterList(ctx, runtimes.SelectedRuntime)
-	if (err != nil) {
-		return  nil, err
+	if err != nil {
+		return nil, err
 	}
 
 	for _, cluster := range clusters {
@@ -41,7 +42,7 @@ func GetCluster(ctx context.Context) (*Cluster, error) {
 			return cluster, nil
 		}
 	}
-	
+
 	return nil, nil
 }
 
@@ -207,3 +208,17 @@ mirrors:
 	return k3dClusterConfig
 }
 
+func UninstallCluster(ctx context.Context) error {
+	cluster, err := GetCluster(ctx)
+	if err != nil {
+		return err
+	}
+	if cluster == nil {
+		return errors.New("Cluster not found")
+	}
+	opt := k3d.ClusterDeleteOpts{
+		SkipRegistryCheck: true,
+	}
+	err = k3dCluster.ClusterDelete(ctx, runtimes.SelectedRuntime, cluster, opt)
+	return err
+}
