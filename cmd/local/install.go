@@ -7,17 +7,16 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/tensorleap/cli-go/pkg/helm"
 	"github.com/tensorleap/cli-go/pkg/k3d"
 	"github.com/tensorleap/cli-go/pkg/local"
 )
 
-var port uint
-var registryPort uint
-var useGpu bool
-var dataVolume string
-
-func init() {
+func NewInstallCmd() *cobra.Command {
+	var port uint
+	var registryPort uint
+	var useGpu bool
+	var dataVolume string
+	
 	cmd := &cobra.Command{
 		Use:   "install",
 		Short: "Installs tensorleap on the local machine, running in a docker container",
@@ -57,31 +56,8 @@ func init() {
 			}
 
 			dataContainerPath := strings.Split(dataVolume, ":")[1]
-			helmConfig, err := helm.CreateHelmConfig(local.KUBE_CONTEXT, local.KUBE_NAMESPACE)
-			if err != nil {
+			if err := local.InstallHelm(ctx, useGpu, dataContainerPath); err != nil {
 				return err
-			}
-
-			isHelmReleaseExisted, err := helm.IsHelmReleaseExists(helmConfig)
-			if err != nil {
-				return err
-			}
-			if isHelmReleaseExisted {
-				if err := helm.UpgradeTensorleapChartVersion(
-					ctx,
-					helmConfig,
-				); err != nil {
-					return err
-				}
-			} else {
-				values := helm.CreateTensorleapChartValues(useGpu, dataContainerPath)
-				if err := helm.InstallLatestTensorleapChartVersion(
-					ctx,
-					helmConfig,
-					values,
-				); err != nil {
-					return err
-				}
 			}
 
 			k3d.CacheImageInTheBackground(ctx, imageToCacheInTheBackground)
@@ -95,5 +71,9 @@ func init() {
 	cmd.Flags().BoolVar(&useGpu, "gpu", false, "Enable GPU usage for training and evaluating")
 	cmd.Flags().StringVar(&dataVolume, "data-volume", local.GetDefaultDataVolume(), "Data Volume maps the user's local directory to the container's directory, enabling access to datasets for training and evaluation")
 
-	RootCommand.AddCommand(cmd)
+	return cmd
+}
+
+func init() {
+	RootCommand.AddCommand(NewInstallCmd())
 }
