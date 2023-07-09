@@ -1,19 +1,17 @@
 package helm
 
 import (
-	"context"
 	"log"
+	"time"
 
 	"helm.sh/helm/v3/pkg/action"
 )
 
 func InstallLatestTensorleapChartVersion(
-	ctx context.Context,
 	config *HelmConfig,
 	values Record,
 ) error {
 	
-
 	client := action.NewInstall(config.ActionConfig)
 	client.ChartPathOptions.RepoURL = REPO_URL
 	client.Namespace = config.Namespace
@@ -26,7 +24,9 @@ func InstallLatestTensorleapChartVersion(
 		return err
 	}
 
-	_, err = client.RunWithContext(ctx, latestChart, values)
+	client.Timeout = 5 * time.Minute;
+
+	_, err = client.RunWithContext(config.Context, latestChart, values)
 	if err != nil {
 		return err
 	}
