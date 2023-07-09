@@ -9,8 +9,8 @@ import (
 	"github.com/tensorleap/cli-go/pkg/local"
 )
 
-func init() {
-	RootCommand.AddCommand(&cobra.Command{
+func NewUpgradeCmd() *cobra.Command {
+	cmd := &cobra.Command{
 		Use:   "upgrade",
 		Short: "Upgrade an existing local tensorleap installation to the latest version",
 		Long:  `Upgrade an existing local tensorleap installation to the latest version`,
@@ -57,5 +57,10 @@ func init() {
 			k3d.CacheImageInTheBackground(ctx, imageToCacheInTheBackground)
 			return nil
 		},
-	})
+	}
+	return cmd
+}
+
+func init() {
+	RootCommand.AddCommand(NewUpgradeCmd())
 }

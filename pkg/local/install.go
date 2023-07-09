@@ -1,12 +1,15 @@
 package local
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
 	"os/exec"
 	"path"
 	"strings"
+
+	"github.com/tensorleap/cli-go/pkg/helm"
 )
 
 func InitVarDir() error {
@@ -51,6 +54,36 @@ func InitDataVolumeDir(dataVolume string) error {
 func GetDefaultDataVolume() string {
 	defaultDataPath := fmt.Sprintf("%s/tensorleap/data", getHomePath())
 	return fmt.Sprintf("%s:%s", defaultDataPath, defaultDataPath)
+}
+
+func InstallHelm(ctx context.Context, useGpu bool, dataContainerPath string) error {
+	helmConfig, err := helm.CreateHelmConfig(KUBE_CONTEXT, KUBE_NAMESPACE)
+	if err != nil {
+		return err
+	}
+
+	isHelmReleaseExisted, err := helm.IsHelmReleaseExists(helmConfig)
+	if err != nil {
+		return err
+	}
+	if isHelmReleaseExisted {
+		if err := helm.UpgradeTensorleapChartVersion(
+			ctx,
+			helmConfig,
+		); err != nil {
+			return err
+		}
+	} else {
+		values := helm.CreateTensorleapChartValues(useGpu, dataContainerPath)
+		if err := helm.InstallLatestTensorleapChartVersion(
+			ctx,
+			helmConfig,
+			values,
+		); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func getHomePath() string {
