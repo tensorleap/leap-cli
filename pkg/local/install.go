@@ -2,12 +2,13 @@ package local
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
 	"path"
 	"strings"
 
+	"github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 	"github.com/tensorleap/cli-go/pkg/helm"
 )
 
@@ -55,8 +56,8 @@ func GetDefaultDataVolume() string {
 	return fmt.Sprintf("%s:%s", defaultDataPath, defaultDataPath)
 }
 
-func InstallHelm(useGpu bool, dataContainerPath string) error {
-	helmConfig, err := helm.CreateHelmConfig(KUBE_CONTEXT, KUBE_NAMESPACE)
+func InstallHelm(useGpu bool, dataContainerPath string, logger *logrus.Logger) error {
+	helmConfig, err := helm.CreateHelmConfig(KUBE_CONTEXT, KUBE_NAMESPACE, logger)
 	if err != nil {
 		return err
 	}

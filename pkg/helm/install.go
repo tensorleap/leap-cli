@@ -1,9 +1,9 @@
 package helm
 
 import (
-	"log"
 	"time"
 
+	"github.com/tensorleap/cli-go/pkg/log"
 	"helm.sh/helm/v3/pkg/action"
 )
 
@@ -11,7 +11,9 @@ func InstallLatestTensorleapChartVersion(
 	config *HelmConfig,
 	values Record,
 ) error {
-	
+
+	log.Println("Installing helm chart (will take few minutes)")
+
 	client := action.NewInstall(config.ActionConfig)
 	client.ChartPathOptions.RepoURL = REPO_URL
 	client.Namespace = config.Namespace
@@ -24,7 +26,7 @@ func InstallLatestTensorleapChartVersion(
 		return err
 	}
 
-	client.Timeout = 5 * time.Minute;
+	client.Timeout = 5 * time.Minute
 
 	_, err = client.RunWithContext(config.Context, latestChart, values)
 	if err != nil {
@@ -35,4 +37,3 @@ func InstallLatestTensorleapChartVersion(
 
 	return nil
 }
-

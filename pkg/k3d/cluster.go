@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -17,6 +16,7 @@ import (
 	"github.com/k3d-io/k3d/v5/pkg/runtimes"
 	k3d "github.com/k3d-io/k3d/v5/pkg/types"
 	"github.com/k3d-io/k3d/v5/version"
+	"github.com/tensorleap/cli-go/pkg/log"
 )
 
 type Cluster = k3d.Cluster
@@ -86,7 +86,7 @@ func IsGpuCluster(cluster *Cluster) bool {
 func createClusterConfig(ctx context.Context, port uint, volumes []string, useGpu bool) *conf.ClusterConfig {
 	freePort, err := cliutil.GetFreePort()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 
 	image := K3sImage
@@ -197,12 +197,12 @@ mirrors:
 
 	k3dClusterConfig, err := config.TransformSimpleToClusterConfig(ctx, runtimes.SelectedRuntime, simpleK3dConfig)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 
 	k3dClusterConfig, err = config.ProcessClusterConfig(*k3dClusterConfig)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 
 	return k3dClusterConfig
@@ -214,8 +214,9 @@ func UninstallCluster(ctx context.Context) error {
 		return err
 	}
 	if cluster == nil {
-		return errors.New("Cluster not found")
+		return errors.New("Cluster 'tensorleap' not found")
 	}
+	log.Info("Deleting cluster 'tensorleap'")
 	opt := k3d.ClusterDeleteOpts{
 		SkipRegistryCheck: true,
 	}
