@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"log"
 	"strconv"
 	"strings"
 	"sync"
@@ -16,6 +15,7 @@ import (
 	"github.com/k3d-io/k3d/v5/pkg/runtimes"
 	docker "github.com/k3d-io/k3d/v5/pkg/runtimes/docker"
 	k3d "github.com/k3d-io/k3d/v5/pkg/types"
+	"github.com/tensorleap/cli-go/pkg/log"
 )
 
 type Registry = k3d.Registry
@@ -75,13 +75,13 @@ func CacheImage(ctx context.Context, image string, reg *Registry) error {
 	}
 	defer resp.Close()
 
-	log.Printf("Pulling image '%s'\n", image)
+	log.Infof("Pulling image '%s'\n", image)
 
 	// this prints out status of the pull, consider having that under some flags or doing fancy stuff to display it
 	// _, err = io.Copy(os.Stdout, resp)
 	_, err = io.Copy(io.Discard, resp)
 	if err != nil {
-		log.Printf("Couldn't get docker output: %v", err)
+		log.Warnf("Couldn't get docker output: %v", err)
 	}
 
 	registryNode, err := runtimes.SelectedRuntime.GetNode(ctx, &k3d.Node{Name: reg.Host})
@@ -109,7 +109,7 @@ func CacheImage(ctx context.Context, image string, reg *Registry) error {
 	}
 	defer resp.Close()
 
-	log.Printf("Pushing image '%s'\n", targetImage)
+	log.Infof("Pushing image '%s'\n", targetImage)
 
 	_, err = io.Copy(io.Discard, resp)
 	if err != nil {
@@ -123,6 +123,7 @@ func CacheImage(ctx context.Context, image string, reg *Registry) error {
 
 func CacheImagesInParallel(ctx context.Context, images []string, registry *k3d.Registry) {
 	var wg sync.WaitGroup
+	log.Info("Downloading docker images...")
 	for _, img := range images {
 		go func(img string) {
 			wg.Add(1)

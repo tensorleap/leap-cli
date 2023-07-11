@@ -1,15 +1,17 @@
 package helm
 
 import (
-	"log"
 	"time"
 
+	"github.com/tensorleap/cli-go/pkg/log"
 	"helm.sh/helm/v3/pkg/action"
 )
 
 func UpgradeTensorleapChartVersion(
 	config *HelmConfig,
 ) error {
+
+	log.Println("Upgrading helm chart (will take few minutes)")
 
 	client := action.NewUpgrade(config.ActionConfig)
 	client.ChartPathOptions.RepoURL = REPO_URL
@@ -22,7 +24,7 @@ func UpgradeTensorleapChartVersion(
 		return err
 	}
 
-	client.Timeout = 5 * time.Minute;
+	client.Timeout = 5 * time.Minute
 
 	_, err = client.RunWithContext(config.Context, RELEASE_NAME, latestChart, Record{})
 	if err != nil {

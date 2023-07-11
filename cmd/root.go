@@ -12,6 +12,7 @@ import (
 	"github.com/tensorleap/cli-go/cmd/models"
 	. "github.com/tensorleap/cli-go/pkg/api"
 	"github.com/tensorleap/cli-go/pkg/config"
+	"github.com/tensorleap/cli-go/pkg/log"
 	"github.com/tensorleap/cli-go/pkg/version"
 )
 
@@ -60,7 +61,7 @@ func init() {
 
 func Execute() {
 	if err := RootCommand.Execute(); err != nil {
-		fmt.Println(err)
+		log.Error(err)
 		os.Exit(1)
 	}
 }

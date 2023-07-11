@@ -2,9 +2,9 @@ package helm
 
 import (
 	"context"
-	"log"
 	"os"
 
+	"github.com/sirupsen/logrus"
 	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chart/loader"
@@ -43,12 +43,12 @@ func CreateTensorleapChartValues(useGpu bool, dataDir string) Record {
 
 type HelmConfig struct {
 	Namespace    string
-	Context context.Context
+	Context      context.Context
 	ActionConfig *action.Configuration
 	Settings     *cli.EnvSettings
 }
 
-func CreateHelmConfig(kubeContext, namespace string) (*HelmConfig, error) {
+func CreateHelmConfig(kubeContext, namespace string, logger *logrus.Logger) (*HelmConfig, error) {
 	settings := cli.New()
 	settings.SetNamespace(namespace)
 	settings.KubeContext = kubeContext
@@ -57,12 +57,12 @@ func CreateHelmConfig(kubeContext, namespace string) (*HelmConfig, error) {
 	ctx := context.Background()
 
 	actionConfig := new(action.Configuration)
-	if err := actionConfig.Init(settings.RESTClientGetter(), settings.Namespace(), os.Getenv("HELM_DRIVER"), log.Printf); err != nil {
+	if err := actionConfig.Init(settings.RESTClientGetter(), settings.Namespace(), os.Getenv("HELM_DRIVER"), logger.Printf); err != nil {
 		return nil, err
 	}
 
 	return &HelmConfig{
-		Context: ctx,
+		Context:      ctx,
 		Namespace:    namespace,
 		ActionConfig: actionConfig,
 		Settings:     settings,
