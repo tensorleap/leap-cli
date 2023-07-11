@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
-
 	"github.com/tensorleap/cli-go/pkg/k3d"
 	"github.com/tensorleap/cli-go/pkg/local"
 )
@@ -16,12 +15,14 @@ func NewInstallCmd() *cobra.Command {
 	var registryPort uint
 	var useGpu bool
 	var dataVolume string
-	
+
 	cmd := &cobra.Command{
 		Use:   "install",
 		Short: "Installs tensorleap on the local machine, running in a docker container",
 		Long:  `Installs tensorleap on the local machine, running in a docker container`,
 		RunE: func(cmd *cobra.Command, args []string) error {
+			bgLogger := local.SetupBackgroundLogger("install")
+
 			if err := local.InitVarDir(); err != nil {
 				return err
 			}
@@ -56,7 +57,7 @@ func NewInstallCmd() *cobra.Command {
 			}
 
 			dataContainerPath := strings.Split(dataVolume, ":")[1]
-			if err := local.InstallHelm(useGpu, dataContainerPath); err != nil {
+			if err := local.InstallHelm(useGpu, dataContainerPath, bgLogger); err != nil {
 				return err
 			}
 
