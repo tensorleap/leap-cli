@@ -16,10 +16,11 @@ func NewUpgradeCmd() *cobra.Command {
 		Long:  `Upgrade an existing local tensorleap installation to the latest version`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 
-			ctx := cmd.Context()
 			if err := local.ValidateVarDir(); err != nil {
 				return err
 			}
+			ctx := cmd.Context()
+			bgLogger := local.SetupBackgroundLogger("upgrade")
 
 			cluster, err := local.GetTensorleapCluster(ctx)
 			if err != nil {
@@ -27,7 +28,7 @@ func NewUpgradeCmd() *cobra.Command {
 			}
 			isGpuCluster := k3d.IsGpuCluster(cluster)
 
-			helmConfig, err := helm.CreateHelmConfig(local.KUBE_CONTEXT, local.KUBE_NAMESPACE)
+			helmConfig, err := helm.CreateHelmConfig(local.KUBE_CONTEXT, local.KUBE_NAMESPACE, bgLogger)
 			if err != nil {
 				return err
 			}

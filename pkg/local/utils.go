@@ -6,7 +6,9 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/sirupsen/logrus"
 	"github.com/tensorleap/cli-go/pkg/k3d"
+	"github.com/tensorleap/cli-go/pkg/k8s"
 )
 
 const VAR_DIR = "/var/lib/tensorleap/standalone"
@@ -60,4 +62,13 @@ func GetLatestImages(useGpu bool) (necessaryImages []string, backgroundImage str
 	}
 
 	return
+}
+
+func SetupBackgroundLogger(logName string) *logrus.Logger {
+	backgroundLogger := logrus.New()
+	backgroundLogger.SetLevel(logrus.DebugLevel)
+	backgroundLogger.SetOutput(io.Discard)
+	k3d.SetupLogger(backgroundLogger)
+	k8s.SetupLogger(backgroundLogger)
+	return backgroundLogger
 }
