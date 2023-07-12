@@ -20,7 +20,11 @@ func NewUpgradeCmd() *cobra.Command {
 				return err
 			}
 			ctx := cmd.Context()
-			bgLogger := local.SetupBackgroundLogger("upgrade")
+			close, err := local.SetupInfra("upgrade")
+			if err != nil {
+				return err
+			}
+			defer close()
 
 			cluster, err := local.GetTensorleapCluster(ctx)
 			if err != nil {
@@ -28,7 +32,7 @@ func NewUpgradeCmd() *cobra.Command {
 			}
 			isGpuCluster := k3d.IsGpuCluster(cluster)
 
-			helmConfig, err := helm.CreateHelmConfig(local.KUBE_CONTEXT, local.KUBE_NAMESPACE, bgLogger)
+			helmConfig, err := helm.CreateHelmConfig(local.KUBE_CONTEXT, local.KUBE_NAMESPACE)
 			if err != nil {
 				return err
 			}
