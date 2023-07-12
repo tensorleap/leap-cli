@@ -2,8 +2,10 @@ package k3d
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
+	"net/http"
 	"strconv"
 	"strings"
 	"sync"
@@ -23,6 +25,11 @@ type Registry = k3d.Registry
 const REGISTRY_NAME = "k3d-tensorleap-registry"
 const CONTAINER_NAME = "k3d-tensorleap-server-0"
 const REGISTRY_DOMAIN = "k3d-tensorleap-registry:5000"
+
+type RegistryTagListResponse struct {
+	Name string
+	Tags []string
+}
 
 func GetLocalRegistryPort(ctx context.Context) (string, error) {
 	reg, err := client.RegistryGet(ctx, runtimes.SelectedRuntime, REGISTRY_NAME)
@@ -74,7 +81,54 @@ func createRegistryConfig(port uint, volumes []string) *Registry {
 	return reg
 }
 
+func isImageInRegistry(ctx context.Context, image string, regPort string) (bool, error) {
+	imageParts := strings.SplitN(image, ":", 2)
+	imageTag := imageParts[1]
+	urlLength := strings.IndexRune(imageParts[0], '/')
+	imageFullPath := imageParts[0][urlLength:]
+	tagsListUrl := fmt.Sprintf("http://127.0.0.1:%s/v2%s/tags/list", regPort, imageFullPath)
+
+	resp, err := http.Get(tagsListUrl)
+	if err != nil {
+		return false, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode == 404 {
+		return false, nil
+	}
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return false, fmt.Errorf("Local registry returned bad status code: %v", resp.StatusCode)
+	}
+
+	tagsListRaw, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return false, err
+	}
+
+	tagsList := RegistryTagListResponse{}
+	if err = json.Unmarshal(tagsListRaw, &tagsList); err != nil {
+		return false, err
+	}
+
+	for _, tag := range tagsList.Tags {
+		if tag == imageTag {
+			return true, nil
+		}
+	}
+
+	return false, nil
+}
+
 func CacheImage(ctx context.Context, image string, regPort string) error {
+	imageAlreadyInRegistry, err := isImageInRegistry(ctx, image, regPort)
+	if err != nil {
+		return err
+	}
+	if imageAlreadyInRegistry {
+		log.Infof("Image already cached '%s'\n", image)
+		return nil
+	}
+
 	dockerClient, err := docker.GetDockerClient()
 	if err != nil {
 		return err
