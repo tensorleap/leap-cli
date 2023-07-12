@@ -104,3 +104,27 @@ func initVarDirSubDir() error {
 	}
 	return nil
 }
+
+// SetupInfra init VAR_DIR, setup VerboseLog and connect its output into a file
+func SetupInfra(cmdName string) (closeLogFile func(), err error) {
+	err = InitVarDir()
+	if err != nil {
+		return
+	}
+
+	k3d.SetupLogger(log.VerboseLogger)
+	k8s.SetupLogger(log.VerboseLogger)
+
+	logPath := createLogFilePath(cmdName)
+	closeLogFile, err = log.ConnectFileToVerboseLogOutput(logPath)
+	return
+}
+
+func createLogFilePath(cmdName string) string {
+	filePath := fmt.Sprintf("%s/logs/%s_%s.log",
+		VAR_DIR,
+		cmdName,
+		time.Now().Format("2006-01-02_15-04-05"),
+	)
+	return filePath
+}
