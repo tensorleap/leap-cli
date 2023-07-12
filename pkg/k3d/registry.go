@@ -24,12 +24,23 @@ const REGISTRY_NAME = "k3d-tensorleap-registry"
 const CONTAINER_NAME = "k3d-tensorleap-server-0"
 const REGISTRY_DOMAIN = "k3d-tensorleap-registry:5000"
 
-func GetRegistry(ctx context.Context) (*Registry, error) {
-	registry, err := client.RegistryGet(ctx, runtimes.SelectedRuntime, REGISTRY_NAME)
+func GetLocalRegistryPort(ctx context.Context) (string, error) {
+	reg, err := client.RegistryGet(ctx, runtimes.SelectedRuntime, REGISTRY_NAME)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
-	return registry, nil
+
+	return GetRegistryPort(ctx, reg)
+}
+
+func GetRegistryPort(ctx context.Context, reg *Registry) (string, error) {
+	registryNode, err := runtimes.SelectedRuntime.GetNode(ctx, &k3d.Node{Name: reg.Host})
+	if err != nil {
+		return "", err
+	}
+
+	regPort := registryNode.Ports["5000/tcp"][0].HostPort
+	return regPort, nil
 }
 
 func CreateLocalRegistry(ctx context.Context, port uint, volumes []string) (*Registry, error) {
@@ -63,7 +74,7 @@ func createRegistryConfig(port uint, volumes []string) *Registry {
 	return reg
 }
 
-func CacheImage(ctx context.Context, image string, reg *Registry) error {
+func CacheImage(ctx context.Context, image string, regPort string) error {
 	dockerClient, err := docker.GetDockerClient()
 	if err != nil {
 		return err
@@ -84,11 +95,6 @@ func CacheImage(ctx context.Context, image string, reg *Registry) error {
 		log.Warnf("Couldn't get docker output: %v", err)
 	}
 
-	registryNode, err := runtimes.SelectedRuntime.GetNode(ctx, &k3d.Node{Name: reg.Host})
-	if err != nil {
-		return err
-	}
-	regPort := registryNode.Ports["5000/tcp"][0].HostPort
 	targetImage := fmt.Sprintf(
 		"127.0.0.1:%s%s",
 		regPort,
@@ -121,14 +127,14 @@ func CacheImage(ctx context.Context, image string, reg *Registry) error {
 	return nil
 }
 
-func CacheImagesInParallel(ctx context.Context, images []string, registry *k3d.Registry) {
+func CacheImagesInParallel(ctx context.Context, images []string, regPort string) {
 	var wg sync.WaitGroup
 	log.Info("Downloading docker images...")
 	for _, img := range images {
 		go func(img string) {
 			wg.Add(1)
 			defer wg.Done()
-			if err := CacheImage(ctx, img, registry); err != nil {
+			if err := CacheImage(ctx, img, regPort); err != nil {
 				log.Fatalf("Failed to cache %s: %s", img, err)
 			}
 		}(img)
