@@ -4,7 +4,7 @@ import (
 	"context"
 	"os"
 
-	"github.com/sirupsen/logrus"
+	"github.com/tensorleap/cli-go/pkg/log"
 	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chart/loader"
@@ -48,7 +48,7 @@ type HelmConfig struct {
 	Settings     *cli.EnvSettings
 }
 
-func CreateHelmConfig(kubeContext, namespace string, logger *logrus.Logger) (*HelmConfig, error) {
+func CreateHelmConfig(kubeContext, namespace string) (*HelmConfig, error) {
 	settings := cli.New()
 	settings.SetNamespace(namespace)
 	settings.KubeContext = kubeContext
@@ -57,7 +57,7 @@ func CreateHelmConfig(kubeContext, namespace string, logger *logrus.Logger) (*He
 	ctx := context.Background()
 
 	actionConfig := new(action.Configuration)
-	if err := actionConfig.Init(settings.RESTClientGetter(), settings.Namespace(), os.Getenv("HELM_DRIVER"), logger.Printf); err != nil {
+	if err := actionConfig.Init(settings.RESTClientGetter(), settings.Namespace(), os.Getenv("HELM_DRIVER"), log.VerboseLogger.Printf); err != nil {
 		return nil, err
 	}
 
