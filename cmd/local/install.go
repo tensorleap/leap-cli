@@ -21,11 +21,12 @@ func NewInstallCmd() *cobra.Command {
 		Short: "Installs tensorleap on the local machine, running in a docker container",
 		Long:  `Installs tensorleap on the local machine, running in a docker container`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			bgLogger := local.SetupBackgroundLogger("install")
 
-			if err := local.InitVarDir(); err != nil {
+			close, err := local.SetupInfra("install")
+			if err != nil {
 				return err
 			}
+			defer close()
 
 			if err := local.InitDataVolumeDir(dataVolume); err != nil {
 				return err
@@ -62,7 +63,7 @@ func NewInstallCmd() *cobra.Command {
 			}
 
 			dataContainerPath := strings.Split(dataVolume, ":")[1]
-			if err := local.InstallHelm(useGpu, dataContainerPath, bgLogger); err != nil {
+			if err := local.InstallHelm(useGpu, dataContainerPath); err != nil {
 				return err
 			}
 
