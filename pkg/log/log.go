@@ -1,49 +1,74 @@
 package log
 
-import "github.com/sirupsen/logrus"
+import (
+	"github.com/sirupsen/logrus"
+)
 
-var logger = (*logrus.Logger)(nil)
+var stdoutLogger = (*logrus.Logger)(nil)
+var VerboseLogger = (*logrus.Logger)(nil)
+var VerboseLoggerOutputs = (*LoggerWriters)(nil)
 
 func Printf(format string, args ...interface{}) {
-	logger.Printf(format, args...)
+	stdoutLogger.Printf(format, args...)
+	VerboseLogger.Printf(format, args...)
 }
 
-func Println( args ...interface{}) {
-	logger.Println(args...)
+func Println(args ...interface{}) {
+	stdoutLogger.Println(args...)
+	VerboseLogger.Println(args...)
 }
 
 func Info(args ...interface{}) {
-	logger.Info(args...)
+	stdoutLogger.Info(args...)
+	VerboseLogger.Info(args...)
 }
 
 func Infof(format string, args ...interface{}) {
-	logger.Infof(format, args...)
+	stdoutLogger.Infof(format, args...)
+	VerboseLogger.Infof(format, args...)
 }
 
 func Warn(args ...interface{}) {
-	logger.Warn(args...)
+	stdoutLogger.Warn(args...)
+	VerboseLogger.Warn(args...)
 }
 
 func Warnf(format string, args ...interface{}) {
-	logger.Warnf(format, args...)
+	stdoutLogger.Warnf(format, args...)
+	VerboseLogger.Warnf(format, args...)
 }
 
 func Error(args ...interface{}) {
-	logger.Error(args...)
+	stdoutLogger.Error(args...)
+	VerboseLogger.Error(args...)
 }
 
 func Errorf(format string, args ...interface{}) {
-	logger.Errorf(format, args...)
+	stdoutLogger.Errorf(format, args...)
+	VerboseLogger.Errorf(format, args...)
 }
 
 func Fatalln(args ...interface{}) {
-	logger.Fatalln(args...)
+	stdoutLogger.Fatalln(args...)
+	VerboseLogger.Fatalln(args...)
 }
 
 func Fatalf(format string, args ...interface{}) {
-	logger.Fatalf(format, args...)
+	stdoutLogger.Fatalf(format, args...)
+	VerboseLogger.Fatalf(format, args...)
 }
 
 func init() {
-	logger = logrus.New()
+	stdoutLogger = logrus.New()
+	stdoutLogger.SetFormatter(&logrus.TextFormatter{
+		DisableTimestamp: true,
+		ForceColors:      true,
+		ForceQuote:       true,
+	})
+
+	VerboseLogger = logrus.New()
+	VerboseLogger.SetFormatter(&logrus.JSONFormatter{})
+	VerboseLogger.SetLevel(logrus.DebugLevel)
+	VerboseLoggerOutputs = NewLoggerOutputs(VerboseLogger)
+	VerboseLoggerOutputs.Set()
 }
