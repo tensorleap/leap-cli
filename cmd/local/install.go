@@ -41,11 +41,16 @@ func NewInstallCmd() *cobra.Command {
 				return err
 			}
 
+			registryPortStr, err := k3d.GetRegistryPort(ctx, registry)
+			if err != nil {
+				return err
+			}
+
 			imagesToCache, imageToCacheInTheBackground, err := local.GetLatestImages(useGpu)
 			if err != nil {
 				return err
 			}
-			k3d.CacheImagesInParallel(ctx, imagesToCache, registry)
+			k3d.CacheImagesInParallel(ctx, imagesToCache, registryPortStr)
 
 			if err := k3d.CreateCluster(
 				ctx,

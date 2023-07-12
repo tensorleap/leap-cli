@@ -45,11 +45,11 @@ func NewUpgradeCmd() *cobra.Command {
 				return err
 			}
 
-			registry, err := k3d.GetRegistry(ctx)
+			registryPort, err := k3d.GetLocalRegistryPort(ctx)
 			if err != nil {
 				return err
 			}
-			k3d.CacheImagesInParallel(ctx, imagesToCache, registry)
+			k3d.CacheImagesInParallel(ctx, imagesToCache, registryPort)
 
 			if err := helm.UpgradeTensorleapChartVersion(helmConfig); err != nil {
 				return err
