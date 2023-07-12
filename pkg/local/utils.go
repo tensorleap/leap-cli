@@ -4,11 +4,15 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
+	"os/exec"
+	"path"
 	"strings"
+	"time"
 
-	"github.com/sirupsen/logrus"
 	"github.com/tensorleap/cli-go/pkg/k3d"
 	"github.com/tensorleap/cli-go/pkg/k8s"
+	"github.com/tensorleap/cli-go/pkg/log"
 )
 
 const VAR_DIR = "/var/lib/tensorleap/standalone"
@@ -64,11 +68,39 @@ func GetLatestImages(useGpu bool) (necessaryImages []string, backgroundImage str
 	return
 }
 
-func SetupBackgroundLogger(logName string) *logrus.Logger {
-	backgroundLogger := logrus.New()
-	backgroundLogger.SetLevel(logrus.DebugLevel)
-	backgroundLogger.SetOutput(io.Discard)
-	k3d.SetupLogger(backgroundLogger)
-	k8s.SetupLogger(backgroundLogger)
-	return backgroundLogger
+func InitVarDir() error {
+	_, err := os.Stat(VAR_DIR)
+	if os.IsNotExist(err) {
+		log.Printf("Creating directory: %s (you may be asked to enter the root user password)", VAR_DIR)
+		mkdirCmd := exec.Command("/bin/sh", "-c", fmt.Sprintf("sudo mkdir -p %s", VAR_DIR))
+		if err := mkdirCmd.Run(); err != nil {
+			return err
+		}
+
+		log.Println("Setting directory permissions")
+		chmodCmd := exec.Command("/bin/sh", "-c", fmt.Sprintf("sudo chmod -R 777 %s", VAR_DIR))
+		if err := chmodCmd.Run(); err != nil {
+			return err
+		}
+	} else if err != nil {
+		return err
+	}
+
+	return initVarDirSubDir()
+}
+
+func initVarDirSubDir() error {
+	for _, dir := range []string{"storage", "registry", "logs"} {
+		fullPath := path.Join(VAR_DIR, dir)
+		_, err := os.Stat(fullPath)
+		if os.IsNotExist(err) {
+			log.Printf("Creating directory: %s", fullPath)
+			if err := os.MkdirAll(fullPath, 0777); err != nil {
+				return err
+			}
+		} else if err != nil {
+			return err
+		}
+	}
+	return nil
 }
