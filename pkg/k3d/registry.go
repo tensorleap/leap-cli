@@ -197,6 +197,15 @@ func CacheImagesInParallel(ctx context.Context, images []string, regPort string)
 }
 
 func CacheImageInTheBackground(ctx context.Context, image string) error {
+	regPort, err := GetLocalRegistryPort(ctx)
+	if err != nil {
+		return err
+	}
+	imageAlreadyInRegistry, err := isImageInRegistry(ctx, image, regPort)
+	if err != nil {
+		return err
+	}
+
 	dockerClient, err := docker.GetDockerClient()
 	if err != nil {
 		return err
@@ -205,11 +214,14 @@ func CacheImageInTheBackground(ctx context.Context, image string) error {
 	urlLength := strings.IndexRune(image, '/')
 	targetImage := REGISTRY_DOMAIN + image[urlLength:]
 
-	shellScript := strings.Join([]string{
-		fmt.Sprintf("crictl pull %s", image),
-		fmt.Sprintf("ctr image convert %s %s", image, targetImage),
-		fmt.Sprintf("ctr image push --plain-http %s", targetImage),
-	}, " && ")
+	shellScript := fmt.Sprintf("crictl pull %s", image)
+	if !imageAlreadyInRegistry {
+		shellScript = strings.Join([]string{
+			shellScript,
+			fmt.Sprintf("ctr image convert %s %s", image, targetImage),
+			fmt.Sprintf("ctr image push --plain-http %s", targetImage),
+		}, " && ")
+	}
 	exec, err := dockerClient.ContainerExecCreate(ctx, CONTAINER_NAME, dockerTypes.ExecConfig{
 		Privileged: true,
 		Detach:     true,
