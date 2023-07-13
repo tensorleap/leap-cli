@@ -34,6 +34,8 @@ type RegistryTagListResponse struct {
 func GetLocalRegistryPort(ctx context.Context) (string, error) {
 	reg, err := client.RegistryGet(ctx, runtimes.SelectedRuntime, REGISTRY_NAME)
 	if err != nil {
+		log.SendCloudReport("error", "Failed getting local registry port", "Failed",
+			&map[string]interface{}{"registryName": REGISTRY_NAME, "selectedRuntime": runtimes.SelectedRuntime, "error": err.Error()})
 		return "", err
 	}
 
@@ -53,20 +55,28 @@ func GetRegistryPort(ctx context.Context, reg *Registry) (string, error) {
 func CreateLocalRegistry(ctx context.Context, port uint, volumes []string) (*Registry, error) {
 	if existingRegistry, _ := client.RegistryGet(ctx, runtimes.SelectedRuntime, REGISTRY_NAME); existingRegistry != nil {
 		log.Println("Found existing registry!")
+		log.SendCloudReport("info", "Found existing registry", "Running", &map[string]interface{}{"registryName": REGISTRY_NAME, "existingRegistry": existingRegistry})
+
 		return existingRegistry, nil
 	}
 
 	reg := createRegistryConfig(port, volumes)
 	_, err := client.RegistryRun(ctx, runtimes.SelectedRuntime, reg)
 	if err != nil {
+		log.SendCloudReport("error", "Failed running k3d registry", "Failed",
+			&map[string]interface{}{"registryName": REGISTRY_NAME, "selectedRuntime": runtimes.SelectedRuntime, "port": port, "volumes": volumes, "error": err.Error()})
 		return nil, err
 	}
+
+	log.SendCloudReport("info", "Successfully created k3d regisrty", "Running", &map[string]interface{}{"registryName": REGISTRY_NAME})
 	return reg, nil
 }
 
 func createRegistryConfig(port uint, volumes []string) *Registry {
 	exposePort, err := cliutil.ParsePortExposureSpec(strconv.FormatUint(uint64(port), 10), k3d.DefaultRegistryPort)
 	if err != nil {
+		log.SendCloudReport("error", "Failed creating k3d registry config", "Failed",
+			&map[string]interface{}{"defaultRegistry": k3d.DefaultRegistryPort, "port": port, "error": err.Error()})
 		log.Fatalln(err)
 	}
 
@@ -189,11 +199,13 @@ func CacheImagesInParallel(ctx context.Context, images []string, regPort string)
 			wg.Add(1)
 			defer wg.Done()
 			if err := CacheImage(ctx, img, regPort); err != nil {
+				log.SendCloudReport("error", "Failed caching image", "Failed", &map[string]interface{}{"image": img, "error": err.Error()})
 				log.Fatalf("Failed to cache %s: %s", img, err)
 			}
 		}(img)
 	}
 	wg.Wait()
+	log.SendCloudReport("info", "Successfully cached images in parallel", "Running", nil)
 }
 
 func CacheImageInTheBackground(ctx context.Context, image string) error {
@@ -208,6 +220,7 @@ func CacheImageInTheBackground(ctx context.Context, image string) error {
 
 	dockerClient, err := docker.GetDockerClient()
 	if err != nil {
+		log.SendCloudReport("error", "Failed fetching docker client", "Failed", &map[string]interface{}{"error": err.Error()})
 		return err
 	}
 
@@ -228,8 +241,11 @@ func CacheImageInTheBackground(ctx context.Context, image string) error {
 		Cmd:        []string{"sh", "-c", shellScript},
 	})
 	if err != nil {
+		log.SendCloudReport("error", "Failed creating exec config for node", "Failed",
+			&map[string]interface{}{"containerName": CONTAINER_NAME, "error": err.Error()})
 		return fmt.Errorf("docker failed to create exec config for node '%s': %w", CONTAINER_NAME, err)
 	}
 
+	log.SendCloudReport("info", "Successfully cached images in background", "Running", nil)
 	return dockerClient.ContainerExecStart(ctx, exec.ID, dockerTypes.ExecStartCheck{})
 }

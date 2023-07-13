@@ -27,6 +27,7 @@ func IsHelmReleaseExists(config *HelmConfig) (bool, error) {
 	if err == driver.ErrReleaseNotFound {
 		return false, nil
 	} else if err != nil {
+		log.SendCloudReport("error", "Failed validating helm release exists", "Failed", &map[string]interface{}{"error": err.Error()})
 		return false, err
 	}
 	return true, nil
@@ -55,12 +56,16 @@ func CreateHelmConfig(kubeContext, namespace string) (*HelmConfig, error) {
 
 	// Any other context with cancel will failed immediately when running helm actions, using background context solve it
 	ctx := context.Background()
+	helmDriver := os.Getenv("HELM_DRIVER")
 
 	actionConfig := new(action.Configuration)
 	if err := actionConfig.Init(settings.RESTClientGetter(), settings.Namespace(), os.Getenv("HELM_DRIVER"), log.VerboseLogger.Printf); err != nil {
+		log.SendCloudReport("error", "Failed creating helm config", "Failed",
+			&map[string]interface{}{"namespace": namespace, "helmDriver": helmDriver, "error": err.Error()})
 		return nil, err
 	}
 
+	log.SendCloudReport("info", "Successfully created helm config", "Running", nil)
 	return &HelmConfig{
 		Context:      ctx,
 		Namespace:    namespace,
@@ -72,11 +77,13 @@ func CreateHelmConfig(kubeContext, namespace string) (*HelmConfig, error) {
 func getLatestChart(config *HelmConfig, chartPathOptions *action.ChartPathOptions) (*chart.Chart, error) {
 	chartPath, err := chartPathOptions.LocateChart(CHART_NAME, config.Settings)
 	if err != nil {
+		log.SendCloudReport("error", "Failed locating helm chart", "Failed", &map[string]interface{}{"error": err.Error()})
 		return nil, err
 	}
 
 	chartRequested, err := loader.Load(chartPath)
 	if err != nil {
+		log.SendCloudReport("error", "Failed loading helm chart", "Failed", &map[string]interface{}{"error": err.Error()})
 		return nil, err
 	}
 	return chartRequested, nil

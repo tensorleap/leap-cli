@@ -22,15 +22,18 @@ const KUBE_NAMESPACE = "tensorleap"
 func GetLatestImages(useGpu bool) (necessaryImages []string, backgroundImage string, err error) {
 	resp, err := http.Get("https://raw.githubusercontent.com/tensorleap/helm-charts/master/images.txt")
 	if err != nil {
+		log.SendCloudReport("error", "Failed fetching latest helm-charts images", "Failed", &map[string]interface{}{"error": err.Error()})
 		return nil, "", err
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		log.SendCloudReport("error", "Getting latest chart images returned bad status code", "Failed", &map[string]interface{}{"statusCode": resp.StatusCode, "error": err.Error()})
 		return nil, "", fmt.Errorf("Getting latest chart images returned bad status code: %v", resp.StatusCode)
 	}
 
 	tensorleapImages, err := io.ReadAll(resp.Body)
 	if err != nil {
+		log.SendCloudReport("error", "Failed reading tensorleap images", "Failed", &map[string]interface{}{"error": err.Error()})
 		return nil, "", err
 	}
 	k3sVersion := k3d.K3sVersion
@@ -40,16 +43,19 @@ func GetLatestImages(useGpu bool) (necessaryImages []string, backgroundImage str
 
 	resp, err = http.Get(fmt.Sprintf("https://github.com/k3s-io/k3s/releases/download/%s/k3s-images.txt", strings.Replace(k3sVersion, "-", "+", 1)))
 	if err != nil {
+		log.SendCloudReport("error", "Failed fetching latest k3s images", "Failed", &map[string]interface{}{"error": err.Error()})
 		return
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		log.SendCloudReport("error", "Getting latest k3s images returned bad status code", "Failed", &map[string]interface{}{"statusCode": resp.StatusCode, "error": err.Error()})
 		err = fmt.Errorf("Getting latest k3s images returned bad status code: %v", resp.StatusCode)
 		return
 	}
 
 	k3sImages, err := io.ReadAll(resp.Body)
 	if err != nil {
+		log.SendCloudReport("error", "Failed reading k3s images", "Failed", &map[string]interface{}{"error": err.Error()})
 		return
 	}
 
@@ -65,6 +71,7 @@ func GetLatestImages(useGpu bool) (necessaryImages []string, backgroundImage str
 		}
 	}
 
+	log.SendCloudReport("info", "Successfully retrieved latest images", "Running", nil)
 	return
 }
 
@@ -109,6 +116,7 @@ func initStandaloneSubDirs() error {
 func SetupInfra(cmdName string) (closeLogFile func(), err error) {
 	err = InitStandaloneDir()
 	if err != nil {
+		log.SendCloudReport("error", "Failed initializing standalone dir", "Failed", &map[string]interface{}{"error": err.Error()})
 		return
 	}
 
@@ -117,6 +125,8 @@ func SetupInfra(cmdName string) (closeLogFile func(), err error) {
 
 	logPath := createLogFilePath(cmdName)
 	closeLogFile, err = log.ConnectFileToVerboseLogOutput(logPath)
+
+	log.SendCloudReport("info", "Finished setting cli infra", "Running", nil)
 	return
 }
 
