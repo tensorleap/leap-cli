@@ -9,11 +9,11 @@ import (
 	"github.com/tensorleap/cli-go/pkg/k3d"
 )
 
-func ValidateVarDir() error {
-	_, err := os.Stat(VAR_DIR)
+func ValidateStandaloneDir() error {
+	_, err := os.Stat(STANDALONE_DIR)
 	if os.IsNotExist(err) {
 		return errors.New(
-			fmt.Sprintf("Not found data directory(%s) on this machine, Please make sure to install before upgrade", VAR_DIR),
+			fmt.Sprintf("Not found data directory(%s) on this machine, Please make sure to install before upgrade", STANDALONE_DIR),
 		)
 	}
 	return err
@@ -26,7 +26,7 @@ func GetTensorleapCluster(ctx context.Context) (*k3d.Cluster, error) {
 	}
 	if cluster == nil {
 		return nil, errors.New(
-			fmt.Sprintf("Not found local Cluster(%s) on this machine, Please make sure to install before upgrade", VAR_DIR),
+			fmt.Sprintf("Not found local Cluster(%s) on this machine, Please make sure to install before upgrade", STANDALONE_DIR),
 		)
 	}
 	return cluster, nil
