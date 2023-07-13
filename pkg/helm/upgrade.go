@@ -24,7 +24,7 @@ func UpgradeTensorleapChartVersion(
 		return err
 	}
 
-	client.Timeout = 5 * time.Minute
+	client.Timeout = 20 * time.Minute
 
 	_, err = client.RunWithContext(config.Context, RELEASE_NAME, latestChart, Record{})
 	if err != nil {
