@@ -35,7 +35,7 @@ func NewInstallCmd() *cobra.Command {
 			ctx := cmd.Context()
 
 			registryVolumes := []string{
-				fmt.Sprintf("%v:%v", path.Join(local.VAR_DIR, "registry"), "/var/lib/registry"),
+				fmt.Sprintf("%v:%v", path.Join(local.STANDALONE_DIR, "registry"), "/var/lib/registry"),
 			}
 			registry, err := k3d.CreateLocalRegistry(ctx, registryPort, registryVolumes)
 			if err != nil {
@@ -51,7 +51,7 @@ func NewInstallCmd() *cobra.Command {
 			if err := k3d.CreateCluster(
 				ctx,
 				port,
-				[]string{fmt.Sprintf("%v:%v", local.VAR_DIR, local.VAR_DIR), dataVolume},
+				[]string{fmt.Sprintf("%v:%v", local.STANDALONE_DIR, local.STANDALONE_DIR), dataVolume},
 				useGpu,
 			); err != nil {
 				return err

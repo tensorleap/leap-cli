@@ -15,7 +15,7 @@ import (
 	"github.com/tensorleap/cli-go/pkg/log"
 )
 
-const VAR_DIR = "/var/lib/tensorleap/standalone"
+const STANDALONE_DIR = "/var/lib/tensorleap/standalone"
 const KUBE_CONTEXT = "k3d-tensorleap"
 const KUBE_NAMESPACE = "tensorleap"
 
@@ -68,17 +68,17 @@ func GetLatestImages(useGpu bool) (necessaryImages []string, backgroundImage str
 	return
 }
 
-func InitVarDir() error {
-	_, err := os.Stat(VAR_DIR)
+func InitStandaloneDir() error {
+	_, err := os.Stat(STANDALONE_DIR)
 	if os.IsNotExist(err) {
-		log.Printf("Creating directory: %s (you may be asked to enter the root user password)", VAR_DIR)
-		mkdirCmd := exec.Command("/bin/sh", "-c", fmt.Sprintf("sudo mkdir -p %s", VAR_DIR))
+		log.Printf("Creating directory: %s (you may be asked to enter the root user password)", STANDALONE_DIR)
+		mkdirCmd := exec.Command("/bin/sh", "-c", fmt.Sprintf("sudo mkdir -p %s", STANDALONE_DIR))
 		if err := mkdirCmd.Run(); err != nil {
 			return err
 		}
 
 		log.Println("Setting directory permissions")
-		chmodCmd := exec.Command("/bin/sh", "-c", fmt.Sprintf("sudo chmod -R 777 %s", VAR_DIR))
+		chmodCmd := exec.Command("/bin/sh", "-c", fmt.Sprintf("sudo chmod -R 777 %s", STANDALONE_DIR))
 		if err := chmodCmd.Run(); err != nil {
 			return err
 		}
@@ -86,12 +86,12 @@ func InitVarDir() error {
 		return err
 	}
 
-	return initVarDirSubDir()
+	return initStandaloneSubDirs()
 }
 
-func initVarDirSubDir() error {
+func initStandaloneSubDirs() error {
 	for _, dir := range []string{"storage", "registry", "logs"} {
-		fullPath := path.Join(VAR_DIR, dir)
+		fullPath := path.Join(STANDALONE_DIR, dir)
 		_, err := os.Stat(fullPath)
 		if os.IsNotExist(err) {
 			log.Printf("Creating directory: %s", fullPath)
@@ -107,7 +107,7 @@ func initVarDirSubDir() error {
 
 // SetupInfra init VAR_DIR, setup VerboseLog and connect its output into a file
 func SetupInfra(cmdName string) (closeLogFile func(), err error) {
-	err = InitVarDir()
+	err = InitStandaloneDir()
 	if err != nil {
 		return
 	}
@@ -122,7 +122,7 @@ func SetupInfra(cmdName string) (closeLogFile func(), err error) {
 
 func createLogFilePath(cmdName string) string {
 	filePath := fmt.Sprintf("%s/logs/%s_%s.log",
-		VAR_DIR,
+		STANDALONE_DIR,
 		cmdName,
 		time.Now().Format("2006-01-02_15-04-05"),
 	)

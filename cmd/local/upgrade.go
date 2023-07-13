@@ -16,7 +16,7 @@ func NewUpgradeCmd() *cobra.Command {
 		Long:  `Upgrade an existing local tensorleap installation to the latest version`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 
-			if err := local.ValidateVarDir(); err != nil {
+			if err := local.ValidateStandaloneDir(); err != nil {
 				return err
 			}
 			ctx := cmd.Context()
