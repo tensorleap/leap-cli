@@ -7,19 +7,24 @@ import (
 	"github.com/tensorleap/cli-go/pkg/helm"
 	"github.com/tensorleap/cli-go/pkg/k3d"
 	"github.com/tensorleap/cli-go/pkg/local"
+	"github.com/tensorleap/cli-go/pkg/log"
 )
 
 func NewUpgradeCmd() *cobra.Command {
+
 	cmd := &cobra.Command{
 		Use:   "upgrade",
 		Short: "Upgrade an existing local tensorleap installation to the latest version",
 		Long:  `Upgrade an existing local tensorleap installation to the latest version`,
 		RunE: func(cmd *cobra.Command, args []string) error {
+			log.SetCommandName("upgrade")
+			log.SendCloudReport("info", "Starting upgrade", "Starting", &map[string]interface{}{"args": args})
 
 			if err := local.ValidateStandaloneDir(); err != nil {
 				return err
 			}
 			ctx := cmd.Context()
+
 			close, err := local.SetupInfra("upgrade")
 			if err != nil {
 				return err
@@ -60,9 +65,12 @@ func NewUpgradeCmd() *cobra.Command {
 			}
 
 			k3d.CacheImageInTheBackground(ctx, imageToCacheInTheBackground)
+
+			log.SendCloudReport("info", "Successfully completed upgrade", "Success", nil)
 			return nil
 		},
 	}
+
 	return cmd
 }
 

@@ -8,6 +8,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/cli-go/pkg/k3d"
 	"github.com/tensorleap/cli-go/pkg/local"
+	"github.com/tensorleap/cli-go/pkg/log"
 )
 
 func NewInstallCmd() *cobra.Command {
@@ -21,6 +22,10 @@ func NewInstallCmd() *cobra.Command {
 		Short: "Installs tensorleap on the local machine, running in a docker container",
 		Long:  `Installs tensorleap on the local machine, running in a docker container`,
 		RunE: func(cmd *cobra.Command, args []string) error {
+			log.SetCommandName("install")
+			log.SendCloudReport("info", "Starting installation", "Starting",
+				&map[string]interface{}{"params": map[string]interface{}{"port": port, "registryPort": registryPort,
+					"useGpu": useGpu, "dataVolume": dataVolume, "args": args}})
 
 			close, err := local.SetupInfra("install")
 			if err != nil {
@@ -29,6 +34,8 @@ func NewInstallCmd() *cobra.Command {
 			defer close()
 
 			if err := local.InitDataVolumeDir(dataVolume); err != nil {
+				log.SendCloudReport("error", "Failed initializing data volume directory", "Failed",
+					&map[string]interface{}{"dataVolume": dataVolume, "error": err.Error()})
 				return err
 			}
 
@@ -37,6 +44,7 @@ func NewInstallCmd() *cobra.Command {
 			registryVolumes := []string{
 				fmt.Sprintf("%v:%v", path.Join(local.STANDALONE_DIR, "registry"), "/var/lib/registry"),
 			}
+
 			registry, err := k3d.CreateLocalRegistry(ctx, registryPort, registryVolumes)
 			if err != nil {
 				return err
@@ -69,6 +77,7 @@ func NewInstallCmd() *cobra.Command {
 
 			k3d.CacheImageInTheBackground(ctx, imageToCacheInTheBackground)
 
+			log.SendCloudReport("info", "Successfully completed installation", "Success", nil)
 			return nil
 		},
 	}

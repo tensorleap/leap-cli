@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/tensorleap/cli-go/pkg/helm"
+	"github.com/tensorleap/cli-go/pkg/log"
 )
 
 func InitDataVolumeDir(dataVolume string) error {
@@ -19,30 +20,43 @@ func GetDefaultDataVolume() string {
 }
 
 func InstallHelm(useGpu bool, dataContainerPath string) error {
+	log.SendCloudReport("info", "Installing helm", "Running", nil)
 	helmConfig, err := helm.CreateHelmConfig(KUBE_CONTEXT, KUBE_NAMESPACE)
 	if err != nil {
+		log.SendCloudReport("error", "Failed creating helm config", "Failed",
+			&map[string]interface{}{"kubeContext": KUBE_CONTEXT, "kubeNamespace": KUBE_NAMESPACE, "error": err.Error()})
 		return err
 	}
 
 	isHelmReleaseExisted, err := helm.IsHelmReleaseExists(helmConfig)
 	if err != nil {
+		log.SendCloudReport("error", "Failed checking if helm release exists", "Failed",
+			&map[string]interface{}{"helmConfig": helmConfig, "error": err.Error()})
 		return err
 	}
 	if isHelmReleaseExisted {
+		log.SendCloudReport("info", "Running helm upgrade", "Running", &map[string]interface{}{"isHelmReleaseExisted": isHelmReleaseExisted})
 		if err := helm.UpgradeTensorleapChartVersion(
 			helmConfig,
 		); err != nil {
+			log.SendCloudReport("error", "Failed upgrading helm charts versions", "Failed",
+				&map[string]interface{}{"isHelmReleaseExisted": isHelmReleaseExisted, "helmConfig": helmConfig, "error": err.Error()})
 			return err
 		}
 	} else {
 		values := helm.CreateTensorleapChartValues(useGpu, dataContainerPath)
+		log.SendCloudReport("info", "Setting up helm repo", "Running", &map[string]interface{}{"isHelmReleaseExisted": isHelmReleaseExisted})
 		if err := helm.InstallLatestTensorleapChartVersion(
 			helmConfig,
 			values,
 		); err != nil {
+			log.SendCloudReport("error", "Failed installing latest chart versions", "Failed",
+				&map[string]interface{}{"isHelmReleaseExisted": isHelmReleaseExisted, "helmConfig": helmConfig, "values": values, "error": err.Error()})
 			return err
 		}
 	}
+
+	log.SendCloudReport("info", "Successfully installed helm charts", "Running", nil)
 	return nil
 }
 

@@ -47,23 +47,31 @@ func GetCluster(ctx context.Context) (*Cluster, error) {
 }
 
 func CreateCluster(ctx context.Context, port uint, volumes []string, useGpu bool) error {
+	log.SendCloudReport("info", "Creating cluster", "Running", &map[string]interface{}{"useGpu": useGpu, "port": port})
 	clusterConfig := createClusterConfig(ctx, port, volumes, useGpu)
 
 	if _, err := k3dCluster.ClusterGet(ctx, runtimes.SelectedRuntime, &clusterConfig.Cluster); err == nil {
 		log.Println("Found existing tensorleap cluster!")
+		log.SendCloudReport("info", "Cluster already exists", "Running", &map[string]interface{}{"useGpu": useGpu, "port": port})
 		return nil
 	}
 
 	if err := k3dCluster.ClusterRun(ctx, runtimes.SelectedRuntime, clusterConfig); err != nil {
 		log.Println(err)
 		log.Println("Failed to create cluster >>> Rolling Back")
+		log.SendCloudReport("error", "Failed creating cluster", "Failed",
+			&map[string]interface{}{"selectedRuntime": runtimes.SelectedRuntime, "error": err.Error()})
 		if err := k3dCluster.ClusterDelete(ctx, runtimes.SelectedRuntime, &clusterConfig.Cluster, k3d.ClusterDeleteOpts{SkipRegistryCheck: true}); err != nil {
 			log.Println(err)
 			log.Fatalln("Cluster creation FAILED, also FAILED to rollback changes!")
+			log.SendCloudReport("error", "Failed rolling back cluster changes", "Failed",
+				&map[string]interface{}{"error": err.Error()})
 		}
+		log.SendCloudReport("error", "Successfully rolled back cluster changes", "Failed", nil)
 		log.Fatalln("Cluster creation FAILED, all changes have been rolled back!")
 	}
 	log.Printf("Cluster '%s' created successfully!\n", clusterConfig.Cluster.Name)
+	log.SendCloudReport("info", "Created cluster successfully", "Running", nil)
 
 	if _, err := k3dCluster.KubeconfigGetWrite(ctx, runtimes.SelectedRuntime, &clusterConfig.Cluster, "", &k3dCluster.WriteKubeConfigOptions{
 		UpdateExisting:       true,
@@ -77,10 +85,7 @@ func CreateCluster(ctx context.Context, port uint, volumes []string, useGpu bool
 }
 
 func IsGpuCluster(cluster *Cluster) bool {
-	if len(cluster.Nodes) > 0 {
-		return strings.HasSuffix(cluster.Nodes[0].Image, K3sGpuVersionSuffix)
-	}
-	return false
+	return len(cluster.Nodes) > 0 && strings.HasSuffix(cluster.Nodes[0].Image, K3sGpuVersionSuffix)
 }
 
 func createClusterConfig(ctx context.Context, port uint, volumes []string, useGpu bool) *conf.ClusterConfig {
@@ -211,9 +216,11 @@ mirrors:
 func UninstallCluster(ctx context.Context) error {
 	cluster, err := GetCluster(ctx)
 	if err != nil {
+		log.SendCloudReport("error", "Failed getting cluster", "Failed", &map[string]interface{}{"error": err.Error()})
 		return err
 	}
 	if cluster == nil {
+		log.SendCloudReport("error", "Cluster not found", "Failed", nil)
 		return errors.New("Cluster 'tensorleap' not found")
 	}
 	log.Info("Deleting cluster 'tensorleap'")
@@ -221,5 +228,9 @@ func UninstallCluster(ctx context.Context) error {
 		SkipRegistryCheck: true,
 	}
 	err = k3dCluster.ClusterDelete(ctx, runtimes.SelectedRuntime, cluster, opt)
+	if err != nil {
+		log.SendCloudReport("error", "Failed deleting cluster", "Failed",
+			&map[string]interface{}{"opt": opt, "cluster": cluster, "runtime": runtimes.SelectedRuntime, "error": err.Error()})
+	}
 	return err
 }
