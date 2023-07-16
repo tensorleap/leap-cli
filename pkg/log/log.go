@@ -1,6 +1,9 @@
 package log
 
 import (
+	"io"
+	"os"
+
 	"github.com/sirupsen/logrus"
 )
 
@@ -59,16 +62,25 @@ func Fatalf(format string, args ...interface{}) {
 }
 
 func init() {
-	stdoutLogger = logrus.New()
-	stdoutLogger.SetFormatter(&logrus.TextFormatter{
+
+	textFormat:=&logrus.TextFormatter{
 		DisableTimestamp: true,
 		ForceColors:      true,
 		ForceQuote:       true,
-	})
+	}
+	stdoutLogger = logrus.New()
+	stdoutLogger.SetFormatter(textFormat)
 
 	VerboseLogger = logrus.New()
 	VerboseLogger.SetFormatter(&logrus.JSONFormatter{})
 	VerboseLogger.SetLevel(logrus.DebugLevel)
 	VerboseLoggerOutputs = NewLoggerOutputs(VerboseLogger)
-	VerboseLoggerOutputs.Set()
+
+	if verbose := os.Getenv("VERBOSE") == "true"; verbose {
+		VerboseLogger.SetFormatter(textFormat)
+		VerboseLoggerOutputs.Add(os.Stdout)
+		stdoutLogger.SetOutput(io.Discard)
+	} else {
+		VerboseLoggerOutputs.Set()
+	}
 }
