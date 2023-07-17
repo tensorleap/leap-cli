@@ -39,6 +39,12 @@ const (
 )
 
 func SendCloudReport(messageLevel MessageLevel, message string, messageState MessageState, payload *map[string]interface{}) {
+	switch messageState {
+	case Starting, Running, Success:
+		VerboseLogger.Infof("%s, %v", message, payload)
+	case Failed:
+		VerboseLogger.Errorf("%s, %v", message, payload)
+	}
 	if disableResporting {
 		return
 	}
