@@ -195,8 +195,8 @@ func CacheImagesInParallel(ctx context.Context, images []string, regPort string)
 	var wg sync.WaitGroup
 	log.Info("Downloading docker images...")
 	for _, img := range images {
+		wg.Add(1)
 		go func(img string) {
-			wg.Add(1)
 			defer wg.Done()
 			if err := CacheImage(ctx, img, regPort); err != nil {
 				log.SendCloudReport("error", "Failed caching image", "Failed", &map[string]interface{}{"image": img, "error": err.Error()})
