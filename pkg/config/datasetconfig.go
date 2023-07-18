@@ -10,7 +10,7 @@ import (
 
 //go:embed template/*
 var templateDir embed.FS
-
+const configFileName = ".tensorleap.yaml"
 type DatasetConfig struct {
 	DatasetId       string   `yaml:"datasetId"`
 	EntryFile       string   `yaml:"entryFile"`
@@ -48,11 +48,20 @@ func CreateDatasetConfig(datasetId string) error {
 }
 
 func GetDatasetConfig() (*DatasetConfig, error) {
-	content, err := os.ReadFile(".tensorleap.yaml")
+	content, err := os.ReadFile(configFileName)
 	if err != nil {
 		return nil, err
 	}
 	datasetConfig := DatasetConfig{}
 	err = yaml.Unmarshal(content, &datasetConfig)
 	return &datasetConfig, err
+}
+
+func SetDatasetConfig(datasetConfig *DatasetConfig) error {
+	content, err := yaml.Marshal(&datasetConfig)
+	if err != nil {
+		return err
+	}
+	err = os.WriteFile(configFileName, content, 0644)
+	return err
 }
