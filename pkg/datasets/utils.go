@@ -34,7 +34,6 @@ func AskForDataset(ctx context.Context) (*tensorleapapi.Dataset, error) {
 	for _, dataset := range data.Datasets {
 		options = append(options, fmt.Sprintf("%s (%s)", dataset.GetName(), dataset.GetCid()))
 	}
-
 	prompt := &survey.Select{
 		Message: "Choose dataset:",
 		Options: options,

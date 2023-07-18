@@ -2,10 +2,8 @@ package datasets
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/spf13/cobra"
-	. "github.com/tensorleap/cli-go/pkg/api"
 	"github.com/tensorleap/cli-go/pkg/datasets"
 	"github.com/tensorleap/cli-go/pkg/tensorleapapi"
 )
@@ -25,31 +23,17 @@ func init() {
 			return nil
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
+			var dataset *tensorleapapi.Dataset = nil
+			var err error = nil
 			if len(newDatasetName) > 0 {
-				dataset, err := datasets.CreateNewDataset(cmd.Context(), newDatasetName)
-				if err != nil {
-					return err
-				}
-				datasetId = dataset.GetCid()
+				dataset, err = datasets.CreateNewDataset(cmd.Context(), newDatasetName)
 			} else if len(datasetId) > 0 {
-				data, _, err := ApiClient.GetDatasets(cmd.Context()).Execute()
-				if err != nil {
-					return err
-				}
-				found := false
-				for _, dataset := range data.Datasets {
-					if dataset.GetCid() == datasetId {
-						fmt.Println("Found dataset:", dataset.GetName())
-						found = true
-						break
-					}
-				}
-				if !found {
-					return fmt.Errorf("Didn't find dataset with id: %v", datasetId)
-				}
+				dataset, err = datasets.GetDatasetById(cmd.Context(), datasetId)
 			}
-
-			return datasets.CreateDatasetTemplate(datasetId, "")
+			if err != nil {
+				return err
+			}
+			return datasets.CreateDatasetTemplate(dataset.GetCid(), "")
 		},
 	}
 
