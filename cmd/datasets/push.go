@@ -6,10 +6,10 @@ import (
 	"io/fs"
 	"os"
 
-	"github.com/AlecAivazis/survey/v2"
 	"github.com/spf13/cobra"
 	. "github.com/tensorleap/cli-go/pkg/api"
 	"github.com/tensorleap/cli-go/pkg/config"
+	"github.com/tensorleap/cli-go/pkg/datasets"
 	. "github.com/tensorleap/cli-go/pkg/local"
 	"github.com/tensorleap/cli-go/pkg/log"
 	"github.com/tensorleap/cli-go/pkg/tensorleapapi"
@@ -21,7 +21,7 @@ func init() {
 		Short: "Push dataset script",
 		Long:  `Push dataset script`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			datasetConfig, err := config.GetDatasetConfig()
+			datasetConfig, err := datasets.GetDatasetConfig()
 			if err != nil {
 				return err
 			}
@@ -77,7 +77,7 @@ func init() {
 	})
 }
 
-func getDatasetFiles(datasetConfig *config.DatasetConfig) ([]string, error) {
+func getDatasetFiles(datasetConfig *datasets.DatasetConfig) ([]string, error) {
 	currentDirFs := os.DirFS(".")
 	var allMatchedFiles []string
 	for _, pattern := range datasetConfig.IncludePatterns {
@@ -90,13 +90,13 @@ func getDatasetFiles(datasetConfig *config.DatasetConfig) ([]string, error) {
 	return allMatchedFiles, nil
 }
 
-func addDatasetIfNotExisted(ctx context.Context, datasetConfig *config.DatasetConfig) error {
-	datasets, _, err := ApiClient.GetDatasets(ctx).Execute()
+func addDatasetIfNotExisted(ctx context.Context, datasetConfig *datasets.DatasetConfig) error {
+	datasetsRes, _, err := ApiClient.GetDatasets(ctx).Execute()
 	if err != nil {
 		return fmt.Errorf("Failed to get datasets: %v", err)
 	}
 	isDatasetExisted := false
-	for _, dataset := range datasets.Datasets {
+	for _, dataset := range datasetsRes.Datasets {
 		if dataset.Cid == datasetConfig.DatasetId {
 			isDatasetExisted = true
 			break
@@ -106,23 +106,15 @@ func addDatasetIfNotExisted(ctx context.Context, datasetConfig *config.DatasetCo
 	if !isDatasetExisted {
 		log.Infof("Not found dataset id: %s. Creating new dataset", datasetConfig.DatasetId)
 
-		name := ""
-		prompt := &survey.Input{
-			Message: "Enter dataset name",
-		}
-		survey.AskOne(prompt, &name)
-
-		dataset, _, err := ApiClient.AddDataset(ctx).
-			NewDatasetParams(*tensorleapapi.NewNewDatasetParams(*tensorleapapi.NewNullableString(&name))).
-			Execute()
-
+		name := datasets.AskForDatasetName()
+		dataset, err := datasets.CreateNewDataset(ctx, name)
 		if err != nil {
-			return fmt.Errorf("Failed to create a new dataset: %v", err)
+			return err
 		}
 
-		datasetConfig.DatasetId = dataset.Dataset.Cid
+		datasetConfig.DatasetId = dataset.GetCid()
 
-		err = config.SetDatasetConfig(datasetConfig)
+		err = datasets.SetDatasetConfig(datasetConfig, "")
 		if err != nil {
 			return fmt.Errorf("Failed to update tensorleap config: %v", err)
 		}
