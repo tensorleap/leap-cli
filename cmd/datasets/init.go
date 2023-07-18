@@ -6,7 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 	. "github.com/tensorleap/cli-go/pkg/api"
-	"github.com/tensorleap/cli-go/pkg/config"
+	"github.com/tensorleap/cli-go/pkg/datasets"
 	"github.com/tensorleap/cli-go/pkg/tensorleapapi"
 )
 
@@ -52,7 +52,7 @@ func init() {
 					return fmt.Errorf("Didn't find dataset with id: %v", datasetId)
 				}
 			}
-			return config.CreateDatasetConfig(datasetId)
+			return datasets.CreateDatasetConfig(datasetId)
 		},
 	}
 
