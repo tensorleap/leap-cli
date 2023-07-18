@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"gopkg.in/yaml.v3"
 	"os"
+	"path"
 	"text/template"
 )
 
@@ -17,21 +18,40 @@ type DatasetConfig struct {
 	IncludePatterns []string `yaml:"include"`
 }
 
+func NewDatasetConfig(datasetId string, entryFile string, files []string) *DatasetConfig {
+	if len(entryFile) == 0 {
+		entryFile = "tensorleap.py"
+	}
+	return &DatasetConfig{
+		DatasetId:       datasetId,
+		EntryFile:       entryFile,
+		IncludePatterns: files,
+	}
+}
+
 type InitTemplateValues struct {
 	DatasetId string
 }
 
-func CreateDatasetConfig(datasetId string) error {
+func CreateDatasetTemplate(datasetId string, outputDir string) error {
+	// Create the directory for the file if it doesn't exist
+	err := os.MkdirAll(outputDir, 0755)
+	if err != nil {
+		return err
+	}
+
 	files, _ := templateDir.ReadDir("template")
 	for _, f := range files {
 		fileName := f.Name()
 		if _, err := os.Stat(fileName); err == nil {
 			fmt.Println(fileName, "already exists")
 		} else {
-			fmt.Println("Writing file:", fileName)
-			templateContent, _ := templateDir.ReadFile("template/" + fileName)
+			fmt.Println("Adding file:", fileName)
+			filePath := path.Join("template", fileName)
+			templateContent, _ := templateDir.ReadFile(filePath)
 			tmpl, _ := template.New(fileName).Parse(string(templateContent))
-			targetFile, err := os.Create(fileName)
+			targetPath := path.Join(outputDir, fileName)
+			targetFile, err := os.Create(targetPath)
 			if err != nil {
 				return err
 			}
@@ -57,11 +77,12 @@ func GetDatasetConfig() (*DatasetConfig, error) {
 	return &datasetConfig, err
 }
 
-func SetDatasetConfig(datasetConfig *DatasetConfig) error {
+func SetDatasetConfig(datasetConfig *DatasetConfig, outputDir string) error {
 	content, err := yaml.Marshal(&datasetConfig)
 	if err != nil {
 		return err
 	}
-	err = os.WriteFile(configFileName, content, 0644)
+	fullPath := path.Join(outputDir, configFileName)
+	err = os.WriteFile(fullPath, content, 0644)
 	return err
 }

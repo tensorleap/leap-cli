@@ -26,15 +26,11 @@ func init() {
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(newDatasetName) > 0 {
-				fmt.Println("Creating dataset:", newDatasetName)
-				data, _, err := ApiClient.AddDataset(cmd.Context()).
-					NewDatasetParams(*tensorleapapi.NewNewDatasetParams(
-						*tensorleapapi.NewNullableString(&newDatasetName))).
-					Execute()
+				dataset, err := datasets.CreateNewDataset(cmd.Context(), newDatasetName)
 				if err != nil {
 					return err
 				}
-				datasetId = data.Dataset.GetCid()
+				datasetId = dataset.GetCid()
 			} else if len(datasetId) > 0 {
 				data, _, err := ApiClient.GetDatasets(cmd.Context()).Execute()
 				if err != nil {
@@ -52,7 +48,8 @@ func init() {
 					return fmt.Errorf("Didn't find dataset with id: %v", datasetId)
 				}
 			}
-			return datasets.CreateDatasetConfig(datasetId)
+
+			return datasets.CreateDatasetTemplate(datasetId, "")
 		},
 	}
 
