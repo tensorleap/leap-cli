@@ -1,14 +1,17 @@
 package datasets
 
 import (
+	"context"
 	"fmt"
 	"io/fs"
 	"os"
 
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/spf13/cobra"
 	. "github.com/tensorleap/cli-go/pkg/api"
 	"github.com/tensorleap/cli-go/pkg/config"
 	. "github.com/tensorleap/cli-go/pkg/local"
+	"github.com/tensorleap/cli-go/pkg/log"
 	"github.com/tensorleap/cli-go/pkg/tensorleapapi"
 )
 
@@ -25,6 +28,7 @@ func init() {
 			if err := config.CheckLoggedIn(); err != nil {
 				return err
 			}
+			ctx := cmd.Context()
 
 			filePaths, err := getDatasetFiles(datasetConfig)
 			if err != nil {
@@ -41,7 +45,7 @@ func init() {
 				return err
 			}
 
-			data, _, err := ApiClient.GetDatasetVersionUploadUrl(cmd.Context()).Execute()
+			data, _, err := ApiClient.GetDatasetVersionUploadUrl(ctx).Execute()
 			if err != nil {
 				return err
 			}
@@ -52,8 +56,12 @@ func init() {
 				return err
 			}
 
-			fmt.Println("Creating new dataset version...")
-			if _, _, err = ApiClient.SaveDatasetVersion(cmd.Context()).
+			if err := addDatasetIfNotExisted(ctx, datasetConfig); err != nil {
+				return err
+			}
+
+			log.Info("Creating new dataset version...")
+			if _, _, err = ApiClient.SaveDatasetVersion(ctx).
 				SaveDatasetVersionParams(*tensorleapapi.NewSaveDatasetVersionParams(
 					datasetConfig.DatasetId,
 					uploadUrl,
@@ -63,7 +71,7 @@ func init() {
 				return err
 			}
 
-			fmt.Println("Done!")
+			log.Info("Done!")
 			return nil
 		},
 	})
@@ -80,4 +88,44 @@ func getDatasetFiles(datasetConfig *config.DatasetConfig) ([]string, error) {
 		allMatchedFiles = append(allMatchedFiles, matches...)
 	}
 	return allMatchedFiles, nil
+}
+
+func addDatasetIfNotExisted(ctx context.Context, datasetConfig *config.DatasetConfig) error {
+	datasets, _, err := ApiClient.GetDatasets(ctx).Execute()
+	if err != nil {
+		return fmt.Errorf("Failed to get datasets: %v", err)
+	}
+	isDatasetExisted := false
+	for _, dataset := range datasets.Datasets {
+		if dataset.Cid == datasetConfig.DatasetId {
+			isDatasetExisted = true
+			break
+		}
+	}
+
+	if !isDatasetExisted {
+		log.Infof("Not found dataset id: %s. Creating new dataset", datasetConfig.DatasetId)
+
+		name := ""
+		prompt := &survey.Input{
+			Message: "Enter dataset name",
+		}
+		survey.AskOne(prompt, &name)
+
+		dataset, _, err := ApiClient.AddDataset(ctx).
+			NewDatasetParams(*tensorleapapi.NewNewDatasetParams(*tensorleapapi.NewNullableString(&name))).
+			Execute()
+
+		if err != nil {
+			return fmt.Errorf("Failed to create a new dataset: %v", err)
+		}
+
+		datasetConfig.DatasetId = dataset.Dataset.Cid
+
+		err = config.SetDatasetConfig(datasetConfig)
+		if err != nil {
+			return fmt.Errorf("Failed to update tensorleap config: %v", err)
+		}
+	}
+	return nil
 }
