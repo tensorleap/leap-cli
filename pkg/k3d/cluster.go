@@ -26,7 +26,7 @@ const CLUSTER_NAME = "tensorleap"
 var (
 	K3sVersion          = version.K3sVersion
 	K3sImage            = fmt.Sprintf("%s:%s", k3d.DefaultK3sImageRepo, K3sVersion)
-	K3sGpuVersion       = "v1.23.8-k3s1"
+	K3sGpuVersion       = "v1.26.4-k3s1"
 	K3sGpuVersionSuffix = "cuda"
 	K3sGpuImage         = fmt.Sprintf("us-central1-docker.pkg.dev/tensorleap/main/k3s:%s-%s", K3sGpuVersion, K3sGpuVersionSuffix)
 )
