@@ -8,13 +8,13 @@ Name | Type | Description | Notes
 **DatasetVersionId** | Pointer to **string** |  | [optional] 
 **VersionId** | **string** |  | 
 **ProjectId** | **string** |  | 
-**RequestToken** | **string** |  | 
+**Digest** | **string** |  | 
 
 ## Methods
 
 ### NewAnalyzeGraphParams
 
-`func NewAnalyzeGraphParams(graph ModelGraph, versionId string, projectId string, requestToken string, ) *AnalyzeGraphParams`
+`func NewAnalyzeGraphParams(graph ModelGraph, versionId string, projectId string, digest string, ) *AnalyzeGraphParams`
 
 NewAnalyzeGraphParams instantiates a new AnalyzeGraphParams object
 This constructor will assign default values to properties that have it defined,
@@ -114,24 +114,24 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetRequestToken
+### GetDigest
 
-`func (o *AnalyzeGraphParams) GetRequestToken() string`
+`func (o *AnalyzeGraphParams) GetDigest() string`
 
-GetRequestToken returns the RequestToken field if non-nil, zero value otherwise.
+GetDigest returns the Digest field if non-nil, zero value otherwise.
 
-### GetRequestTokenOk
+### GetDigestOk
 
-`func (o *AnalyzeGraphParams) GetRequestTokenOk() (*string, bool)`
+`func (o *AnalyzeGraphParams) GetDigestOk() (*string, bool)`
 
-GetRequestTokenOk returns a tuple with the RequestToken field if it's non-nil, zero value otherwise
+GetDigestOk returns a tuple with the Digest field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetRequestToken
+### SetDigest
 
-`func (o *AnalyzeGraphParams) SetRequestToken(v string)`
+`func (o *AnalyzeGraphParams) SetDigest(v string)`
 
-SetRequestToken sets RequestToken field to given value.
+SetDigest sets Digest field to given value.
 
 
 

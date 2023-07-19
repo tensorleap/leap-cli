@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **CodeIntegrationVersionId** | Pointer to **string** |  | [optional] 
 **DatasetSetup** | [**DatasetSetup**](DatasetSetup.md) |  | 
 **Hash** | Pointer to **string** |  | [optional] 
+**CopySessionIds** | Pointer to **[]string** |  | [optional] 
 
 ## Methods
 
@@ -180,6 +181,31 @@ SetHash sets Hash field to given value.
 `func (o *AddVersionParams) HasHash() bool`
 
 HasHash returns a boolean if a field has been set.
+
+### GetCopySessionIds
+
+`func (o *AddVersionParams) GetCopySessionIds() []string`
+
+GetCopySessionIds returns the CopySessionIds field if non-nil, zero value otherwise.
+
+### GetCopySessionIdsOk
+
+`func (o *AddVersionParams) GetCopySessionIdsOk() (*[]string, bool)`
+
+GetCopySessionIdsOk returns a tuple with the CopySessionIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCopySessionIds
+
+`func (o *AddVersionParams) SetCopySessionIds(v []string)`
+
+SetCopySessionIds sets CopySessionIds field to given value.
+
+### HasCopySessionIds
+
+`func (o *AddVersionParams) HasCopySessionIds() bool`
+
+HasCopySessionIds returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

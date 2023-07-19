@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.342
+  version: 0.0.360
 servers:
 - url: /api/v2
 paths:
@@ -427,22 +427,6 @@ paths:
       security:
       - jwt:
         - not-demo
-  /evaluate/analyzeGraph:
-    post:
-      operationId: AnalyzeGraph
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AnalyzeGraphParams'
-        required: true
-      responses:
-        "204":
-          description: No content
-      security:
-      - jwt:
-        - not-demo
   /exportedsessionruns/getExportedSessionJobs:
     post:
       operationId: GetExportedSessionJobs
@@ -478,6 +462,66 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Job'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /graph/analyzeGraph:
+    post:
+      operationId: AnalyzeGraph
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalyzeGraphParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyzeGraphResponse'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /graph/validateGraph:
+    post:
+      operationId: ValidateGraph
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateGraphParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateGraphResponse'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /graph/getValidateGraphProcessState:
+    post:
+      operationId: GetValidateGraphProcessState
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetValidateGraphProcessStateParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateGraphResponse'
           description: Ok
       security:
       - jwt:
@@ -592,6 +636,26 @@ paths:
           description: No content
       security:
       - jwt: []
+  /issues/getIssueFileUploadSignedUrl:
+    post:
+      operationId: GetIssueFileUploadSignedUrl
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetIssueFileUploadSignedUrl'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueFileUploadSignedUrl'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
   /jobs/getTeamJobs:
     post:
       operationId: GetTeamJobs
@@ -1760,6 +1824,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExternalImportModelStorage'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /versions/getDownloadSignedUrl:
+    post:
+      operationId: GetDownloadSignedUrl
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetDownloadSignedUrlParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDownloadSignedUrlResponse'
           description: Ok
       security:
       - jwt:
@@ -5169,6 +5253,7 @@ components:
       - EXPORT_MODEL
       - DATASET_PARSE
       - ANALYZE_GRAPH
+      - DRY_RUN_GRAPH
       type: string
     JobSubType:
       enum:
@@ -5179,9 +5264,11 @@ components:
       - Population Exploration
       - Sample Selection
       - Sample Analysis
+      - Graph Validate
       type: string
     JobStatus:
       enum:
+      - UNSTARTED
       - STARTED
       - PENDING
       - STOPPED
@@ -5399,53 +5486,6 @@ components:
       - shouldRunPopulationExploration
       - versionId
       type: object
-    Record_string.Node_:
-      description: Construct a type with a set of properties K of type T
-      properties: {}
-      type: object
-    ModelGraph:
-      additionalProperties: false
-      example:
-        nodes: "{}"
-        id: id
-      properties:
-        id:
-          type: string
-        nodes:
-          description: Construct a type with a set of properties K of type T
-          properties: {}
-          type: object
-      required:
-      - id
-      - nodes
-      type: object
-    AnalyzeGraphParams:
-      additionalProperties: false
-      example:
-        versionId: versionId
-        requestToken: requestToken
-        projectId: projectId
-        graph:
-          nodes: "{}"
-          id: id
-        datasetVersionId: datasetVersionId
-      properties:
-        graph:
-          $ref: '#/components/schemas/ModelGraph'
-        datasetVersionId:
-          type: string
-        versionId:
-          type: string
-        projectId:
-          type: string
-        requestToken:
-          type: string
-      required:
-      - graph
-      - projectId
-      - requestToken
-      - versionId
-      type: object
     ExportedModelData:
       additionalProperties: false
       example:
@@ -5571,6 +5611,371 @@ components:
       - pruneModel
       - sessionWeightId
       - title
+      type: object
+    Record_string.NodeCalculatedData_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
+    GraphAnalyzerData:
+      additionalProperties: false
+      example:
+        nodes: "{}"
+        general_error: general_error
+        hash: hash
+      properties:
+        nodes:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+        hash:
+          type: string
+        general_error:
+          type: string
+      required:
+      - nodes
+      type: object
+    AnalyzeGraphResponse:
+      additionalProperties: false
+      example:
+        response:
+          nodes: "{}"
+          general_error: general_error
+          hash: hash
+        digest: digest
+        status: null
+      properties:
+        digest:
+          type: string
+        response:
+          $ref: '#/components/schemas/GraphAnalyzerData'
+        status:
+          $ref: '#/components/schemas/JobStatus'
+      required:
+      - digest
+      - status
+      type: object
+    Record_string.Node_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
+    ModelGraph:
+      additionalProperties: false
+      example:
+        nodes: "{}"
+        id: id
+      properties:
+        id:
+          type: string
+        nodes:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+      required:
+      - id
+      - nodes
+      type: object
+    AnalyzeGraphParams:
+      additionalProperties: false
+      example:
+        versionId: versionId
+        digest: digest
+        projectId: projectId
+        graph:
+          nodes: "{}"
+          id: id
+        datasetVersionId: datasetVersionId
+      properties:
+        graph:
+          $ref: '#/components/schemas/ModelGraph'
+        datasetVersionId:
+          type: string
+        versionId:
+          type: string
+        projectId:
+          type: string
+        digest:
+          type: string
+      required:
+      - digest
+      - graph
+      - projectId
+      - versionId
+      type: object
+    ValidatedNode:
+      additionalProperties: false
+      example:
+        connection_name: connection_name
+        name: name
+        error: error
+        node_id: node_id
+      properties:
+        name:
+          type: string
+        node_id:
+          type: string
+        connection_name:
+          type: string
+        error:
+          type: string
+      required:
+      - name
+      type: object
+    ValidatedLossNode:
+      additionalProperties: false
+      example:
+        connection_name: connection_name
+        is_custom_loss: true
+        name: name
+        error: error
+        node_id: node_id
+      properties:
+        name:
+          type: string
+        node_id:
+          type: string
+        connection_name:
+          type: string
+        error:
+          type: string
+        is_custom_loss:
+          type: boolean
+      required:
+      - is_custom_loss
+      - name
+      type: object
+    GraphValidatorData:
+      additionalProperties: false
+      example:
+        metadata:
+        - connection_name: connection_name
+          name: name
+          error: error
+          node_id: node_id
+        - connection_name: connection_name
+          name: name
+          error: error
+          node_id: node_id
+        inputs:
+        - connection_name: connection_name
+          name: name
+          error: error
+          node_id: node_id
+        - connection_name: connection_name
+          name: name
+          error: error
+          node_id: node_id
+        general_error: general_error
+        ground_truths:
+        - connection_name: connection_name
+          name: name
+          error: error
+          node_id: node_id
+        - connection_name: connection_name
+          name: name
+          error: error
+          node_id: node_id
+        prediction_types:
+        - connection_name: connection_name
+          name: name
+          error: error
+          node_id: node_id
+        - connection_name: connection_name
+          name: name
+          error: error
+          node_id: node_id
+        metrics:
+        - connection_name: connection_name
+          name: name
+          error: error
+          node_id: node_id
+        - connection_name: connection_name
+          name: name
+          error: error
+          node_id: node_id
+        visualizers:
+        - connection_name: connection_name
+          name: name
+          error: error
+          node_id: node_id
+        - connection_name: connection_name
+          name: name
+          error: error
+          node_id: node_id
+        losses:
+        - connection_name: connection_name
+          is_custom_loss: true
+          name: name
+          error: error
+          node_id: node_id
+        - connection_name: connection_name
+          is_custom_loss: true
+          name: name
+          error: error
+          node_id: node_id
+      properties:
+        inputs:
+          items:
+            $ref: '#/components/schemas/ValidatedNode'
+          type: array
+        metadata:
+          items:
+            $ref: '#/components/schemas/ValidatedNode'
+          type: array
+        ground_truths:
+          items:
+            $ref: '#/components/schemas/ValidatedNode'
+          type: array
+        prediction_types:
+          items:
+            $ref: '#/components/schemas/ValidatedNode'
+          type: array
+        visualizers:
+          items:
+            $ref: '#/components/schemas/ValidatedNode'
+          type: array
+        losses:
+          items:
+            $ref: '#/components/schemas/ValidatedLossNode'
+          type: array
+        metrics:
+          items:
+            $ref: '#/components/schemas/ValidatedNode'
+          type: array
+        general_error:
+          type: string
+      required:
+      - ground_truths
+      - inputs
+      - losses
+      - metadata
+      - metrics
+      - prediction_types
+      - visualizers
+      type: object
+    ValidateGraphResponse:
+      additionalProperties: false
+      example:
+        data:
+          metadata:
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          inputs:
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          general_error: general_error
+          ground_truths:
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          prediction_types:
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          metrics:
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          visualizers:
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          losses:
+          - connection_name: connection_name
+            is_custom_loss: true
+            name: name
+            error: error
+            node_id: node_id
+          - connection_name: connection_name
+            is_custom_loss: true
+            name: name
+            error: error
+            node_id: node_id
+        digest: digest
+        status: null
+      properties:
+        digest:
+          type: string
+        data:
+          $ref: '#/components/schemas/GraphValidatorData'
+        status:
+          $ref: '#/components/schemas/JobStatus'
+      required:
+      - digest
+      - status
+      type: object
+    ValidateGraphParams:
+      additionalProperties: false
+      example:
+        versionId: versionId
+        digest: digest
+        projectId: projectId
+        graph:
+          nodes: "{}"
+          id: id
+        datasetVersionId: datasetVersionId
+      properties:
+        graph:
+          $ref: '#/components/schemas/ModelGraph'
+        datasetVersionId:
+          type: string
+        versionId:
+          type: string
+        projectId:
+          type: string
+        digest:
+          type: string
+      required:
+      - datasetVersionId
+      - digest
+      - graph
+      - projectId
+      - versionId
+      type: object
+    GetValidateGraphProcessStateParams:
+      additionalProperties: false
+      example:
+        digest: digest
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        digest:
+          type: string
+      required:
+      - digest
+      - projectId
       type: object
     ScatterInsightType:
       enum:
@@ -6293,11 +6698,45 @@ components:
       - cid
       - projectId
       type: object
+    IssueFileUploadSignedUrl:
+      additionalProperties: false
+      example:
+        fileName: fileName
+        url: url
+      properties:
+        url:
+          type: string
+        fileName:
+          type: string
+      required:
+      - fileName
+      - url
+      type: object
+    GetIssueFileUploadSignedUrl:
+      additionalProperties: false
+      example:
+        fileName: fileName
+        issueId: issueId
+        projectId: projectId
+      properties:
+        fileName:
+          type: string
+        projectId:
+          type: string
+        issueId:
+          type: string
+      required:
+      - fileName
+      - issueId
+      - projectId
+      type: object
     RunProcess:
       additionalProperties: false
       example:
         jobId: jobId
         createdAt: createdAt
+        sessionRunName: sessionRunName
+        sessionName: sessionName
         versionName: versionName
         projectName: projectName
         jobType: jobType
@@ -6318,11 +6757,17 @@ components:
           type: string
         updatedAt:
           type: string
+        sessionName:
+          type: string
+        sessionRunName:
+          type: string
       required:
       - createdAt
       - jobId
       - jobType
       - projectName
+      - sessionName
+      - sessionRunName
       - status
       - updatedAt
       - versionName
@@ -6333,6 +6778,8 @@ components:
         processes:
         - jobId: jobId
           createdAt: createdAt
+          sessionRunName: sessionRunName
+          sessionName: sessionName
           versionName: versionName
           projectName: projectName
           jobType: jobType
@@ -6340,6 +6787,8 @@ components:
           updatedAt: updatedAt
         - jobId: jobId
           createdAt: createdAt
+          sessionRunName: sessionRunName
+          sessionName: sessionName
           versionName: versionName
           projectName: projectName
           jobType: jobType
@@ -9995,6 +10444,9 @@ components:
         modelGraph:
           nodes: "{}"
           id: id
+        copySessionIds:
+        - copySessionIds
+        - copySessionIds
         datasetSetup:
           outputs:
           - shape:
@@ -10082,6 +10534,10 @@ components:
           $ref: '#/components/schemas/DatasetSetup'
         hash:
           type: string
+        copySessionIds:
+          items:
+            type: string
+          type: array
       required:
       - branchName
       - datasetSetup
@@ -11000,6 +11456,26 @@ components:
       required:
       - fileName
       type: object
+    GetDownloadSignedUrlResponse:
+      additionalProperties: false
+      example:
+        url: url
+      properties:
+        url:
+          type: string
+      required:
+      - url
+      type: object
+    GetDownloadSignedUrlParams:
+      additionalProperties: false
+      example:
+        fileName: fileName
+      properties:
+        fileName:
+          type: string
+      required:
+      - fileName
+      type: object
     ImageViz:
       additionalProperties: false
       properties:
@@ -11571,6 +12047,10 @@ components:
           type: array
         connection_name:
           type: string
+        node_id:
+          type: string
+        has_error:
+          type: boolean
       required:
       - connection_name
       - data

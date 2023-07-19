@@ -17,6 +17,8 @@
 
 * `SAMPLE_ANALYSIS` (value: `"Sample Analysis"`)
 
+* `GRAPH_VALIDATE` (value: `"Graph Validate"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
