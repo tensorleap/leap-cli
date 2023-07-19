@@ -3,10 +3,11 @@ package datasets
 import (
 	"embed"
 	"fmt"
-	"gopkg.in/yaml.v3"
 	"os"
 	"path"
 	"text/template"
+
+	"gopkg.in/yaml.v3"
 )
 
 //go:embed template/*
