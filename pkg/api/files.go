@@ -4,11 +4,43 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
+
+	"github.com/tensorleap/cli-go/pkg/log"
 )
 
-func UploadFile(url string, file *os.File) error {
-	fmt.Println("Uploading...")
+func DownloadFile(url string, file io.Writer) error {
+	log.Println("Downloading...")
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("Failed to download file. Status code: %d", resp.StatusCode)
+	}
+
+	// Create a pipe to copy data concurrently
+	reader, writer := io.Pipe()
+	go func() {
+		defer writer.Close()
+		_, err := io.Copy(writer, resp.Body)
+		if err != nil {
+			writer.CloseWithError(err)
+		}
+	}()
+
+	_, err = io.Copy(file, reader)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func UploadFile(url string, file io.Reader) error {
+	log.Println("Uploading...")
 	reader, writer := io.Pipe()
 	go func() {
 		defer writer.Close()
