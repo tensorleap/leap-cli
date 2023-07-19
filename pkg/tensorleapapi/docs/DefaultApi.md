@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**AddProject**](DefaultApi.md#AddProject) | **Post** /projects/addProject | 
 [**AddSecretManager**](DefaultApi.md#AddSecretManager) | **Post** /secret-manager/addSecretManager | 
 [**AddVersion**](DefaultApi.md#AddVersion) | **Post** /versions/addVersion | 
-[**AnalyzeGraph**](DefaultApi.md#AnalyzeGraph) | **Post** /evaluate/analyzeGraph | 
+[**AnalyzeGraph**](DefaultApi.md#AnalyzeGraph) | **Post** /graph/analyzeGraph | 
 [**ContinueTrain**](DefaultApi.md#ContinueTrain) | **Post** /train/continueTrain | 
 [**CreateSessionTest**](DefaultApi.md#CreateSessionTest) | **Post** /sessions-tests/createSessionTest | 
 [**CreateTeam**](DefaultApi.md#CreateTeam) | **Post** /teams/createTeam | 
@@ -40,10 +40,12 @@ Method | HTTP request | Description
 [**GetDatasetVersionUploadUrl**](DefaultApi.md#GetDatasetVersionUploadUrl) | **Post** /datasetVersions/getDatasetVersionUploadUrl | 
 [**GetDatasetVersions**](DefaultApi.md#GetDatasetVersions) | **Post** /datasetVersions/getDatasetVersions | 
 [**GetDatasets**](DefaultApi.md#GetDatasets) | **Post** /datasets/getDatasets | 
+[**GetDownloadSignedUrl**](DefaultApi.md#GetDownloadSignedUrl) | **Post** /versions/getDownloadSignedUrl | 
 [**GetEnvironmentInfo**](DefaultApi.md#GetEnvironmentInfo) | **Post** /metadata/getEnvironmentInfo | 
 [**GetExportedSessionJobs**](DefaultApi.md#GetExportedSessionJobs) | **Post** /exportedsessionruns/getExportedSessionJobs | 
 [**GetF1Score**](DefaultApi.md#GetF1Score) | **Post** /sessionmetrics/getF1Score | 
 [**GetHeatmapChart**](DefaultApi.md#GetHeatmapChart) | **Post** /sessionmetrics/getHeatmapChart | 
+[**GetIssueFileUploadSignedUrl**](DefaultApi.md#GetIssueFileUploadSignedUrl) | **Post** /issues/getIssueFileUploadSignedUrl | 
 [**GetLatestDatasetVersion**](DefaultApi.md#GetLatestDatasetVersion) | **Post** /datasetVersions/getLatestDatasetVersion | 
 [**GetMachineTypes**](DefaultApi.md#GetMachineTypes) | **Post** /teams/getMachineTypes | 
 [**GetMaxActiveUsers**](DefaultApi.md#GetMaxActiveUsers) | **Post** /metadata/getMaxActiveUsers | 
@@ -70,6 +72,7 @@ Method | HTTP request | Description
 [**GetTeamSlimUserData**](DefaultApi.md#GetTeamSlimUserData) | **Post** /users/getTeamSlimUserData | 
 [**GetTeams**](DefaultApi.md#GetTeams) | **Post** /teams/getTeams | 
 [**GetUploadSignedUrl**](DefaultApi.md#GetUploadSignedUrl) | **Post** /versions/getUploadSignedUrl | 
+[**GetValidateGraphProcessState**](DefaultApi.md#GetValidateGraphProcessState) | **Post** /graph/getValidateGraphProcessState | 
 [**GetVisualization**](DefaultApi.md#GetVisualization) | **Post** /visualizations/getVisualization | 
 [**GetXYChart**](DefaultApi.md#GetXYChart) | **Post** /sessionmetrics/getXYChart | 
 [**HealthCheck**](DefaultApi.md#HealthCheck) | **Get** /monitor/healthCheck | 
@@ -110,6 +113,7 @@ Method | HTTP request | Description
 [**UpdateUserTeam**](DefaultApi.md#UpdateUserTeam) | **Post** /users/updateUserTeam | 
 [**UpdateVersion**](DefaultApi.md#UpdateVersion) | **Post** /versions/updateVersion | 
 [**Upload**](DefaultApi.md#Upload) | **Put** /projects/uploadProject/{projectName} | 
+[**ValidateGraph**](DefaultApi.md#ValidateGraph) | **Post** /graph/validateGraph | 
 [**Warmup**](DefaultApi.md#Warmup) | **Post** /jobs/warmup | 
 [**WhoAmI**](DefaultApi.md#WhoAmI) | **Post** /auth/whoAmI | 
 
@@ -629,7 +633,7 @@ Name | Type | Description  | Notes
 
 ## AnalyzeGraph
 
-> AnalyzeGraph(ctx).AnalyzeGraphParams(analyzeGraphParams).Execute()
+> AnalyzeGraphResponse AnalyzeGraph(ctx).AnalyzeGraphParams(analyzeGraphParams).Execute()
 
 
 
@@ -646,15 +650,17 @@ import (
 )
 
 func main() {
-    analyzeGraphParams := *openapiclient.NewAnalyzeGraphParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "VersionId_example", "ProjectId_example", "RequestToken_example") // AnalyzeGraphParams | 
+    analyzeGraphParams := *openapiclient.NewAnalyzeGraphParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "VersionId_example", "ProjectId_example", "Digest_example") // AnalyzeGraphParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.AnalyzeGraph(context.Background()).AnalyzeGraphParams(analyzeGraphParams).Execute()
+    resp, r, err := apiClient.DefaultApi.AnalyzeGraph(context.Background()).AnalyzeGraphParams(analyzeGraphParams).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.AnalyzeGraph``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
+    // response from `AnalyzeGraph`: AnalyzeGraphResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.AnalyzeGraph`: %v\n", resp)
 }
 ```
 
@@ -673,7 +679,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AnalyzeGraphResponse**](AnalyzeGraphResponse.md)
 
 ### Authorization
 
@@ -682,7 +688,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -2384,6 +2390,70 @@ Other parameters are passed through a pointer to a apiGetDatasetsRequest struct 
 [[Back to README]](../README.md)
 
 
+## GetDownloadSignedUrl
+
+> GetDownloadSignedUrlResponse GetDownloadSignedUrl(ctx).GetDownloadSignedUrlParams(getDownloadSignedUrlParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    getDownloadSignedUrlParams := *openapiclient.NewGetDownloadSignedUrlParams("FileName_example") // GetDownloadSignedUrlParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetDownloadSignedUrl(context.Background()).GetDownloadSignedUrlParams(getDownloadSignedUrlParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetDownloadSignedUrl``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetDownloadSignedUrl`: GetDownloadSignedUrlResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetDownloadSignedUrl`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetDownloadSignedUrlRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getDownloadSignedUrlParams** | [**GetDownloadSignedUrlParams**](GetDownloadSignedUrlParams.md) |  | 
+
+### Return type
+
+[**GetDownloadSignedUrlResponse**](GetDownloadSignedUrlResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetEnvironmentInfo
 
 > GetEnvironmentInfoResponse GetEnvironmentInfo(ctx).Execute()
@@ -2620,6 +2690,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**MultiChartsResponse**](MultiChartsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetIssueFileUploadSignedUrl
+
+> IssueFileUploadSignedUrl GetIssueFileUploadSignedUrl(ctx).GetIssueFileUploadSignedUrl(getIssueFileUploadSignedUrl).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    getIssueFileUploadSignedUrl := *openapiclient.NewGetIssueFileUploadSignedUrl("FileName_example", "ProjectId_example", "IssueId_example") // GetIssueFileUploadSignedUrl | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetIssueFileUploadSignedUrl(context.Background()).GetIssueFileUploadSignedUrl(getIssueFileUploadSignedUrl).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetIssueFileUploadSignedUrl``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetIssueFileUploadSignedUrl`: IssueFileUploadSignedUrl
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetIssueFileUploadSignedUrl`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetIssueFileUploadSignedUrlRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getIssueFileUploadSignedUrl** | [**GetIssueFileUploadSignedUrl**](GetIssueFileUploadSignedUrl.md) |  | 
+
+### Return type
+
+[**IssueFileUploadSignedUrl**](IssueFileUploadSignedUrl.md)
 
 ### Authorization
 
@@ -4244,6 +4378,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ExternalImportModelStorage**](ExternalImportModelStorage.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetValidateGraphProcessState
+
+> ValidateGraphResponse GetValidateGraphProcessState(ctx).GetValidateGraphProcessStateParams(getValidateGraphProcessStateParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    getValidateGraphProcessStateParams := *openapiclient.NewGetValidateGraphProcessStateParams("ProjectId_example", "Digest_example") // GetValidateGraphProcessStateParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetValidateGraphProcessState(context.Background()).GetValidateGraphProcessStateParams(getValidateGraphProcessStateParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetValidateGraphProcessState``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetValidateGraphProcessState`: ValidateGraphResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetValidateGraphProcessState`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetValidateGraphProcessStateRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getValidateGraphProcessStateParams** | [**GetValidateGraphProcessStateParams**](GetValidateGraphProcessStateParams.md) |  | 
+
+### Return type
+
+[**ValidateGraphResponse**](ValidateGraphResponse.md)
 
 ### Authorization
 
@@ -6779,6 +6977,70 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ValidateGraph
+
+> ValidateGraphResponse ValidateGraph(ctx).ValidateGraphParams(validateGraphParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    validateGraphParams := *openapiclient.NewValidateGraphParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "DatasetVersionId_example", "VersionId_example", "ProjectId_example", "Digest_example") // ValidateGraphParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.ValidateGraph(context.Background()).ValidateGraphParams(validateGraphParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ValidateGraph``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `ValidateGraph`: ValidateGraphResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ValidateGraph`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiValidateGraphRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **validateGraphParams** | [**ValidateGraphParams**](ValidateGraphParams.md) |  | 
+
+### Return type
+
+[**ValidateGraphResponse**](ValidateGraphResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

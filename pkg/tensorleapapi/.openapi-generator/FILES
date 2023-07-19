@@ -24,6 +24,7 @@ docs/AggregationMethod.md
 docs/Aggregations.md
 docs/AllSessionsTestResults.md
 docs/AnalyzeGraphParams.md
+docs/AnalyzeGraphResponse.md
 docs/AnalyzeParams.md
 docs/AnalyzeTypeEnum.md
 docs/BBoxImageData.md
@@ -113,9 +114,12 @@ docs/GetDatasetVersionResponse.md
 docs/GetDatasetVersionsParams.md
 docs/GetDatasetVersionsResponse.md
 docs/GetDatasetsResponse.md
+docs/GetDownloadSignedUrlParams.md
+docs/GetDownloadSignedUrlResponse.md
 docs/GetEnvironmentInfoResponse.md
 docs/GetExportedSessionRunJobsParams.md
 docs/GetExportedSessionRunJobsResponse.md
+docs/GetIssueFileUploadSignedUrl.md
 docs/GetJobsResponse.md
 docs/GetLatestDatasetVersionParams.md
 docs/GetLatestDatasetVersionResponse.md
@@ -144,10 +148,13 @@ docs/GetStatisticsResponse.md
 docs/GetTeamUsersResponse.md
 docs/GetTeamsResponse.md
 docs/GetUploadSignedUrlParams.md
+docs/GetValidateGraphProcessStateParams.md
 docs/GradsAnalysis.md
 docs/GradsItem.md
+docs/GraphAnalyzerData.md
 docs/GraphData.md
 docs/GraphScatterLabel.md
+docs/GraphValidatorData.md
 docs/GraphViz.md
 docs/HealthCheckResponse.md
 docs/HealthStatus.md
@@ -171,6 +178,7 @@ docs/Issue.md
 docs/IssueAction.md
 docs/IssueActionType.md
 docs/IssueActivity.md
+docs/IssueFileUploadSignedUrl.md
 docs/IssueStatus.md
 docs/Job.md
 docs/JobMessageParams.md
@@ -308,6 +316,10 @@ docs/UserData.md
 docs/UserDataLocal.md
 docs/UserDataMetadata.md
 docs/UserRole.md
+docs/ValidateGraphParams.md
+docs/ValidateGraphResponse.md
+docs/ValidatedLossNode.md
+docs/ValidatedNode.md
 docs/Version.md
 docs/VerticalCharts.md
 docs/VisData.md
@@ -342,6 +354,7 @@ model_aggregation_method.go
 model_aggregations.go
 model_all_sessions_test_results.go
 model_analyze_graph_params.go
+model_analyze_graph_response.go
 model_analyze_params.go
 model_analyze_type_enum.go
 model_b_box_image_data.go
@@ -430,9 +443,12 @@ model_get_dataset_version_response.go
 model_get_dataset_versions_params.go
 model_get_dataset_versions_response.go
 model_get_datasets_response.go
+model_get_download_signed_url_params.go
+model_get_download_signed_url_response.go
 model_get_environment_info_response.go
 model_get_exported_session_run_jobs_params.go
 model_get_exported_session_run_jobs_response.go
+model_get_issue_file_upload_signed_url.go
 model_get_jobs_response.go
 model_get_latest_dataset_version_params.go
 model_get_latest_dataset_version_response.go
@@ -461,10 +477,13 @@ model_get_statistics_response.go
 model_get_team_users_response.go
 model_get_teams_response.go
 model_get_upload_signed_url_params.go
+model_get_validate_graph_process_state_params.go
 model_grads_analysis.go
 model_grads_item.go
+model_graph_analyzer_data.go
 model_graph_data.go
 model_graph_scatter_label.go
+model_graph_validator_data.go
 model_graph_viz.go
 model_health_check_response.go
 model_health_status.go
@@ -488,6 +507,7 @@ model_issue.go
 model_issue_action.go
 model_issue_action_type.go
 model_issue_activity.go
+model_issue_file_upload_signed_url.go
 model_issue_status.go
 model_job.go
 model_job_message_params.go
@@ -625,6 +645,10 @@ model_user_data.go
 model_user_data_local.go
 model_user_data_metadata.go
 model_user_role.go
+model_validate_graph_params.go
+model_validate_graph_response.go
+model_validated_loss_node.go
+model_validated_node.go
 model_version.go
 model_vertical_charts.go
 model_vis_data.go

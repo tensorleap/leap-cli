@@ -11,12 +11,14 @@ Name | Type | Description | Notes
 **Status** | [**JobStatus**](JobStatus.md) |  | 
 **CreatedAt** | **string** |  | 
 **UpdatedAt** | **string** |  | 
+**SessionName** | **string** |  | 
+**SessionRunName** | **string** |  | 
 
 ## Methods
 
 ### NewRunProcess
 
-`func NewRunProcess(jobId string, versionName string, projectName string, jobType string, status JobStatus, createdAt string, updatedAt string, ) *RunProcess`
+`func NewRunProcess(jobId string, versionName string, projectName string, jobType string, status JobStatus, createdAt string, updatedAt string, sessionName string, sessionRunName string, ) *RunProcess`
 
 NewRunProcess instantiates a new RunProcess object
 This constructor will assign default values to properties that have it defined,
@@ -169,6 +171,46 @@ and a boolean to check if the value has been set.
 `func (o *RunProcess) SetUpdatedAt(v string)`
 
 SetUpdatedAt sets UpdatedAt field to given value.
+
+
+### GetSessionName
+
+`func (o *RunProcess) GetSessionName() string`
+
+GetSessionName returns the SessionName field if non-nil, zero value otherwise.
+
+### GetSessionNameOk
+
+`func (o *RunProcess) GetSessionNameOk() (*string, bool)`
+
+GetSessionNameOk returns a tuple with the SessionName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSessionName
+
+`func (o *RunProcess) SetSessionName(v string)`
+
+SetSessionName sets SessionName field to given value.
+
+
+### GetSessionRunName
+
+`func (o *RunProcess) GetSessionRunName() string`
+
+GetSessionRunName returns the SessionRunName field if non-nil, zero value otherwise.
+
+### GetSessionRunNameOk
+
+`func (o *RunProcess) GetSessionRunNameOk() (*string, bool)`
+
+GetSessionRunNameOk returns a tuple with the SessionRunName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSessionRunName
+
+`func (o *RunProcess) SetSessionRunName(v string)`
+
+SetSessionRunName sets SessionRunName field to given value.
 
 
 
