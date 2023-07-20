@@ -192,6 +192,9 @@ mirrors:
 			},
 		},
 	}
+	if useGpu {
+		simpleK3dConfig.Options.Runtime.GPURequest = "all"
+	}
 
 	for i, v := range volumes {
 		simpleK3dConfig.Volumes[i] = conf.VolumeWithNodeFilters{
