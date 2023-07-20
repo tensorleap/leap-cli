@@ -4,10 +4,102 @@ import (
 	"archive/tar"
 	"compress/gzip"
 	"fmt"
+	"io"
 	"os"
+	"path/filepath"
+
+	"github.com/tensorleap/cli-go/pkg/api"
 )
 
-func CreateTarGzFile(filePaths []string, file *os.File) error {
+
+func DownloadAndExtractTarFile(url string, outputDir string) ([]string, error) {
+	reader, writer := io.Pipe()
+
+	downloadErrCh := make(chan error, 1)
+	go func() {
+		defer writer.Close()
+		downloadErrCh <- api.DownloadFile(url, writer)
+	}()
+
+	files, extractionErr := ExtractTarGzFile(reader, outputDir)
+
+	downloadErr := <-downloadErrCh
+
+	if extractionErr != nil {
+		return nil, fmt.Errorf("Failed to extract tar.gz file: %w", extractionErr)
+	}
+	if downloadErr != nil {
+		return nil, fmt.Errorf("Failed to download file: %w", downloadErr)
+	}
+
+	return files, nil
+}
+
+func ExtractTarGzFile(file io.Reader, outputDir string) ([]string, error) {
+	fmt.Println("Extract files...")
+	gzipReader, err := gzip.NewReader(file)
+	files := []string{}
+
+	if err != nil {
+		return files, err
+	}
+	defer gzipReader.Close()
+
+	tarReader := tar.NewReader(gzipReader)
+
+	// Iterate through the tar archive and extract the files
+	for {
+		fileName, readEnd, err := readNextTarFile(tarReader, outputDir)
+		if err != nil {
+			return files, err
+		}
+		if readEnd {
+			return files, nil
+		}
+		files = append(files, fileName)
+	}
+}
+
+func readNextTarFile(tarReader *tar.Reader, outputDir string) (fileName string, readEnd bool, err error) {
+	header, err := tarReader.Next()
+	if err == io.EOF {
+		readEnd = true
+		err = nil
+		return
+	}
+	if err != nil {
+		return
+	}
+
+	// Clean the path to prevent path traversal attacks
+	fileName = filepath.Clean(header.Name)
+	
+	extractedFilePath := filepath.Join(outputDir, header.Name)
+	if header.FileInfo().IsDir() {
+		err = os.MkdirAll(extractedFilePath, header.FileInfo().Mode())
+		return
+	}
+
+	// Create the directory for the file if it doesn't exist
+	err = os.MkdirAll(filepath.Dir(extractedFilePath), 0755)
+	if err != nil {
+		return
+	}
+
+	file, err := os.Create(extractedFilePath)
+	if err != nil {
+		return
+	}
+	defer file.Close()
+
+	_, err = io.Copy(file, tarReader)
+	if err == io.EOF {
+		err = nil
+	}
+	return
+}
+
+func CreateTarGzFile(filePaths []string, file io.Writer) error {
 	fmt.Println("Packing files...")
 	gzip := gzip.NewWriter(file)
 	defer gzip.Close()
