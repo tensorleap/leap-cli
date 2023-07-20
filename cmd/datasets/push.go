@@ -7,8 +7,8 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/tensorleap/cli-go/pkg/auth"
 	. "github.com/tensorleap/cli-go/pkg/api"
-	"github.com/tensorleap/cli-go/pkg/config"
 	"github.com/tensorleap/cli-go/pkg/datasets"
 	. "github.com/tensorleap/cli-go/pkg/local"
 	"github.com/tensorleap/cli-go/pkg/log"
@@ -25,7 +25,7 @@ func init() {
 			if err != nil {
 				return err
 			}
-			if err := config.CheckLoggedIn(); err != nil {
+			if err := auth.CheckLoggedIn(); err != nil {
 				return err
 			}
 			ctx := cmd.Context()

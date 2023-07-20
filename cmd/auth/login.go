@@ -4,9 +4,8 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	. "github.com/tensorleap/cli-go/pkg/api"
-	"github.com/tensorleap/cli-go/pkg/config"
+	"github.com/tensorleap/cli-go/pkg/auth"
 )
 
 var cmd = &cobra.Command{
@@ -16,7 +15,7 @@ var cmd = &cobra.Command{
 	Long:  `Logging in with Tensorleap API key`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		apiKey, baseUrl := args[0], args[1]
-		ctx := CreateAuthenticatedContext(cmd.Context(), baseUrl, apiKey)
+		ctx := CreateAuthenticatedContext(cmd.Context(), apiKey, baseUrl)
 
 		userData, _, err := ApiClient.WhoAmI(ctx).Execute()
 		if err != nil {
@@ -25,20 +24,8 @@ var cmd = &cobra.Command{
 
 		fmt.Println("User email: " + userData.Local.Email)
 		fmt.Println("Team name: " + userData.TeamName)
-		viper.Set(config.API_URL_CONFIG_PATH, baseUrl)
-		viper.Set(config.API_KEY_CONFIG_PATH, apiKey)
+		auth.Login(apiKey, baseUrl)
 
-		err = viper.SafeWriteConfig()
-		if err != nil {
-			_, ok := err.(viper.ConfigFileAlreadyExistsError)
-			if ok {
-				err = viper.WriteConfig()
-				if err != nil {
-					return err
-				}
-			}
-		}
-		fmt.Println("Saved credentials to: ", viper.ConfigFileUsed())
 		return nil
 	},
 }
@@ -46,3 +33,4 @@ var cmd = &cobra.Command{
 func init() {
 	RootCommand.AddCommand(cmd)
 }
+

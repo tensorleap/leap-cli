@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/cobra"
 
 	. "github.com/tensorleap/cli-go/pkg/api"
-	"github.com/tensorleap/cli-go/pkg/config"
+	"github.com/tensorleap/cli-go/pkg/auth"
 	"github.com/tensorleap/cli-go/pkg/tensorleapapi"
 )
 
@@ -25,7 +25,7 @@ func init() {
 		Short: "Import a model into tensorleap",
 		Long:  `Import a model into tensorleap`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := config.CheckLoggedIn(); err != nil {
+			if err := auth.CheckLoggedIn(); err != nil {
 				return err
 			}
 			filePath := args[0]
