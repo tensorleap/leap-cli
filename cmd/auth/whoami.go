@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 	. "github.com/tensorleap/cli-go/pkg/api"
-	"github.com/tensorleap/cli-go/pkg/config"
+	"github.com/tensorleap/cli-go/pkg/auth"
 )
 
 func init() {
@@ -14,10 +14,10 @@ func init() {
 		Short: "Get information about the authenticated user",
 		Long:  `Get information about the authenticated user`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := config.CheckLoggedIn(); err != nil {
+			if err := auth.CheckLoggedIn(); err != nil {
 				return err
 			}
-			fmt.Println("API Url: " + config.GetApiUrl())
+			fmt.Println("API Url: " + auth.GetApiUrl())
 
 			userData, _, err := ApiClient.WhoAmI(cmd.Context()).Execute()
 			if err != nil {

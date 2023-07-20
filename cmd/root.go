@@ -11,6 +11,7 @@ import (
 	"github.com/tensorleap/cli-go/cmd/local"
 	"github.com/tensorleap/cli-go/cmd/models"
 	. "github.com/tensorleap/cli-go/pkg/api"
+	authPkg "github.com/tensorleap/cli-go/pkg/auth"
 	"github.com/tensorleap/cli-go/pkg/config"
 	"github.com/tensorleap/cli-go/pkg/log"
 	"github.com/tensorleap/cli-go/pkg/version"
@@ -29,8 +30,9 @@ Complete documentation is available at https://docs.tensorleap.ai`,
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
 		cmd.SetContext(CreateAuthenticatedContext(
 			cmd.Context(),
-			config.GetApiUrl(),
-			config.GetApiKey()))
+			authPkg.GetApiKey(),
+			authPkg.GetApiUrl(),
+		))
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		if !showVersionInfo {
@@ -50,8 +52,8 @@ func init() {
 	RootCommand.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/tensorleap/config.yaml)")
 	RootCommand.PersistentFlags().StringVar(&apiKey, "apiKey", "", "Tensorleap Api key")
 	RootCommand.PersistentFlags().StringVar(&apiUrl, "apiUrl", "", "Tensorleap api url")
-	viper.BindPFlag(config.API_KEY_CONFIG_PATH, RootCommand.PersistentFlags().Lookup("apiKey"))
-	viper.BindPFlag(config.API_URL_CONFIG_PATH, RootCommand.PersistentFlags().Lookup("apiUrl"))
+	viper.BindPFlag(authPkg.API_KEY_CONFIG_PATH, RootCommand.PersistentFlags().Lookup("apiKey"))
+	viper.BindPFlag(authPkg.API_URL_CONFIG_PATH, RootCommand.PersistentFlags().Lookup("apiUrl"))
 
 	RootCommand.AddCommand(auth.RootCommand)
 	RootCommand.AddCommand(local.RootCommand)
