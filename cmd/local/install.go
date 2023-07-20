@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
+	"github.com/tensorleap/cli-go/pkg/auth"
 	"github.com/tensorleap/cli-go/pkg/k3d"
 	"github.com/tensorleap/cli-go/pkg/local"
 	"github.com/tensorleap/cli-go/pkg/log"
@@ -76,6 +77,10 @@ func NewInstallCmd() *cobra.Command {
 			}
 
 			k3d.CacheImageInTheBackground(ctx, imageToCacheInTheBackground)
+
+			if err := auth.Login("", "http://localhost:4589/api/v2"); err != nil {
+				return err
+			}
 
 			log.SendCloudReport("info", "Successfully completed installation", "Success", nil)
 			return nil
