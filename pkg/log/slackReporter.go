@@ -75,7 +75,6 @@ func SendCloudReport(messageLevel MessageLevel, message string, messageState Mes
 	}
 
 	defer res.Body.Close()
-	return
 }
 
 func getUnameData() map[string]interface{} {

@@ -50,7 +50,10 @@ func init() {
 				return err
 			}
 
-			tarGzFile.Seek(0, 0)
+			_, err = tarGzFile.Seek(0, 0)
+			if err != nil {
+				return err
+			}
 			uploadUrl := data.GetUrl()
 			if err := UploadFile(uploadUrl, tarGzFile); err != nil {
 				return err
@@ -106,7 +109,10 @@ func addDatasetIfNotExisted(ctx context.Context, datasetConfig *datasets.Dataset
 	if !isDatasetExisted {
 		log.Infof("Not found dataset id: %s. Creating new dataset", datasetConfig.DatasetId)
 
-		name := datasets.AskForDatasetName()
+		name, err := datasets.AskForDatasetName()
+		if err != nil {
+			return err
+		}
 		dataset, err := datasets.CreateNewDataset(ctx, name)
 		if err != nil {
 			return err

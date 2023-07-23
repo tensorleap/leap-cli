@@ -21,11 +21,12 @@ func InitConfig(cfgFile string) error {
 		viper.SetConfigType("yaml")
 		viper.SetConfigName("config")
 
-		os.MkdirAll(configDir, os.ModePerm)
+		if err := os.MkdirAll(configDir, os.ModePerm); err != nil {
+			return err
+		}
 	}
 
 	viper.AutomaticEnv()
-	viper.ReadInConfig()
+	return viper.ReadInConfig()
 
-	return nil
 }

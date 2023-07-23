@@ -2,7 +2,6 @@ package local
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"os"
 
@@ -14,9 +13,7 @@ func ValidateStandaloneDir() error {
 	_, err := os.Stat(STANDALONE_DIR)
 	if os.IsNotExist(err) {
 		log.SendCloudReport("error", "Installation dir not found", "Failed", &map[string]interface{}{"error": err.Error()})
-		return errors.New(
-			fmt.Sprintf("Not found data directory(%s) on this machine, Please make sure to install before upgrade", STANDALONE_DIR),
-		)
+		return fmt.Errorf("Not found data directory(%s) on this machine, Please make sure to install before upgrade", STANDALONE_DIR)
 	}
 	return err
 }
@@ -29,9 +26,7 @@ func GetTensorleapCluster(ctx context.Context) (*k3d.Cluster, error) {
 	}
 	if cluster == nil {
 		log.SendCloudReport("error", "K3d cluster found was null", "Failed", &map[string]interface{}{"error": err.Error()})
-		return nil, errors.New(
-			fmt.Sprintf("Not found local Cluster(%s) on this machine, Please make sure to install before upgrade", STANDALONE_DIR),
-		)
+		return nil, fmt.Errorf("Not found local Cluster(%s) on this machine, Please make sure to install before upgrade", STANDALONE_DIR)
 	}
 	return cluster, nil
 }

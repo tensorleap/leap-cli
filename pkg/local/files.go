@@ -124,7 +124,10 @@ func CreateTarGzFile(filePaths []string, file io.Writer) error {
 		if err != nil {
 			return err
 		}
-		tarWriter.Write(fileContents)
+		_, err = tarWriter.Write(fileContents)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
