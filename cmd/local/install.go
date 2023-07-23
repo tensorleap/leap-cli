@@ -86,12 +86,16 @@ func NewInstallCmd() *cobra.Command {
 			if err := k3d.CacheImageInTheBackground(ctx, imageToCacheInTheBackground); err != nil {
 				return err
 			}
-
-			if err := auth.Login("", "http://localhost:4589/api/v2"); err != nil {
+			baseLink := "http://127.0.0.1:4589"
+			apiLink := fmt.Sprintf("%s/api/v2", baseLink)
+			if err := auth.Login("", apiLink); err != nil {
 				return err
 			}
 
 			log.SendCloudReport("info", "Successfully completed installation", "Success", nil)
+			log.Info("Successfully completed installation")
+			_ = local.OpenLink(baseLink)
+			log.Infof("You can now access Tensorleap at %s", baseLink)
 			return nil
 		},
 	}
