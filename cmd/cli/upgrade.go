@@ -47,7 +47,6 @@ func UpgradeCLI() error {
 
 	// Read the contents of the script
 	script, err := io.ReadAll(resp.Body)
-	log.Println("script " + string(script))
 	if err != nil {
 		return err
 	}
