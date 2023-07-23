@@ -7,7 +7,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-
 func TestDownloadFile(t *testing.T) {
 	url := "https://hub.tensorleap.ai/demo/projects/MNIST/versions/81/1686477167629-project.tar"
 	outputFilePath := "TestDownloadFile.tar.zip"
