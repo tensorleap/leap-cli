@@ -19,9 +19,9 @@ var _ MappedNullable = &VisualizationResponse{}
 
 // VisualizationResponse struct for VisualizationResponse
 type VisualizationResponse struct {
-	Data VisualizationData `json:"data"`
-	Info VizInfoType `json:"info"`
-	Source string `json:"source"`
+	Data   VisualizationData `json:"data"`
+	Info   VizInfoType       `json:"info"`
+	Source string            `json:"source"`
 }
 
 // NewVisualizationResponse instantiates a new VisualizationResponse object
@@ -117,7 +117,7 @@ func (o *VisualizationResponse) SetSource(v string) {
 }
 
 func (o VisualizationResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -167,5 +167,3 @@ func (v *NullableVisualizationResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

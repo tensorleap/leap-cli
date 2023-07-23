@@ -20,13 +20,13 @@ type JobStatus string
 
 // List of JobStatus
 const (
-	JOBSTATUS_UNSTARTED JobStatus = "UNSTARTED"
-	JOBSTATUS_STARTED JobStatus = "STARTED"
-	JOBSTATUS_PENDING JobStatus = "PENDING"
-	JOBSTATUS_STOPPED JobStatus = "STOPPED"
+	JOBSTATUS_UNSTARTED  JobStatus = "UNSTARTED"
+	JOBSTATUS_STARTED    JobStatus = "STARTED"
+	JOBSTATUS_PENDING    JobStatus = "PENDING"
+	JOBSTATUS_STOPPED    JobStatus = "STOPPED"
 	JOBSTATUS_TERMINATED JobStatus = "TERMINATED"
-	JOBSTATUS_FINISHED JobStatus = "FINISHED"
-	JOBSTATUS_FAILED JobStatus = "FAILED"
+	JOBSTATUS_FINISHED   JobStatus = "FINISHED"
+	JOBSTATUS_FAILED     JobStatus = "FAILED"
 )
 
 // All allowed values of JobStatus enum
@@ -118,4 +118,3 @@ func (v *NullableJobStatus) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

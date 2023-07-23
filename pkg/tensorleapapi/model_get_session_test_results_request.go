@@ -19,7 +19,7 @@ var _ MappedNullable = &GetSessionTestResultsRequest{}
 
 // GetSessionTestResultsRequest struct for GetSessionTestResultsRequest
 type GetSessionTestResultsRequest struct {
-	ProjectId string `json:"projectId"`
+	ProjectId        string            `json:"projectId"`
 	SessionsTestData []SessionTestData `json:"sessionsTestData"`
 }
 
@@ -91,7 +91,7 @@ func (o *GetSessionTestResultsRequest) SetSessionsTestData(v []SessionTestData) 
 }
 
 func (o GetSessionTestResultsRequest) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableGetSessionTestResultsRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

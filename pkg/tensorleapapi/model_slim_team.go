@@ -19,11 +19,11 @@ var _ MappedNullable = &SlimTeam{}
 
 // SlimTeam struct for SlimTeam
 type SlimTeam struct {
-	Cid string `json:"cid"`
-	Name string `json:"name"`
-	PublicName string `json:"publicName"`
-	Type string `json:"type"`
-	IsDefault bool `json:"isDefault"`
+	Cid           string  `json:"cid"`
+	Name          string  `json:"name"`
+	PublicName    string  `json:"publicName"`
+	Type          string  `json:"type"`
+	IsDefault     bool    `json:"isDefault"`
 	MachineTypeId *string `json:"machineTypeId,omitempty"`
 }
 
@@ -202,7 +202,7 @@ func (o *SlimTeam) SetMachineTypeId(v string) {
 }
 
 func (o SlimTeam) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -257,5 +257,3 @@ func (v *NullableSlimTeam) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

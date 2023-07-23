@@ -19,12 +19,12 @@ var _ MappedNullable = &GradsItem{}
 
 // GradsItem struct for GradsItem
 type GradsItem struct {
-	NodeName string `json:"node_name"`
-	Label string `json:"label"`
-	Grads VisData `json:"grads"`
-	VisualizerName string `json:"visualizer_name"`
-	EncoderNames []string `json:"encoder_names"`
-	ConnectionName string `json:"connection_name"`
+	NodeName          string             `json:"node_name"`
+	Label             string             `json:"label"`
+	Grads             VisData            `json:"grads"`
+	VisualizerName    string             `json:"visualizer_name"`
+	EncoderNames      []string           `json:"encoder_names"`
+	ConnectionName    string             `json:"connection_name"`
 	ChannelImportance *HorizontalBarData `json:"channel_importance,omitempty"`
 }
 
@@ -228,7 +228,7 @@ func (o *GradsItem) SetChannelImportance(v HorizontalBarData) {
 }
 
 func (o GradsItem) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -284,5 +284,3 @@ func (v *NullableGradsItem) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

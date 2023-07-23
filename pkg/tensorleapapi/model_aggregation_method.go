@@ -21,9 +21,9 @@ type AggregationMethod string
 // List of AggregationMethod
 const (
 	AGGREGATIONMETHOD_AVERAGE AggregationMethod = "Average"
-	AGGREGATIONMETHOD_COUNT AggregationMethod = "Count"
-	AGGREGATIONMETHOD_MIN AggregationMethod = "Min"
-	AGGREGATIONMETHOD_MAX AggregationMethod = "Max"
+	AGGREGATIONMETHOD_COUNT   AggregationMethod = "Count"
+	AGGREGATIONMETHOD_MIN     AggregationMethod = "Min"
+	AGGREGATIONMETHOD_MAX     AggregationMethod = "Max"
 )
 
 // All allowed values of AggregationMethod enum
@@ -112,4 +112,3 @@ func (v *NullableAggregationMethod) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

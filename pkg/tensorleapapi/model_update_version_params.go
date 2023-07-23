@@ -19,12 +19,12 @@ var _ MappedNullable = &UpdateVersionParams{}
 
 // UpdateVersionParams struct for UpdateVersionParams
 type UpdateVersionParams struct {
-	VersionId string `json:"versionId"`
-	ProjectId string `json:"projectId"`
-	Data ModelGraph `json:"data"`
-	CodeIntegrationVersionId *string `json:"codeIntegrationVersionId,omitempty"`
-	DatasetSetup *DatasetSetup `json:"datasetSetup,omitempty"`
-	Hash *string `json:"hash,omitempty"`
+	VersionId                string        `json:"versionId"`
+	ProjectId                string        `json:"projectId"`
+	Data                     ModelGraph    `json:"data"`
+	CodeIntegrationVersionId *string       `json:"codeIntegrationVersionId,omitempty"`
+	DatasetSetup             *DatasetSetup `json:"datasetSetup,omitempty"`
+	Hash                     *string       `json:"hash,omitempty"`
 }
 
 // NewUpdateVersionParams instantiates a new UpdateVersionParams object
@@ -216,7 +216,7 @@ func (o *UpdateVersionParams) SetHash(v string) {
 }
 
 func (o UpdateVersionParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -275,5 +275,3 @@ func (v *NullableUpdateVersionParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

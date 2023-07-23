@@ -20,7 +20,7 @@ type HeatmapType string
 
 // List of HeatmapType
 const (
-	HEATMAPTYPE_SINGLE HeatmapType = "single"
+	HEATMAPTYPE_SINGLE   HeatmapType = "single"
 	HEATMAPTYPE_MULTIPLE HeatmapType = "multiple"
 )
 
@@ -108,4 +108,3 @@ func (v *NullableHeatmapType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

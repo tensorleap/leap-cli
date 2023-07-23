@@ -19,14 +19,14 @@ var _ MappedNullable = &ImportNewModelParams{}
 
 // ImportNewModelParams struct for ImportNewModelParams
 type ImportNewModelParams struct {
-	ProjectId string `json:"projectId"`
-	FileName string `json:"fileName"`
-	DatasetId *string `json:"datasetId,omitempty"`
-	ModelName string `json:"modelName"`
-	VersionName string `json:"versionName"`
-	BranchName *string `json:"branchName,omitempty"`
-	ModelType ImportModelType `json:"model_type"`
-	TransformInputs *bool `json:"transform_inputs,omitempty"`
+	ProjectId       string          `json:"projectId"`
+	FileName        string          `json:"fileName"`
+	DatasetId       *string         `json:"datasetId,omitempty"`
+	ModelName       string          `json:"modelName"`
+	VersionName     string          `json:"versionName"`
+	BranchName      *string         `json:"branchName,omitempty"`
+	ModelType       ImportModelType `json:"model_type"`
+	TransformInputs *bool           `json:"transform_inputs,omitempty"`
 }
 
 // NewImportNewModelParams instantiates a new ImportNewModelParams object
@@ -268,7 +268,7 @@ func (o *ImportNewModelParams) SetTransformInputs(v bool) {
 }
 
 func (o ImportNewModelParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -329,5 +329,3 @@ func (v *NullableImportNewModelParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

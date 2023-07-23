@@ -19,12 +19,12 @@ var _ MappedNullable = &MultiThresholdConfusionMatrixParams{}
 
 // MultiThresholdConfusionMatrixParams struct for MultiThresholdConfusionMatrixParams
 type MultiThresholdConfusionMatrixParams struct {
-	SessionRunIds []string `json:"sessionRunIds"`
-	ProjectId string `json:"projectId"`
-	CustomMetricName string `json:"customMetricName"`
-	VerticalSplit *string `json:"verticalSplit,omitempty"`
-	HorizontalSplit *string `json:"horizontalSplit,omitempty"`
-	Filters []ESFilter `json:"filters,omitempty"`
+	SessionRunIds    []string   `json:"sessionRunIds"`
+	ProjectId        string     `json:"projectId"`
+	CustomMetricName string     `json:"customMetricName"`
+	VerticalSplit    *string    `json:"verticalSplit,omitempty"`
+	HorizontalSplit  *string    `json:"horizontalSplit,omitempty"`
+	Filters          []ESFilter `json:"filters,omitempty"`
 }
 
 // NewMultiThresholdConfusionMatrixParams instantiates a new MultiThresholdConfusionMatrixParams object
@@ -216,7 +216,7 @@ func (o *MultiThresholdConfusionMatrixParams) SetFilters(v []ESFilter) {
 }
 
 func (o MultiThresholdConfusionMatrixParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -275,5 +275,3 @@ func (v *NullableMultiThresholdConfusionMatrixParams) UnmarshalJSON(src []byte) 
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

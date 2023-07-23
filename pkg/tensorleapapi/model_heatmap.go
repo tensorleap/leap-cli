@@ -19,7 +19,7 @@ var _ MappedNullable = &Heatmap{}
 
 // Heatmap struct for Heatmap
 type Heatmap struct {
-	Body []float64 `json:"body"`
+	Body []float64   `json:"body"`
 	Type HeatmapType `json:"type"`
 }
 
@@ -91,7 +91,7 @@ func (o *Heatmap) SetType(v HeatmapType) {
 }
 
 func (o Heatmap) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableHeatmap) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

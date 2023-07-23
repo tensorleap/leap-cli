@@ -20,7 +20,7 @@ var _ MappedNullable = &RecentTeamSessionsRequestParams{}
 // RecentTeamSessionsRequestParams struct for RecentTeamSessionsRequestParams
 type RecentTeamSessionsRequestParams struct {
 	TopSessions float64 `json:"topSessions"`
-	ProjectId string `json:"projectId"`
+	ProjectId   string  `json:"projectId"`
 }
 
 // NewRecentTeamSessionsRequestParams instantiates a new RecentTeamSessionsRequestParams object
@@ -91,7 +91,7 @@ func (o *RecentTeamSessionsRequestParams) SetProjectId(v string) {
 }
 
 func (o RecentTeamSessionsRequestParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableRecentTeamSessionsRequestParams) UnmarshalJSON(src []byte) erro
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

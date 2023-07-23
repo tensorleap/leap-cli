@@ -19,7 +19,7 @@ var _ MappedNullable = &JobMessageParams{}
 
 // JobMessageParams struct for JobMessageParams
 type JobMessageParams struct {
-	Module string `json:"module"`
+	Module    string    `json:"module"`
 	JobStatus JobStatus `json:"jobStatus"`
 }
 
@@ -91,7 +91,7 @@ func (o *JobMessageParams) SetJobStatus(v JobStatus) {
 }
 
 func (o JobMessageParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableJobMessageParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

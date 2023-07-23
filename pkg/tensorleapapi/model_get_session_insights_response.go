@@ -65,7 +65,7 @@ func (o *GetSessionInsightsResponse) SetInsights(v []Insight) {
 }
 
 func (o GetSessionInsightsResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -113,5 +113,3 @@ func (v *NullableGetSessionInsightsResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

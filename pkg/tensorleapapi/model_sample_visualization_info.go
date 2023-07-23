@@ -19,10 +19,10 @@ var _ MappedNullable = &SampleVisualizationInfo{}
 
 // SampleVisualizationInfo struct for SampleVisualizationInfo
 type SampleVisualizationInfo struct {
-	JobType JobTypeEnum `json:"job_type"`
-	AnalyzeType AnalyzeTypeEnum `json:"analyze_type"`
-	Guid string `json:"guid"`
-	SelectedSample SampleIdentity `json:"selected_sample"`
+	JobType        JobTypeEnum     `json:"job_type"`
+	AnalyzeType    AnalyzeTypeEnum `json:"analyze_type"`
+	Guid           string          `json:"guid"`
+	SelectedSample SampleIdentity  `json:"selected_sample"`
 }
 
 // NewSampleVisualizationInfo instantiates a new SampleVisualizationInfo object
@@ -143,7 +143,7 @@ func (o *SampleVisualizationInfo) SetSelectedSample(v SampleIdentity) {
 }
 
 func (o SampleVisualizationInfo) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -194,5 +194,3 @@ func (v *NullableSampleVisualizationInfo) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

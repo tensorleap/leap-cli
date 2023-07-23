@@ -20,17 +20,17 @@ var _ MappedNullable = &ExportedModelData{}
 
 // ExportedModelData struct for ExportedModelData
 type ExportedModelData struct {
-	Cid string `json:"cid"`
-	JobId string `json:"jobId"`
-	SessionWeightId string `json:"sessionWeightId"`
-	Blob string `json:"blob"`
-	Status string `json:"status"`
-	SessionId string `json:"sessionId"`
-	Title string `json:"title"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
-	CreatedBy string `json:"createdBy"`
-	FileType string `json:"fileType"`
+	Cid             string    `json:"cid"`
+	JobId           string    `json:"jobId"`
+	SessionWeightId string    `json:"sessionWeightId"`
+	Blob            string    `json:"blob"`
+	Status          string    `json:"status"`
+	SessionId       string    `json:"sessionId"`
+	Title           string    `json:"title"`
+	CreatedAt       time.Time `json:"createdAt"`
+	UpdatedAt       time.Time `json:"updatedAt"`
+	CreatedBy       string    `json:"createdBy"`
+	FileType        string    `json:"fileType"`
 }
 
 // NewExportedModelData instantiates a new ExportedModelData object
@@ -326,7 +326,7 @@ func (o *ExportedModelData) SetFileType(v string) {
 }
 
 func (o ExportedModelData) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -384,5 +384,3 @@ func (v *NullableExportedModelData) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-
