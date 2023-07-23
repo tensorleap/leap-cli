@@ -6,7 +6,7 @@ import (
 	. "github.com/tensorleap/cli-go/pkg/tensorleapapi"
 )
 
-func CreateAuthenticatedContext(parentCtx context.Context, apiKey string,  baseUrl string) context.Context {
+func CreateAuthenticatedContext(parentCtx context.Context, apiKey string, baseUrl string) context.Context {
 	ctx := context.WithValue(parentCtx, ContextServerVariables, map[string]string{
 		"baseUrl": baseUrl,
 	})

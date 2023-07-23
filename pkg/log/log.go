@@ -63,7 +63,7 @@ func Fatalf(format string, args ...interface{}) {
 
 func init() {
 
-	textFormat:=&logrus.TextFormatter{
+	textFormat := &logrus.TextFormatter{
 		DisableTimestamp: true,
 		ForceColors:      true,
 		ForceQuote:       true,

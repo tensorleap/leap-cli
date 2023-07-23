@@ -11,7 +11,6 @@ import (
 	"github.com/tensorleap/cli-go/pkg/api"
 )
 
-
 func DownloadAndExtractTarFile(url string, outputDir string) ([]string, error) {
 	reader, writer := io.Pipe()
 
@@ -73,7 +72,7 @@ func readNextTarFile(tarReader *tar.Reader, outputDir string) (fileName string, 
 
 	// Clean the path to prevent path traversal attacks
 	fileName = filepath.Clean(header.Name)
-	
+
 	extractedFilePath := filepath.Join(outputDir, header.Name)
 	if header.FileInfo().IsDir() {
 		err = os.MkdirAll(extractedFilePath, header.FileInfo().Mode())

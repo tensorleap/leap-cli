@@ -33,4 +33,3 @@ var cmd = &cobra.Command{
 func init() {
 	RootCommand.AddCommand(cmd)
 }
-

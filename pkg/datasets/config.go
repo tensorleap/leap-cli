@@ -12,7 +12,9 @@ import (
 
 //go:embed template/*
 var templateDir embed.FS
+
 const configFileName = ".tensorleap.yaml"
+
 type DatasetConfig struct {
 	DatasetId       string   `yaml:"datasetId"`
 	EntryFile       string   `yaml:"entryFile"`
