@@ -28,6 +28,13 @@ func NewInstallCmd() *cobra.Command {
 				&map[string]interface{}{"params": map[string]interface{}{"port": port, "registryPort": registryPort,
 					"useGpu": useGpu, "dataVolume": dataVolume, "args": args}})
 
+			err := k3d.CheckDockerRequirements()
+			if err != nil {
+				log.SendCloudReport("error", "Docker requirements not met", "Failed",
+					&map[string]interface{}{"error": err.Error()})
+				return err
+			}
+
 			close, err := local.SetupInfra("install")
 			if err != nil {
 				return err

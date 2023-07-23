@@ -3,9 +3,12 @@ package k3d
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
+	"os"
+	"os/exec"
 	"strconv"
 	"strings"
 	"sync"
@@ -22,9 +25,18 @@ import (
 
 type Registry = k3d.Registry
 
-const REGISTRY_NAME = "k3d-tensorleap-registry"
-const CONTAINER_NAME = "k3d-tensorleap-server-0"
-const REGISTRY_DOMAIN = "k3d-tensorleap-registry:5000"
+const (
+	REQUIRED_MEMORY         = 6227000000
+	REQUIRED_MEMORY_PRETTY  = "6Gb"
+	REQUIRED_STORAGE_KB     = 16777216
+	REQUIRED_STORAGE_PRETTY = "15Gb"
+)
+
+const (
+	REGISTRY_NAME   = "k3d-tensorleap-registry"
+	CONTAINER_NAME  = "k3d-tensorleap-server-0"
+	REGISTRY_DOMAIN = "k3d-tensorleap-registry:5000"
+)
 
 type RegistryTagListResponse struct {
 	Name string
@@ -248,4 +260,75 @@ func CacheImageInTheBackground(ctx context.Context, image string) error {
 
 	log.SendCloudReport("info", "Successfully cached images in background", "Running", nil)
 	return dockerClient.ContainerExecStart(ctx, exec.ID, dockerTypes.ExecStartCheck{})
+}
+
+func CheckDockerRequirements() error {
+	if os.Getenv("DISABLE_DOCKER_CHECKS") == "true" {
+		return nil
+	}
+	_, err := exec.LookPath("docker")
+	if err != nil {
+		return errors.New("docker is not installed. docker is prerequisite, please install it and retry. https://docs.docker.com/engine/install/")
+	}
+
+	cmd := exec.Command("docker", "ps")
+	err = cmd.Run()
+	if err != nil {
+		return errors.New("docker is not running")
+	}
+
+	log.Println("Checking docker memory limits...")
+	cmd = exec.Command("sh", "-c", "docker info -f '{{json .MemTotal}}'")
+	dockerMemoryBytes, err := cmd.Output()
+	if err != nil {
+		log.Fatalf("Failed getting docker info, %s", err)
+		return err
+	}
+	dockerMemory := int64(0)
+	if err := json.Unmarshal(dockerMemoryBytes, &dockerMemory); err != nil {
+		log.Fatalf("Failed parsing memory data, %s", err)
+		return err
+	}
+	dockerMemoryPretty := fmt.Sprintf("%dGb", dockerMemory/(1024*1024*1024))
+	log.Printf("Docker has %s memory available.\n", dockerMemoryPretty)
+
+	log.Println("Checking docker storage limits...")
+	cmd = exec.Command("sh", "-c", "docker pull alpine")
+	_, err = cmd.CombinedOutput()
+	if err != nil {
+		log.Fatalf("Failed pulling alpine image, %s", err)
+	}
+
+	cmd = exec.Command("sh", "-c", "docker run --rm alpine df -t overlay -P")
+	dfOutputBytes, err := cmd.Output()
+	if err != nil {
+		log.Fatalf("Failed pulling alpine, %s", err)
+		return err
+	}
+	dfOutput := string(dfOutputBytes)
+	dfOutputLines := strings.Split(dfOutput, "\n")
+	dfOutputWords := strings.Fields(dfOutputLines[1])
+	dockerTotalStorageKB, _ := strconv.Atoi(dfOutputWords[3])
+	dockerTotalStoragePretty := fmt.Sprintf("%dGb", dockerTotalStorageKB/(1024*1024))
+	dockerFreeStorageKB, _ := strconv.Atoi(dfOutputWords[2])
+	dockerFreeStoragePretty := fmt.Sprintf("%dGb", dockerFreeStorageKB/(1024*1024))
+	log.Printf("Docker has %s free storage available (%s total).\n", dockerFreeStoragePretty, dockerTotalStoragePretty)
+	var noResources bool
+
+	if dockerMemory < int64(REQUIRED_MEMORY) {
+		log.Printf("Please increase docker memory limit to at least %s\n", REQUIRED_MEMORY_PRETTY)
+		noResources = true
+	}
+
+	if dockerFreeStorageKB < REQUIRED_STORAGE_KB {
+		log.Printf("Please increase docker storage limit, tensorleap required at least %s free storage\n", REQUIRED_STORAGE_PRETTY)
+		noResources = true
+	}
+
+	if noResources {
+		log.Println("Please retry installation after updating your docker config.")
+		return errors.New("not enough resources")
+	}
+
+	return nil
 }
