@@ -3,7 +3,7 @@ package log
 import (
 	"bytes"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"runtime"
@@ -69,7 +69,7 @@ func SendCloudReport(messageLevel MessageLevel, message string, messageState Mes
 	}
 	if res.StatusCode != http.StatusOK {
 		VerboseLogger.Errorf("POST request failed with status code: %d\n", res.StatusCode)
-		body, _ := ioutil.ReadAll(res.Body)
+		body, _ := io.ReadAll(res.Body)
 		VerboseLogger.Errorf("res body: %s\n", string(body))
 		return
 	}

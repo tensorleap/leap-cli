@@ -43,3 +43,8 @@ make docgen
 ```sh
 sudo rm $(which tensorleap)
 ```
+
+### Development requirements
+
+> brew install go
+> brew install golangci-lint
