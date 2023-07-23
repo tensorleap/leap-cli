@@ -13,11 +13,20 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
 
+      - name: Lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: latest
+          only-new-issues: true
+
+      - name: Check format
+        run: make check-fmt
+
       - name: Build
         run: go build .
 
       - name: Test
-        run: go test ./...
+        run: make test
 
   lint-install-script:
     runs-on: ubuntu-latest

@@ -19,3 +19,24 @@ build-cross:
 docgen:
 	rm -rf docs/*
 	go run docgen/docgen.go
+
+.PHONY: lint
+lint:
+	@golangci-lint run
+
+.PHONY: fmt
+fmt:
+	@go fmt ./...
+
+.PHONY: check-fmt
+check-fmt:
+	@if test -z "$$(go fmt ./... 2>&1)" ; then \
+		echo "No formatting issues found."; \
+	else \
+		echo "[ERROR] Fix formatting issues with 'make fmt'"; \
+		exit 1; \
+	fi
+
+.PHONY: test
+test: 
+	@go test ./...
