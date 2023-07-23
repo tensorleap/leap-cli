@@ -7,6 +7,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/tensorleap/cli-go/cmd/auth"
+	"github.com/tensorleap/cli-go/cmd/cli"
 	"github.com/tensorleap/cli-go/cmd/datasets"
 	"github.com/tensorleap/cli-go/cmd/local"
 	"github.com/tensorleap/cli-go/cmd/models"
@@ -62,6 +63,7 @@ func init() {
 	RootCommand.AddCommand(local.RootCommand)
 	RootCommand.AddCommand(datasets.RootCommand)
 	RootCommand.AddCommand(models.RootCommand)
+	RootCommand.AddCommand(cli.RootCommand)
 }
 
 func Execute() {
