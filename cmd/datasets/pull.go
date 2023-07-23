@@ -16,8 +16,8 @@ func NewPullCmd() *cobra.Command {
 		Short: "Pull dataset into a new directory",
 		Long:  `Pull dataset into a new directory`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			var selectedDataset *tensorleapapi.Dataset = nil
-			var err error = nil
+			var selectedDataset *tensorleapapi.Dataset
+			var err error
 			ctx := cmd.Context()
 			if len(args) == 0 {
 				selectedDataset, err = datasets.AskForDataset(ctx)

@@ -16,11 +16,15 @@ func NewCreateCmd() *cobra.Command {
 		Long:  `Create a new dataset`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var newDatasetName string
+			var err error
 			ctx := cmd.Context()
 			if len(args) > 0 {
 				newDatasetName = args[0]
 			} else {
-				newDatasetName = datasets.AskForDatasetName()
+				newDatasetName, err = datasets.AskForDatasetName()
+				if err != nil {
+					return err
+				}
 			}
 			dataset, err := datasets.CreateNewDataset(ctx, newDatasetName)
 			if err != nil {

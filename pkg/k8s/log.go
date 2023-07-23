@@ -8,6 +8,9 @@ import (
 func SetupLogger(logger *logrus.Logger) {
 	// Setting kubernetes logs by setting writeKlogBuffer
 	klog.SetLoggerWithOptions(klog.NewKlogr(), klog.WriteKlogBuffer(func(b []byte) {
-		logger.Writer().Write(b)
+		_, err := logger.Writer().Write(b)
+		if err != nil {
+			logger.Error(err)
+		}
 	}))
 }

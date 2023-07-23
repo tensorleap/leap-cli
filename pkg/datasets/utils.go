@@ -13,11 +13,11 @@ import (
 
 var EmptyDatasetVersionError = fmt.Errorf("Dataset is empty")
 
-func AskForDatasetName() (name string) {
+func AskForDatasetName() (name string, err error) {
 	prompt := &survey.Input{
 		Message: "Enter dataset name",
 	}
-	survey.AskOne(prompt, &name)
+	err = survey.AskOne(prompt, &name)
 	return
 }
 
@@ -38,8 +38,8 @@ func AskForDataset(ctx context.Context) (*tensorleapapi.Dataset, error) {
 		Message: "Choose dataset:",
 		Options: options,
 	}
-	survey.AskOne(prompt, &index)
-	if index == -1 {
+	err = survey.AskOne(prompt, &index)
+	if err != nil || index == -1 {
 		return nil, fmt.Errorf("No dataset selected")
 	}
 	return &data.Datasets[index], nil

@@ -64,7 +64,9 @@ func NewUpgradeCmd() *cobra.Command {
 				return err
 			}
 
-			k3d.CacheImageInTheBackground(ctx, imageToCacheInTheBackground)
+			if err = k3d.CacheImageInTheBackground(ctx, imageToCacheInTheBackground); err != nil {
+				return err
+			}
 
 			log.SendCloudReport("info", "Successfully completed upgrade", "Success", nil)
 			return nil

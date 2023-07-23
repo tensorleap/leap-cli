@@ -24,9 +24,8 @@ var cmd = &cobra.Command{
 
 		fmt.Println("User email: " + userData.Local.Email)
 		fmt.Println("Team name: " + userData.TeamName)
-		auth.Login(apiKey, baseUrl)
+		return auth.Login(apiKey, baseUrl)
 
-		return nil
 	},
 }
 

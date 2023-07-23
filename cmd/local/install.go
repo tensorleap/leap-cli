@@ -83,7 +83,9 @@ func NewInstallCmd() *cobra.Command {
 				return err
 			}
 
-			k3d.CacheImageInTheBackground(ctx, imageToCacheInTheBackground)
+			if err := k3d.CacheImageInTheBackground(ctx, imageToCacheInTheBackground); err != nil {
+				return err
+			}
 
 			if err := auth.Login("", "http://localhost:4589/api/v2"); err != nil {
 				return err

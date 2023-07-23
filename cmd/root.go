@@ -36,7 +36,7 @@ Complete documentation is available at https://docs.tensorleap.ai`,
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		if !showVersionInfo {
-			cmd.Help()
+			_ = cmd.Help()
 			return
 		}
 
@@ -52,9 +52,12 @@ func init() {
 	RootCommand.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/tensorleap/config.yaml)")
 	RootCommand.PersistentFlags().StringVar(&apiKey, "apiKey", "", "Tensorleap Api key")
 	RootCommand.PersistentFlags().StringVar(&apiUrl, "apiUrl", "", "Tensorleap api url")
-	viper.BindPFlag(authPkg.API_KEY_CONFIG_PATH, RootCommand.PersistentFlags().Lookup("apiKey"))
-	viper.BindPFlag(authPkg.API_URL_CONFIG_PATH, RootCommand.PersistentFlags().Lookup("apiUrl"))
-
+	if err := viper.BindPFlag(authPkg.API_KEY_CONFIG_PATH, RootCommand.PersistentFlags().Lookup("apiKey")); err != nil {
+		log.Error(err)
+	}
+	if err := viper.BindPFlag(authPkg.API_URL_CONFIG_PATH, RootCommand.PersistentFlags().Lookup("apiUrl")); err != nil {
+		log.Error(err)
+	}
 	RootCommand.AddCommand(auth.RootCommand)
 	RootCommand.AddCommand(local.RootCommand)
 	RootCommand.AddCommand(datasets.RootCommand)

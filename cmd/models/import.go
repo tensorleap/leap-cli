@@ -65,16 +65,16 @@ func init() {
 	}
 
 	cmd.Flags().StringVar(&projectId, "projectId", "", "ProjectId is the id of the project the model will be imported to")
-	cmd.MarkFlagRequired("projectId")
+	_ = cmd.MarkFlagRequired("projectId")
 
 	cmd.Flags().StringVar(&modelName, "name", "", "Name of the model that will be created")
-	cmd.MarkFlagRequired("name")
+	_ = cmd.MarkFlagRequired("name")
 
 	cmd.Flags().StringVar(&versionName, "version", "", "Version is the name of the version that will be created for the model")
-	cmd.MarkFlagRequired("version")
+	_ = cmd.MarkFlagRequired("version")
 
 	cmd.Flags().StringVar(&modelType, "type", "", "Type is the type of the model file [JSON_TF2 / ONNX / PB_TF2 / H5_TF2]")
-	cmd.MarkFlagRequired("type")
+	_ = cmd.MarkFlagRequired("type")
 
 	cmd.Flags().StringVar(&branchName, "branch", "", "Branch is the name of the branch [OPTIONAL]")
 	cmd.Flags().StringVar(&datasetId, "datasetId", "", "This is a datasetId (Will use the last valid dataset version)")

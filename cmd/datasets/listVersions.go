@@ -35,6 +35,6 @@ func init() {
 	}
 
 	cmd.Flags().StringVar(&datasetId, "datasetId", "", "DatasetId to get versions from")
-	cmd.MarkFlagRequired("datasetId")
+	_ = cmd.MarkFlagRequired("datasetId")
 	RootCommand.AddCommand(cmd)
 }
