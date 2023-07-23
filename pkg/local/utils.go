@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"runtime"
 	"strings"
 	"time"
 
@@ -137,4 +138,21 @@ func createLogFilePath(cmdName string) string {
 		time.Now().Format("2006-01-02_15-04-05"),
 	)
 	return filePath
+}
+
+func OpenLink(link string) error {
+	var cmd *exec.Cmd
+
+	switch runtime.GOOS {
+	case "darwin":
+		cmd = exec.Command("open", link)
+	case "linux":
+		cmd = exec.Command("xdg-open", link)
+	case "windows":
+		cmd = exec.Command("cmd", "/c", "start", link)
+	default:
+		return fmt.Errorf("Unsupported platform!")
+	}
+
+	return cmd.Start()
 }
