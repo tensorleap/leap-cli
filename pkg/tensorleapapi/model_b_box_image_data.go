@@ -19,9 +19,9 @@ var _ MappedNullable = &BBoxImageData{}
 
 // BBoxImageData struct for BBoxImageData
 type BBoxImageData struct {
-	Blob string `json:"blob"`
+	Blob        string        `json:"blob"`
 	BoundingBox []BoundingBox `json:"bounding_box"`
-	Type DataTypeEnum `json:"type"`
+	Type        DataTypeEnum  `json:"type"`
 }
 
 // NewBBoxImageData instantiates a new BBoxImageData object
@@ -117,7 +117,7 @@ func (o *BBoxImageData) SetType(v DataTypeEnum) {
 }
 
 func (o BBoxImageData) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -167,5 +167,3 @@ func (v *NullableBBoxImageData) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

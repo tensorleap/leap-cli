@@ -20,8 +20,8 @@ var _ MappedNullable = &IssueAction{}
 // IssueAction struct for IssueAction
 type IssueAction struct {
 	Assignment *ActionAssignmentElement `json:"assignment,omitempty"`
-	TagsAdded *ActionTagElement `json:"tagsAdded,omitempty"`
-	Comment *ActionCommentElement `json:"comment,omitempty"`
+	TagsAdded  *ActionTagElement        `json:"tagsAdded,omitempty"`
+	Comment    *ActionCommentElement    `json:"comment,omitempty"`
 }
 
 // NewIssueAction instantiates a new IssueAction object
@@ -138,7 +138,7 @@ func (o *IssueAction) SetComment(v ActionCommentElement) {
 }
 
 func (o IssueAction) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -194,5 +194,3 @@ func (v *NullableIssueAction) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

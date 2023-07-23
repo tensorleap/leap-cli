@@ -19,9 +19,9 @@ var _ MappedNullable = &GeneralMessageParams{}
 
 // GeneralMessageParams struct for GeneralMessageParams
 type GeneralMessageParams struct {
-	Message string `json:"message"`
+	Message     string  `json:"message"`
 	MessageCode *string `json:"message_code,omitempty"`
-	Module Module `json:"module"`
+	Module      Module  `json:"module"`
 }
 
 // NewGeneralMessageParams instantiates a new GeneralMessageParams object
@@ -124,7 +124,7 @@ func (o *GeneralMessageParams) SetModule(v Module) {
 }
 
 func (o GeneralMessageParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -176,5 +176,3 @@ func (v *NullableGeneralMessageParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

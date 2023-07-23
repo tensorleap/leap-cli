@@ -20,7 +20,7 @@ var _ MappedNullable = &GetSessionVisualizationsParams{}
 // GetSessionVisualizationsParams struct for GetSessionVisualizationsParams
 type GetSessionVisualizationsParams struct {
 	SessionRunId string `json:"sessionRunId"`
-	ProjectId string `json:"projectId"`
+	ProjectId    string `json:"projectId"`
 }
 
 // NewGetSessionVisualizationsParams instantiates a new GetSessionVisualizationsParams object
@@ -91,7 +91,7 @@ func (o *GetSessionVisualizationsParams) SetProjectId(v string) {
 }
 
 func (o GetSessionVisualizationsParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableGetSessionVisualizationsParams) UnmarshalJSON(src []byte) error
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

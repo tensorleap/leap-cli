@@ -19,11 +19,11 @@ var _ MappedNullable = &ProjectMeta{}
 
 // ProjectMeta struct for ProjectMeta
 type ProjectMeta struct {
-	Name string `json:"name"`
-	Description string `json:"description"`
-	Tags []string `json:"tags"`
+	Name             string           `json:"name"`
+	Description      string           `json:"description"`
+	Tags             []string         `json:"tags"`
 	HubPublishPolicy HubPublishPolicy `json:"hubPublishPolicy"`
-	BgImageUrl *string `json:"bgImageUrl,omitempty"`
+	BgImageUrl       *string          `json:"bgImageUrl,omitempty"`
 	// Construct a type with a set of properties K of type T
 	Categories map[string]interface{} `json:"categories,omitempty"`
 }
@@ -210,7 +210,7 @@ func (o *ProjectMeta) SetCategories(v map[string]interface{}) {
 }
 
 func (o ProjectMeta) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -267,5 +267,3 @@ func (v *NullableProjectMeta) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

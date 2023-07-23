@@ -20,9 +20,9 @@ type DataStateForEval string
 
 // List of DataStateForEval
 const (
-	DATASTATEFOREVAL_TRAINING DataStateForEval = "training"
+	DATASTATEFOREVAL_TRAINING   DataStateForEval = "training"
 	DATASTATEFOREVAL_VALIDATION DataStateForEval = "validation"
-	DATASTATEFOREVAL_TEST DataStateForEval = "test"
+	DATASTATEFOREVAL_TEST       DataStateForEval = "test"
 )
 
 // All allowed values of DataStateForEval enum
@@ -110,4 +110,3 @@ func (v *NullableDataStateForEval) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

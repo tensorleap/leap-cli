@@ -19,10 +19,10 @@ var _ MappedNullable = &ScatterVizDataState{}
 
 // ScatterVizDataState struct for ScatterVizDataState
 type ScatterVizDataState struct {
-	DataState *DataStateType `json:"data_state,omitempty"`
-	ScatterData [][]float64 `json:"scatter_data"`
-	Labels []ScatterLabel `json:"labels"`
-	Samples []SampleIdentity `json:"samples"`
+	DataState   *DataStateType   `json:"data_state,omitempty"`
+	ScatterData [][]float64      `json:"scatter_data"`
+	Labels      []ScatterLabel   `json:"labels"`
+	Samples     []SampleIdentity `json:"samples"`
 	// Construct a type with a set of properties K of type T
 	Metadata map[string]interface{} `json:"metadata"`
 	// Construct a type with a set of properties K of type T
@@ -211,7 +211,7 @@ func (o *ScatterVizDataState) SetMiByCluster(v map[string]interface{}) {
 }
 
 func (o ScatterVizDataState) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -268,5 +268,3 @@ func (v *NullableScatterVizDataState) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

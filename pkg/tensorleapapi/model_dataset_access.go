@@ -21,7 +21,7 @@ type DatasetAccess string
 // List of DatasetAccess
 const (
 	DATASETACCESS_PUBLIC DatasetAccess = "public"
-	DATASETACCESS_LOCAL DatasetAccess = "local"
+	DATASETACCESS_LOCAL  DatasetAccess = "local"
 )
 
 // All allowed values of DatasetAccess enum
@@ -108,4 +108,3 @@ func (v *NullableDatasetAccess) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

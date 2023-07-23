@@ -20,8 +20,8 @@ type StatusEnum string
 
 // List of StatusEnum
 const (
-	STATUSENUM_FAILED StatusEnum = "FAILED"
-	STATUSENUM_STARTED StatusEnum = "STARTED"
+	STATUSENUM_FAILED   StatusEnum = "FAILED"
+	STATUSENUM_STARTED  StatusEnum = "STARTED"
 	STATUSENUM_FINISHED StatusEnum = "FINISHED"
 )
 
@@ -110,4 +110,3 @@ func (v *NullableStatusEnum) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

@@ -19,11 +19,11 @@ var _ MappedNullable = &DuplicationInsight{}
 
 // DuplicationInsight struct for DuplicationInsight
 type DuplicationInsight struct {
-	Type ScatterInsightType `json:"type"`
-	Filter ScatterFilter `json:"filter"`
-	MutualInfoElements []MutualInformationElement `json:"mutual_info_elements,omitempty"`
-	NDuplicateSamples float64 `json:"n_duplicate_samples"`
-	NCrossSubsetDuplications float64 `json:"n_cross_subset_duplications"`
+	Type                     ScatterInsightType         `json:"type"`
+	Filter                   ScatterFilter              `json:"filter"`
+	MutualInfoElements       []MutualInformationElement `json:"mutual_info_elements,omitempty"`
+	NDuplicateSamples        float64                    `json:"n_duplicate_samples"`
+	NCrossSubsetDuplications float64                    `json:"n_cross_subset_duplications"`
 }
 
 // NewDuplicationInsight instantiates a new DuplicationInsight object
@@ -176,7 +176,7 @@ func (o *DuplicationInsight) SetNCrossSubsetDuplications(v float64) {
 }
 
 func (o DuplicationInsight) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -230,5 +230,3 @@ func (v *NullableDuplicationInsight) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

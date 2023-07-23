@@ -19,14 +19,14 @@ var _ MappedNullable = &GraphValidatorData{}
 
 // GraphValidatorData struct for GraphValidatorData
 type GraphValidatorData struct {
-	Inputs []ValidatedNode `json:"inputs"`
-	Metadata []ValidatedNode `json:"metadata"`
-	GroundTruths []ValidatedNode `json:"ground_truths"`
-	PredictionTypes []ValidatedNode `json:"prediction_types"`
-	Visualizers []ValidatedNode `json:"visualizers"`
-	Losses []ValidatedLossNode `json:"losses"`
-	Metrics []ValidatedNode `json:"metrics"`
-	GeneralError *string `json:"general_error,omitempty"`
+	Inputs          []ValidatedNode     `json:"inputs"`
+	Metadata        []ValidatedNode     `json:"metadata"`
+	GroundTruths    []ValidatedNode     `json:"ground_truths"`
+	PredictionTypes []ValidatedNode     `json:"prediction_types"`
+	Visualizers     []ValidatedNode     `json:"visualizers"`
+	Losses          []ValidatedLossNode `json:"losses"`
+	Metrics         []ValidatedNode     `json:"metrics"`
+	GeneralError    *string             `json:"general_error,omitempty"`
 }
 
 // NewGraphValidatorData instantiates a new GraphValidatorData object
@@ -254,7 +254,7 @@ func (o *GraphValidatorData) SetGeneralError(v string) {
 }
 
 func (o GraphValidatorData) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -311,5 +311,3 @@ func (v *NullableGraphValidatorData) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

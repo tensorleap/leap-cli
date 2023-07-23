@@ -20,7 +20,7 @@ type DataDistributionType string
 
 // List of DataDistributionType
 const (
-	DATADISTRIBUTIONTYPE_DISTINCT DataDistributionType = "distinct"
+	DATADISTRIBUTIONTYPE_DISTINCT   DataDistributionType = "distinct"
 	DATADISTRIBUTIONTYPE_CONTINUOUS DataDistributionType = "continuous"
 )
 
@@ -108,4 +108,3 @@ func (v *NullableDataDistributionType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

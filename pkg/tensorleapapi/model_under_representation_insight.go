@@ -19,13 +19,13 @@ var _ MappedNullable = &UnderRepresentationInsight{}
 
 // UnderRepresentationInsight struct for UnderRepresentationInsight
 type UnderRepresentationInsight struct {
-	Type ScatterInsightType `json:"type"`
-	Filter ScatterFilter `json:"filter"`
-	MutualInfoElements []MutualInformationElement `json:"mutual_info_elements,omitempty"`
-	UnderRepresentationDataset DataStateType `json:"under_representation_dataset"`
-	UnderRepresentationNSamples float64 `json:"under_representation_n_samples"`
-	OverRepresentationDataset DataStateType `json:"over_representation_dataset"`
-	OverRepresentationNSamples float64 `json:"over_representation_n_samples"`
+	Type                        ScatterInsightType         `json:"type"`
+	Filter                      ScatterFilter              `json:"filter"`
+	MutualInfoElements          []MutualInformationElement `json:"mutual_info_elements,omitempty"`
+	UnderRepresentationDataset  DataStateType              `json:"under_representation_dataset"`
+	UnderRepresentationNSamples float64                    `json:"under_representation_n_samples"`
+	OverRepresentationDataset   DataStateType              `json:"over_representation_dataset"`
+	OverRepresentationNSamples  float64                    `json:"over_representation_n_samples"`
 }
 
 // NewUnderRepresentationInsight instantiates a new UnderRepresentationInsight object
@@ -228,7 +228,7 @@ func (o *UnderRepresentationInsight) SetOverRepresentationNSamples(v float64) {
 }
 
 func (o UnderRepresentationInsight) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -284,5 +284,3 @@ func (v *NullableUnderRepresentationInsight) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

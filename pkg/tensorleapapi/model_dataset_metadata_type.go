@@ -20,9 +20,9 @@ type DatasetMetadataType string
 
 // List of DatasetMetadataType
 const (
-	DATASETMETADATATYPE_FLOAT DatasetMetadataType = "float"
-	DATASETMETADATATYPE_STRING DatasetMetadataType = "string"
-	DATASETMETADATATYPE_INT DatasetMetadataType = "int"
+	DATASETMETADATATYPE_FLOAT   DatasetMetadataType = "float"
+	DATASETMETADATATYPE_STRING  DatasetMetadataType = "string"
+	DATASETMETADATATYPE_INT     DatasetMetadataType = "int"
 	DATASETMETADATATYPE_BOOLEAN DatasetMetadataType = "boolean"
 )
 
@@ -112,4 +112,3 @@ func (v *NullableDatasetMetadataType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

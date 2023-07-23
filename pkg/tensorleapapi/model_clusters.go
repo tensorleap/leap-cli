@@ -19,8 +19,8 @@ var _ MappedNullable = &Clusters{}
 
 // Clusters struct for Clusters
 type Clusters struct {
-	Data []float64 `json:"data"`
-	Labels []string `json:"labels"`
+	Data   []float64 `json:"data"`
+	Labels []string  `json:"labels"`
 }
 
 // NewClusters instantiates a new Clusters object
@@ -91,7 +91,7 @@ func (o *Clusters) SetLabels(v []string) {
 }
 
 func (o Clusters) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableClusters) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-
