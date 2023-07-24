@@ -97,8 +97,15 @@ func InitStandaloneDir() error {
 	return initStandaloneSubDirs()
 }
 
+const (
+	STORAGE_DIR_NAME  = "storage"
+	REGISTRY_DIR_NAME = "registry"
+	LOGS_DIR_NAME     = "logs"
+)
+
 func initStandaloneSubDirs() error {
-	for _, dir := range []string{"storage", "registry", "logs"} {
+	subDirs := []string{STORAGE_DIR_NAME, REGISTRY_DIR_NAME, LOGS_DIR_NAME}
+	for _, dir := range subDirs {
 		fullPath := path.Join(STANDALONE_DIR, dir)
 		_, err := os.Stat(fullPath)
 		if os.IsNotExist(err) {
@@ -155,4 +162,18 @@ func OpenLink(link string) error {
 	}
 
 	return cmd.Start()
+}
+
+func PurgeData() error {
+	for _, dir := range []string{STORAGE_DIR_NAME, REGISTRY_DIR_NAME} {
+		path := path.Join(STANDALONE_DIR, dir)
+		log.Infof("Removing directory: %s", path)
+		err := os.RemoveAll(path)
+
+		if err != nil {
+			log.SendCloudReport("error", "Failed purge data", "Failed", &map[string]interface{}{"error": err.Error()})
+			return err
+		}
+	}
+	return nil
 }
