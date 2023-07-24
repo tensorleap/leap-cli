@@ -9,8 +9,8 @@ import (
 	"github.com/tensorleap/cli-go/cmd/auth"
 	"github.com/tensorleap/cli-go/cmd/cli"
 	"github.com/tensorleap/cli-go/cmd/datasets"
-	"github.com/tensorleap/cli-go/cmd/local"
 	"github.com/tensorleap/cli-go/cmd/models"
+	"github.com/tensorleap/cli-go/cmd/server"
 	. "github.com/tensorleap/cli-go/pkg/api"
 	authPkg "github.com/tensorleap/cli-go/pkg/auth"
 	"github.com/tensorleap/cli-go/pkg/config"
@@ -60,7 +60,7 @@ func init() {
 		log.Error(err)
 	}
 	RootCommand.AddCommand(auth.RootCommand)
-	RootCommand.AddCommand(local.RootCommand)
+	RootCommand.AddCommand(server.RootCommand)
 	RootCommand.AddCommand(datasets.RootCommand)
 	RootCommand.AddCommand(models.RootCommand)
 	RootCommand.AddCommand(cli.RootCommand)

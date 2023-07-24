@@ -1,4 +1,4 @@
-package local
+package server
 
 import (
 	"errors"
@@ -8,6 +8,7 @@ import (
 	"github.com/tensorleap/cli-go/pkg/k3d"
 	"github.com/tensorleap/cli-go/pkg/local"
 	"github.com/tensorleap/cli-go/pkg/log"
+	"github.com/tensorleap/cli-go/pkg/server"
 )
 
 func NewUpgradeCmd() *cobra.Command {
@@ -20,7 +21,7 @@ func NewUpgradeCmd() *cobra.Command {
 			log.SetCommandName("upgrade")
 			log.SendCloudReport("info", "Starting upgrade", "Starting", &map[string]interface{}{"args": args})
 
-			if err := local.ValidateStandaloneDir(); err != nil {
+			if err := server.ValidateStandaloneDir(); err != nil {
 				return err
 			}
 			ctx := cmd.Context()
@@ -31,13 +32,13 @@ func NewUpgradeCmd() *cobra.Command {
 			}
 			defer close()
 
-			cluster, err := local.GetTensorleapCluster(ctx)
+			cluster, err := server.GetTensorleapCluster(ctx)
 			if err != nil {
 				return err
 			}
 			isGpuCluster := k3d.IsGpuCluster(cluster)
 
-			helmConfig, err := helm.CreateHelmConfig(local.KUBE_CONTEXT, local.KUBE_NAMESPACE)
+			helmConfig, err := helm.CreateHelmConfig(server.KUBE_CONTEXT, server.KUBE_NAMESPACE)
 			if err != nil {
 				return err
 			}

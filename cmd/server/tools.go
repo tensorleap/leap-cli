@@ -1,4 +1,4 @@
-package local
+package server
 
 import (
 	k3d "github.com/k3d-io/k3d/v5/cmd"
