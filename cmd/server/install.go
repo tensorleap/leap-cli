@@ -1,4 +1,4 @@
-package local
+package server
 
 import (
 	"fmt"
@@ -10,6 +10,7 @@ import (
 	"github.com/tensorleap/cli-go/pkg/k3d"
 	"github.com/tensorleap/cli-go/pkg/local"
 	"github.com/tensorleap/cli-go/pkg/log"
+	"github.com/tensorleap/cli-go/pkg/server"
 )
 
 func NewInstallCmd() *cobra.Command {
@@ -41,7 +42,7 @@ func NewInstallCmd() *cobra.Command {
 			}
 			defer close()
 
-			if err := local.InitDataVolumeDir(dataVolume); err != nil {
+			if err := server.InitDataVolumeDir(dataVolume); err != nil {
 				log.SendCloudReport("error", "Failed initializing data volume directory", "Failed",
 					&map[string]interface{}{"dataVolume": dataVolume, "error": err.Error()})
 				return err
@@ -79,7 +80,7 @@ func NewInstallCmd() *cobra.Command {
 			}
 
 			dataContainerPath := strings.Split(dataVolume, ":")[1]
-			if err := local.InstallHelm(useGpu, dataContainerPath); err != nil {
+			if err := server.InstallHelm(useGpu, dataContainerPath); err != nil {
 				return err
 			}
 
@@ -103,7 +104,7 @@ func NewInstallCmd() *cobra.Command {
 	cmd.Flags().UintVarP(&port, "port", "p", 4589, "Port to be used for tensorleap installation")
 	cmd.Flags().UintVar(&registryPort, "registry-port", 5699, "Port to be used for docker registry")
 	cmd.Flags().BoolVar(&useGpu, "gpu", false, "Enable GPU usage for training and evaluating")
-	cmd.Flags().StringVar(&dataVolume, "data-volume", local.GetDefaultDataVolume(), "Data Volume maps the user's local directory to the container's directory, enabling access to datasets for training and evaluation")
+	cmd.Flags().StringVar(&dataVolume, "data-volume", server.GetDefaultDataVolume(), "Data Volume maps the user's local directory to the container's directory, enabling access to datasets for training and evaluation")
 
 	return cmd
 }
