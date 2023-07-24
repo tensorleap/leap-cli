@@ -1,9 +1,9 @@
-# Tensorleap CLI
+# Leap CLI
 
 ## Usage
 
 ## Installation
-Run `tensorleap --help` to see available options.
+Run `leap --help` to see available options.
 
 Also available [here](docs/tensorleap.md)
 
@@ -21,11 +21,11 @@ wget -q -O - https://raw.githubusercontent.com/tensorleap/cli-go/master/install.
 
 ### Manually
 1. Download the binary from the [releases page](https://github.com/tensorleap/cli-go/releases) that matches your OS and machine architecture.
-2. Rename the binary to `tensorleap`
+2. Rename the binary to `leap`
 3. Save it `/usr/local/bin` (or anywhere else in your `$PATH`)
 
 ### Shell Completions
-In order to enabled shell completions, add `source <(tensorleap completion zsh)` to your `~/.zshrc` file
+In order to enabled shell completions, add `source <(leap completion zsh)` to your `~/.zshrc` file
 
 ## Building locally
 1. Clone this repo
@@ -41,7 +41,7 @@ make docgen
 
 ### Uninstall
 ```sh
-sudo rm $(which tensorleap)
+sudo rm $(which leap)
 ```
 
 ### Development requirements

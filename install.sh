@@ -2,7 +2,7 @@
 
 # This is based on k3d installation script: https://github.com/k3d-io/k3d/blob/main/install.sh
 
-APP_NAME="tensorleap"
+APP_NAME="leap"
 REPO_URL="https://github.com/tensorleap/cli-go"
 
 : "${USE_SUDO:="true"}"
@@ -84,12 +84,12 @@ verifySupported() {
 checkInstalledVersion() {
   local version
   if [[ -f "${BIN_DIR}/${APP_NAME}" ]]; then
-    version=$(tensorleap --version)
+    version=$(leap --version)
     if [[ "$version" == "$TAG" ]]; then
-      echo "tensorleap ${version} is already ${DESIRED_VERSION:-latest}"
+      echo "leap ${version} is already ${DESIRED_VERSION:-latest}"
       return 0
     else
-      echo "tensorleap ${TAG} is available. Changing from version ${version}."
+      echo "leap ${TAG} is available. Changing from version ${version}."
       return 1
     fi
   else
@@ -115,12 +115,12 @@ checkLatestVersion() {
 # downloadFile downloads the latest binary package and also the checksum
 # for that binary.
 downloadFile() {
-  DIST_FILE="tensorleap-$OS-$ARCH"
+  DIST_FILE="leap-$OS-$ARCH"
   DOWNLOAD_URL="$REPO_URL/releases/download/$TAG/$DIST_FILE"
   # if [[ "$OS" == "windows" ]]; then
   #   DOWNLOAD_URL=${DOWNLOAD_URL}.exe
   # fi
-  TMP_ROOT="$(mktemp -dt tensorleap-binary-XXXXXX)"
+  TMP_ROOT="$(mktemp -dt leap-binary-XXXXXX)"
   TMP_FILE="$TMP_ROOT/$DIST_FILE"
   if type "curl" > /dev/null; then
     scurl -sL "$DOWNLOAD_URL" -o "$TMP_FILE"
