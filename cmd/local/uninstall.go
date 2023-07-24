@@ -28,6 +28,13 @@ func NewUninstallCmd() *cobra.Command {
 				return err
 			}
 
+			err = k3d.UninstallRegister()
+			if err != nil {
+				return err
+			}
+
+
+
 			log.SendCloudReport("info", "Successfully completed uninstall", "Success", nil)
 			return nil
 			// todo: implement --cache and --data
