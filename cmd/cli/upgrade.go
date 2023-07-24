@@ -23,7 +23,7 @@ func NewUpgradeCliCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			err := UpgradeCLI()
 			if err != nil {
-				fmt.Println("Error installing TensorLeap CLI:", err)
+				fmt.Println("Error installing Leap CLI:", err)
 			}
 
 			return nil

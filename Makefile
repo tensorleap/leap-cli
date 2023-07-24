@@ -10,7 +10,7 @@ export CGO_ENABLED=0
 .PHONY: build-cross
 build-cross:
 	gox \
-		-output  "./dist/tensorleap-{{.OS}}-{{.Arch}}" \
+		-output  "./dist/leap-{{.OS}}-{{.Arch}}" \
 		-osarch "$(OSARCH)" \
 		-ldflags "$(LDFLAGS)" \
 		.

@@ -6,6 +6,6 @@ import (
 
 var RootCommand = &cobra.Command{
 	Use:   "cli",
-	Short: "Manage tensorleap cli",
-	Long:  `Manage tensorleap cli`,
+	Short: "Manage leap cli",
+	Long:  `Manage leap cli`,
 }
