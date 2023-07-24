@@ -18,8 +18,9 @@ import (
 	cliutil "github.com/k3d-io/k3d/v5/cmd/util"
 	"github.com/k3d-io/k3d/v5/pkg/client"
 	"github.com/k3d-io/k3d/v5/pkg/runtimes"
-	docker "github.com/k3d-io/k3d/v5/pkg/runtimes/docker"
+	dockerRuntime "github.com/k3d-io/k3d/v5/pkg/runtimes/docker"
 	k3d "github.com/k3d-io/k3d/v5/pkg/types"
+	"github.com/tensorleap/cli-go/pkg/docker"
 	"github.com/tensorleap/cli-go/pkg/log"
 )
 
@@ -103,6 +104,37 @@ func createRegistryConfig(port uint, volumes []string) *Registry {
 	return reg
 }
 
+func UninstallRegister() error {
+	ctx := context.Background()
+	existingRegistry, _ := client.RegistryGet(ctx, runtimes.SelectedRuntime, REGISTRY_NAME)
+	if existingRegistry == nil {
+		log.Infof("Registry '%s' not found", REGISTRY_NAME)
+		log.SendCloudReport("info", "Not found registry", "Running", &map[string]interface{}{"registryName": REGISTRY_NAME})
+
+		return nil
+	}
+	log.Infof("Deleting registry %s", REGISTRY_NAME)
+
+	cli, err := docker.CreateDockerCli()
+	if err != nil {
+		return fmt.Errorf("Error creating Docker client: %v", err)
+	}
+
+	// Find the container ID or name associated with the registry
+	containerID, err := docker.FindContainerIDByName(ctx, cli, REGISTRY_NAME)
+	if err != nil {
+		return fmt.Errorf("Error finding the registry container: %v", err)
+	}
+
+	// Remove the registry container
+	err = docker.RemoveContainer(ctx, cli, containerID)
+	if err != nil {
+		return fmt.Errorf("Error removing the registry container: %v", err)
+	}
+	log.SendCloudReport("info", "Registry removed successfully", "Running", &map[string]interface{}{"registryName": REGISTRY_NAME})
+	return nil
+}
+
 func isImageInRegistry(ctx context.Context, image string, regPort string) (bool, error) {
 	imageParts := strings.SplitN(image, ":", 2)
 	imageTag := imageParts[1]
@@ -151,7 +183,7 @@ func CacheImage(ctx context.Context, image string, regPort string) error {
 		return nil
 	}
 
-	dockerClient, err := docker.GetDockerClient()
+	dockerClient, err := dockerRuntime.GetDockerClient()
 	if err != nil {
 		return err
 	}
@@ -230,7 +262,7 @@ func CacheImageInTheBackground(ctx context.Context, image string) error {
 		return err
 	}
 
-	dockerClient, err := docker.GetDockerClient()
+	dockerClient, err := dockerRuntime.GetDockerClient()
 	if err != nil {
 		log.SendCloudReport("error", "Failed fetching docker client", "Failed", &map[string]interface{}{"error": err.Error()})
 		return err
