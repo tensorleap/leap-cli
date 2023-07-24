@@ -14,6 +14,12 @@ jobs:
 
       - name: Set up Go
         uses: actions/setup-go@v4
+        with:
+          # Currently we have issue with 1.20.6 (in infect docker exec command - We got an error Host header is missing - see more here: https://github.com/golang/go/issues/61431 )
+          go-version: '1.20.5'
+      
+      - name: Go version
+        run: go version
 
       - name: Install gox
         run: go install github.com/mitchellh/gox@latest
