@@ -2,7 +2,6 @@ package k3d
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"os"
 	"strconv"
@@ -223,8 +222,9 @@ func UninstallCluster(ctx context.Context) error {
 		return err
 	}
 	if cluster == nil {
-		log.SendCloudReport("error", "Cluster not found", "Failed", nil)
-		return errors.New("Cluster 'tensorleap' not found")
+		log.SendCloudReport("info", "Cluster not found", "Running", nil)
+		log.Info("Cluster 'tensorleap' not found")
+		return nil
 	}
 	log.Info("Deleting cluster 'tensorleap'")
 	opt := k3d.ClusterDeleteOpts{
