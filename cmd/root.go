@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/viper"
 	"github.com/tensorleap/cli-go/cmd/auth"
 	"github.com/tensorleap/cli-go/cmd/cli"
-	"github.com/tensorleap/cli-go/cmd/datasets"
+	"github.com/tensorleap/cli-go/cmd/code"
 	"github.com/tensorleap/cli-go/cmd/models"
 	"github.com/tensorleap/cli-go/cmd/server"
 	. "github.com/tensorleap/cli-go/pkg/api"
@@ -61,7 +61,7 @@ func init() {
 	}
 	RootCommand.AddCommand(auth.RootCommand)
 	RootCommand.AddCommand(server.RootCommand)
-	RootCommand.AddCommand(datasets.RootCommand)
+	RootCommand.AddCommand(code.RootCommand)
 	RootCommand.AddCommand(models.RootCommand)
 	RootCommand.AddCommand(cli.RootCommand)
 }

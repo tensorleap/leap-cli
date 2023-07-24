@@ -1,4 +1,4 @@
-package datasets
+package code
 
 import (
 	"context"
@@ -11,9 +11,9 @@ import (
 	"github.com/tensorleap/cli-go/pkg/tensorleapapi"
 )
 
-var EmptyDatasetVersionError = fmt.Errorf("Dataset is empty")
+var ErrEmptyCodeIntegrationVersion = fmt.Errorf("CodeIntegration is empty")
 
-func AskForDatasetName() (name string, err error) {
+func AskForCodeIntegrationName() (name string, err error) {
 	prompt := &survey.Input{
 		Message: "Enter dataset name",
 	}
@@ -21,13 +21,13 @@ func AskForDatasetName() (name string, err error) {
 	return
 }
 
-func AskForDataset(ctx context.Context) (*tensorleapapi.Dataset, error) {
+func AskForCodeIntegration(ctx context.Context) (*tensorleapapi.Dataset, error) {
 	data, _, err := ApiClient.GetDatasets(ctx).Execute()
 	if err != nil {
 		return nil, err
 	}
 	if len(data.Datasets) == 0 {
-		return nil, fmt.Errorf("No datasets found, please create dataset")
+		return nil, fmt.Errorf("No code integration found, please create dataset")
 	}
 	index := -1
 	options := []string{}
@@ -35,29 +35,29 @@ func AskForDataset(ctx context.Context) (*tensorleapapi.Dataset, error) {
 		options = append(options, fmt.Sprintf("%s (%s)", dataset.GetName(), dataset.GetCid()))
 	}
 	prompt := &survey.Select{
-		Message: "Choose dataset:",
+		Message: "Choose code integration:",
 		Options: options,
 	}
 	err = survey.AskOne(prompt, &index)
 	if err != nil || index == -1 {
-		return nil, fmt.Errorf("No dataset selected")
+		return nil, fmt.Errorf("No code integration selected")
 	}
 	return &data.Datasets[index], nil
 }
 
-func CreateNewDataset(ctx context.Context, name string) (*tensorleapapi.Dataset, error) {
+func CreateNewCodeIntegration(ctx context.Context, name string) (*tensorleapapi.Dataset, error) {
 	log.Println("Creating dataset:", name)
 	dataset, _, err := ApiClient.AddDataset(ctx).
 		NewDatasetParams(*tensorleapapi.NewNewDatasetParams(*tensorleapapi.NewNullableString(&name))).
 		Execute()
 
 	if err != nil {
-		return nil, fmt.Errorf("Failed to create a new dataset: %v", err)
+		return nil, fmt.Errorf("Failed to create a new code integration: %v", err)
 	}
 	return &dataset.Dataset, nil
 }
 
-func GetDatasetById(ctx context.Context, datasetId string) (*tensorleapapi.Dataset, error) {
+func GetCodeIntegrationById(ctx context.Context, datasetId string) (*tensorleapapi.Dataset, error) {
 	data, _, err := ApiClient.GetDatasets(ctx).Execute()
 	if err != nil {
 		return nil, err
@@ -76,15 +76,15 @@ func GetDatasetById(ctx context.Context, datasetId string) (*tensorleapapi.Datas
 	return selectedDataset, nil
 }
 
-func GetLatestVersion(ctx context.Context, datasetId string) (*tensorleapapi.DatasetVersion, error) {
+func GetLatestVersion(ctx context.Context, codeIntegrationId string) (*tensorleapapi.DatasetVersion, error) {
 	version, _, err := ApiClient.GetLatestDatasetVersion(ctx).
-		GetLatestDatasetVersionParams(*tensorleapapi.NewGetLatestDatasetVersionParams(datasetId)).
+		GetLatestDatasetVersionParams(*tensorleapapi.NewGetLatestDatasetVersionParams(codeIntegrationId)).
 		Execute()
 	if err != nil {
-		return nil, fmt.Errorf("Failed to get latest version for datasetId: %s", datasetId)
+		return nil, fmt.Errorf("failed to get latest version for code integration id: %s", codeIntegrationId)
 	}
 	if isDatasetVersionEmpty(version.LatestVersion) {
-		return version.LatestVersion, EmptyDatasetVersionError
+		return version.LatestVersion, ErrEmptyCodeIntegrationVersion
 	}
 	return version.LatestVersion, nil
 }
@@ -93,11 +93,11 @@ func isDatasetVersionEmpty(datasetVersion *tensorleapapi.DatasetVersion) bool {
 	return len(datasetVersion.GetBlobPath()) == 0
 }
 
-func CloneDatasetVersionCode(ctx context.Context, datasetVersion *tensorleapapi.DatasetVersion, outputDir string) ([]string, error) {
-	if isDatasetVersionEmpty(datasetVersion) {
-		return []string{}, EmptyDatasetVersionError
+func CloneCodeIntegrationVersion(ctx context.Context, codeIntegrationVersion *tensorleapapi.DatasetVersion, outputDir string) ([]string, error) {
+	if isDatasetVersionEmpty(codeIntegrationVersion) {
+		return []string{}, ErrEmptyCodeIntegrationVersion
 	}
-	blobPath := datasetVersion.GetBlobPath()
+	blobPath := codeIntegrationVersion.GetBlobPath()
 	res, _, err := ApiClient.GetDownloadSignedUrl(ctx).
 		GetDownloadSignedUrlParams(*tensorleapapi.NewGetDownloadSignedUrlParams(blobPath)).
 		Execute()

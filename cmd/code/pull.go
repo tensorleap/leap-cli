@@ -1,11 +1,11 @@
-package datasets
+package code
 
 import (
 	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/tensorleap/cli-go/pkg/datasets"
+	"github.com/tensorleap/cli-go/pkg/code"
 	"github.com/tensorleap/cli-go/pkg/log"
 	"github.com/tensorleap/cli-go/pkg/tensorleapapi"
 )
@@ -20,10 +20,10 @@ func NewPullCmd() *cobra.Command {
 			var err error
 			ctx := cmd.Context()
 			if len(args) == 0 {
-				selectedDataset, err = datasets.AskForDataset(ctx)
+				selectedDataset, err = code.AskForCodeIntegration(ctx)
 			} else {
 				datasetId := args[0]
-				selectedDataset, err = datasets.GetDatasetById(ctx, datasetId)
+				selectedDataset, err = code.GetCodeIntegrationById(ctx, datasetId)
 			}
 			if err != nil {
 				return err
@@ -36,20 +36,20 @@ func NewPullCmd() *cobra.Command {
 			if dirExistsErr == nil {
 				return fmt.Errorf("Can't pull '%s' dataset, directory named '%s' already exists on current directory", datasetName, datasetName)
 			}
-			latestVersion, err := datasets.GetLatestVersion(ctx, selectedDataset.GetCid())
+			latestVersion, err := code.GetLatestVersion(ctx, selectedDataset.GetCid())
 			if err == nil {
-				files, err := datasets.CloneDatasetVersionCode(ctx, latestVersion, datasetName)
+				files, err := code.CloneCodeIntegrationVersion(ctx, latestVersion, datasetName)
 				if err != nil {
 					return err
 				}
-				datasetConfig := datasets.NewDatasetConfig(selectedDataset.GetCid(), latestVersion.GetCodeEntryFile(), files)
-				err = datasets.SetDatasetConfig(datasetConfig, datasetName)
+				datasetConfig := code.NewDatasetConfig(selectedDataset.GetCid(), latestVersion.GetCodeEntryFile(), files)
+				err = code.SetCodeIntegrationConfig(datasetConfig, datasetName)
 				if err != nil {
 					return err
 				}
-			} else if err == datasets.EmptyDatasetVersionError {
+			} else if err == code.ErrEmptyCodeIntegrationVersion {
 				log.Warn("The selected dataset is empty, Create default template")
-				err = datasets.CreateDatasetTemplate(selectedDataset.GetCid(), datasetName)
+				err = code.CreateCodeTemplate(selectedDataset.GetCid(), datasetName)
 				if err != nil {
 					return err
 				}

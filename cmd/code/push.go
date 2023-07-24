@@ -1,4 +1,4 @@
-package datasets
+package code
 
 import (
 	"context"
@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 	. "github.com/tensorleap/cli-go/pkg/api"
 	"github.com/tensorleap/cli-go/pkg/auth"
-	"github.com/tensorleap/cli-go/pkg/datasets"
+	"github.com/tensorleap/cli-go/pkg/code"
 	. "github.com/tensorleap/cli-go/pkg/local"
 	"github.com/tensorleap/cli-go/pkg/log"
 	"github.com/tensorleap/cli-go/pkg/tensorleapapi"
@@ -21,7 +21,7 @@ func init() {
 		Short: "Push dataset script",
 		Long:  `Push dataset script`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			datasetConfig, err := datasets.GetDatasetConfig()
+			datasetConfig, err := code.GetCodeIntegrationConfig()
 			if err != nil {
 				return err
 			}
@@ -80,7 +80,7 @@ func init() {
 	})
 }
 
-func getDatasetFiles(datasetConfig *datasets.DatasetConfig) ([]string, error) {
+func getDatasetFiles(datasetConfig *code.DatasetConfig) ([]string, error) {
 	currentDirFs := os.DirFS(".")
 	var allMatchedFiles []string
 	for _, pattern := range datasetConfig.IncludePatterns {
@@ -93,13 +93,13 @@ func getDatasetFiles(datasetConfig *datasets.DatasetConfig) ([]string, error) {
 	return allMatchedFiles, nil
 }
 
-func addDatasetIfNotExisted(ctx context.Context, datasetConfig *datasets.DatasetConfig) error {
-	datasetsRes, _, err := ApiClient.GetDatasets(ctx).Execute()
+func addDatasetIfNotExisted(ctx context.Context, datasetConfig *code.DatasetConfig) error {
+	data, _, err := ApiClient.GetDatasets(ctx).Execute()
 	if err != nil {
-		return fmt.Errorf("Failed to get datasets: %v", err)
+		return fmt.Errorf("Failed to get code integration: %v", err)
 	}
 	isDatasetExisted := false
-	for _, dataset := range datasetsRes.Datasets {
+	for _, dataset := range data.Datasets {
 		if dataset.Cid == datasetConfig.DatasetId {
 			isDatasetExisted = true
 			break
@@ -109,18 +109,18 @@ func addDatasetIfNotExisted(ctx context.Context, datasetConfig *datasets.Dataset
 	if !isDatasetExisted {
 		log.Infof("Not found dataset id: %s. Creating new dataset", datasetConfig.DatasetId)
 
-		name, err := datasets.AskForDatasetName()
+		name, err := code.AskForCodeIntegrationName()
 		if err != nil {
 			return err
 		}
-		dataset, err := datasets.CreateNewDataset(ctx, name)
+		dataset, err := code.CreateNewCodeIntegration(ctx, name)
 		if err != nil {
 			return err
 		}
 
 		datasetConfig.DatasetId = dataset.GetCid()
 
-		err = datasets.SetDatasetConfig(datasetConfig, "")
+		err = code.SetCodeIntegrationConfig(datasetConfig, "")
 		if err != nil {
 			return fmt.Errorf("Failed to update tensorleap config: %v", err)
 		}

@@ -1,4 +1,4 @@
-package datasets
+package code
 
 import (
 	"embed"
@@ -36,7 +36,7 @@ type InitTemplateValues struct {
 	DatasetId string
 }
 
-func CreateDatasetTemplate(datasetId string, outputDir string) error {
+func CreateCodeTemplate(datasetId string, outputDir string) error {
 	// Create the directory for the file if it doesn't exist
 	err := os.MkdirAll(outputDir, 0755)
 	if err != nil {
@@ -70,7 +70,7 @@ func CreateDatasetTemplate(datasetId string, outputDir string) error {
 	return nil
 }
 
-func GetDatasetConfig() (*DatasetConfig, error) {
+func GetCodeIntegrationConfig() (*DatasetConfig, error) {
 	content, err := os.ReadFile(configFileName)
 	if err != nil {
 		return nil, err
@@ -80,7 +80,7 @@ func GetDatasetConfig() (*DatasetConfig, error) {
 	return &datasetConfig, err
 }
 
-func SetDatasetConfig(datasetConfig *DatasetConfig, outputDir string) error {
+func SetCodeIntegrationConfig(datasetConfig *DatasetConfig, outputDir string) error {
 	content, err := yaml.Marshal(&datasetConfig)
 	if err != nil {
 		return err

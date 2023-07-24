@@ -1,4 +1,4 @@
-package datasets
+package code
 
 import (
 	"fmt"
@@ -27,8 +27,8 @@ func init() {
 			if err != nil {
 				return err
 			}
-			for _, datasetVersion := range data.DatasetVersions {
-				fmt.Println(datasetVersion.GetCid())
+			for _, codeIntegrationVersion := range data.DatasetVersions {
+				fmt.Println(codeIntegrationVersion.GetCid())
 			}
 			return nil
 		},
