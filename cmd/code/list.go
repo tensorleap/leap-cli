@@ -1,4 +1,4 @@
-package datasets
+package code
 
 import (
 	"fmt"
@@ -11,8 +11,8 @@ import (
 func init() {
 	RootCommand.AddCommand(&cobra.Command{
 		Use:   "list",
-		Short: "List available datasets",
-		Long:  `List available datasets`,
+		Short: "List available code integration",
+		Long:  `List available code integration`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := auth.CheckLoggedIn(); err != nil {
 				return err

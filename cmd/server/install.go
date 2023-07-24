@@ -104,7 +104,7 @@ func NewInstallCmd() *cobra.Command {
 	cmd.Flags().UintVarP(&port, "port", "p", 4589, "Port to be used for tensorleap installation")
 	cmd.Flags().UintVar(&registryPort, "registry-port", 5699, "Port to be used for docker registry")
 	cmd.Flags().BoolVar(&useGpu, "gpu", false, "Enable GPU usage for training and evaluating")
-	cmd.Flags().StringVar(&dataVolume, "data-volume", server.GetDefaultDataVolume(), "Data Volume maps the user's local directory to the container's directory, enabling access to datasets for training and evaluation")
+	cmd.Flags().StringVar(&dataVolume, "data-volume", server.GetDefaultDataVolume(), "Data Volume maps the user's local directory to the container's directory, enabling access to code integration for training and evaluation")
 
 	return cmd
 }
