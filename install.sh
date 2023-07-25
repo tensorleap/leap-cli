@@ -3,7 +3,7 @@
 # This is based on k3d installation script: https://github.com/k3d-io/k3d/blob/main/install.sh
 
 APP_NAME="leap"
-REPO_URL="https://github.com/tensorleap/cli-go"
+REPO_URL="https://github.com/tensorleap/leap-cli"
 
 : "${USE_SUDO:="true"}"
 : "${BIN_DIR:="/usr/local/bin"}"

@@ -2,9 +2,9 @@ package server
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/tensorleap/cli-go/pkg/k3d"
-	"github.com/tensorleap/cli-go/pkg/local"
-	"github.com/tensorleap/cli-go/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/k3d"
+	"github.com/tensorleap/leap-cli/pkg/local"
+	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
 func NewUninstallCmd() *cobra.Command {

@@ -1,129 +1,125 @@
 # \DefaultApi
 
-All URIs are relative to */api/v2*
+All URIs are relative to _/api/v2_
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**Activate**](DefaultApi.md#Activate) | **Post** /auth/activate | 
-[**AddDashboard**](DefaultApi.md#AddDashboard) | **Post** /dashboards/addDashboard | 
-[**AddDataset**](DefaultApi.md#AddDataset) | **Post** /datasets/addDataset | 
-[**AddExportModelJob**](DefaultApi.md#AddExportModelJob) | **Post** /exportedsessionruns/addExportModelJob | 
-[**AddIssue**](DefaultApi.md#AddIssue) | **Post** /issues/addIssue | 
-[**AddProject**](DefaultApi.md#AddProject) | **Post** /projects/addProject | 
-[**AddSecretManager**](DefaultApi.md#AddSecretManager) | **Post** /secret-manager/addSecretManager | 
-[**AddVersion**](DefaultApi.md#AddVersion) | **Post** /versions/addVersion | 
-[**AnalyzeGraph**](DefaultApi.md#AnalyzeGraph) | **Post** /graph/analyzeGraph | 
-[**ContinueTrain**](DefaultApi.md#ContinueTrain) | **Post** /train/continueTrain | 
-[**CreateSessionTest**](DefaultApi.md#CreateSessionTest) | **Post** /sessions-tests/createSessionTest | 
-[**CreateTeam**](DefaultApi.md#CreateTeam) | **Post** /teams/createTeam | 
-[**DeleteDashboard**](DefaultApi.md#DeleteDashboard) | **Post** /dashboards/deleteDashboard | 
-[**DeleteIssue**](DefaultApi.md#DeleteIssue) | **Post** /issues/deleteIssue | 
-[**DeleteProject**](DefaultApi.md#DeleteProject) | **Post** /projects/deleteProject | 
-[**DeleteSession**](DefaultApi.md#DeleteSession) | **Post** /sessions/deleteSession | 
-[**DeleteSessionRun**](DefaultApi.md#DeleteSessionRun) | **Post** /sessions/deleteSessionRun | 
-[**DeleteSessionTest**](DefaultApi.md#DeleteSessionTest) | **Post** /sessions-tests/deleteSessionTest | 
-[**DeleteTeam**](DefaultApi.md#DeleteTeam) | **Post** /teams/deleteTeam | 
-[**DeleteUserById**](DefaultApi.md#DeleteUserById) | **Post** /users/deleteUserById | 
-[**DeleteVersion**](DefaultApi.md#DeleteVersion) | **Post** /versions/deleteVersion | 
-[**DeleteVisualizations**](DefaultApi.md#DeleteVisualizations) | **Post** /visualizations/deleteVisualizations | 
-[**Download**](DefaultApi.md#Download) | **Get** /projects/downloadProject/{projectId} | 
-[**Evaluate**](DefaultApi.md#Evaluate) | **Post** /evaluate/evaluate | 
-[**ExtendTrial**](DefaultApi.md#ExtendTrial) | **Post** /auth/extendTrial | 
-[**GetAllProjectSessionTests**](DefaultApi.md#GetAllProjectSessionTests) | **Post** /sessions-tests/getAllProjectSessionTests | 
-[**GetAllSlimUserData**](DefaultApi.md#GetAllSlimUserData) | **Post** /users/getAllSlimUserData | 
-[**GetBalancedAccuracy**](DefaultApi.md#GetBalancedAccuracy) | **Post** /sessionmetrics/getBalancedAccuracy | 
-[**GetConfusionMetricNames**](DefaultApi.md#GetConfusionMetricNames) | **Post** /sessionmetrics/getConfusionMetricNames | 
-[**GetCurrentProjectVersion**](DefaultApi.md#GetCurrentProjectVersion) | **Post** /projects/getCurrentProjectVersion | 
-[**GetDashboard**](DefaultApi.md#GetDashboard) | **Post** /dashboards/getDashboard | 
-[**GetDashletFields**](DefaultApi.md#GetDashletFields) | **Post** /dashboards/getDashletFields | 
-[**GetDatasetVersion**](DefaultApi.md#GetDatasetVersion) | **Post** /datasetVersions/getDatasetVersion | 
-[**GetDatasetVersionUploadUrl**](DefaultApi.md#GetDatasetVersionUploadUrl) | **Post** /datasetVersions/getDatasetVersionUploadUrl | 
-[**GetDatasetVersions**](DefaultApi.md#GetDatasetVersions) | **Post** /datasetVersions/getDatasetVersions | 
-[**GetDatasets**](DefaultApi.md#GetDatasets) | **Post** /datasets/getDatasets | 
-[**GetDownloadSignedUrl**](DefaultApi.md#GetDownloadSignedUrl) | **Post** /versions/getDownloadSignedUrl | 
-[**GetEnvironmentInfo**](DefaultApi.md#GetEnvironmentInfo) | **Post** /metadata/getEnvironmentInfo | 
-[**GetExportedSessionJobs**](DefaultApi.md#GetExportedSessionJobs) | **Post** /exportedsessionruns/getExportedSessionJobs | 
-[**GetF1Score**](DefaultApi.md#GetF1Score) | **Post** /sessionmetrics/getF1Score | 
-[**GetHeatmapChart**](DefaultApi.md#GetHeatmapChart) | **Post** /sessionmetrics/getHeatmapChart | 
-[**GetIssueFileUploadSignedUrl**](DefaultApi.md#GetIssueFileUploadSignedUrl) | **Post** /issues/getIssueFileUploadSignedUrl | 
-[**GetLatestDatasetVersion**](DefaultApi.md#GetLatestDatasetVersion) | **Post** /datasetVersions/getLatestDatasetVersion | 
-[**GetMachineTypes**](DefaultApi.md#GetMachineTypes) | **Post** /teams/getMachineTypes | 
-[**GetMaxActiveUsers**](DefaultApi.md#GetMaxActiveUsers) | **Post** /metadata/getMaxActiveUsers | 
-[**GetNotifications**](DefaultApi.md#GetNotifications) | **Post** /notifications/getNotifications | 
-[**GetPrCurve**](DefaultApi.md#GetPrCurve) | **Post** /sessionmetrics/getPrCurve | 
-[**GetProjectDashboards**](DefaultApi.md#GetProjectDashboards) | **Post** /dashboards/getProjectDashboards | 
-[**GetProjectIssues**](DefaultApi.md#GetProjectIssues) | **Post** /issues/getProjectIssues | 
-[**GetProjectSlimVersions**](DefaultApi.md#GetProjectSlimVersions) | **Post** /versions/getProjectSlimVersions | 
-[**GetProjects**](DefaultApi.md#GetProjects) | **Post** /projects/getProjects | 
-[**GetRecentTeamSessions**](DefaultApi.md#GetRecentTeamSessions) | **Post** /sessions/getRecentTeamSessions | 
-[**GetRoc**](DefaultApi.md#GetRoc) | **Post** /sessionmetrics/getRoc | 
-[**GetSecretManagerList**](DefaultApi.md#GetSecretManagerList) | **Post** /secret-manager/getSecretManagerList | 
-[**GetSessionInsights**](DefaultApi.md#GetSessionInsights) | **Post** /insights/getSessionInsights | 
-[**GetSessionTestResult**](DefaultApi.md#GetSessionTestResult) | **Post** /sessions-tests/getSessionTestResult | 
-[**GetSessionVisualizations**](DefaultApi.md#GetSessionVisualizations) | **Post** /visualizations/getSessionVisualizations | 
-[**GetSessionsByHash**](DefaultApi.md#GetSessionsByHash) | **Post** /sessions/getSessionsByHash | 
-[**GetSessionsByVersionId**](DefaultApi.md#GetSessionsByVersionId) | **Post** /sessions/getSessionsByVersionId | 
-[**GetSingleIssue**](DefaultApi.md#GetSingleIssue) | **Post** /issues/getSingleIssue | 
-[**GetSingleSessionTest**](DefaultApi.md#GetSingleSessionTest) | **Post** /sessions-tests/getSingleSessionTest | 
-[**GetSlimVisualization**](DefaultApi.md#GetSlimVisualization) | **Post** /visualizations/getSlimVisualization | 
-[**GetStatistics**](DefaultApi.md#GetStatistics) | **Post** /metadata/getStatistics | 
-[**GetTableChart**](DefaultApi.md#GetTableChart) | **Post** /sessionmetrics/getTableChart | 
-[**GetTeamJobs**](DefaultApi.md#GetTeamJobs) | **Post** /jobs/getTeamJobs | 
-[**GetTeamSlimUserData**](DefaultApi.md#GetTeamSlimUserData) | **Post** /users/getTeamSlimUserData | 
-[**GetTeams**](DefaultApi.md#GetTeams) | **Post** /teams/getTeams | 
-[**GetUploadSignedUrl**](DefaultApi.md#GetUploadSignedUrl) | **Post** /versions/getUploadSignedUrl | 
-[**GetValidateGraphProcessState**](DefaultApi.md#GetValidateGraphProcessState) | **Post** /graph/getValidateGraphProcessState | 
-[**GetVisualization**](DefaultApi.md#GetVisualization) | **Post** /visualizations/getVisualization | 
-[**GetXYChart**](DefaultApi.md#GetXYChart) | **Post** /sessionmetrics/getXYChart | 
-[**HealthCheck**](DefaultApi.md#HealthCheck) | **Get** /monitor/healthCheck | 
-[**ImportModel**](DefaultApi.md#ImportModel) | **Post** /versions/importModel | 
-[**ImportProject**](DefaultApi.md#ImportProject) | **Post** /projects/importProject | 
-[**KeyGen**](DefaultApi.md#KeyGen) | **Post** /auth/keygen | 
-[**LoadModel**](DefaultApi.md#LoadModel) | **Post** /projects/loadModel | 
-[**LoadVersion**](DefaultApi.md#LoadVersion) | **Post** /versions/loadVersion | 
-[**Login**](DefaultApi.md#Login) | **Post** /auth/login | 
-[**Logout**](DefaultApi.md#Logout) | **Post** /auth/logout | 
-[**ModifyDatasetVersionNote**](DefaultApi.md#ModifyDatasetVersionNote) | **Post** /datasetVersions/modifyDatasetVersionNote | 
-[**PopulationExploration**](DefaultApi.md#PopulationExploration) | **Post** /visualizations/populationExploration | 
-[**SampleAnalysis**](DefaultApi.md#SampleAnalysis) | **Post** /visualizations/sampleAnalysis | 
-[**SampleSelection**](DefaultApi.md#SampleSelection) | **Post** /visualizations/sampleSelection | 
-[**SaveAnalyzerLayout**](DefaultApi.md#SaveAnalyzerLayout) | **Post** /visualizations/saveAnalyzerLayout | 
-[**SaveDatasetVersion**](DefaultApi.md#SaveDatasetVersion) | **Post** /datasetVersions/saveDatasetVersion | 
-[**SendUserMessage**](DefaultApi.md#SendUserMessage) | **Post** /users/sendUserMessage | 
-[**SetDefaultTeam**](DefaultApi.md#SetDefaultTeam) | **Post** /teams/setDefaultTeam | 
-[**SetMachineType**](DefaultApi.md#SetMachineType) | **Post** /teams/setMachineType | 
-[**SetUserNotificationsAsRead**](DefaultApi.md#SetUserNotificationsAsRead) | **Post** /notifications/setUserNotificationsAsRead | 
-[**Signup**](DefaultApi.md#Signup) | **Post** /auth/signup | 
-[**StartTrial**](DefaultApi.md#StartTrial) | **Post** /auth/startTrial | 
-[**StopJob**](DefaultApi.md#StopJob) | **Post** /jobs/stopJob | 
-[**TerminateJob**](DefaultApi.md#TerminateJob) | **Post** /jobs/terminateJob | 
-[**TrainFromInitialWeights**](DefaultApi.md#TrainFromInitialWeights) | **Post** /train/trainFromInitialWeights | 
-[**TrainFromScratch**](DefaultApi.md#TrainFromScratch) | **Post** /train/trainFromScratch | 
-[**TrashDataset**](DefaultApi.md#TrashDataset) | **Post** /datasets/trashDataset | 
-[**TrashSecretManager**](DefaultApi.md#TrashSecretManager) | **Post** /secret-manager/trashSecretManager | 
-[**UpdateDashboard**](DefaultApi.md#UpdateDashboard) | **Post** /dashboards/updateDashboard | 
-[**UpdateIssue**](DefaultApi.md#UpdateIssue) | **Post** /issues/updateIssue | 
-[**UpdateProjectMeta**](DefaultApi.md#UpdateProjectMeta) | **Post** /projects/updateProjectMeta | 
-[**UpdateSecretManager**](DefaultApi.md#UpdateSecretManager) | **Post** /secret-manager/updateSecretManager | 
-[**UpdateSessionTest**](DefaultApi.md#UpdateSessionTest) | **Post** /sessions-tests/updateSessionTest | 
-[**UpdateTeamPublicName**](DefaultApi.md#UpdateTeamPublicName) | **Post** /teams/updateTeamPublicName | 
-[**UpdateUserName**](DefaultApi.md#UpdateUserName) | **Post** /users/updateUserName | 
-[**UpdateUserRole**](DefaultApi.md#UpdateUserRole) | **Post** /users/updateUserRole | 
-[**UpdateUserStatus**](DefaultApi.md#UpdateUserStatus) | **Post** /users/updateUserStatus | 
-[**UpdateUserTeam**](DefaultApi.md#UpdateUserTeam) | **Post** /users/updateUserTeam | 
-[**UpdateVersion**](DefaultApi.md#UpdateVersion) | **Post** /versions/updateVersion | 
-[**Upload**](DefaultApi.md#Upload) | **Put** /projects/uploadProject/{projectName} | 
-[**ValidateGraph**](DefaultApi.md#ValidateGraph) | **Post** /graph/validateGraph | 
-[**Warmup**](DefaultApi.md#Warmup) | **Post** /jobs/warmup | 
-[**WhoAmI**](DefaultApi.md#WhoAmI) | **Post** /auth/whoAmI | 
-
-
+| Method                                                                         | HTTP request                                         | Description |
+| ------------------------------------------------------------------------------ | ---------------------------------------------------- | ----------- |
+| [**Activate**](DefaultApi.md#Activate)                                         | **Post** /auth/activate                              |
+| [**AddDashboard**](DefaultApi.md#AddDashboard)                                 | **Post** /dashboards/addDashboard                    |
+| [**AddDataset**](DefaultApi.md#AddDataset)                                     | **Post** /datasets/addDataset                        |
+| [**AddExportModelJob**](DefaultApi.md#AddExportModelJob)                       | **Post** /exportedsessionruns/addExportModelJob      |
+| [**AddIssue**](DefaultApi.md#AddIssue)                                         | **Post** /issues/addIssue                            |
+| [**AddProject**](DefaultApi.md#AddProject)                                     | **Post** /projects/addProject                        |
+| [**AddSecretManager**](DefaultApi.md#AddSecretManager)                         | **Post** /secret-manager/addSecretManager            |
+| [**AddVersion**](DefaultApi.md#AddVersion)                                     | **Post** /versions/addVersion                        |
+| [**AnalyzeGraph**](DefaultApi.md#AnalyzeGraph)                                 | **Post** /graph/analyzeGraph                         |
+| [**ContinueTrain**](DefaultApi.md#ContinueTrain)                               | **Post** /train/continueTrain                        |
+| [**CreateSessionTest**](DefaultApi.md#CreateSessionTest)                       | **Post** /sessions-tests/createSessionTest           |
+| [**CreateTeam**](DefaultApi.md#CreateTeam)                                     | **Post** /teams/createTeam                           |
+| [**DeleteDashboard**](DefaultApi.md#DeleteDashboard)                           | **Post** /dashboards/deleteDashboard                 |
+| [**DeleteIssue**](DefaultApi.md#DeleteIssue)                                   | **Post** /issues/deleteIssue                         |
+| [**DeleteProject**](DefaultApi.md#DeleteProject)                               | **Post** /projects/deleteProject                     |
+| [**DeleteSession**](DefaultApi.md#DeleteSession)                               | **Post** /sessions/deleteSession                     |
+| [**DeleteSessionRun**](DefaultApi.md#DeleteSessionRun)                         | **Post** /sessions/deleteSessionRun                  |
+| [**DeleteSessionTest**](DefaultApi.md#DeleteSessionTest)                       | **Post** /sessions-tests/deleteSessionTest           |
+| [**DeleteTeam**](DefaultApi.md#DeleteTeam)                                     | **Post** /teams/deleteTeam                           |
+| [**DeleteUserById**](DefaultApi.md#DeleteUserById)                             | **Post** /users/deleteUserById                       |
+| [**DeleteVersion**](DefaultApi.md#DeleteVersion)                               | **Post** /versions/deleteVersion                     |
+| [**DeleteVisualizations**](DefaultApi.md#DeleteVisualizations)                 | **Post** /visualizations/deleteVisualizations        |
+| [**Download**](DefaultApi.md#Download)                                         | **Get** /projects/downloadProject/{projectId}        |
+| [**Evaluate**](DefaultApi.md#Evaluate)                                         | **Post** /evaluate/evaluate                          |
+| [**ExtendTrial**](DefaultApi.md#ExtendTrial)                                   | **Post** /auth/extendTrial                           |
+| [**GetAllProjectSessionTests**](DefaultApi.md#GetAllProjectSessionTests)       | **Post** /sessions-tests/getAllProjectSessionTests   |
+| [**GetAllSlimUserData**](DefaultApi.md#GetAllSlimUserData)                     | **Post** /users/getAllSlimUserData                   |
+| [**GetBalancedAccuracy**](DefaultApi.md#GetBalancedAccuracy)                   | **Post** /sessionmetrics/getBalancedAccuracy         |
+| [**GetConfusionMetricNames**](DefaultApi.md#GetConfusionMetricNames)           | **Post** /sessionmetrics/getConfusionMetricNames     |
+| [**GetCurrentProjectVersion**](DefaultApi.md#GetCurrentProjectVersion)         | **Post** /projects/getCurrentProjectVersion          |
+| [**GetDashboard**](DefaultApi.md#GetDashboard)                                 | **Post** /dashboards/getDashboard                    |
+| [**GetDashletFields**](DefaultApi.md#GetDashletFields)                         | **Post** /dashboards/getDashletFields                |
+| [**GetDatasetVersion**](DefaultApi.md#GetDatasetVersion)                       | **Post** /datasetVersions/getDatasetVersion          |
+| [**GetDatasetVersionUploadUrl**](DefaultApi.md#GetDatasetVersionUploadUrl)     | **Post** /datasetVersions/getDatasetVersionUploadUrl |
+| [**GetDatasetVersions**](DefaultApi.md#GetDatasetVersions)                     | **Post** /datasetVersions/getDatasetVersions         |
+| [**GetDatasets**](DefaultApi.md#GetDatasets)                                   | **Post** /datasets/getDatasets                       |
+| [**GetDownloadSignedUrl**](DefaultApi.md#GetDownloadSignedUrl)                 | **Post** /versions/getDownloadSignedUrl              |
+| [**GetEnvironmentInfo**](DefaultApi.md#GetEnvironmentInfo)                     | **Post** /metadata/getEnvironmentInfo                |
+| [**GetExportedSessionJobs**](DefaultApi.md#GetExportedSessionJobs)             | **Post** /exportedsessionruns/getExportedSessionJobs |
+| [**GetF1Score**](DefaultApi.md#GetF1Score)                                     | **Post** /sessionmetrics/getF1Score                  |
+| [**GetHeatmapChart**](DefaultApi.md#GetHeatmapChart)                           | **Post** /sessionmetrics/getHeatmapChart             |
+| [**GetIssueFileUploadSignedUrl**](DefaultApi.md#GetIssueFileUploadSignedUrl)   | **Post** /issues/getIssueFileUploadSignedUrl         |
+| [**GetLatestDatasetVersion**](DefaultApi.md#GetLatestDatasetVersion)           | **Post** /datasetVersions/getLatestDatasetVersion    |
+| [**GetMachineTypes**](DefaultApi.md#GetMachineTypes)                           | **Post** /teams/getMachineTypes                      |
+| [**GetMaxActiveUsers**](DefaultApi.md#GetMaxActiveUsers)                       | **Post** /metadata/getMaxActiveUsers                 |
+| [**GetNotifications**](DefaultApi.md#GetNotifications)                         | **Post** /notifications/getNotifications             |
+| [**GetPrCurve**](DefaultApi.md#GetPrCurve)                                     | **Post** /sessionmetrics/getPrCurve                  |
+| [**GetProjectDashboards**](DefaultApi.md#GetProjectDashboards)                 | **Post** /dashboards/getProjectDashboards            |
+| [**GetProjectIssues**](DefaultApi.md#GetProjectIssues)                         | **Post** /issues/getProjectIssues                    |
+| [**GetProjectSlimVersions**](DefaultApi.md#GetProjectSlimVersions)             | **Post** /versions/getProjectSlimVersions            |
+| [**GetProjects**](DefaultApi.md#GetProjects)                                   | **Post** /projects/getProjects                       |
+| [**GetRecentTeamSessions**](DefaultApi.md#GetRecentTeamSessions)               | **Post** /sessions/getRecentTeamSessions             |
+| [**GetRoc**](DefaultApi.md#GetRoc)                                             | **Post** /sessionmetrics/getRoc                      |
+| [**GetSecretManagerList**](DefaultApi.md#GetSecretManagerList)                 | **Post** /secret-manager/getSecretManagerList        |
+| [**GetSessionInsights**](DefaultApi.md#GetSessionInsights)                     | **Post** /insights/getSessionInsights                |
+| [**GetSessionTestResult**](DefaultApi.md#GetSessionTestResult)                 | **Post** /sessions-tests/getSessionTestResult        |
+| [**GetSessionVisualizations**](DefaultApi.md#GetSessionVisualizations)         | **Post** /visualizations/getSessionVisualizations    |
+| [**GetSessionsByHash**](DefaultApi.md#GetSessionsByHash)                       | **Post** /sessions/getSessionsByHash                 |
+| [**GetSessionsByVersionId**](DefaultApi.md#GetSessionsByVersionId)             | **Post** /sessions/getSessionsByVersionId            |
+| [**GetSingleIssue**](DefaultApi.md#GetSingleIssue)                             | **Post** /issues/getSingleIssue                      |
+| [**GetSingleSessionTest**](DefaultApi.md#GetSingleSessionTest)                 | **Post** /sessions-tests/getSingleSessionTest        |
+| [**GetSlimVisualization**](DefaultApi.md#GetSlimVisualization)                 | **Post** /visualizations/getSlimVisualization        |
+| [**GetStatistics**](DefaultApi.md#GetStatistics)                               | **Post** /metadata/getStatistics                     |
+| [**GetTableChart**](DefaultApi.md#GetTableChart)                               | **Post** /sessionmetrics/getTableChart               |
+| [**GetTeamJobs**](DefaultApi.md#GetTeamJobs)                                   | **Post** /jobs/getTeamJobs                           |
+| [**GetTeamSlimUserData**](DefaultApi.md#GetTeamSlimUserData)                   | **Post** /users/getTeamSlimUserData                  |
+| [**GetTeams**](DefaultApi.md#GetTeams)                                         | **Post** /teams/getTeams                             |
+| [**GetUploadSignedUrl**](DefaultApi.md#GetUploadSignedUrl)                     | **Post** /versions/getUploadSignedUrl                |
+| [**GetValidateGraphProcessState**](DefaultApi.md#GetValidateGraphProcessState) | **Post** /graph/getValidateGraphProcessState         |
+| [**GetVisualization**](DefaultApi.md#GetVisualization)                         | **Post** /visualizations/getVisualization            |
+| [**GetXYChart**](DefaultApi.md#GetXYChart)                                     | **Post** /sessionmetrics/getXYChart                  |
+| [**HealthCheck**](DefaultApi.md#HealthCheck)                                   | **Get** /monitor/healthCheck                         |
+| [**ImportModel**](DefaultApi.md#ImportModel)                                   | **Post** /versions/importModel                       |
+| [**ImportProject**](DefaultApi.md#ImportProject)                               | **Post** /projects/importProject                     |
+| [**KeyGen**](DefaultApi.md#KeyGen)                                             | **Post** /auth/keygen                                |
+| [**LoadModel**](DefaultApi.md#LoadModel)                                       | **Post** /projects/loadModel                         |
+| [**LoadVersion**](DefaultApi.md#LoadVersion)                                   | **Post** /versions/loadVersion                       |
+| [**Login**](DefaultApi.md#Login)                                               | **Post** /auth/login                                 |
+| [**Logout**](DefaultApi.md#Logout)                                             | **Post** /auth/logout                                |
+| [**ModifyDatasetVersionNote**](DefaultApi.md#ModifyDatasetVersionNote)         | **Post** /datasetVersions/modifyDatasetVersionNote   |
+| [**PopulationExploration**](DefaultApi.md#PopulationExploration)               | **Post** /visualizations/populationExploration       |
+| [**SampleAnalysis**](DefaultApi.md#SampleAnalysis)                             | **Post** /visualizations/sampleAnalysis              |
+| [**SampleSelection**](DefaultApi.md#SampleSelection)                           | **Post** /visualizations/sampleSelection             |
+| [**SaveAnalyzerLayout**](DefaultApi.md#SaveAnalyzerLayout)                     | **Post** /visualizations/saveAnalyzerLayout          |
+| [**SaveDatasetVersion**](DefaultApi.md#SaveDatasetVersion)                     | **Post** /datasetVersions/saveDatasetVersion         |
+| [**SendUserMessage**](DefaultApi.md#SendUserMessage)                           | **Post** /users/sendUserMessage                      |
+| [**SetDefaultTeam**](DefaultApi.md#SetDefaultTeam)                             | **Post** /teams/setDefaultTeam                       |
+| [**SetMachineType**](DefaultApi.md#SetMachineType)                             | **Post** /teams/setMachineType                       |
+| [**SetUserNotificationsAsRead**](DefaultApi.md#SetUserNotificationsAsRead)     | **Post** /notifications/setUserNotificationsAsRead   |
+| [**Signup**](DefaultApi.md#Signup)                                             | **Post** /auth/signup                                |
+| [**StartTrial**](DefaultApi.md#StartTrial)                                     | **Post** /auth/startTrial                            |
+| [**StopJob**](DefaultApi.md#StopJob)                                           | **Post** /jobs/stopJob                               |
+| [**TerminateJob**](DefaultApi.md#TerminateJob)                                 | **Post** /jobs/terminateJob                          |
+| [**TrainFromInitialWeights**](DefaultApi.md#TrainFromInitialWeights)           | **Post** /train/trainFromInitialWeights              |
+| [**TrainFromScratch**](DefaultApi.md#TrainFromScratch)                         | **Post** /train/trainFromScratch                     |
+| [**TrashDataset**](DefaultApi.md#TrashDataset)                                 | **Post** /datasets/trashDataset                      |
+| [**TrashSecretManager**](DefaultApi.md#TrashSecretManager)                     | **Post** /secret-manager/trashSecretManager          |
+| [**UpdateDashboard**](DefaultApi.md#UpdateDashboard)                           | **Post** /dashboards/updateDashboard                 |
+| [**UpdateIssue**](DefaultApi.md#UpdateIssue)                                   | **Post** /issues/updateIssue                         |
+| [**UpdateProjectMeta**](DefaultApi.md#UpdateProjectMeta)                       | **Post** /projects/updateProjectMeta                 |
+| [**UpdateSecretManager**](DefaultApi.md#UpdateSecretManager)                   | **Post** /secret-manager/updateSecretManager         |
+| [**UpdateSessionTest**](DefaultApi.md#UpdateSessionTest)                       | **Post** /sessions-tests/updateSessionTest           |
+| [**UpdateTeamPublicName**](DefaultApi.md#UpdateTeamPublicName)                 | **Post** /teams/updateTeamPublicName                 |
+| [**UpdateUserName**](DefaultApi.md#UpdateUserName)                             | **Post** /users/updateUserName                       |
+| [**UpdateUserRole**](DefaultApi.md#UpdateUserRole)                             | **Post** /users/updateUserRole                       |
+| [**UpdateUserStatus**](DefaultApi.md#UpdateUserStatus)                         | **Post** /users/updateUserStatus                     |
+| [**UpdateUserTeam**](DefaultApi.md#UpdateUserTeam)                             | **Post** /users/updateUserTeam                       |
+| [**UpdateVersion**](DefaultApi.md#UpdateVersion)                               | **Post** /versions/updateVersion                     |
+| [**Upload**](DefaultApi.md#Upload)                                             | **Put** /projects/uploadProject/{projectName}        |
+| [**ValidateGraph**](DefaultApi.md#ValidateGraph)                               | **Post** /graph/validateGraph                        |
+| [**Warmup**](DefaultApi.md#Warmup)                                             | **Post** /jobs/warmup                                |
+| [**WhoAmI**](DefaultApi.md#WhoAmI)                                             | **Post** /auth/whoAmI                                |
 
 ## Activate
 
 > UserData Activate(ctx).ActivationParams(activationParams).Execute()
-
-
 
 ### Example
 
@@ -134,11 +130,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    activationParams := *openapiclient.NewActivationParams("Token_example") // ActivationParams | 
+    activationParams := *openapiclient.NewActivationParams("Token_example") // ActivationParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -154,16 +150,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiActivateRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **activationParams** | [**ActivationParams**](ActivationParams.md) |  | 
+| Name                 | Type                                        | Description | Notes |
+| -------------------- | ------------------------------------------- | ----------- | ----- |
+| **activationParams** | [**ActivationParams**](ActivationParams.md) |             |
 
 ### Return type
 
@@ -182,12 +175,9 @@ No authorization required
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## AddDashboard
 
 > AddDashboardResponse AddDashboard(ctx).AddDashboardParams(addDashboardParams).Execute()
-
-
 
 ### Example
 
@@ -198,11 +188,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    addDashboardParams := *openapiclient.NewAddDashboardParams("ProjectId_example", "Name_example", []openapiclient.DashboardItem{*openapiclient.NewDashboardItem("Cid_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))), "Type_example", *openapiclient.NewCustomVisualizationData(map[string]interface{}(123), "Name_example", openapiclient.CustomVisualizationType("Bar")))}) // AddDashboardParams | 
+    addDashboardParams := *openapiclient.NewAddDashboardParams("ProjectId_example", "Name_example", []openapiclient.DashboardItem{*openapiclient.NewDashboardItem("Cid_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))), "Type_example", *openapiclient.NewCustomVisualizationData(map[string]interface{}(123), "Name_example", openapiclient.CustomVisualizationType("Bar")))}) // AddDashboardParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -218,16 +208,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiAddDashboardRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **addDashboardParams** | [**AddDashboardParams**](AddDashboardParams.md) |  | 
+| Name                   | Type                                            | Description | Notes |
+| ---------------------- | ----------------------------------------------- | ----------- | ----- |
+| **addDashboardParams** | [**AddDashboardParams**](AddDashboardParams.md) |             |
 
 ### Return type
 
@@ -246,12 +233,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## AddDataset
 
 > AddDatasetResponse AddDataset(ctx).NewDatasetParams(newDatasetParams).Execute()
-
-
 
 ### Example
 
@@ -262,11 +246,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    newDatasetParams := *openapiclient.NewNewDatasetParams("Name_example") // NewDatasetParams | 
+    newDatasetParams := *openapiclient.NewNewDatasetParams("Name_example") // NewDatasetParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -282,16 +266,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiAddDatasetRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **newDatasetParams** | [**NewDatasetParams**](NewDatasetParams.md) |  | 
+| Name                 | Type                                        | Description | Notes |
+| -------------------- | ------------------------------------------- | ----------- | ----- |
+| **newDatasetParams** | [**NewDatasetParams**](NewDatasetParams.md) |             |
 
 ### Return type
 
@@ -310,12 +291,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## AddExportModelJob
 
 > Job AddExportModelJob(ctx).AddExportModelJobParams(addExportModelJobParams).Execute()
-
-
 
 ### Example
 
@@ -326,11 +304,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    addExportModelJobParams := *openapiclient.NewAddExportModelJobParams("ProjectId_example", "SessionWeightId_example", openapiclient.ExportModelTypeEnum("JSON_TF2"), "Title_example", false) // AddExportModelJobParams | 
+    addExportModelJobParams := *openapiclient.NewAddExportModelJobParams("ProjectId_example", "SessionWeightId_example", openapiclient.ExportModelTypeEnum("JSON_TF2"), "Title_example", false) // AddExportModelJobParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -346,16 +324,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiAddExportModelJobRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **addExportModelJobParams** | [**AddExportModelJobParams**](AddExportModelJobParams.md) |  | 
+| Name                        | Type                                                      | Description | Notes |
+| --------------------------- | --------------------------------------------------------- | ----------- | ----- |
+| **addExportModelJobParams** | [**AddExportModelJobParams**](AddExportModelJobParams.md) |             |
 
 ### Return type
 
@@ -374,12 +349,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## AddIssue
 
 > Issue AddIssue(ctx).AddIssueParams(addIssueParams).Execute()
-
-
 
 ### Example
 
@@ -390,11 +362,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    addIssueParams := *openapiclient.NewAddIssueParams("ProjectId_example", "Title_example", openapiclient.IssueStatus("Open")) // AddIssueParams | 
+    addIssueParams := *openapiclient.NewAddIssueParams("ProjectId_example", "Title_example", openapiclient.IssueStatus("Open")) // AddIssueParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -410,16 +382,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiAddIssueRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **addIssueParams** | [**AddIssueParams**](AddIssueParams.md) |  | 
+| Name               | Type                                    | Description | Notes |
+| ------------------ | --------------------------------------- | ----------- | ----- |
+| **addIssueParams** | [**AddIssueParams**](AddIssueParams.md) |             |
 
 ### Return type
 
@@ -438,12 +407,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## AddProject
 
 > AddProjectResponse AddProject(ctx).ProjectMeta(projectMeta).Execute()
-
-
 
 ### Example
 
@@ -454,11 +420,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    projectMeta := *openapiclient.NewProjectMeta("Name_example", "Description_example", []string{"Tags_example"}, openapiclient.HubPublishPolicy("public")) // ProjectMeta | 
+    projectMeta := *openapiclient.NewProjectMeta("Name_example", "Description_example", []string{"Tags_example"}, openapiclient.HubPublishPolicy("public")) // ProjectMeta |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -474,16 +440,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiAddProjectRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **projectMeta** | [**ProjectMeta**](ProjectMeta.md) |  | 
+| Name            | Type                              | Description | Notes |
+| --------------- | --------------------------------- | ----------- | ----- |
+| **projectMeta** | [**ProjectMeta**](ProjectMeta.md) |             |
 
 ### Return type
 
@@ -502,12 +465,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## AddSecretManager
 
 > AddSecretManagerResponse AddSecretManager(ctx).AddSecretManagerParams(addSecretManagerParams).Execute()
-
-
 
 ### Example
 
@@ -518,11 +478,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    addSecretManagerParams := *openapiclient.NewAddSecretManagerParams("Name_example", "AuthData_example") // AddSecretManagerParams | 
+    addSecretManagerParams := *openapiclient.NewAddSecretManagerParams("Name_example", "AuthData_example") // AddSecretManagerParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -538,16 +498,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiAddSecretManagerRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **addSecretManagerParams** | [**AddSecretManagerParams**](AddSecretManagerParams.md) |  | 
+| Name                       | Type                                                    | Description | Notes |
+| -------------------------- | ------------------------------------------------------- | ----------- | ----- |
+| **addSecretManagerParams** | [**AddSecretManagerParams**](AddSecretManagerParams.md) |             |
 
 ### Return type
 
@@ -566,12 +523,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## AddVersion
 
 > AddVersionResponse AddVersion(ctx).AddVersionParams(addVersionParams).Execute()
-
-
 
 ### Example
 
@@ -582,11 +536,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    addVersionParams := *openapiclient.NewAddVersionParams("ProjectId_example", *openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "BranchName_example", "Description_example", *openapiclient.NewDatasetSetup(*openapiclient.NewDatasetPreprocess(float64(123), float64(123)), []openapiclient.DatasetInputInstance{*openapiclient.NewDatasetInputInstance("Name_example", []float64{float64(123)})}, []openapiclient.DatasetMetadataInstance{*openapiclient.NewDatasetMetadataInstance("Name_example", openapiclient.DatasetMetadataType("float"))}, []openapiclient.DatasetOutputInstance{*openapiclient.NewDatasetOutputInstance("Name_example", []float64{float64(123)})}, []openapiclient.VisualizerInstance{*openapiclient.NewVisualizerInstance("Name_example", openapiclient.LeapDataType("Image"), []string{"ArgNames_example"})}, []openapiclient.PredictionTypeInstance{*openapiclient.NewPredictionTypeInstance("Name_example", []string{"Labels_example"})}, []openapiclient.CustomLossInstance{*openapiclient.NewCustomLossInstance("Name_example", []string{"ArgNames_example"})}, []openapiclient.MetricInstance{*openapiclient.NewMetricInstance("Name_example", []string{"ArgNames_example"})})) // AddVersionParams | 
+    addVersionParams := *openapiclient.NewAddVersionParams("ProjectId_example", *openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "BranchName_example", "Description_example", *openapiclient.NewDatasetSetup(*openapiclient.NewDatasetPreprocess(float64(123), float64(123)), []openapiclient.DatasetInputInstance{*openapiclient.NewDatasetInputInstance("Name_example", []float64{float64(123)})}, []openapiclient.DatasetMetadataInstance{*openapiclient.NewDatasetMetadataInstance("Name_example", openapiclient.DatasetMetadataType("float"))}, []openapiclient.DatasetOutputInstance{*openapiclient.NewDatasetOutputInstance("Name_example", []float64{float64(123)})}, []openapiclient.VisualizerInstance{*openapiclient.NewVisualizerInstance("Name_example", openapiclient.LeapDataType("Image"), []string{"ArgNames_example"})}, []openapiclient.PredictionTypeInstance{*openapiclient.NewPredictionTypeInstance("Name_example", []string{"Labels_example"})}, []openapiclient.CustomLossInstance{*openapiclient.NewCustomLossInstance("Name_example", []string{"ArgNames_example"})}, []openapiclient.MetricInstance{*openapiclient.NewMetricInstance("Name_example", []string{"ArgNames_example"})})) // AddVersionParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -602,16 +556,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiAddVersionRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **addVersionParams** | [**AddVersionParams**](AddVersionParams.md) |  | 
+| Name                 | Type                                        | Description | Notes |
+| -------------------- | ------------------------------------------- | ----------- | ----- |
+| **addVersionParams** | [**AddVersionParams**](AddVersionParams.md) |             |
 
 ### Return type
 
@@ -630,12 +581,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## AnalyzeGraph
 
 > AnalyzeGraphResponse AnalyzeGraph(ctx).AnalyzeGraphParams(analyzeGraphParams).Execute()
-
-
 
 ### Example
 
@@ -646,11 +594,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    analyzeGraphParams := *openapiclient.NewAnalyzeGraphParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "VersionId_example", "ProjectId_example", "Digest_example") // AnalyzeGraphParams | 
+    analyzeGraphParams := *openapiclient.NewAnalyzeGraphParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "VersionId_example", "ProjectId_example", "Digest_example") // AnalyzeGraphParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -666,16 +614,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiAnalyzeGraphRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **analyzeGraphParams** | [**AnalyzeGraphParams**](AnalyzeGraphParams.md) |  | 
+| Name                   | Type                                            | Description | Notes |
+| ---------------------- | ----------------------------------------------- | ----------- | ----- |
+| **analyzeGraphParams** | [**AnalyzeGraphParams**](AnalyzeGraphParams.md) |             |
 
 ### Return type
 
@@ -694,12 +639,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## ContinueTrain
 
 > Job ContinueTrain(ctx).ContinueTrainParams(continueTrainParams).Execute()
-
-
 
 ### Example
 
@@ -710,11 +652,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    continueTrainParams := *openapiclient.NewContinueTrainParams("VersionId_example", "SessionId_example", "ProjectId_example", float64(123), *openapiclient.NewTrainingParams(float64(123), float64(123)), false) // ContinueTrainParams | 
+    continueTrainParams := *openapiclient.NewContinueTrainParams("VersionId_example", "SessionId_example", "ProjectId_example", float64(123), *openapiclient.NewTrainingParams(float64(123), float64(123)), false) // ContinueTrainParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -730,16 +672,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiContinueTrainRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **continueTrainParams** | [**ContinueTrainParams**](ContinueTrainParams.md) |  | 
+| Name                    | Type                                              | Description | Notes |
+| ----------------------- | ------------------------------------------------- | ----------- | ----- |
+| **continueTrainParams** | [**ContinueTrainParams**](ContinueTrainParams.md) |             |
 
 ### Return type
 
@@ -758,12 +697,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## CreateSessionTest
 
 > string CreateSessionTest(ctx).CreateSessionTestRequest(createSessionTestRequest).Execute()
-
-
 
 ### Example
 
@@ -774,11 +710,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    createSessionTestRequest := *openapiclient.NewCreateSessionTestRequest("ProjectId_example", "Name_example", *openapiclient.NewClientFilterParams("Field_example", openapiclient.FilterOperatorType("between"), float64(123))) // CreateSessionTestRequest | 
+    createSessionTestRequest := *openapiclient.NewCreateSessionTestRequest("ProjectId_example", "Name_example", *openapiclient.NewClientFilterParams("Field_example", openapiclient.FilterOperatorType("between"), float64(123))) // CreateSessionTestRequest |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -794,16 +730,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiCreateSessionTestRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **createSessionTestRequest** | [**CreateSessionTestRequest**](CreateSessionTestRequest.md) |  | 
+| Name                         | Type                                                        | Description | Notes |
+| ---------------------------- | ----------------------------------------------------------- | ----------- | ----- |
+| **createSessionTestRequest** | [**CreateSessionTestRequest**](CreateSessionTestRequest.md) |             |
 
 ### Return type
 
@@ -822,12 +755,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## CreateTeam
 
 > CreateTeamResponse CreateTeam(ctx).CreateTeamRequest(createTeamRequest).Execute()
-
-
 
 ### Example
 
@@ -838,11 +768,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    createTeamRequest := *openapiclient.NewCreateTeamRequest("Name_example", "PublicName_example") // CreateTeamRequest | 
+    createTeamRequest := *openapiclient.NewCreateTeamRequest("Name_example", "PublicName_example") // CreateTeamRequest |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -858,16 +788,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiCreateTeamRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **createTeamRequest** | [**CreateTeamRequest**](CreateTeamRequest.md) |  | 
+| Name                  | Type                                          | Description | Notes |
+| --------------------- | --------------------------------------------- | ----------- | ----- |
+| **createTeamRequest** | [**CreateTeamRequest**](CreateTeamRequest.md) |             |
 
 ### Return type
 
@@ -886,12 +813,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## DeleteDashboard
 
 > DeleteDashboard(ctx).DeleteDashboardParams(deleteDashboardParams).Execute()
-
-
 
 ### Example
 
@@ -902,11 +826,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteDashboardParams := *openapiclient.NewDeleteDashboardParams("DashboardId_example", "ProjectId_example") // DeleteDashboardParams | 
+    deleteDashboardParams := *openapiclient.NewDeleteDashboardParams("DashboardId_example", "ProjectId_example") // DeleteDashboardParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -920,20 +844,17 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDeleteDashboardRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **deleteDashboardParams** | [**DeleteDashboardParams**](DeleteDashboardParams.md) |  | 
+| Name                      | Type                                                  | Description | Notes |
+| ------------------------- | ----------------------------------------------------- | ----------- | ----- |
+| **deleteDashboardParams** | [**DeleteDashboardParams**](DeleteDashboardParams.md) |             |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -948,12 +869,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## DeleteIssue
 
 > DeleteIssue(ctx).DeleteIssueParams(deleteIssueParams).Execute()
-
-
 
 ### Example
 
@@ -964,11 +882,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteIssueParams := *openapiclient.NewDeleteIssueParams("Cid_example", "ProjectId_example") // DeleteIssueParams | 
+    deleteIssueParams := *openapiclient.NewDeleteIssueParams("Cid_example", "ProjectId_example") // DeleteIssueParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -982,20 +900,17 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDeleteIssueRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **deleteIssueParams** | [**DeleteIssueParams**](DeleteIssueParams.md) |  | 
+| Name                  | Type                                          | Description | Notes |
+| --------------------- | --------------------------------------------- | ----------- | ----- |
+| **deleteIssueParams** | [**DeleteIssueParams**](DeleteIssueParams.md) |             |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -1010,12 +925,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## DeleteProject
 
 > DeleteProject(ctx).DeleteProjectParams(deleteProjectParams).Execute()
-
-
 
 ### Example
 
@@ -1026,11 +938,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteProjectParams := *openapiclient.NewDeleteProjectParams("ProjectId_example") // DeleteProjectParams | 
+    deleteProjectParams := *openapiclient.NewDeleteProjectParams("ProjectId_example") // DeleteProjectParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1044,20 +956,17 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDeleteProjectRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **deleteProjectParams** | [**DeleteProjectParams**](DeleteProjectParams.md) |  | 
+| Name                    | Type                                              | Description | Notes |
+| ----------------------- | ------------------------------------------------- | ----------- | ----- |
+| **deleteProjectParams** | [**DeleteProjectParams**](DeleteProjectParams.md) |             |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -1072,12 +981,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## DeleteSession
 
 > DeleteSession(ctx).DeleteSessionParams(deleteSessionParams).Execute()
-
-
 
 ### Example
 
@@ -1088,11 +994,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteSessionParams := *openapiclient.NewDeleteSessionParams("SessionId_example", "ProjectId_example") // DeleteSessionParams | 
+    deleteSessionParams := *openapiclient.NewDeleteSessionParams("SessionId_example", "ProjectId_example") // DeleteSessionParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1106,20 +1012,17 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDeleteSessionRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **deleteSessionParams** | [**DeleteSessionParams**](DeleteSessionParams.md) |  | 
+| Name                    | Type                                              | Description | Notes |
+| ----------------------- | ------------------------------------------------- | ----------- | ----- |
+| **deleteSessionParams** | [**DeleteSessionParams**](DeleteSessionParams.md) |             |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -1134,12 +1037,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## DeleteSessionRun
 
 > DeleteSessionRun(ctx).DeleteSessionRunParams(deleteSessionRunParams).Execute()
-
-
 
 ### Example
 
@@ -1150,11 +1050,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteSessionRunParams := *openapiclient.NewDeleteSessionRunParams("SessionRunId_example", "ProjectId_example") // DeleteSessionRunParams | 
+    deleteSessionRunParams := *openapiclient.NewDeleteSessionRunParams("SessionRunId_example", "ProjectId_example") // DeleteSessionRunParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1168,20 +1068,17 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDeleteSessionRunRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **deleteSessionRunParams** | [**DeleteSessionRunParams**](DeleteSessionRunParams.md) |  | 
+| Name                       | Type                                                    | Description | Notes |
+| -------------------------- | ------------------------------------------------------- | ----------- | ----- |
+| **deleteSessionRunParams** | [**DeleteSessionRunParams**](DeleteSessionRunParams.md) |             |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -1196,12 +1093,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## DeleteSessionTest
 
 > DeleteSessionTest(ctx).DeleteSessionTestRequest(deleteSessionTestRequest).Execute()
-
-
 
 ### Example
 
@@ -1212,11 +1106,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteSessionTestRequest := *openapiclient.NewDeleteSessionTestRequest("Cid_example", "ProjectId_example") // DeleteSessionTestRequest | 
+    deleteSessionTestRequest := *openapiclient.NewDeleteSessionTestRequest("Cid_example", "ProjectId_example") // DeleteSessionTestRequest |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1230,20 +1124,17 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDeleteSessionTestRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **deleteSessionTestRequest** | [**DeleteSessionTestRequest**](DeleteSessionTestRequest.md) |  | 
+| Name                         | Type                                                        | Description | Notes |
+| ---------------------------- | ----------------------------------------------------------- | ----------- | ----- |
+| **deleteSessionTestRequest** | [**DeleteSessionTestRequest**](DeleteSessionTestRequest.md) |             |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -1258,12 +1149,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## DeleteTeam
 
 > DeleteTeam(ctx).DeleteTeamRequest(deleteTeamRequest).Execute()
-
-
 
 ### Example
 
@@ -1274,11 +1162,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteTeamRequest := *openapiclient.NewDeleteTeamRequest("Cid_example") // DeleteTeamRequest | 
+    deleteTeamRequest := *openapiclient.NewDeleteTeamRequest("Cid_example") // DeleteTeamRequest |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1292,20 +1180,17 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDeleteTeamRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **deleteTeamRequest** | [**DeleteTeamRequest**](DeleteTeamRequest.md) |  | 
+| Name                  | Type                                          | Description | Notes |
+| --------------------- | --------------------------------------------- | ----------- | ----- |
+| **deleteTeamRequest** | [**DeleteTeamRequest**](DeleteTeamRequest.md) |             |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -1320,12 +1205,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## DeleteUserById
 
 > DeleteUserById(ctx).DeleteUserByIdRequest(deleteUserByIdRequest).Execute()
-
-
 
 ### Example
 
@@ -1336,11 +1218,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteUserByIdRequest := *openapiclient.NewDeleteUserByIdRequest("UserId_example") // DeleteUserByIdRequest | 
+    deleteUserByIdRequest := *openapiclient.NewDeleteUserByIdRequest("UserId_example") // DeleteUserByIdRequest |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1354,20 +1236,17 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDeleteUserByIdRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **deleteUserByIdRequest** | [**DeleteUserByIdRequest**](DeleteUserByIdRequest.md) |  | 
+| Name                      | Type                                                  | Description | Notes |
+| ------------------------- | ----------------------------------------------------- | ----------- | ----- |
+| **deleteUserByIdRequest** | [**DeleteUserByIdRequest**](DeleteUserByIdRequest.md) |             |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -1382,12 +1261,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## DeleteVersion
 
 > DeleteVersion(ctx).DeleteVersionParams(deleteVersionParams).Execute()
-
-
 
 ### Example
 
@@ -1398,11 +1274,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteVersionParams := *openapiclient.NewDeleteVersionParams("VersionId_example", "ProjectId_example") // DeleteVersionParams | 
+    deleteVersionParams := *openapiclient.NewDeleteVersionParams("VersionId_example", "ProjectId_example") // DeleteVersionParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1416,20 +1292,17 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDeleteVersionRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **deleteVersionParams** | [**DeleteVersionParams**](DeleteVersionParams.md) |  | 
+| Name                    | Type                                              | Description | Notes |
+| ----------------------- | ------------------------------------------------- | ----------- | ----- |
+| **deleteVersionParams** | [**DeleteVersionParams**](DeleteVersionParams.md) |             |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -1444,12 +1317,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## DeleteVisualizations
 
 > DeleteVisualizations(ctx).DeleteVisualizationsParams(deleteVisualizationsParams).Execute()
-
-
 
 ### Example
 
@@ -1460,11 +1330,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteVisualizationsParams := *openapiclient.NewDeleteVisualizationsParams([]string{"VisualizationIdsToDelete_example"}, "ProjectId_example") // DeleteVisualizationsParams | 
+    deleteVisualizationsParams := *openapiclient.NewDeleteVisualizationsParams([]string{"VisualizationIdsToDelete_example"}, "ProjectId_example") // DeleteVisualizationsParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1478,20 +1348,17 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDeleteVisualizationsRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **deleteVisualizationsParams** | [**DeleteVisualizationsParams**](DeleteVisualizationsParams.md) |  | 
+| Name                           | Type                                                            | Description | Notes |
+| ------------------------------ | --------------------------------------------------------------- | ----------- | ----- |
+| **deleteVisualizationsParams** | [**DeleteVisualizationsParams**](DeleteVisualizationsParams.md) |             |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -1506,12 +1373,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## Download
 
 > Download(ctx, projectId).Execute()
-
-
 
 ### Example
 
@@ -1522,11 +1386,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    projectId := "projectId_example" // string | 
+    projectId := "projectId_example" // string |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1540,24 +1404,21 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**projectId** | **string** |  | 
+| Name          | Type                | Description                                                                 | Notes |
+| ------------- | ------------------- | --------------------------------------------------------------------------- | ----- |
+| **ctx**       | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc. |
+| **projectId** | **string**          |                                                                             |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDownloadRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -1572,12 +1433,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## Evaluate
 
 > Job Evaluate(ctx).EvaluateParams(evaluateParams).Execute()
-
-
 
 ### Example
 
@@ -1588,11 +1446,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    evaluateParams := *openapiclient.NewEvaluateParams("VersionId_example", "ProjectId_example", "SessionId_example", float64(123), []openapiclient.DataStateForEval{openapiclient.DataStateForEval("training")}, false, float64(123)) // EvaluateParams | 
+    evaluateParams := *openapiclient.NewEvaluateParams("VersionId_example", "ProjectId_example", "SessionId_example", float64(123), []openapiclient.DataStateForEval{openapiclient.DataStateForEval("training")}, false, float64(123)) // EvaluateParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1608,16 +1466,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiEvaluateRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **evaluateParams** | [**EvaluateParams**](EvaluateParams.md) |  | 
+| Name               | Type                                    | Description | Notes |
+| ------------------ | --------------------------------------- | ----------- | ----- |
+| **evaluateParams** | [**EvaluateParams**](EvaluateParams.md) |             |
 
 ### Return type
 
@@ -1636,12 +1491,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## ExtendTrial
 
 > ExtendTrialResponse ExtendTrial(ctx).ExtendTrialParams(extendTrialParams).Execute()
-
-
 
 ### Example
 
@@ -1652,11 +1504,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    extendTrialParams := *openapiclient.NewExtendTrialParams("Token_example") // ExtendTrialParams | 
+    extendTrialParams := *openapiclient.NewExtendTrialParams("Token_example") // ExtendTrialParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1672,16 +1524,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiExtendTrialRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **extendTrialParams** | [**ExtendTrialParams**](ExtendTrialParams.md) |  | 
+| Name                  | Type                                          | Description | Notes |
+| --------------------- | --------------------------------------------- | ----------- | ----- |
+| **extendTrialParams** | [**ExtendTrialParams**](ExtendTrialParams.md) |             |
 
 ### Return type
 
@@ -1700,12 +1549,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetAllProjectSessionTests
 
 > []SessionTest GetAllProjectSessionTests(ctx).GetAllProjectSessionTestsRequest(getAllProjectSessionTestsRequest).Execute()
-
-
 
 ### Example
 
@@ -1716,11 +1562,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getAllProjectSessionTestsRequest := *openapiclient.NewGetAllProjectSessionTestsRequest("ProjectId_example") // GetAllProjectSessionTestsRequest | 
+    getAllProjectSessionTestsRequest := *openapiclient.NewGetAllProjectSessionTestsRequest("ProjectId_example") // GetAllProjectSessionTestsRequest |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1736,16 +1582,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetAllProjectSessionTestsRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getAllProjectSessionTestsRequest** | [**GetAllProjectSessionTestsRequest**](GetAllProjectSessionTestsRequest.md) |  | 
+| Name                                 | Type                                                                        | Description | Notes |
+| ------------------------------------ | --------------------------------------------------------------------------- | ----------- | ----- |
+| **getAllProjectSessionTestsRequest** | [**GetAllProjectSessionTestsRequest**](GetAllProjectSessionTestsRequest.md) |             |
 
 ### Return type
 
@@ -1764,12 +1607,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetAllSlimUserData
 
 > GetTeamUsersResponse GetAllSlimUserData(ctx).Execute()
-
-
 
 ### Example
 
@@ -1780,7 +1620,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -1805,7 +1645,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiGetAllSlimUserDataRequest struct via the builder pattern
 
-
 ### Return type
 
 [**GetTeamUsersResponse**](GetTeamUsersResponse.md)
@@ -1823,12 +1662,9 @@ Other parameters are passed through a pointer to a apiGetAllSlimUserDataRequest 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetBalancedAccuracy
 
 > MultiChartsResponse GetBalancedAccuracy(ctx).Body(body).Execute()
-
-
 
 ### Example
 
@@ -1839,11 +1675,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    body := ConfusionMatrixParams(987) // ConfusionMatrixParams | 
+    body := ConfusionMatrixParams(987) // ConfusionMatrixParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1859,16 +1695,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetBalancedAccuracyRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | **ConfusionMatrixParams** |  | 
+| Name     | Type                      | Description | Notes |
+| -------- | ------------------------- | ----------- | ----- |
+| **body** | **ConfusionMatrixParams** |             |
 
 ### Return type
 
@@ -1887,12 +1720,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetConfusionMetricNames
 
 > []GetConfusionMetricNamesObject GetConfusionMetricNames(ctx).ConfusionMetricNamesParams(confusionMetricNamesParams).Execute()
-
-
 
 ### Example
 
@@ -1903,11 +1733,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    confusionMetricNamesParams := *openapiclient.NewConfusionMetricNamesParams("ProjectId_example") // ConfusionMetricNamesParams | 
+    confusionMetricNamesParams := *openapiclient.NewConfusionMetricNamesParams("ProjectId_example") // ConfusionMetricNamesParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1923,16 +1753,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetConfusionMetricNamesRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **confusionMetricNamesParams** | [**ConfusionMetricNamesParams**](ConfusionMetricNamesParams.md) |  | 
+| Name                           | Type                                                            | Description | Notes |
+| ------------------------------ | --------------------------------------------------------------- | ----------- | ----- |
+| **confusionMetricNamesParams** | [**ConfusionMetricNamesParams**](ConfusionMetricNamesParams.md) |             |
 
 ### Return type
 
@@ -1951,12 +1778,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetCurrentProjectVersion
 
 > GetCurrentProjectVersionResponse GetCurrentProjectVersion(ctx).GetCurrentProjectVersionParams(getCurrentProjectVersionParams).Execute()
-
-
 
 ### Example
 
@@ -1967,11 +1791,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getCurrentProjectVersionParams := *openapiclient.NewGetCurrentProjectVersionParams("ProjectId_example") // GetCurrentProjectVersionParams | 
+    getCurrentProjectVersionParams := *openapiclient.NewGetCurrentProjectVersionParams("ProjectId_example") // GetCurrentProjectVersionParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1987,16 +1811,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetCurrentProjectVersionRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getCurrentProjectVersionParams** | [**GetCurrentProjectVersionParams**](GetCurrentProjectVersionParams.md) |  | 
+| Name                               | Type                                                                    | Description | Notes |
+| ---------------------------------- | ----------------------------------------------------------------------- | ----------- | ----- |
+| **getCurrentProjectVersionParams** | [**GetCurrentProjectVersionParams**](GetCurrentProjectVersionParams.md) |             |
 
 ### Return type
 
@@ -2015,12 +1836,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetDashboard
 
 > GetDashboardResponse GetDashboard(ctx).GetDashboardParams(getDashboardParams).Execute()
-
-
 
 ### Example
 
@@ -2031,11 +1849,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getDashboardParams := *openapiclient.NewGetDashboardParams("DashboardId_example", "ProjectId_example") // GetDashboardParams | 
+    getDashboardParams := *openapiclient.NewGetDashboardParams("DashboardId_example", "ProjectId_example") // GetDashboardParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -2051,16 +1869,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetDashboardRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getDashboardParams** | [**GetDashboardParams**](GetDashboardParams.md) |  | 
+| Name                   | Type                                            | Description | Notes |
+| ---------------------- | ----------------------------------------------- | ----------- | ----- |
+| **getDashboardParams** | [**GetDashboardParams**](GetDashboardParams.md) |             |
 
 ### Return type
 
@@ -2079,12 +1894,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetDashletFields
 
 > GetDashletFieldsResponse GetDashletFields(ctx).GetDashletFieldsParams(getDashletFieldsParams).Execute()
-
-
 
 ### Example
 
@@ -2095,11 +1907,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getDashletFieldsParams := *openapiclient.NewGetDashletFieldsParams("ProjectId_example") // GetDashletFieldsParams | 
+    getDashletFieldsParams := *openapiclient.NewGetDashletFieldsParams("ProjectId_example") // GetDashletFieldsParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -2115,16 +1927,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetDashletFieldsRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getDashletFieldsParams** | [**GetDashletFieldsParams**](GetDashletFieldsParams.md) |  | 
+| Name                       | Type                                                    | Description | Notes |
+| -------------------------- | ------------------------------------------------------- | ----------- | ----- |
+| **getDashletFieldsParams** | [**GetDashletFieldsParams**](GetDashletFieldsParams.md) |             |
 
 ### Return type
 
@@ -2143,12 +1952,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetDatasetVersion
 
 > GetDatasetVersionResponse GetDatasetVersion(ctx).GetDatasetVersionParams(getDatasetVersionParams).Execute()
-
-
 
 ### Example
 
@@ -2159,11 +1965,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getDatasetVersionParams := *openapiclient.NewGetDatasetVersionParams("DatasetVersionId_example") // GetDatasetVersionParams | 
+    getDatasetVersionParams := *openapiclient.NewGetDatasetVersionParams("DatasetVersionId_example") // GetDatasetVersionParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -2179,16 +1985,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetDatasetVersionRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getDatasetVersionParams** | [**GetDatasetVersionParams**](GetDatasetVersionParams.md) |  | 
+| Name                        | Type                                                      | Description | Notes |
+| --------------------------- | --------------------------------------------------------- | ----------- | ----- |
+| **getDatasetVersionParams** | [**GetDatasetVersionParams**](GetDatasetVersionParams.md) |             |
 
 ### Return type
 
@@ -2207,12 +2010,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetDatasetVersionUploadUrl
 
 > DatasetVersionUploadUrlResponse GetDatasetVersionUploadUrl(ctx).Execute()
-
-
 
 ### Example
 
@@ -2223,7 +2023,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2248,7 +2048,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiGetDatasetVersionUploadUrlRequest struct via the builder pattern
 
-
 ### Return type
 
 [**DatasetVersionUploadUrlResponse**](DatasetVersionUploadUrlResponse.md)
@@ -2266,12 +2065,9 @@ Other parameters are passed through a pointer to a apiGetDatasetVersionUploadUrl
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetDatasetVersions
 
 > GetDatasetVersionsResponse GetDatasetVersions(ctx).GetDatasetVersionsParams(getDatasetVersionsParams).Execute()
-
-
 
 ### Example
 
@@ -2282,11 +2078,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getDatasetVersionsParams := *openapiclient.NewGetDatasetVersionsParams("DatasetId_example") // GetDatasetVersionsParams | 
+    getDatasetVersionsParams := *openapiclient.NewGetDatasetVersionsParams("DatasetId_example") // GetDatasetVersionsParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -2302,16 +2098,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetDatasetVersionsRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getDatasetVersionsParams** | [**GetDatasetVersionsParams**](GetDatasetVersionsParams.md) |  | 
+| Name                         | Type                                                        | Description | Notes |
+| ---------------------------- | ----------------------------------------------------------- | ----------- | ----- |
+| **getDatasetVersionsParams** | [**GetDatasetVersionsParams**](GetDatasetVersionsParams.md) |             |
 
 ### Return type
 
@@ -2330,12 +2123,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetDatasets
 
 > GetDatasetsResponse GetDatasets(ctx).Execute()
-
-
 
 ### Example
 
@@ -2346,7 +2136,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2371,7 +2161,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiGetDatasetsRequest struct via the builder pattern
 
-
 ### Return type
 
 [**GetDatasetsResponse**](GetDatasetsResponse.md)
@@ -2389,12 +2178,9 @@ Other parameters are passed through a pointer to a apiGetDatasetsRequest struct 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetDownloadSignedUrl
 
 > GetDownloadSignedUrlResponse GetDownloadSignedUrl(ctx).GetDownloadSignedUrlParams(getDownloadSignedUrlParams).Execute()
-
-
 
 ### Example
 
@@ -2405,11 +2191,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getDownloadSignedUrlParams := *openapiclient.NewGetDownloadSignedUrlParams("FileName_example") // GetDownloadSignedUrlParams | 
+    getDownloadSignedUrlParams := *openapiclient.NewGetDownloadSignedUrlParams("FileName_example") // GetDownloadSignedUrlParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -2425,16 +2211,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetDownloadSignedUrlRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getDownloadSignedUrlParams** | [**GetDownloadSignedUrlParams**](GetDownloadSignedUrlParams.md) |  | 
+| Name                           | Type                                                            | Description | Notes |
+| ------------------------------ | --------------------------------------------------------------- | ----------- | ----- |
+| **getDownloadSignedUrlParams** | [**GetDownloadSignedUrlParams**](GetDownloadSignedUrlParams.md) |             |
 
 ### Return type
 
@@ -2453,12 +2236,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetEnvironmentInfo
 
 > GetEnvironmentInfoResponse GetEnvironmentInfo(ctx).Execute()
-
-
 
 ### Example
 
@@ -2469,7 +2249,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2494,7 +2274,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiGetEnvironmentInfoRequest struct via the builder pattern
 
-
 ### Return type
 
 [**GetEnvironmentInfoResponse**](GetEnvironmentInfoResponse.md)
@@ -2512,12 +2291,9 @@ Other parameters are passed through a pointer to a apiGetEnvironmentInfoRequest 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetExportedSessionJobs
 
 > GetExportedSessionRunJobsResponse GetExportedSessionJobs(ctx).GetExportedSessionRunJobsParams(getExportedSessionRunJobsParams).Execute()
-
-
 
 ### Example
 
@@ -2528,11 +2304,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getExportedSessionRunJobsParams := *openapiclient.NewGetExportedSessionRunJobsParams("SessionId_example", "ProjectId_example") // GetExportedSessionRunJobsParams | 
+    getExportedSessionRunJobsParams := *openapiclient.NewGetExportedSessionRunJobsParams("SessionId_example", "ProjectId_example") // GetExportedSessionRunJobsParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -2548,16 +2324,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetExportedSessionJobsRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getExportedSessionRunJobsParams** | [**GetExportedSessionRunJobsParams**](GetExportedSessionRunJobsParams.md) |  | 
+| Name                                | Type                                                                      | Description | Notes |
+| ----------------------------------- | ------------------------------------------------------------------------- | ----------- | ----- |
+| **getExportedSessionRunJobsParams** | [**GetExportedSessionRunJobsParams**](GetExportedSessionRunJobsParams.md) |             |
 
 ### Return type
 
@@ -2576,12 +2349,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetF1Score
 
 > MultiChartsResponse GetF1Score(ctx).Body(body).Execute()
-
-
 
 ### Example
 
@@ -2592,11 +2362,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    body := ConfusionMatrixParams(987) // ConfusionMatrixParams | 
+    body := ConfusionMatrixParams(987) // ConfusionMatrixParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -2612,16 +2382,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetF1ScoreRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | **ConfusionMatrixParams** |  | 
+| Name     | Type                      | Description | Notes |
+| -------- | ------------------------- | ----------- | ----- |
+| **body** | **ConfusionMatrixParams** |             |
 
 ### Return type
 
@@ -2640,12 +2407,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetHeatmapChart
 
 > MultiChartsResponse GetHeatmapChart(ctx).HeatmapChartsParams(heatmapChartsParams).Execute()
-
-
 
 ### Example
 
@@ -2656,11 +2420,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    heatmapChartsParams := *openapiclient.NewHeatmapChartsParams("ProjectId_example", "XField_example", float64(123), openapiclient.DataDistributionType("distinct"), "YField_example", float64(123), openapiclient.DataDistributionType("distinct"), "ColorField_example", openapiclient.AggregationMethod("Average"), []string{"SessionRunIds_example"}) // HeatmapChartsParams | 
+    heatmapChartsParams := *openapiclient.NewHeatmapChartsParams("ProjectId_example", "XField_example", float64(123), openapiclient.DataDistributionType("distinct"), "YField_example", float64(123), openapiclient.DataDistributionType("distinct"), "ColorField_example", openapiclient.AggregationMethod("Average"), []string{"SessionRunIds_example"}) // HeatmapChartsParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -2676,16 +2440,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetHeatmapChartRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **heatmapChartsParams** | [**HeatmapChartsParams**](HeatmapChartsParams.md) |  | 
+| Name                    | Type                                              | Description | Notes |
+| ----------------------- | ------------------------------------------------- | ----------- | ----- |
+| **heatmapChartsParams** | [**HeatmapChartsParams**](HeatmapChartsParams.md) |             |
 
 ### Return type
 
@@ -2704,12 +2465,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetIssueFileUploadSignedUrl
 
 > IssueFileUploadSignedUrl GetIssueFileUploadSignedUrl(ctx).GetIssueFileUploadSignedUrl(getIssueFileUploadSignedUrl).Execute()
-
-
 
 ### Example
 
@@ -2720,11 +2478,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getIssueFileUploadSignedUrl := *openapiclient.NewGetIssueFileUploadSignedUrl("FileName_example", "ProjectId_example", "IssueId_example") // GetIssueFileUploadSignedUrl | 
+    getIssueFileUploadSignedUrl := *openapiclient.NewGetIssueFileUploadSignedUrl("FileName_example", "ProjectId_example", "IssueId_example") // GetIssueFileUploadSignedUrl |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -2740,16 +2498,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetIssueFileUploadSignedUrlRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getIssueFileUploadSignedUrl** | [**GetIssueFileUploadSignedUrl**](GetIssueFileUploadSignedUrl.md) |  | 
+| Name                            | Type                                                              | Description | Notes |
+| ------------------------------- | ----------------------------------------------------------------- | ----------- | ----- |
+| **getIssueFileUploadSignedUrl** | [**GetIssueFileUploadSignedUrl**](GetIssueFileUploadSignedUrl.md) |             |
 
 ### Return type
 
@@ -2768,12 +2523,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetLatestDatasetVersion
 
 > GetLatestDatasetVersionResponse GetLatestDatasetVersion(ctx).GetLatestDatasetVersionParams(getLatestDatasetVersionParams).Execute()
-
-
 
 ### Example
 
@@ -2784,11 +2536,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getLatestDatasetVersionParams := *openapiclient.NewGetLatestDatasetVersionParams("DatasetId_example") // GetLatestDatasetVersionParams | 
+    getLatestDatasetVersionParams := *openapiclient.NewGetLatestDatasetVersionParams("DatasetId_example") // GetLatestDatasetVersionParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -2804,16 +2556,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetLatestDatasetVersionRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getLatestDatasetVersionParams** | [**GetLatestDatasetVersionParams**](GetLatestDatasetVersionParams.md) |  | 
+| Name                              | Type                                                                  | Description | Notes |
+| --------------------------------- | --------------------------------------------------------------------- | ----------- | ----- |
+| **getLatestDatasetVersionParams** | [**GetLatestDatasetVersionParams**](GetLatestDatasetVersionParams.md) |             |
 
 ### Return type
 
@@ -2832,12 +2581,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetMachineTypes
 
 > GetMachineTypesResponse GetMachineTypes(ctx).Execute()
-
-
 
 ### Example
 
@@ -2848,7 +2594,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2873,7 +2619,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiGetMachineTypesRequest struct via the builder pattern
 
-
 ### Return type
 
 [**GetMachineTypesResponse**](GetMachineTypesResponse.md)
@@ -2891,12 +2636,9 @@ Other parameters are passed through a pointer to a apiGetMachineTypesRequest str
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetMaxActiveUsers
 
 > GetMaxActiveUsersResponse GetMaxActiveUsers(ctx).Execute()
-
-
 
 ### Example
 
@@ -2907,7 +2649,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2932,7 +2674,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiGetMaxActiveUsersRequest struct via the builder pattern
 
-
 ### Return type
 
 [**GetMaxActiveUsersResponse**](GetMaxActiveUsersResponse.md)
@@ -2950,12 +2691,9 @@ Other parameters are passed through a pointer to a apiGetMaxActiveUsersRequest s
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetNotifications
 
 > GetNotificationsResponse GetNotifications(ctx).Execute()
-
-
 
 ### Example
 
@@ -2966,7 +2704,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -2991,7 +2729,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiGetNotificationsRequest struct via the builder pattern
 
-
 ### Return type
 
 [**GetNotificationsResponse**](GetNotificationsResponse.md)
@@ -3009,12 +2746,9 @@ Other parameters are passed through a pointer to a apiGetNotificationsRequest st
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetPrCurve
 
 > MultiChartsResponse GetPrCurve(ctx).Body(body).Execute()
-
-
 
 ### Example
 
@@ -3025,11 +2759,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    body := MultiThresholdConfusionMatrixParams(987) // MultiThresholdConfusionMatrixParams | 
+    body := MultiThresholdConfusionMatrixParams(987) // MultiThresholdConfusionMatrixParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3045,16 +2779,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetPrCurveRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | **MultiThresholdConfusionMatrixParams** |  | 
+| Name     | Type                                    | Description | Notes |
+| -------- | --------------------------------------- | ----------- | ----- |
+| **body** | **MultiThresholdConfusionMatrixParams** |             |
 
 ### Return type
 
@@ -3073,12 +2804,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetProjectDashboards
 
 > GetProjectDashboardsResponse GetProjectDashboards(ctx).GetProjectDashboardsParams(getProjectDashboardsParams).Execute()
-
-
 
 ### Example
 
@@ -3089,11 +2817,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getProjectDashboardsParams := *openapiclient.NewGetProjectDashboardsParams("ProjectId_example") // GetProjectDashboardsParams | 
+    getProjectDashboardsParams := *openapiclient.NewGetProjectDashboardsParams("ProjectId_example") // GetProjectDashboardsParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3109,16 +2837,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetProjectDashboardsRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getProjectDashboardsParams** | [**GetProjectDashboardsParams**](GetProjectDashboardsParams.md) |  | 
+| Name                           | Type                                                            | Description | Notes |
+| ------------------------------ | --------------------------------------------------------------- | ----------- | ----- |
+| **getProjectDashboardsParams** | [**GetProjectDashboardsParams**](GetProjectDashboardsParams.md) |             |
 
 ### Return type
 
@@ -3137,12 +2862,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetProjectIssues
 
 > GetProjectIssuesResponse GetProjectIssues(ctx).GetProjectIssuesParams(getProjectIssuesParams).Execute()
-
-
 
 ### Example
 
@@ -3153,11 +2875,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getProjectIssuesParams := *openapiclient.NewGetProjectIssuesParams("ProjectId_example") // GetProjectIssuesParams | 
+    getProjectIssuesParams := *openapiclient.NewGetProjectIssuesParams("ProjectId_example") // GetProjectIssuesParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3173,16 +2895,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetProjectIssuesRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getProjectIssuesParams** | [**GetProjectIssuesParams**](GetProjectIssuesParams.md) |  | 
+| Name                       | Type                                                    | Description | Notes |
+| -------------------------- | ------------------------------------------------------- | ----------- | ----- |
+| **getProjectIssuesParams** | [**GetProjectIssuesParams**](GetProjectIssuesParams.md) |             |
 
 ### Return type
 
@@ -3201,12 +2920,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetProjectSlimVersions
 
 > GetProjectSlimVersionsResponse GetProjectSlimVersions(ctx).GetProjectVersionsParams(getProjectVersionsParams).Execute()
-
-
 
 ### Example
 
@@ -3217,11 +2933,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getProjectVersionsParams := *openapiclient.NewGetProjectVersionsParams("ProjectId_example") // GetProjectVersionsParams | 
+    getProjectVersionsParams := *openapiclient.NewGetProjectVersionsParams("ProjectId_example") // GetProjectVersionsParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3237,16 +2953,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetProjectSlimVersionsRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getProjectVersionsParams** | [**GetProjectVersionsParams**](GetProjectVersionsParams.md) |  | 
+| Name                         | Type                                                        | Description | Notes |
+| ---------------------------- | ----------------------------------------------------------- | ----------- | ----- |
+| **getProjectVersionsParams** | [**GetProjectVersionsParams**](GetProjectVersionsParams.md) |             |
 
 ### Return type
 
@@ -3265,12 +2978,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetProjects
 
 > GetProjectsResponse GetProjects(ctx).Execute()
-
-
 
 ### Example
 
@@ -3281,7 +2991,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -3306,7 +3016,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiGetProjectsRequest struct via the builder pattern
 
-
 ### Return type
 
 [**GetProjectsResponse**](GetProjectsResponse.md)
@@ -3324,12 +3033,9 @@ Other parameters are passed through a pointer to a apiGetProjectsRequest struct 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetRecentTeamSessions
 
 > RecentSessionsResponse GetRecentTeamSessions(ctx).RecentTeamSessionsRequestParams(recentTeamSessionsRequestParams).Execute()
-
-
 
 ### Example
 
@@ -3340,11 +3046,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    recentTeamSessionsRequestParams := *openapiclient.NewRecentTeamSessionsRequestParams(float64(123), "ProjectId_example") // RecentTeamSessionsRequestParams | 
+    recentTeamSessionsRequestParams := *openapiclient.NewRecentTeamSessionsRequestParams(float64(123), "ProjectId_example") // RecentTeamSessionsRequestParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3360,16 +3066,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetRecentTeamSessionsRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **recentTeamSessionsRequestParams** | [**RecentTeamSessionsRequestParams**](RecentTeamSessionsRequestParams.md) |  | 
+| Name                                | Type                                                                      | Description | Notes |
+| ----------------------------------- | ------------------------------------------------------------------------- | ----------- | ----- |
+| **recentTeamSessionsRequestParams** | [**RecentTeamSessionsRequestParams**](RecentTeamSessionsRequestParams.md) |             |
 
 ### Return type
 
@@ -3388,12 +3091,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetRoc
 
 > MultiChartsResponse GetRoc(ctx).Body(body).Execute()
-
-
 
 ### Example
 
@@ -3404,11 +3104,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    body := MultiThresholdConfusionMatrixParams(987) // MultiThresholdConfusionMatrixParams | 
+    body := MultiThresholdConfusionMatrixParams(987) // MultiThresholdConfusionMatrixParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3424,16 +3124,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetRocRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | **MultiThresholdConfusionMatrixParams** |  | 
+| Name     | Type                                    | Description | Notes |
+| -------- | --------------------------------------- | ----------- | ----- |
+| **body** | **MultiThresholdConfusionMatrixParams** |             |
 
 ### Return type
 
@@ -3452,12 +3149,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetSecretManagerList
 
 > GetSecretManagerListResponse GetSecretManagerList(ctx).Execute()
-
-
 
 ### Example
 
@@ -3468,7 +3162,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -3493,7 +3187,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiGetSecretManagerListRequest struct via the builder pattern
 
-
 ### Return type
 
 [**GetSecretManagerListResponse**](GetSecretManagerListResponse.md)
@@ -3511,12 +3204,9 @@ Other parameters are passed through a pointer to a apiGetSecretManagerListReques
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetSessionInsights
 
 > GetSessionInsightsResponse GetSessionInsights(ctx).GetSessionInsightsParams(getSessionInsightsParams).Execute()
-
-
 
 ### Example
 
@@ -3527,11 +3217,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getSessionInsightsParams := *openapiclient.NewGetSessionInsightsParams("SessionRunId_example", "ProjectId_example") // GetSessionInsightsParams | 
+    getSessionInsightsParams := *openapiclient.NewGetSessionInsightsParams("SessionRunId_example", "ProjectId_example") // GetSessionInsightsParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3547,16 +3237,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetSessionInsightsRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getSessionInsightsParams** | [**GetSessionInsightsParams**](GetSessionInsightsParams.md) |  | 
+| Name                         | Type                                                        | Description | Notes |
+| ---------------------------- | ----------------------------------------------------------- | ----------- | ----- |
+| **getSessionInsightsParams** | [**GetSessionInsightsParams**](GetSessionInsightsParams.md) |             |
 
 ### Return type
 
@@ -3575,12 +3262,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetSessionTestResult
 
 > []AllSessionsTestResults GetSessionTestResult(ctx).GetSessionTestResultsRequest(getSessionTestResultsRequest).Execute()
-
-
 
 ### Example
 
@@ -3591,11 +3275,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getSessionTestResultsRequest := *openapiclient.NewGetSessionTestResultsRequest("ProjectId_example", []openapiclient.SessionTestData{*openapiclient.NewSessionTestData("SessionRunId_example", "ProjectId_example", float64(123))}) // GetSessionTestResultsRequest | 
+    getSessionTestResultsRequest := *openapiclient.NewGetSessionTestResultsRequest("ProjectId_example", []openapiclient.SessionTestData{*openapiclient.NewSessionTestData("SessionRunId_example", "ProjectId_example", float64(123))}) // GetSessionTestResultsRequest |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3611,16 +3295,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetSessionTestResultRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getSessionTestResultsRequest** | [**GetSessionTestResultsRequest**](GetSessionTestResultsRequest.md) |  | 
+| Name                             | Type                                                                | Description | Notes |
+| -------------------------------- | ------------------------------------------------------------------- | ----------- | ----- |
+| **getSessionTestResultsRequest** | [**GetSessionTestResultsRequest**](GetSessionTestResultsRequest.md) |             |
 
 ### Return type
 
@@ -3639,12 +3320,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetSessionVisualizations
 
 > GetSessionVisualizationsResponse GetSessionVisualizations(ctx).GetSessionVisualizationsParams(getSessionVisualizationsParams).Execute()
-
-
 
 ### Example
 
@@ -3655,11 +3333,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getSessionVisualizationsParams := *openapiclient.NewGetSessionVisualizationsParams("SessionRunId_example", "ProjectId_example") // GetSessionVisualizationsParams | 
+    getSessionVisualizationsParams := *openapiclient.NewGetSessionVisualizationsParams("SessionRunId_example", "ProjectId_example") // GetSessionVisualizationsParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3675,16 +3353,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetSessionVisualizationsRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getSessionVisualizationsParams** | [**GetSessionVisualizationsParams**](GetSessionVisualizationsParams.md) |  | 
+| Name                               | Type                                                                    | Description | Notes |
+| ---------------------------------- | ----------------------------------------------------------------------- | ----------- | ----- |
+| **getSessionVisualizationsParams** | [**GetSessionVisualizationsParams**](GetSessionVisualizationsParams.md) |             |
 
 ### Return type
 
@@ -3703,12 +3378,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetSessionsByHash
 
 > SessionsResponse GetSessionsByHash(ctx).SessionHashRequestParams(sessionHashRequestParams).Execute()
-
-
 
 ### Example
 
@@ -3719,11 +3391,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    sessionHashRequestParams := *openapiclient.NewSessionHashRequestParams("Hash_example", "ProjectId_example") // SessionHashRequestParams | 
+    sessionHashRequestParams := *openapiclient.NewSessionHashRequestParams("Hash_example", "ProjectId_example") // SessionHashRequestParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3739,16 +3411,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetSessionsByHashRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sessionHashRequestParams** | [**SessionHashRequestParams**](SessionHashRequestParams.md) |  | 
+| Name                         | Type                                                        | Description | Notes |
+| ---------------------------- | ----------------------------------------------------------- | ----------- | ----- |
+| **sessionHashRequestParams** | [**SessionHashRequestParams**](SessionHashRequestParams.md) |             |
 
 ### Return type
 
@@ -3767,12 +3436,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetSessionsByVersionId
 
 > SessionsResponse GetSessionsByVersionId(ctx).SessionVersionIdRequestParams(sessionVersionIdRequestParams).Execute()
-
-
 
 ### Example
 
@@ -3783,11 +3449,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    sessionVersionIdRequestParams := *openapiclient.NewSessionVersionIdRequestParams("VersionId_example", "ProjectId_example") // SessionVersionIdRequestParams | 
+    sessionVersionIdRequestParams := *openapiclient.NewSessionVersionIdRequestParams("VersionId_example", "ProjectId_example") // SessionVersionIdRequestParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3803,16 +3469,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetSessionsByVersionIdRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sessionVersionIdRequestParams** | [**SessionVersionIdRequestParams**](SessionVersionIdRequestParams.md) |  | 
+| Name                              | Type                                                                  | Description | Notes |
+| --------------------------------- | --------------------------------------------------------------------- | ----------- | ----- |
+| **sessionVersionIdRequestParams** | [**SessionVersionIdRequestParams**](SessionVersionIdRequestParams.md) |             |
 
 ### Return type
 
@@ -3831,12 +3494,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetSingleIssue
 
 > Issue GetSingleIssue(ctx).GetSingleIssueParams(getSingleIssueParams).Execute()
-
-
 
 ### Example
 
@@ -3847,11 +3507,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getSingleIssueParams := *openapiclient.NewGetSingleIssueParams("Cid_example", "ProjectId_example") // GetSingleIssueParams | 
+    getSingleIssueParams := *openapiclient.NewGetSingleIssueParams("Cid_example", "ProjectId_example") // GetSingleIssueParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3867,16 +3527,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetSingleIssueRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getSingleIssueParams** | [**GetSingleIssueParams**](GetSingleIssueParams.md) |  | 
+| Name                     | Type                                                | Description | Notes |
+| ------------------------ | --------------------------------------------------- | ----------- | ----- |
+| **getSingleIssueParams** | [**GetSingleIssueParams**](GetSingleIssueParams.md) |             |
 
 ### Return type
 
@@ -3895,12 +3552,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetSingleSessionTest
 
 > SessionTest GetSingleSessionTest(ctx).GetSingleSessionTestRequest(getSingleSessionTestRequest).Execute()
-
-
 
 ### Example
 
@@ -3911,11 +3565,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getSingleSessionTestRequest := *openapiclient.NewGetSingleSessionTestRequest("Cid_example", "ProjectId_example") // GetSingleSessionTestRequest | 
+    getSingleSessionTestRequest := *openapiclient.NewGetSingleSessionTestRequest("Cid_example", "ProjectId_example") // GetSingleSessionTestRequest |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3931,16 +3585,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetSingleSessionTestRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getSingleSessionTestRequest** | [**GetSingleSessionTestRequest**](GetSingleSessionTestRequest.md) |  | 
+| Name                            | Type                                                              | Description | Notes |
+| ------------------------------- | ----------------------------------------------------------------- | ----------- | ----- |
+| **getSingleSessionTestRequest** | [**GetSingleSessionTestRequest**](GetSingleSessionTestRequest.md) |             |
 
 ### Return type
 
@@ -3959,12 +3610,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetSlimVisualization
 
 > GetSlimVisualizationResponse GetSlimVisualization(ctx).GetSlimVisualizationParams(getSlimVisualizationParams).Execute()
-
-
 
 ### Example
 
@@ -3975,11 +3623,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getSlimVisualizationParams := *openapiclient.NewGetSlimVisualizationParams("VisualizationId_example", "ProjectId_example") // GetSlimVisualizationParams | 
+    getSlimVisualizationParams := *openapiclient.NewGetSlimVisualizationParams("VisualizationId_example", "ProjectId_example") // GetSlimVisualizationParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3995,16 +3643,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetSlimVisualizationRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getSlimVisualizationParams** | [**GetSlimVisualizationParams**](GetSlimVisualizationParams.md) |  | 
+| Name                           | Type                                                            | Description | Notes |
+| ------------------------------ | --------------------------------------------------------------- | ----------- | ----- |
+| **getSlimVisualizationParams** | [**GetSlimVisualizationParams**](GetSlimVisualizationParams.md) |             |
 
 ### Return type
 
@@ -4023,12 +3668,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetStatistics
 
 > GetStatisticsResponse GetStatistics(ctx).GetStatisticsParams(getStatisticsParams).Execute()
-
-
 
 ### Example
 
@@ -4039,11 +3681,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getStatisticsParams := *openapiclient.NewGetStatisticsParams("ProjectId_example") // GetStatisticsParams | 
+    getStatisticsParams := *openapiclient.NewGetStatisticsParams("ProjectId_example") // GetStatisticsParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4059,16 +3701,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetStatisticsRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getStatisticsParams** | [**GetStatisticsParams**](GetStatisticsParams.md) |  | 
+| Name                    | Type                                              | Description | Notes |
+| ----------------------- | ------------------------------------------------- | ----------- | ----- |
+| **getStatisticsParams** | [**GetStatisticsParams**](GetStatisticsParams.md) |             |
 
 ### Return type
 
@@ -4087,12 +3726,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetTableChart
 
 > MultiChartsResponse GetTableChart(ctx).GenericDataQueryParams(genericDataQueryParams).Execute()
-
-
 
 ### Example
 
@@ -4103,11 +3739,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    genericDataQueryParams := *openapiclient.NewGenericDataQueryParams("ProjectId_example", []string{"SessionRunIds_example"}, []openapiclient.Aggregations{*openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average"))}, []openapiclient.BucketAggregation{*openapiclient.NewBucketAggregation("XField_example", openapiclient.DataDistributionType("distinct"), float64(123), "OrderParams_example")}) // GenericDataQueryParams | 
+    genericDataQueryParams := *openapiclient.NewGenericDataQueryParams("ProjectId_example", []string{"SessionRunIds_example"}, []openapiclient.Aggregations{*openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average"))}, []openapiclient.BucketAggregation{*openapiclient.NewBucketAggregation("XField_example", openapiclient.DataDistributionType("distinct"), float64(123), "OrderParams_example")}) // GenericDataQueryParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4123,16 +3759,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetTableChartRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **genericDataQueryParams** | [**GenericDataQueryParams**](GenericDataQueryParams.md) |  | 
+| Name                       | Type                                                    | Description | Notes |
+| -------------------------- | ------------------------------------------------------- | ----------- | ----- |
+| **genericDataQueryParams** | [**GenericDataQueryParams**](GenericDataQueryParams.md) |             |
 
 ### Return type
 
@@ -4151,12 +3784,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetTeamJobs
 
 > GetJobsResponse GetTeamJobs(ctx).Execute()
-
-
 
 ### Example
 
@@ -4167,7 +3797,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4192,7 +3822,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiGetTeamJobsRequest struct via the builder pattern
 
-
 ### Return type
 
 [**GetJobsResponse**](GetJobsResponse.md)
@@ -4210,12 +3839,9 @@ Other parameters are passed through a pointer to a apiGetTeamJobsRequest struct 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetTeamSlimUserData
 
 > GetTeamUsersResponse GetTeamSlimUserData(ctx).Execute()
-
-
 
 ### Example
 
@@ -4226,7 +3852,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4251,7 +3877,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiGetTeamSlimUserDataRequest struct via the builder pattern
 
-
 ### Return type
 
 [**GetTeamUsersResponse**](GetTeamUsersResponse.md)
@@ -4269,12 +3894,9 @@ Other parameters are passed through a pointer to a apiGetTeamSlimUserDataRequest
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetTeams
 
 > GetTeamsResponse GetTeams(ctx).Execute()
-
-
 
 ### Example
 
@@ -4285,7 +3907,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4310,7 +3932,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiGetTeamsRequest struct via the builder pattern
 
-
 ### Return type
 
 [**GetTeamsResponse**](GetTeamsResponse.md)
@@ -4328,12 +3949,9 @@ Other parameters are passed through a pointer to a apiGetTeamsRequest struct via
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetUploadSignedUrl
 
 > ExternalImportModelStorage GetUploadSignedUrl(ctx).GetUploadSignedUrlParams(getUploadSignedUrlParams).Execute()
-
-
 
 ### Example
 
@@ -4344,11 +3962,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getUploadSignedUrlParams := *openapiclient.NewGetUploadSignedUrlParams("FileName_example") // GetUploadSignedUrlParams | 
+    getUploadSignedUrlParams := *openapiclient.NewGetUploadSignedUrlParams("FileName_example") // GetUploadSignedUrlParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4364,16 +3982,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetUploadSignedUrlRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getUploadSignedUrlParams** | [**GetUploadSignedUrlParams**](GetUploadSignedUrlParams.md) |  | 
+| Name                         | Type                                                        | Description | Notes |
+| ---------------------------- | ----------------------------------------------------------- | ----------- | ----- |
+| **getUploadSignedUrlParams** | [**GetUploadSignedUrlParams**](GetUploadSignedUrlParams.md) |             |
 
 ### Return type
 
@@ -4392,12 +4007,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetValidateGraphProcessState
 
 > ValidateGraphResponse GetValidateGraphProcessState(ctx).GetValidateGraphProcessStateParams(getValidateGraphProcessStateParams).Execute()
-
-
 
 ### Example
 
@@ -4408,11 +4020,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getValidateGraphProcessStateParams := *openapiclient.NewGetValidateGraphProcessStateParams("ProjectId_example", "Digest_example") // GetValidateGraphProcessStateParams | 
+    getValidateGraphProcessStateParams := *openapiclient.NewGetValidateGraphProcessStateParams("ProjectId_example", "Digest_example") // GetValidateGraphProcessStateParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4428,16 +4040,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetValidateGraphProcessStateRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getValidateGraphProcessStateParams** | [**GetValidateGraphProcessStateParams**](GetValidateGraphProcessStateParams.md) |  | 
+| Name                                   | Type                                                                            | Description | Notes |
+| -------------------------------------- | ------------------------------------------------------------------------------- | ----------- | ----- |
+| **getValidateGraphProcessStateParams** | [**GetValidateGraphProcessStateParams**](GetValidateGraphProcessStateParams.md) |             |
 
 ### Return type
 
@@ -4456,12 +4065,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetVisualization
 
 > Visualization GetVisualization(ctx).GetSlimVisualizationParams(getSlimVisualizationParams).Execute()
-
-
 
 ### Example
 
@@ -4472,11 +4078,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getSlimVisualizationParams := *openapiclient.NewGetSlimVisualizationParams("VisualizationId_example", "ProjectId_example") // GetSlimVisualizationParams | 
+    getSlimVisualizationParams := *openapiclient.NewGetSlimVisualizationParams("VisualizationId_example", "ProjectId_example") // GetSlimVisualizationParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4492,16 +4098,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetVisualizationRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getSlimVisualizationParams** | [**GetSlimVisualizationParams**](GetSlimVisualizationParams.md) |  | 
+| Name                           | Type                                                            | Description | Notes |
+| ------------------------------ | --------------------------------------------------------------- | ----------- | ----- |
+| **getSlimVisualizationParams** | [**GetSlimVisualizationParams**](GetSlimVisualizationParams.md) |             |
 
 ### Return type
 
@@ -4520,12 +4123,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GetXYChart
 
 > MultiChartsResponse GetXYChart(ctx).MultiChartsParams(multiChartsParams).Execute()
-
-
 
 ### Example
 
@@ -4536,11 +4136,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    multiChartsParams := *openapiclient.NewMultiChartsParams("ProjectId_example", "XField_example", "YField_example", openapiclient.AggregationMethod("Average"), []string{"SessionRunIds_example"}, openapiclient.DataDistributionType("distinct"), float64(123)) // MultiChartsParams | 
+    multiChartsParams := *openapiclient.NewMultiChartsParams("ProjectId_example", "XField_example", "YField_example", openapiclient.AggregationMethod("Average"), []string{"SessionRunIds_example"}, openapiclient.DataDistributionType("distinct"), float64(123)) // MultiChartsParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4556,16 +4156,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetXYChartRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **multiChartsParams** | [**MultiChartsParams**](MultiChartsParams.md) |  | 
+| Name                  | Type                                          | Description | Notes |
+| --------------------- | --------------------------------------------- | ----------- | ----- |
+| **multiChartsParams** | [**MultiChartsParams**](MultiChartsParams.md) |             |
 
 ### Return type
 
@@ -4584,12 +4181,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## HealthCheck
 
 > HealthCheckResponse HealthCheck(ctx).Execute()
-
-
 
 ### Example
 
@@ -4600,7 +4194,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4625,7 +4219,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiHealthCheckRequest struct via the builder pattern
 
-
 ### Return type
 
 [**HealthCheckResponse**](HealthCheckResponse.md)
@@ -4643,12 +4236,9 @@ No authorization required
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## ImportModel
 
 > ExternalImportModelStorageResponse ImportModel(ctx).ImportNewModelParams(importNewModelParams).Execute()
-
-
 
 ### Example
 
@@ -4659,11 +4249,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    importNewModelParams := *openapiclient.NewImportNewModelParams("ProjectId_example", "FileName_example", "ModelName_example", "VersionName_example", openapiclient.ImportModelType("JSON_TF2")) // ImportNewModelParams | 
+    importNewModelParams := *openapiclient.NewImportNewModelParams("ProjectId_example", "FileName_example", "ModelName_example", "VersionName_example", openapiclient.ImportModelType("JSON_TF2")) // ImportNewModelParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4679,16 +4269,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiImportModelRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **importNewModelParams** | [**ImportNewModelParams**](ImportNewModelParams.md) |  | 
+| Name                     | Type                                                | Description | Notes |
+| ------------------------ | --------------------------------------------------- | ----------- | ----- |
+| **importNewModelParams** | [**ImportNewModelParams**](ImportNewModelParams.md) |             |
 
 ### Return type
 
@@ -4707,12 +4294,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## ImportProject
 
 > ImportProject(ctx).ImportProjectRequest(importProjectRequest).Execute()
-
-
 
 ### Example
 
@@ -4723,11 +4307,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    importProjectRequest := *openapiclient.NewImportProjectRequest("Name_example", "Description_example", []string{"Tags_example"}, openapiclient.HubPublishPolicy("public"), "ImportUrl_example") // ImportProjectRequest | 
+    importProjectRequest := *openapiclient.NewImportProjectRequest("Name_example", "Description_example", []string{"Tags_example"}, openapiclient.HubPublishPolicy("public"), "ImportUrl_example") // ImportProjectRequest |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4741,20 +4325,17 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiImportProjectRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **importProjectRequest** | [**ImportProjectRequest**](ImportProjectRequest.md) |  | 
+| Name                     | Type                                                | Description | Notes |
+| ------------------------ | --------------------------------------------------- | ----------- | ----- |
+| **importProjectRequest** | [**ImportProjectRequest**](ImportProjectRequest.md) |             |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -4769,12 +4350,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## KeyGen
 
 > RotateApiKeyResponse KeyGen(ctx).Execute()
-
-
 
 ### Example
 
@@ -4785,7 +4363,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -4810,7 +4388,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiKeyGenRequest struct via the builder pattern
 
-
 ### Return type
 
 [**RotateApiKeyResponse**](RotateApiKeyResponse.md)
@@ -4828,12 +4405,9 @@ Other parameters are passed through a pointer to a apiKeyGenRequest struct via t
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## LoadModel
 
 > LoadSessionResponse LoadModel(ctx).LoadSessionParams(loadSessionParams).Execute()
-
-
 
 ### Example
 
@@ -4844,11 +4418,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    loadSessionParams := *openapiclient.NewLoadSessionParams("SessionId_example", "ProjectId_example") // LoadSessionParams | 
+    loadSessionParams := *openapiclient.NewLoadSessionParams("SessionId_example", "ProjectId_example") // LoadSessionParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4864,16 +4438,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiLoadModelRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **loadSessionParams** | [**LoadSessionParams**](LoadSessionParams.md) |  | 
+| Name                  | Type                                          | Description | Notes |
+| --------------------- | --------------------------------------------- | ----------- | ----- |
+| **loadSessionParams** | [**LoadSessionParams**](LoadSessionParams.md) |             |
 
 ### Return type
 
@@ -4892,12 +4463,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## LoadVersion
 
 > LoadVersionResponse LoadVersion(ctx).LoadVersionParams(loadVersionParams).Execute()
-
-
 
 ### Example
 
@@ -4908,11 +4476,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    loadVersionParams := *openapiclient.NewLoadVersionParams("VersionId_example", "ProjectId_example") // LoadVersionParams | 
+    loadVersionParams := *openapiclient.NewLoadVersionParams("VersionId_example", "ProjectId_example") // LoadVersionParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4928,16 +4496,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiLoadVersionRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **loadVersionParams** | [**LoadVersionParams**](LoadVersionParams.md) |  | 
+| Name                  | Type                                          | Description | Notes |
+| --------------------- | --------------------------------------------- | ----------- | ----- |
+| **loadVersionParams** | [**LoadVersionParams**](LoadVersionParams.md) |             |
 
 ### Return type
 
@@ -4956,12 +4521,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## Login
 
 > UserData Login(ctx).LoginParams(loginParams).Execute()
-
-
 
 ### Example
 
@@ -4972,11 +4534,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    loginParams := *openapiclient.NewLoginParams("Email_example", "Password_example") // LoginParams | 
+    loginParams := *openapiclient.NewLoginParams("Email_example", "Password_example") // LoginParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4992,16 +4554,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiLoginRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **loginParams** | [**LoginParams**](LoginParams.md) |  | 
+| Name            | Type                              | Description | Notes |
+| --------------- | --------------------------------- | ----------- | ----- |
+| **loginParams** | [**LoginParams**](LoginParams.md) |             |
 
 ### Return type
 
@@ -5020,12 +4579,9 @@ No authorization required
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## Logout
 
 > Logout(ctx).Execute()
-
-
 
 ### Example
 
@@ -5036,7 +4592,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -5059,10 +4615,9 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiLogoutRequest struct via the builder pattern
 
-
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -5077,12 +4632,9 @@ Other parameters are passed through a pointer to a apiLogoutRequest struct via t
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## ModifyDatasetVersionNote
 
 > ModifyDatasetVersionNoteResponse ModifyDatasetVersionNote(ctx).ModifyDatasetVersionNoteParams(modifyDatasetVersionNoteParams).Execute()
-
-
 
 ### Example
 
@@ -5093,11 +4645,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    modifyDatasetVersionNoteParams := *openapiclient.NewModifyDatasetVersionNoteParams("DatasetVersionId_example", "Note_example") // ModifyDatasetVersionNoteParams | 
+    modifyDatasetVersionNoteParams := *openapiclient.NewModifyDatasetVersionNoteParams("DatasetVersionId_example", "Note_example") // ModifyDatasetVersionNoteParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5113,16 +4665,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiModifyDatasetVersionNoteRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **modifyDatasetVersionNoteParams** | [**ModifyDatasetVersionNoteParams**](ModifyDatasetVersionNoteParams.md) |  | 
+| Name                               | Type                                                                    | Description | Notes |
+| ---------------------------------- | ----------------------------------------------------------------------- | ----------- | ----- |
+| **modifyDatasetVersionNoteParams** | [**ModifyDatasetVersionNoteParams**](ModifyDatasetVersionNoteParams.md) |             |
 
 ### Return type
 
@@ -5141,12 +4690,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## PopulationExploration
 
 > Job PopulationExploration(ctx).PopulationExplorationParams(populationExplorationParams).Execute()
-
-
 
 ### Example
 
@@ -5157,11 +4703,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    populationExplorationParams := *openapiclient.NewPopulationExplorationParams("SessionRunId_example", "ProjectId_example", float64(123), float64(123), float64(123)) // PopulationExplorationParams | 
+    populationExplorationParams := *openapiclient.NewPopulationExplorationParams("SessionRunId_example", "ProjectId_example", float64(123), float64(123), float64(123)) // PopulationExplorationParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5177,16 +4723,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiPopulationExplorationRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **populationExplorationParams** | [**PopulationExplorationParams**](PopulationExplorationParams.md) |  | 
+| Name                            | Type                                                              | Description | Notes |
+| ------------------------------- | ----------------------------------------------------------------- | ----------- | ----- |
+| **populationExplorationParams** | [**PopulationExplorationParams**](PopulationExplorationParams.md) |             |
 
 ### Return type
 
@@ -5205,12 +4748,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## SampleAnalysis
 
 > Job SampleAnalysis(ctx).SampleAnalysisParams(sampleAnalysisParams).Execute()
-
-
 
 ### Example
 
@@ -5221,11 +4761,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    sampleAnalysisParams := *openapiclient.NewSampleAnalysisParams("SessionRunId_example", "ProjectId_example", *openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), float64(123)), float64(123)) // SampleAnalysisParams | 
+    sampleAnalysisParams := *openapiclient.NewSampleAnalysisParams("SessionRunId_example", "ProjectId_example", *openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), float64(123)), float64(123)) // SampleAnalysisParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5241,16 +4781,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiSampleAnalysisRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sampleAnalysisParams** | [**SampleAnalysisParams**](SampleAnalysisParams.md) |  | 
+| Name                     | Type                                                | Description | Notes |
+| ------------------------ | --------------------------------------------------- | ----------- | ----- |
+| **sampleAnalysisParams** | [**SampleAnalysisParams**](SampleAnalysisParams.md) |             |
 
 ### Return type
 
@@ -5269,12 +4806,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## SampleSelection
 
 > Job SampleSelection(ctx).SampleSelectionParams(sampleSelectionParams).Execute()
-
-
 
 ### Example
 
@@ -5285,11 +4819,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    sampleSelectionParams := *openapiclient.NewSampleSelectionParams("SessionRunId_example", "ProjectId_example", *openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), float64(123)), openapiclient.DataStateType("training"), float64(123), float64(123), float64(123)) // SampleSelectionParams | 
+    sampleSelectionParams := *openapiclient.NewSampleSelectionParams("SessionRunId_example", "ProjectId_example", *openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), float64(123)), openapiclient.DataStateType("training"), float64(123), float64(123), float64(123)) // SampleSelectionParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5305,16 +4839,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiSampleSelectionRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sampleSelectionParams** | [**SampleSelectionParams**](SampleSelectionParams.md) |  | 
+| Name                      | Type                                                  | Description | Notes |
+| ------------------------- | ----------------------------------------------------- | ----------- | ----- |
+| **sampleSelectionParams** | [**SampleSelectionParams**](SampleSelectionParams.md) |             |
 
 ### Return type
 
@@ -5333,12 +4864,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## SaveAnalyzerLayout
 
 > SaveAnalyzerLayout(ctx).SaveAnalyzerLayoutParams(saveAnalyzerLayoutParams).Execute()
-
-
 
 ### Example
 
@@ -5349,11 +4877,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    saveAnalyzerLayoutParams := *openapiclient.NewSaveAnalyzerLayoutParams([]openapiclient.PanelLayout{*openapiclient.NewPanelLayout("VisualizationId_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))))}, "ProjectId_example") // SaveAnalyzerLayoutParams | 
+    saveAnalyzerLayoutParams := *openapiclient.NewSaveAnalyzerLayoutParams([]openapiclient.PanelLayout{*openapiclient.NewPanelLayout("VisualizationId_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))))}, "ProjectId_example") // SaveAnalyzerLayoutParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5367,20 +4895,17 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiSaveAnalyzerLayoutRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **saveAnalyzerLayoutParams** | [**SaveAnalyzerLayoutParams**](SaveAnalyzerLayoutParams.md) |  | 
+| Name                         | Type                                                        | Description | Notes |
+| ---------------------------- | ----------------------------------------------------------- | ----------- | ----- |
+| **saveAnalyzerLayoutParams** | [**SaveAnalyzerLayoutParams**](SaveAnalyzerLayoutParams.md) |             |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -5395,12 +4920,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## SaveDatasetVersion
 
 > SaveDatasetSetupResponse SaveDatasetVersion(ctx).SaveDatasetVersionParams(saveDatasetVersionParams).Execute()
-
-
 
 ### Example
 
@@ -5411,11 +4933,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    saveDatasetVersionParams := *openapiclient.NewSaveDatasetVersionParams("DatasetId_example", "CodeUrl_example", "CodeEntryFile_example") // SaveDatasetVersionParams | 
+    saveDatasetVersionParams := *openapiclient.NewSaveDatasetVersionParams("DatasetId_example", "CodeUrl_example", "CodeEntryFile_example") // SaveDatasetVersionParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5431,16 +4953,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiSaveDatasetVersionRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **saveDatasetVersionParams** | [**SaveDatasetVersionParams**](SaveDatasetVersionParams.md) |  | 
+| Name                         | Type                                                        | Description | Notes |
+| ---------------------------- | ----------------------------------------------------------- | ----------- | ----- |
+| **saveDatasetVersionParams** | [**SaveDatasetVersionParams**](SaveDatasetVersionParams.md) |             |
 
 ### Return type
 
@@ -5459,12 +4978,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## SendUserMessage
 
 > SendUserMessageResponse SendUserMessage(ctx).SendUserMessageParams(sendUserMessageParams).Execute()
-
-
 
 ### Example
 
@@ -5475,11 +4991,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    sendUserMessageParams := *openapiclient.NewSendUserMessageParams("FirstName_example", "LastName_example", "Email_example", map[string]interface{}(123)) // SendUserMessageParams | 
+    sendUserMessageParams := *openapiclient.NewSendUserMessageParams("FirstName_example", "LastName_example", "Email_example", map[string]interface{}(123)) // SendUserMessageParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5495,16 +5011,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiSendUserMessageRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sendUserMessageParams** | [**SendUserMessageParams**](SendUserMessageParams.md) |  | 
+| Name                      | Type                                                  | Description | Notes |
+| ------------------------- | ----------------------------------------------------- | ----------- | ----- |
+| **sendUserMessageParams** | [**SendUserMessageParams**](SendUserMessageParams.md) |             |
 
 ### Return type
 
@@ -5523,12 +5036,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## SetDefaultTeam
 
 > SetDefaultTeam(ctx).SetDefaultTeamRequest(setDefaultTeamRequest).Execute()
-
-
 
 ### Example
 
@@ -5539,11 +5049,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    setDefaultTeamRequest := *openapiclient.NewSetDefaultTeamRequest("Cid_example") // SetDefaultTeamRequest | 
+    setDefaultTeamRequest := *openapiclient.NewSetDefaultTeamRequest("Cid_example") // SetDefaultTeamRequest |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5557,20 +5067,17 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiSetDefaultTeamRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **setDefaultTeamRequest** | [**SetDefaultTeamRequest**](SetDefaultTeamRequest.md) |  | 
+| Name                      | Type                                                  | Description | Notes |
+| ------------------------- | ----------------------------------------------------- | ----------- | ----- |
+| **setDefaultTeamRequest** | [**SetDefaultTeamRequest**](SetDefaultTeamRequest.md) |             |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -5585,12 +5092,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## SetMachineType
 
 > SetMachineType(ctx).SetTeamMachineTypeParams(setTeamMachineTypeParams).Execute()
-
-
 
 ### Example
 
@@ -5601,11 +5105,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    setTeamMachineTypeParams := *openapiclient.NewSetTeamMachineTypeParams("MachineTypeId_example") // SetTeamMachineTypeParams | 
+    setTeamMachineTypeParams := *openapiclient.NewSetTeamMachineTypeParams("MachineTypeId_example") // SetTeamMachineTypeParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5619,20 +5123,17 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiSetMachineTypeRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **setTeamMachineTypeParams** | [**SetTeamMachineTypeParams**](SetTeamMachineTypeParams.md) |  | 
+| Name                         | Type                                                        | Description | Notes |
+| ---------------------------- | ----------------------------------------------------------- | ----------- | ----- |
+| **setTeamMachineTypeParams** | [**SetTeamMachineTypeParams**](SetTeamMachineTypeParams.md) |             |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -5647,12 +5148,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## SetUserNotificationsAsRead
 
 > SetUserNotificationsAsRead200Response SetUserNotificationsAsRead(ctx).Execute()
-
-
 
 ### Example
 
@@ -5663,7 +5161,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -5688,7 +5186,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiSetUserNotificationsAsReadRequest struct via the builder pattern
 
-
 ### Return type
 
 [**SetUserNotificationsAsRead200Response**](SetUserNotificationsAsRead200Response.md)
@@ -5706,12 +5203,9 @@ Other parameters are passed through a pointer to a apiSetUserNotificationsAsRead
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## Signup
 
 > SignupResponse Signup(ctx).SignupParams(signupParams).Execute()
-
-
 
 ### Example
 
@@ -5722,11 +5216,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    signupParams := *openapiclient.NewSignupParams("Name_example", "Email_example", "Password_example") // SignupParams | 
+    signupParams := *openapiclient.NewSignupParams("Name_example", "Email_example", "Password_example") // SignupParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5742,16 +5236,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiSignupRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **signupParams** | [**SignupParams**](SignupParams.md) |  | 
+| Name             | Type                                | Description | Notes |
+| ---------------- | ----------------------------------- | ----------- | ----- |
+| **signupParams** | [**SignupParams**](SignupParams.md) |             |
 
 ### Return type
 
@@ -5770,12 +5261,9 @@ No authorization required
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## StartTrial
 
 > UserData StartTrial(ctx).StartTrialParams(startTrialParams).Execute()
-
-
 
 ### Example
 
@@ -5786,11 +5274,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    startTrialParams := *openapiclient.NewStartTrialParams("FirstName_example", "LastName_example", "Email_example") // StartTrialParams | 
+    startTrialParams := *openapiclient.NewStartTrialParams("FirstName_example", "LastName_example", "Email_example") // StartTrialParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5806,16 +5294,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiStartTrialRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **startTrialParams** | [**StartTrialParams**](StartTrialParams.md) |  | 
+| Name                 | Type                                        | Description | Notes |
+| -------------------- | ------------------------------------------- | ----------- | ----- |
+| **startTrialParams** | [**StartTrialParams**](StartTrialParams.md) |             |
 
 ### Return type
 
@@ -5834,12 +5319,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## StopJob
 
 > StopJobResponse StopJob(ctx).StopJobParams(stopJobParams).Execute()
-
-
 
 ### Example
 
@@ -5850,11 +5332,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    stopJobParams := *openapiclient.NewStopJobParams("JobId_example") // StopJobParams | 
+    stopJobParams := *openapiclient.NewStopJobParams("JobId_example") // StopJobParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5870,16 +5352,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiStopJobRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **stopJobParams** | [**StopJobParams**](StopJobParams.md) |  | 
+| Name              | Type                                  | Description | Notes |
+| ----------------- | ------------------------------------- | ----------- | ----- |
+| **stopJobParams** | [**StopJobParams**](StopJobParams.md) |             |
 
 ### Return type
 
@@ -5898,12 +5377,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## TerminateJob
 
 > TerminateJobResponse TerminateJob(ctx).TerminateJobParams(terminateJobParams).Execute()
-
-
 
 ### Example
 
@@ -5914,11 +5390,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    terminateJobParams := *openapiclient.NewTerminateJobParams("JobId_example") // TerminateJobParams | 
+    terminateJobParams := *openapiclient.NewTerminateJobParams("JobId_example") // TerminateJobParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5934,16 +5410,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiTerminateJobRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **terminateJobParams** | [**TerminateJobParams**](TerminateJobParams.md) |  | 
+| Name                   | Type                                            | Description | Notes |
+| ---------------------- | ----------------------------------------------- | ----------- | ----- |
+| **terminateJobParams** | [**TerminateJobParams**](TerminateJobParams.md) |             |
 
 ### Return type
 
@@ -5962,12 +5435,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## TrainFromInitialWeights
 
 > Job TrainFromInitialWeights(ctx).TrainFromInitialWeightsParams(trainFromInitialWeightsParams).Execute()
-
-
 
 ### Example
 
@@ -5978,11 +5448,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    trainFromInitialWeightsParams := *openapiclient.NewTrainFromInitialWeightsParams("VersionId_example", "ProjectId_example", "FromSessionId_example", float64(123), "ModelName_example", *openapiclient.NewTrainingParams(float64(123), float64(123)), false) // TrainFromInitialWeightsParams | 
+    trainFromInitialWeightsParams := *openapiclient.NewTrainFromInitialWeightsParams("VersionId_example", "ProjectId_example", "FromSessionId_example", float64(123), "ModelName_example", *openapiclient.NewTrainingParams(float64(123), float64(123)), false) // TrainFromInitialWeightsParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5998,16 +5468,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiTrainFromInitialWeightsRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **trainFromInitialWeightsParams** | [**TrainFromInitialWeightsParams**](TrainFromInitialWeightsParams.md) |  | 
+| Name                              | Type                                                                  | Description | Notes |
+| --------------------------------- | --------------------------------------------------------------------- | ----------- | ----- |
+| **trainFromInitialWeightsParams** | [**TrainFromInitialWeightsParams**](TrainFromInitialWeightsParams.md) |             |
 
 ### Return type
 
@@ -6026,12 +5493,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## TrainFromScratch
 
 > Job TrainFromScratch(ctx).TrainFromScratchParams(trainFromScratchParams).Execute()
-
-
 
 ### Example
 
@@ -6042,11 +5506,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    trainFromScratchParams := *openapiclient.NewTrainFromScratchParams("VersionId_example", "ProjectId_example", "SessionName_example", *openapiclient.NewTrainingParams(float64(123), float64(123)), false) // TrainFromScratchParams | 
+    trainFromScratchParams := *openapiclient.NewTrainFromScratchParams("VersionId_example", "ProjectId_example", "SessionName_example", *openapiclient.NewTrainingParams(float64(123), float64(123)), false) // TrainFromScratchParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6062,16 +5526,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiTrainFromScratchRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **trainFromScratchParams** | [**TrainFromScratchParams**](TrainFromScratchParams.md) |  | 
+| Name                       | Type                                                    | Description | Notes |
+| -------------------------- | ------------------------------------------------------- | ----------- | ----- |
+| **trainFromScratchParams** | [**TrainFromScratchParams**](TrainFromScratchParams.md) |             |
 
 ### Return type
 
@@ -6090,12 +5551,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## TrashDataset
 
 > GetDatasetsResponse TrashDataset(ctx).TrashDatasetParams(trashDatasetParams).Execute()
-
-
 
 ### Example
 
@@ -6106,11 +5564,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    trashDatasetParams := *openapiclient.NewTrashDatasetParams("DatasetId_example") // TrashDatasetParams | 
+    trashDatasetParams := *openapiclient.NewTrashDatasetParams("DatasetId_example") // TrashDatasetParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6126,16 +5584,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiTrashDatasetRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **trashDatasetParams** | [**TrashDatasetParams**](TrashDatasetParams.md) |  | 
+| Name                   | Type                                            | Description | Notes |
+| ---------------------- | ----------------------------------------------- | ----------- | ----- |
+| **trashDatasetParams** | [**TrashDatasetParams**](TrashDatasetParams.md) |             |
 
 ### Return type
 
@@ -6154,12 +5609,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## TrashSecretManager
 
 > TrashSecretManagerResponse TrashSecretManager(ctx).TrashSecretManagerParams(trashSecretManagerParams).Execute()
-
-
 
 ### Example
 
@@ -6170,11 +5622,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    trashSecretManagerParams := *openapiclient.NewTrashSecretManagerParams("SecretManagerId_example") // TrashSecretManagerParams | 
+    trashSecretManagerParams := *openapiclient.NewTrashSecretManagerParams("SecretManagerId_example") // TrashSecretManagerParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6190,16 +5642,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiTrashSecretManagerRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **trashSecretManagerParams** | [**TrashSecretManagerParams**](TrashSecretManagerParams.md) |  | 
+| Name                         | Type                                                        | Description | Notes |
+| ---------------------------- | ----------------------------------------------------------- | ----------- | ----- |
+| **trashSecretManagerParams** | [**TrashSecretManagerParams**](TrashSecretManagerParams.md) |             |
 
 ### Return type
 
@@ -6218,12 +5667,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## UpdateDashboard
 
 > UpdateDashboard(ctx).UpdateDashboardParams(updateDashboardParams).Execute()
-
-
 
 ### Example
 
@@ -6234,11 +5680,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateDashboardParams := *openapiclient.NewUpdateDashboardParams("DashboardId_example", "Name_example", []openapiclient.DashboardItem{*openapiclient.NewDashboardItem("Cid_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))), "Type_example", *openapiclient.NewCustomVisualizationData(map[string]interface{}(123), "Name_example", openapiclient.CustomVisualizationType("Bar")))}, "ProjectId_example") // UpdateDashboardParams | 
+    updateDashboardParams := *openapiclient.NewUpdateDashboardParams("DashboardId_example", "Name_example", []openapiclient.DashboardItem{*openapiclient.NewDashboardItem("Cid_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))), "Type_example", *openapiclient.NewCustomVisualizationData(map[string]interface{}(123), "Name_example", openapiclient.CustomVisualizationType("Bar")))}, "ProjectId_example") // UpdateDashboardParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6252,20 +5698,17 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiUpdateDashboardRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **updateDashboardParams** | [**UpdateDashboardParams**](UpdateDashboardParams.md) |  | 
+| Name                      | Type                                                  | Description | Notes |
+| ------------------------- | ----------------------------------------------------- | ----------- | ----- |
+| **updateDashboardParams** | [**UpdateDashboardParams**](UpdateDashboardParams.md) |             |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -6280,12 +5723,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## UpdateIssue
 
 > Issue UpdateIssue(ctx).UpdateIssueParams(updateIssueParams).Execute()
-
-
 
 ### Example
 
@@ -6296,11 +5736,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateIssueParams := *openapiclient.NewUpdateIssueParams("Cid_example", "ProjectId_example") // UpdateIssueParams | 
+    updateIssueParams := *openapiclient.NewUpdateIssueParams("Cid_example", "ProjectId_example") // UpdateIssueParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6316,16 +5756,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiUpdateIssueRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **updateIssueParams** | [**UpdateIssueParams**](UpdateIssueParams.md) |  | 
+| Name                  | Type                                          | Description | Notes |
+| --------------------- | --------------------------------------------- | ----------- | ----- |
+| **updateIssueParams** | [**UpdateIssueParams**](UpdateIssueParams.md) |             |
 
 ### Return type
 
@@ -6344,12 +5781,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## UpdateProjectMeta
 
 > UpdateProjectMeta(ctx).UpdateProjectMetaRequest(updateProjectMetaRequest).Execute()
-
-
 
 ### Example
 
@@ -6360,11 +5794,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateProjectMetaRequest := *openapiclient.NewUpdateProjectMetaRequest("Name_example", "Description_example", []string{"Tags_example"}, openapiclient.HubPublishPolicy("public"), "ProjectId_example") // UpdateProjectMetaRequest | 
+    updateProjectMetaRequest := *openapiclient.NewUpdateProjectMetaRequest("Name_example", "Description_example", []string{"Tags_example"}, openapiclient.HubPublishPolicy("public"), "ProjectId_example") // UpdateProjectMetaRequest |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6378,20 +5812,17 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiUpdateProjectMetaRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **updateProjectMetaRequest** | [**UpdateProjectMetaRequest**](UpdateProjectMetaRequest.md) |  | 
+| Name                         | Type                                                        | Description | Notes |
+| ---------------------------- | ----------------------------------------------------------- | ----------- | ----- |
+| **updateProjectMetaRequest** | [**UpdateProjectMetaRequest**](UpdateProjectMetaRequest.md) |             |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -6406,12 +5837,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## UpdateSecretManager
 
 > UpdateSecretManagerResponse UpdateSecretManager(ctx).UpdateSecretManagerParams(updateSecretManagerParams).Execute()
-
-
 
 ### Example
 
@@ -6422,11 +5850,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateSecretManagerParams := *openapiclient.NewUpdateSecretManagerParams("Cid_example", "Name_example") // UpdateSecretManagerParams | 
+    updateSecretManagerParams := *openapiclient.NewUpdateSecretManagerParams("Cid_example", "Name_example") // UpdateSecretManagerParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6442,16 +5870,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiUpdateSecretManagerRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **updateSecretManagerParams** | [**UpdateSecretManagerParams**](UpdateSecretManagerParams.md) |  | 
+| Name                          | Type                                                          | Description | Notes |
+| ----------------------------- | ------------------------------------------------------------- | ----------- | ----- |
+| **updateSecretManagerParams** | [**UpdateSecretManagerParams**](UpdateSecretManagerParams.md) |             |
 
 ### Return type
 
@@ -6470,12 +5895,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## UpdateSessionTest
 
 > UpdateSessionTest(ctx).UpdateSessionTestRequest(updateSessionTestRequest).Execute()
-
-
 
 ### Example
 
@@ -6486,11 +5908,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateSessionTestRequest := *openapiclient.NewUpdateSessionTestRequest("Cid_example", "ProjectId_example") // UpdateSessionTestRequest | 
+    updateSessionTestRequest := *openapiclient.NewUpdateSessionTestRequest("Cid_example", "ProjectId_example") // UpdateSessionTestRequest |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6504,20 +5926,17 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiUpdateSessionTestRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **updateSessionTestRequest** | [**UpdateSessionTestRequest**](UpdateSessionTestRequest.md) |  | 
+| Name                         | Type                                                        | Description | Notes |
+| ---------------------------- | ----------------------------------------------------------- | ----------- | ----- |
+| **updateSessionTestRequest** | [**UpdateSessionTestRequest**](UpdateSessionTestRequest.md) |             |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -6532,12 +5951,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## UpdateTeamPublicName
 
 > UpdateTeamPublicName(ctx).UpdateTeamPublicNameRequest(updateTeamPublicNameRequest).Execute()
-
-
 
 ### Example
 
@@ -6548,11 +5964,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateTeamPublicNameRequest := *openapiclient.NewUpdateTeamPublicNameRequest("Cid_example", "PublicName_example") // UpdateTeamPublicNameRequest | 
+    updateTeamPublicNameRequest := *openapiclient.NewUpdateTeamPublicNameRequest("Cid_example", "PublicName_example") // UpdateTeamPublicNameRequest |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6566,20 +5982,17 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiUpdateTeamPublicNameRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **updateTeamPublicNameRequest** | [**UpdateTeamPublicNameRequest**](UpdateTeamPublicNameRequest.md) |  | 
+| Name                            | Type                                                              | Description | Notes |
+| ------------------------------- | ----------------------------------------------------------------- | ----------- | ----- |
+| **updateTeamPublicNameRequest** | [**UpdateTeamPublicNameRequest**](UpdateTeamPublicNameRequest.md) |             |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -6594,12 +6007,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## UpdateUserName
 
 > UserData UpdateUserName(ctx).UpdateUserNameRequest(updateUserNameRequest).Execute()
-
-
 
 ### Example
 
@@ -6610,11 +6020,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateUserNameRequest := *openapiclient.NewUpdateUserNameRequest("UserName_example") // UpdateUserNameRequest | 
+    updateUserNameRequest := *openapiclient.NewUpdateUserNameRequest("UserName_example") // UpdateUserNameRequest |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6630,16 +6040,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiUpdateUserNameRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **updateUserNameRequest** | [**UpdateUserNameRequest**](UpdateUserNameRequest.md) |  | 
+| Name                      | Type                                                  | Description | Notes |
+| ------------------------- | ----------------------------------------------------- | ----------- | ----- |
+| **updateUserNameRequest** | [**UpdateUserNameRequest**](UpdateUserNameRequest.md) |             |
 
 ### Return type
 
@@ -6658,12 +6065,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## UpdateUserRole
 
 > SlimUserData UpdateUserRole(ctx).UpdateUserRoleRequest(updateUserRoleRequest).Execute()
-
-
 
 ### Example
 
@@ -6674,11 +6078,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateUserRoleRequest := *openapiclient.NewUpdateUserRoleRequest("UserId_example", "Role_example") // UpdateUserRoleRequest | 
+    updateUserRoleRequest := *openapiclient.NewUpdateUserRoleRequest("UserId_example", "Role_example") // UpdateUserRoleRequest |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6694,16 +6098,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiUpdateUserRoleRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **updateUserRoleRequest** | [**UpdateUserRoleRequest**](UpdateUserRoleRequest.md) |  | 
+| Name                      | Type                                                  | Description | Notes |
+| ------------------------- | ----------------------------------------------------- | ----------- | ----- |
+| **updateUserRoleRequest** | [**UpdateUserRoleRequest**](UpdateUserRoleRequest.md) |             |
 
 ### Return type
 
@@ -6722,12 +6123,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## UpdateUserStatus
 
 > SlimUserData UpdateUserStatus(ctx).UpdateUserStatusRequest(updateUserStatusRequest).Execute()
-
-
 
 ### Example
 
@@ -6738,11 +6136,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateUserStatusRequest := *openapiclient.NewUpdateUserStatusRequest("UserId_example", false) // UpdateUserStatusRequest | 
+    updateUserStatusRequest := *openapiclient.NewUpdateUserStatusRequest("UserId_example", false) // UpdateUserStatusRequest |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6758,16 +6156,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiUpdateUserStatusRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **updateUserStatusRequest** | [**UpdateUserStatusRequest**](UpdateUserStatusRequest.md) |  | 
+| Name                        | Type                                                      | Description | Notes |
+| --------------------------- | --------------------------------------------------------- | ----------- | ----- |
+| **updateUserStatusRequest** | [**UpdateUserStatusRequest**](UpdateUserStatusRequest.md) |             |
 
 ### Return type
 
@@ -6786,12 +6181,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## UpdateUserTeam
 
 > SlimUserData UpdateUserTeam(ctx).UpdateUserTeamRequest(updateUserTeamRequest).Execute()
-
-
 
 ### Example
 
@@ -6802,11 +6194,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateUserTeamRequest := *openapiclient.NewUpdateUserTeamRequest("UserId_example", "TeamId_example") // UpdateUserTeamRequest | 
+    updateUserTeamRequest := *openapiclient.NewUpdateUserTeamRequest("UserId_example", "TeamId_example") // UpdateUserTeamRequest |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6822,16 +6214,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiUpdateUserTeamRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **updateUserTeamRequest** | [**UpdateUserTeamRequest**](UpdateUserTeamRequest.md) |  | 
+| Name                      | Type                                                  | Description | Notes |
+| ------------------------- | ----------------------------------------------------- | ----------- | ----- |
+| **updateUserTeamRequest** | [**UpdateUserTeamRequest**](UpdateUserTeamRequest.md) |             |
 
 ### Return type
 
@@ -6850,12 +6239,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## UpdateVersion
 
 > UpdateVersionResponse UpdateVersion(ctx).UpdateVersionParams(updateVersionParams).Execute()
-
-
 
 ### Example
 
@@ -6866,11 +6252,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateVersionParams := *openapiclient.NewUpdateVersionParams("VersionId_example", "ProjectId_example", *openapiclient.NewModelGraph("Id_example", map[string]interface{}(123))) // UpdateVersionParams | 
+    updateVersionParams := *openapiclient.NewUpdateVersionParams("VersionId_example", "ProjectId_example", *openapiclient.NewModelGraph("Id_example", map[string]interface{}(123))) // UpdateVersionParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6886,16 +6272,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiUpdateVersionRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **updateVersionParams** | [**UpdateVersionParams**](UpdateVersionParams.md) |  | 
+| Name                    | Type                                              | Description | Notes |
+| ----------------------- | ------------------------------------------------- | ----------- | ----- |
+| **updateVersionParams** | [**UpdateVersionParams**](UpdateVersionParams.md) |             |
 
 ### Return type
 
@@ -6914,12 +6297,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## Upload
 
 > Upload(ctx, projectName).Description(description).Execute()
-
-
 
 ### Example
 
@@ -6930,11 +6310,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    projectName := "projectName_example" // string | 
+    projectName := "projectName_example" // string |
     description := "description_example" // string |  (optional) (default to "")
 
     configuration := openapiclient.NewConfiguration()
@@ -6949,25 +6329,23 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**projectName** | **string** |  | 
+| Name            | Type                | Description                                                                 | Notes |
+| --------------- | ------------------- | --------------------------------------------------------------------------- | ----- |
+| **ctx**         | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc. |
+| **projectName** | **string**          |                                                                             |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiUploadRequest struct via the builder pattern
 
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
- **description** | **string** |  | [default to &quot;&quot;]
+**description** | **string** | | [default to &quot;&quot;]
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -6982,12 +6360,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## ValidateGraph
 
 > ValidateGraphResponse ValidateGraph(ctx).ValidateGraphParams(validateGraphParams).Execute()
-
-
 
 ### Example
 
@@ -6998,11 +6373,11 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    validateGraphParams := *openapiclient.NewValidateGraphParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "DatasetVersionId_example", "VersionId_example", "ProjectId_example", "Digest_example") // ValidateGraphParams | 
+    validateGraphParams := *openapiclient.NewValidateGraphParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "DatasetVersionId_example", "VersionId_example", "ProjectId_example", "Digest_example") // ValidateGraphParams |
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -7018,16 +6393,13 @@ func main() {
 
 ### Path Parameters
 
-
-
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiValidateGraphRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **validateGraphParams** | [**ValidateGraphParams**](ValidateGraphParams.md) |  | 
+| Name                    | Type                                              | Description | Notes |
+| ----------------------- | ------------------------------------------------- | ----------- | ----- |
+| **validateGraphParams** | [**ValidateGraphParams**](ValidateGraphParams.md) |             |
 
 ### Return type
 
@@ -7046,12 +6418,9 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## Warmup
 
 > Warmup(ctx).Execute()
-
-
 
 ### Example
 
@@ -7062,7 +6431,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -7085,10 +6454,9 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiWarmupRequest struct via the builder pattern
 
-
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -7103,12 +6471,9 @@ Other parameters are passed through a pointer to a apiWarmupRequest struct via t
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## WhoAmI
 
 > UserData WhoAmI(ctx).Execute()
-
-
 
 ### Example
 
@@ -7119,7 +6484,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+    openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
@@ -7144,7 +6509,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiWhoAmIRequest struct via the builder pattern
 
-
 ### Return type
 
 [**UserData**](UserData.md)
@@ -7161,4 +6525,3 @@ Other parameters are passed through a pointer to a apiWhoAmIRequest struct via t
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
-

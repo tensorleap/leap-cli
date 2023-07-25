@@ -20,8 +20,8 @@ import (
 	"github.com/k3d-io/k3d/v5/pkg/runtimes"
 	dockerRuntime "github.com/k3d-io/k3d/v5/pkg/runtimes/docker"
 	k3d "github.com/k3d-io/k3d/v5/pkg/types"
-	"github.com/tensorleap/cli-go/pkg/docker"
-	"github.com/tensorleap/cli-go/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/docker"
+	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
 type Registry = k3d.Registry

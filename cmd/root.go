@@ -6,16 +6,16 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/tensorleap/cli-go/cmd/auth"
-	"github.com/tensorleap/cli-go/cmd/cli"
-	"github.com/tensorleap/cli-go/cmd/code"
-	"github.com/tensorleap/cli-go/cmd/models"
-	"github.com/tensorleap/cli-go/cmd/server"
-	. "github.com/tensorleap/cli-go/pkg/api"
-	authPkg "github.com/tensorleap/cli-go/pkg/auth"
-	"github.com/tensorleap/cli-go/pkg/config"
-	"github.com/tensorleap/cli-go/pkg/log"
-	"github.com/tensorleap/cli-go/pkg/version"
+	"github.com/tensorleap/leap-cli/cmd/auth"
+	"github.com/tensorleap/leap-cli/cmd/cli"
+	"github.com/tensorleap/leap-cli/cmd/code"
+	"github.com/tensorleap/leap-cli/cmd/models"
+	"github.com/tensorleap/leap-cli/cmd/server"
+	. "github.com/tensorleap/leap-cli/pkg/api"
+	authPkg "github.com/tensorleap/leap-cli/pkg/auth"
+	"github.com/tensorleap/leap-cli/pkg/config"
+	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/version"
 )
 
 var cfgFile string

@@ -3,7 +3,7 @@ package api
 import (
 	"context"
 
-	. "github.com/tensorleap/cli-go/pkg/tensorleapapi"
+	. "github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
 func CreateAuthenticatedContext(parentCtx context.Context, apiKey string, baseUrl string) context.Context {

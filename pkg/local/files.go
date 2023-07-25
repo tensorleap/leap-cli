@@ -8,7 +8,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/tensorleap/cli-go/pkg/api"
+	"github.com/tensorleap/leap-cli/pkg/api"
 )
 
 func DownloadAndExtractTarFile(url string, outputDir string) ([]string, error) {

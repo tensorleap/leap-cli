@@ -11,9 +11,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tensorleap/cli-go/pkg/k3d"
-	"github.com/tensorleap/cli-go/pkg/k8s"
-	"github.com/tensorleap/cli-go/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/k3d"
+	"github.com/tensorleap/leap-cli/pkg/k8s"
+	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
 const STANDALONE_DIR = "/var/lib/tensorleap/standalone"

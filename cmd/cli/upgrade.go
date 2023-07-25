@@ -8,11 +8,11 @@ import (
 	"os/exec"
 
 	"github.com/spf13/cobra"
-	"github.com/tensorleap/cli-go/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
 const (
-	INSTALL_SCRIPT_URL = "https://raw.githubusercontent.com/tensorleap/cli-go/master/install.sh"
+	INSTALL_SCRIPT_URL = "https://raw.githubusercontent.com/tensorleap/leap-cli/master/install.sh"
 )
 
 func NewUpgradeCliCmd() *cobra.Command {

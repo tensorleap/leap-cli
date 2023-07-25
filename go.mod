@@ -1,4 +1,4 @@
-module github.com/tensorleap/cli-go
+module github.com/tensorleap/leap-cli
 
 go 1.20
 
@@ -11,7 +11,7 @@ require (
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.15.0
 	github.com/stretchr/testify v1.8.4
-	github.com/tensorleap/cli-go/pkg/tensorleapapi v0.0.0-00010101000000-000000000000
+	github.com/tensorleap/leap-cli/pkg/tensorleapapi v0.0.0-00010101000000-000000000000
 	golang.org/x/sys v0.10.0
 	gopkg.in/yaml.v3 v3.0.1
 	helm.sh/helm/v3 v3.12.0
@@ -186,6 +186,6 @@ require (
 	sigs.k8s.io/yaml v1.3.0 // indirect
 )
 
-replace github.com/tensorleap/cli-go/pkg/tensorleapapi => ./pkg/tensorleapapi
+replace github.com/tensorleap/leap-cli/pkg/tensorleapapi => ./pkg/tensorleapapi
 
 replace oras.land/oras-go => oras.land/oras-go v1.2.3

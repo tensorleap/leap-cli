@@ -4,8 +4,8 @@ import (
 	"errors"
 
 	"github.com/spf13/cobra"
-	"github.com/tensorleap/cli-go/pkg/code"
-	"github.com/tensorleap/cli-go/pkg/tensorleapapi"
+	"github.com/tensorleap/leap-cli/pkg/code"
+	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
 func init() {
