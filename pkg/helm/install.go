@@ -3,7 +3,7 @@ package helm
 import (
 	"time"
 
-	"github.com/tensorleap/cli-go/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/log"
 	"helm.sh/helm/v3/pkg/action"
 )
 

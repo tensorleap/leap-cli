@@ -6,11 +6,11 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
-	"github.com/tensorleap/cli-go/pkg/auth"
-	"github.com/tensorleap/cli-go/pkg/k3d"
-	"github.com/tensorleap/cli-go/pkg/local"
-	"github.com/tensorleap/cli-go/pkg/log"
-	"github.com/tensorleap/cli-go/pkg/server"
+	"github.com/tensorleap/leap-cli/pkg/auth"
+	"github.com/tensorleap/leap-cli/pkg/k3d"
+	"github.com/tensorleap/leap-cli/pkg/local"
+	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/server"
 )
 
 func NewInstallCmd() *cobra.Command {

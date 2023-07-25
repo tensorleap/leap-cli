@@ -5,10 +5,10 @@ import (
 	"fmt"
 
 	"github.com/AlecAivazis/survey/v2"
-	. "github.com/tensorleap/cli-go/pkg/api"
-	"github.com/tensorleap/cli-go/pkg/local"
-	"github.com/tensorleap/cli-go/pkg/log"
-	"github.com/tensorleap/cli-go/pkg/tensorleapapi"
+	. "github.com/tensorleap/leap-cli/pkg/api"
+	"github.com/tensorleap/leap-cli/pkg/local"
+	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
 var ErrEmptyCodeIntegrationVersion = fmt.Errorf("CodeIntegration is empty")

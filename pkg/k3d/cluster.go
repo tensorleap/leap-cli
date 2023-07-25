@@ -15,7 +15,7 @@ import (
 	"github.com/k3d-io/k3d/v5/pkg/runtimes"
 	k3d "github.com/k3d-io/k3d/v5/pkg/types"
 	"github.com/k3d-io/k3d/v5/version"
-	"github.com/tensorleap/cli-go/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
 type Cluster = k3d.Cluster

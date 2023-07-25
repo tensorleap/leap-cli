@@ -13,7 +13,7 @@ import (
 	"context"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	openapiclient "github.com/tensorleap/leap-cli/pkg/tensorleapapi/tensorleapapi"
 	"testing"
 )
 

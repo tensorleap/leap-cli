@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/tensorleap/cli-go/cmd"
+	"github.com/tensorleap/leap-cli/cmd"
 )
 
 func main() {

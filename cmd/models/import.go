@@ -7,9 +7,9 @@ import (
 
 	"github.com/spf13/cobra"
 
-	. "github.com/tensorleap/cli-go/pkg/api"
-	"github.com/tensorleap/cli-go/pkg/auth"
-	"github.com/tensorleap/cli-go/pkg/tensorleapapi"
+	. "github.com/tensorleap/leap-cli/pkg/api"
+	"github.com/tensorleap/leap-cli/pkg/auth"
+	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
 func init() {

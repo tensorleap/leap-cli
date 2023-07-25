@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/spf13/cobra/doc"
-	"github.com/tensorleap/cli-go/cmd"
-	"github.com/tensorleap/cli-go/pkg/log"
+	"github.com/tensorleap/leap-cli/cmd"
+	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
 func main() {

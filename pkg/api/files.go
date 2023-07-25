@@ -5,7 +5,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/tensorleap/cli-go/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
 func DownloadFile(url string, file io.Writer) error {

@@ -5,8 +5,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/tensorleap/cli-go/pkg/helm"
-	"github.com/tensorleap/cli-go/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/helm"
+	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
 func InitDataVolumeDir(dataVolume string) error {
