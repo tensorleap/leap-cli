@@ -24,8 +24,8 @@ var apiUrl string
 var showVersionInfo bool
 
 var RootCommand = &cobra.Command{
-	Use:   "tensorleap",
-	Short: "Tensorleap - Deepbug your models!",
+	Use:   "leap",
+	Short: "Leap - Deepbug your models!",
 	Long: `A debugger and analyzer for your DNNs.
 Complete documentation is available at https://docs.tensorleap.ai`,
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
