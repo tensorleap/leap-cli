@@ -17,6 +17,7 @@ const configFileName = ".tensorleap.yaml"
 
 type DatasetConfig struct {
 	DatasetId       string   `yaml:"datasetId"`
+	SecretManagerId string   `yaml:"secretManagerId"`
 	EntryFile       string   `yaml:"entryFile"`
 	IncludePatterns []string `yaml:"include"`
 }
