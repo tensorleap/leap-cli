@@ -16,7 +16,8 @@ import (
 )
 
 func init() {
-	RootCommand.AddCommand(&cobra.Command{
+	var secretId string
+	cmd := &cobra.Command{
 		Use:   "push",
 		Short: "Push dataset script",
 		Long:  `Push dataset script`,
@@ -62,14 +63,21 @@ func init() {
 			if err := addDatasetIfNotExisted(ctx, datasetConfig); err != nil {
 				return err
 			}
+			saveDatasetVersionParams := *tensorleapapi.NewSaveDatasetVersionParams(
+				datasetConfig.DatasetId,
+				uploadUrl,
+				datasetConfig.EntryFile,
+			)
+
+			if len(secretId) > 0 {
+				saveDatasetVersionParams.SecretManagerId = &secretId
+			} else if len(datasetConfig.SecretManagerId) > 0 {
+				saveDatasetVersionParams.SecretManagerId = &datasetConfig.SecretManagerId
+			}
 
 			log.Info("Creating new dataset version...")
 			if _, _, err = ApiClient.SaveDatasetVersion(ctx).
-				SaveDatasetVersionParams(*tensorleapapi.NewSaveDatasetVersionParams(
-					datasetConfig.DatasetId,
-					uploadUrl,
-					datasetConfig.EntryFile,
-				)).
+				SaveDatasetVersionParams(saveDatasetVersionParams).
 				Execute(); err != nil {
 				return err
 			}
@@ -77,7 +85,11 @@ func init() {
 			log.Info("Done!")
 			return nil
 		},
-	})
+	}
+
+	cmd.Flags().StringVar(&secretId, "secretManagerId", "", "Secret manager id")
+	RootCommand.AddCommand(cmd)
+
 }
 
 func getDatasetFiles(datasetConfig *code.DatasetConfig) ([]string, error) {
