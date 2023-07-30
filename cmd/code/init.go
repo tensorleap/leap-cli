@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/code"
-	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
+	"github.com/tensorleap/leap-cli/pkg/entity"
 )
 
 func init() {
@@ -18,20 +18,28 @@ func init() {
 		Long:  `Create a .tensorleap.yaml file in the current directory`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			if len(codeIntegrationId) == 0 && len(newCodeIntegrationName) == 0 {
-				return errors.New("Error: flag(s) \"codeId\" or \"new\" must be set")
+				return errors.New("error: flag(s) \"codeId\" or \"new\" must be set")
 			}
 			return nil
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			var codeIntegration *tensorleapapi.Dataset = nil
-			var err error = nil
+			ctx := cmd.Context()
+			var codeIntegration *code.CodeIntegration = nil
+			var err error
 			if len(newCodeIntegrationName) > 0 {
-				codeIntegration, err = code.CreateNewCodeIntegration(cmd.Context(), newCodeIntegrationName)
+				codeIntegration, err = code.AddCodeIntegration(ctx, newCodeIntegrationName)
+				if err != nil {
+					return err
+				}
 			} else if len(codeIntegrationId) > 0 {
-				codeIntegration, err = code.GetCodeIntegrationById(cmd.Context(), codeIntegrationId)
-			}
-			if err != nil {
-				return err
+				codeIntegrations, err := code.GetCodeIntegrations(ctx)
+				if err != nil {
+					return err
+				}
+				codeIntegration, err = entity.GetEntityById(codeIntegrationId, codeIntegrations, code.CodeIntegrationEntityDesc)
+				if err != nil {
+					return err
+				}
 			}
 			return code.CreateCodeTemplate(codeIntegration.GetCid(), "")
 		},
