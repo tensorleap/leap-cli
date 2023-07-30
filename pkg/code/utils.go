@@ -3,90 +3,68 @@ package code
 import (
 	"context"
 	"fmt"
+	"io/fs"
+	"os"
 
 	"github.com/AlecAivazis/survey/v2"
-	. "github.com/tensorleap/leap-cli/pkg/api"
+	"github.com/tensorleap/leap-cli/pkg/api"
+	"github.com/tensorleap/leap-cli/pkg/entity"
 	"github.com/tensorleap/leap-cli/pkg/local"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
+	"github.com/tensorleap/leap-cli/pkg/workspace"
 )
 
 var ErrEmptyCodeIntegrationVersion = fmt.Errorf("CodeIntegration is empty")
 
-func AskForCodeIntegrationName() (name string, err error) {
+func CreateCodeIntegration(ctx context.Context, codeIntegrations []CodeIntegration) (*CodeIntegration, error) {
+
+	name, err := AskForCodeIntegrationName(codeIntegrations)
+	if err != nil {
+		return nil, err
+	}
+	return AddCodeIntegration(ctx, name)
+}
+
+func GetCodeIntegrationFromFlag(ctx context.Context, codeIntegrationIdFlag string, askForNewProjectFirst bool) (*CodeIntegration, error) {
+	codeIntegrations, err := GetCodeIntegrations(ctx)
+	if err != nil {
+		return nil, err
+	}
+	var selected *CodeIntegration
+	if len(codeIntegrationIdFlag) > 0 {
+		selected, err = entity.GetEntityById(codeIntegrationIdFlag, codeIntegrations, CodeIntegrationEntityDesc)
+	} else {
+		selected, err = SelectOrCreateCodeIntegration(ctx, codeIntegrations, askForNewProjectFirst)
+	}
+	if err != nil {
+		return nil, err
+	}
+	return selected, nil
+}
+
+func SelectOrCreateCodeIntegration(ctx context.Context, codeIntegrations []CodeIntegration, askIsCreateNewFirst bool) (*tensorleapapi.Dataset, error) {
+	createCodeIntegration := func() (*CodeIntegration, error) {
+		return CreateCodeIntegration(ctx, codeIntegrations)
+	}
+	return entity.SelectEntityOrCreateOne(codeIntegrations, createCodeIntegration, askIsCreateNewFirst, CodeIntegrationEntityDesc)
+}
+
+func AskForCodeIntegrationName(codeIntegrations []CodeIntegration) (name string, err error) {
+
+	existingNames := []string{}
+	for _, project := range codeIntegrations {
+		existingNames = append(existingNames, project.GetName())
+	}
+
 	prompt := &survey.Input{
 		Message: "Enter dataset name",
 	}
-	err = survey.AskOne(prompt, &name)
+
+	validate := entity.CreateUniqueNameValidator(existingNames)
+
+	err = survey.AskOne(prompt, &name, survey.WithValidator(validate))
 	return
-}
-
-func AskForCodeIntegration(ctx context.Context) (*tensorleapapi.Dataset, error) {
-	data, _, err := ApiClient.GetDatasets(ctx).Execute()
-	if err != nil {
-		return nil, err
-	}
-	if len(data.Datasets) == 0 {
-		return nil, fmt.Errorf("No code integration found, please create dataset")
-	}
-	index := -1
-	options := []string{}
-	for _, dataset := range data.Datasets {
-		options = append(options, fmt.Sprintf("%s (%s)", dataset.GetName(), dataset.GetCid()))
-	}
-	prompt := &survey.Select{
-		Message: "Choose code integration:",
-		Options: options,
-	}
-	err = survey.AskOne(prompt, &index)
-	if err != nil || index == -1 {
-		return nil, fmt.Errorf("No code integration selected")
-	}
-	return &data.Datasets[index], nil
-}
-
-func CreateNewCodeIntegration(ctx context.Context, name string) (*tensorleapapi.Dataset, error) {
-	log.Println("Creating dataset:", name)
-	dataset, _, err := ApiClient.AddDataset(ctx).
-		NewDatasetParams(*tensorleapapi.NewNewDatasetParams(*tensorleapapi.NewNullableString(&name))).
-		Execute()
-
-	if err != nil {
-		return nil, fmt.Errorf("Failed to create a new code integration: %v", err)
-	}
-	return &dataset.Dataset, nil
-}
-
-func GetCodeIntegrationById(ctx context.Context, datasetId string) (*tensorleapapi.Dataset, error) {
-	data, _, err := ApiClient.GetDatasets(ctx).Execute()
-	if err != nil {
-		return nil, err
-	}
-	var selectedDataset *tensorleapapi.Dataset = nil
-	for _, dataset := range data.Datasets {
-		if dataset.GetCid() == datasetId {
-			fmt.Println("Found dataset:", dataset.GetName())
-			selectedDataset = &dataset
-			break
-		}
-	}
-	if selectedDataset == nil {
-		return nil, fmt.Errorf("Didn't find dataset with id: %v", datasetId)
-	}
-	return selectedDataset, nil
-}
-
-func GetLatestVersion(ctx context.Context, codeIntegrationId string) (*tensorleapapi.DatasetVersion, error) {
-	version, _, err := ApiClient.GetLatestDatasetVersion(ctx).
-		GetLatestDatasetVersionParams(*tensorleapapi.NewGetLatestDatasetVersionParams(codeIntegrationId)).
-		Execute()
-	if err != nil {
-		return nil, fmt.Errorf("failed to get latest version for code integration id: %s", codeIntegrationId)
-	}
-	if isDatasetVersionEmpty(version.LatestVersion) {
-		return version.LatestVersion, ErrEmptyCodeIntegrationVersion
-	}
-	return version.LatestVersion, nil
 }
 
 func isDatasetVersionEmpty(datasetVersion *tensorleapapi.DatasetVersion) bool {
@@ -98,7 +76,7 @@ func CloneCodeIntegrationVersion(ctx context.Context, codeIntegrationVersion *te
 		return []string{}, ErrEmptyCodeIntegrationVersion
 	}
 	blobPath := codeIntegrationVersion.GetBlobPath()
-	res, _, err := ApiClient.GetDownloadSignedUrl(ctx).
+	res, _, err := api.ApiClient.GetDownloadSignedUrl(ctx).
 		GetDownloadSignedUrlParams(*tensorleapapi.NewGetDownloadSignedUrlParams(blobPath)).
 		Execute()
 	if err != nil {
@@ -110,4 +88,66 @@ func CloneCodeIntegrationVersion(ctx context.Context, codeIntegrationVersion *te
 		return nil, err
 	}
 	return files, nil
+}
+
+func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.WorkspaceConfig) (close func(), tarGzFile *os.File, err error) {
+	filePaths, err := getDatasetFiles(filesDir, workspaceConfig)
+	if err != nil {
+		return
+	}
+
+	tarGzFile, err = os.CreateTemp("", "tensorleap-*.tar.gz")
+	if err != nil {
+		return
+	}
+	close = func() { local.CleanupTempFile(tarGzFile) }
+
+	if err = local.CreateTarGzFile(filesDir, filePaths, tarGzFile); err != nil {
+		close()
+		return
+	}
+	_, err = tarGzFile.Seek(0, 0)
+
+	return
+}
+
+func getDatasetFiles(filesDir string, workspaceConfig *workspace.WorkspaceConfig) ([]string, error) {
+	currentDirFs := os.DirFS(filesDir)
+	var allMatchedFiles []string
+	for _, pattern := range workspaceConfig.IncludePatterns {
+		matches, err := fs.Glob(currentDirFs, pattern)
+		if err != nil {
+			return nil, err
+		}
+		allMatchedFiles = append(allMatchedFiles, matches...)
+	}
+	return allMatchedFiles, nil
+}
+
+func GetAndUpdateCodeIntegrationIfNotExists(ctx context.Context, workspaceConfig *workspace.WorkspaceConfig) (*CodeIntegration, error) {
+	codeIntegrations, err := GetCodeIntegrations(ctx)
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to get code integration: %v", err)
+	}
+	for _, codeIntegration := range codeIntegrations {
+		if codeIntegration.Cid == workspaceConfig.CodeIntegrationId {
+			return &codeIntegration, nil
+		}
+	}
+
+	log.Infof("Not found code integration id: %s. Select or create new code integration", workspaceConfig.CodeIntegrationId)
+
+	codeIntegration, err := SelectOrCreateCodeIntegration(ctx, codeIntegrations, true)
+	if err != nil {
+		return nil, err
+	}
+
+	workspaceConfig.CodeIntegrationId = codeIntegration.GetCid()
+	log.Info("Updating codeIntegrationId")
+	err = workspace.SetWorkspaceConfig(workspaceConfig, "")
+	if err != nil {
+		return nil, err
+	}
+	return codeIntegration, nil
 }

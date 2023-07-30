@@ -10,7 +10,7 @@ import (
 	. "github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/code"
-	. "github.com/tensorleap/leap-cli/pkg/local"
+	"github.com/tensorleap/leap-cli/pkg/local"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
@@ -40,9 +40,9 @@ func init() {
 			if err != nil {
 				return err
 			}
-			defer CleanupTempFile(tarGzFile)
+			defer local.CleanupTempFile(tarGzFile)
 
-			if err := CreateTarGzFile(filePaths, tarGzFile); err != nil {
+			if err := local.CreateTarGzFile(filePaths, tarGzFile); err != nil {
 				return err
 			}
 
@@ -108,7 +108,7 @@ func getDatasetFiles(datasetConfig *code.DatasetConfig) ([]string, error) {
 func addDatasetIfNotExisted(ctx context.Context, datasetConfig *code.DatasetConfig) error {
 	data, _, err := ApiClient.GetDatasets(ctx).Execute()
 	if err != nil {
-		return fmt.Errorf("Failed to get code integration: %v", err)
+		return fmt.Errorf("failed to get code integration: %v", err)
 	}
 	isDatasetExisted := false
 	for _, dataset := range data.Datasets {
@@ -120,12 +120,15 @@ func addDatasetIfNotExisted(ctx context.Context, datasetConfig *code.DatasetConf
 
 	if !isDatasetExisted {
 		log.Infof("Not found dataset id: %s. Creating new dataset", datasetConfig.DatasetId)
-
-		name, err := code.AskForCodeIntegrationName()
+		codeIntegrations, err := code.GetCodeIntegrations(ctx)
 		if err != nil {
 			return err
 		}
-		dataset, err := code.CreateNewCodeIntegration(ctx, name)
+		name, err := code.AskForCodeIntegrationName(codeIntegrations)
+		if err != nil {
+			return err
+		}
+		dataset, err := code.AddCodeIntegration(ctx, name)
 		if err != nil {
 			return err
 		}
@@ -134,7 +137,7 @@ func addDatasetIfNotExisted(ctx context.Context, datasetConfig *code.DatasetConf
 
 		err = code.SetCodeIntegrationConfig(datasetConfig, "")
 		if err != nil {
-			return fmt.Errorf("Failed to update tensorleap config: %v", err)
+			return fmt.Errorf("failed to update tensorleap config: %v", err)
 		}
 	}
 	return nil

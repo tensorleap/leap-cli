@@ -6,8 +6,8 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/code"
+	"github.com/tensorleap/leap-cli/pkg/entity"
 	"github.com/tensorleap/leap-cli/pkg/log"
-	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
 func NewPullCmd() *cobra.Command {
@@ -16,14 +16,19 @@ func NewPullCmd() *cobra.Command {
 		Short: "Pull dataset into a new directory",
 		Long:  `Pull dataset into a new directory`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			var selectedDataset *tensorleapapi.Dataset
+			var selectedDataset *code.CodeIntegration
 			var err error
 			ctx := cmd.Context()
+			codeIntegrations, err := code.GetCodeIntegrations(ctx)
+			if err != nil {
+				return err
+			}
 			if len(args) == 0 {
-				selectedDataset, err = code.AskForCodeIntegration(ctx)
+				selectedDataset, err = entity.SelectEntity(codeIntegrations, code.CodeIntegrationEntityDesc)
+
 			} else {
 				datasetId := args[0]
-				selectedDataset, err = code.GetCodeIntegrationById(ctx, datasetId)
+				selectedDataset, err = entity.GetEntityById(datasetId, codeIntegrations, code.CodeIntegrationEntityDesc)
 			}
 			if err != nil {
 				return err
@@ -34,7 +39,7 @@ func NewPullCmd() *cobra.Command {
 			datasetName := selectedDataset.GetName()
 			_, dirExistsErr := os.Stat(datasetName)
 			if dirExistsErr == nil {
-				return fmt.Errorf("Can't pull '%s' dataset, directory named '%s' already exists on current directory", datasetName, datasetName)
+				return fmt.Errorf("can't pull '%s' dataset, directory named '%s' already exists on current directory", datasetName, datasetName)
 			}
 			latestVersion, err := code.GetLatestVersion(ctx, selectedDataset.GetCid())
 			if err == nil {

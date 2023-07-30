@@ -21,12 +21,16 @@ func NewCreateCmd() *cobra.Command {
 			if len(args) > 0 {
 				newCodeIntegrationName = args[0]
 			} else {
-				newCodeIntegrationName, err = code.AskForCodeIntegrationName()
+				codeIntegrations, err := code.GetCodeIntegrations(ctx)
+				if err != nil {
+					return err
+				}
+				newCodeIntegrationName, err = code.AskForCodeIntegrationName(codeIntegrations)
 				if err != nil {
 					return err
 				}
 			}
-			codeIntegration, err := code.CreateNewCodeIntegration(ctx, newCodeIntegrationName)
+			codeIntegration, err := code.AddCodeIntegration(ctx, newCodeIntegrationName)
 			if err != nil {
 				return err
 			}
