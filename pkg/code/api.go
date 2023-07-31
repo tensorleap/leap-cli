@@ -3,6 +3,7 @@ package code
 import (
 	"context"
 	"fmt"
+	"io"
 
 	. "github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/entity"
@@ -60,6 +61,17 @@ func AddCodeIntegration(ctx context.Context, name string) (*CodeIntegration, err
 	return codeIntegration, nil
 }
 
+func DeleteCodeIntegration(ctx context.Context, codeIntegration *CodeIntegration) error {
+	_, _, err := ApiClient.TrashDataset(ctx).
+		TrashDatasetParams(*tensorleapapi.NewTrashDatasetParams(codeIntegration.GetCid())).
+		Execute()
+	if err != nil {
+		return err
+	}
+	entity.InfoDeletion(codeIntegration, CodeIntegrationEntityDesc)
+	return nil
+}
+
 func GetLatestVersion(ctx context.Context, codeIntegrationId string) (*tensorleapapi.DatasetVersion, error) {
 	version, _, err := ApiClient.GetLatestDatasetVersion(ctx).
 		GetLatestDatasetVersionParams(*tensorleapapi.NewGetLatestDatasetVersionParams(codeIntegrationId)).
@@ -71,4 +83,39 @@ func GetLatestVersion(ctx context.Context, codeIntegrationId string) (*tensorlea
 		return version.LatestVersion, ErrEmptyCodeIntegrationVersion
 	}
 	return version.LatestVersion, nil
+}
+
+func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, codeIntegration *CodeIntegration, entryFile string, secretId string) (*CodeIntegrationVersion, error) {
+
+	data, _, err := ApiClient.GetDatasetVersionUploadUrl(ctx).Execute()
+	if err != nil {
+		return nil, err
+	}
+
+	uploadUrl := data.GetUrl()
+	if err := UploadFile(uploadUrl, tarGzFile); err != nil {
+		return nil, err
+	}
+
+	saveDatasetVersionParams := *tensorleapapi.NewSaveDatasetVersionParams(
+		codeIntegration.GetCid(),
+		uploadUrl,
+		entryFile,
+	)
+
+	if len(secretId) > 0 {
+		saveDatasetVersionParams.SecretManagerId = &secretId
+	}
+
+	log.Info("Creating new dataset version...")
+	res, _, err := ApiClient.SaveDatasetVersion(ctx).
+		SaveDatasetVersionParams(saveDatasetVersionParams).
+		Execute()
+	if err != nil {
+		return nil, err
+	}
+
+	log.Info("Done!")
+	return res.Dataset.LatestVersion, nil
+
 }

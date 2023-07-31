@@ -6,6 +6,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/entity"
+	"github.com/tensorleap/leap-cli/pkg/workspace"
 )
 
 func init() {
@@ -14,8 +15,8 @@ func init() {
 
 	var cmd = &cobra.Command{
 		Use:   "init",
-		Short: "Create a .tensorleap.yaml file in the current directory",
-		Long:  `Create a .tensorleap.yaml file in the current directory`,
+		Short: "Create initial code integration files in the current directory",
+		Long:  `Create initial code integration files in the current directory`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			if len(codeIntegrationId) == 0 && len(newCodeIntegrationName) == 0 {
 				return errors.New("error: flag(s) \"codeId\" or \"new\" must be set")
@@ -41,7 +42,7 @@ func init() {
 					return err
 				}
 			}
-			return code.CreateCodeTemplate(codeIntegration.GetCid(), "")
+			return workspace.CreateCodeTemplate(codeIntegration.GetCid(), "", "")
 		},
 	}
 
