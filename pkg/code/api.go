@@ -11,6 +11,7 @@ import (
 )
 
 type CodeIntegration = tensorleapapi.Dataset
+type CodeIntegrationVersion = tensorleapapi.DatasetVersion
 
 var CodeIntegrationEntityDesc = entity.NewEntityDescriptor[CodeIntegration](
 	"code integration",
@@ -19,12 +20,30 @@ var CodeIntegrationEntityDesc = entity.NewEntityDescriptor[CodeIntegration](
 	func(p *CodeIntegration) string { return p.GetCid() },
 )
 
+var CodeIntegrationVersionEntityDesc = entity.NewEntityDescriptor[CodeIntegrationVersion](
+	"code integration version",
+	"code integration versions",
+	func(p *CodeIntegrationVersion) string { return p.GetNote() },
+	func(p *CodeIntegrationVersion) string { return p.GetCid() },
+)
+
 func GetCodeIntegrations(ctx context.Context) ([]CodeIntegration, error) {
 	data, _, err := ApiClient.GetDatasets(ctx).Execute()
 	if err != nil {
 		return nil, err
 	}
 	return data.Datasets, nil
+}
+
+func GetCodeIntegrationVersions(ctx context.Context, codeIntegrationId string) ([]CodeIntegrationVersion, error) {
+	params := *tensorleapapi.NewGetDatasetVersionsParams(codeIntegrationId)
+	data, _, err := ApiClient.GetDatasetVersions(ctx).
+		GetDatasetVersionsParams(params).
+		Execute()
+	if err != nil {
+		return nil, err
+	}
+	return data.DatasetVersions, nil
 }
 
 func AddCodeIntegration(ctx context.Context, name string) (*CodeIntegration, error) {

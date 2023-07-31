@@ -1,11 +1,10 @@
 package code
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
-	. "github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/auth"
+	"github.com/tensorleap/leap-cli/pkg/code"
+	"github.com/tensorleap/leap-cli/pkg/entity"
 )
 
 func init() {
@@ -17,13 +16,11 @@ func init() {
 			if err := auth.CheckLoggedIn(); err != nil {
 				return err
 			}
-			data, _, err := ApiClient.GetDatasets(cmd.Context()).Execute()
+			codeIntegrations, err := code.GetCodeIntegrations(cmd.Context())
 			if err != nil {
 				return err
 			}
-			for _, dataset := range data.Datasets {
-				fmt.Println(dataset.GetCid(), "-", dataset.GetName())
-			}
+			entity.PrintList(codeIntegrations, code.CodeIntegrationEntityDesc)
 
 			return nil
 		},
