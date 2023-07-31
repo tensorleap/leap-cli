@@ -69,3 +69,14 @@ func SelectEntityOrCreateOne[TEntity any](
 	}
 	return SelectEntity(entities, desc)
 }
+
+func AskForName[TEntity any](existingNames []string, desc *EntityDescriptor[TEntity]) (name string, err error) {
+	prompt := &survey.Input{
+		Message: fmt.Sprintf("Enter %s name", desc.Name),
+	}
+
+	validate := CreateUniqueNameValidator(existingNames)
+
+	err = survey.AskOne(prompt, &name, survey.WithValidator(validate))
+	return
+}

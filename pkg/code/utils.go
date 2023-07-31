@@ -6,7 +6,6 @@ import (
 	"io/fs"
 	"os"
 
-	"github.com/AlecAivazis/survey/v2"
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/entity"
 	"github.com/tensorleap/leap-cli/pkg/local"
@@ -52,18 +51,9 @@ func SelectOrCreateCodeIntegration(ctx context.Context, codeIntegrations []CodeI
 
 func AskForCodeIntegrationName(codeIntegrations []CodeIntegration) (name string, err error) {
 
-	existingNames := []string{}
-	for _, project := range codeIntegrations {
-		existingNames = append(existingNames, project.GetName())
-	}
+	existingNames := entity.GetNames(codeIntegrations, CodeIntegrationEntityDesc)
 
-	prompt := &survey.Input{
-		Message: "Enter code integration name",
-	}
-
-	validate := entity.CreateUniqueNameValidator(existingNames)
-
-	err = survey.AskOne(prompt, &name, survey.WithValidator(validate))
+	name, err = entity.AskForName(existingNames, CodeIntegrationEntityDesc)
 	return
 }
 

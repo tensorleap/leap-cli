@@ -33,10 +33,8 @@ func SelectOrCreateProject(ctx context.Context, projects []ProjectEntity, askFor
 }
 
 func AskAndAddProject(ctx context.Context, projectDetails *AddProjectDetails, projects []ProjectEntity) (*ProjectEntity, error) {
-	existingNames := []string{}
-	for _, project := range projects {
-		existingNames = append(existingNames, project.GetName())
-	}
+
+	existingNames := entity.GetNames(projects, ProjectEntityDesc)
 	err := AskForNewProject(projectDetails, existingNames)
 	if err != nil {
 		return nil, err
