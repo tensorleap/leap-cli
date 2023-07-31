@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path"
 	"path/filepath"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
@@ -98,14 +99,15 @@ func readNextTarFile(tarReader *tar.Reader, outputDir string) (fileName string, 
 	return
 }
 
-func CreateTarGzFile(filePaths []string, file io.Writer) error {
+func CreateTarGzFile(filesDir string, filePaths []string, file io.Writer) error {
 	fmt.Println("Packing files...")
 	gzip := gzip.NewWriter(file)
 	defer gzip.Close()
 	tarWriter := tar.NewWriter(gzip)
 	defer tarWriter.Close()
 
-	for _, filePath := range filePaths {
+	for _, relativePath := range filePaths {
+		filePath := path.Join(filesDir, relativePath)
 		fileInfo, err := os.Stat(filePath)
 		if err != nil {
 			return err
