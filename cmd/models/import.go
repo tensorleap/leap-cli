@@ -12,8 +12,7 @@ import (
 
 func NewImportCmd() *cobra.Command {
 	var projectId string
-	var modelName string
-	var versionName string
+	var message string
 	var modelType string
 	var branchName string
 	var codeIntegrationId string
@@ -49,6 +48,9 @@ func NewImportCmd() *cobra.Command {
 				projectId = selected.GetCid()
 			}
 
+			versionName := message
+			modelName := message
+
 			err := model.ImportModel(ctx, modelPath, projectId, modelName, versionName, modelType, branchName, codeIntegrationId)
 			if err != nil {
 				return err
@@ -59,11 +61,7 @@ func NewImportCmd() *cobra.Command {
 
 	cmd.Flags().StringVar(&projectId, "projectId", "", "ProjectId is the id of the project the model will be imported to")
 
-	cmd.Flags().StringVar(&modelName, "name", "", "Name of the model that will be created")
-	_ = cmd.MarkFlagRequired("name")
-
-	cmd.Flags().StringVar(&versionName, "version", "", "Version is the name of the version that will be created for the model")
-	_ = cmd.MarkFlagRequired("version")
+	cmd.Flags().StringVarP(&message, "message", "m", "import from cli", "Version message")
 
 	cmd.Flags().StringVar(&modelType, "type", "", "Type is the type of the model file [JSON_TF2 / ONNX / PB_TF2 / H5_TF2]")
 
