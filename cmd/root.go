@@ -10,6 +10,7 @@ import (
 	"github.com/tensorleap/leap-cli/cmd/cli"
 	"github.com/tensorleap/leap-cli/cmd/code"
 	"github.com/tensorleap/leap-cli/cmd/models"
+	"github.com/tensorleap/leap-cli/cmd/projects"
 	"github.com/tensorleap/leap-cli/cmd/secrets"
 	"github.com/tensorleap/leap-cli/cmd/server"
 	. "github.com/tensorleap/leap-cli/pkg/api"
@@ -66,6 +67,7 @@ func init() {
 	RootCommand.AddCommand(secrets.RootCommand)
 	RootCommand.AddCommand(models.RootCommand)
 	RootCommand.AddCommand(cli.RootCommand)
+	RootCommand.AddCommand(projects.RootCommand)
 }
 
 func Execute() {
