@@ -2,70 +2,62 @@ package models
 
 import (
 	"fmt"
-	"os"
-	"path/filepath"
 
 	"github.com/spf13/cobra"
 
-	. "github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/auth"
-	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
+	"github.com/tensorleap/leap-cli/pkg/model"
+	"github.com/tensorleap/leap-cli/pkg/project"
 )
 
-func init() {
+func NewImportCmd() *cobra.Command {
 	var projectId string
 	var modelName string
 	var versionName string
 	var modelType string
 	var branchName string
-	var datasetId string
+	var codeIntegrationId string
 
 	var cmd = &cobra.Command{
-		Use:   "import [filePath]",
+		Use:   "import [modelPath]",
 		Short: "Import a model into tensorleap",
 		Long:  `Import a model into tensorleap`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			if len(args) == 0 {
+				return fmt.Errorf("missing model path argument")
+			}
+			return nil
+		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := auth.CheckLoggedIn(); err != nil {
 				return err
 			}
-			filePath := args[0]
-			fileName := filepath.Base(filePath)
-			tempSignedUploadUrlParams := *tensorleapapi.NewGetUploadSignedUrlParams(fileName)
-			signedUrlData, _, err := ApiClient.GetUploadSignedUrl(cmd.Context()).GetUploadSignedUrlParams(tempSignedUploadUrlParams).Execute()
+			modelPath := args[0]
+			ctx := cmd.Context()
+
+			model.SelectModelType(&modelType, modelPath)
+
+			if len(projectId) == 0 {
+				projects, err := project.GetProjects(ctx)
+				if err != nil {
+					return err
+				}
+				selected, err := project.SelectOrCreateProject(ctx, projects, true)
+				if err != nil {
+					return err
+				}
+				projectId = selected.GetCid()
+			}
+
+			err := model.ImportModel(ctx, modelPath, projectId, modelName, versionName, modelType, branchName, codeIntegrationId)
 			if err != nil {
 				return err
 			}
-			file, err := os.Open(filePath)
-			if err != nil {
-				return err
-			}
-			defer file.Close()
-
-			uploadUrl := signedUrlData.GetUrl()
-			if err := UploadFile(uploadUrl, file); err != nil {
-				return err
-			}
-
-			uploadFileName := signedUrlData.GetFileName()
-			importModelParams := *tensorleapapi.NewImportNewModelParams(projectId, uploadFileName, modelName, versionName, tensorleapapi.ImportModelType(modelType))
-			if len(branchName) > 0 {
-				importModelParams.BranchName = &branchName
-			}
-			if len(datasetId) > 0 {
-				importModelParams.DatasetId = &datasetId
-			}
-			importModelData, _, err := ApiClient.ImportModel(cmd.Context()).ImportNewModelParams(importModelParams).Execute()
-			if err != nil {
-				return err
-			}
-
-			fmt.Println("Starting import model job. JobId: ", importModelData.GetImportModelJobId())
 			return nil
 		},
 	}
 
 	cmd.Flags().StringVar(&projectId, "projectId", "", "ProjectId is the id of the project the model will be imported to")
-	_ = cmd.MarkFlagRequired("projectId")
 
 	cmd.Flags().StringVar(&modelName, "name", "", "Name of the model that will be created")
 	_ = cmd.MarkFlagRequired("name")
@@ -74,10 +66,12 @@ func init() {
 	_ = cmd.MarkFlagRequired("version")
 
 	cmd.Flags().StringVar(&modelType, "type", "", "Type is the type of the model file [JSON_TF2 / ONNX / PB_TF2 / H5_TF2]")
-	_ = cmd.MarkFlagRequired("type")
 
 	cmd.Flags().StringVar(&branchName, "branch", "", "Branch is the name of the branch [OPTIONAL]")
-	cmd.Flags().StringVar(&datasetId, "datasetId", "", "This is a datasetId (Will use the last valid dataset version)")
+	cmd.Flags().StringVar(&codeIntegrationId, "codeId", "", "This is a code integration id (Will use the last valid dataset version)")
+	return cmd
+}
 
-	RootCommand.AddCommand(cmd)
+func init() {
+	RootCommand.AddCommand(NewImportCmd())
 }
