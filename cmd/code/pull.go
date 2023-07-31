@@ -8,6 +8,7 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/entity"
 	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/workspace"
 )
 
 func NewPullCmd() *cobra.Command {
@@ -47,14 +48,14 @@ func NewPullCmd() *cobra.Command {
 				if err != nil {
 					return err
 				}
-				datasetConfig := code.NewDatasetConfig(selectedDataset.GetCid(), latestVersion.GetCodeEntryFile(), files)
-				err = code.SetCodeIntegrationConfig(datasetConfig, datasetName)
+				workspaceConfig := workspace.NewWorkspaceConfig(selectedDataset.GetCid(), "", latestVersion.GetCodeEntryFile(), files)
+				err = workspace.SetWorkspaceConfig(workspaceConfig, datasetName)
 				if err != nil {
 					return err
 				}
 			} else if err == code.ErrEmptyCodeIntegrationVersion {
 				log.Warn("The selected dataset is empty, Create default template")
-				err = code.CreateCodeTemplate(selectedDataset.GetCid(), datasetName)
+				err = workspace.CreateCodeTemplate(selectedDataset.GetCid(), "", datasetName)
 				if err != nil {
 					return err
 				}

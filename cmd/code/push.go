@@ -1,144 +1,53 @@
 package code
 
 import (
-	"context"
-	"fmt"
-	"io/fs"
-	"os"
-
 	"github.com/spf13/cobra"
-	. "github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/code"
-	"github.com/tensorleap/leap-cli/pkg/local"
-	"github.com/tensorleap/leap-cli/pkg/log"
-	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
+	"github.com/tensorleap/leap-cli/pkg/workspace"
 )
 
-func init() {
+func NewPushCmd() *cobra.Command {
 	var secretId string
 	cmd := &cobra.Command{
 		Use:   "push",
-		Short: "Push dataset script",
-		Long:  `Push dataset script`,
+		Short: "Push code integration",
+		Long:  `Push code integration`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			datasetConfig, err := code.GetCodeIntegrationConfig()
+			workspaceConfig, err := workspace.GetWorkspaceConfig()
 			if err != nil {
 				return err
 			}
 			if err := auth.CheckLoggedIn(); err != nil {
 				return err
 			}
+			close, tarGzFile, err := code.BundleCodeIntoTempFile(".", workspaceConfig)
+			if err != nil {
+				return err
+			}
+			defer close()
+
 			ctx := cmd.Context()
-
-			filePaths, err := getDatasetFiles(datasetConfig)
+			codeIntegration, err := code.GetAndUpdateCodeIntegrationIfNotExists(ctx, workspaceConfig)
 			if err != nil {
 				return err
 			}
+			if len(secretId) == 0 {
+				secretId = workspaceConfig.SecretManagerId
+			}
 
-			tarGzFile, err := os.CreateTemp("", "tensorleap-*.tar.gz")
+			_, err = code.AddCodeIntegrationVersion(ctx, tarGzFile, codeIntegration, workspaceConfig.EntryFile, secretId)
 			if err != nil {
 				return err
 			}
-			defer local.CleanupTempFile(tarGzFile)
-
-			if err := local.CreateTarGzFile(filePaths, tarGzFile); err != nil {
-				return err
-			}
-
-			data, _, err := ApiClient.GetDatasetVersionUploadUrl(ctx).Execute()
-			if err != nil {
-				return err
-			}
-
-			_, err = tarGzFile.Seek(0, 0)
-			if err != nil {
-				return err
-			}
-			uploadUrl := data.GetUrl()
-			if err := UploadFile(uploadUrl, tarGzFile); err != nil {
-				return err
-			}
-
-			if err := addDatasetIfNotExisted(ctx, datasetConfig); err != nil {
-				return err
-			}
-			saveDatasetVersionParams := *tensorleapapi.NewSaveDatasetVersionParams(
-				datasetConfig.DatasetId,
-				uploadUrl,
-				datasetConfig.EntryFile,
-			)
-
-			if len(secretId) > 0 {
-				saveDatasetVersionParams.SecretManagerId = &secretId
-			} else if len(datasetConfig.SecretManagerId) > 0 {
-				saveDatasetVersionParams.SecretManagerId = &datasetConfig.SecretManagerId
-			}
-
-			log.Info("Creating new dataset version...")
-			if _, _, err = ApiClient.SaveDatasetVersion(ctx).
-				SaveDatasetVersionParams(saveDatasetVersionParams).
-				Execute(); err != nil {
-				return err
-			}
-
-			log.Info("Done!")
 			return nil
 		},
 	}
 
 	cmd.Flags().StringVar(&secretId, "secretManagerId", "", "Secret manager id")
-	RootCommand.AddCommand(cmd)
-
+	return cmd
 }
 
-func getDatasetFiles(datasetConfig *code.DatasetConfig) ([]string, error) {
-	currentDirFs := os.DirFS(".")
-	var allMatchedFiles []string
-	for _, pattern := range datasetConfig.IncludePatterns {
-		matches, err := fs.Glob(currentDirFs, pattern)
-		if err != nil {
-			return nil, err
-		}
-		allMatchedFiles = append(allMatchedFiles, matches...)
-	}
-	return allMatchedFiles, nil
-}
-
-func addDatasetIfNotExisted(ctx context.Context, datasetConfig *code.DatasetConfig) error {
-	data, _, err := ApiClient.GetDatasets(ctx).Execute()
-	if err != nil {
-		return fmt.Errorf("failed to get code integration: %v", err)
-	}
-	isDatasetExisted := false
-	for _, dataset := range data.Datasets {
-		if dataset.Cid == datasetConfig.DatasetId {
-			isDatasetExisted = true
-			break
-		}
-	}
-
-	if !isDatasetExisted {
-		log.Infof("Not found dataset id: %s. Creating new dataset", datasetConfig.DatasetId)
-		codeIntegrations, err := code.GetCodeIntegrations(ctx)
-		if err != nil {
-			return err
-		}
-		name, err := code.AskForCodeIntegrationName(codeIntegrations)
-		if err != nil {
-			return err
-		}
-		dataset, err := code.AddCodeIntegration(ctx, name)
-		if err != nil {
-			return err
-		}
-
-		datasetConfig.DatasetId = dataset.GetCid()
-
-		err = code.SetCodeIntegrationConfig(datasetConfig, "")
-		if err != nil {
-			return fmt.Errorf("failed to update tensorleap config: %v", err)
-		}
-	}
-	return nil
+func init() {
+	RootCommand.AddCommand(NewPushCmd())
 }
