@@ -19,7 +19,7 @@ func NewImportCmd() *cobra.Command {
 	var codeIntegrationId string
 
 	var cmd = &cobra.Command{
-		Use:   "import [modelPath]",
+		Use:   "import <modelPath>",
 		Short: "Import a model into tensorleap",
 		Long:  `Import a model into tensorleap`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
