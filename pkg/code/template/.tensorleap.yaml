@@ -1,4 +1,0 @@
-datasetId: {{ .DatasetId }}
-entryFile: 'tensorleap.py'
-include:
-  - tensorleap.py
