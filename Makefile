@@ -39,5 +39,10 @@ check-fmt:
 	fi
 
 .PHONY: test
-test: 
+test:
 	@go test ./...
+
+.PHONY: test-install
+test-install:
+	@go run . server install
+
