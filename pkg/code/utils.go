@@ -58,7 +58,7 @@ func AskForCodeIntegrationName(codeIntegrations []CodeIntegration) (name string,
 	}
 
 	prompt := &survey.Input{
-		Message: "Enter dataset name",
+		Message: "Enter code integration name",
 	}
 
 	validate := entity.CreateUniqueNameValidator(existingNames)
