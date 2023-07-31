@@ -18,6 +18,14 @@ func GetEntityById[TEntity any](entityId string, entities []TEntity, desc *Entit
 	return nil, fmt.Errorf("not found %s id: %s", entityId, desc.Name)
 }
 
+func GetNames[TEntity any](entities []TEntity, desc *EntityDescriptor[TEntity]) []string {
+	names := []string{}
+	for _, entity := range entities {
+		names = append(names, desc.GetDisplayName(&entity))
+	}
+	return names
+}
+
 func PrintList[TEntity any](entities []TEntity, desc *EntityDescriptor[TEntity]) {
 	if len(entities) == 0 {
 		fmt.Printf("No %s \n", desc.PluralName)
