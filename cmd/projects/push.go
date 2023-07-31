@@ -15,8 +15,7 @@ import (
 func NewPushCmd() *cobra.Command {
 
 	var secretId string
-	var modelName string
-	var versionName string
+	var message string
 	var modelType string
 	var branchName string
 
@@ -87,6 +86,9 @@ func NewPushCmd() *cobra.Command {
 				return err
 			}
 
+			versionName := message
+			modelName := message
+
 			err = model.ImportModel(ctx, modelPath, currentProject.GetCid(), modelName, versionName, modelType, branchName, codeIntegration.GetCid())
 			if err != nil {
 				return err
@@ -95,11 +97,7 @@ func NewPushCmd() *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVar(&modelName, "name", "", "Name of the model that will be created")
-	_ = cmd.MarkFlagRequired("name")
-
-	cmd.Flags().StringVar(&versionName, "version", "", "Version is the name of the version that will be created for the model")
-	_ = cmd.MarkFlagRequired("version")
+	cmd.Flags().StringVarP(&message, "message", "m", "push from cli", "Version message")
 
 	cmd.Flags().StringVar(&modelType, "type", "", "Type is the type of the model file [JSON_TF2 / ONNX / PB_TF2 / H5_TF2]")
 
