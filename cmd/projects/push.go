@@ -21,7 +21,7 @@ func NewPushCmd() *cobra.Command {
 	var branchName string
 
 	var cmd = &cobra.Command{
-		Use:   "push [modelPath]",
+		Use:   "push <modelPath>",
 		Short: "Push new version into a project with its model and code integration",
 		Long:  `Push new version into a project with its model and code integration`,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
