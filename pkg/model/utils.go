@@ -23,6 +23,12 @@ func SelectModelType(modelType *string, modelPath string) {
 	case ".h5":
 		*modelType = "H5_TF2"
 		return
+	case ".onnx":
+		*modelType = "ONNX"
+		return
+	case ".tar.gz":
+		*modelType = "PB_TF2"
+		return
 	default:
 		if slices.Contains(MODEL_TYPES, *modelType) {
 			return
