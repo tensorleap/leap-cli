@@ -4,14 +4,17 @@ import (
 	"context"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
-func ImportModel(ctx context.Context, filePath, projectId, modelName, versionName, modelType, branchName, datasetId string) error {
+func ImportModel(ctx context.Context, filePath, projectId, message, modelType, branchName, datasetId string) error {
 	fileName := filepath.Base(filePath)
+	versionName := message
+	modelName := strings.TrimSuffix(fileName, filepath.Ext(fileName))
 	tempSignedUploadUrlParams := *tensorleapapi.NewGetUploadSignedUrlParams(fileName)
 	signedUrlData, _, err := api.ApiClient.GetUploadSignedUrl(ctx).
 		GetUploadSignedUrlParams(tempSignedUploadUrlParams).Execute()

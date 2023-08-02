@@ -86,10 +86,7 @@ func NewPushCmd() *cobra.Command {
 				return err
 			}
 
-			versionName := message
-			modelName := message
-
-			err = model.ImportModel(ctx, modelPath, currentProject.GetCid(), modelName, versionName, modelType, branchName, codeIntegration.GetCid())
+			err = model.ImportModel(ctx, modelPath, currentProject.GetCid(), message, modelType, branchName, codeIntegration.GetCid())
 			if err != nil {
 				return err
 			}

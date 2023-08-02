@@ -48,10 +48,7 @@ func NewImportCmd() *cobra.Command {
 				projectId = selected.GetCid()
 			}
 
-			versionName := message
-			modelName := message
-
-			err := model.ImportModel(ctx, modelPath, projectId, modelName, versionName, modelType, branchName, codeIntegrationId)
+			err := model.ImportModel(ctx, modelPath, projectId, message, modelType, branchName, codeIntegrationId)
 			if err != nil {
 				return err
 			}
