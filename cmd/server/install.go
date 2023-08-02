@@ -87,7 +87,7 @@ func NewInstallCmd() *cobra.Command {
 			if err := k3d.CacheImageInTheBackground(ctx, imageToCacheInTheBackground); err != nil {
 				return err
 			}
-			baseLink := "http://127.0.0.1:4589"
+			baseLink := fmt.Sprintf("http://127.0.0.1:%v", port)
 			apiLink := fmt.Sprintf("%s/api/v2", baseLink)
 			if err := auth.Login("", apiLink); err != nil {
 				return err
