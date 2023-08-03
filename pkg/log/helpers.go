@@ -3,6 +3,9 @@ package log
 import (
 	"fmt"
 	"os"
+	"time"
+
+	"github.com/briandowns/spinner"
 )
 
 func ConnectFileToVerboseLogOutput(filePath string) (close func(), err error) {
@@ -19,5 +22,18 @@ func ConnectFileToVerboseLogOutput(filePath string) (close func(), err error) {
 		VerboseLoggerOutputs.Remove(file)
 		file.Close()
 	}
+	return
+}
+
+func NewSpinner(message string) (start func(), stop func(), s *spinner.Spinner) {
+	s = spinner.New(spinner.CharSets[33], 500*time.Millisecond)
+	s.Suffix = fmt.Sprintf(" %s", message)
+	start = s.Start
+
+	stop = func() {
+		s.Stop()
+		Info(message)
+	}
+
 	return
 }
