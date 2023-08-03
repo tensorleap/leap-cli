@@ -141,3 +141,8 @@ func GetAndUpdateCodeIntegrationIfNotExists(ctx context.Context, workspaceConfig
 	}
 	return codeIntegration, nil
 }
+
+func PrintCodeIntegrationVersionParserErr(civ *CodeIntegrationVersion) {
+	fmt.Println(civ.Metadata.SetupStatus.GeneralError)
+	fmt.Println(civ.Metadata.SetupStatus.PrintLog)
+}
