@@ -1,14 +1,18 @@
 package code
 
 import (
+	"fmt"
+
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/code"
+	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/workspace"
 )
 
 func NewPushCmd() *cobra.Command {
 	var secretId string
+	var watch bool
 	cmd := &cobra.Command{
 		Use:   "push",
 		Short: "Push code integration",
@@ -36,15 +40,30 @@ func NewPushCmd() *cobra.Command {
 				secretId = workspaceConfig.SecretManagerId
 			}
 
-			_, err = code.AddCodeIntegrationVersion(ctx, tarGzFile, codeIntegration, workspaceConfig.EntryFile, secretId)
+			codeIntegrationVersion, err := code.AddCodeIntegrationVersion(ctx, tarGzFile, codeIntegration, workspaceConfig.EntryFile, secretId)
 			if err != nil {
 				return err
 			}
+
+			if watch {
+				ok, codeIntegrationVersion, err := code.WaitForCodeIntegrationStatus(ctx, codeIntegrationVersion.Cid)
+				if err != nil {
+					return err
+				}
+				if ok {
+					log.Info("Code parsed successfully")
+				} else {
+					code.PrintCodeIntegrationVersionParserErr(codeIntegrationVersion)
+					return fmt.Errorf("code parsing failed")
+				}
+			}
+
 			return nil
 		},
 	}
 
 	cmd.Flags().StringVar(&secretId, "secretManagerId", "", "Secret manager id")
+	cmd.Flags().BoolVarP(&watch, "watch", "w", false, "Watch code integration status")
 	return cmd
 }
 

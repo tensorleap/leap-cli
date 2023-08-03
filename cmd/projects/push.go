@@ -81,9 +81,20 @@ func NewPushCmd() *cobra.Command {
 			}
 			defer close()
 
-			_, err = code.AddCodeIntegrationVersion(ctx, tarGzFile, codeIntegration, workspaceConfig.EntryFile, secretId)
+			codeIntegrationVersion, err := code.AddCodeIntegrationVersion(ctx, tarGzFile, codeIntegration, workspaceConfig.EntryFile, secretId)
 			if err != nil {
 				return err
+			}
+
+			ok, codeIntegrationVersion, err := code.WaitForCodeIntegrationStatus(ctx, codeIntegrationVersion.Cid)
+			if err != nil {
+				return err
+			}
+			if ok {
+				log.Info("Code parsed successfully")
+			} else {
+				code.PrintCodeIntegrationVersionParserErr(codeIntegrationVersion)
+				return fmt.Errorf("code parsing failed")
 			}
 
 			err = model.ImportModel(ctx, modelPath, currentProject.GetCid(), message, modelType, branchName, codeIntegration.GetCid())
