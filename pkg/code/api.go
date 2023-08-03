@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"time"
 
 	. "github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/entity"
@@ -85,6 +86,11 @@ func GetLatestVersion(ctx context.Context, codeIntegrationId string) (*tensorlea
 	return version.LatestVersion, nil
 }
 
+func GetCodeIntegration(ctx context.Context, id string) (*CodeIntegrationVersion, error) {
+	res, _, err := ApiClient.GetDatasetVersion(ctx).GetDatasetVersionParams(*tensorleapapi.NewGetDatasetVersionParams(id)).Execute()
+	return &res.DatasetVersion, err
+}
+
 func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, codeIntegration *CodeIntegration, entryFile string, secretId string) (*CodeIntegrationVersion, error) {
 
 	data, _, err := ApiClient.GetDatasetVersionUploadUrl(ctx).Execute()
@@ -107,7 +113,7 @@ func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, codeInt
 		saveDatasetVersionParams.SecretManagerId = &secretId
 	}
 
-	log.Info("Creating new dataset version...")
+	log.Info("Creating new code integration version...")
 	res, _, err := ApiClient.SaveDatasetVersion(ctx).
 		SaveDatasetVersionParams(saveDatasetVersionParams).
 		Execute()
@@ -115,7 +121,39 @@ func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, codeInt
 		return nil, err
 	}
 
-	log.Info("Done!")
 	return res.Dataset.LatestVersion, nil
+}
 
+func WaitForCodeIntegrationStatus(ctx context.Context, codeIntegrationId string) (ok bool, codeIntegrationVersion *CodeIntegrationVersion, err error) {
+	message := "Waiting for code parser result..."
+	sleepDuration := 3 * time.Second
+	timeoutDuration := 10 * time.Minute
+	condition := func() (bool, error) {
+		codeIntegrationVersion, err = GetCodeIntegration(ctx, codeIntegrationId)
+		if err != nil {
+			return false, fmt.Errorf("failed to wait for the integration code status: %v", err)
+		}
+
+		switch codeIntegrationVersion.TestStatus {
+		case tensorleapapi.TESTSTATUS_TEST_SUCCESS:
+			ok = true
+			return true, nil
+		case tensorleapapi.TESTSTATUS_TEST_FAIL:
+			ok = false
+			return true, nil
+		}
+
+		return false, nil
+	}
+
+	err = WaitForCondition(ctx, message, condition, sleepDuration, timeoutDuration)
+
+	if err == ErrorTimeout {
+		return false, nil, fmt.Errorf("timeout occurred while waiting for the integration code status")
+	}
+	if err != nil {
+		return false, nil, fmt.Errorf("failed to wait for the integration code status: %v", err)
+	}
+
+	return
 }
