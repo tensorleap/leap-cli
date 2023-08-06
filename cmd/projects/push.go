@@ -18,6 +18,7 @@ func NewPushCmd() *cobra.Command {
 	var message string
 	var modelType string
 	var branchName string
+	var force bool
 
 	var cmd = &cobra.Command{
 		Use:   "push <modelPath>",
@@ -81,20 +82,29 @@ func NewPushCmd() *cobra.Command {
 			}
 			defer close()
 
-			codeIntegrationVersion, err := code.AddCodeIntegrationVersion(ctx, tarGzFile, codeIntegration, workspaceConfig.EntryFile, secretId)
+			pushed, currentVersion, err := code.PushCode(ctx, force, codeIntegration.Cid, tarGzFile, workspaceConfig.EntryFile, secretId)
 			if err != nil {
 				return err
 			}
+			if pushed || code.IsCodeParsing(currentVersion) {
 
-			ok, codeIntegrationVersion, err := code.WaitForCodeIntegrationStatus(ctx, codeIntegrationVersion.Cid)
-			if err != nil {
-				return err
-			}
-			if ok {
-				log.Info("Code parsed successfully")
-			} else {
-				code.PrintCodeIntegrationVersionParserErr(codeIntegrationVersion)
-				return fmt.Errorf("code parsing failed")
+				if err != nil {
+					return err
+				}
+
+				ok, codeIntegrationVersion, err := code.WaitForCodeIntegrationStatus(ctx, currentVersion.Cid)
+				if err != nil {
+					return err
+				}
+				if ok {
+					log.Info("Code parsed successfully")
+				} else {
+					code.PrintCodeIntegrationVersionParserErr(codeIntegrationVersion)
+					return fmt.Errorf("code parsing failed")
+				}
+			} else if code.IsCodeParseFailed(currentVersion) {
+				code.PrintCodeIntegrationVersionParserErr(currentVersion)
+				return fmt.Errorf("latest code parsing failed, add --force to push anyway")
 			}
 
 			err = model.ImportModel(ctx, modelPath, currentProject.GetCid(), message, modelType, branchName, codeIntegration.GetCid())
@@ -110,6 +120,10 @@ func NewPushCmd() *cobra.Command {
 	cmd.Flags().StringVar(&modelType, "type", "", "Type is the type of the model file [JSON_TF2 / ONNX / PB_TF2 / H5_TF2]")
 
 	cmd.Flags().StringVar(&branchName, "branch", "", "Branch is the name of the branch [OPTIONAL]")
+
+	cmd.Flags().StringVar(&secretId, "secretManagerId", "", "Secret manager id")
+
+	cmd.Flags().BoolVarP(&force, "force", "f", false, "Force push code integration")
 
 	return cmd
 }
