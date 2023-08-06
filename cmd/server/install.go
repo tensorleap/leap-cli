@@ -17,7 +17,7 @@ func NewInstallCmd() *cobra.Command {
 	var port uint
 	var registryPort uint
 	var useGpu bool
-	var dataVolume string
+	var datasetDirectory string
 
 	cmd := &cobra.Command{
 		Use:   "install",
@@ -27,7 +27,7 @@ func NewInstallCmd() *cobra.Command {
 			log.SetCommandName("install")
 			log.SendCloudReport("info", "Starting installation", "Starting",
 				&map[string]interface{}{"params": map[string]interface{}{"port": port, "registryPort": registryPort,
-					"useGpu": useGpu, "dataVolume": dataVolume, "args": args}})
+					"useGpu": useGpu, "datasetDirectory": datasetDirectory, "args": args}})
 
 			err := k3d.CheckDockerRequirements()
 			if err != nil {
@@ -42,9 +42,9 @@ func NewInstallCmd() *cobra.Command {
 			}
 			defer close()
 
-			if err := server.InitDataVolumeDir(dataVolume); err != nil {
+			if err := server.InitDatasetDirectory(&datasetDirectory); err != nil {
 				log.SendCloudReport("error", "Failed initializing data volume directory", "Failed",
-					&map[string]interface{}{"dataVolume": dataVolume, "error": err.Error()})
+					&map[string]interface{}{"datasetDirectory": datasetDirectory, "error": err.Error()})
 				return err
 			}
 
@@ -73,13 +73,13 @@ func NewInstallCmd() *cobra.Command {
 			if err := k3d.CreateCluster(
 				ctx,
 				port,
-				[]string{fmt.Sprintf("%v:%v", local.STANDALONE_DIR, local.STANDALONE_DIR), dataVolume},
+				[]string{fmt.Sprintf("%v:%v", local.STANDALONE_DIR, local.STANDALONE_DIR), datasetDirectory},
 				useGpu,
 			); err != nil {
 				return err
 			}
 
-			dataContainerPath := strings.Split(dataVolume, ":")[1]
+			dataContainerPath := strings.Split(datasetDirectory, ":")[1]
 			if err := server.InstallHelm(useGpu, dataContainerPath); err != nil {
 				return err
 			}
@@ -104,7 +104,7 @@ func NewInstallCmd() *cobra.Command {
 	cmd.Flags().UintVarP(&port, "port", "p", 4589, "Port to be used for tensorleap installation")
 	cmd.Flags().UintVar(&registryPort, "registry-port", 5699, "Port to be used for docker registry")
 	cmd.Flags().BoolVar(&useGpu, "gpu", false, "Enable GPU usage for training and evaluating")
-	cmd.Flags().StringVar(&dataVolume, "data-volume", server.GetDefaultDataVolume(), "Data Volume maps the user's local directory to the container's directory, enabling access to code integration for training and evaluation")
+	cmd.Flags().StringVar(&datasetDirectory, "dataset-dir", "", "Dataset directory maps the user's local directory to the container's directory, enabling access to code integration for training and evaluation")
 
 	return cmd
 }
