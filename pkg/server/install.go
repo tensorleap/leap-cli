@@ -5,18 +5,49 @@ import (
 	"os"
 	"strings"
 
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/tensorleap/leap-cli/pkg/helm"
 	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
-func InitDataVolumeDir(dataVolume string) error {
-	dataPath := strings.Split(dataVolume, ":")[0]
+func InitDatasetDirectory(datasetDirectory *string) error {
+	defaultDatasetDirectory := GetDefaultDataVolume()
+
+	if *datasetDirectory == "" {
+		fromPath := ""
+		prompt := survey.Input{
+			Message: "Enter dataset directory:",
+			Default: defaultDatasetDirectory,
+		}
+		err := survey.AskOne(&prompt, &fromPath)
+		if err != nil {
+			return err
+		}
+		*datasetDirectory = fromPath
+	}
+	if !strings.Contains(*datasetDirectory, ":") {
+		toPath := ""
+		prompt := survey.Input{
+			Message: "Enter container dataset directory:",
+			Default: *datasetDirectory,
+		}
+		err := survey.AskOne(&prompt, &toPath)
+		if err != nil {
+			return err
+		}
+		*datasetDirectory = fmt.Sprintf("%s:%s", *datasetDirectory, toPath)
+	}
+	log.SendCloudReport("info", "Init data volume", "Starting",
+		&map[string]interface{}{"params": map[string]interface{}{"datasetDirectory": datasetDirectory}},
+	)
+
+	dataPath := strings.Split(*datasetDirectory, ":")[0]
 	return os.MkdirAll(dataPath, 0777)
 }
 
 func GetDefaultDataVolume() string {
 	defaultDataPath := fmt.Sprintf("%s/tensorleap/data", getHomePath())
-	return fmt.Sprintf("%s:%s", defaultDataPath, defaultDataPath)
+	return defaultDataPath
 }
 
 func InstallHelm(useGpu bool, dataContainerPath string) error {
