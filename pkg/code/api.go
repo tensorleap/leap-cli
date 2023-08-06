@@ -91,7 +91,7 @@ func GetCodeIntegration(ctx context.Context, id string) (*CodeIntegrationVersion
 	return &res.DatasetVersion, err
 }
 
-func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, codeIntegration *CodeIntegration, entryFile string, secretId string) (*CodeIntegrationVersion, error) {
+func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, codeIntegrationId, entryFile, secretId string) (*CodeIntegrationVersion, error) {
 
 	data, _, err := ApiClient.GetDatasetVersionUploadUrl(ctx).Execute()
 	if err != nil {
@@ -104,7 +104,7 @@ func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, codeInt
 	}
 
 	saveDatasetVersionParams := *tensorleapapi.NewSaveDatasetVersionParams(
-		codeIntegration.GetCid(),
+		codeIntegrationId,
 		uploadUrl,
 		entryFile,
 	)

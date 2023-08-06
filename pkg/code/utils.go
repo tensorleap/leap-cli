@@ -143,6 +143,92 @@ func GetAndUpdateCodeIntegrationIfNotExists(ctx context.Context, workspaceConfig
 }
 
 func PrintCodeIntegrationVersionParserErr(civ *CodeIntegrationVersion) {
-	fmt.Println(civ.Metadata.SetupStatus.GeneralError)
-	fmt.Println(civ.Metadata.SetupStatus.PrintLog)
+	log.Error("Code parsing failed, see error below:")
+	fmt.Println(*civ.Metadata.SetupStatus.GeneralError)
+	fmt.Println(*civ.Metadata.SetupStatus.PrintLog)
+}
+
+func PushCode(ctx context.Context, force bool, codeIntegrationId string, tarGzFile *os.File, entryFile, secretId string) (pushed bool, current *CodeIntegrationVersion, err error) {
+	if !force {
+		log.Info("Checking if code has changed")
+
+		latestVersion, err := GetLatestVersion(ctx, codeIntegrationId)
+
+		if err != nil {
+			log.Warnf("Failed to get latest code integration version: %v", err)
+		} else {
+			change, err := CompareCodeVersion(ctx, latestVersion, tarGzFile, entryFile, secretId)
+			if err != nil {
+				log.Warnf("Failed to check if code changed: %v", err)
+			}
+			if !change {
+				log.Info("No change in code, skipping push")
+				return false, latestVersion, nil
+			} else {
+				log.Info("Code changed, pushing new version")
+			}
+		}
+	}
+	codeIntegrationVersion, err := AddCodeIntegrationVersion(ctx, tarGzFile, codeIntegrationId, entryFile, secretId)
+	if err != nil {
+		return false, nil, err
+	}
+	return true, codeIntegrationVersion, nil
+}
+
+func CompareCodeVersion(ctx context.Context, compareVersion *CodeIntegrationVersion, tarGzFile *os.File, entryFile, secretId string) (bool, error) {
+
+	if isDatasetVersionEmpty(compareVersion) {
+		return true, nil
+	}
+
+	if compareVersion.Metadata.GetSecretManagerId() != secretId || compareVersion.CodeEntryFile != entryFile {
+		return true, nil
+	}
+
+	latestVersionBlobPath := compareVersion.GetBlobPath()
+	tempLatestVersionFile, err := os.CreateTemp("", "tensorleap-*.tar.gz")
+	if err != nil {
+		return true, fmt.Errorf("failed to create temp file: %v", err)
+
+	}
+	defer local.CleanupTempFile(tempLatestVersionFile)
+
+	res, _, err := api.ApiClient.GetDownloadSignedUrl(ctx).
+		GetDownloadSignedUrlParams(*tensorleapapi.NewGetDownloadSignedUrlParams(latestVersionBlobPath)).
+		Execute()
+	if err != nil {
+		return true, fmt.Errorf("failed to get download signed url: %v", err)
+	}
+	err = api.DownloadFile(res.GetUrl(), tempLatestVersionFile)
+	if err != nil {
+		return true, fmt.Errorf("failed to download latest code integration version: %v", err)
+	}
+	_, err = tempLatestVersionFile.Seek(0, 0)
+	if err != nil {
+		return true, fmt.Errorf("failed to seek tempLatestVersionFile: %v", err)
+	}
+	latestChecksum, err := local.GetFileChecksum(tempLatestVersionFile)
+	if err != nil {
+		return true, fmt.Errorf("failed to get checksum of latest code integration version: %v", err)
+	}
+	newChecksum, err := local.GetFileChecksum(tarGzFile)
+
+	if err != nil {
+		return true, fmt.Errorf("failed to get checksum of new code integration version: %v", err)
+	}
+	_, err = tarGzFile.Seek(0, 0)
+	if err != nil {
+		return true, fmt.Errorf("failed to seek tarGzFile: %v", err)
+	}
+
+	return latestChecksum != newChecksum, nil
+}
+
+func IsCodeParseFailed(codeIntegrationVersion *CodeIntegrationVersion) bool {
+	return codeIntegrationVersion.TestStatus == tensorleapapi.TESTSTATUS_TEST_FAIL
+}
+
+func IsCodeParsing(codeIntegrationVersion *CodeIntegrationVersion) bool {
+	return codeIntegrationVersion.TestStatus == tensorleapapi.TESTSTATUS_DURING_TEST || codeIntegrationVersion.TestStatus == tensorleapapi.TESTSTATUS_BEFORE_TEST
 }
