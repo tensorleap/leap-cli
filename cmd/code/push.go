@@ -13,6 +13,8 @@ import (
 func NewPushCmd() *cobra.Command {
 	var secretId string
 	var watch bool
+	var force bool
+
 	cmd := &cobra.Command{
 		Use:   "push",
 		Short: "Push code integration",
@@ -40,13 +42,12 @@ func NewPushCmd() *cobra.Command {
 				secretId = workspaceConfig.SecretManagerId
 			}
 
-			codeIntegrationVersion, err := code.AddCodeIntegrationVersion(ctx, tarGzFile, codeIntegration, workspaceConfig.EntryFile, secretId)
+			_, currentVersion, err := code.PushCode(ctx, force, codeIntegration.Cid, tarGzFile, workspaceConfig.EntryFile, secretId)
 			if err != nil {
 				return err
 			}
-
-			if watch {
-				ok, codeIntegrationVersion, err := code.WaitForCodeIntegrationStatus(ctx, codeIntegrationVersion.Cid)
+			if watch && code.IsCodeParsing(currentVersion) {
+				ok, codeIntegrationVersion, err := code.WaitForCodeIntegrationStatus(ctx, currentVersion.Cid)
 				if err != nil {
 					return err
 				}
@@ -56,6 +57,9 @@ func NewPushCmd() *cobra.Command {
 					code.PrintCodeIntegrationVersionParserErr(codeIntegrationVersion)
 					return fmt.Errorf("code parsing failed")
 				}
+			} else if watch && code.IsCodeParseFailed(currentVersion) {
+				code.PrintCodeIntegrationVersionParserErr(currentVersion)
+				return fmt.Errorf("latest code parsing failed, add --force to push anyway")
 			}
 
 			return nil
@@ -64,6 +68,8 @@ func NewPushCmd() *cobra.Command {
 
 	cmd.Flags().StringVar(&secretId, "secretManagerId", "", "Secret manager id")
 	cmd.Flags().BoolVarP(&watch, "watch", "w", false, "Watch code integration status")
+	cmd.Flags().BoolVarP(&watch, "force", "f", false, "Force push code integration")
+
 	return cmd
 }
 
