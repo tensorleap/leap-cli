@@ -3,6 +3,8 @@ package local
 import (
 	"archive/tar"
 	"compress/gzip"
+	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
 	"io"
 	"os"
@@ -26,10 +28,10 @@ func DownloadAndExtractTarFile(url string, outputDir string) ([]string, error) {
 	downloadErr := <-downloadErrCh
 
 	if extractionErr != nil {
-		return nil, fmt.Errorf("Failed to extract tar.gz file: %w", extractionErr)
+		return nil, fmt.Errorf("failed to extract tar.gz file: %w", extractionErr)
 	}
 	if downloadErr != nil {
-		return nil, fmt.Errorf("Failed to download file: %w", downloadErr)
+		return nil, fmt.Errorf("failed to download file: %w", downloadErr)
 	}
 
 	return files, nil
@@ -138,4 +140,12 @@ func CreateTarGzFile(filesDir string, filePaths []string, file io.Writer) error 
 func CleanupTempFile(file *os.File) {
 	file.Close()
 	os.Remove(file.Name())
+}
+
+func GetFileChecksum(file io.Reader) (string, error) {
+	hash := sha256.New()
+	if _, err := io.Copy(hash, file); err != nil {
+		return "", err
+	}
+	return hex.EncodeToString(hash.Sum(nil)), nil
 }
