@@ -26,7 +26,7 @@ var (
 	K3sVersion          = version.K3sVersion
 	K3sImage            = fmt.Sprintf("%s:%s", k3d.DefaultK3sImageRepo, K3sVersion)
 	K3sGpuVersion       = "v1.26.4-k3s1"
-	K3sGpuVersionSuffix = "cuda"
+	K3sGpuVersionSuffix = "cuda-11.8.0-ubuntu-22.04"
 	K3sGpuImage         = fmt.Sprintf("us-central1-docker.pkg.dev/tensorleap/main/k3s:%s-%s", K3sGpuVersion, K3sGpuVersionSuffix)
 )
 
@@ -84,7 +84,7 @@ func CreateCluster(ctx context.Context, port uint, volumes []string, useGpu bool
 }
 
 func IsGpuCluster(cluster *Cluster) bool {
-	return len(cluster.Nodes) > 0 && strings.HasSuffix(cluster.Nodes[0].Image, K3sGpuVersionSuffix)
+	return len(cluster.Nodes) > 0 && strings.Contains(cluster.Nodes[0].Image, "cuda")
 }
 
 func createClusterConfig(ctx context.Context, port uint, volumes []string, useGpu bool) *conf.ClusterConfig {
