@@ -13,7 +13,6 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/docker/docker/api/types"
 	dockerTypes "github.com/docker/docker/api/types"
 	cliutil "github.com/k3d-io/k3d/v5/cmd/util"
 	"github.com/k3d-io/k3d/v5/pkg/client"
@@ -188,7 +187,7 @@ func CacheImage(ctx context.Context, image string, regPort string) error {
 		return err
 	}
 
-	resp, err := dockerClient.ImagePull(ctx, image, types.ImagePullOptions{})
+	resp, err := dockerClient.ImagePull(ctx, image, dockerTypes.ImagePullOptions{})
 	if err != nil {
 		return fmt.Errorf("docker failed to pull the image '%s': %w", image, err)
 	}
@@ -215,7 +214,7 @@ func CacheImage(ctx context.Context, image string, regPort string) error {
 		return err
 	}
 
-	resp, err = dockerClient.ImagePush(ctx, targetImage, types.ImagePushOptions{
+	resp, err = dockerClient.ImagePush(ctx, targetImage, dockerTypes.ImagePushOptions{
 		RegistryAuth: "empty auth",
 	})
 	if err != nil {
