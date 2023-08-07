@@ -17,6 +17,7 @@ func NewInstallCmd() *cobra.Command {
 	var port uint
 	var registryPort uint
 	var useGpu bool
+	var useCpu bool
 	var datasetDirectory string
 
 	cmd := &cobra.Command{
@@ -25,9 +26,6 @@ func NewInstallCmd() *cobra.Command {
 		Long:  `Installs tensorleap on the local machine, running in a docker container`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			log.SetCommandName("install")
-			log.SendCloudReport("info", "Starting installation", "Starting",
-				&map[string]interface{}{"params": map[string]interface{}{"port": port, "registryPort": registryPort,
-					"useGpu": useGpu, "datasetDirectory": datasetDirectory, "args": args}})
 
 			err := k3d.CheckDockerRequirements()
 			if err != nil {
@@ -42,11 +40,21 @@ func NewInstallCmd() *cobra.Command {
 			}
 			defer close()
 
+			if err := server.InitUseGPU(&useGpu, useCpu); err != nil {
+				log.SendCloudReport("error", "Failed to initializing with gpu", "Failed",
+					&map[string]interface{}{"useGpu": useCpu, "error": err.Error()})
+				return err
+			}
+
 			if err := server.InitDatasetDirectory(&datasetDirectory); err != nil {
 				log.SendCloudReport("error", "Failed initializing data volume directory", "Failed",
 					&map[string]interface{}{"datasetDirectory": datasetDirectory, "error": err.Error()})
 				return err
 			}
+
+			log.SendCloudReport("info", "Starting installation", "Starting",
+				&map[string]interface{}{"params": map[string]interface{}{"port": port, "registryPort": registryPort,
+					"useGpu": useGpu, "datasetDirectory": datasetDirectory, "args": args}})
 
 			ctx := cmd.Context()
 
@@ -104,6 +112,7 @@ func NewInstallCmd() *cobra.Command {
 	cmd.Flags().UintVarP(&port, "port", "p", 4589, "Port to be used for tensorleap installation")
 	cmd.Flags().UintVar(&registryPort, "registry-port", 5699, "Port to be used for docker registry")
 	cmd.Flags().BoolVar(&useGpu, "gpu", false, "Enable GPU usage for training and evaluating")
+	cmd.Flags().BoolVar(&useCpu, "cpu", false, "Use CPU for training and evaluating")
 	cmd.Flags().StringVar(&datasetDirectory, "dataset-dir", "", "Dataset directory maps the user's local directory to the container's directory, enabling access to code integration for training and evaluation")
 
 	return cmd

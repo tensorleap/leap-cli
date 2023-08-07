@@ -10,6 +10,20 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
+func InitUseGPU(useGpu *bool, useCpu bool) error {
+	if *useGpu || useCpu {
+		return nil
+	}
+
+	prompt := survey.Confirm{
+		Message: "Do you want to use GPU?",
+		Default: false,
+	}
+
+	err := survey.AskOne(&prompt, useGpu)
+	return err
+}
+
 func InitDatasetDirectory(datasetDirectory *string) error {
 	defaultDatasetDirectory := GetDefaultDataVolume()
 
@@ -94,7 +108,7 @@ func InstallHelm(useGpu bool, dataContainerPath string) error {
 func getHomePath() string {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		panic(fmt.Errorf("Failed to get home directory: %w", err))
+		panic(fmt.Errorf("failed to get home directory: %w", err))
 	}
 
 	return homeDir
