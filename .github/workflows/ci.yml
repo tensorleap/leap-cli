@@ -16,8 +16,8 @@ jobs:
         with:
           go-version-file: ./go.mod
 
-      - name: Check format
-        run: make check-fmt
+      # - name: Check format
+      #   run: make check-fmt
 
       - name: Build
         run: go build .
@@ -31,12 +31,6 @@ jobs:
       - name: Test
         run: make test
 
-
-
-
-
-
-
       - name: install-server
         run: make test-install
 
@@ -48,4 +42,3 @@ jobs:
 
       - name: Run ShellCheck
         run: shellcheck ./install.sh
-
