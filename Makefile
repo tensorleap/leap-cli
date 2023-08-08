@@ -44,5 +44,5 @@ test:
 
 .PHONY: test-install
 test-install:
-	@go run . server install
+	@go run . server install --cpu --dataset-dir ${ GITHUB_WORKSPACE }/tensorleap:/${ GITHUB_WORKSPACE }/tensorleap
 
