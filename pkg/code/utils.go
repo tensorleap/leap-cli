@@ -16,6 +16,8 @@ import (
 
 var ErrEmptyCodeIntegrationVersion = fmt.Errorf("CodeIntegration is empty")
 
+const BindingFilePath = "bindings.yaml"
+
 func CreateCodeIntegration(ctx context.Context, codeIntegrations []CodeIntegration) (*CodeIntegration, error) {
 
 	name, err := AskForCodeIntegrationName(codeIntegrations)
@@ -104,7 +106,8 @@ func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.Workspac
 func getDatasetFiles(filesDir string, workspaceConfig *workspace.WorkspaceConfig) ([]string, error) {
 	currentDirFs := os.DirFS(filesDir)
 	var allMatchedFiles []string
-	for _, pattern := range workspaceConfig.IncludePatterns {
+	allFilePaths := append(workspaceConfig.IncludePatterns, BindingFilePath)
+	for _, pattern := range allFilePaths {
 		matches, err := fs.Glob(currentDirFs, pattern)
 		if err != nil {
 			return nil, err
