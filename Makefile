@@ -30,10 +30,11 @@ fmt:
 
 .PHONY: check-fmt
 check-fmt:
-	@if test -z "$$(go fmt ./... 2>&1)" ; then \
-		echo "No formatting issues found."; \
-	else \
-		echo "[ERROR] Fix formatting issues with 'make fmt'"; \
+	@echo "Checking code formatting..."
+	@result=$$(gofmt -l ./); \
+	if [ -n "$$result" ]; then \
+		echo "Formatting issues found:"; \
+		echo "$$result"; \
 		exit 1; \
 	fi
 
