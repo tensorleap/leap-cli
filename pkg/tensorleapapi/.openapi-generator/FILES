@@ -27,6 +27,7 @@ docs/AnalyzeGraphParams.md
 docs/AnalyzeGraphResponse.md
 docs/AnalyzeParams.md
 docs/AnalyzeTypeEnum.md
+docs/ApplyDatasetBindingParams.md
 docs/BBoxImageData.md
 docs/BBoxImageScatterLabel.md
 docs/BBoxImageViz.md
@@ -304,12 +305,15 @@ docs/UpdateIssueParams.md
 docs/UpdateProjectMetaRequest.md
 docs/UpdateSecretManagerParams.md
 docs/UpdateSecretManagerResponse.md
+docs/UpdateSessionNameParams.md
+docs/UpdateSessionRunNameParams.md
 docs/UpdateSessionTestRequest.md
 docs/UpdateTeamPublicNameRequest.md
 docs/UpdateUserNameRequest.md
 docs/UpdateUserRoleRequest.md
 docs/UpdateUserStatusRequest.md
 docs/UpdateUserTeamRequest.md
+docs/UpdateVersionNameParams.md
 docs/UpdateVersionParams.md
 docs/UpdateVersionResponse.md
 docs/UserData.md
@@ -357,6 +361,7 @@ model_analyze_graph_params.go
 model_analyze_graph_response.go
 model_analyze_params.go
 model_analyze_type_enum.go
+model_apply_dataset_binding_params.go
 model_b_box_image_data.go
 model_b_box_image_scatter_label.go
 model_b_box_image_viz.go
@@ -633,12 +638,15 @@ model_update_issue_params.go
 model_update_project_meta_request.go
 model_update_secret_manager_params.go
 model_update_secret_manager_response.go
+model_update_session_name_params.go
+model_update_session_run_name_params.go
 model_update_session_test_request.go
 model_update_team_public_name_request.go
 model_update_user_name_request.go
 model_update_user_role_request.go
 model_update_user_status_request.go
 model_update_user_team_request.go
+model_update_version_name_params.go
 model_update_version_params.go
 model_update_version_response.go
 model_user_data.go
