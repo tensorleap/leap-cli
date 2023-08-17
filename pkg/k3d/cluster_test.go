@@ -17,7 +17,7 @@ func TestIsGpuCluster(t *testing.T) {
 			name: "Non-GPU cluster",
 			cluster: &Cluster{
 				Nodes: []*k3d.Node{
-					{Image: K3sImage},
+					{Image: "docker.io/rancher/k3s:v1.26.4-k3s1"},
 				},
 			},
 			expected: false,
@@ -26,7 +26,7 @@ func TestIsGpuCluster(t *testing.T) {
 			name: "GPU cluster",
 			cluster: &Cluster{
 				Nodes: []*k3d.Node{
-					{Image: K3sGpuImage},
+					{Image: "docker.io/rancher/k3s:v1.26.4-k3s1-cuda-11.8.0-ubuntu-22.04"},
 				},
 			},
 			expected: true,

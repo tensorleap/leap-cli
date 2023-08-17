@@ -13,24 +13,32 @@ import (
 
 func NewUpgradeCmd() *cobra.Command {
 
+	var airgapInstallationFilePath string
+	var tag string
+
 	cmd := &cobra.Command{
 		Use:   "upgrade",
 		Short: "Upgrade an existing local tensorleap installation to the latest version",
 		Long:  `Upgrade an existing local tensorleap installation to the latest version`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			log.SetCommandName("upgrade")
-			log.SendCloudReport("info", "Starting upgrade", "Starting", &map[string]interface{}{"args": args})
+			close, err := local.SetupInfra("upgrade")
+			if err != nil {
+				return err
+			}
+			defer close()
+
+			mnf, isAirgap, chart, err := server.InitInstallationProcess(airgapInstallationFilePath, tag)
+			if err != nil {
+				return err
+			}
 
 			if err := server.ValidateStandaloneDir(); err != nil {
 				return err
 			}
 			ctx := cmd.Context()
 
-			close, err := local.SetupInfra("upgrade")
-			if err != nil {
-				return err
-			}
-			defer close()
+			log.SendCloudReport("info", "Starting upgrade", "Starting", &map[string]interface{}{"manifest": mnf})
 
 			cluster, err := server.GetTensorleapCluster(ctx)
 			if err != nil {
@@ -43,36 +51,38 @@ func NewUpgradeCmd() *cobra.Command {
 				return err
 			}
 
-			isHelmReleaseExisted, err := helm.IsHelmReleaseExists(helmConfig)
+			isHelmReleaseExisted, err := helm.IsHelmReleaseExists(helmConfig, mnf.ServerHelmChart)
 			if err != nil {
 				return err
 			} else if !isHelmReleaseExisted {
-				return errors.New("Not found helm release, Please make sure to install before upgrade")
+				return errors.New("not found helm release, Please make sure to install before upgrade")
 			}
 
-			imagesToCache, imageToCacheInTheBackground, err := local.GetLatestImages(isGpuCluster)
-			if err != nil {
-				return err
-			}
+			imagesToCache, imageToCacheInTheBackground := server.CalcWhichImagesToCache(mnf, isGpuCluster, isAirgap)
 
 			registryPort, err := k3d.GetLocalRegistryPort(ctx)
 			if err != nil {
 				return err
 			}
-			k3d.CacheImagesInParallel(ctx, imagesToCache, registryPort)
+			k3d.CacheImagesInParallel(ctx, imagesToCache, registryPort, isAirgap)
 
-			if err := helm.UpgradeTensorleapChartVersion(helmConfig, nil); err != nil {
+			if err := helm.UpgradeTensorleapChartVersion(helmConfig, mnf.ServerHelmChart, chart, nil); err != nil {
 				return err
 			}
 
-			if err = k3d.CacheImageInTheBackground(ctx, imageToCacheInTheBackground); err != nil {
-				return err
+			if len(imageToCacheInTheBackground) > 0 {
+				if err = k3d.CacheImageInTheBackground(ctx, imageToCacheInTheBackground); err != nil {
+					return err
+				}
 			}
 
 			log.SendCloudReport("info", "Successfully completed upgrade", "Success", nil)
 			return nil
 		},
 	}
+
+	cmd.Flags().StringVar(&tag, "tag", "", "Tag to use for tensorleap upgrade , default is latest")
+	cmd.Flags().StringVar(&airgapInstallationFilePath, "airgap", "", "Installation file path for air-gap installation")
 
 	return cmd
 }

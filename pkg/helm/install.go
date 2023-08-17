@@ -4,36 +4,42 @@ import (
 	"time"
 
 	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/server/manifest"
 	"helm.sh/helm/v3/pkg/action"
+	"helm.sh/helm/v3/pkg/chart"
 )
 
-func InstallLatestTensorleapChartVersion(
+func InstallChart(
 	config *HelmConfig,
+	chartMeta manifest.HelmChartMeta,
+	chart *chart.Chart,
 	values Record,
 ) error {
 
 	log.Println("Installing helm chart (will take few minutes)")
 
 	client := action.NewInstall(config.ActionConfig)
-	client.ChartPathOptions.RepoURL = REPO_URL
 	client.Namespace = config.Namespace
 	client.CreateNamespace = true
 	client.Wait = true
-	client.ReleaseName = RELEASE_NAME
+	client.ReleaseName = chartMeta.ReleaseName
 
-	latestChart, err := getLatestChart(config, &client.ChartPathOptions)
-	if err != nil {
-		return err
+	var err error
+	if chart == nil {
+		chart, err = GetChart(config, &client.ChartPathOptions, chartMeta)
+		if err != nil {
+			return err
+		}
 	}
 
 	client.Timeout = 20 * time.Minute
 
-	_, err = client.RunWithContext(config.Context, latestChart, values)
+	_, err = client.RunWithContext(config.Context, chart, values)
 	if err != nil {
 		return err
 	}
 
-	log.Printf("Tensorleap installed on local k3d cluster! version: %s", latestChart.Metadata.Version)
+	log.Printf("Tensorleap installed on local k3d cluster! version: %s", chart.Metadata.Version)
 
 	return nil
 }

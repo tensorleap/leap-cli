@@ -5,11 +5,15 @@ import (
 	"time"
 
 	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/server/manifest"
 	"helm.sh/helm/v3/pkg/action"
+	"helm.sh/helm/v3/pkg/chart"
 )
 
 func UpgradeTensorleapChartVersion(
 	config *HelmConfig,
+	chartMeta manifest.HelmChartMeta,
+	chart *chart.Chart,
 	values Record,
 ) error {
 
@@ -17,11 +21,10 @@ func UpgradeTensorleapChartVersion(
 	log.Println("Upgrading helm chart (will take few minutes)")
 
 	client := action.NewUpgrade(config.ActionConfig)
-	client.ChartPathOptions.RepoURL = REPO_URL
 	client.Namespace = config.Namespace
 	client.Wait = true
 	if values == nil {
-		oldValues, err := GetValues(config, RELEASE_NAME)
+		oldValues, err := GetValues(config, chartMeta.ReleaseName)
 		if err != nil {
 			return err
 		}
@@ -31,21 +34,24 @@ func UpgradeTensorleapChartVersion(
 		}
 	}
 
-	latestChart, err := getLatestChart(config, &client.ChartPathOptions)
-	if err != nil {
-		return err
+	var err error
+	if chart == nil {
+		chart, err = GetChart(config, &client.ChartPathOptions, chartMeta)
+		if err != nil {
+			return err
+		}
 	}
 
 	client.Timeout = 20 * time.Minute
 
-	_, err = client.RunWithContext(config.Context, RELEASE_NAME, latestChart, values)
+	_, err = client.RunWithContext(config.Context, chartMeta.ReleaseName, chart, values)
 	if err != nil {
 		log.SendCloudReport("error", "Failed upgrading helm chart", "Failed",
-			&map[string]interface{}{"releaseName": RELEASE_NAME, "latestChart": latestChart, "error": err.Error()})
+			&map[string]interface{}{"releaseName": chartMeta.ReleaseName, "latestChart": chart, "error": err.Error()})
 		return err
 	}
 
-	log.Printf("Tensorleap upgrade on local k3d cluster! version: %s", latestChart.Metadata.Version)
+	log.Printf("Tensorleap upgrade on local k3d cluster! version: %s", chart.Metadata.Version)
 	log.SendCloudReport("info", "Successfully upgraded helm chart", "Running", nil)
 
 	return nil

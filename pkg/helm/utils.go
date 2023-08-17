@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/server/manifest"
 	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chart/loader"
@@ -15,16 +16,10 @@ import (
 
 type Record = map[string]interface{}
 
-const (
-	RELEASE_NAME = "tensorleap"
-	CHART_NAME   = "tensorleap"
-	REPO_URL     = "https://helm.tensorleap.ai"
-)
-
-func IsHelmReleaseExists(config *HelmConfig) (bool, error) {
+func IsHelmReleaseExists(config *HelmConfig, helmChart manifest.HelmChartMeta) (bool, error) {
 	client := action.NewHistory(config.ActionConfig)
 	client.Max = 1
-	_, err := client.Run(RELEASE_NAME)
+	_, err := client.Run(helmChart.ReleaseName)
 	if err == driver.ErrReleaseNotFound {
 		return false, nil
 	} else if err != nil {
@@ -124,8 +119,11 @@ func CreateHelmConfig(kubeContext, namespace string) (*HelmConfig, error) {
 	}, nil
 }
 
-func getLatestChart(config *HelmConfig, chartPathOptions *action.ChartPathOptions) (*chart.Chart, error) {
-	chartPath, err := chartPathOptions.LocateChart(CHART_NAME, config.Settings)
+func GetChart(config *HelmConfig, chartPathOptions *action.ChartPathOptions, chart manifest.HelmChartMeta) (*chart.Chart, error) {
+	chartPathOptions.Version = chart.Version
+	chartPathOptions.RepoURL = chart.RepoUrl
+
+	chartPath, err := chartPathOptions.LocateChart(chart.ChartName, config.Settings)
 	if err != nil {
 		log.SendCloudReport("error", "Failed locating helm chart", "Failed", &map[string]interface{}{"error": err.Error()})
 		return nil, err

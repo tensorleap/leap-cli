@@ -14,21 +14,13 @@ import (
 	conf "github.com/k3d-io/k3d/v5/pkg/config/v1alpha5"
 	"github.com/k3d-io/k3d/v5/pkg/runtimes"
 	k3d "github.com/k3d-io/k3d/v5/pkg/types"
-	"github.com/k3d-io/k3d/v5/version"
 	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/server/manifest"
 )
 
 type Cluster = k3d.Cluster
 
 const CLUSTER_NAME = "tensorleap"
-
-var (
-	K3sVersion          = version.K3sVersion
-	K3sImage            = fmt.Sprintf("%s:%s", k3d.DefaultK3sImageRepo, K3sVersion)
-	K3sGpuVersion       = "v1.26.4-k3s1"
-	K3sGpuVersionSuffix = "cuda-11.8.0-ubuntu-22.04"
-	K3sGpuImage         = fmt.Sprintf("us-central1-docker.pkg.dev/tensorleap/main/k3s:%s-%s", K3sGpuVersion, K3sGpuVersionSuffix)
-)
 
 func GetCluster(ctx context.Context) (*Cluster, error) {
 	clusters, err := k3dCluster.ClusterList(ctx, runtimes.SelectedRuntime)
@@ -45,9 +37,9 @@ func GetCluster(ctx context.Context) (*Cluster, error) {
 	return nil, nil
 }
 
-func CreateCluster(ctx context.Context, port uint, volumes []string, useGpu bool) error {
+func CreateCluster(ctx context.Context, manifest *manifest.InstallationManifest, port uint, volumes []string, useGpu bool) error {
 	log.SendCloudReport("info", "Creating cluster", "Running", &map[string]interface{}{"useGpu": useGpu, "port": port})
-	clusterConfig := createClusterConfig(ctx, port, volumes, useGpu)
+	clusterConfig := createClusterConfig(ctx, manifest, port, volumes, useGpu)
 
 	if _, err := k3dCluster.ClusterGet(ctx, runtimes.SelectedRuntime, &clusterConfig.Cluster); err == nil {
 		log.Println("Found existing tensorleap cluster!")
@@ -87,15 +79,20 @@ func IsGpuCluster(cluster *Cluster) bool {
 	return len(cluster.Nodes) > 0 && strings.Contains(cluster.Nodes[0].Image, "cuda")
 }
 
-func createClusterConfig(ctx context.Context, port uint, volumes []string, useGpu bool) *conf.ClusterConfig {
+func createClusterConfig(ctx context.Context, manifest *manifest.InstallationManifest, port uint, volumes []string, useGpu bool) *conf.ClusterConfig {
 	freePort, err := cliutil.GetFreePort()
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	image := K3sImage
+	image := manifest.Images.K3s
 	if useGpu {
-		image = K3sGpuImage
+		image = manifest.Images.K3sGpu
+	}
+
+	mirrorConfig, err := CreateMirrorFromManifest(manifest, fmt.Sprintf("http://%s", REGISTRY_DOMAIN))
+	if err != nil {
+		log.Fatalln(err)
 	}
 
 	simpleK3dConfig := conf.SimpleConfig{
@@ -151,28 +148,8 @@ func createClusterConfig(ctx context.Context, port uint, volumes []string, useGp
 			},
 		},
 		Registries: conf.SimpleConfigRegistries{
-			Use: []string{"tensorleap-registry"},
-			Config: `
-mirrors:
-  docker.io:
-    endpoint:
-      - http://k3d-tensorleap-registry:5000
-  k8s.gcr.io:
-    endpoint:
-      - http://k3d-tensorleap-registry:5000
-  gcr.io:
-    endpoint:
-      - http://k3d-tensorleap-registry:5000
-  docker.elastic.co:
-    endpoint:
-      - http://k3d-tensorleap-registry:5000
-  quay.io:
-    endpoint:
-      - http://k3d-tensorleap-registry:5000
-  us-central1-docker.pkg.dev:
-    endpoint:
-      - http://k3d-tensorleap-registry:5000
-          `,
+			Use:    []string{"tensorleap-registry"},
+			Config: mirrorConfig,
 		},
 		Options: conf.SimpleConfigOptions{
 			K3dOptions: conf.SimpleConfigOptionsK3d{
