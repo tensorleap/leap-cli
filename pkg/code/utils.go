@@ -22,7 +22,7 @@ import (
 
 var ErrEmptyCodeIntegrationVersion = fmt.Errorf("CodeIntegration is empty")
 
-const BindingFilePath = "bindings.yaml"
+const BindingFilePath = "leap_mappings.yaml"
 
 func CreateCodeIntegration(ctx context.Context, codeIntegrations []CodeIntegration) (*CodeIntegration, error) {
 
@@ -277,7 +277,7 @@ func IsCodeParsing(codeIntegrationVersion *CodeIntegrationVersion) bool {
 	return codeIntegrationVersion.TestStatus == tensorleapapi.TESTSTATUS_DURING_TEST || codeIntegrationVersion.TestStatus == tensorleapapi.TESTSTATUS_BEFORE_TEST
 }
 
-func GetBinderYaml(ctx context.Context, codeIntegrationId string) string {
+func GetDatasetMappingYaml(ctx context.Context, codeIntegrationId string) string {
 	codeIntegrationVersion, err := GetLatestVersion(ctx, codeIntegrationId)
 	if err != nil {
 		return ""

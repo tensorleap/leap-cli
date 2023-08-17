@@ -27,7 +27,7 @@ docs/AnalyzeGraphParams.md
 docs/AnalyzeGraphResponse.md
 docs/AnalyzeParams.md
 docs/AnalyzeTypeEnum.md
-docs/ApplyDatasetBindingParams.md
+docs/ApplyDatasetMappingsParams.md
 docs/BBoxImageData.md
 docs/BBoxImageScatterLabel.md
 docs/BBoxImageViz.md
@@ -361,7 +361,7 @@ model_analyze_graph_params.go
 model_analyze_graph_response.go
 model_analyze_params.go
 model_analyze_type_enum.go
-model_apply_dataset_binding_params.go
+model_apply_dataset_mappings_params.go
 model_b_box_image_data.go
 model_b_box_image_scatter_label.go
 model_b_box_image_viz.go
