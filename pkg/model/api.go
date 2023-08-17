@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
+	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
@@ -39,6 +40,8 @@ func ImportModel(ctx context.Context, filePath, projectId, message, modelType, b
 	}
 	if len(datasetId) > 0 {
 		importModelParams.DatasetId = &datasetId
+		mappingYaml := code.GetBinderYaml(ctx, datasetId)
+		importModelParams.MappingYaml = &mappingYaml
 	}
 	importModelData, _, err := api.ApiClient.ImportModel(ctx).ImportNewModelParams(importModelParams).Execute()
 	if err != nil {

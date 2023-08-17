@@ -26,7 +26,7 @@ lint:
 
 .PHONY: fmt
 fmt:
-	@go fmt ./...
+	@gofmt -w **/*.go
 
 .PHONY: check-fmt
 check-fmt:

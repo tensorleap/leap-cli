@@ -11,12 +11,13 @@ Name | Type | Description | Notes
 **DataStates** | [**[]DataStateForEval**](DataStateForEval.md) |  | 
 **ShouldRunPopulationExploration** | **bool** |  | 
 **EvaluatedEpoch** | **float64** |  | 
+**Name** | **string** |  | 
 
 ## Methods
 
 ### NewEvaluateParams
 
-`func NewEvaluateParams(versionId string, projectId string, sessionId string, batchSize float64, dataStates []DataStateForEval, shouldRunPopulationExploration bool, evaluatedEpoch float64, ) *EvaluateParams`
+`func NewEvaluateParams(versionId string, projectId string, sessionId string, batchSize float64, dataStates []DataStateForEval, shouldRunPopulationExploration bool, evaluatedEpoch float64, name string, ) *EvaluateParams`
 
 NewEvaluateParams instantiates a new EvaluateParams object
 This constructor will assign default values to properties that have it defined,
@@ -169,6 +170,26 @@ and a boolean to check if the value has been set.
 `func (o *EvaluateParams) SetEvaluatedEpoch(v float64)`
 
 SetEvaluatedEpoch sets EvaluatedEpoch field to given value.
+
+
+### GetName
+
+`func (o *EvaluateParams) GetName() string`
+
+GetName returns the Name field if non-nil, zero value otherwise.
+
+### GetNameOk
+
+`func (o *EvaluateParams) GetNameOk() (*string, bool)`
+
+GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetName
+
+`func (o *EvaluateParams) SetName(v string)`
+
+SetName sets Name field to given value.
 
 
 

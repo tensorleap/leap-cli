@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.360
+  version: 0.0.364
 servers:
 - url: /api/v2
 paths:
@@ -526,6 +526,25 @@ paths:
       security:
       - jwt:
         - not-demo
+  /graph/applyDatasetBinding:
+    post:
+      operationId: ApplyDatasetBinding
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplyDatasetBindingParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelGraph'
+          description: Ok
+      security:
+      - jwt: []
   /insights/getSessionInsights:
     post:
       operationId: GetSessionInsights
@@ -1271,6 +1290,36 @@ paths:
           description: No content
       security:
       - jwt: []
+  /sessions/updateSessionName:
+    post:
+      operationId: UpdateSessionName
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSessionNameParams'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
+  /sessionsruns/updateSessionRunName:
+    post:
+      operationId: UpdateSessionRunName
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSessionRunNameParams'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
   /sessions-tests/createSessionTest:
     post:
       operationId: CreateSessionTest
@@ -1845,6 +1894,22 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetDownloadSignedUrlResponse'
           description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /versions/updateVersionName:
+    post:
+      operationId: UpdateVersionName
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateVersionNameParams'
+        required: true
+      responses:
+        "204":
+          description: No content
       security:
       - jwt:
         - not-demo
@@ -5450,6 +5515,7 @@ components:
       additionalProperties: false
       example:
         versionId: versionId
+        name: name
         dataStates:
         - null
         - null
@@ -5477,10 +5543,13 @@ components:
         evaluatedEpoch:
           format: double
           type: number
+        name:
+          type: string
       required:
       - batchSize
       - dataStates
       - evaluatedEpoch
+      - name
       - projectId
       - sessionId
       - shouldRunPopulationExploration
@@ -5976,6 +6045,22 @@ components:
       required:
       - digest
       - projectId
+      type: object
+    ApplyDatasetBindingParams:
+      additionalProperties: false
+      example:
+        modelGraph:
+          nodes: "{}"
+          id: id
+        yaml: yaml
+      properties:
+        modelGraph:
+          $ref: '#/components/schemas/ModelGraph'
+        yaml:
+          type: string
+      required:
+      - modelGraph
+      - yaml
       type: object
     ScatterInsightType:
       enum:
@@ -9491,6 +9576,42 @@ components:
       - projectId
       - sessionRunId
       type: object
+    UpdateSessionNameParams:
+      additionalProperties: false
+      example:
+        name: name
+        projectId: projectId
+        cid: cid
+      properties:
+        cid:
+          type: string
+        projectId:
+          type: string
+        name:
+          type: string
+      required:
+      - cid
+      - name
+      - projectId
+      type: object
+    UpdateSessionRunNameParams:
+      additionalProperties: false
+      example:
+        name: name
+        projectId: projectId
+        cid: cid
+      properties:
+        cid:
+          type: string
+        name:
+          type: string
+        projectId:
+          type: string
+      required:
+      - cid
+      - name
+      - projectId
+      type: object
     ClientFilterParams:
       additionalProperties: false
       example:
@@ -10315,6 +10436,7 @@ components:
       example:
         modelName: modelName
         fileName: fileName
+        mappingYaml: mappingYaml
         model_type: null
         datasetId: datasetId
         branchName: branchName
@@ -10338,6 +10460,8 @@ components:
           $ref: '#/components/schemas/ImportModelType'
         transform_inputs:
           type: boolean
+        mappingYaml:
+          type: string
       required:
       - fileName
       - modelName
@@ -11475,6 +11599,24 @@ components:
           type: string
       required:
       - fileName
+      type: object
+    UpdateVersionNameParams:
+      additionalProperties: false
+      example:
+        name: name
+        projectId: projectId
+        cid: cid
+      properties:
+        cid:
+          type: string
+        projectId:
+          type: string
+        name:
+          type: string
+      required:
+      - cid
+      - name
+      - projectId
       type: object
     ImageViz:
       additionalProperties: false

@@ -1,9 +1,15 @@
 package code
 
 import (
+	"archive/tar"
+	"bytes"
+	"compress/gzip"
 	"context"
+	"errors"
 	"fmt"
+	"io"
 	"io/fs"
+	"net/http"
 	"os"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
@@ -80,6 +86,41 @@ func CloneCodeIntegrationVersion(ctx context.Context, codeIntegrationVersion *te
 		return nil, err
 	}
 	return files, nil
+}
+
+func FetchFileFromTarGz(blobURL string, filename string) (string, error) {
+	resp, err := http.Get(blobURL)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	gz, err := gzip.NewReader(resp.Body)
+	if err != nil {
+		return "", err
+	}
+	defer gz.Close()
+
+	tarReader := tar.NewReader(gz)
+	for {
+		header, err := tarReader.Next()
+		if errors.Is(err, io.EOF) {
+			break
+		}
+		if err != nil {
+			return "", err
+		}
+
+		if header.Name == filename {
+			var buf bytes.Buffer
+			if _, err := io.Copy(&buf, tarReader); err != nil {
+				return "", err
+			}
+			return buf.String(), nil
+		}
+	}
+
+	return "", errors.New("file not found in tar.gz")
 }
 
 func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.WorkspaceConfig) (close func(), tarGzFile *os.File, err error) {
@@ -234,4 +275,30 @@ func IsCodeParseFailed(codeIntegrationVersion *CodeIntegrationVersion) bool {
 
 func IsCodeParsing(codeIntegrationVersion *CodeIntegrationVersion) bool {
 	return codeIntegrationVersion.TestStatus == tensorleapapi.TESTSTATUS_DURING_TEST || codeIntegrationVersion.TestStatus == tensorleapapi.TESTSTATUS_BEFORE_TEST
+}
+
+func GetBinderYaml(ctx context.Context, codeIntegrationId string) string {
+	codeIntegrationVersion, err := GetLatestVersion(ctx, codeIntegrationId)
+	if err != nil {
+		return ""
+	}
+
+	if isDatasetVersionEmpty(codeIntegrationVersion) {
+		return ""
+	}
+
+	blobPath := codeIntegrationVersion.GetBlobPath()
+	res, _, err := api.ApiClient.GetDownloadSignedUrl(ctx).
+		GetDownloadSignedUrlParams(*tensorleapapi.NewGetDownloadSignedUrlParams(blobPath)).
+		Execute()
+	if err != nil {
+		return ""
+	}
+
+	content, err := FetchFileFromTarGz(res.Url, BindingFilePath)
+	if err != nil {
+		return ""
+	}
+
+	return string(content)
 }
