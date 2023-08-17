@@ -19,6 +19,7 @@ func NewInstallCmd() *cobra.Command {
 	var useGpu bool
 	var useCpu bool
 	var datasetDirectory string
+	var disableMetrics bool
 
 	cmd := &cobra.Command{
 		Use:   "install",
@@ -88,7 +89,7 @@ func NewInstallCmd() *cobra.Command {
 			}
 
 			dataContainerPath := strings.Split(datasetDirectory, ":")[1]
-			if err := server.InstallHelm(useGpu, dataContainerPath); err != nil {
+			if err := server.InstallHelm(useGpu, dataContainerPath, disableMetrics); err != nil {
 				return err
 			}
 
@@ -114,7 +115,7 @@ func NewInstallCmd() *cobra.Command {
 	cmd.Flags().BoolVar(&useGpu, "gpu", false, "Enable GPU usage for training and evaluating")
 	cmd.Flags().BoolVar(&useCpu, "cpu", false, "Use CPU for training and evaluating")
 	cmd.Flags().StringVar(&datasetDirectory, "dataset-dir", "", "Dataset directory maps the user's local directory to the container's directory, enabling access to code integration for training and evaluation")
-
+	cmd.Flags().BoolVar(&disableMetrics, "disable-metrics", false, "Disable metrics collection")
 	return cmd
 }
 

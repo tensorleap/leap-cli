@@ -15,9 +15,12 @@ func TestCreateTensorleapChartValues(t *testing.T) {
 				"gpu":                useGpu,
 				"localDataDirectory": dataDir,
 			},
+			"node-server": Record{
+				"disableDatadogMetrics": false,
+			},
 		}
 
-		result := CreateTensorleapChartValues(useGpu, dataDir)
+		result := CreateTensorleapChartValues(useGpu, dataDir, false)
 
 		assert.Equal(t, expected, result)
 	})

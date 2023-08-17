@@ -33,11 +33,14 @@ func IsHelmReleaseExists(config *HelmConfig) (bool, error) {
 	return true, nil
 }
 
-func CreateTensorleapChartValues(useGpu bool, dataDir string) Record {
+func CreateTensorleapChartValues(useGpu bool, dataDir string, disableMetrics bool) Record {
 	return Record{
 		"tensorleap-engine": Record{
 			"gpu":                useGpu,
 			"localDataDirectory": dataDir,
+		},
+		"node-server": Record{
+			"disableDatadogMetrics": disableMetrics,
 		},
 	}
 }
