@@ -64,7 +64,7 @@ func GetDefaultDataVolume() string {
 	return defaultDataPath
 }
 
-func InstallHelm(useGpu bool, dataContainerPath string) error {
+func InstallHelm(useGpu bool, dataContainerPath string, disableMetrics bool) error {
 	log.SendCloudReport("info", "Installing helm", "Running", nil)
 	helmConfig, err := helm.CreateHelmConfig(KUBE_CONTEXT, KUBE_NAMESPACE)
 	if err != nil {
@@ -89,7 +89,7 @@ func InstallHelm(useGpu bool, dataContainerPath string) error {
 			return err
 		}
 	} else {
-		values := helm.CreateTensorleapChartValues(useGpu, dataContainerPath)
+		values := helm.CreateTensorleapChartValues(useGpu, dataContainerPath, disableMetrics)
 		log.SendCloudReport("info", "Setting up helm repo", "Running", &map[string]interface{}{"isHelmReleaseExisted": isHelmReleaseExisted})
 		if err := helm.InstallLatestTensorleapChartVersion(
 			helmConfig,
