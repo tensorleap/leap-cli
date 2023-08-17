@@ -38,6 +38,10 @@ const (
 	Success  MessageState = "Success"
 )
 
+func DisableReporting() {
+	disableResporting = true
+}
+
 func SendCloudReport(messageLevel MessageLevel, message string, messageState MessageState, payload *map[string]interface{}) {
 	switch messageState {
 	case Starting, Running, Success:

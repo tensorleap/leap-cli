@@ -21,6 +21,8 @@ func NewInstallCmd() *cobra.Command {
 	var datasetDirectory string
 	var disableMetrics bool
 	var fixK3dDns bool
+	var tag string
+	var airgapInstallationFilePath string
 
 	cmd := &cobra.Command{
 		Use:   "install",
@@ -29,18 +31,25 @@ func NewInstallCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			log.SetCommandName("install")
 
-			err := k3d.CheckDockerRequirements()
-			if err != nil {
-				log.SendCloudReport("error", "Docker requirements not met", "Failed",
-					&map[string]interface{}{"error": err.Error()})
-				return err
-			}
-
 			close, err := local.SetupInfra("install")
 			if err != nil {
 				return err
 			}
 			defer close()
+
+			mnf, isAirgap, chart, err := server.InitInstallationProcess(airgapInstallationFilePath, tag)
+			if err != nil {
+				return err
+			}
+
+			log.SendCloudReport("info", "Starting install", "Starting", &map[string]interface{}{"manifest": mnf})
+
+			err = k3d.CheckDockerRequirements(mnf.Images.CheckDockerRequirement, isAirgap)
+			if err != nil {
+				log.SendCloudReport("error", "Docker requirements not met", "Failed",
+					&map[string]interface{}{"error": err.Error()})
+				return err
+			}
 
 			if err := server.InitUseGPU(&useGpu, useCpu); err != nil {
 				log.SendCloudReport("error", "Failed to initializing with gpu", "Failed",
@@ -68,7 +77,7 @@ func NewInstallCmd() *cobra.Command {
 				k3d.FixDockerDns()
 			}
 
-			registry, err := k3d.CreateLocalRegistry(ctx, registryPort, registryVolumes)
+			registry, err := k3d.CreateLocalRegistry(ctx, mnf.Images.Register, registryPort, registryVolumes)
 			if err != nil {
 				return err
 			}
@@ -78,14 +87,13 @@ func NewInstallCmd() *cobra.Command {
 				return err
 			}
 
-			imagesToCache, imageToCacheInTheBackground, err := local.GetLatestImages(useGpu)
-			if err != nil {
-				return err
-			}
-			k3d.CacheImagesInParallel(ctx, imagesToCache, registryPortStr)
+			imagesToCache, imageToCacheInTheBackground := server.CalcWhichImagesToCache(mnf, useGpu, isAirgap)
+
+			k3d.CacheImagesInParallel(ctx, imagesToCache, registryPortStr, isAirgap)
 
 			if err := k3d.CreateCluster(
 				ctx,
+				mnf,
 				port,
 				[]string{fmt.Sprintf("%v:%v", local.STANDALONE_DIR, local.STANDALONE_DIR), datasetDirectory},
 				useGpu,
@@ -94,12 +102,13 @@ func NewInstallCmd() *cobra.Command {
 			}
 
 			dataContainerPath := strings.Split(datasetDirectory, ":")[1]
-			if err := server.InstallHelm(useGpu, dataContainerPath, disableMetrics); err != nil {
+			if err := server.InstallHelm(mnf.ServerHelmChart, chart, useGpu, dataContainerPath, disableMetrics); err != nil {
 				return err
 			}
-
-			if err := k3d.CacheImageInTheBackground(ctx, imageToCacheInTheBackground); err != nil {
-				return err
+			if len(imageToCacheInTheBackground) > 0 {
+				if err := k3d.CacheImageInTheBackground(ctx, imageToCacheInTheBackground); err != nil {
+					return err
+				}
 			}
 			baseLink := fmt.Sprintf("http://127.0.0.1:%v", port)
 			apiLink := fmt.Sprintf("%s/api/v2", baseLink)
@@ -122,7 +131,8 @@ func NewInstallCmd() *cobra.Command {
 	cmd.Flags().StringVar(&datasetDirectory, "dataset-dir", "", "Dataset directory maps the user's local directory to the container's directory, enabling access to code integration for training and evaluation")
 	cmd.Flags().BoolVar(&disableMetrics, "disable-metrics", false, "Disable metrics collection")
 	cmd.Flags().BoolVar(&fixK3dDns, "fix-dns", false, "Fix DNS issue with docker, in case you are having issue with internet connection in the container")
-
+	cmd.Flags().StringVarP(&tag, "tag", "t", "", "Tag to be used for tensorleap installation, default is latest")
+	cmd.Flags().StringVar(&airgapInstallationFilePath, "airgap", "", "Installation file path for air-gap installation")
 	return cmd
 }
 

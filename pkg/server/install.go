@@ -8,6 +8,8 @@ import (
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/tensorleap/leap-cli/pkg/helm"
 	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/server/manifest"
+	"helm.sh/helm/v3/pkg/chart"
 )
 
 func InitUseGPU(useGpu *bool, useCpu bool) error {
@@ -64,7 +66,7 @@ func GetDefaultDataVolume() string {
 	return defaultDataPath
 }
 
-func InstallHelm(useGpu bool, dataContainerPath string, disableMetrics bool) error {
+func InstallHelm(chartMeta manifest.HelmChartMeta, chart *chart.Chart, useGpu bool, dataContainerPath string, disableMetrics bool) error {
 	log.SendCloudReport("info", "Installing helm", "Running", nil)
 	helmConfig, err := helm.CreateHelmConfig(KUBE_CONTEXT, KUBE_NAMESPACE)
 	if err != nil {
@@ -73,7 +75,7 @@ func InstallHelm(useGpu bool, dataContainerPath string, disableMetrics bool) err
 		return err
 	}
 
-	isHelmReleaseExisted, err := helm.IsHelmReleaseExists(helmConfig)
+	isHelmReleaseExisted, err := helm.IsHelmReleaseExists(helmConfig, chartMeta)
 	if err != nil {
 		log.SendCloudReport("error", "Failed checking if helm release exists", "Failed",
 			&map[string]interface{}{"helmConfig": helmConfig, "error": err.Error()})
@@ -84,6 +86,8 @@ func InstallHelm(useGpu bool, dataContainerPath string, disableMetrics bool) err
 		log.SendCloudReport("info", "Running helm upgrade", "Running", &map[string]interface{}{"isHelmReleaseExisted": isHelmReleaseExisted})
 		if err := helm.UpgradeTensorleapChartVersion(
 			helmConfig,
+			chartMeta,
+			chart,
 			values,
 		); err != nil {
 			log.SendCloudReport("error", "Failed upgrading helm charts versions", "Failed",
@@ -92,8 +96,10 @@ func InstallHelm(useGpu bool, dataContainerPath string, disableMetrics bool) err
 		}
 	} else {
 		log.SendCloudReport("info", "Setting up helm repo", "Running", &map[string]interface{}{"isHelmReleaseExisted": isHelmReleaseExisted})
-		if err := helm.InstallLatestTensorleapChartVersion(
+		if err := helm.InstallChart(
 			helmConfig,
+			chartMeta,
+			chart,
 			values,
 		); err != nil {
 			log.SendCloudReport("error", "Failed installing latest chart versions", "Failed",

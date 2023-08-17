@@ -17,8 +17,9 @@ import (
 	cliutil "github.com/k3d-io/k3d/v5/cmd/util"
 	"github.com/k3d-io/k3d/v5/pkg/client"
 	"github.com/k3d-io/k3d/v5/pkg/runtimes"
-	dockerRuntime "github.com/k3d-io/k3d/v5/pkg/runtimes/docker"
+
 	k3d "github.com/k3d-io/k3d/v5/pkg/types"
+	"github.com/tensorleap/leap-cli/pkg/docker"
 	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
@@ -63,7 +64,7 @@ func GetRegistryPort(ctx context.Context, reg *Registry) (string, error) {
 	return regPort, nil
 }
 
-func CreateLocalRegistry(ctx context.Context, port uint, volumes []string) (*Registry, error) {
+func CreateLocalRegistry(ctx context.Context, imageName string, port uint, volumes []string) (*Registry, error) {
 	if existingRegistry, _ := client.RegistryGet(ctx, runtimes.SelectedRuntime, REGISTRY_NAME); existingRegistry != nil {
 		log.Println("Found existing registry!")
 		log.SendCloudReport("info", "Found existing registry", "Running", &map[string]interface{}{"registryName": REGISTRY_NAME, "existingRegistry": existingRegistry})
@@ -71,7 +72,7 @@ func CreateLocalRegistry(ctx context.Context, port uint, volumes []string) (*Reg
 		return existingRegistry, nil
 	}
 
-	reg := createRegistryConfig(port, volumes)
+	reg := createRegistryConfig(imageName, port, volumes)
 	_, err := client.RegistryRun(ctx, runtimes.SelectedRuntime, reg)
 	if err != nil {
 		log.SendCloudReport("error", "Failed running k3d registry", "Failed",
@@ -83,7 +84,7 @@ func CreateLocalRegistry(ctx context.Context, port uint, volumes []string) (*Reg
 	return reg, nil
 }
 
-func createRegistryConfig(port uint, volumes []string) *Registry {
+func createRegistryConfig(imageName string, port uint, volumes []string) *Registry {
 	exposePort, err := cliutil.ParsePortExposureSpec(strconv.FormatUint(uint64(port), 10), k3d.DefaultRegistryPort)
 	if err != nil {
 		log.SendCloudReport("error", "Failed creating k3d registry config", "Failed",
@@ -93,7 +94,7 @@ func createRegistryConfig(port uint, volumes []string) *Registry {
 
 	reg := &Registry{
 		Host:         REGISTRY_NAME,
-		Image:        fmt.Sprintf("%s:%s", k3d.DefaultRegistryImageRepo, k3d.DefaultRegistryImageTag),
+		Image:        imageName,
 		ExposureOpts: *exposePort,
 		Network:      k3d.DefaultRuntimeNetwork,
 		Volumes:      volumes,
@@ -135,6 +136,10 @@ func isImageInRegistry(ctx context.Context, image string, regPort string) (bool,
 
 	resp, err := http.Get(tagsListUrl)
 	if err != nil {
+		// In arirgap mode, the registry will return EOF when the image is not found
+		if strings.HasSuffix(err.Error(), "EOF") {
+			return false, nil
+		}
 		return false, err
 	}
 	defer resp.Body.Close()
@@ -142,7 +147,7 @@ func isImageInRegistry(ctx context.Context, image string, regPort string) (bool,
 		return false, nil
 	}
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return false, fmt.Errorf("Local registry returned bad status code: %v", resp.StatusCode)
+		return false, fmt.Errorf("local registry returned bad status code: %v", resp.StatusCode)
 	}
 
 	tagsListRaw, err := io.ReadAll(resp.Body)
@@ -164,7 +169,7 @@ func isImageInRegistry(ctx context.Context, image string, regPort string) (bool,
 	return false, nil
 }
 
-func CacheImage(ctx context.Context, image string, regPort string) error {
+func CacheImage(ctx context.Context, image string, regPort string, isAirgap bool) error {
 	imageAlreadyInRegistry, err := isImageInRegistry(ctx, image, regPort)
 	if err != nil {
 		return err
@@ -174,24 +179,25 @@ func CacheImage(ctx context.Context, image string, regPort string) error {
 		return nil
 	}
 
-	dockerClient, err := dockerRuntime.GetDockerClient()
+	dockerClient, err := docker.NewClient()
 	if err != nil {
 		return err
 	}
 
-	resp, err := dockerClient.ImagePull(ctx, image, dockerTypes.ImagePullOptions{})
-	if err != nil {
-		return fmt.Errorf("docker failed to pull the image '%s': %w", image, err)
-	}
-	defer resp.Close()
+	if !isAirgap {
+		resp, err := dockerClient.ImagePull(ctx, image, dockerTypes.ImagePullOptions{})
+		if err != nil {
+			return fmt.Errorf("docker failed to pull the image '%s': %w", image, err)
+		}
+		defer resp.Close()
+		log.Infof("Pulling image '%s'\n", image)
 
-	log.Infof("Pulling image '%s'\n", image)
-
-	// this prints out status of the pull, consider having that under some flags or doing fancy stuff to display it
-	// _, err = io.Copy(os.Stdout, resp)
-	_, err = io.Copy(io.Discard, resp)
-	if err != nil {
-		log.Warnf("Couldn't get docker output: %v", err)
+		// this prints out status of the pull, consider having that under some flags or doing fancy stuff to display it
+		// _, err = io.Copy(os.Stdout, resp)
+		_, err = io.Copy(io.Discard, resp)
+		if err != nil {
+			log.Warnf("Couldn't get docker output: %v", err)
+		}
 	}
 
 	targetImage := fmt.Sprintf(
@@ -206,7 +212,7 @@ func CacheImage(ctx context.Context, image string, regPort string) error {
 		return err
 	}
 
-	resp, err = dockerClient.ImagePush(ctx, targetImage, dockerTypes.ImagePushOptions{
+	resp, err := dockerClient.ImagePush(ctx, targetImage, dockerTypes.ImagePushOptions{
 		RegistryAuth: "empty auth",
 	})
 	if err != nil {
@@ -226,14 +232,14 @@ func CacheImage(ctx context.Context, image string, regPort string) error {
 	return nil
 }
 
-func CacheImagesInParallel(ctx context.Context, images []string, regPort string) {
+func CacheImagesInParallel(ctx context.Context, images []string, regPort string, isAirgap bool) {
 	var wg sync.WaitGroup
 	log.Info("Downloading docker images...")
 	for _, img := range images {
 		wg.Add(1)
 		go func(img string) {
 			defer wg.Done()
-			if err := CacheImage(ctx, img, regPort); err != nil {
+			if err := CacheImage(ctx, img, regPort, isAirgap); err != nil {
 				log.SendCloudReport("error", "Failed caching image", "Failed", &map[string]interface{}{"image": img, "error": err.Error()})
 				log.Fatalf("Failed to cache %s: %s", img, err)
 			}
@@ -253,7 +259,7 @@ func CacheImageInTheBackground(ctx context.Context, image string) error {
 		return err
 	}
 
-	dockerClient, err := dockerRuntime.GetDockerClient()
+	dockerClient, err := docker.NewClient()
 	if err != nil {
 		log.SendCloudReport("error", "Failed fetching docker client", "Failed", &map[string]interface{}{"error": err.Error()})
 		return err
@@ -285,7 +291,7 @@ func CacheImageInTheBackground(ctx context.Context, image string) error {
 	return dockerClient.ContainerExecStart(ctx, exec.ID, dockerTypes.ExecStartCheck{})
 }
 
-func CheckDockerRequirements() error {
+func CheckDockerRequirements(checkDockerRequirementImage string, isAirgap bool) error {
 	if os.Getenv("DISABLE_DOCKER_CHECKS") == "true" {
 		return nil
 	}
@@ -301,31 +307,32 @@ func CheckDockerRequirements() error {
 	}
 
 	log.Println("Checking docker memory limits...")
-	cmd = exec.Command("sh", "-c", "docker info -f '{{json .MemTotal}}'")
-	dockerMemoryBytes, err := cmd.Output()
+	dockerClient, err := docker.NewClient()
+	if err != nil {
+		return fmt.Errorf("docker failed to get client: %w", err)
+	}
+	dockerInfo, err := dockerClient.Info(context.Background())
 	if err != nil {
 		log.Fatalf("Failed getting docker info, %s", err)
 		return err
 	}
-	dockerMemory := int64(0)
-	if err := json.Unmarshal(dockerMemoryBytes, &dockerMemory); err != nil {
-		log.Fatalf("Failed parsing memory data, %s", err)
-		return err
-	}
-	dockerMemoryPretty := fmt.Sprintf("%dGb", dockerMemory/(1024*1024*1024))
+	dockerMemoryPretty := fmt.Sprintf("%dGb", dockerInfo.MemTotal/(1024*1024*1024))
 	log.Printf("Docker has %s memory available.\n", dockerMemoryPretty)
 
 	log.Println("Checking docker storage limits...")
-	cmd = exec.Command("sh", "-c", "docker pull alpine")
-	_, err = cmd.CombinedOutput()
-	if err != nil {
-		log.Fatalf("Failed pulling alpine image, %s", err)
+
+	if !isAirgap {
+		_, err = dockerClient.ImagePull(context.Background(), checkDockerRequirementImage, dockerTypes.ImagePullOptions{})
+		if err != nil {
+			log.Fatalf("Failed pulling  %s image, %s", checkDockerRequirementImage, err)
+		}
 	}
 
-	cmd = exec.Command("sh", "-c", "docker run --rm alpine df -t overlay -P")
+	runCmdStr := fmt.Sprintf("docker run --rm %s df -t overlay -P", checkDockerRequirementImage)
+	cmd = exec.Command("sh", "-c", runCmdStr)
 	dfOutputBytes, err := cmd.Output()
 	if err != nil {
-		log.Fatalf("Failed pulling alpine, %s", err)
+		log.Fatalf("Failed pulling %s, %s", checkDockerRequirementImage, err)
 		return err
 	}
 	// the output looks like this:
@@ -341,7 +348,7 @@ func CheckDockerRequirements() error {
 	log.Printf("Docker has %s free storage available (%s total).\n", dockerFreeStoragePretty, dockerTotalStoragePretty)
 	var noResources bool
 
-	if dockerMemory < int64(REQUIRED_MEMORY) {
+	if dockerInfo.MemTotal < int64(REQUIRED_MEMORY) {
 		log.Printf("Please increase docker memory limit to at least %s\n", REQUIRED_MEMORY_PRETTY)
 		noResources = true
 	}
