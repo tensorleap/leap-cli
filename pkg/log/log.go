@@ -61,6 +61,13 @@ func Fatalf(format string, args ...interface{}) {
 	VerboseLogger.Fatalf(format, args...)
 }
 
+func GetLevel() logrus.Level {
+	if os.Getenv("VERBOSE") == "true" {
+		return logrus.DebugLevel
+	}
+	return logrus.InfoLevel
+}
+
 func init() {
 
 	textFormat := &logrus.TextFormatter{
