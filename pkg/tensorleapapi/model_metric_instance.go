@@ -19,7 +19,7 @@ var _ MappedNullable = &MetricInstance{}
 
 // MetricInstance struct for MetricInstance
 type MetricInstance struct {
-	Name string `json:"name"`
+	Name     string   `json:"name"`
 	ArgNames []string `json:"arg_names"`
 }
 
@@ -91,7 +91,7 @@ func (o *MetricInstance) SetArgNames(v []string) {
 }
 
 func (o MetricInstance) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableMetricInstance) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

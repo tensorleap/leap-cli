@@ -19,7 +19,7 @@ var _ MappedNullable = &DatasetInputInstance{}
 
 // DatasetInputInstance struct for DatasetInputInstance
 type DatasetInputInstance struct {
-	Name string `json:"name"`
+	Name  string    `json:"name"`
 	Shape []float64 `json:"shape"`
 }
 
@@ -91,7 +91,7 @@ func (o *DatasetInputInstance) SetShape(v []float64) {
 }
 
 func (o DatasetInputInstance) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableDatasetInputInstance) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

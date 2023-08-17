@@ -19,10 +19,10 @@ var _ MappedNullable = &DatasetMetadata{}
 
 // DatasetMetadata struct for DatasetMetadata
 type DatasetMetadata struct {
-	Setup *DatasetSetup `json:"setup,omitempty"`
-	SetupStatus *DatasetSetupStatus `json:"setupStatus,omitempty"`
-	ModelSetup *ModelSetup `json:"modelSetup,omitempty"`
-	SecretManagerId *string `json:"secretManagerId,omitempty"`
+	Setup           *DatasetSetup       `json:"setup,omitempty"`
+	SetupStatus     *DatasetSetupStatus `json:"setupStatus,omitempty"`
+	ModelSetup      *ModelSetup         `json:"modelSetup,omitempty"`
+	SecretManagerId *string             `json:"secretManagerId,omitempty"`
 }
 
 // NewDatasetMetadata instantiates a new DatasetMetadata object
@@ -171,7 +171,7 @@ func (o *DatasetMetadata) SetSecretManagerId(v string) {
 }
 
 func (o DatasetMetadata) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -230,5 +230,3 @@ func (v *NullableDatasetMetadata) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

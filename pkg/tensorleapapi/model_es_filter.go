@@ -20,9 +20,9 @@ var _ MappedNullable = &ESFilter{}
 // ESFilter struct for ESFilter
 type ESFilter struct {
 	Operator FilterOperatorType `json:"operator"`
-	Field string `json:"field"`
-	Disable *bool `json:"disable,omitempty"`
-	Value ESFilterValue `json:"value"`
+	Field    string             `json:"field"`
+	Disable  *bool              `json:"disable,omitempty"`
+	Value    ESFilterValue      `json:"value"`
 }
 
 // NewESFilter instantiates a new ESFilter object
@@ -150,7 +150,7 @@ func (o *ESFilter) SetValue(v ESFilterValue) {
 }
 
 func (o ESFilter) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -203,5 +203,3 @@ func (v *NullableESFilter) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

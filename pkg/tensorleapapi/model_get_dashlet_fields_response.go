@@ -20,8 +20,8 @@ var _ MappedNullable = &GetDashletFieldsResponse{}
 // GetDashletFieldsResponse struct for GetDashletFieldsResponse
 type GetDashletFieldsResponse struct {
 	AggregatableFields []string `json:"aggregatableFields"`
-	NumericFields []string `json:"numericFields"`
-	StringFields []string `json:"stringFields"`
+	NumericFields      []string `json:"numericFields"`
+	StringFields       []string `json:"stringFields"`
 }
 
 // NewGetDashletFieldsResponse instantiates a new GetDashletFieldsResponse object
@@ -117,7 +117,7 @@ func (o *GetDashletFieldsResponse) SetStringFields(v []string) {
 }
 
 func (o GetDashletFieldsResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -167,5 +167,3 @@ func (v *NullableGetDashletFieldsResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

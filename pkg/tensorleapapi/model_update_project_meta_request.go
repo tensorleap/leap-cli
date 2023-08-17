@@ -19,14 +19,14 @@ var _ MappedNullable = &UpdateProjectMetaRequest{}
 
 // UpdateProjectMetaRequest struct for UpdateProjectMetaRequest
 type UpdateProjectMetaRequest struct {
-	Name string `json:"name"`
-	Description string `json:"description"`
-	Tags []string `json:"tags"`
+	Name             string           `json:"name"`
+	Description      string           `json:"description"`
+	Tags             []string         `json:"tags"`
 	HubPublishPolicy HubPublishPolicy `json:"hubPublishPolicy"`
-	BgImageUrl *string `json:"bgImageUrl,omitempty"`
+	BgImageUrl       *string          `json:"bgImageUrl,omitempty"`
 	// Construct a type with a set of properties K of type T
 	Categories map[string]interface{} `json:"categories,omitempty"`
-	ProjectId string `json:"projectId"`
+	ProjectId  string                 `json:"projectId"`
 }
 
 // NewUpdateProjectMetaRequest instantiates a new UpdateProjectMetaRequest object
@@ -236,7 +236,7 @@ func (o *UpdateProjectMetaRequest) SetProjectId(v string) {
 }
 
 func (o UpdateProjectMetaRequest) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -294,5 +294,3 @@ func (v *NullableUpdateProjectMetaRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

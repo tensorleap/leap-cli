@@ -20,7 +20,7 @@ type Direction string
 
 // List of Direction
 const (
-	DIRECTION_UP Direction = "up"
+	DIRECTION_UP   Direction = "up"
 	DIRECTION_DOWN Direction = "down"
 )
 
@@ -108,4 +108,3 @@ func (v *NullableDirection) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

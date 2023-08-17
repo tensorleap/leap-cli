@@ -19,7 +19,7 @@ var _ MappedNullable = &AllSessionsTestResults{}
 
 // AllSessionsTestResults struct for AllSessionsTestResults
 type AllSessionsTestResults struct {
-	TestId string `json:"testId"`
+	TestId          string              `json:"testId"`
 	SessionsResults []SessionTestResult `json:"sessionsResults"`
 }
 
@@ -91,7 +91,7 @@ func (o *AllSessionsTestResults) SetSessionsResults(v []SessionTestResult) {
 }
 
 func (o AllSessionsTestResults) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableAllSessionsTestResults) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

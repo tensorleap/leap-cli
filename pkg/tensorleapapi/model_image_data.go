@@ -19,7 +19,7 @@ var _ MappedNullable = &ImageData{}
 
 // ImageData struct for ImageData
 type ImageData struct {
-	Blob string `json:"blob"`
+	Blob string       `json:"blob"`
 	Type DataTypeEnum `json:"type"`
 }
 
@@ -91,7 +91,7 @@ func (o *ImageData) SetType(v DataTypeEnum) {
 }
 
 func (o ImageData) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableImageData) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

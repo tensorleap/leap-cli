@@ -20,12 +20,12 @@ type LeapDataType string
 
 // List of LeapDataType
 const (
-	LEAPDATATYPE_IMAGE LeapDataType = "Image"
-	LEAPDATATYPE_TEXT LeapDataType = "Text"
-	LEAPDATATYPE_GRAPH LeapDataType = "Graph"
-	LEAPDATATYPE_HORIZONTAL_BAR LeapDataType = "HorizontalBar"
-	LEAPDATATYPE_IMAGE_MASK LeapDataType = "ImageMask"
-	LEAPDATATYPE_TEXT_MASK LeapDataType = "TextMask"
+	LEAPDATATYPE_IMAGE            LeapDataType = "Image"
+	LEAPDATATYPE_TEXT             LeapDataType = "Text"
+	LEAPDATATYPE_GRAPH            LeapDataType = "Graph"
+	LEAPDATATYPE_HORIZONTAL_BAR   LeapDataType = "HorizontalBar"
+	LEAPDATATYPE_IMAGE_MASK       LeapDataType = "ImageMask"
+	LEAPDATATYPE_TEXT_MASK        LeapDataType = "TextMask"
 	LEAPDATATYPE_IMAGE_WITH_B_BOX LeapDataType = "ImageWithBBox"
 )
 
@@ -118,4 +118,3 @@ func (v *NullableLeapDataType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

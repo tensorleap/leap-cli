@@ -19,14 +19,14 @@ var _ MappedNullable = &DatasetSetup{}
 
 // DatasetSetup struct for DatasetSetup
 type DatasetSetup struct {
-	Preprocess DatasetPreprocess `json:"preprocess"`
-	Inputs []DatasetInputInstance `json:"inputs"`
-	Metadata []DatasetMetadataInstance `json:"metadata"`
-	Outputs []DatasetOutputInstance `json:"outputs"`
-	Visualizers []VisualizerInstance `json:"visualizers"`
-	PredictionTypes []PredictionTypeInstance `json:"prediction_types"`
-	CustomLosses []CustomLossInstance `json:"custom_losses"`
-	Metrics []MetricInstance `json:"metrics"`
+	Preprocess      DatasetPreprocess         `json:"preprocess"`
+	Inputs          []DatasetInputInstance    `json:"inputs"`
+	Metadata        []DatasetMetadataInstance `json:"metadata"`
+	Outputs         []DatasetOutputInstance   `json:"outputs"`
+	Visualizers     []VisualizerInstance      `json:"visualizers"`
+	PredictionTypes []PredictionTypeInstance  `json:"prediction_types"`
+	CustomLosses    []CustomLossInstance      `json:"custom_losses"`
+	Metrics         []MetricInstance          `json:"metrics"`
 }
 
 // NewDatasetSetup instantiates a new DatasetSetup object
@@ -247,7 +247,7 @@ func (o *DatasetSetup) SetMetrics(v []MetricInstance) {
 }
 
 func (o DatasetSetup) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -302,5 +302,3 @@ func (v *NullableDatasetSetup) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

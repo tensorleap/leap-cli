@@ -19,10 +19,10 @@ var _ MappedNullable = &ClientFilterParams{}
 
 // ClientFilterParams struct for ClientFilterParams
 type ClientFilterParams struct {
-	Field string `json:"field"`
+	Field    string             `json:"field"`
 	Operator FilterOperatorType `json:"operator"`
-	Value float64 `json:"value"`
-	Disable *bool `json:"disable,omitempty"`
+	Value    float64            `json:"value"`
+	Disable  *bool              `json:"disable,omitempty"`
 }
 
 // NewClientFilterParams instantiates a new ClientFilterParams object
@@ -150,7 +150,7 @@ func (o *ClientFilterParams) SetDisable(v bool) {
 }
 
 func (o ClientFilterParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -203,5 +203,3 @@ func (v *NullableClientFilterParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -65,7 +65,7 @@ func (o *StopJobParams) SetJobId(v string) {
 }
 
 func (o StopJobParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -113,5 +113,3 @@ func (v *NullableStopJobParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

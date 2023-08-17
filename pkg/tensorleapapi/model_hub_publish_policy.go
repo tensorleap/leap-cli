@@ -20,8 +20,8 @@ type HubPublishPolicy string
 
 // List of HubPublishPolicy
 const (
-	HUBPUBLISHPOLICY_PUBLIC HubPublishPolicy = "public"
-	HUBPUBLISHPOLICY_ALPHA HubPublishPolicy = "alpha"
+	HUBPUBLISHPOLICY_PUBLIC     HubPublishPolicy = "public"
+	HUBPUBLISHPOLICY_ALPHA      HubPublishPolicy = "alpha"
 	HUBPUBLISHPOLICY_NO_PUBLISH HubPublishPolicy = "no_publish"
 )
 
@@ -110,4 +110,3 @@ func (v *NullableHubPublishPolicy) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

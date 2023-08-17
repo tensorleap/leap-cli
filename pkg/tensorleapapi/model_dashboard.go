@@ -20,14 +20,14 @@ var _ MappedNullable = &Dashboard{}
 
 // Dashboard struct for Dashboard
 type Dashboard struct {
-	Cid string `json:"cid"`
-	ProjectId string `json:"projectId"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
-	CreatedBy string `json:"createdBy"`
-	Name string `json:"name"`
-	Items []DashboardItem `json:"items"`
-	Description *string `json:"description,omitempty"`
+	Cid         string          `json:"cid"`
+	ProjectId   string          `json:"projectId"`
+	CreatedAt   time.Time       `json:"createdAt"`
+	UpdatedAt   time.Time       `json:"updatedAt"`
+	CreatedBy   string          `json:"createdBy"`
+	Name        string          `json:"name"`
+	Items       []DashboardItem `json:"items"`
+	Description *string         `json:"description,omitempty"`
 }
 
 // NewDashboard instantiates a new Dashboard object
@@ -255,7 +255,7 @@ func (o *Dashboard) SetDescription(v string) {
 }
 
 func (o Dashboard) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -312,5 +312,3 @@ func (v *NullableDashboard) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

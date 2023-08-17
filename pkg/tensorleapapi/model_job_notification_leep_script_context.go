@@ -19,12 +19,12 @@ var _ MappedNullable = &JobNotificationLeepScriptContext{}
 
 // JobNotificationLeepScriptContext struct for JobNotificationLeepScriptContext
 type JobNotificationLeepScriptContext struct {
-	JobId string `json:"jobId"`
-	JobType JobTypeEnum `json:"jobType"`
-	LeepScriptName string `json:"leepScriptName"`
-	LeepScriptId string `json:"leepScriptId"`
-	LeepScriptVersion *string `json:"leepScriptVersion,omitempty"`
-	LeepScriptVersionId *string `json:"leepScriptVersionId,omitempty"`
+	JobId               string      `json:"jobId"`
+	JobType             JobTypeEnum `json:"jobType"`
+	LeepScriptName      string      `json:"leepScriptName"`
+	LeepScriptId        string      `json:"leepScriptId"`
+	LeepScriptVersion   *string     `json:"leepScriptVersion,omitempty"`
+	LeepScriptVersionId *string     `json:"leepScriptVersionId,omitempty"`
 }
 
 // NewJobNotificationLeepScriptContext instantiates a new JobNotificationLeepScriptContext object
@@ -209,7 +209,7 @@ func (o *JobNotificationLeepScriptContext) SetLeepScriptVersionId(v string) {
 }
 
 func (o JobNotificationLeepScriptContext) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -266,5 +266,3 @@ func (v *NullableJobNotificationLeepScriptContext) UnmarshalJSON(src []byte) err
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -19,11 +19,11 @@ var _ MappedNullable = &AnalyzeGraphParams{}
 
 // AnalyzeGraphParams struct for AnalyzeGraphParams
 type AnalyzeGraphParams struct {
-	Graph ModelGraph `json:"graph"`
-	DatasetVersionId *string `json:"datasetVersionId,omitempty"`
-	VersionId string `json:"versionId"`
-	ProjectId string `json:"projectId"`
-	Digest string `json:"digest"`
+	Graph            ModelGraph `json:"graph"`
+	DatasetVersionId *string    `json:"datasetVersionId,omitempty"`
+	VersionId        string     `json:"versionId"`
+	ProjectId        string     `json:"projectId"`
+	Digest           string     `json:"digest"`
 }
 
 // NewAnalyzeGraphParams instantiates a new AnalyzeGraphParams object
@@ -176,7 +176,7 @@ func (o *AnalyzeGraphParams) SetDigest(v string) {
 }
 
 func (o AnalyzeGraphParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -230,5 +230,3 @@ func (v *NullableAnalyzeGraphParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

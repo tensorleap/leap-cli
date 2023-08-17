@@ -19,10 +19,10 @@ var _ MappedNullable = &CustomVisualizationItem{}
 
 // CustomVisualizationItem struct for CustomVisualizationItem
 type CustomVisualizationItem struct {
-	Cid string `json:"cid"`
-	Layout SizedLayout `json:"layout"`
-	Type string `json:"type"`
-	Data CustomVisualizationData `json:"data"`
+	Cid    string                  `json:"cid"`
+	Layout SizedLayout             `json:"layout"`
+	Type   string                  `json:"type"`
+	Data   CustomVisualizationData `json:"data"`
 }
 
 // NewCustomVisualizationItem instantiates a new CustomVisualizationItem object
@@ -143,7 +143,7 @@ func (o *CustomVisualizationItem) SetData(v CustomVisualizationData) {
 }
 
 func (o CustomVisualizationItem) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -194,5 +194,3 @@ func (v *NullableCustomVisualizationItem) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -19,9 +19,9 @@ var _ MappedNullable = &VisualizerInstance{}
 
 // VisualizerInstance struct for VisualizerInstance
 type VisualizerInstance struct {
-	Name string `json:"name"`
-	Type LeapDataType `json:"type"`
-	ArgNames []string `json:"arg_names"`
+	Name     string       `json:"name"`
+	Type     LeapDataType `json:"type"`
+	ArgNames []string     `json:"arg_names"`
 }
 
 // NewVisualizerInstance instantiates a new VisualizerInstance object
@@ -117,7 +117,7 @@ func (o *VisualizerInstance) SetArgNames(v []string) {
 }
 
 func (o VisualizerInstance) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -167,5 +167,3 @@ func (v *NullableVisualizerInstance) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

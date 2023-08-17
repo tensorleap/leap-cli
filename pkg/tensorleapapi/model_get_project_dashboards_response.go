@@ -65,7 +65,7 @@ func (o *GetProjectDashboardsResponse) SetDashboards(v []Dashboard) {
 }
 
 func (o GetProjectDashboardsResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -113,5 +113,3 @@ func (v *NullableGetProjectDashboardsResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -19,12 +19,12 @@ var _ MappedNullable = &VisualizerMessageParams{}
 
 // VisualizerMessageParams struct for VisualizerMessageParams
 type VisualizerMessageParams struct {
-	Message string `json:"message"`
-	MessageCode *string `json:"message_code,omitempty"`
-	VisualizerName string `json:"visualizer_name"`
-	NodeId string `json:"node_id"`
-	LineNumber *float64 `json:"line_number,omitempty"`
-	Module Module `json:"module"`
+	Message        string   `json:"message"`
+	MessageCode    *string  `json:"message_code,omitempty"`
+	VisualizerName string   `json:"visualizer_name"`
+	NodeId         string   `json:"node_id"`
+	LineNumber     *float64 `json:"line_number,omitempty"`
+	Module         Module   `json:"module"`
 }
 
 // NewVisualizerMessageParams instantiates a new VisualizerMessageParams object
@@ -209,7 +209,7 @@ func (o *VisualizerMessageParams) SetModule(v Module) {
 }
 
 func (o VisualizerMessageParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -266,5 +266,3 @@ func (v *NullableVisualizerMessageParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

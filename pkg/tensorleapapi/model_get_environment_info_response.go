@@ -19,10 +19,10 @@ var _ MappedNullable = &GetEnvironmentInfoResponse{}
 
 // GetEnvironmentInfoResponse struct for GetEnvironmentInfoResponse
 type GetEnvironmentInfoResponse struct {
-	ClientStoragePrefixUrl string `json:"clientStoragePrefixUrl"`
-	SchemaVersion float64 `json:"schemaVersion"`
-	HubDefaultNamespace string `json:"hubDefaultNamespace"`
-	HubUrl string `json:"hubUrl"`
+	ClientStoragePrefixUrl string  `json:"clientStoragePrefixUrl"`
+	SchemaVersion          float64 `json:"schemaVersion"`
+	HubDefaultNamespace    string  `json:"hubDefaultNamespace"`
+	HubUrl                 string  `json:"hubUrl"`
 }
 
 // NewGetEnvironmentInfoResponse instantiates a new GetEnvironmentInfoResponse object
@@ -143,7 +143,7 @@ func (o *GetEnvironmentInfoResponse) SetHubUrl(v string) {
 }
 
 func (o GetEnvironmentInfoResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -194,5 +194,3 @@ func (v *NullableGetEnvironmentInfoResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

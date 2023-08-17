@@ -20,11 +20,11 @@ type ScatterInsightType string
 
 // List of ScatterInsightType
 const (
-	SCATTERINSIGHTTYPE_REDUNDANT_SAMPLES_CLUSTER ScatterInsightType = "redundant_samples_cluster"
-	SCATTERINSIGHTTYPE_WEAK_CLUSTER ScatterInsightType = "weak_cluster"
+	SCATTERINSIGHTTYPE_REDUNDANT_SAMPLES_CLUSTER    ScatterInsightType = "redundant_samples_cluster"
+	SCATTERINSIGHTTYPE_WEAK_CLUSTER                 ScatterInsightType = "weak_cluster"
 	SCATTERINSIGHTTYPE_UNDER_REPRESENTATION_CLUSTER ScatterInsightType = "under_representation_cluster"
-	SCATTERINSIGHTTYPE_OVERFITTING_CLUSTER ScatterInsightType = "overfitting_cluster"
-	SCATTERINSIGHTTYPE_DUPLICATION_INSIGHT ScatterInsightType = "duplication_insight"
+	SCATTERINSIGHTTYPE_OVERFITTING_CLUSTER          ScatterInsightType = "overfitting_cluster"
+	SCATTERINSIGHTTYPE_DUPLICATION_INSIGHT          ScatterInsightType = "duplication_insight"
 )
 
 // All allowed values of ScatterInsightType enum
@@ -114,4 +114,3 @@ func (v *NullableScatterInsightType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

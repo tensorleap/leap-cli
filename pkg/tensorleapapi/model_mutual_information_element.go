@@ -19,10 +19,10 @@ var _ MappedNullable = &MutualInformationElement{}
 
 // MutualInformationElement struct for MutualInformationElement
 type MutualInformationElement struct {
-	FeatureName string `json:"feature_name"`
-	FeatureValue *string `json:"feature_value,omitempty"`
-	Direction Direction `json:"direction"`
-	IsCategorical bool `json:"is_categorical"`
+	FeatureName   string    `json:"feature_name"`
+	FeatureValue  *string   `json:"feature_value,omitempty"`
+	Direction     Direction `json:"direction"`
+	IsCategorical bool      `json:"is_categorical"`
 }
 
 // NewMutualInformationElement instantiates a new MutualInformationElement object
@@ -150,7 +150,7 @@ func (o *MutualInformationElement) SetIsCategorical(v bool) {
 }
 
 func (o MutualInformationElement) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -203,5 +203,3 @@ func (v *NullableMutualInformationElement) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

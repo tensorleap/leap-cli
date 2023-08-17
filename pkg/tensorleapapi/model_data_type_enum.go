@@ -20,12 +20,12 @@ type DataTypeEnum string
 
 // List of DataTypeEnum
 const (
-	DATATYPEENUM_IMAGE DataTypeEnum = "image"
-	DATATYPEENUM_WORD DataTypeEnum = "word"
-	DATATYPEENUM_TEXT DataTypeEnum = "text"
-	DATATYPEENUM_MASK_TEXT DataTypeEnum = "mask_text"
-	DATATYPEENUM_GRAPH DataTypeEnum = "graph"
-	DATATYPEENUM_HBAR DataTypeEnum = "hbar"
+	DATATYPEENUM_IMAGE      DataTypeEnum = "image"
+	DATATYPEENUM_WORD       DataTypeEnum = "word"
+	DATATYPEENUM_TEXT       DataTypeEnum = "text"
+	DATATYPEENUM_MASK_TEXT  DataTypeEnum = "mask_text"
+	DATATYPEENUM_GRAPH      DataTypeEnum = "graph"
+	DATATYPEENUM_HBAR       DataTypeEnum = "hbar"
 	DATATYPEENUM_BBOX_IMAGE DataTypeEnum = "bbox_image"
 	DATATYPEENUM_MASK_IMAGE DataTypeEnum = "mask_image"
 )
@@ -120,4 +120,3 @@ func (v *NullableDataTypeEnum) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

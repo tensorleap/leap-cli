@@ -19,11 +19,11 @@ var _ MappedNullable = &SendUserMessageParams{}
 
 // SendUserMessageParams struct for SendUserMessageParams
 type SendUserMessageParams struct {
-	FirstName string `json:"firstName"`
-	LastName string `json:"lastName"`
-	Role *string `json:"role,omitempty"`
-	Company *string `json:"company,omitempty"`
-	Email string `json:"email"`
+	FirstName string  `json:"firstName"`
+	LastName  string  `json:"lastName"`
+	Role      *string `json:"role,omitempty"`
+	Company   *string `json:"company,omitempty"`
+	Email     string  `json:"email"`
 	Telephone *string `json:"telephone,omitempty"`
 	// Construct a type with a set of properties K of type T
 	Content map[string]interface{} `json:"content"`
@@ -243,7 +243,7 @@ func (o *SendUserMessageParams) SetContent(v map[string]interface{}) {
 }
 
 func (o SendUserMessageParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -303,5 +303,3 @@ func (v *NullableSendUserMessageParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

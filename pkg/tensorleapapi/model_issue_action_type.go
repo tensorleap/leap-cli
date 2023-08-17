@@ -22,7 +22,7 @@ type IssueActionType string
 const (
 	ISSUEACTIONTYPE_TAGS_ADDED IssueActionType = "TagsAdded"
 	ISSUEACTIONTYPE_ASSIGNMENT IssueActionType = "Assignment"
-	ISSUEACTIONTYPE_COMMENT IssueActionType = "Comment"
+	ISSUEACTIONTYPE_COMMENT    IssueActionType = "Comment"
 )
 
 // All allowed values of IssueActionType enum
@@ -110,4 +110,3 @@ func (v *NullableIssueActionType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

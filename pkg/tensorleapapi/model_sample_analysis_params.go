@@ -19,10 +19,10 @@ var _ MappedNullable = &SampleAnalysisParams{}
 
 // SampleAnalysisParams struct for SampleAnalysisParams
 type SampleAnalysisParams struct {
-	SessionRunId string `json:"sessionRunId"`
-	ProjectId string `json:"projectId"`
+	SessionRunId   string         `json:"sessionRunId"`
+	ProjectId      string         `json:"projectId"`
 	SampleIdentity SampleIdentity `json:"sampleIdentity"`
-	FromEpoch float64 `json:"fromEpoch"`
+	FromEpoch      float64        `json:"fromEpoch"`
 }
 
 // NewSampleAnalysisParams instantiates a new SampleAnalysisParams object
@@ -143,7 +143,7 @@ func (o *SampleAnalysisParams) SetFromEpoch(v float64) {
 }
 
 func (o SampleAnalysisParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -194,5 +194,3 @@ func (v *NullableSampleAnalysisParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

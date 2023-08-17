@@ -20,7 +20,7 @@ var _ MappedNullable = &GetValidateGraphProcessStateParams{}
 // GetValidateGraphProcessStateParams struct for GetValidateGraphProcessStateParams
 type GetValidateGraphProcessStateParams struct {
 	ProjectId string `json:"projectId"`
-	Digest string `json:"digest"`
+	Digest    string `json:"digest"`
 }
 
 // NewGetValidateGraphProcessStateParams instantiates a new GetValidateGraphProcessStateParams object
@@ -91,7 +91,7 @@ func (o *GetValidateGraphProcessStateParams) SetDigest(v string) {
 }
 
 func (o GetValidateGraphProcessStateParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableGetValidateGraphProcessStateParams) UnmarshalJSON(src []byte) e
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -20,7 +20,7 @@ var _ MappedNullable = &StopJobResponse{}
 // StopJobResponse struct for StopJobResponse
 type StopJobResponse struct {
 	Status string `json:"status"`
-	JobId string `json:"job_id"`
+	JobId  string `json:"job_id"`
 }
 
 // NewStopJobResponse instantiates a new StopJobResponse object
@@ -91,7 +91,7 @@ func (o *StopJobResponse) SetJobId(v string) {
 }
 
 func (o StopJobResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableStopJobResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

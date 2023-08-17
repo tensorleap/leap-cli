@@ -20,13 +20,13 @@ type FilterOperatorType string
 
 // List of FilterOperatorType
 const (
-	FILTEROPERATORTYPE_BETWEEN FilterOperatorType = "between"
-	FILTEROPERATORTYPE_NOT_BETWEEN FilterOperatorType = "not-between"
-	FILTEROPERATORTYPE_EQUAL FilterOperatorType = "equal"
-	FILTEROPERATORTYPE_NOT_EQUAL FilterOperatorType = "not-equal"
-	FILTEROPERATORTYPE_IN FilterOperatorType = "in"
+	FILTEROPERATORTYPE_BETWEEN      FilterOperatorType = "between"
+	FILTEROPERATORTYPE_NOT_BETWEEN  FilterOperatorType = "not-between"
+	FILTEROPERATORTYPE_EQUAL        FilterOperatorType = "equal"
+	FILTEROPERATORTYPE_NOT_EQUAL    FilterOperatorType = "not-equal"
+	FILTEROPERATORTYPE_IN           FilterOperatorType = "in"
 	FILTEROPERATORTYPE_GREATER_THAN FilterOperatorType = "greater-than"
-	FILTEROPERATORTYPE_LESS_THAN FilterOperatorType = "less-than"
+	FILTEROPERATORTYPE_LESS_THAN    FilterOperatorType = "less-than"
 )
 
 // All allowed values of FilterOperatorType enum
@@ -118,4 +118,3 @@ func (v *NullableFilterOperatorType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

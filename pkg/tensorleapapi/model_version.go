@@ -20,21 +20,21 @@ var _ MappedNullable = &Version{}
 
 // Version struct for Version
 type Version struct {
-	Cid string `json:"cid"`
-	ExtId string `json:"extId"`
-	CreatedBy string `json:"createdBy"`
-	TeamId string `json:"teamId"`
-	ProjectId string `json:"projectId"`
-	Branch string `json:"branch"`
-	Tag string `json:"tag"`
-	Data ModelGraph `json:"data"`
-	CreatedAt time.Time `json:"createdAt"`
-	Notes string `json:"notes"`
-	Status string `json:"status"`
-	IsFavourite bool `json:"isFavourite"`
-	CodeIntegrationVersionId *string `json:"codeIntegrationVersionId,omitempty"`
-	DatasetSetup DatasetSetup `json:"datasetSetup"`
-	Hash *string `json:"hash,omitempty"`
+	Cid                      string       `json:"cid"`
+	ExtId                    string       `json:"extId"`
+	CreatedBy                string       `json:"createdBy"`
+	TeamId                   string       `json:"teamId"`
+	ProjectId                string       `json:"projectId"`
+	Branch                   string       `json:"branch"`
+	Tag                      string       `json:"tag"`
+	Data                     ModelGraph   `json:"data"`
+	CreatedAt                time.Time    `json:"createdAt"`
+	Notes                    string       `json:"notes"`
+	Status                   string       `json:"status"`
+	IsFavourite              bool         `json:"isFavourite"`
+	CodeIntegrationVersionId *string      `json:"codeIntegrationVersionId,omitempty"`
+	DatasetSetup             DatasetSetup `json:"datasetSetup"`
+	Hash                     *string      `json:"hash,omitempty"`
 }
 
 // NewVersion instantiates a new Version object
@@ -444,7 +444,7 @@ func (o *Version) SetHash(v string) {
 }
 
 func (o Version) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -510,5 +510,3 @@ func (v *NullableVersion) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

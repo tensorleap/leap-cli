@@ -19,12 +19,12 @@ var _ MappedNullable = &StartTrialParams{}
 
 // StartTrialParams struct for StartTrialParams
 type StartTrialParams struct {
-	FirstName string `json:"firstName"`
-	LastName string `json:"lastName"`
-	Email string `json:"email"`
+	FirstName   string  `json:"firstName"`
+	LastName    string  `json:"lastName"`
+	Email       string  `json:"email"`
 	PhoneNumber *string `json:"phoneNumber,omitempty"`
-	Role *string `json:"role,omitempty"`
-	Company *string `json:"company,omitempty"`
+	Role        *string `json:"role,omitempty"`
+	Company     *string `json:"company,omitempty"`
 }
 
 // NewStartTrialParams instantiates a new StartTrialParams object
@@ -216,7 +216,7 @@ func (o *StartTrialParams) SetCompany(v string) {
 }
 
 func (o StartTrialParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -275,5 +275,3 @@ func (v *NullableStartTrialParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

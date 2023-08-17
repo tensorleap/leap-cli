@@ -19,8 +19,8 @@ var _ MappedNullable = &UpdateSecretManagerParams{}
 
 // UpdateSecretManagerParams struct for UpdateSecretManagerParams
 type UpdateSecretManagerParams struct {
-	Cid string `json:"cid"`
-	Name string `json:"name"`
+	Cid      string  `json:"cid"`
+	Name     string  `json:"name"`
 	AuthData *string `json:"authData,omitempty"`
 }
 
@@ -124,7 +124,7 @@ func (o *UpdateSecretManagerParams) SetAuthData(v string) {
 }
 
 func (o UpdateSecretManagerParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -176,5 +176,3 @@ func (v *NullableUpdateSecretManagerParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

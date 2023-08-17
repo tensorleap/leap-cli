@@ -19,8 +19,8 @@ var _ MappedNullable = &SignupParams{}
 
 // SignupParams struct for SignupParams
 type SignupParams struct {
-	Name string `json:"name"`
-	Email string `json:"email"`
+	Name     string `json:"name"`
+	Email    string `json:"email"`
 	Password string `json:"password"`
 }
 
@@ -117,7 +117,7 @@ func (o *SignupParams) SetPassword(v string) {
 }
 
 func (o SignupParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -167,5 +167,3 @@ func (v *NullableSignupParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

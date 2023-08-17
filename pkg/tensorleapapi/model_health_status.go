@@ -19,8 +19,8 @@ var _ MappedNullable = &HealthStatus{}
 
 // HealthStatus struct for HealthStatus
 type HealthStatus struct {
-	Status bool `json:"status"`
-	Error *string `json:"error,omitempty"`
+	Status bool    `json:"status"`
+	Error  *string `json:"error,omitempty"`
 }
 
 // NewHealthStatus instantiates a new HealthStatus object
@@ -98,7 +98,7 @@ func (o *HealthStatus) SetError(v string) {
 }
 
 func (o HealthStatus) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -149,5 +149,3 @@ func (v *NullableHealthStatus) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -19,9 +19,9 @@ var _ MappedNullable = &GetIssueFileUploadSignedUrl{}
 
 // GetIssueFileUploadSignedUrl struct for GetIssueFileUploadSignedUrl
 type GetIssueFileUploadSignedUrl struct {
-	FileName string `json:"fileName"`
+	FileName  string `json:"fileName"`
 	ProjectId string `json:"projectId"`
-	IssueId string `json:"issueId"`
+	IssueId   string `json:"issueId"`
 }
 
 // NewGetIssueFileUploadSignedUrl instantiates a new GetIssueFileUploadSignedUrl object
@@ -117,7 +117,7 @@ func (o *GetIssueFileUploadSignedUrl) SetIssueId(v string) {
 }
 
 func (o GetIssueFileUploadSignedUrl) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -167,5 +167,3 @@ func (v *NullableGetIssueFileUploadSignedUrl) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -19,22 +19,22 @@ var _ MappedNullable = &HeatmapChartsParams{}
 
 // HeatmapChartsParams struct for HeatmapChartsParams
 type HeatmapChartsParams struct {
-	ProjectId string `json:"projectId"`
-	XField string `json:"xField"`
-	XAxisSizeInterval float64 `json:"xAxisSizeInterval"`
-	XDataDistributionType DataDistributionType `json:"xDataDistributionType"`
-	XOrderParams *OrderType `json:"xOrderParams,omitempty"`
-	YField string `json:"yField"`
-	YAxisSizeInterval float64 `json:"yAxisSizeInterval"`
-	YDataDistributionType DataDistributionType `json:"yDataDistributionType"`
-	YOrderParams *OrderType `json:"yOrderParams,omitempty"`
-	ColorField string `json:"colorField"`
-	ColorAggregationMethod AggregationMethod `json:"colorAggregationMethod"`
-	SessionRunIds []string `json:"sessionRunIds"`
-	VerticalSplit *string `json:"verticalSplit,omitempty"`
-	HorizontalSplit *string `json:"horizontalSplit,omitempty"`
-	Filters []ESFilter `json:"filters,omitempty"`
-	LastEpochOnly *bool `json:"lastEpochOnly,omitempty"`
+	ProjectId              string               `json:"projectId"`
+	XField                 string               `json:"xField"`
+	XAxisSizeInterval      float64              `json:"xAxisSizeInterval"`
+	XDataDistributionType  DataDistributionType `json:"xDataDistributionType"`
+	XOrderParams           *OrderType           `json:"xOrderParams,omitempty"`
+	YField                 string               `json:"yField"`
+	YAxisSizeInterval      float64              `json:"yAxisSizeInterval"`
+	YDataDistributionType  DataDistributionType `json:"yDataDistributionType"`
+	YOrderParams           *OrderType           `json:"yOrderParams,omitempty"`
+	ColorField             string               `json:"colorField"`
+	ColorAggregationMethod AggregationMethod    `json:"colorAggregationMethod"`
+	SessionRunIds          []string             `json:"sessionRunIds"`
+	VerticalSplit          *string              `json:"verticalSplit,omitempty"`
+	HorizontalSplit        *string              `json:"horizontalSplit,omitempty"`
+	Filters                []ESFilter           `json:"filters,omitempty"`
+	LastEpochOnly          *bool                `json:"lastEpochOnly,omitempty"`
 }
 
 // NewHeatmapChartsParams instantiates a new HeatmapChartsParams object
@@ -497,7 +497,7 @@ func (o *HeatmapChartsParams) SetLastEpochOnly(v bool) {
 }
 
 func (o HeatmapChartsParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -572,5 +572,3 @@ func (v *NullableHeatmapChartsParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -19,7 +19,7 @@ var _ MappedNullable = &CustomLossInstance{}
 
 // CustomLossInstance struct for CustomLossInstance
 type CustomLossInstance struct {
-	Name string `json:"name"`
+	Name     string   `json:"name"`
 	ArgNames []string `json:"arg_names"`
 }
 
@@ -91,7 +91,7 @@ func (o *CustomLossInstance) SetArgNames(v []string) {
 }
 
 func (o CustomLossInstance) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableCustomLossInstance) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

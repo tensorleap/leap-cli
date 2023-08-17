@@ -19,7 +19,7 @@ var _ MappedNullable = &ExternalImportModelStorage{}
 
 // ExternalImportModelStorage struct for ExternalImportModelStorage
 type ExternalImportModelStorage struct {
-	Url string `json:"url"`
+	Url      string `json:"url"`
 	FileName string `json:"fileName"`
 }
 
@@ -91,7 +91,7 @@ func (o *ExternalImportModelStorage) SetFileName(v string) {
 }
 
 func (o ExternalImportModelStorage) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableExternalImportModelStorage) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

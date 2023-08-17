@@ -19,13 +19,13 @@ var _ MappedNullable = &TrainFromInitialWeightsParams{}
 
 // TrainFromInitialWeightsParams struct for TrainFromInitialWeightsParams
 type TrainFromInitialWeightsParams struct {
-	VersionId string `json:"versionId"`
-	ProjectId string `json:"projectId"`
-	FromSessionId string `json:"fromSessionId"`
-	FromEpoch float64 `json:"fromEpoch"`
-	ModelName string `json:"modelName"`
-	TrainingParams TrainingParams `json:"trainingParams"`
-	ShouldRunPopulationExploration bool `json:"shouldRunPopulationExploration"`
+	VersionId                      string         `json:"versionId"`
+	ProjectId                      string         `json:"projectId"`
+	FromSessionId                  string         `json:"fromSessionId"`
+	FromEpoch                      float64        `json:"fromEpoch"`
+	ModelName                      string         `json:"modelName"`
+	TrainingParams                 TrainingParams `json:"trainingParams"`
+	ShouldRunPopulationExploration bool           `json:"shouldRunPopulationExploration"`
 }
 
 // NewTrainFromInitialWeightsParams instantiates a new TrainFromInitialWeightsParams object
@@ -221,7 +221,7 @@ func (o *TrainFromInitialWeightsParams) SetShouldRunPopulationExploration(v bool
 }
 
 func (o TrainFromInitialWeightsParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -275,5 +275,3 @@ func (v *NullableTrainFromInitialWeightsParams) UnmarshalJSON(src []byte) error 
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -19,12 +19,12 @@ var _ MappedNullable = &AddIssueParams{}
 
 // AddIssueParams struct for AddIssueParams
 type AddIssueParams struct {
-	ProjectId string `json:"projectId"`
-	Title string `json:"title"`
-	Status IssueStatus `json:"status"`
-	Branch *string `json:"branch,omitempty"`
-	Tags []string `json:"tags,omitempty"`
-	Assignment *string `json:"assignment,omitempty"`
+	ProjectId  string          `json:"projectId"`
+	Title      string          `json:"title"`
+	Status     IssueStatus     `json:"status"`
+	Branch     *string         `json:"branch,omitempty"`
+	Tags       []string        `json:"tags,omitempty"`
+	Assignment *string         `json:"assignment,omitempty"`
 	Activities []IssueActivity `json:"activities,omitempty"`
 }
 
@@ -249,7 +249,7 @@ func (o *AddIssueParams) SetActivities(v []IssueActivity) {
 }
 
 func (o AddIssueParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -311,5 +311,3 @@ func (v *NullableAddIssueParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

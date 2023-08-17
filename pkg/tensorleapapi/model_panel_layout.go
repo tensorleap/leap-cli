@@ -19,8 +19,8 @@ var _ MappedNullable = &PanelLayout{}
 
 // PanelLayout struct for PanelLayout
 type PanelLayout struct {
-	VisualizationId string `json:"visualizationId"`
-	Layout SizedLayout `json:"layout"`
+	VisualizationId string      `json:"visualizationId"`
+	Layout          SizedLayout `json:"layout"`
 }
 
 // NewPanelLayout instantiates a new PanelLayout object
@@ -91,7 +91,7 @@ func (o *PanelLayout) SetLayout(v SizedLayout) {
 }
 
 func (o PanelLayout) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullablePanelLayout) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

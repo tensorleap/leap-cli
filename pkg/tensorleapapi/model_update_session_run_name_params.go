@@ -19,8 +19,8 @@ var _ MappedNullable = &UpdateSessionRunNameParams{}
 
 // UpdateSessionRunNameParams struct for UpdateSessionRunNameParams
 type UpdateSessionRunNameParams struct {
-	Cid string `json:"cid"`
-	Name string `json:"name"`
+	Cid       string `json:"cid"`
+	Name      string `json:"name"`
 	ProjectId string `json:"projectId"`
 }
 
@@ -117,7 +117,7 @@ func (o *UpdateSessionRunNameParams) SetProjectId(v string) {
 }
 
 func (o UpdateSessionRunNameParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -167,5 +167,3 @@ func (v *NullableUpdateSessionRunNameParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

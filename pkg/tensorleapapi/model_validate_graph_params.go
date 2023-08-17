@@ -19,11 +19,11 @@ var _ MappedNullable = &ValidateGraphParams{}
 
 // ValidateGraphParams struct for ValidateGraphParams
 type ValidateGraphParams struct {
-	Graph ModelGraph `json:"graph"`
-	DatasetVersionId string `json:"datasetVersionId"`
-	VersionId string `json:"versionId"`
-	ProjectId string `json:"projectId"`
-	Digest string `json:"digest"`
+	Graph            ModelGraph `json:"graph"`
+	DatasetVersionId string     `json:"datasetVersionId"`
+	VersionId        string     `json:"versionId"`
+	ProjectId        string     `json:"projectId"`
+	Digest           string     `json:"digest"`
 }
 
 // NewValidateGraphParams instantiates a new ValidateGraphParams object
@@ -169,7 +169,7 @@ func (o *ValidateGraphParams) SetDigest(v string) {
 }
 
 func (o ValidateGraphParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -221,5 +221,3 @@ func (v *NullableValidateGraphParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

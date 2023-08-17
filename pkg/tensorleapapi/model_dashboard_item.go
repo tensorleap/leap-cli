@@ -18,14 +18,14 @@ import (
 // DashboardItem struct for DashboardItem
 type DashboardItem struct {
 	CustomVisualizationItem *CustomVisualizationItem
-	VisualizationItem *VisualizationItem
+	VisualizationItem       *VisualizationItem
 }
 
 // Unmarshal JSON data into any of the pointers in the struct
 func (dst *DashboardItem) UnmarshalJSON(data []byte) error {
 	var err error
 	// try to unmarshal JSON data into CustomVisualizationItem
-	err = json.Unmarshal(data, &dst.CustomVisualizationItem);
+	err = json.Unmarshal(data, &dst.CustomVisualizationItem)
 	if err == nil {
 		jsonCustomVisualizationItem, _ := json.Marshal(dst.CustomVisualizationItem)
 		if string(jsonCustomVisualizationItem) == "{}" { // empty struct
@@ -38,7 +38,7 @@ func (dst *DashboardItem) UnmarshalJSON(data []byte) error {
 	}
 
 	// try to unmarshal JSON data into VisualizationItem
-	err = json.Unmarshal(data, &dst.VisualizationItem);
+	err = json.Unmarshal(data, &dst.VisualizationItem)
 	if err == nil {
 		jsonVisualizationItem, _ := json.Marshal(dst.VisualizationItem)
 		if string(jsonVisualizationItem) == "{}" { // empty struct
@@ -101,5 +101,3 @@ func (v *NullableDashboardItem) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

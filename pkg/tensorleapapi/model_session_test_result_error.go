@@ -20,7 +20,7 @@ var _ MappedNullable = &SessionTestResultError{}
 // SessionTestResultError struct for SessionTestResultError
 type SessionTestResultError struct {
 	SessionRunId string `json:"sessionRunId"`
-	QueryStatus string `json:"queryStatus"`
+	QueryStatus  string `json:"queryStatus"`
 }
 
 // NewSessionTestResultError instantiates a new SessionTestResultError object
@@ -91,7 +91,7 @@ func (o *SessionTestResultError) SetQueryStatus(v string) {
 }
 
 func (o SessionTestResultError) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableSessionTestResultError) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

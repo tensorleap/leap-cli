@@ -19,14 +19,14 @@ var _ MappedNullable = &Dataset{}
 
 // Dataset struct for Dataset
 type Dataset struct {
-	Cid string `json:"cid"`
-	Name NullableString `json:"name"`
-	TeamId string `json:"teamId"`
-	SourceDatasetId *string `json:"sourceDatasetId,omitempty"`
-	Access DatasetAccess `json:"access"`
-	CreatedAt string `json:"createdAt"`
+	Cid                string          `json:"cid"`
+	Name               NullableString  `json:"name"`
+	TeamId             string          `json:"teamId"`
+	SourceDatasetId    *string         `json:"sourceDatasetId,omitempty"`
+	Access             DatasetAccess   `json:"access"`
+	CreatedAt          string          `json:"createdAt"`
 	LatestValidVersion *DatasetVersion `json:"latestValidVersion,omitempty"`
-	LatestVersion *DatasetVersion `json:"latestVersion,omitempty"`
+	LatestVersion      *DatasetVersion `json:"latestVersion,omitempty"`
 }
 
 // NewDataset instantiates a new Dataset object
@@ -270,7 +270,7 @@ func (o *Dataset) SetLatestVersion(v DatasetVersion) {
 }
 
 func (o Dataset) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -331,5 +331,3 @@ func (v *NullableDataset) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

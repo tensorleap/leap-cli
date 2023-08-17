@@ -19,14 +19,14 @@ var _ MappedNullable = &UserData{}
 
 // UserData struct for UserData
 type UserData struct {
-	Cid string `json:"cid"`
-	RecordSession bool `json:"recordSession"`
-	Role UserRole `json:"role"`
-	Local UserDataLocal `json:"local"`
-	Metadata *UserDataMetadata `json:"metadata,omitempty"`
-	TeamName string `json:"teamName"`
+	Cid            string                  `json:"cid"`
+	RecordSession  bool                    `json:"recordSession"`
+	Role           UserRole                `json:"role"`
+	Local          UserDataLocal           `json:"local"`
+	Metadata       *UserDataMetadata       `json:"metadata,omitempty"`
+	TeamName       string                  `json:"teamName"`
 	SingleUserMode *SingleUserModeSettings `json:"singleUserMode,omitempty"`
-	Activated bool `json:"activated"`
+	Activated      bool                    `json:"activated"`
 }
 
 // NewUserData instantiates a new UserData object
@@ -261,7 +261,7 @@ func (o *UserData) SetActivated(v bool) {
 }
 
 func (o UserData) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -320,5 +320,3 @@ func (v *NullableUserData) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

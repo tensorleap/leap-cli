@@ -19,11 +19,11 @@ var _ MappedNullable = &SampleSelectionInfo{}
 
 // SampleSelectionInfo struct for SampleSelectionInfo
 type SampleSelectionInfo struct {
-	JobType JobTypeEnum `json:"job_type"`
-	AnalyzeType AnalyzeTypeEnum `json:"analyze_type"`
-	Guid string `json:"guid"`
-	NSelectedSamples float64 `json:"n_selected_samples"`
-	SelectedSample SampleIdentity `json:"selected_sample"`
+	JobType          JobTypeEnum     `json:"job_type"`
+	AnalyzeType      AnalyzeTypeEnum `json:"analyze_type"`
+	Guid             string          `json:"guid"`
+	NSelectedSamples float64         `json:"n_selected_samples"`
+	SelectedSample   SampleIdentity  `json:"selected_sample"`
 }
 
 // NewSampleSelectionInfo instantiates a new SampleSelectionInfo object
@@ -169,7 +169,7 @@ func (o *SampleSelectionInfo) SetSelectedSample(v SampleIdentity) {
 }
 
 func (o SampleSelectionInfo) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -221,5 +221,3 @@ func (v *NullableSampleSelectionInfo) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -20,10 +20,10 @@ type DataStateType string
 
 // List of DataStateType
 const (
-	DATASTATETYPE_TRAINING DataStateType = "training"
+	DATASTATETYPE_TRAINING   DataStateType = "training"
 	DATASTATETYPE_VALIDATION DataStateType = "validation"
-	DATASTATETYPE_TEST DataStateType = "test"
-	DATASTATETYPE_UNLABELED DataStateType = "unlabeled"
+	DATASTATETYPE_TEST       DataStateType = "test"
+	DATASTATETYPE_UNLABELED  DataStateType = "unlabeled"
 )
 
 // All allowed values of DataStateType enum
@@ -112,4 +112,3 @@ func (v *NullableDataStateType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

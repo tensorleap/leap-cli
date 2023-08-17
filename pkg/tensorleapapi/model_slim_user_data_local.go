@@ -19,10 +19,10 @@ var _ MappedNullable = &SlimUserDataLocal{}
 
 // SlimUserDataLocal struct for SlimUserDataLocal
 type SlimUserDataLocal struct {
-	Name string `json:"name"`
-	Email string `json:"email"`
-	TeamId string `json:"teamId"`
-	Activated bool `json:"activated"`
+	Name      string `json:"name"`
+	Email     string `json:"email"`
+	TeamId    string `json:"teamId"`
+	Activated bool   `json:"activated"`
 }
 
 // NewSlimUserDataLocal instantiates a new SlimUserDataLocal object
@@ -143,7 +143,7 @@ func (o *SlimUserDataLocal) SetActivated(v bool) {
 }
 
 func (o SlimUserDataLocal) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -194,5 +194,3 @@ func (v *NullableSlimUserDataLocal) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

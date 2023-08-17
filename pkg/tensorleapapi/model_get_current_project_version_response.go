@@ -91,7 +91,7 @@ func (o *GetCurrentProjectVersionResponse) SetVersionId(v string) {
 }
 
 func (o GetCurrentProjectVersionResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableGetCurrentProjectVersionResponse) UnmarshalJSON(src []byte) err
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

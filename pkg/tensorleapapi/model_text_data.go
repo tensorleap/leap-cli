@@ -19,9 +19,9 @@ var _ MappedNullable = &TextData{}
 
 // TextData struct for TextData
 type TextData struct {
-	Body []string `json:"body"`
-	Heatmap *Heatmap `json:"heatmap,omitempty"`
-	Type DataTypeEnum `json:"type"`
+	Body    []string     `json:"body"`
+	Heatmap *Heatmap     `json:"heatmap,omitempty"`
+	Type    DataTypeEnum `json:"type"`
 }
 
 // NewTextData instantiates a new TextData object
@@ -124,7 +124,7 @@ func (o *TextData) SetType(v DataTypeEnum) {
 }
 
 func (o TextData) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -176,5 +176,3 @@ func (v *NullableTextData) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-
