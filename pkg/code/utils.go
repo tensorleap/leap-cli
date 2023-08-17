@@ -277,7 +277,7 @@ func IsCodeParsing(codeIntegrationVersion *CodeIntegrationVersion) bool {
 	return codeIntegrationVersion.TestStatus == tensorleapapi.TESTSTATUS_DURING_TEST || codeIntegrationVersion.TestStatus == tensorleapapi.TESTSTATUS_BEFORE_TEST
 }
 
-func GetBinderYaml(ctx context.Context, codeIntegrationId string) string {
+func GetDatasetMappingYaml(ctx context.Context, codeIntegrationId string) string {
 	codeIntegrationVersion, err := GetLatestVersion(ctx, codeIntegrationId)
 	if err != nil {
 		return ""

@@ -40,7 +40,7 @@ func ImportModel(ctx context.Context, filePath, projectId, message, modelType, b
 	}
 	if len(datasetId) > 0 {
 		importModelParams.DatasetId = &datasetId
-		mappingYaml := code.GetBinderYaml(ctx, datasetId)
+		mappingYaml := code.GetDatasetMappingYaml(ctx, datasetId)
 		importModelParams.MappingYaml = &mappingYaml
 	}
 	importModelData, _, err := api.ApiClient.ImportModel(ctx).ImportNewModelParams(importModelParams).Execute()
