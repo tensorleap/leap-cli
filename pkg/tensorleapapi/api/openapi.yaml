@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.364
+  version: 0.0.365
 servers:
 - url: /api/v2
 paths:
@@ -526,15 +526,15 @@ paths:
       security:
       - jwt:
         - not-demo
-  /graph/applyDatasetBinding:
+  /graph/applyDatasetMapping:
     post:
-      operationId: ApplyDatasetBinding
+      operationId: ApplyDatasetMapping
       parameters: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ApplyDatasetBindingParams'
+              $ref: '#/components/schemas/ApplyDatasetMappingsParams'
         required: true
       responses:
         "200":
@@ -6046,7 +6046,7 @@ components:
       - digest
       - projectId
       type: object
-    ApplyDatasetBindingParams:
+    ApplyDatasetMappingsParams:
       additionalProperties: false
       example:
         modelGraph:

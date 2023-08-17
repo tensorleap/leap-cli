@@ -13,7 +13,7 @@ Method | HTTP request | Description
 [**AddSecretManager**](DefaultApi.md#AddSecretManager) | **Post** /secret-manager/addSecretManager | 
 [**AddVersion**](DefaultApi.md#AddVersion) | **Post** /versions/addVersion | 
 [**AnalyzeGraph**](DefaultApi.md#AnalyzeGraph) | **Post** /graph/analyzeGraph | 
-[**ApplyDatasetBinding**](DefaultApi.md#ApplyDatasetBinding) | **Post** /graph/applyDatasetBinding | 
+[**ApplyDatasetMapping**](DefaultApi.md#ApplyDatasetMapping) | **Post** /graph/applyDatasetMapping | 
 [**ContinueTrain**](DefaultApi.md#ContinueTrain) | **Post** /train/continueTrain | 
 [**CreateSessionTest**](DefaultApi.md#CreateSessionTest) | **Post** /sessions-tests/createSessionTest | 
 [**CreateTeam**](DefaultApi.md#CreateTeam) | **Post** /teams/createTeam | 
@@ -699,9 +699,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ApplyDatasetBinding
+## ApplyDatasetMapping
 
-> ModelGraph ApplyDatasetBinding(ctx).ApplyDatasetBindingParams(applyDatasetBindingParams).Execute()
+> ModelGraph ApplyDatasetMapping(ctx).ApplyDatasetMappingsParams(applyDatasetMappingsParams).Execute()
 
 
 
@@ -718,17 +718,17 @@ import (
 )
 
 func main() {
-    applyDatasetBindingParams := *openapiclient.NewApplyDatasetBindingParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "Yaml_example") // ApplyDatasetBindingParams | 
+    applyDatasetMappingsParams := *openapiclient.NewApplyDatasetMappingsParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "Yaml_example") // ApplyDatasetMappingsParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.ApplyDatasetBinding(context.Background()).ApplyDatasetBindingParams(applyDatasetBindingParams).Execute()
+    resp, r, err := apiClient.DefaultApi.ApplyDatasetMapping(context.Background()).ApplyDatasetMappingsParams(applyDatasetMappingsParams).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApplyDatasetBinding``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApplyDatasetMapping``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `ApplyDatasetBinding`: ModelGraph
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ApplyDatasetBinding`: %v\n", resp)
+    // response from `ApplyDatasetMapping`: ModelGraph
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ApplyDatasetMapping`: %v\n", resp)
 }
 ```
 
@@ -738,12 +738,12 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiApplyDatasetBindingRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiApplyDatasetMappingRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **applyDatasetBindingParams** | [**ApplyDatasetBindingParams**](ApplyDatasetBindingParams.md) |  | 
+ **applyDatasetMappingsParams** | [**ApplyDatasetMappingsParams**](ApplyDatasetMappingsParams.md) |  | 
 
 ### Return type
 
