@@ -22,7 +22,7 @@ import (
 
 var ErrEmptyCodeIntegrationVersion = fmt.Errorf("CodeIntegration is empty")
 
-const BindingFilePath = "bindings.yaml"
+const BindingFilePath = "leap_mappings.yaml"
 
 func CreateCodeIntegration(ctx context.Context, codeIntegrations []CodeIntegration) (*CodeIntegration, error) {
 
