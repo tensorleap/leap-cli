@@ -39,7 +39,7 @@ func CreateTensorleapChartValues(useGpu bool, dataDir string, disableMetrics boo
 			"gpu":                useGpu,
 			"localDataDirectory": dataDir,
 		},
-		"node-server": Record{
+		"tensorleap-node-server": Record{
 			"disableDatadogMetrics": disableMetrics,
 		},
 	}
