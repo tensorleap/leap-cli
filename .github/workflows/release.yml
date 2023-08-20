@@ -14,9 +14,8 @@ jobs:
 
       - name: Set up Go
         uses: actions/setup-go@v4
-      
-      - name: Go version
-        run: go version
+        with:
+          go-version-file: ./go.mod
 
       - name: Install gox
         run: go install github.com/mitchellh/gox@latest
