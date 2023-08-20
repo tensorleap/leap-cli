@@ -15,7 +15,7 @@ func TestCreateTensorleapChartValues(t *testing.T) {
 				"gpu":                useGpu,
 				"localDataDirectory": dataDir,
 			},
-			"node-server": Record{
+			"tensorleap-node-server": Record{
 				"disableDatadogMetrics": false,
 			},
 		}
