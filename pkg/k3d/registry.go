@@ -336,12 +336,15 @@ func CheckDockerRequirements() error {
 		log.Fatalf("Failed pulling alpine, %s", err)
 		return err
 	}
+	// the output looks like this:
+	// Filesystem           1024-blocks    Used Available Capacity Mounted on
+	// overlay              345672852  98074428 229966016  30% /
 	dfOutput := string(dfOutputBytes)
 	dfOutputLines := strings.Split(dfOutput, "\n")
 	dfOutputWords := strings.Fields(dfOutputLines[1])
-	dockerTotalStorageKB, _ := strconv.Atoi(dfOutputWords[3])
+	dockerTotalStorageKB, _ := strconv.Atoi(dfOutputWords[1])
 	dockerTotalStoragePretty := fmt.Sprintf("%dGb", dockerTotalStorageKB/(1024*1024))
-	dockerFreeStorageKB, _ := strconv.Atoi(dfOutputWords[2])
+	dockerFreeStorageKB, _ := strconv.Atoi(dfOutputWords[3])
 	dockerFreeStoragePretty := fmt.Sprintf("%dGb", dockerFreeStorageKB/(1024*1024))
 	log.Printf("Docker has %s free storage available (%s total).\n", dockerFreeStoragePretty, dockerTotalStoragePretty)
 	var noResources bool
