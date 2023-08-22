@@ -98,6 +98,7 @@ func createClusterConfig(ctx context.Context, port uint, volumes []string, useGp
 		image = K3sGpuImage
 	}
 
+	// Creating k3d cluster and skipping created network
 	simpleK3dConfig := conf.SimpleConfig{
 		TypeMeta: k3dConfTypes.TypeMeta{
 			Kind:       "Simple",
@@ -111,6 +112,7 @@ func createClusterConfig(ctx context.Context, port uint, volumes []string, useGp
 			HostPort: strconv.Itoa(freePort),
 		},
 		Image:   image,
+		Network: "host",
 		Volumes: make([]conf.VolumeWithNodeFilters, len(volumes)),
 		Ports: []conf.PortWithNodeFilters{{
 			Port:        fmt.Sprintf("%v:80", port),
