@@ -79,10 +79,15 @@ func NewInstallCmd() *cobra.Command {
 			}
 			k3d.CacheImagesInParallel(ctx, imagesToCache, registryPortStr)
 
+			clusterVolumes := []string{
+				"/etc/resolv.conf:/etc/resolv.conf",
+				fmt.Sprintf("%v:%v", local.STANDALONE_DIR, local.STANDALONE_DIR),
+				datasetDirectory,
+			}
 			if err := k3d.CreateCluster(
 				ctx,
 				port,
-				[]string{fmt.Sprintf("%v:%v", local.STANDALONE_DIR, local.STANDALONE_DIR), datasetDirectory},
+				clusterVolumes,
 				useGpu,
 			); err != nil {
 				return err
