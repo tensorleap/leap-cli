@@ -19,7 +19,6 @@ import (
 	"github.com/k3d-io/k3d/v5/pkg/runtimes"
 	dockerRuntime "github.com/k3d-io/k3d/v5/pkg/runtimes/docker"
 	k3d "github.com/k3d-io/k3d/v5/pkg/types"
-	"github.com/tensorleap/leap-cli/pkg/docker"
 	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
@@ -114,21 +113,14 @@ func UninstallRegister() error {
 	}
 	log.Infof("Deleting registry %s", REGISTRY_NAME)
 
-	cli, err := docker.CreateDockerCli()
+	node, err := client.NodeGet(ctx, runtimes.SelectedRuntime, &k3d.Node{Name: REGISTRY_NAME})
 	if err != nil {
-		return fmt.Errorf("Error creating Docker client: %v", err)
+		return fmt.Errorf("failed to get node: %w", err)
 	}
 
-	// Find the container ID or name associated with the registry
-	containerID, err := docker.FindContainerIDByName(ctx, cli, REGISTRY_NAME)
+	err = client.NodeDelete(ctx, runtimes.SelectedRuntime, node, k3d.NodeDeleteOpts{SkipLBUpdate: true})
 	if err != nil {
-		return fmt.Errorf("Error finding the registry container: %v", err)
-	}
-
-	// Remove the registry container
-	err = docker.RemoveContainer(ctx, cli, containerID)
-	if err != nil {
-		return fmt.Errorf("Error removing the registry container: %v", err)
+		return fmt.Errorf("error removing the registry container: %v", err)
 	}
 	log.SendCloudReport("info", "Registry removed successfully", "Running", &map[string]interface{}{"registryName": REGISTRY_NAME})
 	return nil
