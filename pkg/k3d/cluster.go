@@ -237,3 +237,7 @@ func UninstallCluster(ctx context.Context) error {
 	}
 	return err
 }
+
+func FixDockerDns() {
+	os.Setenv(k3d.K3dEnvFixDNS, "true")
+}

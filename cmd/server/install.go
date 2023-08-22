@@ -20,6 +20,7 @@ func NewInstallCmd() *cobra.Command {
 	var useCpu bool
 	var datasetDirectory string
 	var disableMetrics bool
+	var fixK3dDns bool
 
 	cmd := &cobra.Command{
 		Use:   "install",
@@ -61,6 +62,10 @@ func NewInstallCmd() *cobra.Command {
 
 			registryVolumes := []string{
 				fmt.Sprintf("%v:%v", path.Join(local.STANDALONE_DIR, "registry"), "/var/lib/registry"),
+			}
+
+			if fixK3dDns {
+				k3d.FixDockerDns()
 			}
 
 			registry, err := k3d.CreateLocalRegistry(ctx, registryPort, registryVolumes)
@@ -116,6 +121,8 @@ func NewInstallCmd() *cobra.Command {
 	cmd.Flags().BoolVar(&useCpu, "cpu", false, "Use CPU for training and evaluating")
 	cmd.Flags().StringVar(&datasetDirectory, "dataset-dir", "", "Dataset directory maps the user's local directory to the container's directory, enabling access to code integration for training and evaluation")
 	cmd.Flags().BoolVar(&disableMetrics, "disable-metrics", false, "Disable metrics collection")
+	cmd.Flags().BoolVar(&fixK3dDns, "fix-dns", false, "Fix DNS issue with docker, in case you are having issue with internet connection in the container")
+
 	return cmd
 }
 
