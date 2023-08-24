@@ -66,7 +66,7 @@ func NewPushCmd() *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVar(&secretId, "secretManagerId", "", "Secret manager id")
+	cmd.Flags().StringVar(&secretId, "secretId", "", "Secret manager id")
 	cmd.Flags().BoolVarP(&watch, "watch", "w", false, "Watch code integration status")
 	cmd.Flags().BoolVarP(&watch, "force", "f", false, "Force push code integration")
 

@@ -9,14 +9,14 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/log"
-	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
+	tlApi "github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
-func ImportModel(ctx context.Context, filePath, projectId, message, modelType, branchName, datasetId string) error {
+func ImportModel(ctx context.Context, filePath, projectId, message, modelType, branchName, datasetId string, transformInput bool) error {
 	fileName := filepath.Base(filePath)
 	versionName := message
 	modelName := strings.TrimSuffix(fileName, filepath.Ext(fileName))
-	tempSignedUploadUrlParams := *tensorleapapi.NewGetUploadSignedUrlParams(fileName)
+	tempSignedUploadUrlParams := *tlApi.NewGetUploadSignedUrlParams(fileName)
 	signedUrlData, _, err := api.ApiClient.GetUploadSignedUrl(ctx).
 		GetUploadSignedUrlParams(tempSignedUploadUrlParams).Execute()
 	if err != nil {
@@ -34,7 +34,7 @@ func ImportModel(ctx context.Context, filePath, projectId, message, modelType, b
 	}
 
 	uploadFileName := signedUrlData.GetFileName()
-	importModelParams := *tensorleapapi.NewImportNewModelParams(projectId, uploadFileName, modelName, versionName, tensorleapapi.ImportModelType(modelType))
+	importModelParams := *tlApi.NewImportNewModelParams(projectId, uploadFileName, modelName, versionName, tlApi.ImportModelType(modelType))
 	if len(branchName) > 0 {
 		importModelParams.BranchName = &branchName
 	}
@@ -42,6 +42,9 @@ func ImportModel(ctx context.Context, filePath, projectId, message, modelType, b
 		importModelParams.DatasetId = &datasetId
 		mappingYaml := code.GetDatasetMappingYaml(ctx, datasetId)
 		importModelParams.MappingYaml = &mappingYaml
+	}
+	if transformInput && modelType == string(tlApi.IMPORTMODELTYPE_ONNX) {
+		importModelParams.TransformInputs = &transformInput
 	}
 	importModelData, _, err := api.ApiClient.ImportModel(ctx).ImportNewModelParams(importModelParams).Execute()
 	if err != nil {
