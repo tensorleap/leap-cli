@@ -18,6 +18,7 @@ func NewPushCmd() *cobra.Command {
 	var message string
 	var modelType string
 	var branchName string
+	var transformInput bool
 	var force bool
 
 	var cmd = &cobra.Command{
@@ -34,12 +35,15 @@ func NewPushCmd() *cobra.Command {
 			ctx := cmd.Context()
 			modelPath := args[0]
 			projects, err := project.GetProjects(ctx)
-
-			model.SelectModelType(&modelType, modelPath)
-
 			if err != nil {
 				return err
 			}
+
+			err = model.SelectModelType(&modelType, modelPath)
+			if err != nil {
+				return err
+			}
+
 			workspaceConfig, err := workspace.GetWorkspaceConfig()
 			if err != nil {
 				return err
@@ -107,7 +111,7 @@ func NewPushCmd() *cobra.Command {
 				return fmt.Errorf("latest code parsing failed, add --force to push anyway")
 			}
 
-			err = model.ImportModel(ctx, modelPath, currentProject.GetCid(), message, modelType, branchName, codeIntegration.GetCid())
+			err = model.ImportModel(ctx, modelPath, currentProject.GetCid(), message, modelType, branchName, codeIntegration.GetCid(), transformInput)
 			if err != nil {
 				return err
 			}
@@ -116,14 +120,11 @@ func NewPushCmd() *cobra.Command {
 	}
 
 	cmd.Flags().StringVarP(&message, "message", "m", "push from cli", "Version message")
-
 	cmd.Flags().StringVar(&modelType, "type", "", "Type is the type of the model file [JSON_TF2 / ONNX / PB_TF2 / H5_TF2]")
-
 	cmd.Flags().StringVar(&branchName, "branch", "", "Branch is the name of the branch [OPTIONAL]")
-
-	cmd.Flags().StringVar(&secretId, "secretManagerId", "", "Secret manager id")
-
+	cmd.Flags().StringVar(&secretId, "secretId", "", "Secret manager id")
 	cmd.Flags().BoolVarP(&force, "force", "f", false, "Force push code integration")
+	cmd.Flags().BoolVar(&transformInput, "transform-input", true, "Transform input in case of ONNX model")
 
 	return cmd
 }
