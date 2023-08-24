@@ -25,3 +25,18 @@ func TestCreateTensorleapChartValues(t *testing.T) {
 		assert.Equal(t, expected, result)
 	})
 }
+
+func TestCreateTensorleapChartValuesFormOldValues(t *testing.T) {
+	t.Skip("skipping test") // for debugging
+
+	helmConfig, _ := CreateHelmConfig("k3d-tensorleap", "tensorleap")
+	oldVals, err := GetValues(helmConfig, "tensorleap")
+	if err != nil {
+		t.Fatal(err)
+	}
+	newVals, err := CreateTensorleapChartValuesFormOldValues(oldVals)
+	if err != nil {
+		t.Fatal(err)
+	}
+	print(newVals)
+}
