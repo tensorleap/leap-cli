@@ -79,17 +79,18 @@ func InstallHelm(useGpu bool, dataContainerPath string, disableMetrics bool) err
 			&map[string]interface{}{"helmConfig": helmConfig, "error": err.Error()})
 		return err
 	}
+	values := helm.CreateTensorleapChartValues(useGpu, dataContainerPath, disableMetrics)
 	if isHelmReleaseExisted {
 		log.SendCloudReport("info", "Running helm upgrade", "Running", &map[string]interface{}{"isHelmReleaseExisted": isHelmReleaseExisted})
 		if err := helm.UpgradeTensorleapChartVersion(
 			helmConfig,
+			values,
 		); err != nil {
 			log.SendCloudReport("error", "Failed upgrading helm charts versions", "Failed",
 				&map[string]interface{}{"isHelmReleaseExisted": isHelmReleaseExisted, "helmConfig": helmConfig, "error": err.Error()})
 			return err
 		}
 	} else {
-		values := helm.CreateTensorleapChartValues(useGpu, dataContainerPath, disableMetrics)
 		log.SendCloudReport("info", "Setting up helm repo", "Running", &map[string]interface{}{"isHelmReleaseExisted": isHelmReleaseExisted})
 		if err := helm.InstallLatestTensorleapChartVersion(
 			helmConfig,
