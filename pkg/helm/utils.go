@@ -2,6 +2,7 @@ package helm
 
 import (
 	"context"
+	"fmt"
 	"os"
 
 	"github.com/tensorleap/leap-cli/pkg/log"
@@ -43,6 +44,52 @@ func CreateTensorleapChartValues(useGpu bool, dataDir string, disableMetrics boo
 			"disableDatadogMetrics": disableMetrics,
 		},
 	}
+}
+
+func CreateTensorleapChartValuesFormOldValues(oldValues Record) (Record, error) {
+
+	disableMetrics := false
+	useGpu := false
+
+	errFailedGettingOldValue := fmt.Errorf("failed getting old values")
+
+	engineVal, ok := oldValues["tensorleap-engine"]
+	if !ok {
+		return nil, errFailedGettingOldValue
+	}
+	engineValMap, ok := engineVal.(map[string]interface{})
+	if !ok {
+		return nil, errFailedGettingOldValue
+	}
+	useGpuVal, ok := engineValMap["gpu"]
+	if ok {
+		useGpu = useGpuVal.(bool)
+	}
+	dataDirVal, ok := engineValMap["localDataDirectory"]
+	if !ok {
+		return nil, errFailedGettingOldValue
+	}
+	dataDir, ok := dataDirVal.(string)
+	if !ok {
+		return nil, errFailedGettingOldValue
+	}
+
+	nodeServerVal, ok := oldValues["tensorleap-node-server"]
+	if ok {
+		nodeServerMap, ok := nodeServerVal.(map[string]interface{})
+		if ok {
+			disableMetrics = nodeServerMap["disableDatadogMetrics"].(bool)
+		}
+	}
+
+	newValues := CreateTensorleapChartValues(useGpu, dataDir, disableMetrics)
+	return newValues, nil
+}
+
+func GetValues(config *HelmConfig, releaseName string) (Record, error) {
+	client := action.NewGetValues(config.ActionConfig)
+	client.AllValues = true
+	return client.Run(releaseName)
 }
 
 type HelmConfig struct {
