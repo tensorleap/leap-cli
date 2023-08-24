@@ -61,7 +61,7 @@ func NewUpgradeCmd() *cobra.Command {
 			}
 			k3d.CacheImagesInParallel(ctx, imagesToCache, registryPort)
 
-			if err := helm.UpgradeTensorleapChartVersion(helmConfig); err != nil {
+			if err := helm.UpgradeTensorleapChartVersion(helmConfig, nil); err != nil {
 				return err
 			}
 
