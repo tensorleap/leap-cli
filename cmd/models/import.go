@@ -45,7 +45,7 @@ func NewImportCmd() *cobra.Command {
 				if err != nil {
 					return err
 				}
-				selected, err := project.SelectOrCreateProject(ctx, projects, true)
+				selected, _, err := project.SelectOrCreateProject(ctx, projects, true)
 				if err != nil {
 					return err
 				}

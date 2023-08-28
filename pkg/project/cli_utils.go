@@ -7,24 +7,23 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/entity"
 )
 
-func GetProjectFromFlag(ctx context.Context, projectIdFlag string, askForNewProjectFirst bool) (*ProjectEntity, error) {
+func GetProjectFromFlag(ctx context.Context, projectIdFlag string, askForNewProjectFirst bool) (project *ProjectEntity, wasCreated bool, err error) {
 	projects, err := GetProjects(ctx)
 	if err != nil {
-		return nil, err
+		return nil, false, err
 	}
-	var selectedProject *ProjectEntity
 	if len(projectIdFlag) > 0 {
-		selectedProject, err = entity.GetEntityById(projectIdFlag, projects, ProjectEntityDesc)
+		project, err = entity.GetEntityById(projectIdFlag, projects, ProjectEntityDesc)
 	} else {
-		selectedProject, err = SelectOrCreateProject(ctx, projects, askForNewProjectFirst)
+		project, wasCreated, err = SelectOrCreateProject(ctx, projects, askForNewProjectFirst)
 	}
 	if err != nil {
-		return nil, err
+		return nil, false, err
 	}
-	return selectedProject, nil
+	return project, wasCreated, nil
 }
 
-func SelectOrCreateProject(ctx context.Context, projects []ProjectEntity, askForNewProjectFirst bool) (*ProjectEntity, error) {
+func SelectOrCreateProject(ctx context.Context, projects []ProjectEntity, askForNewProjectFirst bool) (*ProjectEntity, bool, error) {
 	createProject := func() (*ProjectEntity, error) {
 		projectDetails := AddProjectDetails{}
 		return AskAndAddProject(ctx, &projectDetails, projects)

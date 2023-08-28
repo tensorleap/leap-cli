@@ -33,24 +33,24 @@ func CreateCodeIntegration(ctx context.Context, codeIntegrations []CodeIntegrati
 	return AddCodeIntegration(ctx, name)
 }
 
-func GetCodeIntegrationFromFlag(ctx context.Context, codeIntegrationIdFlag string, askForNewProjectFirst bool) (*CodeIntegration, error) {
+func GetCodeIntegrationFromFlag(ctx context.Context, codeIntegrationIdFlag string, askForNewProjectFirst bool) (code *CodeIntegration, wasCreated bool, err error) {
 	codeIntegrations, err := GetCodeIntegrations(ctx)
 	if err != nil {
-		return nil, err
+		return nil, false, err
 	}
 	var selected *CodeIntegration
 	if len(codeIntegrationIdFlag) > 0 {
 		selected, err = entity.GetEntityById(codeIntegrationIdFlag, codeIntegrations, CodeIntegrationEntityDesc)
 	} else {
-		selected, err = SelectOrCreateCodeIntegration(ctx, codeIntegrations, askForNewProjectFirst)
+		selected, wasCreated, err = SelectOrCreateCodeIntegration(ctx, codeIntegrations, askForNewProjectFirst)
 	}
 	if err != nil {
-		return nil, err
+		return nil, false, err
 	}
-	return selected, nil
+	return selected, wasCreated, nil
 }
 
-func SelectOrCreateCodeIntegration(ctx context.Context, codeIntegrations []CodeIntegration, askIsCreateNewFirst bool) (*tensorleapapi.Dataset, error) {
+func SelectOrCreateCodeIntegration(ctx context.Context, codeIntegrations []CodeIntegration, askIsCreateNewFirst bool) (*tensorleapapi.Dataset, bool, error) {
 	createCodeIntegration := func() (*CodeIntegration, error) {
 		return CreateCodeIntegration(ctx, codeIntegrations)
 	}
@@ -158,32 +158,32 @@ func getDatasetFiles(filesDir string, workspaceConfig *workspace.WorkspaceConfig
 	return allMatchedFiles, nil
 }
 
-func GetAndUpdateCodeIntegrationIfNotExists(ctx context.Context, workspaceConfig *workspace.WorkspaceConfig) (*CodeIntegration, error) {
+func GetAndUpdateCodeIntegrationIfNotExists(ctx context.Context, workspaceConfig *workspace.WorkspaceConfig) (code *CodeIntegration, wasCreated bool, err error) {
 	codeIntegrations, err := GetCodeIntegrations(ctx)
 
 	if err != nil {
-		return nil, fmt.Errorf("failed to get code integration: %v", err)
+		return nil, false, fmt.Errorf("failed to get code integration: %v", err)
 	}
 	for _, codeIntegration := range codeIntegrations {
 		if codeIntegration.Cid == workspaceConfig.CodeIntegrationId {
-			return &codeIntegration, nil
+			return &codeIntegration, false, nil
 		}
 	}
 
 	log.Infof("Not found code integration id: %s. Select or create new code integration", workspaceConfig.CodeIntegrationId)
 
-	codeIntegration, err := SelectOrCreateCodeIntegration(ctx, codeIntegrations, true)
+	codeIntegration, wasCreated, err := SelectOrCreateCodeIntegration(ctx, codeIntegrations, true)
 	if err != nil {
-		return nil, err
+		return nil, false, err
 	}
 
 	workspaceConfig.CodeIntegrationId = codeIntegration.GetCid()
 	log.Info("Updating codeIntegrationId")
 	err = workspace.SetWorkspaceConfig(workspaceConfig, "")
 	if err != nil {
-		return nil, err
+		return nil, false, err
 	}
-	return codeIntegration, nil
+	return codeIntegration, wasCreated, nil
 }
 
 func PrintCodeIntegrationVersionParserErr(civ *CodeIntegrationVersion) {

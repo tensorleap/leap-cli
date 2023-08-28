@@ -8,6 +8,7 @@ import (
 	"text/template"
 
 	"gopkg.in/yaml.v3"
+	"k8s.io/kubectl/pkg/util/slice"
 )
 
 //go:embed template/*
@@ -26,6 +27,9 @@ type WorkspaceConfig struct {
 func NewWorkspaceConfig(codeIntegrationId, projectId, entryFile string, files []string) *WorkspaceConfig {
 	if len(entryFile) == 0 {
 		entryFile = "leap_binder.py"
+	}
+	if !slice.ContainsString(files, entryFile, nil) {
+		files = append(files, entryFile)
 	}
 	return &WorkspaceConfig{
 		ProjectId:         projectId,
@@ -73,6 +77,18 @@ func CreateCodeTemplate(codeIntegrationId, projectId, outputDir string) error {
 		}
 	}
 	return nil
+}
+
+func OverrideWorkspaceConfig(codeIntegrationId, projectId, entryFile, outputDir string) error {
+	wc, err := GetWorkspaceConfig()
+	if err != nil {
+		wc = NewWorkspaceConfig(codeIntegrationId, projectId, entryFile, nil)
+	} else {
+		wc.CodeIntegrationId = codeIntegrationId
+		wc.ProjectId = projectId
+		wc.EntryFile = entryFile
+	}
+	return SetWorkspaceConfig(wc, outputDir)
 }
 
 func GetWorkspaceConfig() (*WorkspaceConfig, error) {
