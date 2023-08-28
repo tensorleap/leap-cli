@@ -27,16 +27,42 @@ func TestCreateTensorleapChartValues(t *testing.T) {
 }
 
 func TestCreateTensorleapChartValuesFormOldValues(t *testing.T) {
-	t.Skip("skipping test") // for debugging
+	t.Run("With no values", func(t *testing.T) {
+		oldValues := Record{
+			"tensorleap-engine": Record{
+				"localDataDirectory": "some/dir/path",
+			},
+			"tensorleap-node-server": Record{},
+		}
+		expected := Record{
+			"tensorleap-engine": Record{
+				"gpu":                false,
+				"localDataDirectory": "some/dir/path",
+			},
+			"tensorleap-node-server": Record{
+				"disableDatadogMetrics": false,
+			},
+		}
 
-	helmConfig, _ := CreateHelmConfig("k3d-tensorleap", "tensorleap")
-	oldVals, err := GetValues(helmConfig, "tensorleap")
-	if err != nil {
-		t.Fatal(err)
-	}
-	newVals, err := CreateTensorleapChartValuesFormOldValues(oldVals)
-	if err != nil {
-		t.Fatal(err)
-	}
-	print(newVals)
+		result, err := CreateTensorleapChartValuesFormOldValues(oldValues)
+
+		assert.NoError(t, err)
+		assert.Equal(t, expected, result)
+	})
+
+	t.Run("With values", func(t *testing.T) {
+
+		t.Skip("skipping test") // for debugging
+
+		helmConfig, _ := CreateHelmConfig("k3d-tensorleap", "tensorleap")
+		oldVals, err := GetValues(helmConfig, "tensorleap")
+		if err != nil {
+			t.Fatal(err)
+		}
+		newVals, err := CreateTensorleapChartValuesFormOldValues(oldVals)
+		if err != nil {
+			t.Fatal(err)
+		}
+		print(newVals)
+	})
 }
