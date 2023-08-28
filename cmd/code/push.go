@@ -12,7 +12,7 @@ import (
 
 func NewPushCmd() *cobra.Command {
 	var secretId string
-	var watch bool
+	var noWait bool
 	var force bool
 
 	cmd := &cobra.Command{
@@ -46,7 +46,9 @@ func NewPushCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			if watch && code.IsCodeParsing(currentVersion) {
+			supposedToWait := !noWait
+			waitNeeded := supposedToWait && !code.IsCodeParsing(currentVersion)
+			if waitNeeded {
 				ok, codeIntegrationVersion, err := code.WaitForCodeIntegrationStatus(ctx, currentVersion.Cid)
 				if err != nil {
 					return err
@@ -57,7 +59,7 @@ func NewPushCmd() *cobra.Command {
 					code.PrintCodeIntegrationVersionParserErr(codeIntegrationVersion)
 					return fmt.Errorf("code parsing failed")
 				}
-			} else if watch && code.IsCodeParseFailed(currentVersion) {
+			} else if supposedToWait && code.IsCodeParseFailed(currentVersion) {
 				code.PrintCodeIntegrationVersionParserErr(currentVersion)
 				return fmt.Errorf("latest code parsing failed, add --force to push anyway")
 			}
@@ -67,7 +69,7 @@ func NewPushCmd() *cobra.Command {
 	}
 
 	cmd.Flags().StringVar(&secretId, "secretId", "", "Secret manager id")
-	cmd.Flags().BoolVarP(&watch, "watch", "w", false, "Watch code integration status")
+	cmd.Flags().BoolVar(&noWait, "no-wait", false, "Do not wait for code parsing")
 	cmd.Flags().BoolVarP(&force, "force", "f", false, "Force push code integration")
 
 	return cmd
