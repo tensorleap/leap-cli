@@ -63,7 +63,7 @@ func CreateTensorleapChartValuesFormOldValues(oldValues Record) (Record, error) 
 	}
 	useGpuVal, ok := engineValMap["gpu"]
 	if ok {
-		useGpu = useGpuVal.(bool)
+		useGpu, _ = useGpuVal.(bool)
 	}
 	dataDirVal, ok := engineValMap["localDataDirectory"]
 	if !ok {
@@ -71,14 +71,14 @@ func CreateTensorleapChartValuesFormOldValues(oldValues Record) (Record, error) 
 	}
 	dataDir, ok := dataDirVal.(string)
 	if !ok {
-		return nil, errFailedGettingOldValue
+		return nil, fmt.Errorf("failed getting old data directory value, try to install instead of upgrade")
 	}
 
 	nodeServerVal, ok := oldValues["tensorleap-node-server"]
 	if ok {
 		nodeServerMap, ok := nodeServerVal.(map[string]interface{})
 		if ok {
-			disableMetrics = nodeServerMap["disableDatadogMetrics"].(bool)
+			disableMetrics, _ = nodeServerMap["disableDatadogMetrics"].(bool)
 		}
 	}
 
