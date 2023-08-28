@@ -21,23 +21,49 @@ func NewInitCmd() *cobra.Command {
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx := cmd.Context()
-			selectedProject, err := project.GetProjectFromFlag(ctx, projectId, true)
+			selectedProject, _, err := project.GetProjectFromFlag(ctx, projectId, true)
 			if err != nil {
 				return err
 			}
 
-			codeIntegration, err := code.GetCodeIntegrationFromFlag(ctx, codeIntegrationId, true)
+			codeIntegration, wasCreatedCodeIntegration, err := code.GetCodeIntegrationFromFlag(ctx, codeIntegrationId, true)
 			if err != nil {
 				return err
 			}
 
-			err = workspace.CreateCodeTemplate(
-				codeIntegration.GetCid(),
-				selectedProject.GetCid(),
-				".",
-			)
-			if err != nil {
-				return err
+			isCreatingEmptyTemplate := true
+			if !wasCreatedCodeIntegration {
+				latestVersion, err := code.GetLatestVersion(ctx, codeIntegration.GetCid())
+				if err != nil && code.ErrEmptyCodeIntegrationVersion != err {
+					return err
+				} else if err == nil {
+					isCreatingEmptyTemplate = false
+					_, err = code.CloneCodeIntegrationVersion(ctx, latestVersion, ".")
+					if err != nil {
+						return err
+					}
+
+					err := workspace.OverrideWorkspaceConfig(
+						codeIntegration.GetCid(),
+						selectedProject.GetCid(),
+						latestVersion.GetCodeEntryFile(),
+						".",
+					)
+					if err != nil {
+						return err
+					}
+				}
+			}
+
+			if isCreatingEmptyTemplate {
+				err = workspace.CreateCodeTemplate(
+					codeIntegration.GetCid(),
+					selectedProject.GetCid(),
+					".",
+				)
+				if err != nil {
+					return err
+				}
 			}
 
 			return nil

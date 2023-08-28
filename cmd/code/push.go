@@ -34,7 +34,7 @@ func NewPushCmd() *cobra.Command {
 			defer close()
 
 			ctx := cmd.Context()
-			codeIntegration, err := code.GetAndUpdateCodeIntegrationIfNotExists(ctx, workspaceConfig)
+			codeIntegration, _, err := code.GetAndUpdateCodeIntegrationIfNotExists(ctx, workspaceConfig)
 			if err != nil {
 				return err
 			}

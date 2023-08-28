@@ -60,7 +60,7 @@ func NewPushCmd() *cobra.Command {
 				} else {
 					log.Info("Project ID not found on local config file")
 				}
-				currentProject, err = project.SelectOrCreateProject(ctx, projects, true)
+				currentProject, _, err = project.SelectOrCreateProject(ctx, projects, true)
 				if err != nil {
 					return err
 				}
@@ -72,7 +72,7 @@ func NewPushCmd() *cobra.Command {
 				}
 			}
 
-			codeIntegration, err := code.GetAndUpdateCodeIntegrationIfNotExists(ctx, workspaceConfig)
+			codeIntegration, _, err := code.GetAndUpdateCodeIntegrationIfNotExists(ctx, workspaceConfig)
 			if err != nil {
 				return err
 			}

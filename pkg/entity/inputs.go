@@ -49,7 +49,7 @@ func SelectEntityOrCreateOne[TEntity any](
 	createEntity func() (*TEntity, error),
 	askForNewFirst bool,
 	desc *EntityDescriptor[TEntity],
-) (*TEntity, error) {
+) (entity *TEntity, wasCreated bool, err error) {
 
 	thereAreProjects := len(entities) > 0
 
@@ -59,15 +59,19 @@ func SelectEntityOrCreateOne[TEntity any](
 		if thereAreProjects {
 			isCreatingNew, err = AskUserIsCreatingNew(desc)
 			if err != nil {
-				return nil, err
+				return nil, false, err
 			}
 		}
 
 	}
+
 	if isCreatingNew {
-		return createEntity()
+		wasCreated = true
+		entity, err = createEntity()
+		return
 	}
-	return SelectEntity(entities, desc)
+	entity, err = SelectEntity(entities, desc)
+	return
 }
 
 func AskForName[TEntity any](existingNames []string, desc *EntityDescriptor[TEntity]) (name string, err error) {
