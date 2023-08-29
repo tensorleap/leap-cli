@@ -43,7 +43,12 @@ func CreateCluster(ctx context.Context, manifest *manifest.InstallationManifest,
 
 	if _, err := k3dCluster.ClusterGet(ctx, runtimes.SelectedRuntime, &clusterConfig.Cluster); err == nil {
 		log.Println("Found existing tensorleap cluster!")
+
 		log.SendCloudReport("info", "Cluster already exists", "Running", &map[string]interface{}{"useGpu": useGpu, "port": port})
+		err = RunCluster(ctx)
+		if err != nil {
+			return err
+		}
 		return nil
 	}
 
@@ -73,6 +78,70 @@ func CreateCluster(ctx context.Context, manifest *manifest.InstallationManifest,
 	}
 
 	return nil
+}
+
+// StopCluster stops a cluster if it exists, copy from pkg/k3d/cmd/cluster/stop.go
+func StopCluster(ctx context.Context) error {
+	cluster, err := GetCluster(ctx)
+	if err != nil {
+		log.SendCloudReport("error", "Failed getting cluster", "Failed", &map[string]interface{}{"error": err.Error()})
+		return err
+	}
+	if cluster == nil {
+		log.SendCloudReport("info", "Cluster not found", "Running", nil)
+		log.Info("Cluster 'tensorleap' not found")
+		return nil
+	}
+	log.Info("Stopping cluster 'tensorleap'")
+	err = k3dCluster.ClusterStop(ctx, runtimes.SelectedRuntime, cluster)
+	if err != nil {
+		log.SendCloudReport("error", "Failed stopping cluster", "Failed",
+			&map[string]interface{}{"cluster": cluster, "error": err.Error()})
+	}
+	return err
+}
+
+// RunCluster starts a cluster if it exists, copy from pkg/k3d/cmd/cluster/start.go
+func RunCluster(ctx context.Context) error {
+	cluster, err := GetCluster(ctx)
+	if err != nil {
+		log.SendCloudReport("error", "Failed getting cluster", "Failed", &map[string]interface{}{"error": err.Error()})
+		return err
+	}
+	if cluster == nil {
+		log.SendCloudReport("info", "Cluster not found", "Running", nil)
+		log.Info("Cluster 'tensorleap' not found")
+		return nil
+	}
+	log.Info("Running cluster 'tensorleap'")
+
+	startClusterOpts := k3d.ClusterStartOpts{}
+	envInfo, err := k3dCluster.GatherEnvironmentInfo(ctx, runtimes.SelectedRuntime, cluster)
+	if err != nil {
+		return fmt.Errorf("failed to gather info about cluster environment: %v", err)
+	}
+	startClusterOpts.EnvironmentInfo = envInfo
+
+	// Get pre-defined clusterStartOpts from cluster
+	fetchedClusterStartOpts, err := k3dCluster.GetClusterStartOptsFromLabels(cluster)
+	if err != nil {
+		return fmt.Errorf("failed to get cluster start opts from cluster labels: %v", err)
+	}
+
+	// override only a few clusterStartOpts from fetched opts
+	startClusterOpts.HostAliases = fetchedClusterStartOpts.HostAliases
+
+	if err != nil {
+		log.SendCloudReport("error", "Failed getting cluster start options", "Failed",
+			&map[string]interface{}{"error": err.Error()})
+		return err
+	}
+	err = k3dCluster.ClusterStart(ctx, runtimes.SelectedRuntime, cluster, startClusterOpts)
+	if err != nil {
+		log.SendCloudReport("error", "Failed running cluster", "Failed",
+			&map[string]interface{}{"error": err.Error()})
+	}
+	return err
 }
 
 func IsGpuCluster(cluster *Cluster) bool {
