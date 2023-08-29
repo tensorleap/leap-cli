@@ -102,7 +102,7 @@ func NewInstallCmd() *cobra.Command {
 			}
 
 			dataContainerPath := strings.Split(datasetDirectory, ":")[1]
-			if err := server.InstallHelm(mnf.ServerHelmChart, chart, useGpu, dataContainerPath, disableMetrics); err != nil {
+			if err := server.InstallHelm(ctx, mnf.ServerHelmChart, chart, useGpu, dataContainerPath, disableMetrics); err != nil {
 				return err
 			}
 			if len(imageToCacheInTheBackground) > 0 {
