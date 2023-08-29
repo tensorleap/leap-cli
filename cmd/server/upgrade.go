@@ -56,7 +56,13 @@ func NewUpgradeCmd() *cobra.Command {
 			}
 			isGpuCluster := k3d.IsGpuCluster(cluster)
 
-			helmConfig, err := helm.CreateHelmConfig(server.KUBE_CONTEXT, server.KUBE_NAMESPACE)
+			kubeConfigPath, clean, err := k3d.CreateTmpClusterKubeConfig(ctx, cluster)
+			if err != nil {
+				return err
+			}
+			defer clean()
+
+			helmConfig, err := helm.CreateHelmConfig(kubeConfigPath, server.KUBE_CONTEXT, server.KUBE_NAMESPACE)
 			if err != nil {
 				return err
 			}

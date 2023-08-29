@@ -1,12 +1,14 @@
 package server
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"strings"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/tensorleap/leap-cli/pkg/helm"
+	"github.com/tensorleap/leap-cli/pkg/k3d"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/server/manifest"
 	"helm.sh/helm/v3/pkg/chart"
@@ -66,9 +68,21 @@ func GetDefaultDataVolume() string {
 	return defaultDataPath
 }
 
-func InstallHelm(chartMeta manifest.HelmChartMeta, chart *chart.Chart, useGpu bool, dataContainerPath string, disableMetrics bool) error {
+func InstallHelm(ctx context.Context, chartMeta manifest.HelmChartMeta, chart *chart.Chart, useGpu bool, dataContainerPath string, disableMetrics bool) error {
 	log.SendCloudReport("info", "Installing helm", "Running", nil)
-	helmConfig, err := helm.CreateHelmConfig(KUBE_CONTEXT, KUBE_NAMESPACE)
+
+	cluster, err := k3d.GetCluster(ctx)
+	if err != nil {
+		return err
+	}
+
+	kubeConfigPath, clean, err := k3d.CreateTmpClusterKubeConfig(ctx, cluster)
+	if err != nil {
+		return err
+	}
+	defer clean()
+
+	helmConfig, err := helm.CreateHelmConfig(kubeConfigPath, KUBE_CONTEXT, KUBE_NAMESPACE)
 	if err != nil {
 		log.SendCloudReport("error", "Failed creating helm config", "Failed",
 			&map[string]interface{}{"kubeContext": KUBE_CONTEXT, "kubeNamespace": KUBE_NAMESPACE, "error": err.Error()})
