@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ModelGraph** | [**ModelGraph**](ModelGraph.md) |  | 
 **Yaml** | **string** |  | 
+**DatasetVersionId** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -65,6 +66,31 @@ and a boolean to check if the value has been set.
 
 SetYaml sets Yaml field to given value.
 
+
+### GetDatasetVersionId
+
+`func (o *ApplyDatasetMappingsParams) GetDatasetVersionId() string`
+
+GetDatasetVersionId returns the DatasetVersionId field if non-nil, zero value otherwise.
+
+### GetDatasetVersionIdOk
+
+`func (o *ApplyDatasetMappingsParams) GetDatasetVersionIdOk() (*string, bool)`
+
+GetDatasetVersionIdOk returns a tuple with the DatasetVersionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDatasetVersionId
+
+`func (o *ApplyDatasetMappingsParams) SetDatasetVersionId(v string)`
+
+SetDatasetVersionId sets DatasetVersionId field to given value.
+
+### HasDatasetVersionId
+
+`func (o *ApplyDatasetMappingsParams) HasDatasetVersionId() bool`
+
+HasDatasetVersionId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.365
+  version: 0.0.378-rc.3
 servers:
 - url: /api/v2
 paths:
@@ -105,6 +105,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserData'
           description: Ok
+      security:
+      - jwt: []
+  /auth/resolveConcurrentUsersConflict:
+    post:
+      operationId: ResolveConcurrentUsersConflict
+      parameters: []
+      responses:
+        "204":
+          description: No content
       security:
       - jwt: []
   /auth/extendTrial:
@@ -541,7 +550,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ModelGraph'
+                $ref: '#/components/schemas/ApplyMappingResponse'
           description: Ok
       security:
       - jwt: []
@@ -6046,17 +6055,64 @@ components:
       - digest
       - projectId
       type: object
+    MappingErrorType:
+      enum:
+      - datasetMappingApplyError
+      - datasetMappingApplyWarning
+      type: string
+    MappingError:
+      additionalProperties: false
+      example:
+        type: null
+        message: message
+        title: title
+      properties:
+        type:
+          $ref: '#/components/schemas/MappingErrorType'
+        message:
+          type: string
+        title:
+          type: string
+      required:
+      - message
+      - title
+      - type
+      type: object
+    ApplyMappingResponse:
+      additionalProperties: false
+      example:
+        modelGraph:
+          nodes: "{}"
+          id: id
+        validationErrors:
+        - type: null
+          message: message
+          title: title
+        - type: null
+          message: message
+          title: title
+      properties:
+        validationErrors:
+          items:
+            $ref: '#/components/schemas/MappingError'
+          type: array
+        modelGraph:
+          $ref: '#/components/schemas/ModelGraph'
+      type: object
     ApplyDatasetMappingsParams:
       additionalProperties: false
       example:
         modelGraph:
           nodes: "{}"
           id: id
+        datasetVersionId: datasetVersionId
         yaml: yaml
       properties:
         modelGraph:
           $ref: '#/components/schemas/ModelGraph'
         yaml:
+          type: string
+        datasetVersionId:
           type: string
       required:
       - modelGraph
@@ -7002,6 +7058,7 @@ components:
       additionalProperties: false
       example:
         schemaVersion: 0.8008281904610115
+        disableDatadogMetrics: true
         hubDefaultNamespace: hubDefaultNamespace
         hubUrl: hubUrl
         clientStoragePrefixUrl: clientStoragePrefixUrl
@@ -7015,8 +7072,11 @@ components:
           type: string
         hubUrl:
           type: string
+        disableDatadogMetrics:
+          type: boolean
       required:
       - clientStoragePrefixUrl
+      - disableDatadogMetrics
       - hubDefaultNamespace
       - hubUrl
       - schemaVersion

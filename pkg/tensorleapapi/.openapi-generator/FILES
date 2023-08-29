@@ -28,6 +28,7 @@ docs/AnalyzeGraphResponse.md
 docs/AnalyzeParams.md
 docs/AnalyzeTypeEnum.md
 docs/ApplyDatasetMappingsParams.md
+docs/ApplyMappingResponse.md
 docs/BBoxImageData.md
 docs/BBoxImageScatterLabel.md
 docs/BBoxImageViz.md
@@ -201,6 +202,8 @@ docs/LoadVersionResponse.md
 docs/LoginParams.md
 docs/LossMessageParams.md
 docs/MachineTypeOption.md
+docs/MappingError.md
+docs/MappingErrorType.md
 docs/MaskImageData.md
 docs/MaskImageScatterLabel.md
 docs/MaskTextData.md
@@ -362,6 +365,7 @@ model_analyze_graph_response.go
 model_analyze_params.go
 model_analyze_type_enum.go
 model_apply_dataset_mappings_params.go
+model_apply_mapping_response.go
 model_b_box_image_data.go
 model_b_box_image_scatter_label.go
 model_b_box_image_viz.go
@@ -534,6 +538,8 @@ model_load_version_response.go
 model_login_params.go
 model_loss_message_params.go
 model_machine_type_option.go
+model_mapping_error.go
+model_mapping_error_type.go
 model_mask_image_data.go
 model_mask_image_scatter_label.go
 model_mask_text_data.go

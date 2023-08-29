@@ -86,6 +86,7 @@ Method | HTTP request | Description
 [**Logout**](DefaultApi.md#Logout) | **Post** /auth/logout | 
 [**ModifyDatasetVersionNote**](DefaultApi.md#ModifyDatasetVersionNote) | **Post** /datasetVersions/modifyDatasetVersionNote | 
 [**PopulationExploration**](DefaultApi.md#PopulationExploration) | **Post** /visualizations/populationExploration | 
+[**ResolveConcurrentUsersConflict**](DefaultApi.md#ResolveConcurrentUsersConflict) | **Post** /auth/resolveConcurrentUsersConflict | 
 [**SampleAnalysis**](DefaultApi.md#SampleAnalysis) | **Post** /visualizations/sampleAnalysis | 
 [**SampleSelection**](DefaultApi.md#SampleSelection) | **Post** /visualizations/sampleSelection | 
 [**SaveAnalyzerLayout**](DefaultApi.md#SaveAnalyzerLayout) | **Post** /visualizations/saveAnalyzerLayout | 
@@ -701,7 +702,7 @@ Name | Type | Description  | Notes
 
 ## ApplyDatasetMapping
 
-> ModelGraph ApplyDatasetMapping(ctx).ApplyDatasetMappingsParams(applyDatasetMappingsParams).Execute()
+> ApplyMappingResponse ApplyDatasetMapping(ctx).ApplyDatasetMappingsParams(applyDatasetMappingsParams).Execute()
 
 
 
@@ -727,7 +728,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApplyDatasetMapping``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `ApplyDatasetMapping`: ModelGraph
+    // response from `ApplyDatasetMapping`: ApplyMappingResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ApplyDatasetMapping`: %v\n", resp)
 }
 ```
@@ -747,7 +748,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ModelGraph**](ModelGraph.md)
+[**ApplyMappingResponse**](ApplyMappingResponse.md)
 
 ### Authorization
 
@@ -5268,6 +5269,63 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ResolveConcurrentUsersConflict
+
+> ResolveConcurrentUsersConflict(ctx).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.DefaultApi.ResolveConcurrentUsersConflict(context.Background()).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ResolveConcurrentUsersConflict``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiResolveConcurrentUsersConflictRequest struct via the builder pattern
+
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
