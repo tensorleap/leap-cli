@@ -94,10 +94,14 @@ type HelmConfig struct {
 	Settings     *cli.EnvSettings
 }
 
-func CreateHelmConfig(kubeContext, namespace string) (*HelmConfig, error) {
+func CreateHelmConfig(kubeConfigPath string, kubeContext, namespace string) (*HelmConfig, error) {
 	settings := cli.New()
 	settings.SetNamespace(namespace)
 	settings.KubeContext = kubeContext
+
+	if len(kubeConfigPath) > 0 {
+		settings.KubeConfig = kubeConfigPath
+	}
 
 	// Any other context with cancel will failed immediately when running helm actions, using background context solve it
 	ctx := context.Background()
