@@ -40,7 +40,17 @@ func NewUpgradeCmd() *cobra.Command {
 
 			log.SendCloudReport("info", "Starting upgrade", "Starting", &map[string]interface{}{"manifest": mnf})
 
-			cluster, err := server.GetTensorleapCluster(ctx)
+			err = server.ValidateClusterExists(ctx)
+			if err != nil {
+				return err
+			}
+
+			err = k3d.RunCluster(ctx)
+			if err != nil {
+				return err
+			}
+
+			cluster, err := k3d.GetCluster(ctx)
 			if err != nil {
 				return err
 			}
