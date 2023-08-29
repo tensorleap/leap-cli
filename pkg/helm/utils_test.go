@@ -54,7 +54,7 @@ func TestCreateTensorleapChartValuesFormOldValues(t *testing.T) {
 
 		t.Skip("skipping test") // for debugging
 
-		helmConfig, _ := CreateHelmConfig("k3d-tensorleap", "tensorleap")
+		helmConfig, _ := CreateHelmConfig("", "k3d-tensorleap", "tensorleap")
 		oldVals, err := GetValues(helmConfig, "tensorleap")
 		if err != nil {
 			t.Fatal(err)
