@@ -80,6 +80,33 @@ func CreateCluster(ctx context.Context, manifest *manifest.InstallationManifest,
 	return nil
 }
 
+func CreateTmpClusterKubeConfig(ctx context.Context, cluster *Cluster) (string, func(), error) {
+	kubeConfig, err := k3dCluster.KubeconfigGet(ctx, runtimes.SelectedRuntime, cluster)
+
+	if err != nil {
+		log.SendCloudReport("error", "Failed getting cluster kubeconfig", "Failed",
+			&map[string]interface{}{"cluster": cluster, "error": err.Error()})
+		return "", nil, err
+	}
+	tmpConfigFile, err := os.CreateTemp("", "kubeconfig")
+	if err != nil {
+		return "", nil, err
+	}
+	tmpPath := tmpConfigFile.Name()
+	tmpConfigFile.Close()
+	cleanup := func() { os.Remove(tmpPath) }
+
+	err = k3dCluster.KubeconfigWriteToPath(ctx, kubeConfig, tmpPath)
+	if err != nil {
+		log.SendCloudReport("error", "Failed writing cluster kubeconfig", "Failed",
+			&map[string]interface{}{"kubeConfig": kubeConfig, "tmpPath": tmpPath, "error": err.Error()})
+		cleanup()
+		return "", nil, err
+	}
+
+	return tmpPath, cleanup, nil
+}
+
 // StopCluster stops a cluster if it exists, copy from pkg/k3d/cmd/cluster/stop.go
 func StopCluster(ctx context.Context) error {
 	cluster, err := GetCluster(ctx)
@@ -231,6 +258,7 @@ func createClusterConfig(ctx context.Context, manifest *manifest.InstallationMan
 					NodeFilters: []string{"server:*"},
 				}},
 			},
+			// Just for convenience to use kubectl, on install and upgrade we take the kubeconfig from the cluster
 			KubeconfigOptions: conf.SimpleConfigOptionsKubeconfig{
 				UpdateDefaultKubeconfig: true,
 				SwitchCurrentContext:    true,
