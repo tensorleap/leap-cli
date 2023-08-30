@@ -17,7 +17,7 @@ func NewListCmd() *cobra.Command {
 			if err := auth.CheckLoggedIn(); err != nil {
 				return err
 			}
-			list, err := secret.GetSecretManagerList(cmd.Context())
+			list, err := secret.GetSecretList(cmd.Context())
 			if err != nil {
 				return err
 			}

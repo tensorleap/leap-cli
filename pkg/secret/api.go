@@ -19,7 +19,7 @@ var SecretEntityDesc = entity.NewEntityDescriptor[SecretEntity](
 	func(s *SecretEntity) string { return s.GetCid() },
 )
 
-func GetSecretManagerList(ctx context.Context) ([]SecretEntity, error) {
+func GetSecretList(ctx context.Context) ([]SecretEntity, error) {
 	list, _, err := api.ApiClient.GetSecretManagerList(ctx).Execute()
 	return list.Results, err
 }
@@ -31,7 +31,7 @@ func CreateSecretManager(ctx context.Context, name, key string) (*SecretEntity, 
 	if err != nil {
 		return nil, err
 	}
-	list, err := GetSecretManagerList(ctx)
+	list, err := GetSecretList(ctx)
 	if err != nil {
 		return nil, err
 	}

@@ -22,12 +22,12 @@ func NewCreateCmd() *cobra.Command {
 				keyPath = args[1]
 			}
 
-			secrets, err := secret.GetSecretManagerList(cmd.Context())
+			secrets, err := secret.GetSecretList(cmd.Context())
 			if err != nil {
 				return err
 			}
 
-			err = secret.AskForSecret(cmd.Context(), secrets, &name, &key, keyPath)
+			err = secret.AskForNewSecret(cmd.Context(), secrets, &name, &key, keyPath)
 			if err != nil {
 				return err
 
