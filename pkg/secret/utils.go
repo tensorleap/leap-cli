@@ -9,13 +9,13 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
-func SelectOrCreateSecret(ctx context.Context, secrets []SecretEntity, askForNewProjectFirst bool) (*SecretEntity, bool, error) {
+func SelectOrCreateSecret(ctx context.Context, secrets []SecretEntity, askForNewFirst bool) (*SecretEntity, bool, error) {
 	create := func() (*SecretEntity, error) {
 		var name string
 		var key string
 		var keyPath string
 
-		err := AskForSecret(ctx, secrets, &name, &key, keyPath)
+		err := AskForNewSecret(ctx, secrets, &name, &key, keyPath)
 		if err != nil {
 			return nil, err
 
@@ -27,10 +27,10 @@ func SelectOrCreateSecret(ctx context.Context, secrets []SecretEntity, askForNew
 		}
 		return secret, nil
 	}
-	return entity.SelectEntityOrCreateOne(secrets, create, askForNewProjectFirst, SecretEntityDesc)
+	return entity.SelectEntityOrCreateOne(secrets, create, askForNewFirst, SecretEntityDesc)
 }
 
-func AskForSecret(ctx context.Context, secrets []SecretEntity, name, key *string, keyPath string) error {
+func AskForNewSecret(ctx context.Context, secrets []SecretEntity, name, key *string, keyPath string) error {
 
 	existingNames := entity.GetNames(secrets, SecretEntityDesc)
 	validator := entity.CreateUniqueNameValidator(existingNames)

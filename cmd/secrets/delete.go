@@ -12,7 +12,7 @@ func NewDeleteCmd() *cobra.Command {
 		Short: "Delete a secret",
 		Long:  `Delete a secret`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			list, err := secret.GetSecretManagerList(cmd.Context())
+			list, err := secret.GetSecretList(cmd.Context())
 			if err != nil {
 				return err
 			}
