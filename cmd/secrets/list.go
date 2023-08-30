@@ -2,20 +2,10 @@ package secrets
 
 import (
 	"github.com/tensorleap/leap-cli/pkg/entity"
-	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
+	"github.com/tensorleap/leap-cli/pkg/secret"
 
 	"github.com/spf13/cobra"
-	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/auth"
-)
-
-type SecretEntity = tensorleapapi.SecretManager
-
-var SecretEntityDescriptor = entity.NewEntityDescriptor[SecretEntity](
-	"secret",
-	"secrets",
-	func(e *SecretEntity) string { return e.GetName() },
-	func(e *SecretEntity) string { return e.GetCid() },
 )
 
 func NewListCmd() *cobra.Command {
@@ -27,11 +17,11 @@ func NewListCmd() *cobra.Command {
 			if err := auth.CheckLoggedIn(); err != nil {
 				return err
 			}
-			data, _, err := api.ApiClient.GetSecretManagerList(cmd.Context()).Execute()
+			list, err := secret.GetSecretManagerList(cmd.Context())
 			if err != nil {
 				return err
 			}
-			entity.PrintList(data.Results, SecretEntityDescriptor)
+			entity.PrintList(list, secret.SecretEntityDesc)
 
 			return nil
 		},
