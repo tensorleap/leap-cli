@@ -9,9 +9,10 @@ import (
 
 func init() {
 	RootCommand.AddCommand(&cobra.Command{
-		Use:   "list",
-		Short: "List available code integration",
-		Long:  `List available code integration`,
+		Use:     "list",
+		Aliases: []string{"ls"},
+		Short:   "List available code integration",
+		Long:    `List available code integration`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := auth.CheckLoggedIn(); err != nil {
 				return err
