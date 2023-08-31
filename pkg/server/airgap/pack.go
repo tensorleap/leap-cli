@@ -4,10 +4,10 @@ import (
 	"archive/tar"
 	"fmt"
 	"io"
-	"net/http"
 	"os"
 
 	"github.com/tensorleap/leap-cli/pkg/docker"
+	"github.com/tensorleap/leap-cli/pkg/helm/chart"
 	"github.com/tensorleap/leap-cli/pkg/local"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/server/manifest"
@@ -37,13 +37,8 @@ func Pack(mnf *manifest.InstallationManifest, outputFile io.Writer) error {
 }
 
 func AddHelm(tarWriter *tar.Writer, chartMeta manifest.HelmChartMeta, fileName string) error {
-	log.Info("Downloading helm chart...")
-	version, err := manifest.GetHelmVersion(chartMeta.RepoUrl, chartMeta.ChartName, chartMeta.Version)
-	if err != nil {
-		return err
-	}
 
-	tempHelmFile, clean, err := DownloadIntoTempFile(version.URLs[0], "helm.tgz")
+	tempHelmFile, clean, err := chart.DownloadIntoTempFile(chartMeta.RepoUrl, chartMeta.ChartName, chartMeta.Version)
 	if err != nil {
 		return err
 	}
@@ -143,34 +138,4 @@ func AddManifest(tarWriter *tar.Writer, mnf *manifest.InstallationManifest) erro
 		return err
 	}
 	return nil
-}
-
-func DownloadIntoTempFile(url, tempSuffix string) (*os.File, func(), error) {
-	tempFile, err := os.CreateTemp("", tempSuffix)
-	if err != nil {
-		return nil, nil, err
-	}
-	clean := func() {
-		tempFile.Close()
-		os.Remove(tempFile.Name())
-	}
-
-	res, err := http.Get(url)
-	if err != nil {
-		return nil, nil, err
-	}
-	defer res.Body.Close()
-	if res.StatusCode < 200 || res.StatusCode >= 300 {
-		return nil, nil, fmt.Errorf("failed downloading (%s): %v", url, res.StatusCode)
-	}
-	_, err = io.Copy(tempFile, res.Body)
-	if err != nil {
-		return nil, nil, err
-	}
-	_, err = tempFile.Seek(0, 0)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	return tempFile, clean, nil
 }
