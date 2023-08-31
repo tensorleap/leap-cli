@@ -4,11 +4,13 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/project"
+	"github.com/tensorleap/leap-cli/pkg/secret"
 	"github.com/tensorleap/leap-cli/pkg/workspace"
 )
 
 func NewInitCmd() *cobra.Command {
 	var projectId string
+	var secretId string
 	var codeIntegrationId string
 
 	var cmd = &cobra.Command{
@@ -37,6 +39,9 @@ func NewInitCmd() *cobra.Command {
 				if err != nil && code.ErrEmptyCodeIntegrationVersion != err {
 					return err
 				} else if err == nil {
+					if secretId == "" {
+						secretId = latestVersion.Metadata.GetSecretManagerId()
+					}
 					isCreatingEmptyTemplate = false
 					_, err = code.CloneCodeIntegrationVersion(ctx, latestVersion, ".")
 					if err != nil {
@@ -47,6 +52,7 @@ func NewInitCmd() *cobra.Command {
 						codeIntegration.GetCid(),
 						selectedProject.GetCid(),
 						latestVersion.GetCodeEntryFile(),
+						secretId,
 						".",
 					)
 					if err != nil {
@@ -55,10 +61,21 @@ func NewInitCmd() *cobra.Command {
 				}
 			}
 
+			if wasCreatedCodeIntegration && secretId == "" {
+				selectedSecret, _, err := secret.CreateOrSelectSecretIfInUse(ctx)
+				if err != nil {
+					return err
+				}
+				if selectedSecret != nil {
+					secretId = selectedSecret.GetCid()
+				}
+			}
+
 			if isCreatingEmptyTemplate {
 				err = workspace.CreateCodeTemplate(
 					codeIntegration.GetCid(),
 					selectedProject.GetCid(),
+					secretId,
 					".",
 				)
 				if err != nil {

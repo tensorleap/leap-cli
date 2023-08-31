@@ -7,6 +7,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/secret"
 	"github.com/tensorleap/leap-cli/pkg/workspace"
 )
 
@@ -40,10 +41,19 @@ func NewCreateCmd() *cobra.Command {
 			codeIntegrationName := codeIntegration.GetName()
 			_, dirExistsErr := os.Stat(codeIntegrationName)
 			if dirExistsErr == nil {
-				return fmt.Errorf("Can't pull '%s' code integration, directory named '%s' already exists on current directory", codeIntegrationName, codeIntegrationName)
+				return fmt.Errorf("can't pull '%s' code integration, directory named '%s' already exists on current directory", codeIntegrationName, codeIntegrationName)
 			}
 
-			err = workspace.CreateCodeTemplate(codeIntegration.GetCid(), "", codeIntegrationName)
+			var secretId string
+			selectedSecret, _, err := secret.CreateOrSelectSecretIfInUse(ctx)
+			if err != nil {
+				return err
+			}
+			if selectedSecret != nil {
+				secretId = selectedSecret.GetCid()
+			}
+
+			err = workspace.CreateCodeTemplate(codeIntegration.GetCid(), "", secretId, codeIntegrationName)
 			if err != nil {
 				return err
 			}
