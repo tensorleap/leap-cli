@@ -2,6 +2,7 @@ package secret
 
 import (
 	"context"
+	"fmt"
 	"os"
 
 	"github.com/AlecAivazis/survey/v2"
@@ -143,4 +144,51 @@ func SyncSecretIdFromFlagAndConfig(ctx context.Context, secretId string, workspa
 		}
 	}
 	return secretId, nil
+}
+
+func SetSecret(ctx context.Context, flagSecretId string) error {
+	workspaceConfig, err := workspace.GetWorkspaceConfig()
+	if err != nil {
+		return err
+	}
+	secrets, err := GetSecretList(ctx)
+	if err != nil {
+		return err
+	}
+	var selectedSecret *SecretEntity
+	if len(flagSecretId) == 0 {
+		if workspaceConfig.SecretId != "" {
+			currentSecret, _ := entity.GetEntityById(workspaceConfig.SecretId, secrets, SecretEntityDesc)
+			if currentSecret != nil {
+				var confirmed bool
+				err = survey.AskOne(&survey.Confirm{
+					Message: fmt.Sprintf("You are already using secret: %s, Do you want to change secret", currentSecret.GetName()),
+					Default: true,
+				}, &confirmed)
+
+				if err != nil {
+					return err
+				}
+				if !confirmed {
+					return nil
+				}
+			}
+		}
+
+		selectedSecret, _, err = SelectOrCreateSecret(ctx, secrets, true)
+		if err != nil {
+			return err
+		}
+	} else {
+		selectedSecret, _, _, err = CreateOrSelectIfSecretNotFound(ctx, flagSecretId)
+		if err != nil {
+			return err
+		}
+	}
+
+	workspaceConfig.SecretId = selectedSecret.GetCid()
+	log.Infof("Set leap.yaml with secret ID: %s", workspaceConfig.SecretId)
+	err = workspace.SetWorkspaceConfig(workspaceConfig, ".")
+
+	return err
 }
