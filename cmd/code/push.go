@@ -7,6 +7,7 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/secret"
 	"github.com/tensorleap/leap-cli/pkg/workspace"
 )
 
@@ -38,8 +39,10 @@ func NewPushCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			if len(secretId) == 0 {
-				secretId = workspaceConfig.SecretManagerId
+
+			secretId, err := secret.SyncSecretIdFromFlagAndConfig(ctx, secretId, workspaceConfig)
+			if err != nil {
+				return err
 			}
 
 			_, currentVersion, err := code.PushCode(ctx, force, codeIntegration.Cid, tarGzFile, workspaceConfig.EntryFile, secretId)

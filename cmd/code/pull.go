@@ -43,19 +43,21 @@ func NewPullCmd() *cobra.Command {
 				return fmt.Errorf("can't pull '%s' dataset, directory named '%s' already exists on current directory", datasetName, datasetName)
 			}
 			latestVersion, err := code.GetLatestVersion(ctx, selectedDataset.GetCid())
+			secretId := latestVersion.Metadata.GetSecretManagerId()
 			if err == nil {
 				files, err := code.CloneCodeIntegrationVersion(ctx, latestVersion, datasetName)
 				if err != nil {
 					return err
 				}
-				workspaceConfig := workspace.NewWorkspaceConfig(selectedDataset.GetCid(), "", latestVersion.GetCodeEntryFile(), files)
+
+				workspaceConfig := workspace.NewWorkspaceConfig(selectedDataset.GetCid(), "", latestVersion.GetCodeEntryFile(), secretId, files)
 				err = workspace.SetWorkspaceConfig(workspaceConfig, datasetName)
 				if err != nil {
 					return err
 				}
 			} else if err == code.ErrEmptyCodeIntegrationVersion {
 				log.Warn("The selected dataset is empty, Create default template")
-				err = workspace.CreateCodeTemplate(selectedDataset.GetCid(), "", datasetName)
+				err = workspace.CreateCodeTemplate(selectedDataset.GetCid(), "", secretId, datasetName)
 				if err != nil {
 					return err
 				}
