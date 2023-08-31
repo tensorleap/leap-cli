@@ -10,9 +10,10 @@ import (
 
 func NewListCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "list",
-		Short: "List secrets",
-		Long:  `List secrets`,
+		Use:     "list",
+		Aliases: []string{"ls"},
+		Short:   "List secrets",
+		Long:    `List secrets`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if err := auth.CheckLoggedIn(); err != nil {
 				return err

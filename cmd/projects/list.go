@@ -9,9 +9,10 @@ import (
 func NewListCmd() *cobra.Command {
 
 	var cmd = &cobra.Command{
-		Use:   "list",
-		Short: "List projects",
-		Long:  `List projects`,
+		Use:     "list",
+		Aliases: []string{"ls"},
+		Short:   "List projects",
+		Long:    `List projects`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			projects, err := project.GetProjects(cmd.Context())
 			if err != nil {
