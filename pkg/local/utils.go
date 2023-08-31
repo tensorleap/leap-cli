@@ -104,15 +104,22 @@ func OpenLink(link string) error {
 }
 
 func PurgeData() error {
+	log.Infof("Purging data (you may be asked to enter the root user password)")
 	for _, dir := range []string{STORAGE_DIR_NAME, REGISTRY_DIR_NAME} {
 		path := path.Join(STANDALONE_DIR, dir)
 		log.Infof("Removing directory: %s", path)
 		err := os.RemoveAll(path)
 
+		// if failed to remove directory, try to remove it with sudo
 		if err != nil {
-			log.SendCloudReport("error", "Failed purge data", "Failed", &map[string]interface{}{"error": err.Error()})
-			return err
+			rmCmd := exec.Command("/bin/sh", "-c", fmt.Sprintf("sudo rm -rf %s", path))
+
+			if err := rmCmd.Run(); err != nil {
+				log.SendCloudReport("error", "Failed purge data", "Failed", &map[string]interface{}{"error": err.Error()})
+				return err
+			}
 		}
+
 	}
 	return nil
 }
