@@ -2,15 +2,11 @@ package manifest
 
 import (
 	"fmt"
-	"io"
-	"net/http"
-	"os"
 	"regexp"
 	"strings"
 
 	"github.com/tensorleap/leap-cli/pkg/github"
 	"github.com/tensorleap/leap-cli/pkg/log"
-	"helm.sh/helm/v3/pkg/repo"
 )
 
 const (
@@ -135,39 +131,6 @@ func createManifestWithBasicInfo() (*InstallationManifest, error) {
 	}
 
 	return info, nil
-}
-
-// GetHelmVersion returns version of a helm chart if version is empty it returns the latest version
-func GetHelmVersion(repoUrl, chartName, version string) (*repo.ChartVersion, error) {
-
-	url, err := repo.ResolveReferenceURL(repoUrl, "index.yaml")
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-
-	tempFile, err := os.CreateTemp("", "index.yaml")
-	if err != nil {
-		return nil, err
-	}
-	defer os.Remove(tempFile.Name())
-	_, err = io.Copy(tempFile, res.Body)
-	if err != nil {
-		return nil, err
-	}
-	path := tempFile.Name()
-	res.Body.Close()
-	tempFile.Close()
-
-	indexFile, err := repo.LoadIndexFile(path)
-	if err != nil {
-		return nil, err
-	}
-	return indexFile.Get(chartName, version)
 }
 
 func getTensorleapRepoRef(branch, tag string) string {

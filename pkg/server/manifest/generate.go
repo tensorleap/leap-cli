@@ -2,6 +2,8 @@ package manifest
 
 import (
 	"fmt"
+
+	"github.com/tensorleap/leap-cli/pkg/helm/chart"
 )
 
 // GenerateManifest builds an installation manifest for the given branch and tag. If tag is empty, the latest tag is used.
@@ -31,7 +33,7 @@ func GenerateManifest(branch, tag string) (*InstallationManifest, error) {
 		return nil, err
 	}
 
-	version, err := GetHelmVersion(mnf.ServerHelmChart.RepoUrl, mnf.ServerHelmChart.ChartName, serverChartVersion)
+	version, err := chart.GetVersion(mnf.ServerHelmChart.RepoUrl, mnf.ServerHelmChart.ChartName, serverChartVersion)
 	if err != nil {
 		return nil, err
 	}
