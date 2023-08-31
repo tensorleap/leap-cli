@@ -17,14 +17,16 @@ var templateDir embed.FS
 const configFileName = "leap.yaml"
 
 type WorkspaceConfig struct {
-	CodeIntegrationId string   `yaml:"codeIntegrationId"`
-	ProjectId         string   `yaml:"projectId"`
-	SecretManagerId   string   `yaml:"secretManagerId"`
-	EntryFile         string   `yaml:"entryFile"`
-	IncludePatterns   []string `yaml:"include"`
+	CodeIntegrationId string `yaml:"codeIntegrationId"`
+	ProjectId         string `yaml:"projectId"`
+	SecretId          string `yaml:"secretId"`
+	// deprecated
+	SecretManagerId string   `yaml:"secretManagerId,omitempty"`
+	EntryFile       string   `yaml:"entryFile"`
+	IncludePatterns []string `yaml:"include"`
 }
 
-func NewWorkspaceConfig(codeIntegrationId, projectId, entryFile string, files []string) *WorkspaceConfig {
+func NewWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId string, files []string) *WorkspaceConfig {
 	if len(entryFile) == 0 {
 		entryFile = "leap_binder.py"
 	}
@@ -35,6 +37,7 @@ func NewWorkspaceConfig(codeIntegrationId, projectId, entryFile string, files []
 		ProjectId:         projectId,
 		CodeIntegrationId: codeIntegrationId,
 		EntryFile:         entryFile,
+		SecretId:          secretId,
 		IncludePatterns:   files,
 	}
 }
@@ -42,9 +45,10 @@ func NewWorkspaceConfig(codeIntegrationId, projectId, entryFile string, files []
 type InitTemplateValues struct {
 	CodeIntegrationId string
 	ProjectId         string
+	SecretId          string
 }
 
-func CreateCodeTemplate(codeIntegrationId, projectId, outputDir string) error {
+func CreateCodeTemplate(codeIntegrationId, projectId, secretId, outputDir string) error {
 	// Create the directory for the file if it doesn't exist
 	err := os.MkdirAll(outputDir, 0755)
 	if err != nil {
@@ -71,6 +75,7 @@ func CreateCodeTemplate(codeIntegrationId, projectId, outputDir string) error {
 			if err := tmpl.Execute(targetFile, &InitTemplateValues{
 				CodeIntegrationId: codeIntegrationId,
 				ProjectId:         projectId,
+				SecretId:          secretId,
 			}); err != nil {
 				return err
 			}
@@ -79,14 +84,15 @@ func CreateCodeTemplate(codeIntegrationId, projectId, outputDir string) error {
 	return nil
 }
 
-func OverrideWorkspaceConfig(codeIntegrationId, projectId, entryFile, outputDir string) error {
+func OverrideWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, outputDir string) error {
 	wc, err := GetWorkspaceConfig()
 	if err != nil {
-		wc = NewWorkspaceConfig(codeIntegrationId, projectId, entryFile, nil)
+		wc = NewWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, nil)
 	} else {
 		wc.CodeIntegrationId = codeIntegrationId
 		wc.ProjectId = projectId
 		wc.EntryFile = entryFile
+		wc.SecretId = secretId
 	}
 	return SetWorkspaceConfig(wc, outputDir)
 }
@@ -98,6 +104,14 @@ func GetWorkspaceConfig() (*WorkspaceConfig, error) {
 	}
 	workspaceConfig := WorkspaceConfig{}
 	err = yaml.Unmarshal(content, &workspaceConfig)
+	// handle deprecated SecretManagerId
+	if len(workspaceConfig.SecretId) == 0 {
+		workspaceConfig.SecretId = workspaceConfig.SecretManagerId
+	}
+	if len(workspaceConfig.SecretManagerId) > 0 {
+		workspaceConfig.SecretManagerId = ""
+		_ = SetWorkspaceConfig(&workspaceConfig, ".")
+	}
 	return &workspaceConfig, err
 }
 

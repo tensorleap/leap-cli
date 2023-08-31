@@ -122,7 +122,7 @@ func NewPushCmd() *cobra.Command {
 	cmd.Flags().StringVarP(&message, "message", "m", "push from cli", "Version message")
 	cmd.Flags().StringVar(&modelType, "type", "", "Type is the type of the model file [JSON_TF2 / ONNX / PB_TF2 / H5_TF2]")
 	cmd.Flags().StringVar(&branchName, "branch", "", "Branch is the name of the branch [OPTIONAL]")
-	cmd.Flags().StringVar(&secretId, "secretId", "", "Secret manager id")
+	cmd.Flags().StringVar(&secretId, "secretId", "", "Secret id")
 	cmd.Flags().BoolVarP(&force, "force", "f", false, "Force push code integration")
 	cmd.Flags().BoolVar(&transformInput, "transform-input", true, "Transform input in case of ONNX model")
 
