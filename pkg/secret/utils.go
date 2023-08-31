@@ -7,6 +7,7 @@ import (
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/tensorleap/leap-cli/pkg/entity"
 	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/workspace"
 )
 
 func SelectOrCreateSecret(ctx context.Context, secrets []SecretEntity, askForNewFirst bool) (*SecretEntity, bool, error) {
@@ -67,4 +68,79 @@ func AskForNewSecret(ctx context.Context, secrets []SecretEntity, name, key *str
 	}
 
 	return nil
+}
+
+func AskIfUseSecret() (bool, error) {
+	var useSecret bool
+	err := survey.AskOne(&survey.Confirm{
+		Message: "Do you want to use a secret?",
+	}, &useSecret)
+	if err != nil {
+		return false, err
+	}
+	return useSecret, nil
+}
+
+func CreateOrSelectSecretIfInUse(ctx context.Context) (selectedSecret *SecretEntity, wasCreateNew bool, err error) {
+	useSecret, err := AskIfUseSecret()
+
+	if err != nil {
+		return nil, false, err
+	}
+
+	if !useSecret {
+		return nil, false, nil
+	}
+
+	secrets, err := GetSecretList(ctx)
+	if err != nil {
+		return nil, false, err
+	}
+
+	selectedSecret, wasCreateNew, err = SelectOrCreateSecret(ctx, secrets, true)
+	if err != nil {
+		return nil, false, err
+	}
+	return selectedSecret, wasCreateNew, nil
+}
+
+func CreateOrSelectIfSecretNotFound(ctx context.Context, secretId string) (selectedSecret *SecretEntity, wasValid, wasCreateNew bool, err error) {
+	secrets, err := GetSecretList(ctx)
+	if err != nil {
+		return nil, false, false, err
+	}
+	selectedSecret, _ = entity.GetEntityById(secretId, secrets, SecretEntityDesc)
+	if selectedSecret != nil {
+		return selectedSecret, true, false, nil
+	}
+	log.Warnf("Secret with id %s not found. Select or create new secret.", secretId)
+
+	selectedSecret, wasCreateNew, err = SelectOrCreateSecret(ctx, secrets, true)
+	if err != nil {
+		return nil, false, false, err
+	}
+	return selectedSecret, false, wasCreateNew, nil
+}
+
+func SyncSecretIdFromFlagAndConfig(ctx context.Context, secretId string, workspaceConfig *workspace.WorkspaceConfig) (string, error) {
+	if len(secretId) == 0 {
+		secretId = workspaceConfig.SecretId
+	}
+
+	if len(secretId) > 0 {
+		selectedSecrete, _, _, err := CreateOrSelectIfSecretNotFound(ctx, secretId)
+		if err != nil {
+			return "", err
+		}
+		secretId = selectedSecrete.GetCid()
+		if workspaceConfig.SecretId != secretId {
+			log.Infof("Updating leap.yaml secret id to %s", secretId)
+			workspaceConfig.SecretId = secretId
+			err = workspace.SetWorkspaceConfig(workspaceConfig, ".")
+			if err != nil {
+				return "", err
+			}
+		}
+	}
+	return secretId, nil
 }
