@@ -4,10 +4,10 @@ import (
 	"os"
 	"strings"
 
+	"github.com/tensorleap/leap-cli/pkg/helm/chart"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/server/airgap"
 	"github.com/tensorleap/leap-cli/pkg/server/manifest"
-	"helm.sh/helm/v3/pkg/chart"
 )
 
 const (
@@ -15,7 +15,7 @@ const (
 	KUBE_NAMESPACE = "tensorleap"
 )
 
-func InitInstallationProcess(airgapInstallationFilePath, tag string) (mnf *manifest.InstallationManifest, isAirgap bool, chart *chart.Chart, err error) {
+func InitInstallationProcess(airgapInstallationFilePath, tag string) (mnf *manifest.InstallationManifest, isAirgap bool, helmChart *chart.Chart, clean func(), err error) {
 
 	isAirgap = airgapInstallationFilePath != ""
 	if isAirgap {
@@ -23,22 +23,26 @@ func InitInstallationProcess(airgapInstallationFilePath, tag string) (mnf *manif
 		var file *os.File
 		file, err = os.Open(airgapInstallationFilePath)
 		if err != nil {
-			return nil, false, nil, err
+			return nil, false, nil, nil, err
 		}
-		var clean func()
-		mnf, chart, clean, err = airgap.Load(file)
+		mnf, helmChart, clean, err = airgap.Load(file)
 		if err != nil {
 			log.SendCloudReport("error", "Failed to load airgap installation file", "Failed",
 				&map[string]interface{}{"error": err.Error()})
-			return nil, false, nil, err
+			return nil, false, nil, nil, err
 		}
-		defer clean()
 	} else {
 		mnf, err = manifest.GenerateManifest("", tag)
 		if err != nil {
 			log.SendCloudReport("error", "Build manifest failed", "Failed",
 				&map[string]interface{}{"error": err.Error()})
-			return nil, false, nil, err
+			return nil, false, nil, nil, err
+		}
+		helmChart, clean, err = chart.Load(mnf.ServerHelmChart.RepoUrl, mnf.ServerHelmChart.ChartName, mnf.ServerHelmChart.Version)
+		if err != nil {
+			log.SendCloudReport("error", "Failed loading helm chart", "Failed",
+				&map[string]interface{}{"error": err.Error()})
+			return nil, false, nil, nil, err
 		}
 	}
 	airgap.SetupEnvForK3dToolsImage(mnf.Images.K3dTools)

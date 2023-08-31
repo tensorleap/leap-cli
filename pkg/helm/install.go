@@ -23,18 +23,9 @@ func InstallChart(
 	client.CreateNamespace = true
 	client.Wait = true
 	client.ReleaseName = chartMeta.ReleaseName
-
-	var err error
-	if chart == nil {
-		chart, err = GetChart(config, &client.ChartPathOptions, chartMeta)
-		if err != nil {
-			return err
-		}
-	}
-
 	client.Timeout = 20 * time.Minute
 
-	_, err = client.RunWithContext(config.Context, chart, values)
+	_, err := client.RunWithContext(config.Context, chart, values)
 	if err != nil {
 		return err
 	}

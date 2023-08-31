@@ -37,10 +37,11 @@ func NewInstallCmd() *cobra.Command {
 			}
 			defer close()
 
-			mnf, isAirgap, chart, err := server.InitInstallationProcess(airgapInstallationFilePath, tag)
+			mnf, isAirgap, chart, clean, err := server.InitInstallationProcess(airgapInstallationFilePath, tag)
 			if err != nil {
 				return err
 			}
+			defer clean()
 
 			log.SendCloudReport("info", "Starting install", "Starting", &map[string]interface{}{"manifest": mnf})
 
