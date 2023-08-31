@@ -53,7 +53,7 @@ func AskForNewSecret(ctx context.Context, secrets []SecretEntity, name, key *str
 	if len(*key) == 0 && len(keyPath) == 0 {
 		err = survey.AskOne(&survey.Input{
 			Message: "Enter secret key path:",
-		}, keyPath)
+		}, &keyPath)
 
 		if err != nil {
 			return err
