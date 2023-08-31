@@ -28,10 +28,11 @@ func NewUpgradeCmd() *cobra.Command {
 			}
 			defer close()
 
-			mnf, isAirgap, chart, err := server.InitInstallationProcess(airgapInstallationFilePath, tag)
+			mnf, isAirgap, chart, clean, err := server.InitInstallationProcess(airgapInstallationFilePath, tag)
 			if err != nil {
 				return err
 			}
+			defer clean()
 
 			if err := server.ValidateStandaloneDir(); err != nil {
 				return err

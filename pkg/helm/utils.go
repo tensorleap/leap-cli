@@ -8,8 +8,6 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/server/manifest"
 	"helm.sh/helm/v3/pkg/action"
-	"helm.sh/helm/v3/pkg/chart"
-	"helm.sh/helm/v3/pkg/chart/loader"
 	"helm.sh/helm/v3/pkg/cli"
 	"helm.sh/helm/v3/pkg/storage/driver"
 )
@@ -121,22 +119,4 @@ func CreateHelmConfig(kubeConfigPath string, kubeContext, namespace string) (*He
 		ActionConfig: actionConfig,
 		Settings:     settings,
 	}, nil
-}
-
-func GetChart(config *HelmConfig, chartPathOptions *action.ChartPathOptions, chart manifest.HelmChartMeta) (*chart.Chart, error) {
-	chartPathOptions.Version = chart.Version
-	chartPathOptions.RepoURL = chart.RepoUrl
-
-	chartPath, err := chartPathOptions.LocateChart(chart.ChartName, config.Settings)
-	if err != nil {
-		log.SendCloudReport("error", "Failed locating helm chart", "Failed", &map[string]interface{}{"error": err.Error()})
-		return nil, err
-	}
-
-	chartRequested, err := loader.Load(chartPath)
-	if err != nil {
-		log.SendCloudReport("error", "Failed loading helm chart", "Failed", &map[string]interface{}{"error": err.Error()})
-		return nil, err
-	}
-	return chartRequested, nil
 }
