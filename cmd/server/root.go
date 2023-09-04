@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/spf13/cobra"
+	"github.com/tensorleap/helm-charts/cmd/server"
 )
 
 var RootCommand = &cobra.Command{
@@ -11,5 +12,10 @@ var RootCommand = &cobra.Command{
 }
 
 func init() {
-	// todo: add subcommands
+	RootCommand.AddCommand(NewInstallCmd())
+	RootCommand.AddCommand(server.NewUpgradeCmd())
+	RootCommand.AddCommand(server.NewRunCmd())
+	RootCommand.AddCommand(server.NewStopCmd())
+	RootCommand.AddCommand(server.NewUninstallCmd())
+	RootCommand.AddCommand(server.NewToolCmd())
 }
