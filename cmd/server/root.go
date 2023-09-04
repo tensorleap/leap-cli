@@ -9,3 +9,7 @@ var RootCommand = &cobra.Command{
 	Short: "Manage local server installation of Tensorleap",
 	Long:  `Manage local server installation of Tensorleap`,
 }
+
+func init() {
+	// todo: add subcommands
+}
