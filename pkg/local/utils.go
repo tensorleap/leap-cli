@@ -6,10 +6,7 @@ import (
 	"os/exec"
 	"path"
 	"runtime"
-	"time"
 
-	"github.com/tensorleap/leap-cli/pkg/k3d"
-	"github.com/tensorleap/leap-cli/pkg/k8s"
 	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
@@ -57,33 +54,6 @@ func initStandaloneSubDirs() error {
 		}
 	}
 	return nil
-}
-
-// SetupInfra init VAR_DIR, setup VerboseLog and connect its output into a file
-func SetupInfra(cmdName string) (closeLogFile func(), err error) {
-	err = InitStandaloneDir()
-	if err != nil {
-		log.SendCloudReport("error", "Failed initializing standalone dir", "Failed", &map[string]interface{}{"error": err.Error()})
-		return
-	}
-
-	k3d.SetupLogger(log.VerboseLogger)
-	k8s.SetupLogger(log.VerboseLogger)
-
-	logPath := createLogFilePath(cmdName)
-	closeLogFile, err = log.ConnectFileToVerboseLogOutput(logPath)
-
-	log.SendCloudReport("info", "Finished setting cli infra", "Running", nil)
-	return
-}
-
-func createLogFilePath(cmdName string) string {
-	filePath := fmt.Sprintf("%s/logs/%s_%s.log",
-		STANDALONE_DIR,
-		cmdName,
-		time.Now().Format("2006-01-02_15-04-05"),
-	)
-	return filePath
 }
 
 func OpenLink(link string) error {
