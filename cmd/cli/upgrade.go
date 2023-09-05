@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/spf13/cobra"
+	"github.com/tensorleap/leap-cli/pkg/cli"
 )
 
 const (
@@ -21,7 +22,7 @@ func NewUpgradeCliCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if !installScript {
 				fmt.Println("Run the following command to upgrade:")
-				fmt.Println("leap cli upgrade -s | bash")
+				fmt.Println(cli.UpgradeCmd)
 				return nil
 			}
 			err := printScript()

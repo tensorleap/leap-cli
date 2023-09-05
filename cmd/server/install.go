@@ -18,7 +18,7 @@ func NewInstallCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			err := server.RunInstallCmd(cmd, flags)
 			if err != nil {
-				return err
+				return mapInstallationErr(err)
 			}
 			baseLink := fmt.Sprintf("http://127.0.0.1:%v", flags.Port)
 			apiLink := fmt.Sprintf("%s/api/v2", baseLink)

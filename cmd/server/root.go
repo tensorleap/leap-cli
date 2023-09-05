@@ -13,7 +13,7 @@ var RootCommand = &cobra.Command{
 
 func init() {
 	RootCommand.AddCommand(NewInstallCmd())
-	RootCommand.AddCommand(server.NewUpgradeCmd())
+	RootCommand.AddCommand(NewUpgradeCmd())
 	RootCommand.AddCommand(server.NewRunCmd())
 	RootCommand.AddCommand(server.NewStopCmd())
 	RootCommand.AddCommand(server.NewUninstallCmd())
