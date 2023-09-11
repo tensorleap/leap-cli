@@ -16,12 +16,13 @@ Name | Type | Description | Notes
 **Layout** | Pointer to [**SizedLayout**](SizedLayout.md) |  | [optional] 
 **VisualizationUuid** | **string** |  | 
 **Blob** | **string** |  | 
+**CsvBlob** | **string** |  | 
 
 ## Methods
 
 ### NewSlimVisualization
 
-`func NewSlimVisualization(projectId string, cid string, jobId string, sessionRunId string, type_ AnalyzeTypeEnum, createdAt time.Time, epoch float64, visualizationUuid string, blob string, ) *SlimVisualization`
+`func NewSlimVisualization(projectId string, cid string, jobId string, sessionRunId string, type_ AnalyzeTypeEnum, createdAt time.Time, epoch float64, visualizationUuid string, blob string, csvBlob string, ) *SlimVisualization`
 
 NewSlimVisualization instantiates a new SlimVisualization object
 This constructor will assign default values to properties that have it defined,
@@ -289,6 +290,26 @@ and a boolean to check if the value has been set.
 `func (o *SlimVisualization) SetBlob(v string)`
 
 SetBlob sets Blob field to given value.
+
+
+### GetCsvBlob
+
+`func (o *SlimVisualization) GetCsvBlob() string`
+
+GetCsvBlob returns the CsvBlob field if non-nil, zero value otherwise.
+
+### GetCsvBlobOk
+
+`func (o *SlimVisualization) GetCsvBlobOk() (*string, bool)`
+
+GetCsvBlobOk returns a tuple with the CsvBlob field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCsvBlob
+
+`func (o *SlimVisualization) SetCsvBlob(v string)`
+
+SetCsvBlob sets CsvBlob field to given value.
 
 
 

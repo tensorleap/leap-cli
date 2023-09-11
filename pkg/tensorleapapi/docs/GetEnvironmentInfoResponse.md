@@ -8,12 +8,13 @@ Name | Type | Description | Notes
 **SchemaVersion** | **float64** |  | 
 **HubDefaultNamespace** | **string** |  | 
 **HubUrl** | **string** |  | 
+**DisableDatadogMetrics** | **bool** |  | 
 
 ## Methods
 
 ### NewGetEnvironmentInfoResponse
 
-`func NewGetEnvironmentInfoResponse(clientStoragePrefixUrl string, schemaVersion float64, hubDefaultNamespace string, hubUrl string, ) *GetEnvironmentInfoResponse`
+`func NewGetEnvironmentInfoResponse(clientStoragePrefixUrl string, schemaVersion float64, hubDefaultNamespace string, hubUrl string, disableDatadogMetrics bool, ) *GetEnvironmentInfoResponse`
 
 NewGetEnvironmentInfoResponse instantiates a new GetEnvironmentInfoResponse object
 This constructor will assign default values to properties that have it defined,
@@ -106,6 +107,26 @@ and a boolean to check if the value has been set.
 `func (o *GetEnvironmentInfoResponse) SetHubUrl(v string)`
 
 SetHubUrl sets HubUrl field to given value.
+
+
+### GetDisableDatadogMetrics
+
+`func (o *GetEnvironmentInfoResponse) GetDisableDatadogMetrics() bool`
+
+GetDisableDatadogMetrics returns the DisableDatadogMetrics field if non-nil, zero value otherwise.
+
+### GetDisableDatadogMetricsOk
+
+`func (o *GetEnvironmentInfoResponse) GetDisableDatadogMetricsOk() (*bool, bool)`
+
+GetDisableDatadogMetricsOk returns a tuple with the DisableDatadogMetrics field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDisableDatadogMetrics
+
+`func (o *GetEnvironmentInfoResponse) SetDisableDatadogMetrics(v bool)`
+
+SetDisableDatadogMetrics sets DisableDatadogMetrics field to given value.
 
 
 

@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.365
+  version: 0.0.382
 servers:
 - url: /api/v2
 paths:
@@ -105,6 +105,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserData'
           description: Ok
+      security:
+      - jwt: []
+  /auth/resolveConcurrentUsersConflict:
+    post:
+      operationId: ResolveConcurrentUsersConflict
+      parameters: []
+      responses:
+        "204":
+          description: No content
       security:
       - jwt: []
   /auth/extendTrial:
@@ -541,7 +550,26 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ModelGraph'
+                $ref: '#/components/schemas/ApplyMappingResponse'
+          description: Ok
+      security:
+      - jwt: []
+  /graph/getCodeIntegrationMappingErrorsByVersionId:
+    post:
+      operationId: GetCodeIntegrationMappingErrorsByVersionId
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CodeIntegrationMappingErrorsParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CodeIntegrationMappingErrorsResponse'
           description: Ok
       security:
       - jwt: []
@@ -2230,7 +2258,10 @@ components:
       additionalProperties: false
       example:
         success: true
+        userCid: userCid
       properties:
+        userCid:
+          type: string
         success:
           enum:
           - true
@@ -2238,6 +2269,7 @@ components:
           type: boolean
       required:
       - success
+      - userCid
       type: object
     SignupParams:
       additionalProperties: false
@@ -5503,14 +5535,7 @@ components:
       - teamId
       - type
       - updatedAt
-      - version
       type: object
-    DataStateForEval:
-      enum:
-      - training
-      - validation
-      - test
-      type: string
     EvaluateParams:
       additionalProperties: false
       example:
@@ -5536,7 +5561,7 @@ components:
           type: number
         dataStates:
           items:
-            $ref: '#/components/schemas/DataStateForEval'
+            $ref: '#/components/schemas/DataStateType'
           type: array
         shouldRunPopulationExploration:
           type: boolean
@@ -6046,21 +6071,102 @@ components:
       - digest
       - projectId
       type: object
+    MappingErrorType:
+      enum:
+      - datasetMappingApplyError
+      - datasetMappingApplyWarning
+      type: string
+    MappingError:
+      additionalProperties: false
+      example:
+        type: null
+        message: message
+        title: title
+      properties:
+        type:
+          $ref: '#/components/schemas/MappingErrorType'
+        message:
+          type: string
+        title:
+          type: string
+      required:
+      - message
+      - title
+      - type
+      type: object
+    ApplyMappingResponse:
+      additionalProperties: false
+      example:
+        modelGraph:
+          nodes: "{}"
+          id: id
+        mappingErrors:
+        - type: null
+          message: message
+          title: title
+        - type: null
+          message: message
+          title: title
+      properties:
+        mappingErrors:
+          items:
+            $ref: '#/components/schemas/MappingError'
+          type: array
+        modelGraph:
+          $ref: '#/components/schemas/ModelGraph'
+      type: object
     ApplyDatasetMappingsParams:
       additionalProperties: false
       example:
         modelGraph:
           nodes: "{}"
           id: id
+        datasetVersionId: datasetVersionId
         yaml: yaml
       properties:
         modelGraph:
           $ref: '#/components/schemas/ModelGraph'
         yaml:
           type: string
+        datasetVersionId:
+          type: string
       required:
       - modelGraph
       - yaml
+      type: object
+    CodeIntegrationMappingErrorsResponse:
+      additionalProperties: false
+      example:
+        mappingErrors:
+        - type: null
+          message: message
+          title: title
+        - type: null
+          message: message
+          title: title
+      properties:
+        mappingErrors:
+          items:
+            $ref: '#/components/schemas/MappingError'
+          type: array
+      type: object
+    CodeIntegrationMappingErrorsParams:
+      additionalProperties: false
+      example:
+        versionId: versionId
+        mapping: mapping
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        versionId:
+          type: string
+        mapping:
+          type: string
+      required:
+      - mapping
+      - projectId
+      - versionId
       type: object
     ScatterInsightType:
       enum:
@@ -6820,6 +6926,7 @@ components:
       example:
         jobId: jobId
         createdAt: createdAt
+        versionId: versionId
         sessionRunName: sessionRunName
         sessionName: sessionName
         versionName: versionName
@@ -6831,6 +6938,8 @@ components:
         jobId:
           type: string
         versionName:
+          type: string
+        versionId:
           type: string
         projectName:
           type: string
@@ -6855,6 +6964,7 @@ components:
       - sessionRunName
       - status
       - updatedAt
+      - versionId
       - versionName
       type: object
     GetJobsResponse:
@@ -6863,6 +6973,7 @@ components:
         processes:
         - jobId: jobId
           createdAt: createdAt
+          versionId: versionId
           sessionRunName: sessionRunName
           sessionName: sessionName
           versionName: versionName
@@ -6872,6 +6983,7 @@ components:
           updatedAt: updatedAt
         - jobId: jobId
           createdAt: createdAt
+          versionId: versionId
           sessionRunName: sessionRunName
           sessionName: sessionName
           versionName: versionName
@@ -7002,6 +7114,7 @@ components:
       additionalProperties: false
       example:
         schemaVersion: 0.8008281904610115
+        disableDatadogMetrics: true
         hubDefaultNamespace: hubDefaultNamespace
         hubUrl: hubUrl
         clientStoragePrefixUrl: clientStoragePrefixUrl
@@ -7015,8 +7128,11 @@ components:
           type: string
         hubUrl:
           type: string
+        disableDatadogMetrics:
+          type: boolean
       required:
       - clientStoragePrefixUrl
+      - disableDatadogMetrics
       - hubDefaultNamespace
       - hubUrl
       - schemaVersion
@@ -12446,6 +12562,7 @@ components:
           source: source
           info: null
         sampleId: 6.027456183070403
+        csvBlob: csvBlob
         visualizationUuid: visualizationUuid
         jobParms: null
         epoch: 0.8008281904610115
@@ -12505,12 +12622,15 @@ components:
           type: string
         blob:
           type: string
+        csvBlob:
+          type: string
         data:
           $ref: '#/components/schemas/VisualizationResponse'
       required:
       - blob
       - cid
       - createdAt
+      - csvBlob
       - data
       - epoch
       - jobId
@@ -12536,6 +12656,12 @@ components:
     SlimVisualization:
       additionalProperties: false
       example:
+        sampleId: 6.027456183070403
+        csvBlob: csvBlob
+        visualizationUuid: visualizationUuid
+        jobParms: null
+        epoch: 0.8008281904610115
+        type: null
         layout:
           md:
             w: 5.637376656633329
@@ -12561,11 +12687,6 @@ components:
         createdAt: 2000-01-23T04:56:07.000+00:00
         sessionRunId: sessionRunId
         blob: blob
-        sampleId: 6.027456183070403
-        visualizationUuid: visualizationUuid
-        jobParms: null
-        epoch: 0.8008281904610115
-        type: null
         projectId: projectId
         cid: cid
       properties:
@@ -12596,10 +12717,13 @@ components:
           type: string
         blob:
           type: string
+        csvBlob:
+          type: string
       required:
       - blob
       - cid
       - createdAt
+      - csvBlob
       - epoch
       - jobId
       - projectId
@@ -12611,7 +12735,13 @@ components:
       additionalProperties: false
       example:
         slimVisualizations:
-        - layout:
+        - sampleId: 6.027456183070403
+          csvBlob: csvBlob
+          visualizationUuid: visualizationUuid
+          jobParms: null
+          epoch: 0.8008281904610115
+          type: null
+          layout:
             md:
               w: 5.637376656633329
               x: 1.4658129805029452
@@ -12636,14 +12766,15 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           sessionRunId: sessionRunId
           blob: blob
-          sampleId: 6.027456183070403
-          visualizationUuid: visualizationUuid
-          jobParms: null
-          epoch: 0.8008281904610115
-          type: null
           projectId: projectId
           cid: cid
-        - layout:
+        - sampleId: 6.027456183070403
+          csvBlob: csvBlob
+          visualizationUuid: visualizationUuid
+          jobParms: null
+          epoch: 0.8008281904610115
+          type: null
+          layout:
             md:
               w: 5.637376656633329
               x: 1.4658129805029452
@@ -12668,11 +12799,6 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           sessionRunId: sessionRunId
           blob: blob
-          sampleId: 6.027456183070403
-          visualizationUuid: visualizationUuid
-          jobParms: null
-          epoch: 0.8008281904610115
-          type: null
           projectId: projectId
           cid: cid
       properties:
@@ -12701,6 +12827,12 @@ components:
       additionalProperties: false
       example:
         slimVisualization:
+          sampleId: 6.027456183070403
+          csvBlob: csvBlob
+          visualizationUuid: visualizationUuid
+          jobParms: null
+          epoch: 0.8008281904610115
+          type: null
           layout:
             md:
               w: 5.637376656633329
@@ -12726,11 +12858,6 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           sessionRunId: sessionRunId
           blob: blob
-          sampleId: 6.027456183070403
-          visualizationUuid: visualizationUuid
-          jobParms: null
-          epoch: 0.8008281904610115
-          type: null
           projectId: projectId
           cid: cid
       properties:

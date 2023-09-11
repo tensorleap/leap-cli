@@ -16,13 +16,14 @@ Name | Type | Description | Notes
 **Layout** | Pointer to [**SizedLayout**](SizedLayout.md) |  | [optional] 
 **VisualizationUuid** | **string** |  | 
 **Blob** | **string** |  | 
+**CsvBlob** | **string** |  | 
 **Data** | [**VisualizationResponse**](VisualizationResponse.md) |  | 
 
 ## Methods
 
 ### NewVisualization
 
-`func NewVisualization(projectId string, cid string, jobId string, sessionRunId string, type_ AnalyzeTypeEnum, createdAt time.Time, epoch float64, visualizationUuid string, blob string, data VisualizationResponse, ) *Visualization`
+`func NewVisualization(projectId string, cid string, jobId string, sessionRunId string, type_ AnalyzeTypeEnum, createdAt time.Time, epoch float64, visualizationUuid string, blob string, csvBlob string, data VisualizationResponse, ) *Visualization`
 
 NewVisualization instantiates a new Visualization object
 This constructor will assign default values to properties that have it defined,
@@ -290,6 +291,26 @@ and a boolean to check if the value has been set.
 `func (o *Visualization) SetBlob(v string)`
 
 SetBlob sets Blob field to given value.
+
+
+### GetCsvBlob
+
+`func (o *Visualization) GetCsvBlob() string`
+
+GetCsvBlob returns the CsvBlob field if non-nil, zero value otherwise.
+
+### GetCsvBlobOk
+
+`func (o *Visualization) GetCsvBlobOk() (*string, bool)`
+
+GetCsvBlobOk returns a tuple with the CsvBlob field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCsvBlob
+
+`func (o *Visualization) SetCsvBlob(v string)`
+
+SetCsvBlob sets CsvBlob field to given value.
 
 
 ### GetData

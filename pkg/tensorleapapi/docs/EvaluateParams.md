@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **ProjectId** | **string** |  | 
 **SessionId** | **string** |  | 
 **BatchSize** | **float64** |  | 
-**DataStates** | [**[]DataStateForEval**](DataStateForEval.md) |  | 
+**DataStates** | [**[]DataStateType**](DataStateType.md) |  | 
 **ShouldRunPopulationExploration** | **bool** |  | 
 **EvaluatedEpoch** | **float64** |  | 
 **Name** | **string** |  | 
@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 
 ### NewEvaluateParams
 
-`func NewEvaluateParams(versionId string, projectId string, sessionId string, batchSize float64, dataStates []DataStateForEval, shouldRunPopulationExploration bool, evaluatedEpoch float64, name string, ) *EvaluateParams`
+`func NewEvaluateParams(versionId string, projectId string, sessionId string, batchSize float64, dataStates []DataStateType, shouldRunPopulationExploration bool, evaluatedEpoch float64, name string, ) *EvaluateParams`
 
 NewEvaluateParams instantiates a new EvaluateParams object
 This constructor will assign default values to properties that have it defined,
@@ -114,20 +114,20 @@ SetBatchSize sets BatchSize field to given value.
 
 ### GetDataStates
 
-`func (o *EvaluateParams) GetDataStates() []DataStateForEval`
+`func (o *EvaluateParams) GetDataStates() []DataStateType`
 
 GetDataStates returns the DataStates field if non-nil, zero value otherwise.
 
 ### GetDataStatesOk
 
-`func (o *EvaluateParams) GetDataStatesOk() (*[]DataStateForEval, bool)`
+`func (o *EvaluateParams) GetDataStatesOk() (*[]DataStateType, bool)`
 
 GetDataStatesOk returns a tuple with the DataStates field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDataStates
 
-`func (o *EvaluateParams) SetDataStates(v []DataStateForEval)`
+`func (o *EvaluateParams) SetDataStates(v []DataStateType)`
 
 SetDataStates sets DataStates field to given value.
 

@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **ProjectId** | **string** |  | 
 **Cid** | **string** |  | 
 **CreatedBy** | **string** |  | 
-**Version** | **string** |  | 
+**Version** | Pointer to **string** |  | [optional] 
 **Type** | [**JobTypeEnum**](JobTypeEnum.md) |  | 
 **SubType** | Pointer to [**JobSubType**](JobSubType.md) |  | [optional] 
 **Status** | [**JobStatus**](JobStatus.md) |  | 
@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewJob
 
-`func NewJob(projectId string, cid string, createdBy string, version string, type_ JobTypeEnum, status JobStatus, createdAt time.Time, updatedAt time.Time, teamId string, ) *Job`
+`func NewJob(projectId string, cid string, createdBy string, type_ JobTypeEnum, status JobStatus, createdAt time.Time, updatedAt time.Time, teamId string, ) *Job`
 
 NewJob instantiates a new Job object
 This constructor will assign default values to properties that have it defined,
@@ -115,6 +115,11 @@ and a boolean to check if the value has been set.
 
 SetVersion sets Version field to given value.
 
+### HasVersion
+
+`func (o *Job) HasVersion() bool`
+
+HasVersion returns a boolean if a field has been set.
 
 ### GetType
 

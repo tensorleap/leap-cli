@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **JobId** | **string** |  | 
 **VersionName** | **string** |  | 
+**VersionId** | **string** |  | 
 **ProjectName** | **string** |  | 
 **JobType** | **string** |  | 
 **Status** | [**JobStatus**](JobStatus.md) |  | 
@@ -18,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewRunProcess
 
-`func NewRunProcess(jobId string, versionName string, projectName string, jobType string, status JobStatus, createdAt string, updatedAt string, sessionName string, sessionRunName string, ) *RunProcess`
+`func NewRunProcess(jobId string, versionName string, versionId string, projectName string, jobType string, status JobStatus, createdAt string, updatedAt string, sessionName string, sessionRunName string, ) *RunProcess`
 
 NewRunProcess instantiates a new RunProcess object
 This constructor will assign default values to properties that have it defined,
@@ -71,6 +72,26 @@ and a boolean to check if the value has been set.
 `func (o *RunProcess) SetVersionName(v string)`
 
 SetVersionName sets VersionName field to given value.
+
+
+### GetVersionId
+
+`func (o *RunProcess) GetVersionId() string`
+
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
+
+### GetVersionIdOk
+
+`func (o *RunProcess) GetVersionIdOk() (*string, bool)`
+
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVersionId
+
+`func (o *RunProcess) SetVersionId(v string)`
+
+SetVersionId sets VersionId field to given value.
 
 
 ### GetProjectName
