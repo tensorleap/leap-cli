@@ -17,6 +17,7 @@ func NewImportCmd() *cobra.Command {
 	var branchName string
 	var transformInput bool
 	var codeIntegrationId string
+	var noWait bool
 
 	var cmd = &cobra.Command{
 		Use:   "import <modelPath>",
@@ -52,7 +53,7 @@ func NewImportCmd() *cobra.Command {
 				projectId = selected.GetCid()
 			}
 
-			err = model.ImportModel(ctx, modelPath, projectId, message, modelType, branchName, codeIntegrationId, transformInput)
+			err = model.ImportModel(ctx, modelPath, projectId, message, modelType, branchName, codeIntegrationId, transformInput, !noWait)
 			if err != nil {
 				return err
 			}
@@ -66,6 +67,7 @@ func NewImportCmd() *cobra.Command {
 	cmd.Flags().StringVar(&branchName, "branch", "", "Branch is the name of the branch [OPTIONAL]")
 	cmd.Flags().StringVar(&codeIntegrationId, "codeId", "", "This is a code integration id (Will use the last valid dataset version)")
 	cmd.Flags().BoolVar(&transformInput, "transform-input", true, "Transform input in case of ONNX model")
+	cmd.Flags().BoolVar(&noWait, "no-wait", false, "Do not wait for push to complete")
 
 	return cmd
 }
