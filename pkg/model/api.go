@@ -64,11 +64,13 @@ func ImportModel(ctx context.Context, filePath, projectId, message, modelType, b
 		}
 		if okStatus {
 			log.Println("Successfully imported model")
-			if mappingYaml != "" {
+
+			displayMappingErrorsIfMappingProvided := mappingYaml != ""
+			if displayMappingErrorsIfMappingProvided {
 				printMappingValidationErrors(ctx, job.VersionId, projectId, mappingYaml)
 			}
 		} else {
-			log.Println("Failed to import model")
+			return fmt.Errorf("failed to import model")
 		}
 		return nil
 	}
@@ -138,8 +140,8 @@ func printMappingValidationErrors(ctx context.Context, versionId string, project
 
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetHeader([]string{"Title", "Message"})
-		table.SetBorder(true)  // Set Border to false if you don't want borders
-		table.SetRowLine(true) // Enable row line separation
+		table.SetBorder(true)
+		table.SetRowLine(true)
 
 		for _, entry := range data.MappingErrors {
 			table.Append([]string{entry.Title, entry.Message})
