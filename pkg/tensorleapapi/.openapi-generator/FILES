@@ -28,6 +28,7 @@ docs/AnalyzeGraphResponse.md
 docs/AnalyzeParams.md
 docs/AnalyzeTypeEnum.md
 docs/ApplyDatasetMappingsParams.md
+docs/ApplyMappingResponse.md
 docs/BBoxImageData.md
 docs/BBoxImageScatterLabel.md
 docs/BBoxImageViz.md
@@ -37,6 +38,8 @@ docs/BucketAggregation.md
 docs/ClientFilterParams.md
 docs/ClusterInsight.md
 docs/Clusters.md
+docs/CodeIntegrationMappingErrorsParams.md
+docs/CodeIntegrationMappingErrorsResponse.md
 docs/ConfusionMatrixParams.md
 docs/ConfusionMetricNamesParams.md
 docs/ContinueTrainParams.md
@@ -53,7 +56,6 @@ docs/CustomVisualizationType.md
 docs/Dashboard.md
 docs/DashboardItem.md
 docs/DataDistributionType.md
-docs/DataStateForEval.md
 docs/DataStateType.md
 docs/DataTypeEnum.md
 docs/Dataset.md
@@ -201,6 +203,8 @@ docs/LoadVersionResponse.md
 docs/LoginParams.md
 docs/LossMessageParams.md
 docs/MachineTypeOption.md
+docs/MappingError.md
+docs/MappingErrorType.md
 docs/MaskImageData.md
 docs/MaskImageScatterLabel.md
 docs/MaskTextData.md
@@ -362,6 +366,7 @@ model_analyze_graph_response.go
 model_analyze_params.go
 model_analyze_type_enum.go
 model_apply_dataset_mappings_params.go
+model_apply_mapping_response.go
 model_b_box_image_data.go
 model_b_box_image_scatter_label.go
 model_b_box_image_viz.go
@@ -371,6 +376,8 @@ model_bucket_aggregation.go
 model_client_filter_params.go
 model_cluster_insight.go
 model_clusters.go
+model_code_integration_mapping_errors_params.go
+model_code_integration_mapping_errors_response.go
 model_confusion_matrix_params.go
 model_confusion_metric_names_params.go
 model_continue_train_params.go
@@ -387,7 +394,6 @@ model_custom_visualization_type.go
 model_dashboard.go
 model_dashboard_item.go
 model_data_distribution_type.go
-model_data_state_for_eval.go
 model_data_state_type.go
 model_data_type_enum.go
 model_dataset.go
@@ -534,6 +540,8 @@ model_load_version_response.go
 model_login_params.go
 model_loss_message_params.go
 model_machine_type_option.go
+model_mapping_error.go
+model_mapping_error_type.go
 model_mask_image_data.go
 model_mask_image_scatter_label.go
 model_mask_text_data.go

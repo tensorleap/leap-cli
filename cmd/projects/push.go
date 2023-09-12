@@ -21,6 +21,7 @@ func NewPushCmd() *cobra.Command {
 	var branchName string
 	var transformInput bool
 	var force bool
+	var noWait bool
 
 	var cmd = &cobra.Command{
 		Use:   "push <modelPath>",
@@ -114,7 +115,7 @@ func NewPushCmd() *cobra.Command {
 				return fmt.Errorf("latest code parsing failed, add --force to push anyway")
 			}
 
-			err = model.ImportModel(ctx, modelPath, currentProject.GetCid(), message, modelType, branchName, codeIntegration.GetCid(), transformInput)
+			err = model.ImportModel(ctx, modelPath, currentProject.GetCid(), message, modelType, branchName, codeIntegration.GetCid(), transformInput, !noWait)
 			if err != nil {
 				return err
 			}
@@ -128,6 +129,7 @@ func NewPushCmd() *cobra.Command {
 	cmd.Flags().StringVar(&secretId, "secretId", "", "Secret id")
 	cmd.Flags().BoolVarP(&force, "force", "f", false, "Force push code integration")
 	cmd.Flags().BoolVar(&transformInput, "transform-input", true, "Transform input in case of ONNX model")
+	cmd.Flags().BoolVar(&noWait, "no-wait", false, "Do not wait for push to complete")
 
 	return cmd
 }

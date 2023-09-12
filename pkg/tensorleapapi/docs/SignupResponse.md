@@ -4,13 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**UserCid** | **string** |  | 
 **Success** | **bool** |  | 
 
 ## Methods
 
 ### NewSignupResponse
 
-`func NewSignupResponse(success bool, ) *SignupResponse`
+`func NewSignupResponse(userCid string, success bool, ) *SignupResponse`
 
 NewSignupResponse instantiates a new SignupResponse object
 This constructor will assign default values to properties that have it defined,
@@ -24,6 +25,26 @@ will change when the set of required properties is changed
 NewSignupResponseWithDefaults instantiates a new SignupResponse object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetUserCid
+
+`func (o *SignupResponse) GetUserCid() string`
+
+GetUserCid returns the UserCid field if non-nil, zero value otherwise.
+
+### GetUserCidOk
+
+`func (o *SignupResponse) GetUserCidOk() (*string, bool)`
+
+GetUserCidOk returns a tuple with the UserCid field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUserCid
+
+`func (o *SignupResponse) SetUserCid(v string)`
+
+SetUserCid sets UserCid field to given value.
+
 
 ### GetSuccess
 
