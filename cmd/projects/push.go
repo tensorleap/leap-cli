@@ -45,6 +45,10 @@ func NewPushCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+			err = model.InitMessage(&message)
+			if err != nil {
+				return err
+			}
 
 			workspaceConfig, err := workspace.GetWorkspaceConfig()
 			if err != nil {
@@ -123,7 +127,7 @@ func NewPushCmd() *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&message, "message", "m", "push from cli", "Version message")
+	cmd.Flags().StringVarP(&message, "message", "m", "", "Version message")
 	cmd.Flags().StringVar(&modelType, "type", "", "Type is the type of the model file [JSON_TF2 / ONNX / PB_TF2 / H5_TF2]")
 	cmd.Flags().StringVar(&branchName, "branch", "", "Branch is the name of the branch [OPTIONAL]")
 	cmd.Flags().StringVar(&secretId, "secretId", "", "Secret id")

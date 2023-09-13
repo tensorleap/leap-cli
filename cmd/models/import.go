@@ -40,6 +40,10 @@ func NewImportCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+			err = model.InitMessage(&message)
+			if err != nil {
+				return err
+			}
 
 			if len(projectId) == 0 {
 				projects, err := project.GetProjects(ctx)
@@ -62,7 +66,7 @@ func NewImportCmd() *cobra.Command {
 	}
 
 	cmd.Flags().StringVar(&projectId, "projectId", "", "ProjectId is the id of the project the model will be imported to")
-	cmd.Flags().StringVarP(&message, "message", "m", "import from cli", "Version message")
+	cmd.Flags().StringVarP(&message, "message", "m", "", "Version message")
 	cmd.Flags().StringVar(&modelType, "type", "", "Type is the type of the model file [JSON_TF2 / ONNX / PB_TF2 / H5_TF2]")
 	cmd.Flags().StringVar(&branchName, "branch", "", "Branch is the name of the branch [OPTIONAL]")
 	cmd.Flags().StringVar(&codeIntegrationId, "codeId", "", "This is a code integration id (Will use the last valid dataset version)")

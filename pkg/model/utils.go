@@ -18,6 +18,32 @@ var MODEL_TYPES = []string{
 	string(tlApi.IMPORTMODELTYPE_H5_TF2),
 }
 
+func InitMessage(msg *string) error {
+	if len(*msg) > 0 {
+		return nil
+	}
+	validate := func(val interface{}) error {
+		str, ok := val.(string)
+		if !ok {
+			return fmt.Errorf("expected string, got %T", val)
+		}
+		str = strings.TrimSpace(str)
+		if len(str) == 0 {
+			return fmt.Errorf("message cannot be empty")
+		}
+		return nil
+	}
+	msgPrompt := &survey.Input{
+		Message: "Enter model version message",
+		Help:    "This message will be displayed in the version control page",
+	}
+	err := survey.AskOne(msgPrompt, msg, survey.WithValidator(validate))
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func SelectModelType(modelType *string, modelPath string) error {
 
 	// Extract the file extension from the modelPath
