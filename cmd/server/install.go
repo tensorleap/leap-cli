@@ -1,11 +1,8 @@
 package server
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/helm-charts/cmd/server"
-	"github.com/tensorleap/leap-cli/pkg/auth"
 )
 
 func NewInstallCmd() *cobra.Command {
@@ -20,16 +17,14 @@ func NewInstallCmd() *cobra.Command {
 			if err != nil {
 				return mapInstallationErr(err)
 			}
-			baseLink := fmt.Sprintf("http://127.0.0.1:%v", flags.Port)
-			apiLink := fmt.Sprintf("%s/api/v2", baseLink)
-			if err := auth.Login("", apiLink); err != nil {
+			if err := localLogin(flags.Port); err != nil {
 				return err
 			}
 			return nil
 		},
 	}
 
-	server.SetInstallCmdFlags(cmd, flags)
+	flags.SetFlags(cmd)
 
 	return cmd
 }
