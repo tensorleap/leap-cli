@@ -22,7 +22,7 @@ func NewUpgradeCmd() *cobra.Command {
 		},
 	}
 
-	server.SetUpgradeCmdFlags(cmd, flags)
+	flags.SetFlags(cmd)
 
 	return cmd
 }
