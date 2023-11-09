@@ -1,0 +1,456 @@
+# for testing
+namespace: demo
+projects:
+  yolov7:
+    createdAt: 1687181678289
+    versions:
+      "84":
+        schemaVersion: 84
+        name: yolov7
+        description: ""
+        tags: []
+        categories:
+          data_format: text
+          network_tasks:
+            - segmentation
+        bgImagePath: projects/yolov7/versions/84/1687181351036-bgImage.png
+        sourceProjectId: 6326fc1aa61f720018c0c8a6
+        size: 24357593
+        path: projects/yolov7/versions/84/1687181351036-project.tar
+        createdAt: 1687181678289
+  CelebA:
+    createdAt: 1687362352705
+    versions:
+      "84":
+        schemaVersion: 84
+        name: CelebA
+        description: >+
+          A popular component of computer vision and deep learning revolves
+          around identifying faces for various applications from logging into
+          your phone with your face or searching through surveillance images for
+          a particular suspect. This dataset is great for training and testing
+          models for face detection, particularly for recognising facial
+          attributes such as finding people with brown hair, are smiling, or
+          wearing glasses. Images cover large pose variations, background
+          clutter, diverse people, supported by a large quantity of images and
+          rich annotations. This data was originally collected by researchers at
+          MMLAB, The Chinese University of Hong Kong (specific reference in
+          Acknowledgment section).
+
+        tags: []
+        categories:
+          data_format: text
+          network_tasks:
+            - classification
+        bgImagePath: projects/CelebA/versions/84/1687362351242-bgImage.png
+        sourceProjectId: 62ae6209e3f768001dba17fe
+        size: 403657
+        path: projects/CelebA/versions/84/1687362351242-project.tar
+        createdAt: 1687362352705
+  IMDB:
+    createdAt: 1690390741690
+    versions:
+      "88":
+        schemaVersion: 88
+        name: IMDB
+        description: >
+          IMDB dataset containing 50K movie reviews for natural language
+          processing. It can be used for binary sentiment classification. 25,000
+          highly polar movie reviews are provided for training and 25,000 for
+          testing.
+        tags: []
+        categories:
+          data_format: text
+        bgImagePath: projects/IMDB/versions/88/1690390739972-bgImage.png
+        sourceProjectId: 62ae61c2e3f768001dba17f6
+        size: 70210
+        path: projects/IMDB/versions/88/1690390739972-project.tar
+        createdAt: 1690390741690
+  cifar10:
+    createdAt: 1692261015779
+    versions:
+      "90":
+        schemaVersion: 90
+        name: cifar10
+        description: This project implements the resnet algorithm using CIFAR-10 dataset
+          for image classification tasks.
+        tags:
+          - image clasification
+          - CNN
+        categories:
+          data_format: image
+          network_tasks:
+            - classification
+          storage_location: local
+        bgImagePath: projects/cifar10/versions/90/1692260397902-bgImage.png
+        sourceProjectId: 649d80cd10f9cf001936c61e
+        size: 744918953
+        path: projects/cifar10/versions/90/1692260397902-project.tar
+        createdAt: 1692261015779
+      "91":
+        schemaVersion: 91
+        name: cifar10
+        description: This project implements the resnet algorithm using CIFAR-10 dataset
+          for image classification tasks.
+        tags:
+          - image clasification
+          - CNN
+        categories:
+          data_format: image
+          network_tasks:
+            - classification
+          storage_location: local
+        bgImagePath: projects/cifar10/versions/91/1695317165488-bgImage.png
+        sourceProjectId: 650c5f6887a6ff00197abf83
+        size: 744916319
+        path: projects/cifar10/versions/91/1695317165488-project.tar
+        createdAt: 1695317319267
+      "92":
+        schemaVersion: 92
+        name: cifar10
+        description: This project implements the resnet algorithm using CIFAR-10 dataset
+          for image classification tasks.
+        tags:
+          - image clasification
+          - CNN
+        categories:
+          data_format: image
+          network_tasks:
+            - classification
+          storage_location: local
+        bgImagePath: projects/cifar10/versions/92/1695835342234-bgImage.png
+        sourceProjectId: 650c5f6887a6ff00197abf83
+        size: 744916658
+        path: projects/cifar10/versions/92/1695835342234-project.tar
+        createdAt: 1695835410129
+      "95":
+        schemaVersion: 95
+        name: cifar10
+        description: This project implements the resnet algorithm using CIFAR-10 dataset
+          for image classification tasks.
+        tags:
+          - image clasification
+          - CNN
+        categories:
+          data_format: image
+          network_tasks:
+            - classification
+          storage_location: local
+        bgImagePath: projects/cifar10/versions/95/1698301611827-bgImage.png
+        sourceProjectId: 650c5f6887a6ff00197abf83
+        size: 2063456556
+        path: projects/cifar10/versions/95/1698301611827-project.tar
+        createdAt: 1698302542656
+  ALBERT-QA:
+    createdAt: 1692262643869
+    versions:
+      "90":
+        schemaVersion: 90
+        name: ALBERT-QA
+        description: This project implements the Albert algorithm using the SQuAD
+          (Stanford Question Answering Dataset) for question answering tasks.
+        tags:
+          - Question Answering
+          - Albert
+        categories:
+          data_format: text
+        bgImagePath: projects/ALBERT-QA/versions/90/1692261807464-bgImage.png
+        sourceProjectId: 64a27e2bddeecd001906cda2
+        size: 1039412749
+        path: projects/ALBERT-QA/versions/90/1692261807464-project.tar
+        createdAt: 1692262643869
+      "91":
+        schemaVersion: 91
+        name: ALBERT-QA
+        description: This project implements the Albert algorithm using the SQuAD
+          (Stanford Question Answering Dataset) for question answering tasks.
+        tags:
+          - Question Answering
+          - Albert
+        categories:
+          data_format: text
+        bgImagePath: projects/ALBERT-QA/versions/91/1695317651076-bgImage.png
+        sourceProjectId: 650c600e87a6ff00197ac0e3
+        size: 1039413696
+        path: projects/ALBERT-QA/versions/91/1695317651076-project.tar
+        createdAt: 1695317802765
+      "92":
+        schemaVersion: 92
+        name: ALBERT-QA
+        description: This project implements the Albert algorithm using the SQuAD
+          (Stanford Question Answering Dataset) for question answering tasks.
+        tags:
+          - Question Answering
+          - Albert
+        categories:
+          data_format: text
+        bgImagePath: projects/ALBERT-QA/versions/92/1695835231022-bgImage.png
+        sourceProjectId: 650c600e87a6ff00197ac0e3
+        size: 1039412680
+        path: projects/ALBERT-QA/versions/92/1695835231022-project.tar
+        createdAt: 1695835324228
+      "94":
+        schemaVersion: 94
+        name: ALBERT-QA
+        description: This project implements the Albert algorithm using the SQuAD
+          (Stanford Question Answering Dataset) for question answering tasks.
+        tags:
+          - Question Answering
+          - Albert
+        categories:
+          data_format: text
+        bgImagePath: projects/ALBERT-QA/versions/94/1698071315500-bgImage.png
+        sourceProjectId: 650c600e87a6ff00197ac0e3
+        size: 694448839
+        path: projects/ALBERT-QA/versions/94/1698071315500-project.tar
+        createdAt: 1698071580294
+  raft:
+    createdAt: 1692281886533
+    versions:
+      "90":
+        schemaVersion: 90
+        name: raft
+        description: Optical Flow using RAFT on the KITTI dataset
+        tags:
+          - optical flow
+        categories:
+          storage_location: google_cloud
+          data_format: image
+        bgImagePath: projects/raft/versions/90/1692281592774-bgImage.png
+        sourceProjectId: 64a566d15737b40018471a2c
+        size: 362431200
+        path: projects/raft/versions/90/1692281592774-project.tar
+        createdAt: 1692281886533
+      "91":
+        schemaVersion: 91
+        name: raft
+        description: Optical Flow using RAFT on the KITTI dataset
+        tags:
+          - optical flow
+        categories:
+          storage_location: google_cloud
+          data_format: image
+        bgImagePath: projects/raft/versions/91/1695313006148-bgImage.png
+        sourceProjectId: 650c606087a6ff00197ac150
+        size: 362429525
+        path: projects/raft/versions/91/1695313006148-project.tar
+        createdAt: 1695313122046
+      "92":
+        schemaVersion: 92
+        name: raft
+        description: Optical Flow using RAFT on the KITTI dataset
+        tags:
+          - optical flow
+        categories:
+          storage_location: google_cloud
+          data_format: image
+        bgImagePath: projects/raft/versions/92/1695834056916-bgImage.png
+        sourceProjectId: 650c606087a6ff00197ac150
+        size: 362429076
+        path: projects/raft/versions/92/1695834056916-project.tar
+        createdAt: 1695834090917
+  healthcare:
+    createdAt: 1696150890596
+    versions:
+      "90":
+        schemaVersion: 90
+        name: healthcare
+        description: The project uses transfer learning from a pre-trained DensNet201
+          network to classify chest X-ray images into one of three classes-
+          normal, bacteria, or virus. In a DenseNet, we use dense connections
+          between layers, using Dense Blocks, where each layer (with identical
+          feature maps) directly connects with each other through dense
+          connections.
+        tags:
+          - image clasification
+          - DensNet
+        categories:
+          data_format: image
+          network_tasks:
+            - classification
+          storage_location: local
+        bgImagePath: projects/healthcare/versions/90/1696150804942-bgImage.png
+        sourceProjectId: 64ff006439eb78002012fd4c
+        size: 571666208
+        path: projects/healthcare/versions/90/1696150804942-project.tar
+        createdAt: 1696150890596
+      "92":
+        schemaVersion: 92
+        name: healthcare
+        description: The project uses transfer learning from a pre-trained DensNet201
+          network to classify chest X-ray images into one of three classes-
+          normal, bacteria, or virus. In a DenseNet, we use dense connections
+          between layers, using Dense Blocks, where each layer (with identical
+          feature maps) directly connects with each other through dense
+          connections.
+        tags:
+          - image clasification
+          - DensNet
+        categories:
+          data_format: image
+          network_tasks:
+            - classification
+          storage_location: local
+        bgImagePath: projects/healthcare/versions/92/1696335847092-bgImage.png
+        sourceProjectId: 64ff006439eb78002012fd4c
+        size: 647649037
+        path: projects/healthcare/versions/92/1696335847092-project.tar
+        createdAt: 1696335980346
+  mnist:
+    createdAt: 1696169466323
+    versions:
+      "92":
+        schemaVersion: 92
+        name: mnist
+        description: >
+          The MNIST database of handwritten digits, available from this page,
+          has a training set of 60,000 examples, and a test set of 10,000
+          examples. It is a subset of a larger set available from NIST. The
+          digits have been size-normalized and centered in a fixed-size image.
+        tags:
+          - "cnn "
+          - image clasification
+        categories:
+          data_format: image
+          network_tasks:
+            - classification
+          storage_location: local
+        bgImagePath: projects/mnist/versions/92/1696169379475-bgImage.png
+        sourceProjectId: 651965638d268b001736622d
+        size: 410866408
+        path: projects/mnist/versions/92/1696169379475-project.tar
+        createdAt: 1696169466323
+  IMDb:
+    createdAt: 1696173389997
+    versions:
+      "92":
+        schemaVersion: 92
+        name: IMDb
+        description: This project involves the developed of a classifier model designed
+          to predict sentiment in movie reviews, distinguishing between positive
+          and negative sentiments. The model has been trained on the IMDB
+          dataset.
+        tags:
+          - bert
+          - sequence-classification
+        categories:
+          data_format: text
+          network_tasks:
+            - classification
+          storage_location: google_cloud
+        bgImagePath: projects/IMDb/versions/92/1696173236928-bgImage.png
+        sourceProjectId: 650c640f1038ef0019e3deb4
+        size: 1003770340
+        path: projects/IMDb/versions/92/1696173236928-project.tar
+        createdAt: 1696173389997
+  depth_estimation:
+    createdAt: 1697637286525
+    versions:
+      "93":
+        schemaVersion: 93
+        name: depth_estimation
+        description: Monocular Depth Estimation
+        tags:
+          - vision
+          - depth estimation
+          - autonomous vehicle
+        categories:
+          data_format: image
+          storage_location: aws
+        bgImagePath: projects/depth_estimation/versions/93/1697637187778-bgImage.png
+        sourceProjectId: 64d222a016b2ed001937669e
+        size: 258131478
+        path: projects/depth_estimation/versions/93/1697637187778-project.tar
+        createdAt: 1697637286525
+      "95":
+        schemaVersion: 95
+        name: depth_estimation
+        description: |-
+          Monocular Depth Estimation 
+          Analysis of GLPN model trained on the Kitti dataset
+        tags:
+          - vision
+          - depth estimation
+          - autonomous vehicle
+        categories:
+          data_format: image
+          storage_location: aws
+        bgImagePath: projects/depth_estimation/versions/95/1698301759467-bgImage.png
+        sourceProjectId: 64d222a016b2ed001937669e
+        size: 256898058
+        path: projects/depth_estimation/versions/95/1698301759467-project.tar
+        createdAt: 1698301928941
+  CityScapes:
+    createdAt: 1698076270105
+    versions:
+      "94":
+        schemaVersion: 94
+        name: CityScapes
+        description: >-
+          This project utilizes the YOLOv7 algorithm to perform object detection
+          on Cityscapes dataset. The 
+
+          cityscapes dataset is a large-scale dataset stands as one of the standard ADAS benchmarks used for multiple vision
+
+          related tasks.
+        tags:
+          - yolov7
+          - object detection
+        categories:
+          data_format: image
+          network_tasks:
+            - object_detection
+          storage_location: google_cloud
+        bgImagePath: projects/CityScapes/versions/94/1698076112261-bgImage.png
+        sourceProjectId: 650c5f7487a6ff00197ac013
+        size: 415973104
+        path: projects/CityScapes/versions/94/1698076112261-project.tar
+        createdAt: 1698076270105
+      "95":
+        schemaVersion: 95
+        name: CityScapes
+        description: >-
+          This project utilizes the YOLOv7 algorithm to perform object detection
+          on Cityscapes dataset. The 
+
+          cityscapes dataset is a large-scale dataset stands as one of the standard ADAS benchmarks used for multiple vision
+
+          related tasks.
+        tags:
+          - yolov7
+          - object detection
+        categories:
+          data_format: image
+          network_tasks:
+            - object_detection
+          storage_location: google_cloud
+        bgImagePath: projects/CityScapes/versions/95/1698317601382-bgImage.png
+        sourceProjectId: 650c5f7487a6ff00197ac013
+        size: 303846237
+        path: projects/CityScapes/versions/95/1698317601382-project.tar
+        createdAt: 1698317718241
+  DomainGap-CS-Kitti:
+    createdAt: 1699345294846
+    versions:
+      "95":
+        schemaVersion: 95
+        name: DomainGap-CS-Kitti
+        description: This project addresses a domain gap between KITTI and Cityscapes
+          datasets for semantic segmentation in autonomous driving scenarios. By
+          applying domain adaptation techniques and designing a robust model, we
+          aim to improve cross-dataset generalization. The project seeks to
+          enhance the model's real-world applicability and contribute to
+          advancements in domain adaptation research.
+        tags:
+          - Semantic segmantaion
+          - Autonomous vehicle
+        categories:
+          data_format: image
+          network_tasks:
+            - segmentation
+          storage_location: google_cloud
+        bgImagePath: projects/DomainGap-CS-Kitti/versions/95/1699345279990-bgImage.png
+        sourceProjectId: 650c5f3e87a6ff00197abe35
+        size: 471222773
+        path: projects/DomainGap-CS-Kitti/versions/95/1699345279990-project.tar
+        createdAt: 1699345294846
