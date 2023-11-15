@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"net/http"
 
 	. "github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
@@ -25,6 +26,16 @@ func getApiClient() *DefaultApiService {
 		},
 	}
 	return NewAPIClient(cfg).DefaultApi
+}
+
+func GetAuthFromContext(ctx context.Context) (baseUrl string, apiKey string) {
+	apiKey = ctx.Value(ContextAccessToken).(string)
+	baseUrl = ctx.Value(ContextServerVariables).(map[string]string)["baseUrl"]
+	return
+}
+
+func AddAuthToRequestHeader(h *http.Header, apiKey string) {
+	h.Add("Authorization", "Bearer "+apiKey)
 }
 
 var ApiClient = getApiClient()

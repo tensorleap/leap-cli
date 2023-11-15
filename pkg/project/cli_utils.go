@@ -5,6 +5,7 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/tensorleap/leap-cli/pkg/entity"
+	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
 func GetProjectFromFlag(ctx context.Context, projectIdFlag string, askForNewProjectFirst bool) (project *ProjectEntity, wasCreated bool, err error) {
@@ -64,4 +65,28 @@ func AskForNewProject(projectDetails *AddProjectDetails, existingProjectNames []
 	}
 
 	return nil
+}
+
+func SelectProjectsToPublish(ctx context.Context, projectNamesFromArgs []string, allProjectFlag bool) ([]ProjectEntity, error) {
+	projects, err := GetProjects(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	if allProjectFlag {
+		selectedProjects := []ProjectEntity{}
+		for _, project := range projects {
+			isPublicProject := project.HubPublishPolicy == tensorleapapi.HUBPUBLISHPOLICY_PUBLIC
+			if isPublicProject {
+				selectedProjects = append(selectedProjects, project)
+			}
+		}
+		return selectedProjects, nil
+	}
+
+	projectEntities, err := entity.SelectEntitiesByNamesOrAsk(projectNamesFromArgs, projects, ProjectEntityDesc)
+	if err != nil {
+		return nil, err
+	}
+	return projectEntities, nil
 }
