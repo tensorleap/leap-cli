@@ -23,6 +23,8 @@
 
 * `DRY_RUN_GRAPH` (value: `"DRY_RUN_GRAPH"`)
 
+* `SLIM_LS` (value: `"SLIM_LS"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

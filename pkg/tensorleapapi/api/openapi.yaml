@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.382
+  version: 0.0.404
 servers:
 - url: /api/v2
 paths:
@@ -325,6 +325,26 @@ paths:
       security:
       - jwt:
         - not-demo
+  /datasetVersions/saveDatasetVersionNoParse:
+    post:
+      operationId: SaveDatasetVersionNoParse
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveDatasetVersionNoParseParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveDatasetSetupResponse'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
   /datasetVersions/modifyDatasetVersionNote:
     post:
       operationId: ModifyDatasetVersionNote
@@ -573,25 +593,6 @@ paths:
           description: Ok
       security:
       - jwt: []
-  /insights/getSessionInsights:
-    post:
-      operationId: GetSessionInsights
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GetSessionInsightsParams'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetSessionInsightsResponse'
-          description: Ok
-      security:
-      - jwt: []
   /issues/getProjectIssues:
     post:
       operationId: GetProjectIssues
@@ -707,12 +708,37 @@ paths:
     post:
       operationId: GetTeamJobs
       parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetJobsFilterParams'
+        required: true
       responses:
         "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetJobsResponse'
+          description: Ok
+      security:
+      - jwt: []
+  /jobs/getSlimJobs:
+    post:
+      operationId: GetSlimJobs
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetJobsFilterParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSlimJobsResponse'
           description: Ok
       security:
       - jwt: []
@@ -1118,9 +1144,24 @@ paths:
           description: Ok
       security:
       - jwt: []
+  /projects/publishProject:
+    post:
+      operationId: PublishProject
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishProjectRequest'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
   /projects/downloadProject/{projectId}:
     get:
-      operationId: Download
+      operationId: DownloadProject
       parameters:
       - explode: false
         in: path
@@ -1136,7 +1177,7 @@ paths:
       - jwt: []
   /projects/uploadProject/{projectName}:
     put:
-      operationId: Upload
+      operationId: UploadProject
       parameters:
       - explode: false
         in: path
@@ -1158,6 +1199,78 @@ paths:
           description: No content
       security:
       - jwt: []
+  /sample-collection/getSampleCollections:
+    post:
+      operationId: GetSampleCollections
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSampleCollectionsParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSampleCollectionsResponse'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /sample-collection/addSampleCollection:
+    post:
+      operationId: AddSampleCollection
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddSampleCollectionParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddSampleCollectionResponse'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /sample-collection/removeSampleCollections:
+    post:
+      operationId: RemoveSamplesCollection
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoveSampleCollectionParams'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt:
+        - not-demo
+  /sample-collection/updateSampleCollection:
+    post:
+      operationId: UpdateSampleCollection
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSampleCollectionParams'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt:
+        - not-demo
   /secret-manager/addSecretManager:
     post:
       operationId: AddSecretManager
@@ -1960,22 +2073,60 @@ paths:
           description: Ok
       security:
       - jwt: []
-  /visualizations/getSessionVisualizations:
+  /visualizations/getSessionRunsVisualizations:
     post:
-      operationId: GetSessionVisualizations
+      operationId: GetSessionRunsVisualizations
       parameters: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GetSessionVisualizationsParams'
+              $ref: '#/components/schemas/GetSessionRunsVisualizationsParams'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetSessionVisualizationsResponse'
+                $ref: '#/components/schemas/GetSessionRunsVisualizationsResponse'
+          description: Ok
+      security:
+      - jwt: []
+  /visualizations/getScatterSampleVisualizations:
+    post:
+      operationId: GetScatterSampleVisualizations
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetScatterSampleVisualizationsParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetScatterSampleVisualizationsResponse'
+          description: Ok
+      security:
+      - jwt: []
+  /visualizations/getSampleVisualizationsPath:
+    post:
+      operationId: GetSampleVisualizationsPath
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSampleVisualizationsPathsParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSampleVisualizationsPathsResponse'
           description: Ok
       security:
       - jwt: []
@@ -2079,6 +2230,26 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/SampleSelectionParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /visualizations/createSamplesVisualizations:
+    post:
+      operationId: CreateSamplesVisualizations
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSampleVisualizationsParams'
         required: true
       responses:
         "200":
@@ -2346,7 +2517,7 @@ components:
       required:
       - token
       type: object
-    CustomVisualizationType:
+    AnalyticsDashletType:
       enum:
       - Bar
       - Line
@@ -2360,7 +2531,7 @@ components:
       description: Construct a type with a set of properties K of type T
       properties: {}
       type: object
-    CustomVisualizationData:
+    AnalyticsDashletData:
       properties:
         data:
           description: Construct a type with a set of properties K of type T
@@ -2369,7 +2540,7 @@ components:
         name:
           type: string
         type:
-          $ref: '#/components/schemas/CustomVisualizationType'
+          $ref: '#/components/schemas/AnalyticsDashletType'
       required:
       - data
       - name
@@ -2439,7 +2610,7 @@ components:
       - sm
       - xs
       type: object
-    CustomVisualizationItem:
+    AnalyticsDashlet:
       additionalProperties: false
       properties:
         cid:
@@ -2448,18 +2619,57 @@ components:
           $ref: '#/components/schemas/SizedLayout'
         type:
           enum:
-          - CustomVisualization
+          - Analytics
           nullable: false
           type: string
         data:
-          $ref: '#/components/schemas/CustomVisualizationData'
+          $ref: '#/components/schemas/AnalyticsDashletData'
       required:
       - cid
       - data
       - layout
       - type
       type: object
-    VisualizationItem:
+    DataStateType:
+      enum:
+      - training
+      - validation
+      - test
+      - unlabeled
+      type: string
+    SampleIdentity:
+      additionalProperties: false
+      example:
+        index: 0.8008281904610115
+        state: null
+      properties:
+        state:
+          $ref: '#/components/schemas/DataStateType'
+        index:
+          format: double
+          type: number
+      required:
+      - index
+      - state
+      type: object
+    SampleAssetNames:
+      enum:
+      - visualization
+      - analysis
+      - loss analysis
+      - metadata
+      type: string
+    SampleAssetId:
+      properties:
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/SampleAssetNames'
+      required:
+      - name
+      - type
+      type: object
+    SampleAnalysisDashlet:
       additionalProperties: false
       properties:
         cid:
@@ -2468,18 +2678,51 @@ components:
           $ref: '#/components/schemas/SizedLayout'
         type:
           enum:
-          - Visualization
+          - SampleAnalysis
           nullable: false
+          type: string
+        name:
+          type: string
+        collectionIds:
+          items:
+            type: string
+          type: array
+        sample:
+          $ref: '#/components/schemas/SampleIdentity'
+        assetId:
+          $ref: '#/components/schemas/SampleAssetId'
+      required:
+      - cid
+      - collectionIds
+      - layout
+      - name
+      - type
+      type: object
+    PopulationExplorationDashlet:
+      additionalProperties: false
+      properties:
+        cid:
+          type: string
+        layout:
+          $ref: '#/components/schemas/SizedLayout'
+        type:
+          enum:
+          - PopulationExploration
+          nullable: false
+          type: string
+        name:
           type: string
       required:
       - cid
       - layout
+      - name
       - type
       type: object
-    DashboardItem:
+    Dashlet:
       anyOf:
-      - $ref: '#/components/schemas/CustomVisualizationItem'
-      - $ref: '#/components/schemas/VisualizationItem'
+      - $ref: '#/components/schemas/AnalyticsDashlet'
+      - $ref: '#/components/schemas/SampleAnalysisDashlet'
+      - $ref: '#/components/schemas/PopulationExplorationDashlet'
     Dashboard:
       additionalProperties: false
       example:
@@ -2510,7 +2753,7 @@ components:
           type: string
         items:
           items:
-            $ref: '#/components/schemas/DashboardItem'
+            $ref: '#/components/schemas/Dashlet'
           type: array
         description:
           type: string
@@ -2625,7 +2868,7 @@ components:
           type: string
         items:
           items:
-            $ref: '#/components/schemas/DashboardItem'
+            $ref: '#/components/schemas/Dashlet'
           type: array
         description:
           type: string
@@ -2665,7 +2908,7 @@ components:
           type: string
         items:
           items:
-            $ref: '#/components/schemas/DashboardItem'
+            $ref: '#/components/schemas/Dashlet'
           type: array
         description:
           type: string
@@ -4695,6 +4938,30 @@ components:
       - codeUrl
       - datasetId
       type: object
+    SaveDatasetVersionNoParseParams:
+      additionalProperties: false
+      example:
+        codeUrl: codeUrl
+        note: note
+        secretManagerId: secretManagerId
+        codeEntryFile: codeEntryFile
+        fromDatasetVersionId: fromDatasetVersionId
+      properties:
+        fromDatasetVersionId:
+          type: string
+        secretManagerId:
+          type: string
+        codeUrl:
+          type: string
+        codeEntryFile:
+          type: string
+        note:
+          type: string
+      required:
+      - codeEntryFile
+      - codeUrl
+      - fromDatasetVersionId
+      type: object
     ModifyDatasetVersionNoteResponse:
       additionalProperties: false
       example:
@@ -5351,6 +5618,7 @@ components:
       - DATASET_PARSE
       - ANALYZE_GRAPH
       - DRY_RUN_GRAPH
+      - SLIM_LS
       type: string
     JobSubType:
       enum:
@@ -5359,6 +5627,7 @@ components:
       - Continue Training
       - Train From Initial Weights
       - Population Exploration
+      - Visualizers Calculation
       - Sample Selection
       - Sample Analysis
       - Graph Validate
@@ -5409,29 +5678,8 @@ components:
       - population_exploration
       - sample_selection
       - sample_analysis
+      - visualizers_calculation
       type: string
-    DataStateType:
-      enum:
-      - training
-      - validation
-      - test
-      - unlabeled
-      type: string
-    SampleIdentity:
-      additionalProperties: false
-      example:
-        index: 0.8008281904610115
-        state: null
-      properties:
-        state:
-          $ref: '#/components/schemas/DataStateType'
-        index:
-          format: double
-          type: number
-      required:
-      - index
-      - state
-      type: object
     AnalyzeParams:
       additionalProperties: false
       properties:
@@ -5451,6 +5699,8 @@ components:
         fromDatasetSlice:
           $ref: '#/components/schemas/DataStateType'
         extId:
+          type: string
+        digest:
           type: string
       required:
       - extId
@@ -5544,7 +5794,6 @@ components:
         dataStates:
         - null
         - null
-        shouldRunPopulationExploration: true
         sessionId: sessionId
         batchSize: 0.8008281904610115
         evaluatedEpoch: 6.027456183070403
@@ -5563,8 +5812,6 @@ components:
           items:
             $ref: '#/components/schemas/DataStateType'
           type: array
-        shouldRunPopulationExploration:
-          type: boolean
         evaluatedEpoch:
           format: double
           type: number
@@ -5577,7 +5824,6 @@ components:
       - name
       - projectId
       - sessionId
-      - shouldRunPopulationExploration
       - versionId
       type: object
     ExportedModelData:
@@ -6168,276 +6414,6 @@ components:
       - projectId
       - versionId
       type: object
-    ScatterInsightType:
-      enum:
-      - redundant_samples_cluster
-      - weak_cluster
-      - under_representation_cluster
-      - overfitting_cluster
-      - duplication_insight
-      type: string
-    OperatorEnum:
-      enum:
-      - smaller_than
-      - equal_to
-      - larger_than
-      type: string
-    ScatterFilter:
-      additionalProperties: false
-      properties:
-        metric:
-          type: string
-        value:
-          type: string
-        operator:
-          $ref: '#/components/schemas/OperatorEnum'
-        data_state:
-          $ref: '#/components/schemas/DataStateType'
-      required:
-      - metric
-      - operator
-      - value
-      type: object
-    Direction:
-      enum:
-      - up
-      - down
-      type: string
-    MutualInformationElement:
-      additionalProperties: false
-      properties:
-        feature_name:
-          type: string
-        feature_value:
-          type: string
-        direction:
-          $ref: '#/components/schemas/Direction'
-        is_categorical:
-          type: boolean
-      required:
-      - direction
-      - feature_name
-      - is_categorical
-      type: object
-    OverfittingInsight:
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/ScatterInsightType'
-        filter:
-          $ref: '#/components/schemas/ScatterFilter'
-        mutual_info_elements:
-          items:
-            $ref: '#/components/schemas/MutualInformationElement'
-          type: array
-        n_samples_validation:
-          format: double
-          type: number
-        n_samples_training:
-          format: double
-          type: number
-        avg_metric_validation:
-          format: double
-          type: number
-        avg_metric_training:
-          format: double
-          type: number
-        metric_name:
-          type: string
-      required:
-      - avg_metric_training
-      - avg_metric_validation
-      - filter
-      - metric_name
-      - n_samples_training
-      - n_samples_validation
-      - type
-      type: object
-    UnderRepresentationInsight:
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/ScatterInsightType'
-        filter:
-          $ref: '#/components/schemas/ScatterFilter'
-        mutual_info_elements:
-          items:
-            $ref: '#/components/schemas/MutualInformationElement'
-          type: array
-        under_representation_dataset:
-          $ref: '#/components/schemas/DataStateType'
-        under_representation_n_samples:
-          format: double
-          type: number
-        over_representation_dataset:
-          $ref: '#/components/schemas/DataStateType'
-        over_representation_n_samples:
-          format: double
-          type: number
-      required:
-      - filter
-      - over_representation_dataset
-      - over_representation_n_samples
-      - type
-      - under_representation_dataset
-      - under_representation_n_samples
-      type: object
-    ClusterInsight:
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/ScatterInsightType'
-        filter:
-          $ref: '#/components/schemas/ScatterFilter'
-        mutual_info_elements:
-          items:
-            $ref: '#/components/schemas/MutualInformationElement'
-          type: array
-        n_samples:
-          format: double
-          type: number
-        avg_metric:
-          format: double
-          type: number
-        metric_name:
-          type: string
-      required:
-      - avg_metric
-      - filter
-      - metric_name
-      - n_samples
-      - type
-      type: object
-    DuplicationInsight:
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/ScatterInsightType'
-        filter:
-          $ref: '#/components/schemas/ScatterFilter'
-        mutual_info_elements:
-          items:
-            $ref: '#/components/schemas/MutualInformationElement'
-          type: array
-        n_duplicate_samples:
-          format: double
-          type: number
-        n_cross_subset_duplications:
-          format: double
-          type: number
-      required:
-      - filter
-      - n_cross_subset_duplications
-      - n_duplicate_samples
-      - type
-      type: object
-    InsightType:
-      anyOf:
-      - $ref: '#/components/schemas/OverfittingInsight'
-      - $ref: '#/components/schemas/UnderRepresentationInsight'
-      - $ref: '#/components/schemas/ClusterInsight'
-      - $ref: '#/components/schemas/DuplicationInsight'
-    Insight:
-      additionalProperties: false
-      example:
-        createdAt: 2000-01-23T04:56:07.000+00:00
-        sessionRunId: sessionRunId
-        data: null
-        createdBy: createdBy
-        teamId: teamId
-        modelEpoch: 0.8008281904610115
-        visualizationUuid: visualizationUuid
-        projectId: projectId
-        cid: cid
-        modelExtId: modelExtId
-        updatedAt: 2000-01-23T04:56:07.000+00:00
-      properties:
-        projectId:
-          type: string
-        cid:
-          type: string
-        sessionRunId:
-          type: string
-        modelEpoch:
-          format: double
-          type: number
-        modelExtId:
-          type: string
-        teamId:
-          type: string
-        createdBy:
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-        updatedAt:
-          format: date-time
-          type: string
-        visualizationUuid:
-          type: string
-        data:
-          $ref: '#/components/schemas/InsightType'
-      required:
-      - cid
-      - createdAt
-      - createdBy
-      - data
-      - modelEpoch
-      - modelExtId
-      - projectId
-      - sessionRunId
-      - teamId
-      - updatedAt
-      - visualizationUuid
-      type: object
-    GetSessionInsightsResponse:
-      additionalProperties: false
-      example:
-        insights:
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          sessionRunId: sessionRunId
-          data: null
-          createdBy: createdBy
-          teamId: teamId
-          modelEpoch: 0.8008281904610115
-          visualizationUuid: visualizationUuid
-          projectId: projectId
-          cid: cid
-          modelExtId: modelExtId
-          updatedAt: 2000-01-23T04:56:07.000+00:00
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          sessionRunId: sessionRunId
-          data: null
-          createdBy: createdBy
-          teamId: teamId
-          modelEpoch: 0.8008281904610115
-          visualizationUuid: visualizationUuid
-          projectId: projectId
-          cid: cid
-          modelExtId: modelExtId
-          updatedAt: 2000-01-23T04:56:07.000+00:00
-      properties:
-        insights:
-          items:
-            $ref: '#/components/schemas/Insight'
-          type: array
-      required:
-      - insights
-      type: object
-    GetSessionInsightsParams:
-      additionalProperties: false
-      example:
-        sessionRunId: sessionRunId
-        projectId: projectId
-      properties:
-        sessionRunId:
-          type: string
-        projectId:
-          type: string
-      required:
-      - projectId
-      - sessionRunId
-      type: object
     IssueStatus:
       enum:
       - Open
@@ -6928,6 +6904,7 @@ components:
         createdAt: createdAt
         versionId: versionId
         sessionRunName: sessionRunName
+        sessionRunId: sessionRunId
         sessionName: sessionName
         versionName: versionName
         projectName: projectName
@@ -6955,6 +6932,8 @@ components:
           type: string
         sessionRunName:
           type: string
+        sessionRunId:
+          type: string
       required:
       - createdAt
       - jobId
@@ -6975,6 +6954,7 @@ components:
           createdAt: createdAt
           versionId: versionId
           sessionRunName: sessionRunName
+          sessionRunId: sessionRunId
           sessionName: sessionName
           versionName: versionName
           projectName: projectName
@@ -6985,6 +6965,7 @@ components:
           createdAt: createdAt
           versionId: versionId
           sessionRunName: sessionRunName
+          sessionRunId: sessionRunId
           sessionName: sessionName
           versionName: versionName
           projectName: projectName
@@ -6998,6 +6979,90 @@ components:
           type: array
       required:
       - processes
+      type: object
+    JobTrigger:
+      enum:
+      - Manual
+      - Auto
+      type: string
+    GetJobsFilterParams:
+      additionalProperties: false
+      example:
+        lastUpdated: 2000-01-23T04:56:07.000+00:00
+        types:
+        - null
+        - null
+        subTypes:
+        - null
+        - null
+        trigger: null
+        sessionRunIds:
+        - sessionRunIds
+        - sessionRunIds
+        projectId: projectId
+        status:
+        - null
+        - null
+      properties:
+        lastUpdated:
+          format: date-time
+          type: string
+        sessionRunIds:
+          items:
+            type: string
+          type: array
+        types:
+          items:
+            $ref: '#/components/schemas/JobTypeEnum'
+          type: array
+        subTypes:
+          items:
+            $ref: '#/components/schemas/JobSubType'
+          type: array
+        trigger:
+          $ref: '#/components/schemas/JobTrigger'
+        status:
+          items:
+            $ref: '#/components/schemas/JobStatus'
+          type: array
+        projectId:
+          type: string
+      type: object
+    GetSlimJobsResponse:
+      additionalProperties: false
+      example:
+        jobs:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          sessionRunId: sessionRunId
+          createdBy: createdBy
+          teamId: teamId
+          subType: null
+          type: null
+          params: null
+          projectId: projectId
+          version: version
+          cid: cid
+          status: null
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          sessionRunId: sessionRunId
+          createdBy: createdBy
+          teamId: teamId
+          subType: null
+          type: null
+          params: null
+          projectId: projectId
+          version: version
+          cid: cid
+          status: null
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        jobs:
+          items:
+            $ref: '#/components/schemas/Job'
+          type: array
+      required:
+      - jobs
       type: object
     StopJobResponse:
       additionalProperties: false
@@ -7830,6 +7895,7 @@ components:
       enum:
       - mongo
       - rabbitmq
+      - elastic
       type: string
     ModuleStatusAllModules:
       properties:
@@ -8241,6 +8307,32 @@ components:
       - projectId
       - projectName
       type: object
+    JobNotificationAnalyzeContext:
+      additionalProperties: false
+      properties:
+        jobId:
+          type: string
+        jobType:
+          $ref: '#/components/schemas/JobTypeEnum'
+        projectName:
+          type: string
+        projectId:
+          type: string
+        modelName:
+          type: string
+        modelExtId:
+          type: string
+        sessionRunId:
+          type: string
+      required:
+      - jobId
+      - jobType
+      - modelExtId
+      - modelName
+      - projectId
+      - projectName
+      - sessionRunId
+      type: object
     JobNotificationSampleContext:
       additionalProperties: false
       properties:
@@ -8272,6 +8364,7 @@ components:
       - $ref: '#/components/schemas/JobNotificationBaseContext'
       - $ref: '#/components/schemas/JobNotificationLeepScriptContext'
       - $ref: '#/components/schemas/JobNotificationModelContext'
+      - $ref: '#/components/schemas/JobNotificationAnalyzeContext'
       - $ref: '#/components/schemas/JobNotificationSampleContext'
     Notification:
       additionalProperties: false
@@ -9157,6 +9250,186 @@ components:
           type: string
       required:
       - projectId
+      type: object
+    PublishProjectRequest:
+      additionalProperties: false
+      example:
+        projectId: projectId
+        publishUrl: publishUrl
+      properties:
+        projectId:
+          type: string
+        publishUrl:
+          type: string
+      required:
+      - projectId
+      - publishUrl
+      type: object
+    SampleCollection:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        createdBy: createdBy
+        teamId: teamId
+        name: name
+        description: description
+        projectId: projectId
+        samples:
+        - index: 0.8008281904610115
+          state: null
+        - index: 0.8008281904610115
+          state: null
+        cid: cid
+      properties:
+        samples:
+          items:
+            $ref: '#/components/schemas/SampleIdentity'
+          type: array
+        createdBy:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        description:
+          type: string
+        name:
+          type: string
+        cid:
+          type: string
+        projectId:
+          type: string
+        teamId:
+          type: string
+      required:
+      - cid
+      - createdAt
+      - name
+      - projectId
+      - samples
+      - teamId
+      type: object
+    GetSampleCollectionsResponse:
+      example:
+        data:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          teamId: teamId
+          name: name
+          description: description
+          projectId: projectId
+          samples:
+          - index: 0.8008281904610115
+            state: null
+          - index: 0.8008281904610115
+            state: null
+          cid: cid
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          teamId: teamId
+          name: name
+          description: description
+          projectId: projectId
+          samples:
+          - index: 0.8008281904610115
+            state: null
+          - index: 0.8008281904610115
+            state: null
+          cid: cid
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/SampleCollection'
+          type: array
+      required:
+      - data
+      type: object
+    GetSampleCollectionsParams:
+      example:
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+      required:
+      - projectId
+      type: object
+    AddSampleCollectionResponse:
+      example:
+        cid: cid
+      properties:
+        cid:
+          type: string
+      required:
+      - cid
+      type: object
+    AddSampleCollectionParams:
+      example:
+        name: name
+        description: description
+        projectId: projectId
+        samples:
+        - index: 0.8008281904610115
+          state: null
+        - index: 0.8008281904610115
+          state: null
+      properties:
+        samples:
+          items:
+            $ref: '#/components/schemas/SampleIdentity'
+          type: array
+        projectId:
+          type: string
+        description:
+          type: string
+        name:
+          type: string
+      required:
+      - name
+      - projectId
+      - samples
+      type: object
+    RemoveSampleCollectionParams:
+      example:
+        sampleCollectionIds:
+        - sampleCollectionIds
+        - sampleCollectionIds
+        projectId: projectId
+      properties:
+        sampleCollectionIds:
+          items:
+            type: string
+          type: array
+        projectId:
+          type: string
+      required:
+      - projectId
+      - sampleCollectionIds
+      type: object
+    UpdateSampleCollectionParams:
+      example:
+        sampleCollectionId: sampleCollectionId
+        name: name
+        description: description
+        projectId: projectId
+        samples:
+        - index: 0.8008281904610115
+          state: null
+        - index: 0.8008281904610115
+          state: null
+      properties:
+        samples:
+          items:
+            $ref: '#/components/schemas/SampleIdentity'
+          type: array
+        description:
+          type: string
+        name:
+          type: string
+        sampleCollectionId:
+          type: string
+        projectId:
+          type: string
+      required:
+      - projectId
+      - sampleCollectionId
       type: object
     AddSecretManagerResponse:
       additionalProperties: false
@@ -10248,7 +10521,6 @@ components:
           epochs: 0.8008281904610115
           early_stop_params:
             patience: 1.4658129805029452
-        shouldRunPopulationExploration: true
         projectId: projectId
       properties:
         versionId:
@@ -10259,12 +10531,9 @@ components:
           type: string
         trainingParams:
           $ref: '#/components/schemas/TrainingParams'
-        shouldRunPopulationExploration:
-          type: boolean
       required:
       - projectId
       - sessionName
-      - shouldRunPopulationExploration
       - trainingParams
       - versionId
       type: object
@@ -10278,7 +10547,6 @@ components:
           epochs: 0.8008281904610115
           early_stop_params:
             patience: 1.4658129805029452
-        shouldRunPopulationExploration: true
         sessionId: sessionId
         projectId: projectId
       properties:
@@ -10293,13 +10561,10 @@ components:
           type: number
         trainingParams:
           $ref: '#/components/schemas/TrainingParams'
-        shouldRunPopulationExploration:
-          type: boolean
       required:
       - fromEpoch
       - projectId
       - sessionId
-      - shouldRunPopulationExploration
       - trainingParams
       - versionId
       type: object
@@ -10314,7 +10579,6 @@ components:
           epochs: 0.8008281904610115
           early_stop_params:
             patience: 1.4658129805029452
-        shouldRunPopulationExploration: true
         fromSessionId: fromSessionId
         projectId: projectId
       properties:
@@ -10331,14 +10595,11 @@ components:
           type: string
         trainingParams:
           $ref: '#/components/schemas/TrainingParams'
-        shouldRunPopulationExploration:
-          type: boolean
       required:
       - fromEpoch
       - fromSessionId
       - modelName
       - projectId
-      - shouldRunPopulationExploration
       - trainingParams
       - versionId
       type: object
@@ -12731,7 +12992,7 @@ components:
       - type
       - visualizationUuid
       type: object
-    GetSessionVisualizationsResponse:
+    GetSessionRunsVisualizationsResponse:
       additionalProperties: false
       example:
         slimVisualizations:
@@ -12809,19 +13070,92 @@ components:
       required:
       - slimVisualizations
       type: object
-    GetSessionVisualizationsParams:
+    GetSessionRunsVisualizationsParams:
+      additionalProperties: false
+      example:
+        sessionRunIds:
+        - sessionRunIds
+        - sessionRunIds
+        projectId: projectId
+      properties:
+        sessionRunIds:
+          items:
+            type: string
+          type: array
+        projectId:
+          type: string
+      required:
+      - projectId
+      - sessionRunIds
+      type: object
+    GetScatterSampleVisualizationsResponse:
+      additionalProperties: false
+      example:
+        scatterSampleVisualizationsPrefix: scatterSampleVisualizationsPrefix
+        samplesIds:
+        - samplesIds
+        - samplesIds
+      properties:
+        samplesIds:
+          items:
+            type: string
+          type: array
+        scatterSampleVisualizationsPrefix:
+          type: string
+      required:
+      - samplesIds
+      - scatterSampleVisualizationsPrefix
+      type: object
+    GetScatterSampleVisualizationsParams:
       additionalProperties: false
       example:
         sessionRunId: sessionRunId
+        epoch: 0.8008281904610115
         projectId: projectId
       properties:
         sessionRunId:
           type: string
         projectId:
           type: string
+        epoch:
+          format: double
+          type: number
       required:
+      - epoch
       - projectId
       - sessionRunId
+      type: object
+    GetSampleVisualizationsPathsResponse:
+      additionalProperties: false
+      example:
+        paths:
+        - paths
+        - paths
+      properties:
+        paths:
+          items:
+            type: string
+          type: array
+      required:
+      - paths
+      type: object
+    GetSampleVisualizationsPathsParams:
+      additionalProperties: false
+      example:
+        scatterSampleVisualizationsPrefix: scatterSampleVisualizationsPrefix
+        fileNameMatch: fileNameMatch
+        sampleId: sampleId
+      properties:
+        scatterSampleVisualizationsPrefix:
+          type: string
+        fileNameMatch:
+          type: string
+        sampleId:
+          type: string
+      required:
+      - fileNameMatch
+      - sampleId
+      - scatterSampleVisualizationsPrefix
       type: object
     GetSlimVisualizationResponse:
       additionalProperties: false
@@ -12981,7 +13315,7 @@ components:
     SampleAnalysisParams:
       additionalProperties: false
       example:
-        fromEpoch: 6.027456183070403
+        fromEpoch: 0.8008281904610115
         sessionRunId: sessionRunId
         projectId: projectId
         sampleIdentity:
@@ -13008,6 +13342,7 @@ components:
       example:
         fromEpoch: 1.4658129805029452
         sessionRunId: sessionRunId
+        digest: digest
         numOfSamples: 6.027456183070403
         batchSize: 0.8008281904610115
         projectId: projectId
@@ -13025,8 +13360,11 @@ components:
         fromEpoch:
           format: double
           type: number
+        digest:
+          type: string
       required:
       - batchSize
+      - digest
       - fromEpoch
       - numOfSamples
       - projectId
@@ -13069,6 +13407,35 @@ components:
       - numOfSamples
       - projectId
       - sampleIdentity
+      - sessionRunId
+      type: object
+    CreateSampleVisualizationsParams:
+      additionalProperties: false
+      example:
+        sessionRunId: sessionRunId
+        epoch: 0.8008281904610115
+        projectId: projectId
+        sampleIdentities:
+        - index: 0.8008281904610115
+          state: null
+        - index: 0.8008281904610115
+          state: null
+      properties:
+        projectId:
+          type: string
+        sessionRunId:
+          type: string
+        epoch:
+          format: double
+          type: number
+        sampleIdentities:
+          items:
+            $ref: '#/components/schemas/SampleIdentity'
+          type: array
+      required:
+      - epoch
+      - projectId
+      - sampleIdentities
       - sessionRunId
       type: object
     SetUserNotificationsAsRead_200_response:

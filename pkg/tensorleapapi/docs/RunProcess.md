@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **UpdatedAt** | **string** |  | 
 **SessionName** | **string** |  | 
 **SessionRunName** | **string** |  | 
+**SessionRunId** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -233,6 +234,31 @@ and a boolean to check if the value has been set.
 
 SetSessionRunName sets SessionRunName field to given value.
 
+
+### GetSessionRunId
+
+`func (o *RunProcess) GetSessionRunId() string`
+
+GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+
+### GetSessionRunIdOk
+
+`func (o *RunProcess) GetSessionRunIdOk() (*string, bool)`
+
+GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSessionRunId
+
+`func (o *RunProcess) SetSessionRunId(v string)`
+
+SetSessionRunId sets SessionRunId field to given value.
+
+### HasSessionRunId
+
+`func (o *RunProcess) HasSessionRunId() bool`
+
+HasSessionRunId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

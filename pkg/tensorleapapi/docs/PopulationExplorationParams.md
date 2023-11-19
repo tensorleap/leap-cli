@@ -9,12 +9,13 @@ Name | Type | Description | Notes
 **BatchSize** | **float64** |  | 
 **NumOfSamples** | **float64** |  | 
 **FromEpoch** | **float64** |  | 
+**Digest** | **string** |  | 
 
 ## Methods
 
 ### NewPopulationExplorationParams
 
-`func NewPopulationExplorationParams(sessionRunId string, projectId string, batchSize float64, numOfSamples float64, fromEpoch float64, ) *PopulationExplorationParams`
+`func NewPopulationExplorationParams(sessionRunId string, projectId string, batchSize float64, numOfSamples float64, fromEpoch float64, digest string, ) *PopulationExplorationParams`
 
 NewPopulationExplorationParams instantiates a new PopulationExplorationParams object
 This constructor will assign default values to properties that have it defined,
@@ -127,6 +128,26 @@ and a boolean to check if the value has been set.
 `func (o *PopulationExplorationParams) SetFromEpoch(v float64)`
 
 SetFromEpoch sets FromEpoch field to given value.
+
+
+### GetDigest
+
+`func (o *PopulationExplorationParams) GetDigest() string`
+
+GetDigest returns the Digest field if non-nil, zero value otherwise.
+
+### GetDigestOk
+
+`func (o *PopulationExplorationParams) GetDigestOk() (*string, bool)`
+
+GetDigestOk returns a tuple with the Digest field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDigest
+
+`func (o *PopulationExplorationParams) SetDigest(v string)`
+
+SetDigest sets Digest field to given value.
 
 
 

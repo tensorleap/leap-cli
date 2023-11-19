@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **SampleIdentity** | Pointer to [**SampleIdentity**](SampleIdentity.md) |  | [optional] 
 **FromDatasetSlice** | Pointer to [**DataStateType**](DataStateType.md) |  | [optional] 
 **ExtId** | **string** |  | 
+**Digest** | Pointer to **string** |  | [optional] 
 **Title** | **string** |  | 
 **Epoch** | **float64** |  | 
 
@@ -260,6 +261,31 @@ and a boolean to check if the value has been set.
 
 SetExtId sets ExtId field to given value.
 
+
+### GetDigest
+
+`func (o *JobParams) GetDigest() string`
+
+GetDigest returns the Digest field if non-nil, zero value otherwise.
+
+### GetDigestOk
+
+`func (o *JobParams) GetDigestOk() (*string, bool)`
+
+GetDigestOk returns a tuple with the Digest field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDigest
+
+`func (o *JobParams) SetDigest(v string)`
+
+SetDigest sets Digest field to given value.
+
+### HasDigest
+
+`func (o *JobParams) HasDigest() bool`
+
+HasDigest returns a boolean if a field has been set.
 
 ### GetTitle
 
