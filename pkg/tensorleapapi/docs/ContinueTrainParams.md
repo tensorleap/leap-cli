@@ -9,13 +9,12 @@ Name | Type | Description | Notes
 **ProjectId** | **string** |  | 
 **FromEpoch** | **float64** |  | 
 **TrainingParams** | [**TrainingParams**](TrainingParams.md) |  | 
-**ShouldRunPopulationExploration** | **bool** |  | 
 
 ## Methods
 
 ### NewContinueTrainParams
 
-`func NewContinueTrainParams(versionId string, sessionId string, projectId string, fromEpoch float64, trainingParams TrainingParams, shouldRunPopulationExploration bool, ) *ContinueTrainParams`
+`func NewContinueTrainParams(versionId string, sessionId string, projectId string, fromEpoch float64, trainingParams TrainingParams, ) *ContinueTrainParams`
 
 NewContinueTrainParams instantiates a new ContinueTrainParams object
 This constructor will assign default values to properties that have it defined,
@@ -128,26 +127,6 @@ and a boolean to check if the value has been set.
 `func (o *ContinueTrainParams) SetTrainingParams(v TrainingParams)`
 
 SetTrainingParams sets TrainingParams field to given value.
-
-
-### GetShouldRunPopulationExploration
-
-`func (o *ContinueTrainParams) GetShouldRunPopulationExploration() bool`
-
-GetShouldRunPopulationExploration returns the ShouldRunPopulationExploration field if non-nil, zero value otherwise.
-
-### GetShouldRunPopulationExplorationOk
-
-`func (o *ContinueTrainParams) GetShouldRunPopulationExplorationOk() (*bool, bool)`
-
-GetShouldRunPopulationExplorationOk returns a tuple with the ShouldRunPopulationExploration field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetShouldRunPopulationExploration
-
-`func (o *ContinueTrainParams) SetShouldRunPopulationExploration(v bool)`
-
-SetShouldRunPopulationExploration sets ShouldRunPopulationExploration field to given value.
 
 
 

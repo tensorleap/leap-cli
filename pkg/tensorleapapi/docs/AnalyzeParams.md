@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **SampleIdentity** | Pointer to [**SampleIdentity**](SampleIdentity.md) |  | [optional] 
 **FromDatasetSlice** | Pointer to [**DataStateType**](DataStateType.md) |  | [optional] 
 **ExtId** | **string** |  | 
+**Digest** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -190,6 +191,31 @@ and a boolean to check if the value has been set.
 
 SetExtId sets ExtId field to given value.
 
+
+### GetDigest
+
+`func (o *AnalyzeParams) GetDigest() string`
+
+GetDigest returns the Digest field if non-nil, zero value otherwise.
+
+### GetDigestOk
+
+`func (o *AnalyzeParams) GetDigestOk() (*string, bool)`
+
+GetDigestOk returns a tuple with the Digest field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDigest
+
+`func (o *AnalyzeParams) SetDigest(v string)`
+
+SetDigest sets Digest field to given value.
+
+### HasDigest
+
+`func (o *AnalyzeParams) HasDigest() bool`
+
+HasDigest returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

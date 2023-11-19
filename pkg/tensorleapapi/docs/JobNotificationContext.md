@@ -14,13 +14,14 @@ Name | Type | Description | Notes
 **ProjectId** | **string** |  | 
 **ModelName** | **string** |  | 
 **ModelExtId** | **string** |  | 
+**SessionRunId** | **string** |  | 
 **Sample** | [**SampleIdentity**](SampleIdentity.md) |  | 
 
 ## Methods
 
 ### NewJobNotificationContext
 
-`func NewJobNotificationContext(jobId string, jobType JobTypeEnum, leepScriptName string, leepScriptId string, projectName string, projectId string, modelName string, modelExtId string, sample SampleIdentity, ) *JobNotificationContext`
+`func NewJobNotificationContext(jobId string, jobType JobTypeEnum, leepScriptName string, leepScriptId string, projectName string, projectId string, modelName string, modelExtId string, sessionRunId string, sample SampleIdentity, ) *JobNotificationContext`
 
 NewJobNotificationContext instantiates a new JobNotificationContext object
 This constructor will assign default values to properties that have it defined,
@@ -243,6 +244,26 @@ and a boolean to check if the value has been set.
 `func (o *JobNotificationContext) SetModelExtId(v string)`
 
 SetModelExtId sets ModelExtId field to given value.
+
+
+### GetSessionRunId
+
+`func (o *JobNotificationContext) GetSessionRunId() string`
+
+GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+
+### GetSessionRunIdOk
+
+`func (o *JobNotificationContext) GetSessionRunIdOk() (*string, bool)`
+
+GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSessionRunId
+
+`func (o *JobNotificationContext) SetSessionRunId(v string)`
+
+SetSessionRunId sets SessionRunId field to given value.
 
 
 ### GetSample

@@ -8,13 +8,12 @@ Name | Type | Description | Notes
 **ProjectId** | **string** |  | 
 **SessionName** | **string** |  | 
 **TrainingParams** | [**TrainingParams**](TrainingParams.md) |  | 
-**ShouldRunPopulationExploration** | **bool** |  | 
 
 ## Methods
 
 ### NewTrainFromScratchParams
 
-`func NewTrainFromScratchParams(versionId string, projectId string, sessionName string, trainingParams TrainingParams, shouldRunPopulationExploration bool, ) *TrainFromScratchParams`
+`func NewTrainFromScratchParams(versionId string, projectId string, sessionName string, trainingParams TrainingParams, ) *TrainFromScratchParams`
 
 NewTrainFromScratchParams instantiates a new TrainFromScratchParams object
 This constructor will assign default values to properties that have it defined,
@@ -107,26 +106,6 @@ and a boolean to check if the value has been set.
 `func (o *TrainFromScratchParams) SetTrainingParams(v TrainingParams)`
 
 SetTrainingParams sets TrainingParams field to given value.
-
-
-### GetShouldRunPopulationExploration
-
-`func (o *TrainFromScratchParams) GetShouldRunPopulationExploration() bool`
-
-GetShouldRunPopulationExploration returns the ShouldRunPopulationExploration field if non-nil, zero value otherwise.
-
-### GetShouldRunPopulationExplorationOk
-
-`func (o *TrainFromScratchParams) GetShouldRunPopulationExplorationOk() (*bool, bool)`
-
-GetShouldRunPopulationExplorationOk returns a tuple with the ShouldRunPopulationExploration field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetShouldRunPopulationExploration
-
-`func (o *TrainFromScratchParams) SetShouldRunPopulationExploration(v bool)`
-
-SetShouldRunPopulationExploration sets ShouldRunPopulationExploration field to given value.
 
 
 

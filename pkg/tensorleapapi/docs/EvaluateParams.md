@@ -9,7 +9,6 @@ Name | Type | Description | Notes
 **SessionId** | **string** |  | 
 **BatchSize** | **float64** |  | 
 **DataStates** | [**[]DataStateType**](DataStateType.md) |  | 
-**ShouldRunPopulationExploration** | **bool** |  | 
 **EvaluatedEpoch** | **float64** |  | 
 **Name** | **string** |  | 
 
@@ -17,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewEvaluateParams
 
-`func NewEvaluateParams(versionId string, projectId string, sessionId string, batchSize float64, dataStates []DataStateType, shouldRunPopulationExploration bool, evaluatedEpoch float64, name string, ) *EvaluateParams`
+`func NewEvaluateParams(versionId string, projectId string, sessionId string, batchSize float64, dataStates []DataStateType, evaluatedEpoch float64, name string, ) *EvaluateParams`
 
 NewEvaluateParams instantiates a new EvaluateParams object
 This constructor will assign default values to properties that have it defined,
@@ -130,26 +129,6 @@ and a boolean to check if the value has been set.
 `func (o *EvaluateParams) SetDataStates(v []DataStateType)`
 
 SetDataStates sets DataStates field to given value.
-
-
-### GetShouldRunPopulationExploration
-
-`func (o *EvaluateParams) GetShouldRunPopulationExploration() bool`
-
-GetShouldRunPopulationExploration returns the ShouldRunPopulationExploration field if non-nil, zero value otherwise.
-
-### GetShouldRunPopulationExplorationOk
-
-`func (o *EvaluateParams) GetShouldRunPopulationExplorationOk() (*bool, bool)`
-
-GetShouldRunPopulationExplorationOk returns a tuple with the ShouldRunPopulationExploration field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetShouldRunPopulationExploration
-
-`func (o *EvaluateParams) SetShouldRunPopulationExploration(v bool)`
-
-SetShouldRunPopulationExploration sets ShouldRunPopulationExploration field to given value.
 
 
 ### GetEvaluatedEpoch

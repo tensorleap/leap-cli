@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DashboardId** | **string** |  | 
 **Name** | **string** |  | 
-**Items** | [**[]DashboardItem**](DashboardItem.md) |  | 
+**Items** | [**[]Dashlet**](Dashlet.md) |  | 
 **Description** | Pointer to **string** |  | [optional] 
 **ProjectId** | **string** |  | 
 
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewUpdateDashboardParams
 
-`func NewUpdateDashboardParams(dashboardId string, name string, items []DashboardItem, projectId string, ) *UpdateDashboardParams`
+`func NewUpdateDashboardParams(dashboardId string, name string, items []Dashlet, projectId string, ) *UpdateDashboardParams`
 
 NewUpdateDashboardParams instantiates a new UpdateDashboardParams object
 This constructor will assign default values to properties that have it defined,
@@ -71,20 +71,20 @@ SetName sets Name field to given value.
 
 ### GetItems
 
-`func (o *UpdateDashboardParams) GetItems() []DashboardItem`
+`func (o *UpdateDashboardParams) GetItems() []Dashlet`
 
 GetItems returns the Items field if non-nil, zero value otherwise.
 
 ### GetItemsOk
 
-`func (o *UpdateDashboardParams) GetItemsOk() (*[]DashboardItem, bool)`
+`func (o *UpdateDashboardParams) GetItemsOk() (*[]Dashlet, bool)`
 
 GetItemsOk returns a tuple with the Items field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetItems
 
-`func (o *UpdateDashboardParams) SetItems(v []DashboardItem)`
+`func (o *UpdateDashboardParams) SetItems(v []Dashlet)`
 
 SetItems sets Items field to given value.
 

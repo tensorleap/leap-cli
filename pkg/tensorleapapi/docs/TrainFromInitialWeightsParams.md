@@ -10,13 +10,12 @@ Name | Type | Description | Notes
 **FromEpoch** | **float64** |  | 
 **ModelName** | **string** |  | 
 **TrainingParams** | [**TrainingParams**](TrainingParams.md) |  | 
-**ShouldRunPopulationExploration** | **bool** |  | 
 
 ## Methods
 
 ### NewTrainFromInitialWeightsParams
 
-`func NewTrainFromInitialWeightsParams(versionId string, projectId string, fromSessionId string, fromEpoch float64, modelName string, trainingParams TrainingParams, shouldRunPopulationExploration bool, ) *TrainFromInitialWeightsParams`
+`func NewTrainFromInitialWeightsParams(versionId string, projectId string, fromSessionId string, fromEpoch float64, modelName string, trainingParams TrainingParams, ) *TrainFromInitialWeightsParams`
 
 NewTrainFromInitialWeightsParams instantiates a new TrainFromInitialWeightsParams object
 This constructor will assign default values to properties that have it defined,
@@ -149,26 +148,6 @@ and a boolean to check if the value has been set.
 `func (o *TrainFromInitialWeightsParams) SetTrainingParams(v TrainingParams)`
 
 SetTrainingParams sets TrainingParams field to given value.
-
-
-### GetShouldRunPopulationExploration
-
-`func (o *TrainFromInitialWeightsParams) GetShouldRunPopulationExploration() bool`
-
-GetShouldRunPopulationExploration returns the ShouldRunPopulationExploration field if non-nil, zero value otherwise.
-
-### GetShouldRunPopulationExplorationOk
-
-`func (o *TrainFromInitialWeightsParams) GetShouldRunPopulationExplorationOk() (*bool, bool)`
-
-GetShouldRunPopulationExplorationOk returns a tuple with the ShouldRunPopulationExploration field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetShouldRunPopulationExploration
-
-`func (o *TrainFromInitialWeightsParams) SetShouldRunPopulationExploration(v bool)`
-
-SetShouldRunPopulationExploration sets ShouldRunPopulationExploration field to given value.
 
 
 

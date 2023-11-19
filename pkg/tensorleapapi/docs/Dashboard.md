@@ -10,14 +10,14 @@ Name | Type | Description | Notes
 **UpdatedAt** | **time.Time** |  | 
 **CreatedBy** | **string** |  | 
 **Name** | **string** |  | 
-**Items** | [**[]DashboardItem**](DashboardItem.md) |  | 
+**Items** | [**[]Dashlet**](Dashlet.md) |  | 
 **Description** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewDashboard
 
-`func NewDashboard(cid string, projectId string, createdAt time.Time, updatedAt time.Time, createdBy string, name string, items []DashboardItem, ) *Dashboard`
+`func NewDashboard(cid string, projectId string, createdAt time.Time, updatedAt time.Time, createdBy string, name string, items []Dashlet, ) *Dashboard`
 
 NewDashboard instantiates a new Dashboard object
 This constructor will assign default values to properties that have it defined,
@@ -154,20 +154,20 @@ SetName sets Name field to given value.
 
 ### GetItems
 
-`func (o *Dashboard) GetItems() []DashboardItem`
+`func (o *Dashboard) GetItems() []Dashlet`
 
 GetItems returns the Items field if non-nil, zero value otherwise.
 
 ### GetItemsOk
 
-`func (o *Dashboard) GetItemsOk() (*[]DashboardItem, bool)`
+`func (o *Dashboard) GetItemsOk() (*[]Dashlet, bool)`
 
 GetItemsOk returns a tuple with the Items field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetItems
 
-`func (o *Dashboard) SetItems(v []DashboardItem)`
+`func (o *Dashboard) SetItems(v []Dashlet)`
 
 SetItems sets Items field to given value.
 
