@@ -16,6 +16,12 @@ func NewPublishCmd() *cobra.Command {
 		Use:   "publish <project tar file path>",
 		Short: "Publish project to the hub",
 		Long:  `Publish project to the hub`,
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			if len(args) == 0 {
+				return fmt.Errorf("missing project tar file path")
+			}
+			return nil
+		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx := cmd.Context()
 			tarPath := args[0]
