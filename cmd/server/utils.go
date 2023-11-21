@@ -39,7 +39,9 @@ func mapInstallationErr(err error) error {
 func localLogin(port uint) error {
 	baseLink := fmt.Sprintf("http://127.0.0.1:%v", port)
 	apiLink := fmt.Sprintf("%s/api/v2", baseLink)
-	if err := auth.Login("", apiLink); err != nil {
+	envName := auth.EnvNameFromUrl(apiLink)
+	authData := auth.NewEnv(envName, apiLink, "")
+	if err := auth.Login(authData); err != nil {
 		return err
 	}
 	return nil
