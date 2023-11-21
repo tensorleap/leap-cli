@@ -1,34 +1,42 @@
 package auth
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
-	. "github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 )
 
-var cmd = &cobra.Command{
-	Use:   "login [api key] [api url]",
-	Args:  cobra.ExactArgs(2),
-	Short: "Logging in with Tensorleap API key",
-	Long:  `Logging in with Tensorleap API key`,
-	RunE: func(cmd *cobra.Command, args []string) error {
-		apiKey, baseUrl := args[0], args[1]
-		ctx := CreateAuthenticatedContext(cmd.Context(), apiKey, baseUrl)
+func NewLoginCmd() *cobra.Command {
 
-		userData, _, err := ApiClient.WhoAmI(ctx).Execute()
-		if err != nil {
-			return err
-		}
+	var name string
 
-		fmt.Println("User email: " + userData.Local.Email)
-		fmt.Println("Team name: " + userData.TeamName)
-		return auth.Login(apiKey, baseUrl)
+	cmd := &cobra.Command{
+		Use:   "login [api key] [api url]",
+		Args:  cobra.ExactArgs(2),
+		Short: "Logging in with Tensorleap API key",
+		Long:  `Logging in with Tensorleap API key`,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			apiKey, baseUrl := args[0], args[1]
 
-	},
+			if name == "" {
+				name = auth.EnvNameFromUrl(baseUrl)
+			}
+
+			env := auth.NewEnv(name, baseUrl, apiKey)
+
+			err := env.PrintWhoami(cmd.Context())
+			if err != nil {
+				return err
+			}
+
+			return auth.Login(env)
+
+		},
+	}
+
+	cmd.Flags().StringVarP(&name, "name", "n", "", "Name of the environment to login to, by default parse the api url")
+	return cmd
 }
 
 func init() {
-	RootCommand.AddCommand(cmd)
+	RootCommand.AddCommand(NewLoginCmd())
 }
