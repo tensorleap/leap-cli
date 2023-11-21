@@ -14,7 +14,6 @@ import (
 	"github.com/tensorleap/leap-cli/cmd/projects"
 	"github.com/tensorleap/leap-cli/cmd/secrets"
 	"github.com/tensorleap/leap-cli/cmd/server"
-	. "github.com/tensorleap/leap-cli/pkg/api"
 	authPkg "github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/config"
 	hubPkg "github.com/tensorleap/leap-cli/pkg/hub"
@@ -33,11 +32,11 @@ var RootCommand = &cobra.Command{
 	Long: `A debugger and analyzer for your DNNs.
 Complete documentation is available at https://docs.tensorleap.ai`,
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
-		cmd.SetContext(CreateAuthenticatedContext(
+		env := authPkg.GetCurrentEnv()
+		authCtx := env.AuthContext(
 			cmd.Context(),
-			authPkg.GetApiKey(),
-			authPkg.GetApiUrl(),
-		))
+		)
+		cmd.SetContext(authCtx)
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		if !showVersionInfo {
