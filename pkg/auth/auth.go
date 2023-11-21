@@ -1,31 +1,30 @@
 package auth
 
 import (
-	"fmt"
+	"context"
 
-	"github.com/spf13/viper"
-	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/api"
 )
 
-func Login(apiKey, baseUrl string) (err error) {
-	viper.Set(API_URL_CONFIG_PATH, baseUrl)
-	viper.Set(API_KEY_CONFIG_PATH, apiKey)
-
-	err = viper.SafeWriteConfig()
-	if err != nil {
-		_, ok := err.(viper.ConfigFileAlreadyExistsError)
-		if ok {
-			err = viper.WriteConfig()
-			if err != nil {
-				return fmt.Errorf("Login failed: %v", err)
-			}
-		}
-	}
-	log.Println("Saved credentials to: ", viper.ConfigFileUsed())
-	return
+type Env struct {
+	Name   string
+	ApiUrl string
+	ApiKey string
 }
 
-func Logout() error {
-	viper.Set(API_KEY_CONFIG_PATH, "")
-	return viper.WriteConfig()
+func NewEnv(name, apiUrl, apiKey string) *Env {
+	return &Env{
+		Name:   name,
+		ApiUrl: apiUrl,
+		ApiKey: apiKey,
+	}
+}
+
+func (a *Env) PrintWhoami(ctx context.Context) error {
+	authCtx := a.AuthContext(ctx)
+	return PrintWhoami(authCtx)
+}
+
+func (a *Env) AuthContext(ctx context.Context) context.Context {
+	return api.CreateAuthenticatedContext(ctx, a.ApiKey, a.ApiUrl)
 }
