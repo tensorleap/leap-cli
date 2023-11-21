@@ -58,7 +58,7 @@ func ImportModel(ctx context.Context, filePath, projectId, message, modelType, b
 
 	importModelJobId := importModelData.GetImportModelJobId()
 	if waitForResults {
-		okStatus, job, err := waitForImportModelJob(ctx, importModelJobId)
+		okStatus, job, err := waitForImportModelJob(ctx, projectId, importModelJobId)
 		if err != nil {
 			return err
 		}
@@ -67,7 +67,7 @@ func ImportModel(ctx context.Context, filePath, projectId, message, modelType, b
 
 			displayMappingErrorsIfMappingProvided := mappingYaml != ""
 			if displayMappingErrorsIfMappingProvided {
-				printMappingValidationErrors(ctx, job.VersionId, projectId, mappingYaml)
+				printMappingValidationErrors(ctx, job.GetVersion(), projectId, mappingYaml)
 			}
 		} else {
 			return fmt.Errorf("failed to import model")
@@ -79,21 +79,26 @@ func ImportModel(ctx context.Context, filePath, projectId, message, modelType, b
 	return nil
 }
 
-func waitForImportModelJob(ctx context.Context, importModelJobId string) (ok bool, job *tlApi.RunProcess, err error) {
+func waitForImportModelJob(ctx context.Context, projectId, importModelJobId string) (ok bool, job *tlApi.Job, err error) {
 	message := "Waiting for import model result..."
 	sleepDuration := 3 * time.Second
 	timeoutDuration := 10 * time.Minute
 
+	getJobParams := *tlApi.NewGetJobsFilterParams()
+	getJobParams.SetProjectId(projectId)
+
 	condition := func() (bool, error) {
-		data, _, err := api.ApiClient.GetTeamJobs(ctx).Execute()
+		data, _, err := api.ApiClient.GetSlimJobs(ctx).GetJobsFilterParams(
+			getJobParams,
+		).Execute()
 		if err != nil {
 			return false, fmt.Errorf("failed to wait for the import model job status: %v", err)
 		}
-		if len(data.Processes) == 0 {
+		if len(data.Jobs) == 0 {
 			return false, fmt.Errorf("failed to wait for the import model job status")
 		}
 
-		job = findRunProcessByJobId(data.Processes, importModelJobId)
+		job = findRunProcessByJobId(data.Jobs, importModelJobId)
 		switch job.Status {
 		case tlApi.JOBSTATUS_FAILED:
 			ok = true
@@ -118,9 +123,9 @@ func waitForImportModelJob(ctx context.Context, importModelJobId string) (ok boo
 	return
 }
 
-func findRunProcessByJobId(runProcesses []tlApi.RunProcess, jobId string) *tlApi.RunProcess {
+func findRunProcessByJobId(runProcesses []tlApi.Job, jobId string) *tlApi.Job {
 	for _, rp := range runProcesses {
-		if rp.JobId == jobId {
+		if rp.GetCid() == jobId {
 			return &rp
 		}
 	}
