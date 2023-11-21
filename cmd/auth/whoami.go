@@ -1,10 +1,7 @@
 package auth
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
-	. "github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 )
 
@@ -17,15 +14,8 @@ func init() {
 			if err := auth.CheckLoggedIn(); err != nil {
 				return err
 			}
-			fmt.Println("API Url: " + auth.GetApiUrl())
 
-			userData, _, err := ApiClient.WhoAmI(cmd.Context()).Execute()
-			if err != nil {
-				return err
-			}
-			fmt.Println("User email: " + userData.Local.Email)
-			fmt.Println("Team name: " + userData.TeamName)
-			return nil
+			return auth.PrintWhoami(cmd.Context())
 		},
 	}
 	RootCommand.AddCommand(cmd)
