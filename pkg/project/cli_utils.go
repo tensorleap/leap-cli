@@ -48,13 +48,19 @@ func AskForNewProject(projectDetails *AddProjectDetails, existingProjectNames []
 	// Create a survey with questions
 	questions := []*survey.Question{
 		{
-			Name:     "name",
-			Prompt:   &survey.Input{Message: "Project name:"},
+			Name: "name",
+			Prompt: &survey.Input{
+				Message: "Project name:",
+				Default: projectDetails.Name,
+			},
 			Validate: entity.CreateUniqueNameValidator(existingProjectNames),
 		},
 		{
 			Name:   "description",
-			Prompt: &survey.Input{Message: "Project description (optional):"},
+			Prompt: &survey.Input{
+				Message: "Project description (optional):",
+				Default: projectDetails.Description,
+			},
 		},
 	}
 

@@ -25,7 +25,8 @@ func ConnectFileToVerboseLogOutput(filePath string) (close func(), err error) {
 	return
 }
 
-func NewSpinner(message string) (start func(), stop func(), s *spinner.Spinner) {
+func NewSpinner(message string, a ...any) (start func(), stop func(), s *spinner.Spinner) {
+	message = fmt.Sprintf(message, a...)
 	s = spinner.New(spinner.CharSets[33], 500*time.Millisecond)
 	s.Suffix = fmt.Sprintf(" %s", message)
 	start = s.Start

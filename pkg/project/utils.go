@@ -7,7 +7,9 @@ import (
 	"net/http"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
+	"github.com/tensorleap/leap-cli/pkg/entity"
 	"github.com/tensorleap/leap-cli/pkg/hub"
+	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
@@ -42,4 +44,46 @@ func BuildProjectContext(ctx context.Context, projectEntity *ProjectEntity, sche
 			Buffer: bgImageBytes,
 		},
 	}, nil
+}
+
+func CopyProject(
+	sourceCtx context.Context, sourceProject *ProjectEntity,
+	targetCtx context.Context, targetProjectName string,
+) error {
+
+	sourceUrl, _ := api.GetAuthFromContext(sourceCtx)
+	targetUrl, _ := api.GetAuthFromContext(targetCtx)
+	log.Infof("Copying project:\n\tfrom: %s:%s\n\tto:   %s:%s\n", sourceProject.GetName(), sourceUrl, targetProjectName, targetUrl)
+	exportRes, err := ExportProject(sourceCtx, sourceProject.Cid)
+	if err != nil {
+		return err
+	} 
+	defer exportRes.Body.Close()
+
+	targetProjectMeta := &hub.ProjectMeta{
+		Name:            targetProjectName,
+		Description:     sourceProject.GetDescription(),
+		Tags:            sourceProject.Tags,
+		Categories:      sourceProject.Categories,
+		BgImagePath:     sourceProject.GetBgImagePath(),
+		SourceProjectId: sourceProject.Cid,
+	}
+
+	err = ImportProjectFromStream(targetCtx, targetProjectName, targetProjectMeta, exportRes.Body)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func ValidateProjectName(projectName, defaultProjectName string, projects []ProjectEntity) (string, error) {
+	existedNames := entity.GetNames(projects, ProjectEntityDesc)
+	err := entity.CreateUniqueNameValidator(existedNames)(projectName)
+	if err == nil {
+		return projectName, nil
+	}
+	if defaultProjectName == "" {
+		defaultProjectName = projectName
+	}
+	return entity.AskForName(existedNames, defaultProjectName, ProjectEntityDesc)
 }

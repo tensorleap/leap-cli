@@ -40,14 +40,12 @@ func DownloadFile(url string, file io.Writer) error {
 }
 
 func UploadFile(url string, file io.Reader) error {
-	log.Println("Uploading...")
-	reader, writer := io.Pipe()
-	go func() {
-		defer writer.Close()
-		_, err := io.Copy(writer, file)
-		writer.CloseWithError(err)
-	}()
-	req, err := http.NewRequest(http.MethodPut, url, reader)
+	log.Infof("Upload target: %s", url)
+	start, stop, _ := log.NewSpinner("Uploading...")
+	start()
+	defer stop()
+
+	req, err := http.NewRequest(http.MethodPut, url, file)
 	if err != nil {
 		return err
 	}

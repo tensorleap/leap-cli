@@ -10,15 +10,22 @@ import (
 )
 
 func NewImportCmd() *cobra.Command {
+	var filePath string
 	cmd := &cobra.Command{
 		Use:   "import [project name]",
 		Short: "Import project from hub",
 		Long:  `Import project from hub`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx := cmd.Context()
+
+			
 			projectNameArg := ""
 			if len(args) > 0 {
 				projectNameArg = args[0]
+			}
+
+			if filePath != "" {
+				return project.ImportProjectFromFile(ctx, filePath, projectNameArg)
 			}
 			publicHubUrl := hub.GetPublicUrl()
 			meta, err := hub.CreateWrapperMetaFromUrl(publicHubUrl)
@@ -46,9 +53,19 @@ func NewImportCmd() *cobra.Command {
 
 			fmt.Printf("Importing project %s from %s\n", projectName, importUrl)
 
-			return project.ImportProject(ctx, projectName, importUrl, bgImageUrl, versionMeta)
+			projectMeta := &hub.ProjectMeta{
+				Name:          projectName,
+				SchemaVersion: version,
+				BgImagePath:   bgImageUrl,
+				Description:   versionMeta.Description,
+				Tags:          versionMeta.Tags,
+				Categories:    versionMeta.Categories,
+			}
+
+			return project.ImportProject(ctx, projectName, importUrl, projectMeta)
 		},
 	}
+	cmd.Flags().StringVarP(&filePath, "file", "f", "", "Import project from file instead of hub")
 	return cmd
 }
 
