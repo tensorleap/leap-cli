@@ -29,7 +29,7 @@ func Login(env *Env) (err error) {
 }
 
 func SelectAndSetEnv(envName string) error {
-	auth, err := SelectEnv(envName)
+	auth, err := SelectEnv("Select an environment to use", envName)
 	if err != nil {
 		return err
 	}
@@ -42,7 +42,7 @@ func SelectAndSetEnv(envName string) error {
 	return nil
 }
 
-func SelectEnv(envName string) (*Env, error) {
+func SelectEnv(msg string, envName string) (*Env, error) {
 	currentAuth := GetCurrentEnv().Name
 	envs := GetEnvs()
 	if envName != "" {
@@ -65,7 +65,7 @@ func SelectEnv(envName string) (*Env, error) {
 
 	selectIndex := -1
 	prompt := &survey.Select{
-		Message: "Select an environment to use",
+		Message: msg,
 		Options: options,
 		Default: defaultOption,
 	}

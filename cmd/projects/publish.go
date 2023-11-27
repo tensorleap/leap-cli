@@ -97,8 +97,8 @@ func init() {
 
 func StreamProjectToHub(ctx context.Context, hubApi *hub.HubApi, projectContext *hub.ProjectContext) error {
 	res, err := project.ExportProject(ctx, projectContext.Meta.SourceProjectId)
-	if err != nil {
-		return fmt.Errorf("failed to export project: %v", err)
+	if api.CheckRes(res, err) != nil {
+		return err
 	}
 	defer res.Body.Close()
 

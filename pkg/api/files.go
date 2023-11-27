@@ -18,7 +18,7 @@ func DownloadFile(url string, file io.Writer) error {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("Failed to download file. Status code: %d", resp.StatusCode)
+		return fmt.Errorf("failed to download file. Status code: %d", resp.StatusCode)
 	}
 
 	// Create a pipe to copy data concurrently
