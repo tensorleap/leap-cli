@@ -108,8 +108,9 @@ func SelectEntityOrCreateOne[TEntity any](
 	return
 }
 
-func AskForName[TEntity any](existingNames []string, desc *EntityDescriptor[TEntity]) (name string, err error) {
+func AskForName[TEntity any](existingNames []string, defaultName string, desc *EntityDescriptor[TEntity]) (name string, err error) {
 	prompt := &survey.Input{
+		Default: defaultName,
 		Message: fmt.Sprintf("Enter %s name", desc.Name),
 	}
 

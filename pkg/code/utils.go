@@ -61,7 +61,7 @@ func AskForCodeIntegrationName(codeIntegrations []CodeIntegration) (name string,
 
 	existingNames := entity.GetNames(codeIntegrations, CodeIntegrationEntityDesc)
 
-	name, err = entity.AskForName(existingNames, CodeIntegrationEntityDesc)
+	name, err = entity.AskForName(existingNames, "", CodeIntegrationEntityDesc)
 	return
 }
 
