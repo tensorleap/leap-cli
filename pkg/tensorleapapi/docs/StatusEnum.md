@@ -3,6 +3,8 @@
 ## Enum
 
 
+* `UNSTARTED` (value: `"UNSTARTED"`)
+
 * `FAILED` (value: `"FAILED"`)
 
 * `STARTED` (value: `"STARTED"`)

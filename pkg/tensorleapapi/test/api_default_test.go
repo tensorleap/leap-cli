@@ -505,6 +505,18 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultApiService GetEngineSettings", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultApi.GetEngineSettings(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultApiService GetEnvironmentInfo", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -786,6 +798,18 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultApi.GetSessionsByVersionId(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultApiService GetSignedUrl", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultApi.GetSignedUrl(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1306,6 +1330,17 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultApi.UpdateDashboard(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultApiService UpdateEngineSettings", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		httpRes, err := apiClient.DefaultApi.UpdateEngineSettings(context.Background()).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)

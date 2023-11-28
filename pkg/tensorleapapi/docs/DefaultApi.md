@@ -45,6 +45,7 @@ Method | HTTP request | Description
 [**GetDatasetVersions**](DefaultApi.md#GetDatasetVersions) | **Post** /datasetVersions/getDatasetVersions | 
 [**GetDatasets**](DefaultApi.md#GetDatasets) | **Post** /datasets/getDatasets | 
 [**GetDownloadSignedUrl**](DefaultApi.md#GetDownloadSignedUrl) | **Post** /versions/getDownloadSignedUrl | 
+[**GetEngineSettings**](DefaultApi.md#GetEngineSettings) | **Post** /settings/getEngineSettings | 
 [**GetEnvironmentInfo**](DefaultApi.md#GetEnvironmentInfo) | **Post** /metadata/getEnvironmentInfo | 
 [**GetExportedSessionJobs**](DefaultApi.md#GetExportedSessionJobs) | **Post** /exportedsessionruns/getExportedSessionJobs | 
 [**GetF1Score**](DefaultApi.md#GetF1Score) | **Post** /sessionmetrics/getF1Score | 
@@ -69,6 +70,7 @@ Method | HTTP request | Description
 [**GetSessionTestResult**](DefaultApi.md#GetSessionTestResult) | **Post** /sessions-tests/getSessionTestResult | 
 [**GetSessionsByHash**](DefaultApi.md#GetSessionsByHash) | **Post** /sessions/getSessionsByHash | 
 [**GetSessionsByVersionId**](DefaultApi.md#GetSessionsByVersionId) | **Post** /sessions/getSessionsByVersionId | 
+[**GetSignedUrl**](DefaultApi.md#GetSignedUrl) | **Post** /versions/getSignedUrl | 
 [**GetSingleIssue**](DefaultApi.md#GetSingleIssue) | **Post** /issues/getSingleIssue | 
 [**GetSingleSessionTest**](DefaultApi.md#GetSingleSessionTest) | **Post** /sessions-tests/getSingleSessionTest | 
 [**GetSlimJobs**](DefaultApi.md#GetSlimJobs) | **Post** /jobs/getSlimJobs | 
@@ -113,6 +115,7 @@ Method | HTTP request | Description
 [**TrashDataset**](DefaultApi.md#TrashDataset) | **Post** /datasets/trashDataset | 
 [**TrashSecretManager**](DefaultApi.md#TrashSecretManager) | **Post** /secret-manager/trashSecretManager | 
 [**UpdateDashboard**](DefaultApi.md#UpdateDashboard) | **Post** /dashboards/updateDashboard | 
+[**UpdateEngineSettings**](DefaultApi.md#UpdateEngineSettings) | **Post** /settings/updateSetting | 
 [**UpdateIssue**](DefaultApi.md#UpdateIssue) | **Post** /issues/updateIssue | 
 [**UpdateProjectMeta**](DefaultApi.md#UpdateProjectMeta) | **Post** /projects/updateProjectMeta | 
 [**UpdateSampleCollection**](DefaultApi.md#UpdateSampleCollection) | **Post** /sample-collection/updateSampleCollection | 
@@ -921,7 +924,7 @@ import (
 )
 
 func main() {
-    createSampleVisualizationsParams := *openapiclient.NewCreateSampleVisualizationsParams("ProjectId_example", "SessionRunId_example", float64(123), []openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), float64(123))}) // CreateSampleVisualizationsParams | 
+    createSampleVisualizationsParams := *openapiclient.NewCreateSampleVisualizationsParams("ProjectId_example", "SessionRunId_example", float64(123), []openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), float64(123))}, "Digest_example") // CreateSampleVisualizationsParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -2725,6 +2728,65 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetEngineSettings
+
+> GetSettingsWrapper GetEngineSettings(ctx).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetEngineSettings(context.Background()).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetEngineSettings``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetEngineSettings`: GetSettingsWrapper
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetEngineSettings`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetEngineSettingsRequest struct via the builder pattern
+
+
+### Return type
+
+[**GetSettingsWrapper**](GetSettingsWrapper.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetEnvironmentInfo
 
 > GetEnvironmentInfoResponse GetEnvironmentInfo(ctx).Execute()
@@ -4216,6 +4278,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**SessionsResponse**](SessionsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetSignedUrl
+
+> ExternalImportModelStorage GetSignedUrl(ctx).GetSignedUrlParams(getSignedUrlParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    getSignedUrlParams := *openapiclient.NewGetSignedUrlParams("FileName_example", float64(123), openapiclient.HttpMethods("GET")) // GetSignedUrlParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetSignedUrl(context.Background()).GetSignedUrlParams(getSignedUrlParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSignedUrl``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetSignedUrl`: ExternalImportModelStorage
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSignedUrl`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetSignedUrlRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getSignedUrlParams** | [**GetSignedUrlParams**](GetSignedUrlParams.md) |  | 
+
+### Return type
+
+[**ExternalImportModelStorage**](ExternalImportModelStorage.md)
 
 ### Authorization
 
@@ -6975,6 +7101,68 @@ Other parameters are passed through a pointer to a apiUpdateDashboardRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **updateDashboardParams** | [**UpdateDashboardParams**](UpdateDashboardParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateEngineSettings
+
+> UpdateEngineSettings(ctx).SetSettingValues(setSettingValues).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    setSettingValues := *openapiclient.NewSetSettingValues() // SetSettingValues | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.DefaultApi.UpdateEngineSettings(context.Background()).SetSettingValues(setSettingValues).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateEngineSettings``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateEngineSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **setSettingValues** | [**SetSettingValues**](SetSettingValues.md) |  | 
 
 ### Return type
 

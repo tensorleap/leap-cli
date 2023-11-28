@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Origin** | Pointer to **string** |  | [optional] 
 **FileName** | **string** |  | 
 
 ## Methods
@@ -24,6 +25,31 @@ will change when the set of required properties is changed
 NewGetDownloadSignedUrlParamsWithDefaults instantiates a new GetDownloadSignedUrlParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetOrigin
+
+`func (o *GetDownloadSignedUrlParams) GetOrigin() string`
+
+GetOrigin returns the Origin field if non-nil, zero value otherwise.
+
+### GetOriginOk
+
+`func (o *GetDownloadSignedUrlParams) GetOriginOk() (*string, bool)`
+
+GetOriginOk returns a tuple with the Origin field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOrigin
+
+`func (o *GetDownloadSignedUrlParams) SetOrigin(v string)`
+
+SetOrigin sets Origin field to given value.
+
+### HasOrigin
+
+`func (o *GetDownloadSignedUrlParams) HasOrigin() bool`
+
+HasOrigin returns a boolean if a field has been set.
 
 ### GetFileName
 

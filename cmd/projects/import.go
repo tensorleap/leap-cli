@@ -18,7 +18,6 @@ func NewImportCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx := cmd.Context()
 
-			
 			projectNameArg := ""
 			if len(args) > 0 {
 				projectNameArg = args[0]

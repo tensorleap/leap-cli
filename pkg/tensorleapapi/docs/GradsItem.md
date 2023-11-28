@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **NodeName** | **string** |  | 
 **Label** | **string** |  | 
+**Depth** | **float64** |  | 
 **Grads** | [**VisData**](VisData.md) |  | 
 **VisualizerName** | **string** |  | 
 **EncoderNames** | **[]string** |  | 
@@ -16,7 +17,7 @@ Name | Type | Description | Notes
 
 ### NewGradsItem
 
-`func NewGradsItem(nodeName string, label string, grads VisData, visualizerName string, encoderNames []string, connectionName string, ) *GradsItem`
+`func NewGradsItem(nodeName string, label string, depth float64, grads VisData, visualizerName string, encoderNames []string, connectionName string, ) *GradsItem`
 
 NewGradsItem instantiates a new GradsItem object
 This constructor will assign default values to properties that have it defined,
@@ -69,6 +70,26 @@ and a boolean to check if the value has been set.
 `func (o *GradsItem) SetLabel(v string)`
 
 SetLabel sets Label field to given value.
+
+
+### GetDepth
+
+`func (o *GradsItem) GetDepth() float64`
+
+GetDepth returns the Depth field if non-nil, zero value otherwise.
+
+### GetDepthOk
+
+`func (o *GradsItem) GetDepthOk() (*float64, bool)`
+
+GetDepthOk returns a tuple with the Depth field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDepth
+
+`func (o *GradsItem) SetDepth(v float64)`
+
+SetDepth sets Depth field to given value.
 
 
 ### GetGrads

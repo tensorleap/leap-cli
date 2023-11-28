@@ -56,7 +56,7 @@ func AskForNewProject(projectDetails *AddProjectDetails, existingProjectNames []
 			Validate: entity.CreateUniqueNameValidator(existingProjectNames),
 		},
 		{
-			Name:   "description",
+			Name: "description",
 			Prompt: &survey.Input{
 				Message: "Project description (optional):",
 				Default: projectDetails.Description,

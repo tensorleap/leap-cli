@@ -53,11 +53,15 @@ func CopyProject(
 
 	sourceUrl, _ := api.GetAuthFromContext(sourceCtx)
 	targetUrl, _ := api.GetAuthFromContext(targetCtx)
-	log.Infof("Copying project:\n\tfrom: %s:%s\n\tto:   %s:%s\n", sourceProject.GetName(), sourceUrl, targetProjectName, targetUrl)
+
+	start, stop, _ := log.NewSpinner(fmt.Sprintf("Copying project %s\n\tfrom: %s\n\tto:   %s", sourceProject.GetName(), sourceUrl, targetUrl))
+	start()
+	defer stop()
+
 	exportRes, err := ExportProject(sourceCtx, sourceProject.Cid)
 	if err != nil {
 		return err
-	} 
+	}
 	defer exportRes.Body.Close()
 
 	targetProjectMeta := &hub.ProjectMeta{

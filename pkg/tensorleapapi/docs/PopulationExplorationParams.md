@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **BatchSize** | **float64** |  | 
 **NumOfSamples** | **float64** |  | 
 **FromEpoch** | **float64** |  | 
+**Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **Digest** | **string** |  | 
 
 ## Methods
@@ -129,6 +130,31 @@ and a boolean to check if the value has been set.
 
 SetFromEpoch sets FromEpoch field to given value.
 
+
+### GetFilters
+
+`func (o *PopulationExplorationParams) GetFilters() []ESFilter`
+
+GetFilters returns the Filters field if non-nil, zero value otherwise.
+
+### GetFiltersOk
+
+`func (o *PopulationExplorationParams) GetFiltersOk() (*[]ESFilter, bool)`
+
+GetFiltersOk returns a tuple with the Filters field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFilters
+
+`func (o *PopulationExplorationParams) SetFilters(v []ESFilter)`
+
+SetFilters sets Filters field to given value.
+
+### HasFilters
+
+`func (o *PopulationExplorationParams) HasFilters() bool`
+
+HasFilters returns a boolean if a field has been set.
 
 ### GetDigest
 
