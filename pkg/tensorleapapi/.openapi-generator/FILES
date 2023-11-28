@@ -147,6 +147,8 @@ docs/GetSecretManagerListResponse.md
 docs/GetSessionRunsVisualizationsParams.md
 docs/GetSessionRunsVisualizationsResponse.md
 docs/GetSessionTestResultsRequest.md
+docs/GetSettingsWrapper.md
+docs/GetSignedUrlParams.md
 docs/GetSingleIssueParams.md
 docs/GetSingleSessionTestRequest.md
 docs/GetSlimJobsResponse.md
@@ -174,6 +176,7 @@ docs/HorizontalBarData.md
 docs/HorizontalBarScatterLabel.md
 docs/HorizontalBarViz.md
 docs/HorizontalCharts.md
+docs/HttpMethods.md
 docs/HubPublishPolicy.md
 docs/ImageData.md
 docs/ImageScatterLabel.md
@@ -188,6 +191,8 @@ docs/IssueActivity.md
 docs/IssueFileUploadSignedUrl.md
 docs/IssueStatus.md
 docs/Job.md
+docs/JobEvent.md
+docs/JobEventProgress.md
 docs/JobMessageParams.md
 docs/JobNotificationAnalyzeContext.md
 docs/JobNotificationBaseContext.md
@@ -284,6 +289,7 @@ docs/SessionVersionIdRequestParams.md
 docs/SessionWeightData.md
 docs/SessionsResponse.md
 docs/SetDefaultTeamRequest.md
+docs/SetSettingValues.md
 docs/SetTeamMachineTypeParams.md
 docs/SetUserNotificationsAsRead200Response.md
 docs/SignupParams.md
@@ -492,6 +498,8 @@ model_get_secret_manager_list_response.go
 model_get_session_runs_visualizations_params.go
 model_get_session_runs_visualizations_response.go
 model_get_session_test_results_request.go
+model_get_settings_wrapper.go
+model_get_signed_url_params.go
 model_get_single_issue_params.go
 model_get_single_session_test_request.go
 model_get_slim_jobs_response.go
@@ -519,6 +527,7 @@ model_horizontal_bar_data.go
 model_horizontal_bar_scatter_label.go
 model_horizontal_bar_viz.go
 model_horizontal_charts.go
+model_http_methods.go
 model_hub_publish_policy.go
 model_image_data.go
 model_image_scatter_label.go
@@ -533,6 +542,8 @@ model_issue_activity.go
 model_issue_file_upload_signed_url.go
 model_issue_status.go
 model_job.go
+model_job_event.go
+model_job_event_progress.go
 model_job_message_params.go
 model_job_notification_analyze_context.go
 model_job_notification_base_context.go
@@ -629,6 +640,7 @@ model_session_version_id_request_params.go
 model_session_weight_data.go
 model_sessions_response.go
 model_set_default_team_request.go
+model_set_setting_values.go
 model_set_team_machine_type_params.go
 model_set_user_notifications_as_read_200_response.go
 model_signup_params.go

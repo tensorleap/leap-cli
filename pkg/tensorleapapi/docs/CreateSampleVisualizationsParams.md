@@ -8,12 +8,13 @@ Name | Type | Description | Notes
 **SessionRunId** | **string** |  | 
 **Epoch** | **float64** |  | 
 **SampleIdentities** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
+**Digest** | **string** |  | 
 
 ## Methods
 
 ### NewCreateSampleVisualizationsParams
 
-`func NewCreateSampleVisualizationsParams(projectId string, sessionRunId string, epoch float64, sampleIdentities []SampleIdentity, ) *CreateSampleVisualizationsParams`
+`func NewCreateSampleVisualizationsParams(projectId string, sessionRunId string, epoch float64, sampleIdentities []SampleIdentity, digest string, ) *CreateSampleVisualizationsParams`
 
 NewCreateSampleVisualizationsParams instantiates a new CreateSampleVisualizationsParams object
 This constructor will assign default values to properties that have it defined,
@@ -106,6 +107,26 @@ and a boolean to check if the value has been set.
 `func (o *CreateSampleVisualizationsParams) SetSampleIdentities(v []SampleIdentity)`
 
 SetSampleIdentities sets SampleIdentities field to given value.
+
+
+### GetDigest
+
+`func (o *CreateSampleVisualizationsParams) GetDigest() string`
+
+GetDigest returns the Digest field if non-nil, zero value otherwise.
+
+### GetDigestOk
+
+`func (o *CreateSampleVisualizationsParams) GetDigestOk() (*string, bool)`
+
+GetDigestOk returns a tuple with the Digest field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDigest
+
+`func (o *CreateSampleVisualizationsParams) SetDigest(v string)`
+
+SetDigest sets Digest field to given value.
 
 
 

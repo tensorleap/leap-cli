@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **FromDatasetSlice** | Pointer to [**DataStateType**](DataStateType.md) |  | [optional] 
 **ExtId** | **string** |  | 
 **Digest** | Pointer to **string** |  | [optional] 
+**Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **Title** | **string** |  | 
 **Epoch** | **float64** |  | 
 
@@ -286,6 +287,31 @@ SetDigest sets Digest field to given value.
 `func (o *JobParams) HasDigest() bool`
 
 HasDigest returns a boolean if a field has been set.
+
+### GetFilters
+
+`func (o *JobParams) GetFilters() []ESFilter`
+
+GetFilters returns the Filters field if non-nil, zero value otherwise.
+
+### GetFiltersOk
+
+`func (o *JobParams) GetFiltersOk() (*[]ESFilter, bool)`
+
+GetFiltersOk returns a tuple with the Filters field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFilters
+
+`func (o *JobParams) SetFilters(v []ESFilter)`
+
+SetFilters sets Filters field to given value.
+
+### HasFilters
+
+`func (o *JobParams) HasFilters() bool`
+
+HasFilters returns a boolean if a field has been set.
 
 ### GetTitle
 

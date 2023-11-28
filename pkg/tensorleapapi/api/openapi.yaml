@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.404
+  version: 0.0.417
 servers:
 - url: /api/v2
 paths:
@@ -1571,6 +1571,34 @@ paths:
           description: Ok
       security:
       - jwt: []
+  /settings/getEngineSettings:
+    post:
+      operationId: GetEngineSettings
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSettingsWrapper'
+          description: Ok
+      security:
+      - jwt: []
+  /settings/updateSetting:
+    post:
+      operationId: UpdateEngineSettings
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetSettingValues'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
   /teams/getTeams:
     post:
       operationId: GetTeams
@@ -2034,6 +2062,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDownloadSignedUrlResponse'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /versions/getSignedUrl:
+    post:
+      operationId: GetSignedUrl
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSignedUrlParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalImportModelStorage'
           description: Ok
       security:
       - jwt:
@@ -5680,6 +5728,71 @@ components:
       - sample_analysis
       - visualizers_calculation
       type: string
+    FilterOperatorType:
+      enum:
+      - between
+      - not-between
+      - equal
+      - not-equal
+      - in
+      - greater-than
+      - less-than
+      type: string
+    NumberOrString:
+      anyOf:
+      - format: double
+        type: number
+      - type: string
+    ESFilterValue:
+      additionalProperties: false
+      example:
+        lt: 6.027456183070403
+        eq: null
+        lst:
+        - null
+        - null
+        gt: 0.8008281904610115
+      properties:
+        gt:
+          format: double
+          type: number
+        lt:
+          format: double
+          type: number
+        eq:
+          $ref: '#/components/schemas/NumberOrString'
+        lst:
+          items:
+            $ref: '#/components/schemas/NumberOrString'
+          type: array
+      type: object
+    ESFilter:
+      additionalProperties: false
+      example:
+        field: field
+        disable: true
+        value:
+          lt: 6.027456183070403
+          eq: null
+          lst:
+          - null
+          - null
+          gt: 0.8008281904610115
+        operator: null
+      properties:
+        operator:
+          $ref: '#/components/schemas/FilterOperatorType'
+        field:
+          type: string
+        disable:
+          type: boolean
+        value:
+          $ref: '#/components/schemas/ESFilterValue'
+      required:
+      - field
+      - operator
+      - value
+      type: object
     AnalyzeParams:
       additionalProperties: false
       properties:
@@ -5702,6 +5815,10 @@ components:
           type: string
         digest:
           type: string
+        filters:
+          items:
+            $ref: '#/components/schemas/ESFilter'
+          type: array
       required:
       - extId
       - fromEpoch
@@ -6897,6 +7014,52 @@ components:
       - issueId
       - projectId
       type: object
+    StatusEnum:
+      enum:
+      - UNSTARTED
+      - FAILED
+      - STARTED
+      - FINISHED
+      type: string
+    JobEventProgress:
+      additionalProperties: false
+      example:
+        total: 0.8008281904610115
+        current: 6.027456183070403
+      properties:
+        total:
+          format: double
+          type: number
+        current:
+          format: double
+          type: number
+      required:
+      - current
+      - total
+      type: object
+    JobEvent:
+      additionalProperties: false
+      example:
+        name: name
+        progress:
+          total: 0.8008281904610115
+          current: 6.027456183070403
+        id: id
+        status: null
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        progress:
+          $ref: '#/components/schemas/JobEventProgress'
+      required:
+      - id
+      - name
+      - status
+      type: object
     RunProcess:
       additionalProperties: false
       example:
@@ -6909,6 +7072,19 @@ components:
         versionName: versionName
         projectName: projectName
         jobType: jobType
+        events:
+        - name: name
+          progress:
+            total: 0.8008281904610115
+            current: 6.027456183070403
+          id: id
+          status: null
+        - name: name
+          progress:
+            total: 0.8008281904610115
+            current: 6.027456183070403
+          id: id
+          status: null
         status: null
         updatedAt: updatedAt
       properties:
@@ -6934,8 +7110,13 @@ components:
           type: string
         sessionRunId:
           type: string
+        events:
+          items:
+            $ref: '#/components/schemas/JobEvent'
+          type: array
       required:
       - createdAt
+      - events
       - jobId
       - jobType
       - projectName
@@ -6959,6 +7140,19 @@ components:
           versionName: versionName
           projectName: projectName
           jobType: jobType
+          events:
+          - name: name
+            progress:
+              total: 0.8008281904610115
+              current: 6.027456183070403
+            id: id
+            status: null
+          - name: name
+            progress:
+              total: 0.8008281904610115
+              current: 6.027456183070403
+            id: id
+            status: null
           status: null
           updatedAt: updatedAt
         - jobId: jobId
@@ -6970,6 +7164,19 @@ components:
           versionName: versionName
           projectName: projectName
           jobType: jobType
+          events:
+          - name: name
+            progress:
+              total: 0.8008281904610115
+              current: 6.027456183070403
+            id: id
+            status: null
+          - name: name
+            progress:
+              total: 0.8008281904610115
+              current: 6.027456183070403
+            id: id
+            status: null
           status: null
           updatedAt: updatedAt
       properties:
@@ -7338,71 +7545,6 @@ components:
       - Min
       - Max
       type: string
-    FilterOperatorType:
-      enum:
-      - between
-      - not-between
-      - equal
-      - not-equal
-      - in
-      - greater-than
-      - less-than
-      type: string
-    NumberOrString:
-      anyOf:
-      - format: double
-        type: number
-      - type: string
-    ESFilterValue:
-      additionalProperties: false
-      example:
-        lt: 6.027456183070403
-        eq: null
-        lst:
-        - null
-        - null
-        gt: 0.8008281904610115
-      properties:
-        gt:
-          format: double
-          type: number
-        lt:
-          format: double
-          type: number
-        eq:
-          $ref: '#/components/schemas/NumberOrString'
-        lst:
-          items:
-            $ref: '#/components/schemas/NumberOrString'
-          type: array
-      type: object
-    ESFilter:
-      additionalProperties: false
-      example:
-        field: field
-        disable: true
-        value:
-          lt: 6.027456183070403
-          eq: null
-          lst:
-          - null
-          - null
-          gt: 0.8008281904610115
-        operator: null
-      properties:
-        operator:
-          $ref: '#/components/schemas/FilterOperatorType'
-        field:
-          type: string
-        disable:
-          type: boolean
-        value:
-          $ref: '#/components/schemas/ESFilterValue'
-      required:
-      - field
-      - operator
-      - value
-      type: object
     DataDistributionType:
       enum:
       - distinct
@@ -8998,12 +9140,6 @@ components:
       - teamId
       - weightAssets
       type: object
-    StatusEnum:
-      enum:
-      - FAILED
-      - STARTED
-      - FINISHED
-      type: string
     SessionWeightData:
       additionalProperties: false
       example:
@@ -10351,6 +10487,41 @@ components:
       required:
       - projectId
       - sessionsTestData
+      type: object
+    GetSettingsWrapper:
+      additionalProperties: false
+      example:
+        schema: schema
+        values: values
+      properties:
+        schema:
+          type: string
+        values:
+          type: string
+      required:
+      - schema
+      - values
+      type: object
+    SettingValues:
+      additionalProperties: {}
+      properties: {}
+      type: object
+    SetSettingValues:
+      example:
+        set:
+          key: ""
+        unset:
+        - unset
+        - unset
+      properties:
+        unset:
+          items:
+            type: string
+          type: array
+        set:
+          additionalProperties: {}
+          properties: {}
+          type: object
       type: object
     SlimTeam:
       additionalProperties: false
@@ -11951,7 +12122,10 @@ components:
       additionalProperties: false
       example:
         fileName: fileName
+        origin: origin
       properties:
+        origin:
+          type: string
         fileName:
           type: string
       required:
@@ -11971,11 +12145,46 @@ components:
       additionalProperties: false
       example:
         fileName: fileName
+        origin: origin
       properties:
+        origin:
+          type: string
         fileName:
           type: string
       required:
       - fileName
+      type: object
+    HttpMethods:
+      enum:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      - PATCH
+      - HEAD
+      - OPTIONS
+      type: string
+    GetSignedUrlParams:
+      additionalProperties: false
+      example:
+        fileName: fileName
+        expired: 0.8008281904610115
+        method: null
+        origin: origin
+      properties:
+        origin:
+          type: string
+        fileName:
+          type: string
+        expired:
+          format: double
+          type: number
+        method:
+          $ref: '#/components/schemas/HttpMethods'
+      required:
+      - expired
+      - fileName
+      - method
       type: object
     UpdateVersionNameParams:
       additionalProperties: false
@@ -12583,6 +12792,9 @@ components:
           type: string
         label:
           type: string
+        depth:
+          format: double
+          type: number
         grads:
           $ref: '#/components/schemas/VisData'
         visualizer_name:
@@ -12597,6 +12809,7 @@ components:
           $ref: '#/components/schemas/HorizontalBarData'
       required:
       - connection_name
+      - depth
       - encoder_names
       - grads
       - label
@@ -13344,6 +13557,27 @@ components:
         sessionRunId: sessionRunId
         digest: digest
         numOfSamples: 6.027456183070403
+        filters:
+        - field: field
+          disable: true
+          value:
+            lt: 6.027456183070403
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 0.8008281904610115
+          operator: null
+        - field: field
+          disable: true
+          value:
+            lt: 6.027456183070403
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 0.8008281904610115
+          operator: null
         batchSize: 0.8008281904610115
         projectId: projectId
       properties:
@@ -13360,6 +13594,10 @@ components:
         fromEpoch:
           format: double
           type: number
+        filters:
+          items:
+            $ref: '#/components/schemas/ESFilter'
+          type: array
         digest:
           type: string
       required:
@@ -13413,6 +13651,7 @@ components:
       additionalProperties: false
       example:
         sessionRunId: sessionRunId
+        digest: digest
         epoch: 0.8008281904610115
         projectId: projectId
         sampleIdentities:
@@ -13432,7 +13671,10 @@ components:
           items:
             $ref: '#/components/schemas/SampleIdentity'
           type: array
+        digest:
+          type: string
       required:
+      - digest
       - epoch
       - projectId
       - sampleIdentities

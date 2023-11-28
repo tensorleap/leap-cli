@@ -15,12 +15,13 @@ Name | Type | Description | Notes
 **SessionName** | **string** |  | 
 **SessionRunName** | **string** |  | 
 **SessionRunId** | Pointer to **string** |  | [optional] 
+**Events** | [**[]JobEvent**](JobEvent.md) |  | 
 
 ## Methods
 
 ### NewRunProcess
 
-`func NewRunProcess(jobId string, versionName string, versionId string, projectName string, jobType string, status JobStatus, createdAt string, updatedAt string, sessionName string, sessionRunName string, ) *RunProcess`
+`func NewRunProcess(jobId string, versionName string, versionId string, projectName string, jobType string, status JobStatus, createdAt string, updatedAt string, sessionName string, sessionRunName string, events []JobEvent, ) *RunProcess`
 
 NewRunProcess instantiates a new RunProcess object
 This constructor will assign default values to properties that have it defined,
@@ -259,6 +260,26 @@ SetSessionRunId sets SessionRunId field to given value.
 `func (o *RunProcess) HasSessionRunId() bool`
 
 HasSessionRunId returns a boolean if a field has been set.
+
+### GetEvents
+
+`func (o *RunProcess) GetEvents() []JobEvent`
+
+GetEvents returns the Events field if non-nil, zero value otherwise.
+
+### GetEventsOk
+
+`func (o *RunProcess) GetEventsOk() (*[]JobEvent, bool)`
+
+GetEventsOk returns a tuple with the Events field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEvents
+
+`func (o *RunProcess) SetEvents(v []JobEvent)`
+
+SetEvents sets Events field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
