@@ -44,7 +44,7 @@ func AskForNewSecret(ctx context.Context, secrets []SecretEntity, name, key *str
 			log.Warnf(err.Error())
 		}
 
-		*name, err = entity.AskForName(existingNames, SecretEntityDesc)
+		*name, err = entity.AskForName(existingNames, *name, SecretEntityDesc)
 		if err != nil {
 			return err
 		}
