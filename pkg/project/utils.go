@@ -14,7 +14,10 @@ import (
 )
 
 func BuildProjectContext(ctx context.Context, projectEntity *ProjectEntity, schemaVersion int) (*hub.ProjectContext, error) {
-	bgImageBlobUrl := fmt.Sprintf("projects/%s/%s", projectEntity.Cid, *projectEntity.BgImagePath)
+	bgImageBlobUrl := ""
+	if projectEntity.BgImagePath != nil {
+		bgImageBlobUrl = fmt.Sprintf("projects/%s/%s", projectEntity.Cid, *projectEntity.BgImagePath)
+	}
 	urlRes, _, err := api.ApiClient.GetDownloadSignedUrl(ctx).GetDownloadSignedUrlParams(*tensorleapapi.NewGetDownloadSignedUrlParams(bgImageBlobUrl)).Execute()
 	if err != nil {
 		return nil, fmt.Errorf("failed to get download signed url: %v", err)
@@ -54,9 +57,7 @@ func CopyProject(
 	sourceUrl, _ := api.GetAuthFromContext(sourceCtx)
 	targetUrl, _ := api.GetAuthFromContext(targetCtx)
 
-	start, stop, _ := log.NewSpinner(fmt.Sprintf("Copying project %s\n\tfrom: %s\n\tto:   %s", sourceProject.GetName(), sourceUrl, targetUrl))
-	start()
-	defer stop()
+	log.Infof("Copying project\n\tfrom: %s:%s\n\tto:   %s:%s", sourceProject.GetName(), sourceUrl, targetProjectName, targetUrl)
 
 	exportRes, err := ExportProject(sourceCtx, sourceProject.Cid)
 	if err != nil {
