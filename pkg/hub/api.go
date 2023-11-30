@@ -10,10 +10,10 @@ func NewHubApi(hubStorage *HubStorageApi) *HubApi {
 	return &HubApi{hubStorage: hubStorage}
 }
 
-func (h *HubApi) PublishProjectContentBySignedUrl(meta *ProjectMeta) (string, *ProjectFilePaths, error) {
+func (h *HubApi) PublishProjectContentBySignedUrl(meta *ProjectMeta) (*FileAccessBySignedUrl, *ProjectFilePaths, error) {
 	_, err := h.hubStorage.DeleteProjectVersion(meta.Name, meta.SchemaVersion)
 	if err != nil {
-		return "", nil, err
+		return nil, nil, err
 	}
 
 	return h.hubStorage.UploadProjectContentBySignedUrl(meta)

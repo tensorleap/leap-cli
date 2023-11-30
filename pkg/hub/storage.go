@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"net/http"
 	"path/filepath"
 	"strings"
 	"time"
@@ -34,6 +35,10 @@ type UploadCtx struct {
 	Files ProjectFilePaths
 }
 
+type FileAccessBySignedUrl struct {
+	Get, Put, Head string
+}
+
 func NewHubStorageApi(namespace string, filesClient storage.StorageClient) *HubStorageApi {
 	return &HubStorageApi{
 		Namespace:   namespace,
@@ -41,17 +46,39 @@ func NewHubStorageApi(namespace string, filesClient storage.StorageClient) *HubS
 	}
 }
 
-func (hs *HubStorageApi) UploadProjectContentBySignedUrl(meta *ProjectMeta) (string, *ProjectFilePaths, error) {
+func (hs *HubStorageApi) UploadProjectContentBySignedUrl(meta *ProjectMeta) (*FileAccessBySignedUrl, *ProjectFilePaths, error) {
 	filePaths := GenerateProjectFilePaths(hs.Namespace, meta)
 
 	log.Infof("HubStorage - Create signed url for content of project: '%s' version: %d", meta.Name, meta.SchemaVersion)
 
-	signedTarUrl, err := hs.FilesClient.CreateWriteableSignedUrl(filePaths.TarPath, time.Now().Add(4*time.Hour))
+	signedTarUrl, err := hs.createFileAccessBySignedUrl(filePaths.TarPath, 4*time.Hour)
 	if err != nil {
-		return "", nil, err
+		return nil, nil, err
 	}
 
 	return signedTarUrl, filePaths, nil
+}
+
+func (hs *HubStorageApi) createFileAccessBySignedUrl(url string, duration time.Duration) (*FileAccessBySignedUrl, error) {
+	expires := time.Now().Add(duration)
+	getUrl, err := hs.FilesClient.CreateSignedUrl(url, http.MethodGet, expires)
+	if err != nil {
+		return nil, err
+	}
+	putUrl, err := hs.FilesClient.CreateSignedUrl(url, http.MethodPut, expires)
+	if err != nil {
+		return nil, err
+	}
+	headUrl, err := hs.FilesClient.CreateSignedUrl(url, http.MethodHead, expires)
+	if err != nil {
+		return nil, err
+	}
+
+	return &FileAccessBySignedUrl{
+		Get:  getUrl,
+		Put:  putUrl,
+		Head: headUrl,
+	}, nil
 }
 
 func (hs *HubStorageApi) UploadProjectContent(fileStream io.Reader, meta *ProjectMeta) (*ProjectFilePaths, error) {
