@@ -137,7 +137,8 @@ func (hs *HubStorageApi) DownloadProject(projectName string, projectVersion int,
 	files, _ := hs.FilesClient.ListDirectoryObjects(projectVersionDir, true)
 	var fileName string
 	for _, file := range files {
-		if strings.HasSuffix(file, PROJECT_TAR_FILE_SUFFIX_NAME) {
+		isProjectTarFile := strings.HasSuffix(file, PROJECT_TAR_FILE_SUFFIX_NAME) || strings.HasSuffix(file, PROJECT_TAR_FILE_SUFFIX_NAME_OLD)
+		if isProjectTarFile {
 			fileName = file
 			break
 		}
