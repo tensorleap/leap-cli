@@ -3,7 +3,10 @@ package api
 import (
 	"fmt"
 	"io"
+	"mime"
 	"net/http"
+	"net/url"
+	"path"
 
 	"github.com/tensorleap/leap-cli/pkg/log"
 )
@@ -49,6 +52,7 @@ func UploadFile(url string, file io.Reader) error {
 	if err != nil {
 		return err
 	}
+	req.Header.Set("Content-Type", DetectContentTypeFromUrl(url))
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -56,4 +60,19 @@ func UploadFile(url string, file io.Reader) error {
 	}
 	defer resp.Body.Close()
 	return nil
+}
+
+const defaultContentType = "application/octet-stream"
+
+func DetectContentTypeFromUrl(u string) string {
+	parsedUrl, err := url.Parse(u)
+	if err != nil {
+		return defaultContentType
+	}
+	fileExt := path.Ext(parsedUrl.Path)
+	mimeType := mime.TypeByExtension(fileExt)
+	if mimeType == "" {
+		return defaultContentType
+	}
+	return mimeType
 }
