@@ -183,10 +183,10 @@ func (c *GoogleBucketClient) ListDirectoryObjects(directoryPath string, recursiv
 	return objects, nil
 }
 
-func (c *GoogleBucketClient) CreateWriteableSignedUrl(fileName string, expire time.Time) (string, error) {
+func (c *GoogleBucketClient) CreateSignedUrl(fileName string, method string, expire time.Time) (string, error) {
 	opts := &storage.SignedURLOptions{
 		Scheme:  storage.SigningSchemeV4,
-		Method:  "PUT",
+		Method:  method,
 		Expires: expire,
 	}
 

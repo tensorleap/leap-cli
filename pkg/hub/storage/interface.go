@@ -26,5 +26,5 @@ type StorageClient interface {
 	DeleteFile(fileName string) error
 	DeleteFilesInDirectory(directoryPath string) (bool, error)
 	ListDirectoryObjects(directoryPath string, recursive bool) ([]string, error)
-	CreateWriteableSignedUrl(fileName string, expire time.Time) (string, error)
+	CreateSignedUrl(fileName, method string, expire time.Time) (string, error)
 }
