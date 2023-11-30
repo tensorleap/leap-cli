@@ -3,6 +3,8 @@ package projects
 import (
 	"context"
 	"fmt"
+	"net/http"
+	"time"
 
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/api"
@@ -69,6 +71,7 @@ func NewPublishCmd() *cobra.Command {
 			}
 
 			for _, projectEntity := range projectsToPublish {
+				fmt.Printf("Publishing project %s\n", projectEntity.Name)
 				err := publishProject(&projectEntity)
 				if err == hub.ErrProjectExists {
 					log.Warnf("Project %s already exists, use -o, --override to re-upload", projectEntity.Name)
@@ -106,13 +109,26 @@ func StreamProjectToHub(ctx context.Context, hubApi *hub.HubApi, projectContext 
 }
 
 func StreamProjectToHubBySignedUrl(ctx context.Context, hubApi *hub.HubApi, projectContext *hub.ProjectContext) error {
-	tarSignedUrl, filesPath, err := hubApi.PublishProjectContentBySignedUrl(&projectContext.Meta)
+	tarAccess, filesPath, err := hubApi.PublishProjectContentBySignedUrl(&projectContext.Meta)
+
 	if err != nil {
 		return fmt.Errorf("failed to get signed url: %v", err)
 	}
-	err = project.PublishProject(ctx, projectContext.Meta.SourceProjectId, tarSignedUrl)
+	err = project.PublishProject(ctx, projectContext.Meta.SourceProjectId, tarAccess.Put)
 	if err != nil {
 		return fmt.Errorf("failed to publish project by signed url: %v", err)
+	}
+
+	err = api.WaitForCondition(ctx, "Waiting for project to be published", func() (bool, error) {
+		res, err := http.Head(tarAccess.Head)
+		if err != nil {
+			return false, err
+		}
+		return api.IsValidStatus(res), nil
+	}, 10*time.Second, time.Hour)
+
+	if err != nil {
+		return fmt.Errorf("failed to wait for project to be published: %v", err)
 	}
 
 	return hubApi.PublishProjectMeta(filesPath, projectContext)
