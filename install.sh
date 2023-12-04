@@ -29,7 +29,7 @@ initOS() {
 
   case "$OS" in
     # Minimalist GNU for Windows
-    mingw*)
+    mingw*) 
       OS="windows"
       USE_SUDO="false"
       if [[ ! -d "$BIN_DIR" ]]; then
@@ -216,5 +216,3 @@ fi
 testVersion
 cleanup
 
-leap -h
-leap server install
