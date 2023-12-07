@@ -87,8 +87,12 @@ func Logout(envName string) error {
 	return nil
 }
 
+func IsLocalUrl(url string) bool {
+	return strings.Contains(url, "localhost") || strings.Contains(url, "127.0,0,1") || !strings.Contains(url, "https")
+}
+
 func EnvNameFromUrl(url string) string {
-	isLocal := strings.Contains(url, "localhost") || strings.Contains(url, "127.0,0,1") || !strings.Contains(url, "https")
+	isLocal := IsLocalUrl(url)
 	if isLocal {
 		return "local"
 	}
