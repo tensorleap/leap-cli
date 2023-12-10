@@ -5,8 +5,11 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
+	"time"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
+	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/entity"
 	"github.com/tensorleap/leap-cli/pkg/hub"
 	"github.com/tensorleap/leap-cli/pkg/log"
@@ -57,13 +60,17 @@ func CopyProject(
 	sourceUrl, _ := api.GetAuthFromContext(sourceCtx)
 	targetUrl, _ := api.GetAuthFromContext(targetCtx)
 
-	log.Infof("Copying project\n\tfrom: %s:%s\n\tto:   %s:%s", sourceProject.GetName(), sourceUrl, targetProjectName, targetUrl)
-
-	exportRes, err := ExportProject(sourceCtx, sourceProject.Cid)
+	fileAccess, err := getCopyPublishSignedUrl(sourceCtx, targetCtx, targetProjectName)
 	if err != nil {
 		return err
 	}
-	defer exportRes.Body.Close()
+
+	log.Infof("Copying project\n\tfrom: %s:%s\n\tto:   %s:%s", sourceProject.GetName(), sourceUrl, targetProjectName, targetUrl)
+
+	err = PublishProject(sourceCtx, sourceProject.Cid, fileAccess)
+	if err != nil {
+		return err
+	}
 
 	targetProjectMeta := &hub.ProjectMeta{
 		Name:            targetProjectName,
@@ -74,11 +81,50 @@ func CopyProject(
 		SourceProjectId: sourceProject.Cid,
 	}
 
-	err = ImportProjectFromStream(targetCtx, targetProjectName, targetProjectMeta, exportRes.Body)
+	err = ImportProject(targetCtx, targetProjectName, fileAccess.Get, targetProjectMeta)
 	if err != nil {
 		return err
 	}
 	return nil
+}
+
+func getCopyPublishSignedUrl(sourceCtx, targetCtx context.Context, fileName string) (*hub.FileAccessBySignedUrl, error) {
+	sourceUrl, _ := api.GetAuthFromContext(sourceCtx)
+	targetUrl, _ := api.GetAuthFromContext(targetCtx)
+
+	isTargetLocal := auth.IsLocalUrl(targetUrl)
+	isSourceLocal := auth.IsLocalUrl(sourceUrl)
+
+	var ctx context.Context
+	var origin *string
+	if !isTargetLocal {
+		ctx = targetCtx
+	} else {
+		ctx = sourceCtx
+	}
+
+	if isTargetLocal && isSourceLocal {
+		// in case of local to local copy, we need to use the environment origin by setting origin to empty string
+		emptyOrigin := ""
+		origin = &emptyOrigin
+	}
+	signedUploadUrl, url, err := getTempUploadedSignedUrl(ctx, fileName, origin)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get signed url for the uploaded project: %v", err)
+	}
+	signedGetUrl, err := getSignedUrl(ctx, url, http.MethodGet, time.Hour*24, origin)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get singed url for the uploaded project: %v", err)
+	}
+	signedHeadUrl, err := getSignedUrl(ctx, url, http.MethodHead, time.Hour*24, origin)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get singed url for the uploaded project: %v", err)
+	}
+	return &hub.FileAccessBySignedUrl{
+		Put:  signedUploadUrl,
+		Get:  signedGetUrl,
+		Head: signedHeadUrl,
+	}, nil
 }
 
 func ValidateProjectName(projectName, defaultProjectName string, projects []ProjectEntity) (string, error) {
@@ -91,4 +137,9 @@ func ValidateProjectName(projectName, defaultProjectName string, projects []Proj
 		defaultProjectName = projectName
 	}
 	return entity.AskForName(existedNames, defaultProjectName, ProjectEntityDesc)
+}
+
+func extractUrl(rowUrl string) string {
+	parsedURL, _ := url.Parse(rowUrl)
+	return parsedURL.Scheme + "://" + parsedURL.Host + parsedURL.Path
 }
