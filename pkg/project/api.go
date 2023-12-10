@@ -8,6 +8,7 @@ import (
 	"os"
 	"path"
 	"strings"
+	"time"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/entity"
@@ -116,30 +117,43 @@ func ImportProjectFromFile(ctx context.Context, filePath, projectName string) er
 	return ImportProject(ctx, projectName, getUrl, &projectCtx.Meta)
 }
 
-func ImportProjectFromStream(ctx context.Context, projectName string, meta *hub.ProjectMeta, stream io.Reader) error {
-	getUrl, err := uploadProjectToTempFile(ctx, projectName, stream)
-	if err != nil {
-		return err
-	}
-	return ImportProject(ctx, projectName, getUrl, meta)
-}
-
 func uploadProjectToTempFile(ctx context.Context, projectName string, projectReader io.Reader) (string, error) {
-	tempSignedUploadUrlParams := *tensorleapapi.NewGetUploadSignedUrlParams(projectName)
-	uploadUrl, res, err := api.ApiClient.GetUploadSignedUrl(ctx).GetUploadSignedUrlParams(tempSignedUploadUrlParams).Execute()
-	if err = api.CheckRes(res, err); err != nil {
-		return "", fmt.Errorf("failed to get signed url: %v", err)
+
+	uploadSingedUrl, uploadUrl, err := getTempUploadedSignedUrl(ctx, projectName, nil)
+	if err != nil {
+		return "", fmt.Errorf("failed to get signed url for the uploaded project: %v", err)
 	}
-	err = api.UploadFile(uploadUrl.Url, projectReader)
+	err = api.UploadFile(uploadSingedUrl, projectReader)
 	if err != nil {
 		return "", fmt.Errorf("failed to upload project: %v", err)
 	}
 	log.Infof("Uploaded successfully project: %s", projectName)
 
-	getUrlParams := *tensorleapapi.NewGetDownloadSignedUrlParams(uploadUrl.GetFileName())
-	getUrlParams.SetNotUseRequestOrigin(true)
-	getUrl, res, err := api.ApiClient.GetDownloadSignedUrl(ctx).
-		GetDownloadSignedUrlParams(getUrlParams).Execute()
+	expireTime := time.Hour * 24
+	origin := "" // use default origin
+	getUrl, err := getSignedUrl(ctx, uploadUrl, http.MethodGet, expireTime, &origin)
+	if err != nil {
+		return "", fmt.Errorf("failed to get singed url for the uploaded project: %v", err)
+	}
+	return getUrl, nil
+}
+
+func getTempUploadedSignedUrl(ctx context.Context, fileName string, origin *string) (string, string, error) {
+	tempSignedUploadUrlParams := *tensorleapapi.NewGetUploadSignedUrlParams(fileName)
+	tempSignedUploadUrlParams.Origin = origin
+	uploadUrl, res, err := api.ApiClient.GetUploadSignedUrl(ctx).GetUploadSignedUrlParams(tempSignedUploadUrlParams).Execute()
+	if err = api.CheckRes(res, err); err != nil {
+		return "", "", fmt.Errorf("failed to get uploaded signed url: %v", err)
+	}
+	return uploadUrl.Url, uploadUrl.GetFileName(), nil
+}
+
+func getSignedUrl(ctx context.Context, url, method string, expire time.Duration, origin *string) (string, error) {
+	expireTime := float64(expire.Seconds())
+	getUrlParams := *tensorleapapi.NewGetSignedUrlParams(url, expireTime, http.MethodGet)
+	getUrlParams.Origin = origin
+	getUrl, res, err := api.ApiClient.GetSignedUrl(ctx).
+		GetSignedUrlParams(getUrlParams).Execute()
 	if err = api.CheckRes(res, err); err != nil {
 		return "", fmt.Errorf("failed to get signed url: %v", err)
 	}
@@ -175,13 +189,27 @@ func ExportProjectIntoFile(ctx context.Context, project *ProjectEntity, outputDi
 	return nil
 }
 
-func PublishProject(ctx context.Context, projectId, tarSignedUrl string) error {
-	start, stop, _ := log.NewSpinner("Publishing project content by signed url")
-	start()
-	defer stop()
-	res, err := api.ApiClient.PublishProject(ctx).PublishProjectRequest(*tensorleapapi.NewPublishProjectRequest(projectId, tarSignedUrl)).Execute()
+func PublishProject(ctx context.Context, projectId string, tarAccess *hub.FileAccessBySignedUrl) error {
+
+	url := extractUrl(tarAccess.Put)
+	log.Infof("Copy project content by signed url: %v", url)
+
+	res, err := api.ApiClient.PublishProject(ctx).PublishProjectRequest(*tensorleapapi.NewPublishProjectRequest(projectId, tarAccess.Put)).Execute()
 	if err = api.CheckRes(res, err); err != nil {
 		return fmt.Errorf("failed to publish project: %v", err)
+	}
+	err = api.WaitForCondition(ctx, "Copy project", func() (bool, error) {
+		res, err := http.Head(tarAccess.Head)
+		if err != nil {
+			return false, err
+		} else if !api.IsValidStatus(res) && res.StatusCode != http.StatusNotFound {
+			return false, fmt.Errorf("failed to check published file status: %v", res.StatusCode)
+		}
+		return api.IsValidStatus(res), nil
+	}, 10*time.Second, time.Hour)
+
+	if err != nil {
+		return fmt.Errorf("failed to wait for project to be published: %v", err)
 	}
 	return nil
 }
