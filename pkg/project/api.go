@@ -196,20 +196,20 @@ func PublishProject(ctx context.Context, projectId string, tarAccess *hub.FileAc
 
 	res, err := api.ApiClient.PublishProject(ctx).PublishProjectRequest(*tensorleapapi.NewPublishProjectRequest(projectId, tarAccess.Put)).Execute()
 	if err = api.CheckRes(res, err); err != nil {
-		return fmt.Errorf("failed to publish project: %v", err)
+		return fmt.Errorf("failed to copy project: %v", err)
 	}
-	err = api.WaitForCondition(ctx, "Copy project", func() (bool, error) {
+	err = api.WaitForCondition(ctx, "Copy project...", func() (bool, error) {
 		res, err := http.Head(tarAccess.Head)
 		if err != nil {
 			return false, err
 		} else if !api.IsValidStatus(res) && res.StatusCode != http.StatusNotFound {
-			return false, fmt.Errorf("failed to check published file status: %v", res.StatusCode)
+			return false, fmt.Errorf("failed to check copy file status: %v", res.StatusCode)
 		}
 		return api.IsValidStatus(res), nil
 	}, 10*time.Second, time.Hour)
 
 	if err != nil {
-		return fmt.Errorf("failed to wait for project to be published: %v", err)
+		return fmt.Errorf("failed to wait for project to be copied: %v", err)
 	}
 	return nil
 }
