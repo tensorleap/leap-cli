@@ -44,7 +44,7 @@ func initProjectCopyArgs(ctx context.Context, args []string) (
 ) {
 	envs := auth.GetEnvs()
 	if len(envs) == 0 {
-		err = fmt.Errorf("no environments found. Please login an environment first")
+		err = fmt.Errorf("no environments found. Please login to an environment first")
 		return
 	}
 	var sourceEnv, targetEnv *auth.Env
