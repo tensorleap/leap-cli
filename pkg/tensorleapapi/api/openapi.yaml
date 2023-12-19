@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.417
+  version: 0.0.422
 servers:
 - url: /api/v2
 paths:
@@ -426,6 +426,12 @@ paths:
     post:
       operationId: GetDatasetVersionUploadUrl
       parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetDatasetVersionUploadUrlParams'
+        required: true
       responses:
         "200":
           content:
@@ -1580,7 +1586,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetSettingsWrapper'
+                $ref: '#/components/schemas/SettingsAndValuesWrapper'
           description: Ok
       security:
       - jwt: []
@@ -1592,7 +1598,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SetSettingValues'
+              $ref: '#/components/schemas/SetSettingValueWrapper'
         required: true
       responses:
         "204":
@@ -3138,6 +3144,7 @@ components:
     PredictionTypeInstance:
       additionalProperties: false
       example:
+        channel_dim: 7.061401241503109
         name: name
         labels:
         - labels
@@ -3149,6 +3156,9 @@ components:
           items:
             type: string
           type: array
+        channel_dim:
+          format: double
+          type: number
       required:
       - labels
       - name
@@ -3230,11 +3240,13 @@ components:
           - arg_names
           name: name
         prediction_types:
-        - name: name
+        - channel_dim: 7.061401241503109
+          name: name
           labels:
           - labels
           - labels
-        - name: name
+        - channel_dim: 7.061401241503109
+          name: name
           labels:
           - labels
           - labels
@@ -3308,10 +3320,12 @@ components:
       example:
         is_passed: true
         shape:
-        - 7.061401241503109
-        - 7.061401241503109
+        - 9.301444243932576
+        - 9.301444243932576
+        handler_type: handler_type
         display: "{}"
         name: name
+        raw_result: ""
       properties:
         name:
           type: string
@@ -3326,6 +3340,9 @@ components:
             format: double
             type: number
           type: array
+        raw_result: {}
+        handler_type:
+          type: string
       required:
       - display
       - is_passed
@@ -3338,16 +3355,20 @@ components:
         bindersStatus:
         - is_passed: true
           shape:
-          - 7.061401241503109
-          - 7.061401241503109
+          - 9.301444243932576
+          - 9.301444243932576
+          handler_type: handler_type
           display: "{}"
           name: name
+          raw_result: ""
         - is_passed: true
           shape:
-          - 7.061401241503109
-          - 7.061401241503109
+          - 9.301444243932576
+          - 9.301444243932576
+          handler_type: handler_type
           display: "{}"
           name: name
+          raw_result: ""
         printLog: printLog
       properties:
         generalError:
@@ -3421,16 +3442,20 @@ components:
           bindersStatus:
           - is_passed: true
             shape:
-            - 7.061401241503109
-            - 7.061401241503109
+            - 9.301444243932576
+            - 9.301444243932576
+            handler_type: handler_type
             display: "{}"
             name: name
+            raw_result: ""
           - is_passed: true
             shape:
-            - 7.061401241503109
-            - 7.061401241503109
+            - 9.301444243932576
+            - 9.301444243932576
+            handler_type: handler_type
             display: "{}"
             name: name
+            raw_result: ""
           printLog: printLog
         secretManagerId: secretManagerId
         setup:
@@ -3472,11 +3497,13 @@ components:
             - arg_names
             name: name
           prediction_types:
-          - name: name
+          - channel_dim: 7.061401241503109
+            name: name
             labels:
             - labels
             - labels
-          - name: name
+          - channel_dim: 7.061401241503109
+            name: name
             labels:
             - labels
             - labels
@@ -3537,16 +3564,20 @@ components:
             bindersStatus:
             - is_passed: true
               shape:
-              - 7.061401241503109
-              - 7.061401241503109
+              - 9.301444243932576
+              - 9.301444243932576
+              handler_type: handler_type
               display: "{}"
               name: name
+              raw_result: ""
             - is_passed: true
               shape:
-              - 7.061401241503109
-              - 7.061401241503109
+              - 9.301444243932576
+              - 9.301444243932576
+              handler_type: handler_type
               display: "{}"
               name: name
+              raw_result: ""
             printLog: printLog
           secretManagerId: secretManagerId
           setup:
@@ -3588,11 +3619,13 @@ components:
               - arg_names
               name: name
             prediction_types:
-            - name: name
+            - channel_dim: 7.061401241503109
+              name: name
               labels:
               - labels
               - labels
-            - name: name
+            - channel_dim: 7.061401241503109
+              name: name
               labels:
               - labels
               - labels
@@ -3686,16 +3719,20 @@ components:
               bindersStatus:
               - is_passed: true
                 shape:
-                - 7.061401241503109
-                - 7.061401241503109
+                - 9.301444243932576
+                - 9.301444243932576
+                handler_type: handler_type
                 display: "{}"
                 name: name
+                raw_result: ""
               - is_passed: true
                 shape:
-                - 7.061401241503109
-                - 7.061401241503109
+                - 9.301444243932576
+                - 9.301444243932576
+                handler_type: handler_type
                 display: "{}"
                 name: name
+                raw_result: ""
               printLog: printLog
             secretManagerId: secretManagerId
             setup:
@@ -3737,11 +3774,13 @@ components:
                 - arg_names
                 name: name
               prediction_types:
-              - name: name
+              - channel_dim: 7.061401241503109
+                name: name
                 labels:
                 - labels
                 - labels
-              - name: name
+              - channel_dim: 7.061401241503109
+                name: name
                 labels:
                 - labels
                 - labels
@@ -3800,16 +3839,20 @@ components:
               bindersStatus:
               - is_passed: true
                 shape:
-                - 7.061401241503109
-                - 7.061401241503109
+                - 9.301444243932576
+                - 9.301444243932576
+                handler_type: handler_type
                 display: "{}"
                 name: name
+                raw_result: ""
               - is_passed: true
                 shape:
-                - 7.061401241503109
-                - 7.061401241503109
+                - 9.301444243932576
+                - 9.301444243932576
+                handler_type: handler_type
                 display: "{}"
                 name: name
+                raw_result: ""
               printLog: printLog
             secretManagerId: secretManagerId
             setup:
@@ -3851,11 +3894,13 @@ components:
                 - arg_names
                 name: name
               prediction_types:
-              - name: name
+              - channel_dim: 7.061401241503109
+                name: name
                 labels:
                 - labels
                 - labels
-              - name: name
+              - channel_dim: 7.061401241503109
+                name: name
                 labels:
                 - labels
                 - labels
@@ -3943,16 +3988,20 @@ components:
                 bindersStatus:
                 - is_passed: true
                   shape:
-                  - 7.061401241503109
-                  - 7.061401241503109
+                  - 9.301444243932576
+                  - 9.301444243932576
+                  handler_type: handler_type
                   display: "{}"
                   name: name
+                  raw_result: ""
                 - is_passed: true
                   shape:
-                  - 7.061401241503109
-                  - 7.061401241503109
+                  - 9.301444243932576
+                  - 9.301444243932576
+                  handler_type: handler_type
                   display: "{}"
                   name: name
+                  raw_result: ""
                 printLog: printLog
               secretManagerId: secretManagerId
               setup:
@@ -3994,11 +4043,13 @@ components:
                   - arg_names
                   name: name
                 prediction_types:
-                - name: name
+                - channel_dim: 7.061401241503109
+                  name: name
                   labels:
                   - labels
                   - labels
-                - name: name
+                - channel_dim: 7.061401241503109
+                  name: name
                   labels:
                   - labels
                   - labels
@@ -4057,16 +4108,20 @@ components:
                 bindersStatus:
                 - is_passed: true
                   shape:
-                  - 7.061401241503109
-                  - 7.061401241503109
+                  - 9.301444243932576
+                  - 9.301444243932576
+                  handler_type: handler_type
                   display: "{}"
                   name: name
+                  raw_result: ""
                 - is_passed: true
                   shape:
-                  - 7.061401241503109
-                  - 7.061401241503109
+                  - 9.301444243932576
+                  - 9.301444243932576
+                  handler_type: handler_type
                   display: "{}"
                   name: name
+                  raw_result: ""
                 printLog: printLog
               secretManagerId: secretManagerId
               setup:
@@ -4108,11 +4163,13 @@ components:
                   - arg_names
                   name: name
                 prediction_types:
-                - name: name
+                - channel_dim: 7.061401241503109
+                  name: name
                   labels:
                   - labels
                   - labels
-                - name: name
+                - channel_dim: 7.061401241503109
+                  name: name
                   labels:
                   - labels
                   - labels
@@ -4171,16 +4228,20 @@ components:
                 bindersStatus:
                 - is_passed: true
                   shape:
-                  - 7.061401241503109
-                  - 7.061401241503109
+                  - 9.301444243932576
+                  - 9.301444243932576
+                  handler_type: handler_type
                   display: "{}"
                   name: name
+                  raw_result: ""
                 - is_passed: true
                   shape:
-                  - 7.061401241503109
-                  - 7.061401241503109
+                  - 9.301444243932576
+                  - 9.301444243932576
+                  handler_type: handler_type
                   display: "{}"
                   name: name
+                  raw_result: ""
                 printLog: printLog
               secretManagerId: secretManagerId
               setup:
@@ -4222,11 +4283,13 @@ components:
                   - arg_names
                   name: name
                 prediction_types:
-                - name: name
+                - channel_dim: 7.061401241503109
+                  name: name
                   labels:
                   - labels
                   - labels
-                - name: name
+                - channel_dim: 7.061401241503109
+                  name: name
                   labels:
                   - labels
                   - labels
@@ -4285,16 +4348,20 @@ components:
                 bindersStatus:
                 - is_passed: true
                   shape:
-                  - 7.061401241503109
-                  - 7.061401241503109
+                  - 9.301444243932576
+                  - 9.301444243932576
+                  handler_type: handler_type
                   display: "{}"
                   name: name
+                  raw_result: ""
                 - is_passed: true
                   shape:
-                  - 7.061401241503109
-                  - 7.061401241503109
+                  - 9.301444243932576
+                  - 9.301444243932576
+                  handler_type: handler_type
                   display: "{}"
                   name: name
+                  raw_result: ""
                 printLog: printLog
               secretManagerId: secretManagerId
               setup:
@@ -4336,11 +4403,13 @@ components:
                   - arg_names
                   name: name
                 prediction_types:
-                - name: name
+                - channel_dim: 7.061401241503109
+                  name: name
                   labels:
                   - labels
                   - labels
-                - name: name
+                - channel_dim: 7.061401241503109
+                  name: name
                   labels:
                   - labels
                   - labels
@@ -4411,16 +4480,20 @@ components:
                 bindersStatus:
                 - is_passed: true
                   shape:
-                  - 7.061401241503109
-                  - 7.061401241503109
+                  - 9.301444243932576
+                  - 9.301444243932576
+                  handler_type: handler_type
                   display: "{}"
                   name: name
+                  raw_result: ""
                 - is_passed: true
                   shape:
-                  - 7.061401241503109
-                  - 7.061401241503109
+                  - 9.301444243932576
+                  - 9.301444243932576
+                  handler_type: handler_type
                   display: "{}"
                   name: name
+                  raw_result: ""
                 printLog: printLog
               secretManagerId: secretManagerId
               setup:
@@ -4462,11 +4535,13 @@ components:
                   - arg_names
                   name: name
                 prediction_types:
-                - name: name
+                - channel_dim: 7.061401241503109
+                  name: name
                   labels:
                   - labels
                   - labels
-                - name: name
+                - channel_dim: 7.061401241503109
+                  name: name
                   labels:
                   - labels
                   - labels
@@ -4525,16 +4600,20 @@ components:
                 bindersStatus:
                 - is_passed: true
                   shape:
-                  - 7.061401241503109
-                  - 7.061401241503109
+                  - 9.301444243932576
+                  - 9.301444243932576
+                  handler_type: handler_type
                   display: "{}"
                   name: name
+                  raw_result: ""
                 - is_passed: true
                   shape:
-                  - 7.061401241503109
-                  - 7.061401241503109
+                  - 9.301444243932576
+                  - 9.301444243932576
+                  handler_type: handler_type
                   display: "{}"
                   name: name
+                  raw_result: ""
                 printLog: printLog
               secretManagerId: secretManagerId
               setup:
@@ -4576,11 +4655,13 @@ components:
                   - arg_names
                   name: name
                 prediction_types:
-                - name: name
+                - channel_dim: 7.061401241503109
+                  name: name
                   labels:
                   - labels
                   - labels
-                - name: name
+                - channel_dim: 7.061401241503109
+                  name: name
                   labels:
                   - labels
                   - labels
@@ -4670,16 +4751,20 @@ components:
                 bindersStatus:
                 - is_passed: true
                   shape:
-                  - 7.061401241503109
-                  - 7.061401241503109
+                  - 9.301444243932576
+                  - 9.301444243932576
+                  handler_type: handler_type
                   display: "{}"
                   name: name
+                  raw_result: ""
                 - is_passed: true
                   shape:
-                  - 7.061401241503109
-                  - 7.061401241503109
+                  - 9.301444243932576
+                  - 9.301444243932576
+                  handler_type: handler_type
                   display: "{}"
                   name: name
+                  raw_result: ""
                 printLog: printLog
               secretManagerId: secretManagerId
               setup:
@@ -4721,11 +4806,13 @@ components:
                   - arg_names
                   name: name
                 prediction_types:
-                - name: name
+                - channel_dim: 7.061401241503109
+                  name: name
                   labels:
                   - labels
                   - labels
-                - name: name
+                - channel_dim: 7.061401241503109
+                  name: name
                   labels:
                   - labels
                   - labels
@@ -4784,16 +4871,20 @@ components:
                 bindersStatus:
                 - is_passed: true
                   shape:
-                  - 7.061401241503109
-                  - 7.061401241503109
+                  - 9.301444243932576
+                  - 9.301444243932576
+                  handler_type: handler_type
                   display: "{}"
                   name: name
+                  raw_result: ""
                 - is_passed: true
                   shape:
-                  - 7.061401241503109
-                  - 7.061401241503109
+                  - 9.301444243932576
+                  - 9.301444243932576
+                  handler_type: handler_type
                   display: "{}"
                   name: name
+                  raw_result: ""
                 printLog: printLog
               secretManagerId: secretManagerId
               setup:
@@ -4835,11 +4926,13 @@ components:
                   - arg_names
                   name: name
                 prediction_types:
-                - name: name
+                - channel_dim: 7.061401241503109
+                  name: name
                   labels:
                   - labels
                   - labels
-                - name: name
+                - channel_dim: 7.061401241503109
+                  name: name
                   labels:
                   - labels
                   - labels
@@ -4939,11 +5032,13 @@ components:
             - arg_names
             name: name
           prediction_types:
-          - name: name
+          - channel_dim: 7.061401241503109
+            name: name
             labels:
             - labels
             - labels
-          - name: name
+          - channel_dim: 7.061401241503109
+            name: name
             labels:
             - labels
             - labels
@@ -5022,16 +5117,20 @@ components:
               bindersStatus:
               - is_passed: true
                 shape:
-                - 7.061401241503109
-                - 7.061401241503109
+                - 9.301444243932576
+                - 9.301444243932576
+                handler_type: handler_type
                 display: "{}"
                 name: name
+                raw_result: ""
               - is_passed: true
                 shape:
-                - 7.061401241503109
-                - 7.061401241503109
+                - 9.301444243932576
+                - 9.301444243932576
+                handler_type: handler_type
                 display: "{}"
                 name: name
+                raw_result: ""
               printLog: printLog
             secretManagerId: secretManagerId
             setup:
@@ -5073,11 +5172,13 @@ components:
                 - arg_names
                 name: name
               prediction_types:
-              - name: name
+              - channel_dim: 7.061401241503109
+                name: name
                 labels:
                 - labels
                 - labels
-              - name: name
+              - channel_dim: 7.061401241503109
+                name: name
                 labels:
                 - labels
                 - labels
@@ -5156,16 +5257,20 @@ components:
               bindersStatus:
               - is_passed: true
                 shape:
-                - 7.061401241503109
-                - 7.061401241503109
+                - 9.301444243932576
+                - 9.301444243932576
+                handler_type: handler_type
                 display: "{}"
                 name: name
+                raw_result: ""
               - is_passed: true
                 shape:
-                - 7.061401241503109
-                - 7.061401241503109
+                - 9.301444243932576
+                - 9.301444243932576
+                handler_type: handler_type
                 display: "{}"
                 name: name
+                raw_result: ""
               printLog: printLog
             secretManagerId: secretManagerId
             setup:
@@ -5207,11 +5312,13 @@ components:
                 - arg_names
                 name: name
               prediction_types:
-              - name: name
+              - channel_dim: 7.061401241503109
+                name: name
                 labels:
                 - labels
                 - labels
-              - name: name
+              - channel_dim: 7.061401241503109
+                name: name
                 labels:
                 - labels
                 - labels
@@ -5286,16 +5393,20 @@ components:
               bindersStatus:
               - is_passed: true
                 shape:
-                - 7.061401241503109
-                - 7.061401241503109
+                - 9.301444243932576
+                - 9.301444243932576
+                handler_type: handler_type
                 display: "{}"
                 name: name
+                raw_result: ""
               - is_passed: true
                 shape:
-                - 7.061401241503109
-                - 7.061401241503109
+                - 9.301444243932576
+                - 9.301444243932576
+                handler_type: handler_type
                 display: "{}"
                 name: name
+                raw_result: ""
               printLog: printLog
             secretManagerId: secretManagerId
             setup:
@@ -5337,11 +5448,13 @@ components:
                 - arg_names
                 name: name
               prediction_types:
-              - name: name
+              - channel_dim: 7.061401241503109
+                name: name
                 labels:
                 - labels
                 - labels
-              - name: name
+              - channel_dim: 7.061401241503109
+                name: name
                 labels:
                 - labels
                 - labels
@@ -5414,16 +5527,20 @@ components:
               bindersStatus:
               - is_passed: true
                 shape:
-                - 7.061401241503109
-                - 7.061401241503109
+                - 9.301444243932576
+                - 9.301444243932576
+                handler_type: handler_type
                 display: "{}"
                 name: name
+                raw_result: ""
               - is_passed: true
                 shape:
-                - 7.061401241503109
-                - 7.061401241503109
+                - 9.301444243932576
+                - 9.301444243932576
+                handler_type: handler_type
                 display: "{}"
                 name: name
+                raw_result: ""
               printLog: printLog
             secretManagerId: secretManagerId
             setup:
@@ -5465,11 +5582,13 @@ components:
                 - arg_names
                 name: name
               prediction_types:
-              - name: name
+              - channel_dim: 7.061401241503109
+                name: name
                 labels:
                 - labels
                 - labels
-              - name: name
+              - channel_dim: 7.061401241503109
+                name: name
                 labels:
                 - labels
                 - labels
@@ -5524,16 +5643,20 @@ components:
               bindersStatus:
               - is_passed: true
                 shape:
-                - 7.061401241503109
-                - 7.061401241503109
+                - 9.301444243932576
+                - 9.301444243932576
+                handler_type: handler_type
                 display: "{}"
                 name: name
+                raw_result: ""
               - is_passed: true
                 shape:
-                - 7.061401241503109
-                - 7.061401241503109
+                - 9.301444243932576
+                - 9.301444243932576
+                handler_type: handler_type
                 display: "{}"
                 name: name
+                raw_result: ""
               printLog: printLog
             secretManagerId: secretManagerId
             setup:
@@ -5575,11 +5698,13 @@ components:
                 - arg_names
                 name: name
               prediction_types:
-              - name: name
+              - channel_dim: 7.061401241503109
+                name: name
                 labels:
                 - labels
                 - labels
-              - name: name
+              - channel_dim: 7.061401241503109
+                name: name
                 labels:
                 - labels
                 - labels
@@ -5653,6 +5778,16 @@ components:
           type: string
       required:
       - url
+      type: object
+    GetDatasetVersionUploadUrlParams:
+      additionalProperties: false
+      example:
+        datasetId: datasetId
+      properties:
+        datasetId:
+          type: string
+      required:
+      - datasetId
       type: object
     JobTypeEnum:
       enum:
@@ -8726,11 +8861,13 @@ components:
             - arg_names
             name: name
           prediction_types:
-          - name: name
+          - channel_dim: 7.061401241503109
+            name: name
             labels:
             - labels
             - labels
-          - name: name
+          - channel_dim: 7.061401241503109
+            name: name
             labels:
             - labels
             - labels
@@ -8879,11 +9016,13 @@ components:
               - arg_names
               name: name
             prediction_types:
-            - name: name
+            - channel_dim: 7.061401241503109
+              name: name
               labels:
               - labels
               - labels
-            - name: name
+            - channel_dim: 7.061401241503109
+              name: name
               labels:
               - labels
               - labels
@@ -10488,28 +10627,167 @@ components:
       - projectId
       - sessionsTestData
       type: object
-    GetSettingsWrapper:
+    StringSchema:
+      additionalProperties: false
+      properties:
+        type:
+          enum:
+          - string
+          nullable: false
+          type: string
+        title:
+          type: string
+        def:
+          nullable: true
+          type: string
+        description:
+          type: string
+        options:
+          items:
+            type: string
+          type: array
+        maxLength:
+          format: double
+          type: number
+        minLength:
+          format: double
+          type: number
+        pattern:
+          type: string
+        required:
+          type: boolean
+        placeholder:
+          type: string
+      required:
+      - type
+      type: object
+    BoolSchema:
+      additionalProperties: false
+      properties:
+        type:
+          enum:
+          - boolean
+          nullable: false
+          type: string
+        title:
+          type: string
+        def:
+          type: boolean
+        description:
+          type: string
+      required:
+      - type
+      type: object
+    NumberSchema:
+      additionalProperties: false
+      properties:
+        type:
+          enum:
+          - number
+          nullable: false
+          type: string
+        title:
+          type: string
+        def:
+          format: double
+          nullable: true
+          type: number
+        description:
+          type: string
+        options:
+          items:
+            format: double
+            type: number
+          type: array
+        step:
+          format: double
+          type: number
+        max:
+          format: double
+          type: number
+        min:
+          format: double
+          type: number
+        required:
+          type: boolean
+        placeholder:
+          type: string
+      required:
+      - type
+      type: object
+    SettingSchema:
+      anyOf:
+      - $ref: '#/components/schemas/StringSchema'
+      - $ref: '#/components/schemas/BoolSchema'
+      - $ref: '#/components/schemas/NumberSchema'
+    SchemaWithKey:
       additionalProperties: false
       example:
-        schema: schema
-        values: values
+        schema: null
+        keyName: keyName
+      properties:
+        keyName:
+          type: string
+        schema:
+          $ref: '#/components/schemas/SettingSchema'
+      required:
+      - keyName
+      - schema
+      type: object
+    SettingValue:
+      anyOf:
+      - type: string
+      - format: double
+        type: number
+      - type: boolean
+      nullable: true
+    ValueWithKey:
+      additionalProperties: false
+      example:
+        keyName: keyName
+        value: null
+      properties:
+        keyName:
+          type: string
+        value:
+          $ref: '#/components/schemas/SettingValue'
+      required:
+      - keyName
+      - value
+      type: object
+    SettingsAndValuesWrapper:
+      additionalProperties: false
+      example:
+        schema:
+        - schema: null
+          keyName: keyName
+        - schema: null
+          keyName: keyName
+        values:
+        - keyName: keyName
+          value: null
+        - keyName: keyName
+          value: null
       properties:
         schema:
-          type: string
+          items:
+            $ref: '#/components/schemas/SchemaWithKey'
+          type: array
         values:
-          type: string
+          items:
+            $ref: '#/components/schemas/ValueWithKey'
+          type: array
       required:
       - schema
       - values
       type: object
-    SettingValues:
-      additionalProperties: {}
-      properties: {}
-      type: object
-    SetSettingValues:
+    SetSettingValueWrapper:
       example:
         set:
-          key: ""
+        - keyName: keyName
+          value: null
+        - keyName: keyName
+          value: null
         unset:
         - unset
         - unset
@@ -10519,9 +10797,9 @@ components:
             type: string
           type: array
         set:
-          additionalProperties: {}
-          properties: {}
-          type: object
+          items:
+            $ref: '#/components/schemas/ValueWithKey'
+          type: array
       type: object
     SlimTeam:
       additionalProperties: false
@@ -11067,11 +11345,13 @@ components:
               - arg_names
               name: name
             prediction_types:
-            - name: name
+            - channel_dim: 7.061401241503109
+              name: name
               labels:
               - labels
               - labels
-            - name: name
+            - channel_dim: 7.061401241503109
+              name: name
               labels:
               - labels
               - labels
@@ -11158,11 +11438,13 @@ components:
             - arg_names
             name: name
           prediction_types:
-          - name: name
+          - channel_dim: 7.061401241503109
+            name: name
             labels:
             - labels
             - labels
-          - name: name
+          - channel_dim: 7.061401241503109
+            name: name
             labels:
             - labels
             - labels
@@ -11283,11 +11565,13 @@ components:
               - arg_names
               name: name
             prediction_types:
-            - name: name
+            - channel_dim: 7.061401241503109
+              name: name
               labels:
               - labels
               - labels
-            - name: name
+            - channel_dim: 7.061401241503109
+              name: name
               labels:
               - labels
               - labels
@@ -11413,11 +11697,13 @@ components:
             - arg_names
             name: name
           prediction_types:
-          - name: name
+          - channel_dim: 7.061401241503109
+            name: name
             labels:
             - labels
             - labels
-          - name: name
+          - channel_dim: 7.061401241503109
+            name: name
             labels:
             - labels
             - labels
@@ -11621,11 +11907,13 @@ components:
             - arg_names
             name: name
           prediction_types:
-          - name: name
+          - channel_dim: 7.061401241503109
+            name: name
             labels:
             - labels
             - labels
-          - name: name
+          - channel_dim: 7.061401241503109
+            name: name
             labels:
             - labels
             - labels
@@ -11858,11 +12146,13 @@ components:
               - arg_names
               name: name
             prediction_types:
-            - name: name
+            - channel_dim: 7.061401241503109
+              name: name
               labels:
               - labels
               - labels
-            - name: name
+            - channel_dim: 7.061401241503109
+              name: name
               labels:
               - labels
               - labels
@@ -12050,11 +12340,13 @@ components:
               - arg_names
               name: name
             prediction_types:
-            - name: name
+            - channel_dim: 7.061401241503109
+              name: name
               labels:
               - labels
               - labels
-            - name: name
+            - channel_dim: 7.061401241503109
+              name: name
               labels:
               - labels
               - labels

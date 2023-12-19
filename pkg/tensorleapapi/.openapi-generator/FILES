@@ -38,6 +38,7 @@ docs/BBoxImageData.md
 docs/BBoxImageScatterLabel.md
 docs/BBoxImageViz.md
 docs/BasicVisualizationInfo.md
+docs/BoolSchema.md
 docs/BoundingBox.md
 docs/BucketAggregation.md
 docs/ClientFilterParams.md
@@ -114,6 +115,7 @@ docs/GetDashletFieldsParams.md
 docs/GetDashletFieldsResponse.md
 docs/GetDatasetVersionParams.md
 docs/GetDatasetVersionResponse.md
+docs/GetDatasetVersionUploadUrlParams.md
 docs/GetDatasetVersionsParams.md
 docs/GetDatasetVersionsResponse.md
 docs/GetDatasetsResponse.md
@@ -147,7 +149,6 @@ docs/GetSecretManagerListResponse.md
 docs/GetSessionRunsVisualizationsParams.md
 docs/GetSessionRunsVisualizationsResponse.md
 docs/GetSessionTestResultsRequest.md
-docs/GetSettingsWrapper.md
 docs/GetSignedUrlParams.md
 docs/GetSingleIssueParams.md
 docs/GetSingleSessionTestRequest.md
@@ -239,6 +240,7 @@ docs/NodeMessageParams.md
 docs/NodeType.md
 docs/Notification.md
 docs/NumberOrString.md
+docs/NumberSchema.md
 docs/OrderType.md
 docs/PanelLayout.md
 docs/PopExploreInfo.md
@@ -272,6 +274,7 @@ docs/SaveDatasetVersionParams.md
 docs/ScatterLabel.md
 docs/ScatterViz.md
 docs/ScatterVizDataState.md
+docs/SchemaWithKey.md
 docs/SecretManager.md
 docs/SendUserMessageParams.md
 docs/SendUserMessageResponse.md
@@ -289,9 +292,12 @@ docs/SessionVersionIdRequestParams.md
 docs/SessionWeightData.md
 docs/SessionsResponse.md
 docs/SetDefaultTeamRequest.md
-docs/SetSettingValues.md
+docs/SetSettingValueWrapper.md
 docs/SetTeamMachineTypeParams.md
 docs/SetUserNotificationsAsRead200Response.md
+docs/SettingSchema.md
+docs/SettingValue.md
+docs/SettingsAndValuesWrapper.md
 docs/SignupParams.md
 docs/SignupResponse.md
 docs/SingleUserModeSettings.md
@@ -305,6 +311,7 @@ docs/StartTrialParams.md
 docs/StatusEnum.md
 docs/StopJobParams.md
 docs/StopJobResponse.md
+docs/StringSchema.md
 docs/TerminateJobParams.md
 docs/TerminateJobResponse.md
 docs/TestStatus.md
@@ -343,6 +350,7 @@ docs/ValidateGraphParams.md
 docs/ValidateGraphResponse.md
 docs/ValidatedLossNode.md
 docs/ValidatedNode.md
+docs/ValueWithKey.md
 docs/Version.md
 docs/VerticalCharts.md
 docs/VisData.md
@@ -390,6 +398,7 @@ model_b_box_image_data.go
 model_b_box_image_scatter_label.go
 model_b_box_image_viz.go
 model_basic_visualization_info.go
+model_bool_schema.go
 model_bounding_box.go
 model_bucket_aggregation.go
 model_client_filter_params.go
@@ -465,6 +474,7 @@ model_get_dashlet_fields_params.go
 model_get_dashlet_fields_response.go
 model_get_dataset_version_params.go
 model_get_dataset_version_response.go
+model_get_dataset_version_upload_url_params.go
 model_get_dataset_versions_params.go
 model_get_dataset_versions_response.go
 model_get_datasets_response.go
@@ -498,7 +508,6 @@ model_get_secret_manager_list_response.go
 model_get_session_runs_visualizations_params.go
 model_get_session_runs_visualizations_response.go
 model_get_session_test_results_request.go
-model_get_settings_wrapper.go
 model_get_signed_url_params.go
 model_get_single_issue_params.go
 model_get_single_session_test_request.go
@@ -590,6 +599,7 @@ model_node_message_params.go
 model_node_type.go
 model_notification.go
 model_number_or_string.go
+model_number_schema.go
 model_order_type.go
 model_panel_layout.go
 model_pop_explore_info.go
@@ -623,6 +633,7 @@ model_save_dataset_version_params.go
 model_scatter_label.go
 model_scatter_viz.go
 model_scatter_viz_data_state.go
+model_schema_with_key.go
 model_secret_manager.go
 model_send_user_message_params.go
 model_send_user_message_response.go
@@ -640,9 +651,12 @@ model_session_version_id_request_params.go
 model_session_weight_data.go
 model_sessions_response.go
 model_set_default_team_request.go
-model_set_setting_values.go
+model_set_setting_value_wrapper.go
 model_set_team_machine_type_params.go
 model_set_user_notifications_as_read_200_response.go
+model_setting_schema.go
+model_setting_value.go
+model_settings_and_values_wrapper.go
 model_signup_params.go
 model_signup_response.go
 model_single_user_mode_settings.go
@@ -656,6 +670,7 @@ model_start_trial_params.go
 model_status_enum.go
 model_stop_job_params.go
 model_stop_job_response.go
+model_string_schema.go
 model_terminate_job_params.go
 model_terminate_job_response.go
 model_test_status.go
@@ -694,6 +709,7 @@ model_validate_graph_params.go
 model_validate_graph_response.go
 model_validated_loss_node.go
 model_validated_node.go
+model_value_with_key.go
 model_version.go
 model_vertical_charts.go
 model_vis_data.go
