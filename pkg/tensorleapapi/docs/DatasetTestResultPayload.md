@@ -8,6 +8,8 @@ Name | Type | Description | Notes
 **Display** | **map[string]interface{}** | Construct a type with a set of properties K of type T | 
 **IsPassed** | **bool** |  | 
 **Shape** | Pointer to **[]float64** |  | [optional] 
+**RawResult** | Pointer to **interface{}** |  | [optional] 
+**HandlerType** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -112,6 +114,66 @@ SetShape sets Shape field to given value.
 `func (o *DatasetTestResultPayload) HasShape() bool`
 
 HasShape returns a boolean if a field has been set.
+
+### GetRawResult
+
+`func (o *DatasetTestResultPayload) GetRawResult() interface{}`
+
+GetRawResult returns the RawResult field if non-nil, zero value otherwise.
+
+### GetRawResultOk
+
+`func (o *DatasetTestResultPayload) GetRawResultOk() (*interface{}, bool)`
+
+GetRawResultOk returns a tuple with the RawResult field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRawResult
+
+`func (o *DatasetTestResultPayload) SetRawResult(v interface{})`
+
+SetRawResult sets RawResult field to given value.
+
+### HasRawResult
+
+`func (o *DatasetTestResultPayload) HasRawResult() bool`
+
+HasRawResult returns a boolean if a field has been set.
+
+### SetRawResultNil
+
+`func (o *DatasetTestResultPayload) SetRawResultNil(b bool)`
+
+ SetRawResultNil sets the value for RawResult to be an explicit nil
+
+### UnsetRawResult
+`func (o *DatasetTestResultPayload) UnsetRawResult()`
+
+UnsetRawResult ensures that no value is present for RawResult, not even an explicit nil
+### GetHandlerType
+
+`func (o *DatasetTestResultPayload) GetHandlerType() string`
+
+GetHandlerType returns the HandlerType field if non-nil, zero value otherwise.
+
+### GetHandlerTypeOk
+
+`func (o *DatasetTestResultPayload) GetHandlerTypeOk() (*string, bool)`
+
+GetHandlerTypeOk returns a tuple with the HandlerType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHandlerType
+
+`func (o *DatasetTestResultPayload) SetHandlerType(v string)`
+
+SetHandlerType sets HandlerType field to given value.
+
+### HasHandlerType
+
+`func (o *DatasetTestResultPayload) HasHandlerType() bool`
+
+HasHandlerType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

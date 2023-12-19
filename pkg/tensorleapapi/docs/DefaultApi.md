@@ -2484,7 +2484,7 @@ Name | Type | Description  | Notes
 
 ## GetDatasetVersionUploadUrl
 
-> DatasetVersionUploadUrlResponse GetDatasetVersionUploadUrl(ctx).Execute()
+> DatasetVersionUploadUrlResponse GetDatasetVersionUploadUrl(ctx).GetDatasetVersionUploadUrlParams(getDatasetVersionUploadUrlParams).Execute()
 
 
 
@@ -2501,10 +2501,11 @@ import (
 )
 
 func main() {
+    getDatasetVersionUploadUrlParams := *openapiclient.NewGetDatasetVersionUploadUrlParams("DatasetId_example") // GetDatasetVersionUploadUrlParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetDatasetVersionUploadUrl(context.Background()).Execute()
+    resp, r, err := apiClient.DefaultApi.GetDatasetVersionUploadUrl(context.Background()).GetDatasetVersionUploadUrlParams(getDatasetVersionUploadUrlParams).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetDatasetVersionUploadUrl``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -2516,12 +2517,16 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetDatasetVersionUploadUrlRequest struct via the builder pattern
 
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getDatasetVersionUploadUrlParams** | [**GetDatasetVersionUploadUrlParams**](GetDatasetVersionUploadUrlParams.md) |  | 
 
 ### Return type
 
@@ -2533,7 +2538,7 @@ Other parameters are passed through a pointer to a apiGetDatasetVersionUploadUrl
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -2730,7 +2735,7 @@ Name | Type | Description  | Notes
 
 ## GetEngineSettings
 
-> GetSettingsWrapper GetEngineSettings(ctx).Execute()
+> SettingsAndValuesWrapper GetEngineSettings(ctx).Execute()
 
 
 
@@ -2755,7 +2760,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetEngineSettings``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `GetEngineSettings`: GetSettingsWrapper
+    // response from `GetEngineSettings`: SettingsAndValuesWrapper
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetEngineSettings`: %v\n", resp)
 }
 ```
@@ -2771,7 +2776,7 @@ Other parameters are passed through a pointer to a apiGetEngineSettingsRequest s
 
 ### Return type
 
-[**GetSettingsWrapper**](GetSettingsWrapper.md)
+[**SettingsAndValuesWrapper**](SettingsAndValuesWrapper.md)
 
 ### Authorization
 
@@ -7122,7 +7127,7 @@ Name | Type | Description  | Notes
 
 ## UpdateEngineSettings
 
-> UpdateEngineSettings(ctx).SetSettingValues(setSettingValues).Execute()
+> UpdateEngineSettings(ctx).SetSettingValueWrapper(setSettingValueWrapper).Execute()
 
 
 
@@ -7139,11 +7144,11 @@ import (
 )
 
 func main() {
-    setSettingValues := *openapiclient.NewSetSettingValues() // SetSettingValues | 
+    setSettingValueWrapper := *openapiclient.NewSetSettingValueWrapper() // SetSettingValueWrapper | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.UpdateEngineSettings(context.Background()).SetSettingValues(setSettingValues).Execute()
+    r, err := apiClient.DefaultApi.UpdateEngineSettings(context.Background()).SetSettingValueWrapper(setSettingValueWrapper).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateEngineSettings``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -7162,7 +7167,7 @@ Other parameters are passed through a pointer to a apiUpdateEngineSettingsReques
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **setSettingValues** | [**SetSettingValues**](SetSettingValues.md) |  | 
+ **setSettingValueWrapper** | [**SetSettingValueWrapper**](SetSettingValueWrapper.md) |  | 
 
 ### Return type
 
