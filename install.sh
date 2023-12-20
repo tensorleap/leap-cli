@@ -217,7 +217,3 @@ testVersion
 cleanup
 
 leap -h
-STANDALONE_DIR="/var/lib/tensorleap/standalone/storage"
-if [ ! -d "$STANDALONE_DIR" ]; then
-  leap server install
-fi
