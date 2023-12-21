@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 .travis.yml
 README.md
 api/openapi.yaml
@@ -723,5 +722,4 @@ model_viz_info_type.go
 model_viz_type.go
 model_weight_asset_data.go
 response.go
-test/api_default_test.go
 utils.go

@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.422
+  version: 0.0.423
 servers:
 - url: /api/v2
 paths:
@@ -7198,13 +7198,14 @@ components:
     RunProcess:
       additionalProperties: false
       example:
+        sessionRunName: sessionRunName
+        sessionName: sessionName
+        versionName: versionName
+        params: null
         jobId: jobId
         createdAt: createdAt
         versionId: versionId
-        sessionRunName: sessionRunName
         sessionRunId: sessionRunId
-        sessionName: sessionName
-        versionName: versionName
         projectName: projectName
         jobType: jobType
         events:
@@ -7249,6 +7250,8 @@ components:
           items:
             $ref: '#/components/schemas/JobEvent'
           type: array
+        params:
+          $ref: '#/components/schemas/JobParams'
       required:
       - createdAt
       - events
@@ -7266,13 +7269,14 @@ components:
       additionalProperties: false
       example:
         processes:
-        - jobId: jobId
-          createdAt: createdAt
-          versionId: versionId
-          sessionRunName: sessionRunName
-          sessionRunId: sessionRunId
+        - sessionRunName: sessionRunName
           sessionName: sessionName
           versionName: versionName
+          params: null
+          jobId: jobId
+          createdAt: createdAt
+          versionId: versionId
+          sessionRunId: sessionRunId
           projectName: projectName
           jobType: jobType
           events:
@@ -7290,13 +7294,14 @@ components:
             status: null
           status: null
           updatedAt: updatedAt
-        - jobId: jobId
-          createdAt: createdAt
-          versionId: versionId
-          sessionRunName: sessionRunName
-          sessionRunId: sessionRunId
+        - sessionRunName: sessionRunName
           sessionName: sessionName
           versionName: versionName
+          params: null
+          jobId: jobId
+          createdAt: createdAt
+          versionId: versionId
+          sessionRunId: sessionRunId
           projectName: projectName
           jobType: jobType
           events:
