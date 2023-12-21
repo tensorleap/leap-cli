@@ -19,9 +19,9 @@ var _ MappedNullable = &GetScatterSampleVisualizationsParams{}
 
 // GetScatterSampleVisualizationsParams struct for GetScatterSampleVisualizationsParams
 type GetScatterSampleVisualizationsParams struct {
-	SessionRunId string `json:"sessionRunId"`
-	ProjectId string `json:"projectId"`
-	Epoch float64 `json:"epoch"`
+	SessionRunId string  `json:"sessionRunId"`
+	ProjectId    string  `json:"projectId"`
+	Epoch        float64 `json:"epoch"`
 }
 
 // NewGetScatterSampleVisualizationsParams instantiates a new GetScatterSampleVisualizationsParams object
@@ -117,7 +117,7 @@ func (o *GetScatterSampleVisualizationsParams) SetEpoch(v float64) {
 }
 
 func (o GetScatterSampleVisualizationsParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -167,5 +167,3 @@ func (v *NullableGetScatterSampleVisualizationsParams) UnmarshalJSON(src []byte)
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

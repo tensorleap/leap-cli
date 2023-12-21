@@ -20,12 +20,12 @@ type HttpMethods string
 
 // List of HttpMethods
 const (
-	HTTPMETHODS_GET HttpMethods = "GET"
-	HTTPMETHODS_POST HttpMethods = "POST"
-	HTTPMETHODS_PUT HttpMethods = "PUT"
-	HTTPMETHODS_DELETE HttpMethods = "DELETE"
-	HTTPMETHODS_PATCH HttpMethods = "PATCH"
-	HTTPMETHODS_HEAD HttpMethods = "HEAD"
+	HTTPMETHODS_GET     HttpMethods = "GET"
+	HTTPMETHODS_POST    HttpMethods = "POST"
+	HTTPMETHODS_PUT     HttpMethods = "PUT"
+	HTTPMETHODS_DELETE  HttpMethods = "DELETE"
+	HTTPMETHODS_PATCH   HttpMethods = "PATCH"
+	HTTPMETHODS_HEAD    HttpMethods = "HEAD"
 	HTTPMETHODS_OPTIONS HttpMethods = "OPTIONS"
 )
 
@@ -118,4 +118,3 @@ func (v *NullableHttpMethods) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

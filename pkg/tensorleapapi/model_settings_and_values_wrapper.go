@@ -20,7 +20,7 @@ var _ MappedNullable = &SettingsAndValuesWrapper{}
 // SettingsAndValuesWrapper struct for SettingsAndValuesWrapper
 type SettingsAndValuesWrapper struct {
 	Schema []SchemaWithKey `json:"schema"`
-	Values []ValueWithKey `json:"values"`
+	Values []ValueWithKey  `json:"values"`
 }
 
 // NewSettingsAndValuesWrapper instantiates a new SettingsAndValuesWrapper object
@@ -91,7 +91,7 @@ func (o *SettingsAndValuesWrapper) SetValues(v []ValueWithKey) {
 }
 
 func (o SettingsAndValuesWrapper) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableSettingsAndValuesWrapper) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -20,18 +20,18 @@ var _ MappedNullable = &SlimVersion{}
 
 // SlimVersion struct for SlimVersion
 type SlimVersion struct {
-	Cid string `json:"cid"`
-	CreatedBy string `json:"createdBy"`
-	ProjectId string `json:"projectId"`
-	BranchName string `json:"branchName"`
-	Tags string `json:"tags"`
-	CreatedAt time.Time `json:"createdAt"`
-	Notes string `json:"notes"`
-	CodeIntegrationVersionId *string `json:"codeIntegrationVersionId,omitempty"`
-	DatasetSetup DatasetSetup `json:"datasetSetup"`
-	IsFavourite bool `json:"isFavourite"`
-	Hash NullableString `json:"hash,omitempty"`
-	Sessions []Session `json:"sessions"`
+	Cid                      string         `json:"cid"`
+	CreatedBy                string         `json:"createdBy"`
+	ProjectId                string         `json:"projectId"`
+	BranchName               string         `json:"branchName"`
+	Tags                     string         `json:"tags"`
+	CreatedAt                time.Time      `json:"createdAt"`
+	Notes                    string         `json:"notes"`
+	CodeIntegrationVersionId *string        `json:"codeIntegrationVersionId,omitempty"`
+	DatasetSetup             DatasetSetup   `json:"datasetSetup"`
+	IsFavourite              bool           `json:"isFavourite"`
+	Hash                     NullableString `json:"hash,omitempty"`
+	Sessions                 []Session      `json:"sessions"`
 }
 
 // NewSlimVersion instantiates a new SlimVersion object
@@ -341,6 +341,7 @@ func (o *SlimVersion) HasHash() bool {
 func (o *SlimVersion) SetHash(v string) {
 	o.Hash.Set(&v)
 }
+
 // SetHashNil sets the value for Hash to be an explicit nil
 func (o *SlimVersion) SetHashNil() {
 	o.Hash.Set(nil)
@@ -376,7 +377,7 @@ func (o *SlimVersion) SetSessions(v []Session) {
 }
 
 func (o SlimVersion) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -439,5 +440,3 @@ func (v *NullableSlimVersion) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

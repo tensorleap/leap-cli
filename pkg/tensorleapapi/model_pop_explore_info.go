@@ -19,10 +19,10 @@ var _ MappedNullable = &PopExploreInfo{}
 
 // PopExploreInfo struct for PopExploreInfo
 type PopExploreInfo struct {
-	JobType JobTypeEnum `json:"job_type"`
-	AnalyzeType AnalyzeTypeEnum `json:"analyze_type"`
-	Guid string `json:"guid"`
-	PopulationExplorationNSamples float64 `json:"population_exploration_n_samples"`
+	JobType                       JobTypeEnum     `json:"job_type"`
+	AnalyzeType                   AnalyzeTypeEnum `json:"analyze_type"`
+	Guid                          string          `json:"guid"`
+	PopulationExplorationNSamples float64         `json:"population_exploration_n_samples"`
 }
 
 // NewPopExploreInfo instantiates a new PopExploreInfo object
@@ -143,7 +143,7 @@ func (o *PopExploreInfo) SetPopulationExplorationNSamples(v float64) {
 }
 
 func (o PopExploreInfo) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -194,5 +194,3 @@ func (v *NullablePopExploreInfo) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

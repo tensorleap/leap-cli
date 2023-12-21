@@ -19,13 +19,13 @@ var _ MappedNullable = &JobNotificationAnalyzeContext{}
 
 // JobNotificationAnalyzeContext struct for JobNotificationAnalyzeContext
 type JobNotificationAnalyzeContext struct {
-	JobId string `json:"jobId"`
-	JobType JobTypeEnum `json:"jobType"`
-	ProjectName string `json:"projectName"`
-	ProjectId string `json:"projectId"`
-	ModelName string `json:"modelName"`
-	ModelExtId string `json:"modelExtId"`
-	SessionRunId string `json:"sessionRunId"`
+	JobId        string      `json:"jobId"`
+	JobType      JobTypeEnum `json:"jobType"`
+	ProjectName  string      `json:"projectName"`
+	ProjectId    string      `json:"projectId"`
+	ModelName    string      `json:"modelName"`
+	ModelExtId   string      `json:"modelExtId"`
+	SessionRunId string      `json:"sessionRunId"`
 }
 
 // NewJobNotificationAnalyzeContext instantiates a new JobNotificationAnalyzeContext object
@@ -221,7 +221,7 @@ func (o *JobNotificationAnalyzeContext) SetSessionRunId(v string) {
 }
 
 func (o JobNotificationAnalyzeContext) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -275,5 +275,3 @@ func (v *NullableJobNotificationAnalyzeContext) UnmarshalJSON(src []byte) error 
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

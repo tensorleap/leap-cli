@@ -19,7 +19,7 @@ var _ MappedNullable = &Aggregations{}
 
 // Aggregations struct for Aggregations
 type Aggregations struct {
-	Field string `json:"field"`
+	Field       string            `json:"field"`
 	Aggregation AggregationMethod `json:"aggregation"`
 }
 
@@ -91,7 +91,7 @@ func (o *Aggregations) SetAggregation(v AggregationMethod) {
 }
 
 func (o Aggregations) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableAggregations) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

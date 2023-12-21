@@ -20,14 +20,14 @@ var _ MappedNullable = &SampleCollection{}
 
 // SampleCollection struct for SampleCollection
 type SampleCollection struct {
-	Samples []SampleIdentity `json:"samples"`
-	CreatedBy *string `json:"createdBy,omitempty"`
-	CreatedAt time.Time `json:"createdAt"`
-	Description *string `json:"description,omitempty"`
-	Name string `json:"name"`
-	Cid string `json:"cid"`
-	ProjectId string `json:"projectId"`
-	TeamId string `json:"teamId"`
+	Samples     []SampleIdentity `json:"samples"`
+	CreatedBy   *string          `json:"createdBy,omitempty"`
+	CreatedAt   time.Time        `json:"createdAt"`
+	Description *string          `json:"description,omitempty"`
+	Name        string           `json:"name"`
+	Cid         string           `json:"cid"`
+	ProjectId   string           `json:"projectId"`
+	TeamId      string           `json:"teamId"`
 }
 
 // NewSampleCollection instantiates a new SampleCollection object
@@ -262,7 +262,7 @@ func (o *SampleCollection) SetTeamId(v string) {
 }
 
 func (o SampleCollection) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -321,5 +321,3 @@ func (v *NullableSampleCollection) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

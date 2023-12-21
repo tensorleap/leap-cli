@@ -19,10 +19,10 @@ var _ MappedNullable = &ContinueTrainParams{}
 
 // ContinueTrainParams struct for ContinueTrainParams
 type ContinueTrainParams struct {
-	VersionId string `json:"versionId"`
-	SessionId string `json:"sessionId"`
-	ProjectId string `json:"projectId"`
-	FromEpoch float64 `json:"fromEpoch"`
+	VersionId      string         `json:"versionId"`
+	SessionId      string         `json:"sessionId"`
+	ProjectId      string         `json:"projectId"`
+	FromEpoch      float64        `json:"fromEpoch"`
 	TrainingParams TrainingParams `json:"trainingParams"`
 }
 
@@ -169,7 +169,7 @@ func (o *ContinueTrainParams) SetTrainingParams(v TrainingParams) {
 }
 
 func (o ContinueTrainParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -221,5 +221,3 @@ func (v *NullableContinueTrainParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

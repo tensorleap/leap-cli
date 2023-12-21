@@ -20,12 +20,12 @@ type AnalyticsDashletType string
 
 // List of AnalyticsDashletType
 const (
-	ANALYTICSDASHLETTYPE_BAR AnalyticsDashletType = "Bar"
-	ANALYTICSDASHLETTYPE_LINE AnalyticsDashletType = "Line"
-	ANALYTICSDASHLETTYPE_AREA AnalyticsDashletType = "Area"
-	ANALYTICSDASHLETTYPE_TABLE AnalyticsDashletType = "Table"
-	ANALYTICSDASHLETTYPE_HEATMAP AnalyticsDashletType = "Heatmap"
-	ANALYTICSDASHLETTYPE_DONUT AnalyticsDashletType = "Donut"
+	ANALYTICSDASHLETTYPE_BAR              AnalyticsDashletType = "Bar"
+	ANALYTICSDASHLETTYPE_LINE             AnalyticsDashletType = "Line"
+	ANALYTICSDASHLETTYPE_AREA             AnalyticsDashletType = "Area"
+	ANALYTICSDASHLETTYPE_TABLE            AnalyticsDashletType = "Table"
+	ANALYTICSDASHLETTYPE_HEATMAP          AnalyticsDashletType = "Heatmap"
+	ANALYTICSDASHLETTYPE_DONUT            AnalyticsDashletType = "Donut"
 	ANALYTICSDASHLETTYPE_CONFUSION_MATRIX AnalyticsDashletType = "Confusion Matrix"
 )
 
@@ -118,4 +118,3 @@ func (v *NullableAnalyticsDashletType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

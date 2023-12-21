@@ -19,8 +19,8 @@ var _ MappedNullable = &GetScatterSampleVisualizationsResponse{}
 
 // GetScatterSampleVisualizationsResponse struct for GetScatterSampleVisualizationsResponse
 type GetScatterSampleVisualizationsResponse struct {
-	SamplesIds []string `json:"samplesIds"`
-	ScatterSampleVisualizationsPrefix string `json:"scatterSampleVisualizationsPrefix"`
+	SamplesIds                        []string `json:"samplesIds"`
+	ScatterSampleVisualizationsPrefix string   `json:"scatterSampleVisualizationsPrefix"`
 }
 
 // NewGetScatterSampleVisualizationsResponse instantiates a new GetScatterSampleVisualizationsResponse object
@@ -91,7 +91,7 @@ func (o *GetScatterSampleVisualizationsResponse) SetScatterSampleVisualizationsP
 }
 
 func (o GetScatterSampleVisualizationsResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableGetScatterSampleVisualizationsResponse) UnmarshalJSON(src []byt
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

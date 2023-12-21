@@ -20,9 +20,9 @@ type MessageLevel string
 
 // List of MessageLevel
 const (
-	MESSAGELEVEL_ERROR MessageLevel = "Error"
+	MESSAGELEVEL_ERROR   MessageLevel = "Error"
 	MESSAGELEVEL_WARNING MessageLevel = "Warning"
-	MESSAGELEVEL_INFO MessageLevel = "Info"
+	MESSAGELEVEL_INFO    MessageLevel = "Info"
 	MESSAGELEVEL_VERBOSE MessageLevel = "Verbose"
 )
 
@@ -112,4 +112,3 @@ func (v *NullableMessageLevel) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

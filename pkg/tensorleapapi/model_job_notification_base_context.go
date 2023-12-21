@@ -19,7 +19,7 @@ var _ MappedNullable = &JobNotificationBaseContext{}
 
 // JobNotificationBaseContext struct for JobNotificationBaseContext
 type JobNotificationBaseContext struct {
-	JobId string `json:"jobId"`
+	JobId   string      `json:"jobId"`
 	JobType JobTypeEnum `json:"jobType"`
 }
 
@@ -91,7 +91,7 @@ func (o *JobNotificationBaseContext) SetJobType(v JobTypeEnum) {
 }
 
 func (o JobNotificationBaseContext) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableJobNotificationBaseContext) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -19,9 +19,9 @@ var _ MappedNullable = &HorizontalBarData{}
 
 // HorizontalBarData struct for HorizontalBarData
 type HorizontalBarData struct {
-	Body []float64 `json:"body"`
-	Labels []string `json:"labels"`
-	Type DataTypeEnum `json:"type"`
+	Body   []float64    `json:"body"`
+	Labels []string     `json:"labels"`
+	Type   DataTypeEnum `json:"type"`
 }
 
 // NewHorizontalBarData instantiates a new HorizontalBarData object
@@ -117,7 +117,7 @@ func (o *HorizontalBarData) SetType(v DataTypeEnum) {
 }
 
 func (o HorizontalBarData) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -167,5 +167,3 @@ func (v *NullableHorizontalBarData) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -20,7 +20,7 @@ var _ MappedNullable = &SignupResponse{}
 // SignupResponse struct for SignupResponse
 type SignupResponse struct {
 	UserCid string `json:"userCid"`
-	Success bool `json:"success"`
+	Success bool   `json:"success"`
 }
 
 // NewSignupResponse instantiates a new SignupResponse object
@@ -91,7 +91,7 @@ func (o *SignupResponse) SetSuccess(v bool) {
 }
 
 func (o SignupResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableSignupResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

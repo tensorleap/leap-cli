@@ -19,13 +19,13 @@ var _ MappedNullable = &EvaluateParams{}
 
 // EvaluateParams struct for EvaluateParams
 type EvaluateParams struct {
-	VersionId string `json:"versionId"`
-	ProjectId string `json:"projectId"`
-	SessionId string `json:"sessionId"`
-	BatchSize float64 `json:"batchSize"`
-	DataStates []DataStateType `json:"dataStates"`
-	EvaluatedEpoch float64 `json:"evaluatedEpoch"`
-	Name string `json:"name"`
+	VersionId      string          `json:"versionId"`
+	ProjectId      string          `json:"projectId"`
+	SessionId      string          `json:"sessionId"`
+	BatchSize      float64         `json:"batchSize"`
+	DataStates     []DataStateType `json:"dataStates"`
+	EvaluatedEpoch float64         `json:"evaluatedEpoch"`
+	Name           string          `json:"name"`
 }
 
 // NewEvaluateParams instantiates a new EvaluateParams object
@@ -221,7 +221,7 @@ func (o *EvaluateParams) SetName(v string) {
 }
 
 func (o EvaluateParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -275,5 +275,3 @@ func (v *NullableEvaluateParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

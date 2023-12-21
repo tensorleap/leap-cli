@@ -19,11 +19,11 @@ var _ MappedNullable = &CreateSampleVisualizationsParams{}
 
 // CreateSampleVisualizationsParams struct for CreateSampleVisualizationsParams
 type CreateSampleVisualizationsParams struct {
-	ProjectId string `json:"projectId"`
-	SessionRunId string `json:"sessionRunId"`
-	Epoch float64 `json:"epoch"`
+	ProjectId        string           `json:"projectId"`
+	SessionRunId     string           `json:"sessionRunId"`
+	Epoch            float64          `json:"epoch"`
 	SampleIdentities []SampleIdentity `json:"sampleIdentities"`
-	Digest string `json:"digest"`
+	Digest           string           `json:"digest"`
 }
 
 // NewCreateSampleVisualizationsParams instantiates a new CreateSampleVisualizationsParams object
@@ -169,7 +169,7 @@ func (o *CreateSampleVisualizationsParams) SetDigest(v string) {
 }
 
 func (o CreateSampleVisualizationsParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -221,5 +221,3 @@ func (v *NullableCreateSampleVisualizationsParams) UnmarshalJSON(src []byte) err
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

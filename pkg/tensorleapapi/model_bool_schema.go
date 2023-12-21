@@ -19,9 +19,9 @@ var _ MappedNullable = &BoolSchema{}
 
 // BoolSchema struct for BoolSchema
 type BoolSchema struct {
-	Type string `json:"type"`
-	Title *string `json:"title,omitempty"`
-	Def *bool `json:"def,omitempty"`
+	Type        string  `json:"type"`
+	Title       *string `json:"title,omitempty"`
+	Def         *bool   `json:"def,omitempty"`
 	Description *string `json:"description,omitempty"`
 }
 
@@ -164,7 +164,7 @@ func (o *BoolSchema) SetDescription(v string) {
 }
 
 func (o BoolSchema) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -221,5 +221,3 @@ func (v *NullableBoolSchema) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

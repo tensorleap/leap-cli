@@ -19,8 +19,8 @@ var _ MappedNullable = &PredictionTypeInstance{}
 
 // PredictionTypeInstance struct for PredictionTypeInstance
 type PredictionTypeInstance struct {
-	Name string `json:"name"`
-	Labels []string `json:"labels"`
+	Name       string   `json:"name"`
+	Labels     []string `json:"labels"`
 	ChannelDim *float64 `json:"channel_dim,omitempty"`
 }
 
@@ -124,7 +124,7 @@ func (o *PredictionTypeInstance) SetChannelDim(v float64) {
 }
 
 func (o PredictionTypeInstance) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -176,5 +176,3 @@ func (v *NullablePredictionTypeInstance) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -19,10 +19,10 @@ var _ MappedNullable = &DatasetPreprocess{}
 
 // DatasetPreprocess struct for DatasetPreprocess
 type DatasetPreprocess struct {
-	TrainingLength float64 `json:"training_length"`
-	ValidationLength float64 `json:"validation_length"`
-	TestLength *float64 `json:"test_length,omitempty"`
-	UnlabeledLength *float64 `json:"unlabeled_length,omitempty"`
+	TrainingLength   float64  `json:"training_length"`
+	ValidationLength float64  `json:"validation_length"`
+	TestLength       *float64 `json:"test_length,omitempty"`
+	UnlabeledLength  *float64 `json:"unlabeled_length,omitempty"`
 }
 
 // NewDatasetPreprocess instantiates a new DatasetPreprocess object
@@ -157,7 +157,7 @@ func (o *DatasetPreprocess) SetUnlabeledLength(v float64) {
 }
 
 func (o DatasetPreprocess) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -212,5 +212,3 @@ func (v *NullableDatasetPreprocess) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

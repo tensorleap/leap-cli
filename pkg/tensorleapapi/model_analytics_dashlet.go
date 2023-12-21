@@ -19,10 +19,10 @@ var _ MappedNullable = &AnalyticsDashlet{}
 
 // AnalyticsDashlet struct for AnalyticsDashlet
 type AnalyticsDashlet struct {
-	Cid string `json:"cid"`
-	Layout SizedLayout `json:"layout"`
-	Type string `json:"type"`
-	Data AnalyticsDashletData `json:"data"`
+	Cid    string               `json:"cid"`
+	Layout SizedLayout          `json:"layout"`
+	Type   string               `json:"type"`
+	Data   AnalyticsDashletData `json:"data"`
 }
 
 // NewAnalyticsDashlet instantiates a new AnalyticsDashlet object
@@ -143,7 +143,7 @@ func (o *AnalyticsDashlet) SetData(v AnalyticsDashletData) {
 }
 
 func (o AnalyticsDashlet) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -194,5 +194,3 @@ func (v *NullableAnalyticsDashlet) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

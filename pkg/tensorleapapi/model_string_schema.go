@@ -19,16 +19,16 @@ var _ MappedNullable = &StringSchema{}
 
 // StringSchema struct for StringSchema
 type StringSchema struct {
-	Type string `json:"type"`
-	Title *string `json:"title,omitempty"`
-	Def NullableString `json:"def,omitempty"`
-	Description *string `json:"description,omitempty"`
-	Options []string `json:"options,omitempty"`
-	MaxLength *float64 `json:"maxLength,omitempty"`
-	MinLength *float64 `json:"minLength,omitempty"`
-	Pattern *string `json:"pattern,omitempty"`
-	Required *bool `json:"required,omitempty"`
-	Placeholder *string `json:"placeholder,omitempty"`
+	Type        string         `json:"type"`
+	Title       *string        `json:"title,omitempty"`
+	Def         NullableString `json:"def,omitempty"`
+	Description *string        `json:"description,omitempty"`
+	Options     []string       `json:"options,omitempty"`
+	MaxLength   *float64       `json:"maxLength,omitempty"`
+	MinLength   *float64       `json:"minLength,omitempty"`
+	Pattern     *string        `json:"pattern,omitempty"`
+	Required    *bool          `json:"required,omitempty"`
+	Placeholder *string        `json:"placeholder,omitempty"`
 }
 
 // NewStringSchema instantiates a new StringSchema object
@@ -137,6 +137,7 @@ func (o *StringSchema) HasDef() bool {
 func (o *StringSchema) SetDef(v string) {
 	o.Def.Set(&v)
 }
+
 // SetDefNil sets the value for Def to be an explicit nil
 func (o *StringSchema) SetDefNil() {
 	o.Def.Set(nil)
@@ -372,7 +373,7 @@ func (o *StringSchema) SetPlaceholder(v string) {
 }
 
 func (o StringSchema) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -447,5 +448,3 @@ func (v *NullableStringSchema) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

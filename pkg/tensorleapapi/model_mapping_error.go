@@ -19,9 +19,9 @@ var _ MappedNullable = &MappingError{}
 
 // MappingError struct for MappingError
 type MappingError struct {
-	Type MappingErrorType `json:"type"`
-	Message string `json:"message"`
-	Title string `json:"title"`
+	Type    MappingErrorType `json:"type"`
+	Message string           `json:"message"`
+	Title   string           `json:"title"`
 }
 
 // NewMappingError instantiates a new MappingError object
@@ -117,7 +117,7 @@ func (o *MappingError) SetTitle(v string) {
 }
 
 func (o MappingError) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -167,5 +167,3 @@ func (v *NullableMappingError) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

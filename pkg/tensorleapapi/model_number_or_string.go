@@ -18,14 +18,14 @@ import (
 // NumberOrString struct for NumberOrString
 type NumberOrString struct {
 	float64 *float64
-	string *string
+	string  *string
 }
 
 // Unmarshal JSON data into any of the pointers in the struct
 func (dst *NumberOrString) UnmarshalJSON(data []byte) error {
 	var err error
 	// try to unmarshal JSON data into float64
-	err = json.Unmarshal(data, &dst.float64);
+	err = json.Unmarshal(data, &dst.float64)
 	if err == nil {
 		jsonfloat64, _ := json.Marshal(dst.float64)
 		if string(jsonfloat64) == "{}" { // empty struct
@@ -38,7 +38,7 @@ func (dst *NumberOrString) UnmarshalJSON(data []byte) error {
 	}
 
 	// try to unmarshal JSON data into string
-	err = json.Unmarshal(data, &dst.string);
+	err = json.Unmarshal(data, &dst.string)
 	if err == nil {
 		jsonstring, _ := json.Marshal(dst.string)
 		if string(jsonstring) == "{}" { // empty struct
@@ -101,5 +101,3 @@ func (v *NullableNumberOrString) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

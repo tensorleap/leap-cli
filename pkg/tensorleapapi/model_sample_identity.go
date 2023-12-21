@@ -20,7 +20,7 @@ var _ MappedNullable = &SampleIdentity{}
 // SampleIdentity struct for SampleIdentity
 type SampleIdentity struct {
 	State DataStateType `json:"state"`
-	Index float64 `json:"index"`
+	Index float64       `json:"index"`
 }
 
 // NewSampleIdentity instantiates a new SampleIdentity object
@@ -91,7 +91,7 @@ func (o *SampleIdentity) SetIndex(v float64) {
 }
 
 func (o SampleIdentity) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableSampleIdentity) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

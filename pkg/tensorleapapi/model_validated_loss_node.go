@@ -19,11 +19,11 @@ var _ MappedNullable = &ValidatedLossNode{}
 
 // ValidatedLossNode struct for ValidatedLossNode
 type ValidatedLossNode struct {
-	Name string `json:"name"`
-	NodeId *string `json:"node_id,omitempty"`
+	Name           string  `json:"name"`
+	NodeId         *string `json:"node_id,omitempty"`
 	ConnectionName *string `json:"connection_name,omitempty"`
-	Error *string `json:"error,omitempty"`
-	IsCustomLoss bool `json:"is_custom_loss"`
+	Error          *string `json:"error,omitempty"`
+	IsCustomLoss   bool    `json:"is_custom_loss"`
 }
 
 // NewValidatedLossNode instantiates a new ValidatedLossNode object
@@ -190,7 +190,7 @@ func (o *ValidatedLossNode) SetIsCustomLoss(v bool) {
 }
 
 func (o ValidatedLossNode) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -248,5 +248,3 @@ func (v *NullableValidatedLossNode) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

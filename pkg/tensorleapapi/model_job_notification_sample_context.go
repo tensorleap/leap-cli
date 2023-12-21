@@ -19,13 +19,13 @@ var _ MappedNullable = &JobNotificationSampleContext{}
 
 // JobNotificationSampleContext struct for JobNotificationSampleContext
 type JobNotificationSampleContext struct {
-	JobId string `json:"jobId"`
-	JobType JobTypeEnum `json:"jobType"`
-	ProjectName string `json:"projectName"`
-	ProjectId string `json:"projectId"`
-	ModelName string `json:"modelName"`
-	ModelExtId string `json:"modelExtId"`
-	Sample SampleIdentity `json:"sample"`
+	JobId       string         `json:"jobId"`
+	JobType     JobTypeEnum    `json:"jobType"`
+	ProjectName string         `json:"projectName"`
+	ProjectId   string         `json:"projectId"`
+	ModelName   string         `json:"modelName"`
+	ModelExtId  string         `json:"modelExtId"`
+	Sample      SampleIdentity `json:"sample"`
 }
 
 // NewJobNotificationSampleContext instantiates a new JobNotificationSampleContext object
@@ -221,7 +221,7 @@ func (o *JobNotificationSampleContext) SetSample(v SampleIdentity) {
 }
 
 func (o JobNotificationSampleContext) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -275,5 +275,3 @@ func (v *NullableJobNotificationSampleContext) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

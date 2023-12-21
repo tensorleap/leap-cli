@@ -19,10 +19,10 @@ var _ MappedNullable = &GetSignedUrlParams{}
 
 // GetSignedUrlParams struct for GetSignedUrlParams
 type GetSignedUrlParams struct {
-	Origin *string `json:"origin,omitempty"`
-	FileName string `json:"fileName"`
-	Expired float64 `json:"expired"`
-	Method HttpMethods `json:"method"`
+	Origin   *string     `json:"origin,omitempty"`
+	FileName string      `json:"fileName"`
+	Expired  float64     `json:"expired"`
+	Method   HttpMethods `json:"method"`
 }
 
 // NewGetSignedUrlParams instantiates a new GetSignedUrlParams object
@@ -150,7 +150,7 @@ func (o *GetSignedUrlParams) SetMethod(v HttpMethods) {
 }
 
 func (o GetSignedUrlParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -203,5 +203,3 @@ func (v *NullableGetSignedUrlParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

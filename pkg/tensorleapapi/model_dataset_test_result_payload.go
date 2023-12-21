@@ -21,11 +21,11 @@ var _ MappedNullable = &DatasetTestResultPayload{}
 type DatasetTestResultPayload struct {
 	Name string `json:"name"`
 	// Construct a type with a set of properties K of type T
-	Display map[string]interface{} `json:"display"`
-	IsPassed bool `json:"is_passed"`
-	Shape []float64 `json:"shape,omitempty"`
-	RawResult interface{} `json:"raw_result,omitempty"`
-	HandlerType *string `json:"handler_type,omitempty"`
+	Display     map[string]interface{} `json:"display"`
+	IsPassed    bool                   `json:"is_passed"`
+	Shape       []float64              `json:"shape,omitempty"`
+	RawResult   interface{}            `json:"raw_result,omitempty"`
+	HandlerType *string                `json:"handler_type,omitempty"`
 }
 
 // NewDatasetTestResultPayload instantiates a new DatasetTestResultPayload object
@@ -218,7 +218,7 @@ func (o *DatasetTestResultPayload) SetHandlerType(v string) {
 }
 
 func (o DatasetTestResultPayload) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -277,5 +277,3 @@ func (v *NullableDatasetTestResultPayload) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

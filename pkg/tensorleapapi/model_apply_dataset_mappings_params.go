@@ -19,9 +19,9 @@ var _ MappedNullable = &ApplyDatasetMappingsParams{}
 
 // ApplyDatasetMappingsParams struct for ApplyDatasetMappingsParams
 type ApplyDatasetMappingsParams struct {
-	ModelGraph ModelGraph `json:"modelGraph"`
-	Yaml string `json:"yaml"`
-	DatasetVersionId *string `json:"datasetVersionId,omitempty"`
+	ModelGraph       ModelGraph `json:"modelGraph"`
+	Yaml             string     `json:"yaml"`
+	DatasetVersionId *string    `json:"datasetVersionId,omitempty"`
 }
 
 // NewApplyDatasetMappingsParams instantiates a new ApplyDatasetMappingsParams object
@@ -124,7 +124,7 @@ func (o *ApplyDatasetMappingsParams) SetDatasetVersionId(v string) {
 }
 
 func (o ApplyDatasetMappingsParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -176,5 +176,3 @@ func (v *NullableApplyDatasetMappingsParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

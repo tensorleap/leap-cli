@@ -19,10 +19,10 @@ var _ MappedNullable = &MaskImageData{}
 
 // MaskImageData struct for MaskImageData
 type MaskImageData struct {
-	Blob string `json:"blob"`
-	MaskBlob string `json:"mask_blob"`
-	Labels []string `json:"labels"`
-	Type DataTypeEnum `json:"type"`
+	Blob     string       `json:"blob"`
+	MaskBlob string       `json:"mask_blob"`
+	Labels   []string     `json:"labels"`
+	Type     DataTypeEnum `json:"type"`
 }
 
 // NewMaskImageData instantiates a new MaskImageData object
@@ -143,7 +143,7 @@ func (o *MaskImageData) SetType(v DataTypeEnum) {
 }
 
 func (o MaskImageData) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -194,5 +194,3 @@ func (v *NullableMaskImageData) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -20,8 +20,8 @@ var _ MappedNullable = &GetSampleVisualizationsPathsParams{}
 // GetSampleVisualizationsPathsParams struct for GetSampleVisualizationsPathsParams
 type GetSampleVisualizationsPathsParams struct {
 	ScatterSampleVisualizationsPrefix string `json:"scatterSampleVisualizationsPrefix"`
-	FileNameMatch string `json:"fileNameMatch"`
-	SampleId string `json:"sampleId"`
+	FileNameMatch                     string `json:"fileNameMatch"`
+	SampleId                          string `json:"sampleId"`
 }
 
 // NewGetSampleVisualizationsPathsParams instantiates a new GetSampleVisualizationsPathsParams object
@@ -117,7 +117,7 @@ func (o *GetSampleVisualizationsPathsParams) SetSampleId(v string) {
 }
 
 func (o GetSampleVisualizationsPathsParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -167,5 +167,3 @@ func (v *NullableGetSampleVisualizationsPathsParams) UnmarshalJSON(src []byte) e
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

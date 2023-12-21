@@ -19,15 +19,15 @@ var _ MappedNullable = &AnalyzeParams{}
 
 // AnalyzeParams struct for AnalyzeParams
 type AnalyzeParams struct {
-	Type AnalyzeTypeEnum `json:"type"`
-	FromEpoch float64 `json:"fromEpoch"`
-	NumOfSamples *float64 `json:"numOfSamples,omitempty"`
-	BatchSize *float64 `json:"batchSize,omitempty"`
-	SampleIdentity *SampleIdentity `json:"sampleIdentity,omitempty"`
-	FromDatasetSlice *DataStateType `json:"fromDatasetSlice,omitempty"`
-	ExtId string `json:"extId"`
-	Digest *string `json:"digest,omitempty"`
-	Filters []ESFilter `json:"filters,omitempty"`
+	Type             AnalyzeTypeEnum `json:"type"`
+	FromEpoch        float64         `json:"fromEpoch"`
+	NumOfSamples     *float64        `json:"numOfSamples,omitempty"`
+	BatchSize        *float64        `json:"batchSize,omitempty"`
+	SampleIdentity   *SampleIdentity `json:"sampleIdentity,omitempty"`
+	FromDatasetSlice *DataStateType  `json:"fromDatasetSlice,omitempty"`
+	ExtId            string          `json:"extId"`
+	Digest           *string         `json:"digest,omitempty"`
+	Filters          []ESFilter      `json:"filters,omitempty"`
 }
 
 // NewAnalyzeParams instantiates a new AnalyzeParams object
@@ -315,7 +315,7 @@ func (o *AnalyzeParams) SetFilters(v []ESFilter) {
 }
 
 func (o AnalyzeParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -383,5 +383,3 @@ func (v *NullableAnalyzeParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

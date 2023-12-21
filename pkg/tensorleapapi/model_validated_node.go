@@ -19,10 +19,10 @@ var _ MappedNullable = &ValidatedNode{}
 
 // ValidatedNode struct for ValidatedNode
 type ValidatedNode struct {
-	Name string `json:"name"`
-	NodeId *string `json:"node_id,omitempty"`
+	Name           string  `json:"name"`
+	NodeId         *string `json:"node_id,omitempty"`
 	ConnectionName *string `json:"connection_name,omitempty"`
-	Error *string `json:"error,omitempty"`
+	Error          *string `json:"error,omitempty"`
 }
 
 // NewValidatedNode instantiates a new ValidatedNode object
@@ -164,7 +164,7 @@ func (o *ValidatedNode) SetError(v string) {
 }
 
 func (o ValidatedNode) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -221,5 +221,3 @@ func (v *NullableValidatedNode) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

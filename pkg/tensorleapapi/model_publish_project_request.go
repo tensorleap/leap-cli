@@ -19,7 +19,7 @@ var _ MappedNullable = &PublishProjectRequest{}
 
 // PublishProjectRequest struct for PublishProjectRequest
 type PublishProjectRequest struct {
-	ProjectId string `json:"projectId"`
+	ProjectId  string `json:"projectId"`
 	PublishUrl string `json:"publishUrl"`
 }
 
@@ -91,7 +91,7 @@ func (o *PublishProjectRequest) SetPublishUrl(v string) {
 }
 
 func (o PublishProjectRequest) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullablePublishProjectRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

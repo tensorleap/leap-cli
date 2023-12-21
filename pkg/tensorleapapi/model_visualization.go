@@ -20,20 +20,20 @@ var _ MappedNullable = &Visualization{}
 
 // Visualization struct for Visualization
 type Visualization struct {
-	ProjectId string `json:"projectId"`
-	Cid string `json:"cid"`
-	JobId string `json:"jobId"`
-	SessionRunId string `json:"sessionRunId"`
-	JobParms *JobParams `json:"jobParms,omitempty"`
-	Type AnalyzeTypeEnum `json:"type"`
-	CreatedAt time.Time `json:"createdAt"`
-	Epoch float64 `json:"epoch"`
-	SampleId *float64 `json:"sampleId,omitempty"`
-	Layout *SizedLayout `json:"layout,omitempty"`
-	VisualizationUuid string `json:"visualizationUuid"`
-	Blob string `json:"blob"`
-	CsvBlob string `json:"csvBlob"`
-	Data VisualizationResponse `json:"data"`
+	ProjectId         string                `json:"projectId"`
+	Cid               string                `json:"cid"`
+	JobId             string                `json:"jobId"`
+	SessionRunId      string                `json:"sessionRunId"`
+	JobParms          *JobParams            `json:"jobParms,omitempty"`
+	Type              AnalyzeTypeEnum       `json:"type"`
+	CreatedAt         time.Time             `json:"createdAt"`
+	Epoch             float64               `json:"epoch"`
+	SampleId          *float64              `json:"sampleId,omitempty"`
+	Layout            *SizedLayout          `json:"layout,omitempty"`
+	VisualizationUuid string                `json:"visualizationUuid"`
+	Blob              string                `json:"blob"`
+	CsvBlob           string                `json:"csvBlob"`
+	Data              VisualizationResponse `json:"data"`
 }
 
 // NewVisualization instantiates a new Visualization object
@@ -425,7 +425,7 @@ func (o *Visualization) SetData(v VisualizationResponse) {
 }
 
 func (o Visualization) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -492,5 +492,3 @@ func (v *NullableVisualization) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

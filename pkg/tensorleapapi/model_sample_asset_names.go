@@ -21,9 +21,9 @@ type SampleAssetNames string
 // List of SampleAssetNames
 const (
 	SAMPLEASSETNAMES_VISUALIZATION SampleAssetNames = "visualization"
-	SAMPLEASSETNAMES_ANALYSIS SampleAssetNames = "analysis"
+	SAMPLEASSETNAMES_ANALYSIS      SampleAssetNames = "analysis"
 	SAMPLEASSETNAMES_LOSS_ANALYSIS SampleAssetNames = "loss analysis"
-	SAMPLEASSETNAMES_METADATA SampleAssetNames = "metadata"
+	SAMPLEASSETNAMES_METADATA      SampleAssetNames = "metadata"
 )
 
 // All allowed values of SampleAssetNames enum
@@ -112,4 +112,3 @@ func (v *NullableSampleAssetNames) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

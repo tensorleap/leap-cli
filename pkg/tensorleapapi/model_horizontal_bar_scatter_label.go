@@ -19,9 +19,9 @@ var _ MappedNullable = &HorizontalBarScatterLabel{}
 
 // HorizontalBarScatterLabel struct for HorizontalBarScatterLabel
 type HorizontalBarScatterLabel struct {
-	Type string `json:"type"`
+	Type                        string             `json:"type"`
 	HorizontalBarVisualizations []HorizontalBarViz `json:"horizontal_bar_visualizations"`
-	InputName *string `json:"input_name,omitempty"`
+	InputName                   *string            `json:"input_name,omitempty"`
 }
 
 // NewHorizontalBarScatterLabel instantiates a new HorizontalBarScatterLabel object
@@ -124,7 +124,7 @@ func (o *HorizontalBarScatterLabel) SetInputName(v string) {
 }
 
 func (o HorizontalBarScatterLabel) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -176,5 +176,3 @@ func (v *NullableHorizontalBarScatterLabel) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

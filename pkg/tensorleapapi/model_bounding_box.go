@@ -19,12 +19,12 @@ var _ MappedNullable = &BoundingBox{}
 
 // BoundingBox struct for BoundingBox
 type BoundingBox struct {
-	X float64 `json:"x"`
-	Y float64 `json:"y"`
-	Width float64 `json:"width"`
-	Height float64 `json:"height"`
+	X          float64 `json:"x"`
+	Y          float64 `json:"y"`
+	Width      float64 `json:"width"`
+	Height     float64 `json:"height"`
 	Confidence float64 `json:"confidence"`
-	Label string `json:"label"`
+	Label      string  `json:"label"`
 }
 
 // NewBoundingBox instantiates a new BoundingBox object
@@ -195,7 +195,7 @@ func (o *BoundingBox) SetLabel(v string) {
 }
 
 func (o BoundingBox) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -248,5 +248,3 @@ func (v *NullableBoundingBox) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

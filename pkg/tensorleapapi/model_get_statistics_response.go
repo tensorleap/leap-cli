@@ -20,11 +20,11 @@ var _ MappedNullable = &GetStatisticsResponse{}
 // GetStatisticsResponse struct for GetStatisticsResponse
 type GetStatisticsResponse struct {
 	ActiveUsers float64 `json:"activeUsers"`
-	OpenIssues float64 `json:"openIssues"`
-	Tests float64 `json:"tests"`
-	Projects float64 `json:"projects"`
-	Networks float64 `json:"networks"`
-	Sessions float64 `json:"sessions"`
+	OpenIssues  float64 `json:"openIssues"`
+	Tests       float64 `json:"tests"`
+	Projects    float64 `json:"projects"`
+	Networks    float64 `json:"networks"`
+	Sessions    float64 `json:"sessions"`
 }
 
 // NewGetStatisticsResponse instantiates a new GetStatisticsResponse object
@@ -195,7 +195,7 @@ func (o *GetStatisticsResponse) SetSessions(v float64) {
 }
 
 func (o GetStatisticsResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -248,5 +248,3 @@ func (v *NullableGetStatisticsResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -17,7 +17,7 @@ import (
 
 // SettingSchema struct for SettingSchema
 type SettingSchema struct {
-	BoolSchema *BoolSchema
+	BoolSchema   *BoolSchema
 	NumberSchema *NumberSchema
 	StringSchema *StringSchema
 }
@@ -26,7 +26,7 @@ type SettingSchema struct {
 func (dst *SettingSchema) UnmarshalJSON(data []byte) error {
 	var err error
 	// try to unmarshal JSON data into BoolSchema
-	err = json.Unmarshal(data, &dst.BoolSchema);
+	err = json.Unmarshal(data, &dst.BoolSchema)
 	if err == nil {
 		jsonBoolSchema, _ := json.Marshal(dst.BoolSchema)
 		if string(jsonBoolSchema) == "{}" { // empty struct
@@ -39,7 +39,7 @@ func (dst *SettingSchema) UnmarshalJSON(data []byte) error {
 	}
 
 	// try to unmarshal JSON data into NumberSchema
-	err = json.Unmarshal(data, &dst.NumberSchema);
+	err = json.Unmarshal(data, &dst.NumberSchema)
 	if err == nil {
 		jsonNumberSchema, _ := json.Marshal(dst.NumberSchema)
 		if string(jsonNumberSchema) == "{}" { // empty struct
@@ -52,7 +52,7 @@ func (dst *SettingSchema) UnmarshalJSON(data []byte) error {
 	}
 
 	// try to unmarshal JSON data into StringSchema
-	err = json.Unmarshal(data, &dst.StringSchema);
+	err = json.Unmarshal(data, &dst.StringSchema)
 	if err == nil {
 		jsonStringSchema, _ := json.Marshal(dst.StringSchema)
 		if string(jsonStringSchema) == "{}" { // empty struct
@@ -119,5 +119,3 @@ func (v *NullableSettingSchema) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

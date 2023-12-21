@@ -19,7 +19,7 @@ var _ MappedNullable = &JobEventProgress{}
 
 // JobEventProgress struct for JobEventProgress
 type JobEventProgress struct {
-	Total float64 `json:"total"`
+	Total   float64 `json:"total"`
 	Current float64 `json:"current"`
 }
 
@@ -91,7 +91,7 @@ func (o *JobEventProgress) SetCurrent(v float64) {
 }
 
 func (o JobEventProgress) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableJobEventProgress) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

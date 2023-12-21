@@ -21,7 +21,7 @@ type ProjectAccess string
 // List of ProjectAccess
 const (
 	PROJECTACCESS_PUBLIC ProjectAccess = "public"
-	PROJECTACCESS_LOCAL ProjectAccess = "local"
+	PROJECTACCESS_LOCAL  ProjectAccess = "local"
 )
 
 // All allowed values of ProjectAccess enum
@@ -108,4 +108,3 @@ func (v *NullableProjectAccess) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

@@ -19,10 +19,10 @@ var _ MappedNullable = &AddDashboardParams{}
 
 // AddDashboardParams struct for AddDashboardParams
 type AddDashboardParams struct {
-	ProjectId string `json:"projectId"`
-	Name string `json:"name"`
-	Items []Dashlet `json:"items"`
-	Description *string `json:"description,omitempty"`
+	ProjectId   string    `json:"projectId"`
+	Name        string    `json:"name"`
+	Items       []Dashlet `json:"items"`
+	Description *string   `json:"description,omitempty"`
 }
 
 // NewAddDashboardParams instantiates a new AddDashboardParams object
@@ -150,7 +150,7 @@ func (o *AddDashboardParams) SetDescription(v string) {
 }
 
 func (o AddDashboardParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -203,5 +203,3 @@ func (v *NullableAddDashboardParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

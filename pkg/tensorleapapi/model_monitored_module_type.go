@@ -20,9 +20,9 @@ type MonitoredModuleType string
 
 // List of MonitoredModuleType
 const (
-	MONITOREDMODULETYPE_MONGO MonitoredModuleType = "mongo"
+	MONITOREDMODULETYPE_MONGO    MonitoredModuleType = "mongo"
 	MONITOREDMODULETYPE_RABBITMQ MonitoredModuleType = "rabbitmq"
-	MONITOREDMODULETYPE_ELASTIC MonitoredModuleType = "elastic"
+	MONITOREDMODULETYPE_ELASTIC  MonitoredModuleType = "elastic"
 )
 
 // All allowed values of MonitoredModuleType enum
@@ -110,4 +110,3 @@ func (v *NullableMonitoredModuleType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

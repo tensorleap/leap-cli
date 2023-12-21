@@ -17,18 +17,18 @@ import (
 
 // JobNotificationContext struct for JobNotificationContext
 type JobNotificationContext struct {
-	JobNotificationAnalyzeContext *JobNotificationAnalyzeContext
-	JobNotificationBaseContext *JobNotificationBaseContext
+	JobNotificationAnalyzeContext    *JobNotificationAnalyzeContext
+	JobNotificationBaseContext       *JobNotificationBaseContext
 	JobNotificationLeepScriptContext *JobNotificationLeepScriptContext
-	JobNotificationModelContext *JobNotificationModelContext
-	JobNotificationSampleContext *JobNotificationSampleContext
+	JobNotificationModelContext      *JobNotificationModelContext
+	JobNotificationSampleContext     *JobNotificationSampleContext
 }
 
 // Unmarshal JSON data into any of the pointers in the struct
 func (dst *JobNotificationContext) UnmarshalJSON(data []byte) error {
 	var err error
 	// try to unmarshal JSON data into JobNotificationAnalyzeContext
-	err = json.Unmarshal(data, &dst.JobNotificationAnalyzeContext);
+	err = json.Unmarshal(data, &dst.JobNotificationAnalyzeContext)
 	if err == nil {
 		jsonJobNotificationAnalyzeContext, _ := json.Marshal(dst.JobNotificationAnalyzeContext)
 		if string(jsonJobNotificationAnalyzeContext) == "{}" { // empty struct
@@ -41,7 +41,7 @@ func (dst *JobNotificationContext) UnmarshalJSON(data []byte) error {
 	}
 
 	// try to unmarshal JSON data into JobNotificationBaseContext
-	err = json.Unmarshal(data, &dst.JobNotificationBaseContext);
+	err = json.Unmarshal(data, &dst.JobNotificationBaseContext)
 	if err == nil {
 		jsonJobNotificationBaseContext, _ := json.Marshal(dst.JobNotificationBaseContext)
 		if string(jsonJobNotificationBaseContext) == "{}" { // empty struct
@@ -54,7 +54,7 @@ func (dst *JobNotificationContext) UnmarshalJSON(data []byte) error {
 	}
 
 	// try to unmarshal JSON data into JobNotificationLeepScriptContext
-	err = json.Unmarshal(data, &dst.JobNotificationLeepScriptContext);
+	err = json.Unmarshal(data, &dst.JobNotificationLeepScriptContext)
 	if err == nil {
 		jsonJobNotificationLeepScriptContext, _ := json.Marshal(dst.JobNotificationLeepScriptContext)
 		if string(jsonJobNotificationLeepScriptContext) == "{}" { // empty struct
@@ -67,7 +67,7 @@ func (dst *JobNotificationContext) UnmarshalJSON(data []byte) error {
 	}
 
 	// try to unmarshal JSON data into JobNotificationModelContext
-	err = json.Unmarshal(data, &dst.JobNotificationModelContext);
+	err = json.Unmarshal(data, &dst.JobNotificationModelContext)
 	if err == nil {
 		jsonJobNotificationModelContext, _ := json.Marshal(dst.JobNotificationModelContext)
 		if string(jsonJobNotificationModelContext) == "{}" { // empty struct
@@ -80,7 +80,7 @@ func (dst *JobNotificationContext) UnmarshalJSON(data []byte) error {
 	}
 
 	// try to unmarshal JSON data into JobNotificationSampleContext
-	err = json.Unmarshal(data, &dst.JobNotificationSampleContext);
+	err = json.Unmarshal(data, &dst.JobNotificationSampleContext)
 	if err == nil {
 		jsonJobNotificationSampleContext, _ := json.Marshal(dst.JobNotificationSampleContext)
 		if string(jsonJobNotificationSampleContext) == "{}" { // empty struct
@@ -155,5 +155,3 @@ func (v *NullableJobNotificationContext) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

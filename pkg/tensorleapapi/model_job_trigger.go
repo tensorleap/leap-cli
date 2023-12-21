@@ -21,7 +21,7 @@ type JobTrigger string
 // List of JobTrigger
 const (
 	JOBTRIGGER_MANUAL JobTrigger = "Manual"
-	JOBTRIGGER_AUTO JobTrigger = "Auto"
+	JOBTRIGGER_AUTO   JobTrigger = "Auto"
 )
 
 // All allowed values of JobTrigger enum
@@ -108,4 +108,3 @@ func (v *NullableJobTrigger) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

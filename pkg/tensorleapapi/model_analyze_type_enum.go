@@ -20,9 +20,9 @@ type AnalyzeTypeEnum string
 
 // List of AnalyzeTypeEnum
 const (
-	ANALYZETYPEENUM_POPULATION_EXPLORATION AnalyzeTypeEnum = "population_exploration"
-	ANALYZETYPEENUM_SAMPLE_SELECTION AnalyzeTypeEnum = "sample_selection"
-	ANALYZETYPEENUM_SAMPLE_ANALYSIS AnalyzeTypeEnum = "sample_analysis"
+	ANALYZETYPEENUM_POPULATION_EXPLORATION  AnalyzeTypeEnum = "population_exploration"
+	ANALYZETYPEENUM_SAMPLE_SELECTION        AnalyzeTypeEnum = "sample_selection"
+	ANALYZETYPEENUM_SAMPLE_ANALYSIS         AnalyzeTypeEnum = "sample_analysis"
 	ANALYZETYPEENUM_VISUALIZERS_CALCULATION AnalyzeTypeEnum = "visualizers_calculation"
 )
 
@@ -112,4 +112,3 @@ func (v *NullableAnalyzeTypeEnum) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

@@ -20,9 +20,9 @@ type ExportModelTypeEnum string
 
 // List of ExportModelTypeEnum
 const (
-	EXPORTMODELTYPEENUM_JSON_TF2 ExportModelTypeEnum = "JSON_TF2"
-	EXPORTMODELTYPEENUM_H5_TF2 ExportModelTypeEnum = "H5_TF2"
-	EXPORTMODELTYPEENUM_ONNX ExportModelTypeEnum = "ONNX"
+	EXPORTMODELTYPEENUM_JSON_TF2        ExportModelTypeEnum = "JSON_TF2"
+	EXPORTMODELTYPEENUM_H5_TF2          ExportModelTypeEnum = "H5_TF2"
+	EXPORTMODELTYPEENUM_ONNX            ExportModelTypeEnum = "ONNX"
 	EXPORTMODELTYPEENUM_SAVED_MODEL_TF2 ExportModelTypeEnum = "SavedModel_TF2"
 )
 
@@ -112,4 +112,3 @@ func (v *NullableExportModelTypeEnum) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

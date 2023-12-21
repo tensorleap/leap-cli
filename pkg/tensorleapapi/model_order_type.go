@@ -21,7 +21,7 @@ type OrderType string
 // List of OrderType
 const (
 	ORDERTYPE_DESC OrderType = "desc"
-	ORDERTYPE_ASC OrderType = "asc"
+	ORDERTYPE_ASC  OrderType = "asc"
 )
 
 // All allowed values of OrderType enum
@@ -108,4 +108,3 @@ func (v *NullableOrderType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

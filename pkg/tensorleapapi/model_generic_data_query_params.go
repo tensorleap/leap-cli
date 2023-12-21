@@ -19,14 +19,14 @@ var _ MappedNullable = &GenericDataQueryParams{}
 
 // GenericDataQueryParams struct for GenericDataQueryParams
 type GenericDataQueryParams struct {
-	ProjectId string `json:"projectId"`
-	SessionRunIds []string `json:"sessionRunIds"`
-	Filters []ESFilter `json:"filters,omitempty"`
-	VerticalSplit *string `json:"verticalSplit,omitempty"`
-	HorizontalSplit *string `json:"horizontalSplit,omitempty"`
-	Aggregations []Aggregations `json:"aggregations"`
-	Buckets []BucketAggregation `json:"buckets"`
-	LastEpochOnly *bool `json:"lastEpochOnly,omitempty"`
+	ProjectId       string              `json:"projectId"`
+	SessionRunIds   []string            `json:"sessionRunIds"`
+	Filters         []ESFilter          `json:"filters,omitempty"`
+	VerticalSplit   *string             `json:"verticalSplit,omitempty"`
+	HorizontalSplit *string             `json:"horizontalSplit,omitempty"`
+	Aggregations    []Aggregations      `json:"aggregations"`
+	Buckets         []BucketAggregation `json:"buckets"`
+	LastEpochOnly   *bool               `json:"lastEpochOnly,omitempty"`
 }
 
 // NewGenericDataQueryParams instantiates a new GenericDataQueryParams object
@@ -275,7 +275,7 @@ func (o *GenericDataQueryParams) SetLastEpochOnly(v bool) {
 }
 
 func (o GenericDataQueryParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -338,5 +338,3 @@ func (v *NullableGenericDataQueryParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

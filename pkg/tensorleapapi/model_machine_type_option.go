@@ -19,7 +19,7 @@ var _ MappedNullable = &MachineTypeOption{}
 
 // MachineTypeOption struct for MachineTypeOption
 type MachineTypeOption struct {
-	Id string `json:"id"`
+	Id          string `json:"id"`
 	DisplayName string `json:"displayName"`
 }
 
@@ -91,7 +91,7 @@ func (o *MachineTypeOption) SetDisplayName(v string) {
 }
 
 func (o MachineTypeOption) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableMachineTypeOption) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

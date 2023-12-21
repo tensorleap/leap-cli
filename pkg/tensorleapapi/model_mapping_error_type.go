@@ -20,7 +20,7 @@ type MappingErrorType string
 
 // List of MappingErrorType
 const (
-	MAPPINGERRORTYPE_DATASET_MAPPING_APPLY_ERROR MappingErrorType = "datasetMappingApplyError"
+	MAPPINGERRORTYPE_DATASET_MAPPING_APPLY_ERROR   MappingErrorType = "datasetMappingApplyError"
 	MAPPINGERRORTYPE_DATASET_MAPPING_APPLY_WARNING MappingErrorType = "datasetMappingApplyWarning"
 )
 
@@ -108,4 +108,3 @@ func (v *NullableMappingErrorType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

@@ -19,7 +19,7 @@ var _ MappedNullable = &CreateTeamRequest{}
 
 // CreateTeamRequest struct for CreateTeamRequest
 type CreateTeamRequest struct {
-	Name string `json:"name"`
+	Name       string `json:"name"`
 	PublicName string `json:"publicName"`
 }
 
@@ -91,7 +91,7 @@ func (o *CreateTeamRequest) SetPublicName(v string) {
 }
 
 func (o CreateTeamRequest) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableCreateTeamRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -20,10 +20,10 @@ type UserRole string
 
 // List of UserRole
 const (
-	USERROLE_DEMO UserRole = "demo"
-	USERROLE_TRIAL UserRole = "trial"
-	USERROLE_USER UserRole = "user"
-	USERROLE_ADMIN UserRole = "admin"
+	USERROLE_DEMO        UserRole = "demo"
+	USERROLE_TRIAL       UserRole = "trial"
+	USERROLE_USER        UserRole = "user"
+	USERROLE_ADMIN       UserRole = "admin"
 	USERROLE_SINGLE_USER UserRole = "singleUser"
 )
 
@@ -114,4 +114,3 @@ func (v *NullableUserRole) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

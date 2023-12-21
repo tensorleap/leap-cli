@@ -19,9 +19,9 @@ var _ MappedNullable = &ValidateGraphResponse{}
 
 // ValidateGraphResponse struct for ValidateGraphResponse
 type ValidateGraphResponse struct {
-	Digest string `json:"digest"`
-	Data *GraphValidatorData `json:"data,omitempty"`
-	Status JobStatus `json:"status"`
+	Digest string              `json:"digest"`
+	Data   *GraphValidatorData `json:"data,omitempty"`
+	Status JobStatus           `json:"status"`
 }
 
 // NewValidateGraphResponse instantiates a new ValidateGraphResponse object
@@ -124,7 +124,7 @@ func (o *ValidateGraphResponse) SetStatus(v JobStatus) {
 }
 
 func (o ValidateGraphResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -176,5 +176,3 @@ func (v *NullableValidateGraphResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

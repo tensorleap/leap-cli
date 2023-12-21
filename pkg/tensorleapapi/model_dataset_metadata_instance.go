@@ -19,7 +19,7 @@ var _ MappedNullable = &DatasetMetadataInstance{}
 
 // DatasetMetadataInstance struct for DatasetMetadataInstance
 type DatasetMetadataInstance struct {
-	Name string `json:"name"`
+	Name string              `json:"name"`
 	Type DatasetMetadataType `json:"type"`
 }
 
@@ -91,7 +91,7 @@ func (o *DatasetMetadataInstance) SetType(v DatasetMetadataType) {
 }
 
 func (o DatasetMetadataInstance) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableDatasetMetadataInstance) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

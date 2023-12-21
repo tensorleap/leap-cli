@@ -21,7 +21,7 @@ type EsBatchAggregationType string
 // List of EsBatchAggregationType
 const (
 	ESBATCHAGGREGATIONTYPE_HISTOGRAM EsBatchAggregationType = "histogram"
-	ESBATCHAGGREGATIONTYPE_BATCH EsBatchAggregationType = "batch"
+	ESBATCHAGGREGATIONTYPE_BATCH     EsBatchAggregationType = "batch"
 )
 
 // All allowed values of EsBatchAggregationType enum
@@ -108,4 +108,3 @@ func (v *NullableEsBatchAggregationType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

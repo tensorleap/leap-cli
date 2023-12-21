@@ -19,12 +19,12 @@ var _ MappedNullable = &SampleAnalysisViz{}
 
 // SampleAnalysisViz struct for SampleAnalysisViz
 type SampleAnalysisViz struct {
-	Type string `json:"type"`
-	Title string `json:"title"`
-	SubTitle string `json:"sub_title"`
-	Guid string `json:"guid"`
-	VisualizedItems []VisualizedItem `json:"visualized_items"`
-	GradsAnalysis GradsAnalysis `json:"grads_analysis"`
+	Type              string            `json:"type"`
+	Title             string            `json:"title"`
+	SubTitle          string            `json:"sub_title"`
+	Guid              string            `json:"guid"`
+	VisualizedItems   []VisualizedItem  `json:"visualized_items"`
+	GradsAnalysis     GradsAnalysis     `json:"grads_analysis"`
 	FeatureImportance FeatureImportance `json:"feature_importance"`
 	// Construct a type with a set of properties K of type T
 	MetadataMap map[string]interface{} `json:"metadata_map"`
@@ -248,7 +248,7 @@ func (o *SampleAnalysisViz) SetMetadataMap(v map[string]interface{}) {
 }
 
 func (o SampleAnalysisViz) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -303,5 +303,3 @@ func (v *NullableSampleAnalysisViz) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

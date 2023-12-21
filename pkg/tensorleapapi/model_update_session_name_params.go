@@ -19,9 +19,9 @@ var _ MappedNullable = &UpdateSessionNameParams{}
 
 // UpdateSessionNameParams struct for UpdateSessionNameParams
 type UpdateSessionNameParams struct {
-	Cid string `json:"cid"`
+	Cid       string `json:"cid"`
 	ProjectId string `json:"projectId"`
-	Name string `json:"name"`
+	Name      string `json:"name"`
 }
 
 // NewUpdateSessionNameParams instantiates a new UpdateSessionNameParams object
@@ -117,7 +117,7 @@ func (o *UpdateSessionNameParams) SetName(v string) {
 }
 
 func (o UpdateSessionNameParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -167,5 +167,3 @@ func (v *NullableUpdateSessionNameParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

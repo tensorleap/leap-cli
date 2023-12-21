@@ -20,20 +20,20 @@ var _ MappedNullable = &Project{}
 
 // Project struct for Project
 type Project struct {
-	Cid string `json:"cid"`
-	TeamId string `json:"teamId"`
-	CreatedBy string `json:"createdBy"`
-	CreatedAt NullableTime `json:"createdAt"`
-	Name string `json:"name"`
-	LastAccessed time.Time `json:"lastAccessed"`
-	Status ProjectStatus `json:"status"`
-	Access ProjectAccess `json:"access"`
-	Tags []string `json:"tags"`
-	BgImagePath *string `json:"bgImagePath,omitempty"`
+	Cid              string           `json:"cid"`
+	TeamId           string           `json:"teamId"`
+	CreatedBy        string           `json:"createdBy"`
+	CreatedAt        NullableTime     `json:"createdAt"`
+	Name             string           `json:"name"`
+	LastAccessed     time.Time        `json:"lastAccessed"`
+	Status           ProjectStatus    `json:"status"`
+	Access           ProjectAccess    `json:"access"`
+	Tags             []string         `json:"tags"`
+	BgImagePath      *string          `json:"bgImagePath,omitempty"`
 	HubPublishPolicy HubPublishPolicy `json:"hubPublishPolicy"`
 	// Construct a type with a set of properties K of type T
-	Categories map[string]interface{} `json:"categories,omitempty"`
-	Description *string `json:"description,omitempty"`
+	Categories  map[string]interface{} `json:"categories,omitempty"`
+	Description *string                `json:"description,omitempty"`
 }
 
 // NewProject instantiates a new Project object
@@ -402,7 +402,7 @@ func (o *Project) SetDescription(v string) {
 }
 
 func (o Project) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -468,5 +468,3 @@ func (v *NullableProject) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

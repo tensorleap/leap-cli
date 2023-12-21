@@ -19,7 +19,7 @@ var _ MappedNullable = &CustomLayerInstance{}
 
 // CustomLayerInstance struct for CustomLayerInstance
 type CustomLayerInstance struct {
-	Name string `json:"name"`
+	Name         string   `json:"name"`
 	InitArgNames []string `json:"init_arg_names"`
 	CallArgNames []string `json:"call_arg_names"`
 }
@@ -117,7 +117,7 @@ func (o *CustomLayerInstance) SetCallArgNames(v []string) {
 }
 
 func (o CustomLayerInstance) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -167,5 +167,3 @@ func (v *NullableCustomLayerInstance) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

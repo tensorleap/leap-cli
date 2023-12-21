@@ -19,8 +19,8 @@ var _ MappedNullable = &SchemaWithKey{}
 
 // SchemaWithKey struct for SchemaWithKey
 type SchemaWithKey struct {
-	KeyName string `json:"keyName"`
-	Schema SettingSchema `json:"schema"`
+	KeyName string        `json:"keyName"`
+	Schema  SettingSchema `json:"schema"`
 }
 
 // NewSchemaWithKey instantiates a new SchemaWithKey object
@@ -91,7 +91,7 @@ func (o *SchemaWithKey) SetSchema(v SettingSchema) {
 }
 
 func (o SchemaWithKey) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableSchemaWithKey) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

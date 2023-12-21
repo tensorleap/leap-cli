@@ -19,19 +19,19 @@ var _ MappedNullable = &RunProcess{}
 
 // RunProcess struct for RunProcess
 type RunProcess struct {
-	JobId string `json:"jobId"`
-	VersionName string `json:"versionName"`
-	VersionId string `json:"versionId"`
-	ProjectName string `json:"projectName"`
-	JobType string `json:"jobType"`
-	Status JobStatus `json:"status"`
-	CreatedAt string `json:"createdAt"`
-	UpdatedAt string `json:"updatedAt"`
-	SessionName string `json:"sessionName"`
-	SessionRunName string `json:"sessionRunName"`
-	SessionRunId *string `json:"sessionRunId,omitempty"`
-	Events []JobEvent `json:"events"`
-	Params *JobParams `json:"params,omitempty"`
+	JobId          string     `json:"jobId"`
+	VersionName    string     `json:"versionName"`
+	VersionId      string     `json:"versionId"`
+	ProjectName    string     `json:"projectName"`
+	JobType        string     `json:"jobType"`
+	Status         JobStatus  `json:"status"`
+	CreatedAt      string     `json:"createdAt"`
+	UpdatedAt      string     `json:"updatedAt"`
+	SessionName    string     `json:"sessionName"`
+	SessionRunName string     `json:"sessionRunName"`
+	SessionRunId   *string    `json:"sessionRunId,omitempty"`
+	Events         []JobEvent `json:"events"`
+	Params         *JobParams `json:"params,omitempty"`
 }
 
 // NewRunProcess instantiates a new RunProcess object
@@ -391,7 +391,7 @@ func (o *RunProcess) SetParams(v JobParams) {
 }
 
 func (o RunProcess) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -455,5 +455,3 @@ func (v *NullableRunProcess) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

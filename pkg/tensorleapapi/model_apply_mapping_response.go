@@ -20,7 +20,7 @@ var _ MappedNullable = &ApplyMappingResponse{}
 // ApplyMappingResponse struct for ApplyMappingResponse
 type ApplyMappingResponse struct {
 	MappingErrors []MappingError `json:"mappingErrors,omitempty"`
-	ModelGraph *ModelGraph `json:"modelGraph,omitempty"`
+	ModelGraph    *ModelGraph    `json:"modelGraph,omitempty"`
 }
 
 // NewApplyMappingResponse instantiates a new ApplyMappingResponse object
@@ -105,7 +105,7 @@ func (o *ApplyMappingResponse) SetModelGraph(v ModelGraph) {
 }
 
 func (o ApplyMappingResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -158,5 +158,3 @@ func (v *NullableApplyMappingResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

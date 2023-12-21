@@ -19,9 +19,9 @@ var _ MappedNullable = &UpdateVersionNameParams{}
 
 // UpdateVersionNameParams struct for UpdateVersionNameParams
 type UpdateVersionNameParams struct {
-	Cid string `json:"cid"`
+	Cid       string `json:"cid"`
 	ProjectId string `json:"projectId"`
-	Name string `json:"name"`
+	Name      string `json:"name"`
 }
 
 // NewUpdateVersionNameParams instantiates a new UpdateVersionNameParams object
@@ -117,7 +117,7 @@ func (o *UpdateVersionNameParams) SetName(v string) {
 }
 
 func (o UpdateVersionNameParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -167,5 +167,3 @@ func (v *NullableUpdateVersionNameParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

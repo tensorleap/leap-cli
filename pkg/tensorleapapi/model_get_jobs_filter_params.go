@@ -20,13 +20,13 @@ var _ MappedNullable = &GetJobsFilterParams{}
 
 // GetJobsFilterParams struct for GetJobsFilterParams
 type GetJobsFilterParams struct {
-	LastUpdated *time.Time `json:"lastUpdated,omitempty"`
-	SessionRunIds []string `json:"sessionRunIds,omitempty"`
-	Types []JobTypeEnum `json:"types,omitempty"`
-	SubTypes []JobSubType `json:"subTypes,omitempty"`
-	Trigger *JobTrigger `json:"trigger,omitempty"`
-	Status []JobStatus `json:"status,omitempty"`
-	ProjectId *string `json:"projectId,omitempty"`
+	LastUpdated   *time.Time    `json:"lastUpdated,omitempty"`
+	SessionRunIds []string      `json:"sessionRunIds,omitempty"`
+	Types         []JobTypeEnum `json:"types,omitempty"`
+	SubTypes      []JobSubType  `json:"subTypes,omitempty"`
+	Trigger       *JobTrigger   `json:"trigger,omitempty"`
+	Status        []JobStatus   `json:"status,omitempty"`
+	ProjectId     *string       `json:"projectId,omitempty"`
 }
 
 // NewGetJobsFilterParams instantiates a new GetJobsFilterParams object
@@ -271,7 +271,7 @@ func (o *GetJobsFilterParams) SetProjectId(v string) {
 }
 
 func (o GetJobsFilterParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -339,5 +339,3 @@ func (v *NullableGetJobsFilterParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

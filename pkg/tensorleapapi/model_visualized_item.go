@@ -19,12 +19,12 @@ var _ MappedNullable = &VisualizedItem{}
 
 // VisualizedItem struct for VisualizedItem
 type VisualizedItem struct {
-	VisualizerName string `json:"visualizer_name"`
-	Data VisData `json:"data"`
-	EncoderNames []string `json:"encoder_names"`
-	ConnectionName string `json:"connection_name"`
-	NodeId *string `json:"node_id,omitempty"`
-	HasError *bool `json:"has_error,omitempty"`
+	VisualizerName string   `json:"visualizer_name"`
+	Data           VisData  `json:"data"`
+	EncoderNames   []string `json:"encoder_names"`
+	ConnectionName string   `json:"connection_name"`
+	NodeId         *string  `json:"node_id,omitempty"`
+	HasError       *bool    `json:"has_error,omitempty"`
 }
 
 // NewVisualizedItem instantiates a new VisualizedItem object
@@ -209,7 +209,7 @@ func (o *VisualizedItem) SetHasError(v bool) {
 }
 
 func (o VisualizedItem) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -266,5 +266,3 @@ func (v *NullableVisualizedItem) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

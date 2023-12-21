@@ -19,7 +19,7 @@ var _ MappedNullable = &SessionHashRequestParams{}
 
 // SessionHashRequestParams struct for SessionHashRequestParams
 type SessionHashRequestParams struct {
-	Hash string `json:"hash"`
+	Hash      string `json:"hash"`
 	ProjectId string `json:"projectId"`
 }
 
@@ -91,7 +91,7 @@ func (o *SessionHashRequestParams) SetProjectId(v string) {
 }
 
 func (o SessionHashRequestParams) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableSessionHashRequestParams) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-
