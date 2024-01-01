@@ -1,6 +1,9 @@
 OSARCH := linux/386 linux/amd64 linux/arm linux/arm64 darwin/amd64 darwin/arm64
-
 CLI_BUILD_VERSION ?= cli version not set
+
+# set variables for updating server api
+NODE_SERVER_BRANCH ?= master
+NODE_SERVER_BUILDER_IMAGE ?= ""
 
 # See available flags by running: go tool link
 LDFLAGS := -w -s -X 'github.com/tensorleap/leap-cli/pkg/version.CliVersion=$(CLI_BUILD_VERSION)'
@@ -41,3 +44,7 @@ check-fmt:
 .PHONY: test
 test: 
 	@go test ./...
+
+.PHONY: update-server-api
+update-server-api:
+	@./scripts/update_server_api.sh ${NODE_SERVER_BUILDER_IMAGE} ${NODE_SERVER_BRANCH} 
