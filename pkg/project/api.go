@@ -189,6 +189,7 @@ func ExportProjectIntoFile(ctx context.Context, project *ProjectEntity, outputDi
 	return nil
 }
 
+const PUBLISH_TIMEOUT = 4 * time.Hour
 func PublishProject(ctx context.Context, projectId string, tarAccess *hub.FileAccessBySignedUrl) error {
 
 	url := extractUrl(tarAccess.Put)
@@ -206,7 +207,7 @@ func PublishProject(ctx context.Context, projectId string, tarAccess *hub.FileAc
 			return false, fmt.Errorf("failed to check copy file status: %v", res.StatusCode)
 		}
 		return api.IsValidStatus(res), nil
-	}, 10*time.Second, time.Hour)
+	}, 10*time.Second, PUBLISH_TIMEOUT)
 
 	if err != nil {
 		return fmt.Errorf("failed to wait for project to be copied: %v", err)
