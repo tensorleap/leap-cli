@@ -23,6 +23,12 @@ import (
 var ErrEmptyCodeIntegrationVersion = fmt.Errorf("CodeIntegration is empty")
 
 const BindingFilePath = "leap_mapping.yaml"
+const (
+	ExtensionPy  = "*.py"
+	ExtensionBin = "*.bin"
+)
+
+var CodeIntegrationWildcardExtensions = []string{ExtensionPy, ExtensionBin}
 
 func CreateCodeIntegration(ctx context.Context, codeIntegrations []CodeIntegration) (*CodeIntegration, error) {
 
@@ -146,15 +152,27 @@ func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.Workspac
 
 func getDatasetFiles(filesDir string, workspaceConfig *workspace.WorkspaceConfig) ([]string, error) {
 	currentDirFs := os.DirFS(filesDir)
-	var allMatchedFiles []string
-	allFilePaths := append(workspaceConfig.IncludePatterns, BindingFilePath)
-	for _, pattern := range allFilePaths {
+	matchedFilesMap := make(map[string]struct{})
+
+	filePatterns := append(workspaceConfig.IncludePatterns, BindingFilePath)
+
+	filePatterns = append(filePatterns, CodeIntegrationWildcardExtensions...)
+
+	for _, pattern := range filePatterns {
 		matches, err := fs.Glob(currentDirFs, pattern)
 		if err != nil {
 			return nil, err
 		}
-		allMatchedFiles = append(allMatchedFiles, matches...)
+		for _, match := range matches {
+			matchedFilesMap[match] = struct{}{}
+		}
 	}
+
+	var allMatchedFiles []string
+	for file := range matchedFilesMap {
+		allMatchedFiles = append(allMatchedFiles, file)
+	}
+
 	return allMatchedFiles, nil
 }
 
