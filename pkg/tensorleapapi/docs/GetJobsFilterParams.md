@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **Trigger** | Pointer to [**JobTrigger**](JobTrigger.md) |  | [optional] 
 **Status** | Pointer to [**[]JobStatus**](JobStatus.md) |  | [optional] 
 **ProjectId** | Pointer to **string** |  | [optional] 
+**ShowJobsFromDate** | Pointer to **time.Time** |  | [optional] 
 
 ## Methods
 
@@ -205,6 +206,31 @@ SetProjectId sets ProjectId field to given value.
 `func (o *GetJobsFilterParams) HasProjectId() bool`
 
 HasProjectId returns a boolean if a field has been set.
+
+### GetShowJobsFromDate
+
+`func (o *GetJobsFilterParams) GetShowJobsFromDate() time.Time`
+
+GetShowJobsFromDate returns the ShowJobsFromDate field if non-nil, zero value otherwise.
+
+### GetShowJobsFromDateOk
+
+`func (o *GetJobsFilterParams) GetShowJobsFromDateOk() (*time.Time, bool)`
+
+GetShowJobsFromDateOk returns a tuple with the ShowJobsFromDate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetShowJobsFromDate
+
+`func (o *GetJobsFilterParams) SetShowJobsFromDate(v time.Time)`
+
+SetShowJobsFromDate sets ShowJobsFromDate field to given value.
+
+### HasShowJobsFromDate
+
+`func (o *GetJobsFilterParams) HasShowJobsFromDate() bool`
+
+HasShowJobsFromDate returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

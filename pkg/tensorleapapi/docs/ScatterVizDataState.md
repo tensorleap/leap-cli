@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **Samples** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
 **Metadata** | **map[string]interface{}** | Construct a type with a set of properties K of type T | 
 **MiByCluster** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
+**ClustersBlobPath** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
 
 ## Methods
 
@@ -159,6 +160,31 @@ SetMiByCluster sets MiByCluster field to given value.
 `func (o *ScatterVizDataState) HasMiByCluster() bool`
 
 HasMiByCluster returns a boolean if a field has been set.
+
+### GetClustersBlobPath
+
+`func (o *ScatterVizDataState) GetClustersBlobPath() map[string]interface{}`
+
+GetClustersBlobPath returns the ClustersBlobPath field if non-nil, zero value otherwise.
+
+### GetClustersBlobPathOk
+
+`func (o *ScatterVizDataState) GetClustersBlobPathOk() (*map[string]interface{}, bool)`
+
+GetClustersBlobPathOk returns a tuple with the ClustersBlobPath field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetClustersBlobPath
+
+`func (o *ScatterVizDataState) SetClustersBlobPath(v map[string]interface{})`
+
+SetClustersBlobPath sets ClustersBlobPath field to given value.
+
+### HasClustersBlobPath
+
+`func (o *ScatterVizDataState) HasClustersBlobPath() bool`
+
+HasClustersBlobPath returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

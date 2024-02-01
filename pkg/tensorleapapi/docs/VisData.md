@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Blob** | **string** |  | 
 **Type** | [**DataTypeEnum**](DataTypeEnum.md) |  | 
+**HeatmapBlob** | **string** |  | 
 **Body** | **[][]float64** |  | 
 **Heatmap** | Pointer to [**Heatmap**](Heatmap.md) |  | [optional] 
 **Labels** | **[]string** |  | 
@@ -18,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewVisData
 
-`func NewVisData(blob string, type_ DataTypeEnum, body [][]float64, labels []string, boundingBox []BoundingBox, maskBlob string, text []string, mask []float64, ) *VisData`
+`func NewVisData(blob string, type_ DataTypeEnum, heatmapBlob string, body [][]float64, labels []string, boundingBox []BoundingBox, maskBlob string, text []string, mask []float64, ) *VisData`
 
 NewVisData instantiates a new VisData object
 This constructor will assign default values to properties that have it defined,
@@ -71,6 +72,26 @@ and a boolean to check if the value has been set.
 `func (o *VisData) SetType(v DataTypeEnum)`
 
 SetType sets Type field to given value.
+
+
+### GetHeatmapBlob
+
+`func (o *VisData) GetHeatmapBlob() string`
+
+GetHeatmapBlob returns the HeatmapBlob field if non-nil, zero value otherwise.
+
+### GetHeatmapBlobOk
+
+`func (o *VisData) GetHeatmapBlobOk() (*string, bool)`
+
+GetHeatmapBlobOk returns a tuple with the HeatmapBlob field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHeatmapBlob
+
+`func (o *VisData) SetHeatmapBlob(v string)`
+
+SetHeatmapBlob sets HeatmapBlob field to given value.
 
 
 ### GetBody

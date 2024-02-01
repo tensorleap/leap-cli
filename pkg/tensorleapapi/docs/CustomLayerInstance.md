@@ -7,12 +7,13 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **InitArgNames** | **[]string** |  | 
 **CallArgNames** | **[]string** |  | 
+**UseCustomLatentSpace** | **bool** |  | 
 
 ## Methods
 
 ### NewCustomLayerInstance
 
-`func NewCustomLayerInstance(name string, initArgNames []string, callArgNames []string, ) *CustomLayerInstance`
+`func NewCustomLayerInstance(name string, initArgNames []string, callArgNames []string, useCustomLatentSpace bool, ) *CustomLayerInstance`
 
 NewCustomLayerInstance instantiates a new CustomLayerInstance object
 This constructor will assign default values to properties that have it defined,
@@ -85,6 +86,26 @@ and a boolean to check if the value has been set.
 `func (o *CustomLayerInstance) SetCallArgNames(v []string)`
 
 SetCallArgNames sets CallArgNames field to given value.
+
+
+### GetUseCustomLatentSpace
+
+`func (o *CustomLayerInstance) GetUseCustomLatentSpace() bool`
+
+GetUseCustomLatentSpace returns the UseCustomLatentSpace field if non-nil, zero value otherwise.
+
+### GetUseCustomLatentSpaceOk
+
+`func (o *CustomLayerInstance) GetUseCustomLatentSpaceOk() (*bool, bool)`
+
+GetUseCustomLatentSpaceOk returns a tuple with the UseCustomLatentSpace field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUseCustomLatentSpace
+
+`func (o *CustomLayerInstance) SetUseCustomLatentSpace(v bool)`
+
+SetUseCustomLatentSpace sets UseCustomLatentSpace field to given value.
 
 
 

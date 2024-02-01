@@ -5,8 +5,6 @@
 
 * `POPULATION_EXPLORATION` (value: `"population_exploration"`)
 
-* `SAMPLE_SELECTION` (value: `"sample_selection"`)
-
 * `SAMPLE_ANALYSIS` (value: `"sample_analysis"`)
 
 * `VISUALIZERS_CALCULATION` (value: `"visualizers_calculation"`)

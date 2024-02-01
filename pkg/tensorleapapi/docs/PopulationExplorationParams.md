@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **FromEpoch** | **float64** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **Digest** | **string** |  | 
+**ProjectionMetric** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -175,6 +176,31 @@ and a boolean to check if the value has been set.
 
 SetDigest sets Digest field to given value.
 
+
+### GetProjectionMetric
+
+`func (o *PopulationExplorationParams) GetProjectionMetric() string`
+
+GetProjectionMetric returns the ProjectionMetric field if non-nil, zero value otherwise.
+
+### GetProjectionMetricOk
+
+`func (o *PopulationExplorationParams) GetProjectionMetricOk() (*string, bool)`
+
+GetProjectionMetricOk returns a tuple with the ProjectionMetric field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectionMetric
+
+`func (o *PopulationExplorationParams) SetProjectionMetric(v string)`
+
+SetProjectionMetric sets ProjectionMetric field to given value.
+
+### HasProjectionMetric
+
+`func (o *PopulationExplorationParams) HasProjectionMetric() bool`
+
+HasProjectionMetric returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
