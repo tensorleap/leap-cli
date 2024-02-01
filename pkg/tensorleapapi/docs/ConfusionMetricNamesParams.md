@@ -4,13 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**SessionRunIds** | **[]string** |  | 
 **ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewConfusionMetricNamesParams
 
-`func NewConfusionMetricNamesParams(projectId string, ) *ConfusionMetricNamesParams`
+`func NewConfusionMetricNamesParams(sessionRunIds []string, projectId string, ) *ConfusionMetricNamesParams`
 
 NewConfusionMetricNamesParams instantiates a new ConfusionMetricNamesParams object
 This constructor will assign default values to properties that have it defined,
@@ -24,6 +25,26 @@ will change when the set of required properties is changed
 NewConfusionMetricNamesParamsWithDefaults instantiates a new ConfusionMetricNamesParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetSessionRunIds
+
+`func (o *ConfusionMetricNamesParams) GetSessionRunIds() []string`
+
+GetSessionRunIds returns the SessionRunIds field if non-nil, zero value otherwise.
+
+### GetSessionRunIdsOk
+
+`func (o *ConfusionMetricNamesParams) GetSessionRunIdsOk() (*[]string, bool)`
+
+GetSessionRunIdsOk returns a tuple with the SessionRunIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSessionRunIds
+
+`func (o *ConfusionMetricNamesParams) SetSessionRunIds(v []string)`
+
+SetSessionRunIds sets SessionRunIds field to given value.
+
 
 ### GetProjectId
 

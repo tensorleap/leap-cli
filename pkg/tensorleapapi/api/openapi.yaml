@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.422
+  version: 0.0.445
 servers:
 - url: /api/v2
 paths:
@@ -1920,6 +1920,24 @@ paths:
           description: Ok
       security:
       - jwt: []
+  /users/clearUserNotifications:
+    post:
+      operationId: ClearUserNotifications
+      parameters: []
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
+  /users/clearUserJobs:
+    post:
+      operationId: ClearUserJobs
+      parameters: []
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
   /versions/importModel:
     post:
       operationId: ImportModel
@@ -2270,27 +2288,67 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Job'
+                $ref: '#/components/schemas/PopulationExplorationResponse'
           description: Ok
       security:
       - jwt:
         - not-demo
-  /visualizations/sampleSelection:
+  /visualizations/getPopulationExplorationStatus:
     post:
-      operationId: SampleSelection
+      operationId: GetPopulationExplorationStatus
       parameters: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SampleSelectionParams'
+              $ref: '#/components/schemas/PopulationExplorationParams'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Job'
+                $ref: '#/components/schemas/PopulationExplorationResponse'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /visualizations/fetchSimilar:
+    post:
+      operationId: FetchSimilar
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FetchSimilarRequestParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchSimilarResponse'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /visualizations/getFetchSimilarStatus:
+    post:
+      operationId: GetFetchSimilarStatus
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FetchSimilarRequestParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchSimilarResponse'
           description: Ok
       security:
       - jwt:
@@ -3160,6 +3218,7 @@ components:
           format: double
           type: number
       required:
+      - channel_dim
       - labels
       - name
       type: object
@@ -3388,6 +3447,7 @@ components:
         init_arg_names:
         - init_arg_names
         - init_arg_names
+        use_custom_latent_space: true
         name: name
         call_arg_names:
         - call_arg_names
@@ -3403,10 +3463,13 @@ components:
           items:
             type: string
           type: array
+        use_custom_latent_space:
+          type: boolean
       required:
       - call_arg_names
       - init_arg_names
       - name
+      - use_custom_latent_space
       type: object
     ModelSetup:
       additionalProperties: false
@@ -3415,6 +3478,7 @@ components:
         - init_arg_names:
           - init_arg_names
           - init_arg_names
+          use_custom_latent_space: true
           name: name
           call_arg_names:
           - call_arg_names
@@ -3422,6 +3486,7 @@ components:
         - init_arg_names:
           - init_arg_names
           - init_arg_names
+          use_custom_latent_space: true
           name: name
           call_arg_names:
           - call_arg_names
@@ -3532,6 +3597,7 @@ components:
           - init_arg_names:
             - init_arg_names
             - init_arg_names
+            use_custom_latent_space: true
             name: name
             call_arg_names:
             - call_arg_names
@@ -3539,6 +3605,7 @@ components:
           - init_arg_names:
             - init_arg_names
             - init_arg_names
+            use_custom_latent_space: true
             name: name
             call_arg_names:
             - call_arg_names
@@ -3654,6 +3721,7 @@ components:
             - init_arg_names:
               - init_arg_names
               - init_arg_names
+              use_custom_latent_space: true
               name: name
               call_arg_names:
               - call_arg_names
@@ -3661,6 +3729,7 @@ components:
             - init_arg_names:
               - init_arg_names
               - init_arg_names
+              use_custom_latent_space: true
               name: name
               call_arg_names:
               - call_arg_names
@@ -3809,6 +3878,7 @@ components:
               - init_arg_names:
                 - init_arg_names
                 - init_arg_names
+                use_custom_latent_space: true
                 name: name
                 call_arg_names:
                 - call_arg_names
@@ -3816,6 +3886,7 @@ components:
               - init_arg_names:
                 - init_arg_names
                 - init_arg_names
+                use_custom_latent_space: true
                 name: name
                 call_arg_names:
                 - call_arg_names
@@ -3929,6 +4000,7 @@ components:
               - init_arg_names:
                 - init_arg_names
                 - init_arg_names
+                use_custom_latent_space: true
                 name: name
                 call_arg_names:
                 - call_arg_names
@@ -3936,6 +4008,7 @@ components:
               - init_arg_names:
                 - init_arg_names
                 - init_arg_names
+                use_custom_latent_space: true
                 name: name
                 call_arg_names:
                 - call_arg_names
@@ -4078,6 +4151,7 @@ components:
                 - init_arg_names:
                   - init_arg_names
                   - init_arg_names
+                  use_custom_latent_space: true
                   name: name
                   call_arg_names:
                   - call_arg_names
@@ -4085,6 +4159,7 @@ components:
                 - init_arg_names:
                   - init_arg_names
                   - init_arg_names
+                  use_custom_latent_space: true
                   name: name
                   call_arg_names:
                   - call_arg_names
@@ -4198,6 +4273,7 @@ components:
                 - init_arg_names:
                   - init_arg_names
                   - init_arg_names
+                  use_custom_latent_space: true
                   name: name
                   call_arg_names:
                   - call_arg_names
@@ -4205,6 +4281,7 @@ components:
                 - init_arg_names:
                   - init_arg_names
                   - init_arg_names
+                  use_custom_latent_space: true
                   name: name
                   call_arg_names:
                   - call_arg_names
@@ -4318,6 +4395,7 @@ components:
                 - init_arg_names:
                   - init_arg_names
                   - init_arg_names
+                  use_custom_latent_space: true
                   name: name
                   call_arg_names:
                   - call_arg_names
@@ -4325,6 +4403,7 @@ components:
                 - init_arg_names:
                   - init_arg_names
                   - init_arg_names
+                  use_custom_latent_space: true
                   name: name
                   call_arg_names:
                   - call_arg_names
@@ -4438,6 +4517,7 @@ components:
                 - init_arg_names:
                   - init_arg_names
                   - init_arg_names
+                  use_custom_latent_space: true
                   name: name
                   call_arg_names:
                   - call_arg_names
@@ -4445,6 +4525,7 @@ components:
                 - init_arg_names:
                   - init_arg_names
                   - init_arg_names
+                  use_custom_latent_space: true
                   name: name
                   call_arg_names:
                   - call_arg_names
@@ -4570,6 +4651,7 @@ components:
                 - init_arg_names:
                   - init_arg_names
                   - init_arg_names
+                  use_custom_latent_space: true
                   name: name
                   call_arg_names:
                   - call_arg_names
@@ -4577,6 +4659,7 @@ components:
                 - init_arg_names:
                   - init_arg_names
                   - init_arg_names
+                  use_custom_latent_space: true
                   name: name
                   call_arg_names:
                   - call_arg_names
@@ -4690,6 +4773,7 @@ components:
                 - init_arg_names:
                   - init_arg_names
                   - init_arg_names
+                  use_custom_latent_space: true
                   name: name
                   call_arg_names:
                   - call_arg_names
@@ -4697,6 +4781,7 @@ components:
                 - init_arg_names:
                   - init_arg_names
                   - init_arg_names
+                  use_custom_latent_space: true
                   name: name
                   call_arg_names:
                   - call_arg_names
@@ -4841,6 +4926,7 @@ components:
                 - init_arg_names:
                   - init_arg_names
                   - init_arg_names
+                  use_custom_latent_space: true
                   name: name
                   call_arg_names:
                   - call_arg_names
@@ -4848,6 +4934,7 @@ components:
                 - init_arg_names:
                   - init_arg_names
                   - init_arg_names
+                  use_custom_latent_space: true
                   name: name
                   call_arg_names:
                   - call_arg_names
@@ -4961,6 +5048,7 @@ components:
                 - init_arg_names:
                   - init_arg_names
                   - init_arg_names
+                  use_custom_latent_space: true
                   name: name
                   call_arg_names:
                   - call_arg_names
@@ -4968,6 +5056,7 @@ components:
                 - init_arg_names:
                   - init_arg_names
                   - init_arg_names
+                  use_custom_latent_space: true
                   name: name
                   call_arg_names:
                   - call_arg_names
@@ -5207,6 +5296,7 @@ components:
               - init_arg_names:
                 - init_arg_names
                 - init_arg_names
+                use_custom_latent_space: true
                 name: name
                 call_arg_names:
                 - call_arg_names
@@ -5214,6 +5304,7 @@ components:
               - init_arg_names:
                 - init_arg_names
                 - init_arg_names
+                use_custom_latent_space: true
                 name: name
                 call_arg_names:
                 - call_arg_names
@@ -5347,6 +5438,7 @@ components:
               - init_arg_names:
                 - init_arg_names
                 - init_arg_names
+                use_custom_latent_space: true
                 name: name
                 call_arg_names:
                 - call_arg_names
@@ -5354,6 +5446,7 @@ components:
               - init_arg_names:
                 - init_arg_names
                 - init_arg_names
+                use_custom_latent_space: true
                 name: name
                 call_arg_names:
                 - call_arg_names
@@ -5483,6 +5576,7 @@ components:
               - init_arg_names:
                 - init_arg_names
                 - init_arg_names
+                use_custom_latent_space: true
                 name: name
                 call_arg_names:
                 - call_arg_names
@@ -5490,6 +5584,7 @@ components:
               - init_arg_names:
                 - init_arg_names
                 - init_arg_names
+                use_custom_latent_space: true
                 name: name
                 call_arg_names:
                 - call_arg_names
@@ -5617,6 +5712,7 @@ components:
               - init_arg_names:
                 - init_arg_names
                 - init_arg_names
+                use_custom_latent_space: true
                 name: name
                 call_arg_names:
                 - call_arg_names
@@ -5624,6 +5720,7 @@ components:
               - init_arg_names:
                 - init_arg_names
                 - init_arg_names
+                use_custom_latent_space: true
                 name: name
                 call_arg_names:
                 - call_arg_names
@@ -5733,6 +5830,7 @@ components:
               - init_arg_names:
                 - init_arg_names
                 - init_arg_names
+                use_custom_latent_space: true
                 name: name
                 call_arg_names:
                 - call_arg_names
@@ -5740,6 +5838,7 @@ components:
               - init_arg_names:
                 - init_arg_names
                 - init_arg_names
+                use_custom_latent_space: true
                 name: name
                 call_arg_names:
                 - call_arg_names
@@ -5814,6 +5913,7 @@ components:
       - Sample Selection
       - Sample Analysis
       - Graph Validate
+      - Fetch Similar
       type: string
     JobStatus:
       enum:
@@ -5859,84 +5959,15 @@ components:
     AnalyzeTypeEnum:
       enum:
       - population_exploration
-      - sample_selection
       - sample_analysis
       - visualizers_calculation
       type: string
-    FilterOperatorType:
-      enum:
-      - between
-      - not-between
-      - equal
-      - not-equal
-      - in
-      - greater-than
-      - less-than
-      type: string
-    NumberOrString:
-      anyOf:
-      - format: double
-        type: number
-      - type: string
-    ESFilterValue:
-      additionalProperties: false
-      example:
-        lt: 6.027456183070403
-        eq: null
-        lst:
-        - null
-        - null
-        gt: 0.8008281904610115
-      properties:
-        gt:
-          format: double
-          type: number
-        lt:
-          format: double
-          type: number
-        eq:
-          $ref: '#/components/schemas/NumberOrString'
-        lst:
-          items:
-            $ref: '#/components/schemas/NumberOrString'
-          type: array
-      type: object
-    ESFilter:
-      additionalProperties: false
-      example:
-        field: field
-        disable: true
-        value:
-          lt: 6.027456183070403
-          eq: null
-          lst:
-          - null
-          - null
-          gt: 0.8008281904610115
-        operator: null
-      properties:
-        operator:
-          $ref: '#/components/schemas/FilterOperatorType'
-        field:
-          type: string
-        disable:
-          type: boolean
-        value:
-          $ref: '#/components/schemas/ESFilterValue'
-      required:
-      - field
-      - operator
-      - value
-      type: object
     AnalyzeParams:
       additionalProperties: false
       properties:
         type:
           $ref: '#/components/schemas/AnalyzeTypeEnum'
         fromEpoch:
-          format: double
-          type: number
-        numOfSamples:
           format: double
           type: number
         batchSize:
@@ -5948,12 +5979,6 @@ components:
           $ref: '#/components/schemas/DataStateType'
         extId:
           type: string
-        digest:
-          type: string
-        filters:
-          items:
-            $ref: '#/components/schemas/ESFilter'
-          type: array
       required:
       - extId
       - fromEpoch
@@ -5981,11 +6006,150 @@ components:
       - title
       - type
       type: object
+    FilterOperatorType:
+      enum:
+      - between
+      - not-between
+      - equal
+      - not-equal
+      - in
+      - greater-than
+      - less-than
+      - cluster
+      type: string
+    NumberOrString:
+      anyOf:
+      - format: double
+        type: number
+      - type: string
+    ESFilterValue:
+      additionalProperties: false
+      example:
+        lt: 6.027456183070403
+        blob_path: blob_path
+        eq: null
+        lst:
+        - null
+        - null
+        gt: 0.8008281904610115
+      properties:
+        gt:
+          format: double
+          type: number
+        lt:
+          format: double
+          type: number
+        eq:
+          $ref: '#/components/schemas/NumberOrString'
+        lst:
+          items:
+            $ref: '#/components/schemas/NumberOrString'
+          type: array
+        blob_path:
+          type: string
+      type: object
+    ESFilter:
+      additionalProperties: false
+      example:
+        field: field
+        disable: true
+        value:
+          lt: 6.027456183070403
+          blob_path: blob_path
+          eq: null
+          lst:
+          - null
+          - null
+          gt: 0.8008281904610115
+        operator: null
+      properties:
+        operator:
+          $ref: '#/components/schemas/FilterOperatorType'
+        field:
+          type: string
+        disable:
+          type: boolean
+        value:
+          $ref: '#/components/schemas/ESFilterValue'
+      required:
+      - field
+      - operator
+      - value
+      type: object
+    FetchSimilarJobParams:
+      properties:
+        digest:
+          type: string
+        filters:
+          items:
+            $ref: '#/components/schemas/ESFilter'
+          type: array
+        epoch:
+          format: double
+          type: number
+        sampleIds:
+          items:
+            $ref: '#/components/schemas/SampleIdentity'
+          type: array
+        limit:
+          format: double
+          type: number
+        sessionRunId:
+          type: string
+        type:
+          enum:
+          - fetch_similar
+          nullable: false
+          type: string
+      required:
+      - digest
+      - epoch
+      - limit
+      - sampleIds
+      - sessionRunId
+      - type
+      type: object
+    PopulationExplorationJobParams:
+      properties:
+        projectionMetric:
+          type: string
+        digest:
+          type: string
+        filters:
+          items:
+            $ref: '#/components/schemas/ESFilter'
+          type: array
+        fromEpoch:
+          format: double
+          type: number
+        numOfSamples:
+          format: double
+          type: number
+        batchSize:
+          format: double
+          type: number
+        sessionRunId:
+          type: string
+        type:
+          enum:
+          - population_exploration
+          nullable: false
+          type: string
+      required:
+      - batchSize
+      - digest
+      - fromEpoch
+      - numOfSamples
+      - sessionRunId
+      - type
+      type: object
     JobParams:
       anyOf:
       - $ref: '#/components/schemas/TrainingParams'
       - $ref: '#/components/schemas/AnalyzeParams'
       - $ref: '#/components/schemas/ExportModelParams'
+      - $ref: '#/components/schemas/FetchSimilarJobParams'
+      - $ref: '#/components/schemas/PopulationExplorationJobParams'
     Job:
       additionalProperties: false
       example:
@@ -6038,24 +6202,12 @@ components:
       - type
       - updatedAt
       type: object
-    EvaluateParams:
+    EvaluateNewSessionParams:
       additionalProperties: false
-      example:
-        versionId: versionId
-        name: name
-        dataStates:
-        - null
-        - null
-        sessionId: sessionId
-        batchSize: 0.8008281904610115
-        evaluatedEpoch: 6.027456183070403
-        projectId: projectId
       properties:
         versionId:
           type: string
         projectId:
-          type: string
-        sessionId:
           type: string
         batchSize:
           format: double
@@ -6064,20 +6216,23 @@ components:
           items:
             $ref: '#/components/schemas/DataStateType'
           type: array
-        evaluatedEpoch:
-          format: double
-          type: number
         name:
           type: string
       required:
       - batchSize
       - dataStates
-      - evaluatedEpoch
       - name
       - projectId
-      - sessionId
       - versionId
       type: object
+    EvaluateExistingSessionParams:
+      allOf:
+      - $ref: '#/components/schemas/EvaluateNewSessionParams'
+      - $ref: '#/components/schemas/EvaluateExistingSessionParams_allOf'
+    EvaluateParams:
+      anyOf:
+      - $ref: '#/components/schemas/EvaluateNewSessionParams'
+      - $ref: '#/components/schemas/EvaluateExistingSessionParams'
     ExportedModelData:
       additionalProperties: false
       example:
@@ -7198,13 +7353,14 @@ components:
     RunProcess:
       additionalProperties: false
       example:
+        sessionRunName: sessionRunName
+        sessionName: sessionName
+        versionName: versionName
+        params: null
         jobId: jobId
         createdAt: createdAt
         versionId: versionId
-        sessionRunName: sessionRunName
         sessionRunId: sessionRunId
-        sessionName: sessionName
-        versionName: versionName
         projectName: projectName
         jobType: jobType
         events:
@@ -7249,6 +7405,8 @@ components:
           items:
             $ref: '#/components/schemas/JobEvent'
           type: array
+        params:
+          $ref: '#/components/schemas/JobParams'
       required:
       - createdAt
       - events
@@ -7266,13 +7424,14 @@ components:
       additionalProperties: false
       example:
         processes:
-        - jobId: jobId
-          createdAt: createdAt
-          versionId: versionId
-          sessionRunName: sessionRunName
-          sessionRunId: sessionRunId
+        - sessionRunName: sessionRunName
           sessionName: sessionName
           versionName: versionName
+          params: null
+          jobId: jobId
+          createdAt: createdAt
+          versionId: versionId
+          sessionRunId: sessionRunId
           projectName: projectName
           jobType: jobType
           events:
@@ -7290,13 +7449,14 @@ components:
             status: null
           status: null
           updatedAt: updatedAt
-        - jobId: jobId
-          createdAt: createdAt
-          versionId: versionId
-          sessionRunName: sessionRunName
-          sessionRunId: sessionRunId
+        - sessionRunName: sessionRunName
           sessionName: sessionName
           versionName: versionName
+          params: null
+          jobId: jobId
+          createdAt: createdAt
+          versionId: versionId
+          sessionRunId: sessionRunId
           projectName: projectName
           jobType: jobType
           events:
@@ -7334,6 +7494,7 @@ components:
         types:
         - null
         - null
+        showJobsFromDate: 2000-01-23T04:56:07.000+00:00
         subTypes:
         - null
         - null
@@ -7368,6 +7529,9 @@ components:
             $ref: '#/components/schemas/JobStatus'
           type: array
         projectId:
+          type: string
+        showJobsFromDate:
+          format: date-time
           type: string
       type: object
     GetSlimJobsResponse:
@@ -7704,6 +7868,7 @@ components:
           disable: true
           value:
             lt: 6.027456183070403
+            blob_path: blob_path
             eq: null
             lst:
             - null
@@ -7714,6 +7879,7 @@ components:
           disable: true
           value:
             lt: 6.027456183070403
+            blob_path: blob_path
             eq: null
             lst:
             - null
@@ -7787,6 +7953,7 @@ components:
           disable: true
           value:
             lt: 6.027456183070403
+            blob_path: blob_path
             eq: null
             lst:
             - null
@@ -7797,6 +7964,7 @@ components:
           disable: true
           value:
             lt: 6.027456183070403
+            blob_path: blob_path
             eq: null
             lst:
             - null
@@ -7923,6 +8091,7 @@ components:
           disable: true
           value:
             lt: 6.027456183070403
+            blob_path: blob_path
             eq: null
             lst:
             - null
@@ -7933,6 +8102,7 @@ components:
           disable: true
           value:
             lt: 6.027456183070403
+            blob_path: blob_path
             eq: null
             lst:
             - null
@@ -7980,36 +8150,35 @@ components:
       - projectId
       - sessionRunIds
       type: object
-    GetConfusionMetricNamesObject:
-      additionalProperties: false
+    ConfusionMetricNamesResponse:
       example:
-        existedInModeldsExternalIds:
-        - existedInModeldsExternalIds
-        - existedInModeldsExternalIds
-        name: name
+        confusionMetricNames:
+        - confusionMetricNames
+        - confusionMetricNames
       properties:
-        name:
-          type: string
-        existedInModeldsExternalIds:
+        confusionMetricNames:
           items:
             type: string
           type: array
       required:
-      - existedInModeldsExternalIds
-      - name
+      - confusionMetricNames
       type: object
-    ConfusionMetricNamesResponse:
-      items:
-        $ref: '#/components/schemas/GetConfusionMetricNamesObject'
-      type: array
     ConfusionMetricNamesParams:
       example:
+        sessionRunIds:
+        - sessionRunIds
+        - sessionRunIds
         projectId: projectId
       properties:
+        sessionRunIds:
+          items:
+            type: string
+          type: array
         projectId:
           type: string
       required:
       - projectId
+      - sessionRunIds
       type: object
     EsBatchAggregationType:
       enum:
@@ -8030,6 +8199,7 @@ components:
           disable: true
           value:
             lt: 6.027456183070403
+            blob_path: blob_path
             eq: null
             lst:
             - null
@@ -8040,6 +8210,7 @@ components:
           disable: true
           value:
             lt: 6.027456183070403
+            blob_path: blob_path
             eq: null
             lst:
             - null
@@ -8111,6 +8282,7 @@ components:
           disable: true
           value:
             lt: 6.027456183070403
+            blob_path: blob_path
             eq: null
             lst:
             - null
@@ -8121,6 +8293,7 @@ components:
           disable: true
           value:
             lt: 6.027456183070403
+            blob_path: blob_path
             eq: null
             lst:
             - null
@@ -9241,6 +9414,31 @@ components:
           sessionWeightId: sessionWeightId
         createdBy: createdBy
         teamId: teamId
+        jobs:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          sessionRunId: sessionRunId
+          createdBy: createdBy
+          teamId: teamId
+          subType: null
+          type: null
+          params: null
+          projectId: projectId
+          version: version
+          cid: cid
+          status: null
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          sessionRunId: sessionRunId
+          createdBy: createdBy
+          teamId: teamId
+          subType: null
+          type: null
+          params: null
+          projectId: projectId
+          version: version
+          cid: cid
+          status: null
+          updatedAt: 2000-01-23T04:56:07.000+00:00
         name: name
         sessionId: sessionId
         projectId: projectId
@@ -9268,11 +9466,16 @@ components:
           items:
             $ref: '#/components/schemas/WeightAssetData'
           type: array
+        jobs:
+          items:
+            $ref: '#/components/schemas/Job'
+          type: array
       required:
       - cid
       - createdAt
       - createdBy
       - isEvaluate
+      - jobs
       - name
       - projectId
       - sessionId
@@ -9335,6 +9538,31 @@ components:
             sessionWeightId: sessionWeightId
           createdBy: createdBy
           teamId: teamId
+          jobs:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            sessionRunId: sessionRunId
+            createdBy: createdBy
+            teamId: teamId
+            subType: null
+            type: null
+            params: null
+            projectId: projectId
+            version: version
+            cid: cid
+            status: null
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            sessionRunId: sessionRunId
+            createdBy: createdBy
+            teamId: teamId
+            subType: null
+            type: null
+            params: null
+            projectId: projectId
+            version: version
+            cid: cid
+            status: null
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           name: name
           sessionId: sessionId
           projectId: projectId
@@ -9348,6 +9576,31 @@ components:
             sessionWeightId: sessionWeightId
           createdBy: createdBy
           teamId: teamId
+          jobs:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            sessionRunId: sessionRunId
+            createdBy: createdBy
+            teamId: teamId
+            subType: null
+            type: null
+            params: null
+            projectId: projectId
+            version: version
+            cid: cid
+            status: null
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            sessionRunId: sessionRunId
+            createdBy: createdBy
+            teamId: teamId
+            subType: null
+            type: null
+            params: null
+            projectId: projectId
+            version: version
+            cid: cid
+            status: null
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           name: name
           sessionId: sessionId
           projectId: projectId
@@ -9428,6 +9681,31 @@ components:
               sessionWeightId: sessionWeightId
             createdBy: createdBy
             teamId: teamId
+            jobs:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             sessionId: sessionId
             projectId: projectId
@@ -9441,6 +9719,31 @@ components:
               sessionWeightId: sessionWeightId
             createdBy: createdBy
             teamId: teamId
+            jobs:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             sessionId: sessionId
             projectId: projectId
@@ -9838,6 +10141,31 @@ components:
             sessionWeightId: sessionWeightId
           createdBy: createdBy
           teamId: teamId
+          jobs:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            sessionRunId: sessionRunId
+            createdBy: createdBy
+            teamId: teamId
+            subType: null
+            type: null
+            params: null
+            projectId: projectId
+            version: version
+            cid: cid
+            status: null
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            sessionRunId: sessionRunId
+            createdBy: createdBy
+            teamId: teamId
+            subType: null
+            type: null
+            params: null
+            projectId: projectId
+            version: version
+            cid: cid
+            status: null
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           name: name
           sessionId: sessionId
           projectId: projectId
@@ -9851,6 +10179,31 @@ components:
             sessionWeightId: sessionWeightId
           createdBy: createdBy
           teamId: teamId
+          jobs:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            sessionRunId: sessionRunId
+            createdBy: createdBy
+            teamId: teamId
+            subType: null
+            type: null
+            params: null
+            projectId: projectId
+            version: version
+            cid: cid
+            status: null
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            sessionRunId: sessionRunId
+            createdBy: createdBy
+            teamId: teamId
+            subType: null
+            type: null
+            params: null
+            projectId: projectId
+            version: version
+            cid: cid
+            status: null
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           name: name
           sessionId: sessionId
           projectId: projectId
@@ -9935,6 +10288,31 @@ components:
               sessionWeightId: sessionWeightId
             createdBy: createdBy
             teamId: teamId
+            jobs:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             sessionId: sessionId
             projectId: projectId
@@ -9948,6 +10326,31 @@ components:
               sessionWeightId: sessionWeightId
             createdBy: createdBy
             teamId: teamId
+            jobs:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             sessionId: sessionId
             projectId: projectId
@@ -9992,6 +10395,31 @@ components:
               sessionWeightId: sessionWeightId
             createdBy: createdBy
             teamId: teamId
+            jobs:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             sessionId: sessionId
             projectId: projectId
@@ -10005,6 +10433,31 @@ components:
               sessionWeightId: sessionWeightId
             createdBy: createdBy
             teamId: teamId
+            jobs:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             sessionId: sessionId
             projectId: projectId
@@ -10089,6 +10542,31 @@ components:
               sessionWeightId: sessionWeightId
             createdBy: createdBy
             teamId: teamId
+            jobs:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             sessionId: sessionId
             projectId: projectId
@@ -10102,6 +10580,31 @@ components:
               sessionWeightId: sessionWeightId
             createdBy: createdBy
             teamId: teamId
+            jobs:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             sessionId: sessionId
             projectId: projectId
@@ -10145,6 +10648,31 @@ components:
               sessionWeightId: sessionWeightId
             createdBy: createdBy
             teamId: teamId
+            jobs:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             sessionId: sessionId
             projectId: projectId
@@ -10158,6 +10686,31 @@ components:
               sessionWeightId: sessionWeightId
             createdBy: createdBy
             teamId: teamId
+            jobs:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             sessionId: sessionId
             projectId: projectId
@@ -10312,6 +10865,7 @@ components:
           disable: true
           value:
             lt: 6.027456183070403
+            blob_path: blob_path
             eq: null
             lst:
             - null
@@ -10322,6 +10876,7 @@ components:
           disable: true
           value:
             lt: 6.027456183070403
+            blob_path: blob_path
             eq: null
             lst:
             - null
@@ -10359,6 +10914,7 @@ components:
           disable: true
           value:
             lt: 6.027456183070403
+            blob_path: blob_path
             eq: null
             lst:
             - null
@@ -10369,6 +10925,7 @@ components:
           disable: true
           value:
             lt: 6.027456183070403
+            blob_path: blob_path
             eq: null
             lst:
             - null
@@ -10411,6 +10968,7 @@ components:
           disable: true
           value:
             lt: 6.027456183070403
+            blob_path: blob_path
             eq: null
             lst:
             - null
@@ -10421,6 +10979,7 @@ components:
           disable: true
           value:
             lt: 6.027456183070403
+            blob_path: blob_path
             eq: null
             lst:
             - null
@@ -11765,6 +12324,31 @@ components:
               sessionWeightId: sessionWeightId
             createdBy: createdBy
             teamId: teamId
+            jobs:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             sessionId: sessionId
             projectId: projectId
@@ -11778,6 +12362,31 @@ components:
               sessionWeightId: sessionWeightId
             createdBy: createdBy
             teamId: teamId
+            jobs:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             sessionId: sessionId
             projectId: projectId
@@ -11822,6 +12431,31 @@ components:
               sessionWeightId: sessionWeightId
             createdBy: createdBy
             teamId: teamId
+            jobs:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             sessionId: sessionId
             projectId: projectId
@@ -11835,6 +12469,31 @@ components:
               sessionWeightId: sessionWeightId
             createdBy: createdBy
             teamId: teamId
+            jobs:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
             name: name
             sessionId: sessionId
             projectId: projectId
@@ -12004,6 +12663,31 @@ components:
                 sessionWeightId: sessionWeightId
               createdBy: createdBy
               teamId: teamId
+              jobs:
+              - createdAt: 2000-01-23T04:56:07.000+00:00
+                sessionRunId: sessionRunId
+                createdBy: createdBy
+                teamId: teamId
+                subType: null
+                type: null
+                params: null
+                projectId: projectId
+                version: version
+                cid: cid
+                status: null
+                updatedAt: 2000-01-23T04:56:07.000+00:00
+              - createdAt: 2000-01-23T04:56:07.000+00:00
+                sessionRunId: sessionRunId
+                createdBy: createdBy
+                teamId: teamId
+                subType: null
+                type: null
+                params: null
+                projectId: projectId
+                version: version
+                cid: cid
+                status: null
+                updatedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               sessionId: sessionId
               projectId: projectId
@@ -12017,6 +12701,31 @@ components:
                 sessionWeightId: sessionWeightId
               createdBy: createdBy
               teamId: teamId
+              jobs:
+              - createdAt: 2000-01-23T04:56:07.000+00:00
+                sessionRunId: sessionRunId
+                createdBy: createdBy
+                teamId: teamId
+                subType: null
+                type: null
+                params: null
+                projectId: projectId
+                version: version
+                cid: cid
+                status: null
+                updatedAt: 2000-01-23T04:56:07.000+00:00
+              - createdAt: 2000-01-23T04:56:07.000+00:00
+                sessionRunId: sessionRunId
+                createdBy: createdBy
+                teamId: teamId
+                subType: null
+                type: null
+                params: null
+                projectId: projectId
+                version: version
+                cid: cid
+                status: null
+                updatedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               sessionId: sessionId
               projectId: projectId
@@ -12061,6 +12770,31 @@ components:
                 sessionWeightId: sessionWeightId
               createdBy: createdBy
               teamId: teamId
+              jobs:
+              - createdAt: 2000-01-23T04:56:07.000+00:00
+                sessionRunId: sessionRunId
+                createdBy: createdBy
+                teamId: teamId
+                subType: null
+                type: null
+                params: null
+                projectId: projectId
+                version: version
+                cid: cid
+                status: null
+                updatedAt: 2000-01-23T04:56:07.000+00:00
+              - createdAt: 2000-01-23T04:56:07.000+00:00
+                sessionRunId: sessionRunId
+                createdBy: createdBy
+                teamId: teamId
+                subType: null
+                type: null
+                params: null
+                projectId: projectId
+                version: version
+                cid: cid
+                status: null
+                updatedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               sessionId: sessionId
               projectId: projectId
@@ -12074,6 +12808,31 @@ components:
                 sessionWeightId: sessionWeightId
               createdBy: createdBy
               teamId: teamId
+              jobs:
+              - createdAt: 2000-01-23T04:56:07.000+00:00
+                sessionRunId: sessionRunId
+                createdBy: createdBy
+                teamId: teamId
+                subType: null
+                type: null
+                params: null
+                projectId: projectId
+                version: version
+                cid: cid
+                status: null
+                updatedAt: 2000-01-23T04:56:07.000+00:00
+              - createdAt: 2000-01-23T04:56:07.000+00:00
+                sessionRunId: sessionRunId
+                createdBy: createdBy
+                teamId: teamId
+                subType: null
+                type: null
+                params: null
+                projectId: projectId
+                version: version
+                cid: cid
+                status: null
+                updatedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               sessionId: sessionId
               projectId: projectId
@@ -12198,6 +12957,31 @@ components:
                 sessionWeightId: sessionWeightId
               createdBy: createdBy
               teamId: teamId
+              jobs:
+              - createdAt: 2000-01-23T04:56:07.000+00:00
+                sessionRunId: sessionRunId
+                createdBy: createdBy
+                teamId: teamId
+                subType: null
+                type: null
+                params: null
+                projectId: projectId
+                version: version
+                cid: cid
+                status: null
+                updatedAt: 2000-01-23T04:56:07.000+00:00
+              - createdAt: 2000-01-23T04:56:07.000+00:00
+                sessionRunId: sessionRunId
+                createdBy: createdBy
+                teamId: teamId
+                subType: null
+                type: null
+                params: null
+                projectId: projectId
+                version: version
+                cid: cid
+                status: null
+                updatedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               sessionId: sessionId
               projectId: projectId
@@ -12211,6 +12995,31 @@ components:
                 sessionWeightId: sessionWeightId
               createdBy: createdBy
               teamId: teamId
+              jobs:
+              - createdAt: 2000-01-23T04:56:07.000+00:00
+                sessionRunId: sessionRunId
+                createdBy: createdBy
+                teamId: teamId
+                subType: null
+                type: null
+                params: null
+                projectId: projectId
+                version: version
+                cid: cid
+                status: null
+                updatedAt: 2000-01-23T04:56:07.000+00:00
+              - createdAt: 2000-01-23T04:56:07.000+00:00
+                sessionRunId: sessionRunId
+                createdBy: createdBy
+                teamId: teamId
+                subType: null
+                type: null
+                params: null
+                projectId: projectId
+                version: version
+                cid: cid
+                status: null
+                updatedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               sessionId: sessionId
               projectId: projectId
@@ -12255,6 +13064,31 @@ components:
                 sessionWeightId: sessionWeightId
               createdBy: createdBy
               teamId: teamId
+              jobs:
+              - createdAt: 2000-01-23T04:56:07.000+00:00
+                sessionRunId: sessionRunId
+                createdBy: createdBy
+                teamId: teamId
+                subType: null
+                type: null
+                params: null
+                projectId: projectId
+                version: version
+                cid: cid
+                status: null
+                updatedAt: 2000-01-23T04:56:07.000+00:00
+              - createdAt: 2000-01-23T04:56:07.000+00:00
+                sessionRunId: sessionRunId
+                createdBy: createdBy
+                teamId: teamId
+                subType: null
+                type: null
+                params: null
+                projectId: projectId
+                version: version
+                cid: cid
+                status: null
+                updatedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               sessionId: sessionId
               projectId: projectId
@@ -12268,6 +13102,31 @@ components:
                 sessionWeightId: sessionWeightId
               createdBy: createdBy
               teamId: teamId
+              jobs:
+              - createdAt: 2000-01-23T04:56:07.000+00:00
+                sessionRunId: sessionRunId
+                createdBy: createdBy
+                teamId: teamId
+                subType: null
+                type: null
+                params: null
+                projectId: projectId
+                version: version
+                cid: cid
+                status: null
+                updatedAt: 2000-01-23T04:56:07.000+00:00
+              - createdAt: 2000-01-23T04:56:07.000+00:00
+                sessionRunId: sessionRunId
+                createdBy: createdBy
+                teamId: teamId
+                subType: null
+                type: null
+                params: null
+                projectId: projectId
+                version: version
+                cid: cid
+                status: null
+                updatedAt: 2000-01-23T04:56:07.000+00:00
               name: name
               sessionId: sessionId
               projectId: projectId
@@ -12832,6 +13691,10 @@ components:
       description: Construct a type with a set of properties K of type T
       properties: {}
       type: object
+    Record_string.Record_string.string__:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
     ScatterVizDataState:
       additionalProperties: false
       properties:
@@ -12857,6 +13720,10 @@ components:
           properties: {}
           type: object
         mi_by_cluster:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+        clusters_blob_path:
           description: Construct a type with a set of properties K of type T
           properties: {}
           type: object
@@ -12922,6 +13789,7 @@ components:
       - hbar
       - bbox_image
       - mask_image
+      - image_heatmap
       type: string
     ImageData:
       additionalProperties: false
@@ -12932,6 +13800,20 @@ components:
           $ref: '#/components/schemas/DataTypeEnum'
       required:
       - blob
+      - type
+      type: object
+    ImageHeatmapData:
+      additionalProperties: false
+      properties:
+        blob:
+          type: string
+        heatmap_blob:
+          type: string
+        type:
+          $ref: '#/components/schemas/DataTypeEnum'
+      required:
+      - blob
+      - heatmap_blob
       - type
       type: object
     TextData:
@@ -13048,6 +13930,7 @@ components:
     VisData:
       anyOf:
       - $ref: '#/components/schemas/ImageData'
+      - $ref: '#/components/schemas/ImageHeatmapData'
       - $ref: '#/components/schemas/TextData'
       - $ref: '#/components/schemas/HorizontalBarData'
       - $ref: '#/components/schemas/GraphData'
@@ -13842,11 +14725,50 @@ components:
       - sampleIdentity
       - sessionRunId
       type: object
+    Partial_PopulationExplorationArtifacts_:
+      description: Make all properties in T optional
+      example:
+        insights: insights
+        scatter: scatter
+        scatterClusters: scatterClusters
+        analysis: analysis
+      properties:
+        insights:
+          type: string
+        scatter:
+          type: string
+        scatterClusters:
+          type: string
+        analysis:
+          type: string
+      type: object
+    PopulationExplorationResponse:
+      additionalProperties: false
+      example:
+        jobId: jobId
+        readyArtifacts:
+          insights: insights
+          scatter: scatter
+          scatterClusters: scatterClusters
+          analysis: analysis
+        status: null
+      properties:
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        jobId:
+          type: string
+        readyArtifacts:
+          $ref: '#/components/schemas/Partial_PopulationExplorationArtifacts_'
+      required:
+      - readyArtifacts
+      - status
+      type: object
     PopulationExplorationParams:
       additionalProperties: false
       example:
         fromEpoch: 1.4658129805029452
         sessionRunId: sessionRunId
+        projectionMetric: projectionMetric
         digest: digest
         numOfSamples: 6.027456183070403
         filters:
@@ -13854,6 +14776,7 @@ components:
           disable: true
           value:
             lt: 6.027456183070403
+            blob_path: blob_path
             eq: null
             lst:
             - null
@@ -13864,6 +14787,7 @@ components:
           disable: true
           value:
             lt: 6.027456183070403
+            blob_path: blob_path
             eq: null
             lst:
             - null
@@ -13892,6 +14816,8 @@ components:
           type: array
         digest:
           type: string
+        projectionMetric:
+          type: string
       required:
       - batchSize
       - digest
@@ -13900,43 +14826,87 @@ components:
       - projectId
       - sessionRunId
       type: object
-    SampleSelectionParams:
+    FetchSimilarResponse:
       additionalProperties: false
       example:
-        fromEpoch: 1.4658129805029452
+        jobId: jobId
+        readyArtifacts:
+          clusterPath: clusterPath
+        status: null
+      properties:
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        jobId:
+          type: string
+        readyArtifacts:
+          $ref: '#/components/schemas/FetchSimilarResponse_readyArtifacts'
+      required:
+      - readyArtifacts
+      - status
+      type: object
+    FetchSimilarRequestParams:
+      additionalProperties: false
+      example:
         sessionRunId: sessionRunId
-        fromDatasetSlice: null
-        numOfSamples: 6.027456183070403
-        batchSize: 0.8008281904610115
-        projectId: projectId
-        sampleIdentity:
-          index: 0.8008281904610115
+        limit: 0.8008281904610115
+        sampleIds:
+        - index: 0.8008281904610115
           state: null
+        - index: 0.8008281904610115
+          state: null
+        digest: digest
+        epoch: 6.027456183070403
+        filters:
+        - field: field
+          disable: true
+          value:
+            lt: 6.027456183070403
+            blob_path: blob_path
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 0.8008281904610115
+          operator: null
+        - field: field
+          disable: true
+          value:
+            lt: 6.027456183070403
+            blob_path: blob_path
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 0.8008281904610115
+          operator: null
+        projectId: projectId
       properties:
         sessionRunId:
           type: string
         projectId:
           type: string
-        sampleIdentity:
-          $ref: '#/components/schemas/SampleIdentity'
-        fromDatasetSlice:
-          $ref: '#/components/schemas/DataStateType'
-        batchSize:
+        limit:
           format: double
           type: number
-        numOfSamples:
+        sampleIds:
+          items:
+            $ref: '#/components/schemas/SampleIdentity'
+          type: array
+        epoch:
           format: double
           type: number
-        fromEpoch:
-          format: double
-          type: number
+        filters:
+          items:
+            $ref: '#/components/schemas/ESFilter'
+          type: array
+        digest:
+          type: string
       required:
-      - batchSize
-      - fromDatasetSlice
-      - fromEpoch
-      - numOfSamples
+      - digest
+      - epoch
+      - limit
       - projectId
-      - sampleIdentity
+      - sampleIds
       - sessionRunId
       type: object
     CreateSampleVisualizationsParams:
@@ -13983,6 +14953,25 @@ components:
           type: boolean
       required:
       - success
+      type: object
+    EvaluateExistingSessionParams_allOf:
+      properties:
+        evaluatedEpoch:
+          format: double
+          type: number
+        sessionId:
+          type: string
+      required:
+      - evaluatedEpoch
+      - sessionId
+      type: object
+      example: null
+    FetchSimilarResponse_readyArtifacts:
+      example:
+        clusterPath: clusterPath
+      properties:
+        clusterPath:
+          type: string
       type: object
   securitySchemes:
     jwt:

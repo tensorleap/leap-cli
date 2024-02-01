@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **Lt** | Pointer to **float64** |  | [optional] 
 **Eq** | Pointer to [**NumberOrString**](NumberOrString.md) |  | [optional] 
 **Lst** | Pointer to [**[]NumberOrString**](NumberOrString.md) |  | [optional] 
+**BlobPath** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -127,6 +128,31 @@ SetLst sets Lst field to given value.
 `func (o *ESFilterValue) HasLst() bool`
 
 HasLst returns a boolean if a field has been set.
+
+### GetBlobPath
+
+`func (o *ESFilterValue) GetBlobPath() string`
+
+GetBlobPath returns the BlobPath field if non-nil, zero value otherwise.
+
+### GetBlobPathOk
+
+`func (o *ESFilterValue) GetBlobPathOk() (*string, bool)`
+
+GetBlobPathOk returns a tuple with the BlobPath field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBlobPath
+
+`func (o *ESFilterValue) SetBlobPath(v string)`
+
+SetBlobPath sets BlobPath field to given value.
+
+### HasBlobPath
+
+`func (o *ESFilterValue) HasBlobPath() bool`
+
+HasBlobPath returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

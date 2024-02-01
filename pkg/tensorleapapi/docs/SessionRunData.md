@@ -13,12 +13,13 @@ Name | Type | Description | Notes
 **CreatedAt** | **time.Time** |  | 
 **CreatedBy** | **string** |  | 
 **WeightAssets** | [**[]WeightAssetData**](WeightAssetData.md) |  | 
+**Jobs** | [**[]Job**](Job.md) |  | 
 
 ## Methods
 
 ### NewSessionRunData
 
-`func NewSessionRunData(projectId string, cid string, sessionId string, name string, teamId string, isEvaluate bool, createdAt time.Time, createdBy string, weightAssets []WeightAssetData, ) *SessionRunData`
+`func NewSessionRunData(projectId string, cid string, sessionId string, name string, teamId string, isEvaluate bool, createdAt time.Time, createdBy string, weightAssets []WeightAssetData, jobs []Job, ) *SessionRunData`
 
 NewSessionRunData instantiates a new SessionRunData object
 This constructor will assign default values to properties that have it defined,
@@ -211,6 +212,26 @@ and a boolean to check if the value has been set.
 `func (o *SessionRunData) SetWeightAssets(v []WeightAssetData)`
 
 SetWeightAssets sets WeightAssets field to given value.
+
+
+### GetJobs
+
+`func (o *SessionRunData) GetJobs() []Job`
+
+GetJobs returns the Jobs field if non-nil, zero value otherwise.
+
+### GetJobsOk
+
+`func (o *SessionRunData) GetJobsOk() (*[]Job, bool)`
+
+GetJobsOk returns a tuple with the Jobs field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetJobs
+
+`func (o *SessionRunData) SetJobs(v []Job)`
+
+SetJobs sets Jobs field to given value.
 
 
 

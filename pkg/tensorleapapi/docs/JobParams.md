@@ -7,23 +7,27 @@ Name | Type | Description | Notes
 **Epochs** | **float64** |  | 
 **BatchSize** | **float64** |  | 
 **EarlyStopParams** | Pointer to [**EarlyStopParams**](EarlyStopParams.md) |  | [optional] 
-**Type** | [**ExportModelTypeEnum**](ExportModelTypeEnum.md) |  | 
+**Type** | **string** |  | 
 **FromEpoch** | **float64** |  | 
-**NumOfSamples** | Pointer to **float64** |  | [optional] 
-**BatchSize** | Pointer to **float64** |  | [optional] 
+**BatchSize** | **float64** |  | 
 **SampleIdentity** | Pointer to [**SampleIdentity**](SampleIdentity.md) |  | [optional] 
 **FromDatasetSlice** | Pointer to [**DataStateType**](DataStateType.md) |  | [optional] 
 **ExtId** | **string** |  | 
-**Digest** | Pointer to **string** |  | [optional] 
-**Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **Title** | **string** |  | 
 **Epoch** | **float64** |  | 
+**Digest** | **string** |  | 
+**Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
+**SampleIds** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
+**Limit** | **float64** |  | 
+**SessionRunId** | **string** |  | 
+**ProjectionMetric** | Pointer to **string** |  | [optional] 
+**NumOfSamples** | **float64** |  | 
 
 ## Methods
 
 ### NewJobParams
 
-`func NewJobParams(epochs float64, batchSize float64, type_ ExportModelTypeEnum, fromEpoch float64, extId string, title string, epoch float64, ) *JobParams`
+`func NewJobParams(epochs float64, batchSize float64, type_ string, fromEpoch float64, batchSize float64, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, sessionRunId string, numOfSamples float64, ) *JobParams`
 
 NewJobParams instantiates a new JobParams object
 This constructor will assign default values to properties that have it defined,
@@ -105,20 +109,20 @@ HasEarlyStopParams returns a boolean if a field has been set.
 
 ### GetType
 
-`func (o *JobParams) GetType() ExportModelTypeEnum`
+`func (o *JobParams) GetType() string`
 
 GetType returns the Type field if non-nil, zero value otherwise.
 
 ### GetTypeOk
 
-`func (o *JobParams) GetTypeOk() (*ExportModelTypeEnum, bool)`
+`func (o *JobParams) GetTypeOk() (*string, bool)`
 
 GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetType
 
-`func (o *JobParams) SetType(v ExportModelTypeEnum)`
+`func (o *JobParams) SetType(v string)`
 
 SetType sets Type field to given value.
 
@@ -143,31 +147,6 @@ and a boolean to check if the value has been set.
 SetFromEpoch sets FromEpoch field to given value.
 
 
-### GetNumOfSamples
-
-`func (o *JobParams) GetNumOfSamples() float64`
-
-GetNumOfSamples returns the NumOfSamples field if non-nil, zero value otherwise.
-
-### GetNumOfSamplesOk
-
-`func (o *JobParams) GetNumOfSamplesOk() (*float64, bool)`
-
-GetNumOfSamplesOk returns a tuple with the NumOfSamples field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNumOfSamples
-
-`func (o *JobParams) SetNumOfSamples(v float64)`
-
-SetNumOfSamples sets NumOfSamples field to given value.
-
-### HasNumOfSamples
-
-`func (o *JobParams) HasNumOfSamples() bool`
-
-HasNumOfSamples returns a boolean if a field has been set.
-
 ### GetBatchSize
 
 `func (o *JobParams) GetBatchSize() float64`
@@ -187,11 +166,6 @@ and a boolean to check if the value has been set.
 
 SetBatchSize sets BatchSize field to given value.
 
-### HasBatchSize
-
-`func (o *JobParams) HasBatchSize() bool`
-
-HasBatchSize returns a boolean if a field has been set.
 
 ### GetSampleIdentity
 
@@ -263,56 +237,6 @@ and a boolean to check if the value has been set.
 SetExtId sets ExtId field to given value.
 
 
-### GetDigest
-
-`func (o *JobParams) GetDigest() string`
-
-GetDigest returns the Digest field if non-nil, zero value otherwise.
-
-### GetDigestOk
-
-`func (o *JobParams) GetDigestOk() (*string, bool)`
-
-GetDigestOk returns a tuple with the Digest field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDigest
-
-`func (o *JobParams) SetDigest(v string)`
-
-SetDigest sets Digest field to given value.
-
-### HasDigest
-
-`func (o *JobParams) HasDigest() bool`
-
-HasDigest returns a boolean if a field has been set.
-
-### GetFilters
-
-`func (o *JobParams) GetFilters() []ESFilter`
-
-GetFilters returns the Filters field if non-nil, zero value otherwise.
-
-### GetFiltersOk
-
-`func (o *JobParams) GetFiltersOk() (*[]ESFilter, bool)`
-
-GetFiltersOk returns a tuple with the Filters field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFilters
-
-`func (o *JobParams) SetFilters(v []ESFilter)`
-
-SetFilters sets Filters field to given value.
-
-### HasFilters
-
-`func (o *JobParams) HasFilters() bool`
-
-HasFilters returns a boolean if a field has been set.
-
 ### GetTitle
 
 `func (o *JobParams) GetTitle() string`
@@ -351,6 +275,156 @@ and a boolean to check if the value has been set.
 `func (o *JobParams) SetEpoch(v float64)`
 
 SetEpoch sets Epoch field to given value.
+
+
+### GetDigest
+
+`func (o *JobParams) GetDigest() string`
+
+GetDigest returns the Digest field if non-nil, zero value otherwise.
+
+### GetDigestOk
+
+`func (o *JobParams) GetDigestOk() (*string, bool)`
+
+GetDigestOk returns a tuple with the Digest field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDigest
+
+`func (o *JobParams) SetDigest(v string)`
+
+SetDigest sets Digest field to given value.
+
+
+### GetFilters
+
+`func (o *JobParams) GetFilters() []ESFilter`
+
+GetFilters returns the Filters field if non-nil, zero value otherwise.
+
+### GetFiltersOk
+
+`func (o *JobParams) GetFiltersOk() (*[]ESFilter, bool)`
+
+GetFiltersOk returns a tuple with the Filters field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFilters
+
+`func (o *JobParams) SetFilters(v []ESFilter)`
+
+SetFilters sets Filters field to given value.
+
+### HasFilters
+
+`func (o *JobParams) HasFilters() bool`
+
+HasFilters returns a boolean if a field has been set.
+
+### GetSampleIds
+
+`func (o *JobParams) GetSampleIds() []SampleIdentity`
+
+GetSampleIds returns the SampleIds field if non-nil, zero value otherwise.
+
+### GetSampleIdsOk
+
+`func (o *JobParams) GetSampleIdsOk() (*[]SampleIdentity, bool)`
+
+GetSampleIdsOk returns a tuple with the SampleIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSampleIds
+
+`func (o *JobParams) SetSampleIds(v []SampleIdentity)`
+
+SetSampleIds sets SampleIds field to given value.
+
+
+### GetLimit
+
+`func (o *JobParams) GetLimit() float64`
+
+GetLimit returns the Limit field if non-nil, zero value otherwise.
+
+### GetLimitOk
+
+`func (o *JobParams) GetLimitOk() (*float64, bool)`
+
+GetLimitOk returns a tuple with the Limit field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLimit
+
+`func (o *JobParams) SetLimit(v float64)`
+
+SetLimit sets Limit field to given value.
+
+
+### GetSessionRunId
+
+`func (o *JobParams) GetSessionRunId() string`
+
+GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+
+### GetSessionRunIdOk
+
+`func (o *JobParams) GetSessionRunIdOk() (*string, bool)`
+
+GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSessionRunId
+
+`func (o *JobParams) SetSessionRunId(v string)`
+
+SetSessionRunId sets SessionRunId field to given value.
+
+
+### GetProjectionMetric
+
+`func (o *JobParams) GetProjectionMetric() string`
+
+GetProjectionMetric returns the ProjectionMetric field if non-nil, zero value otherwise.
+
+### GetProjectionMetricOk
+
+`func (o *JobParams) GetProjectionMetricOk() (*string, bool)`
+
+GetProjectionMetricOk returns a tuple with the ProjectionMetric field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectionMetric
+
+`func (o *JobParams) SetProjectionMetric(v string)`
+
+SetProjectionMetric sets ProjectionMetric field to given value.
+
+### HasProjectionMetric
+
+`func (o *JobParams) HasProjectionMetric() bool`
+
+HasProjectionMetric returns a boolean if a field has been set.
+
+### GetNumOfSamples
+
+`func (o *JobParams) GetNumOfSamples() float64`
+
+GetNumOfSamples returns the NumOfSamples field if non-nil, zero value otherwise.
+
+### GetNumOfSamplesOk
+
+`func (o *JobParams) GetNumOfSamplesOk() (*float64, bool)`
+
+GetNumOfSamplesOk returns a tuple with the NumOfSamples field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNumOfSamples
+
+`func (o *JobParams) SetNumOfSamples(v float64)`
+
+SetNumOfSamples sets NumOfSamples field to given value.
 
 
 
