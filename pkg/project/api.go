@@ -110,20 +110,25 @@ func ImportProjectFromFile(ctx context.Context, filePath, projectName string) er
 		return err
 	}
 
-	getUrl, err := uploadProjectToTempFile(ctx, projectName, file)
+	fileStat, err := file.Stat()
+	if err != nil {
+		return err
+	}
+
+	getUrl, err := uploadProjectToTempFile(ctx, projectName, file, fileStat.Size())
 	if err != nil {
 		return err
 	}
 	return ImportProject(ctx, projectName, getUrl, &projectCtx.Meta)
 }
 
-func uploadProjectToTempFile(ctx context.Context, projectName string, projectReader io.Reader) (string, error) {
+func uploadProjectToTempFile(ctx context.Context, projectName string, projectReader io.Reader, projectSize int64) (string, error) {
 
 	uploadSingedUrl, uploadUrl, err := getTempUploadedSignedUrl(ctx, projectName, nil)
 	if err != nil {
 		return "", fmt.Errorf("failed to get signed url for the uploaded project: %v", err)
 	}
-	err = api.UploadFile(uploadSingedUrl, projectReader)
+	err = api.UploadFile(uploadSingedUrl, projectReader, projectSize)
 	if err != nil {
 		return "", fmt.Errorf("failed to upload project: %v", err)
 	}
