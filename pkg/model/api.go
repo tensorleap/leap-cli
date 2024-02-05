@@ -32,7 +32,11 @@ func ImportModel(ctx context.Context, filePath, projectId, message, modelType, b
 	defer file.Close()
 
 	uploadUrl := signedUrlData.GetUrl()
-	if err := api.UploadFile(uploadUrl, file); err != nil {
+	fileInfo, err := file.Stat()
+	if err != nil {
+		return err
+	}
+	if err := api.UploadFile(uploadUrl, file, fileInfo.Size()); err != nil {
 		return err
 	}
 

@@ -213,7 +213,12 @@ func PushCode(ctx context.Context, force bool, codeIntegrationId string, tarGzFi
 			}
 		}
 	}
-	codeIntegrationVersion, err := AddCodeIntegrationVersion(ctx, tarGzFile, codeIntegrationId, entryFile, secretId)
+	fileStat, err := tarGzFile.Stat()
+	if err != nil {
+		return false, nil, fmt.Errorf("failed to get file stat: %v", err)
+	}
+
+	codeIntegrationVersion, err := AddCodeIntegrationVersion(ctx, tarGzFile, fileStat.Size(), codeIntegrationId, entryFile, secretId)
 	if err != nil {
 		return false, nil, err
 	}
