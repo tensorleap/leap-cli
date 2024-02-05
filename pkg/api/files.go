@@ -42,7 +42,7 @@ func DownloadFile(url string, file io.Writer) error {
 	return nil
 }
 
-func UploadFile(url string, file io.Reader) error {
+func UploadFile(url string, file io.Reader, fileSize int64) error {
 	log.Infof("Upload target: %s", url)
 	start, stop, _ := log.NewSpinner("Uploading...")
 	start()
@@ -52,11 +52,14 @@ func UploadFile(url string, file io.Reader) error {
 	if err != nil {
 		return err
 	}
+	if fileSize > 0 {
+		req.ContentLength = fileSize
+	}
 	req.Header.Set("Content-Type", DetectContentTypeFromUrl(url))
 	client := &http.Client{}
 	resp, err := client.Do(req)
-	if err != nil {
-		return err
+	if err := CheckRes(resp, err); err != nil {
+		return fmt.Errorf("failed to upload file: %v", err)
 	}
 	defer resp.Body.Close()
 	return nil
