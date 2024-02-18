@@ -55,19 +55,24 @@ func BuildProjectContext(ctx context.Context, projectEntity *ProjectEntity, sche
 func CopyProject(
 	sourceCtx context.Context, sourceProject *ProjectEntity,
 	targetCtx context.Context, targetProjectName string,
+	noExportCache bool,
 ) error {
 
 	sourceUrl, _ := api.GetAuthFromContext(sourceCtx)
 	targetUrl, _ := api.GetAuthFromContext(targetCtx)
 
-	fileAccess, err := getCopyPublishSignedUrl(sourceCtx, targetCtx, targetProjectName)
+	copyTo, err := getCopyToSignedUrl(sourceCtx, targetCtx, targetProjectName)
 	if err != nil {
 		return err
+	}
+	var copyToUrl string
+	if copyTo != nil {
+		copyToUrl = copyTo.Put
 	}
 
 	log.Infof("Copying project\n\tfrom: %s:%s\n\tto:   %s:%s", sourceProject.GetName(), sourceUrl, targetProjectName, targetUrl)
 
-	err = PublishProject(sourceCtx, sourceProject.Cid, fileAccess)
+	exportJob, err := ExportProject(sourceCtx, sourceProject.Cid, copyToUrl, noExportCache)
 	if err != nil {
 		return err
 	}
@@ -81,33 +86,46 @@ func CopyProject(
 		SourceProjectId: sourceProject.Cid,
 	}
 
-	err = ImportProject(targetCtx, targetProjectName, fileAccess.Get, targetProjectMeta)
+	var copyFromUrl string
+	if copyTo != nil {
+		copyFromUrl = copyTo.Get
+	} else {
+		exportUrl := exportJob.Params.ExportProjectParams.GetExportUrl()
+		var origin *string
+		isSourceLocal := auth.IsLocalUrl(sourceUrl)
+		if isSourceLocal {
+			// in case of local to local copy, we need to use the environment origin by setting origin to empty string
+			emptyOrigin := ""
+			origin = &emptyOrigin
+		}
+		copyFromUrl, err = getSignedUrl(sourceCtx, exportUrl, http.MethodGet, time.Hour*24, origin)
+		if err != nil {
+			return fmt.Errorf("failed to get signed url for exported project file : %v", err)
+		}
+	}
+
+	err = ImportProject(targetCtx, targetProjectName, copyFromUrl, targetProjectMeta)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func getCopyPublishSignedUrl(sourceCtx, targetCtx context.Context, fileName string) (*hub.FileAccessBySignedUrl, error) {
+func getCopyToSignedUrl(sourceCtx, targetCtx context.Context, fileName string) (*hub.FileAccessBySignedUrl, error) {
 	sourceUrl, _ := api.GetAuthFromContext(sourceCtx)
 	targetUrl, _ := api.GetAuthFromContext(targetCtx)
 
-	isTargetLocal := auth.IsLocalUrl(targetUrl)
 	isSourceLocal := auth.IsLocalUrl(sourceUrl)
 
-	var ctx context.Context
-	var origin *string
-	if !isTargetLocal {
-		ctx = targetCtx
-	} else {
-		ctx = sourceCtx
+	isSameEnv := sourceUrl == targetUrl
+
+	if !isSourceLocal || isSameEnv {
+		return nil, nil
 	}
 
-	if isTargetLocal && isSourceLocal {
-		// in case of local to local copy, we need to use the environment origin by setting origin to empty string
-		emptyOrigin := ""
-		origin = &emptyOrigin
-	}
+	var origin *string
+	ctx := targetCtx
+
 	signedUploadUrl, url, err := getTempUploadedSignedUrl(ctx, fileName, origin)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get signed url for the uploaded project: %v", err)
@@ -116,14 +134,10 @@ func getCopyPublishSignedUrl(sourceCtx, targetCtx context.Context, fileName stri
 	if err != nil {
 		return nil, fmt.Errorf("failed to get singed url for the uploaded project: %v", err)
 	}
-	signedHeadUrl, err := getSignedUrl(ctx, url, http.MethodHead, time.Hour*24, origin)
-	if err != nil {
-		return nil, fmt.Errorf("failed to get singed url for the uploaded project: %v", err)
-	}
+
 	return &hub.FileAccessBySignedUrl{
-		Put:  signedUploadUrl,
-		Get:  signedGetUrl,
-		Head: signedHeadUrl,
+		Put: signedUploadUrl,
+		Get: signedGetUrl,
 	}, nil
 }
 

@@ -2,6 +2,7 @@ package project
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -196,29 +197,73 @@ func ExportProjectIntoFile(ctx context.Context, project *ProjectEntity, outputDi
 
 const PUBLISH_TIMEOUT = 4 * time.Hour
 
-func PublishProject(ctx context.Context, projectId string, tarAccess *hub.FileAccessBySignedUrl) error {
+func ExportProject(ctx context.Context, projectId string, copyToUrl string, noCache bool) (*tensorleapapi.Job, error) {
 
-	url := extractUrl(tarAccess.Put)
-	log.Infof("Copy project content by signed url: %v", url)
-
-	res, err := api.ApiClient.PublishProject(ctx).PublishProjectRequest(*tensorleapapi.NewPublishProjectRequest(projectId, tarAccess.Put)).Execute()
-	if err = api.CheckRes(res, err); err != nil {
-		return fmt.Errorf("failed to copy project: %v", err)
+	exportParams := *tensorleapapi.NewExportProjectRequest(projectId)
+	exportParams.SetNoCache(noCache)
+	if len(copyToUrl) > 0 {
+		log.Infof("Copy project content by signed url: %v", extractUrl(copyToUrl))
+		exportParams.SetCopyToUrl(copyToUrl)
 	}
-	err = api.WaitForCondition(ctx, "Copy project...", func() (bool, error) {
-		res, err := http.Head(tarAccess.Head)
+	exportRes, res, err := api.ApiClient.ExportProject(ctx).ExportProjectRequest(exportParams).Execute()
+	if err = api.CheckRes(res, err); err != nil {
+		return nil, fmt.Errorf("failed to export project: %v", err)
+	}
+
+	err = api.WaitForCondition(ctx, "Export project...", func() (bool, error) {
+		job, err := getExportProjectJobById(ctx, exportRes.JobId)
 		if err != nil {
 			return false, err
-		} else if !api.IsValidStatus(res) && res.StatusCode != http.StatusNotFound {
-			return false, fmt.Errorf("failed to check copy file status: %v", res.StatusCode)
 		}
-		return api.IsValidStatus(res), nil
-	}, 10*time.Second, PUBLISH_TIMEOUT)
+		switch job.Status {
+		case tensorleapapi.JOBSTATUS_FAILED:
+			return false, fmt.Errorf("export project failed")
+		case tensorleapapi.JOBSTATUS_FINISHED:
+			return true, nil
+		}
+
+		return false, nil
+	}, 20*time.Second, PUBLISH_TIMEOUT)
 
 	if err != nil {
-		return fmt.Errorf("failed to wait for project to be copied: %v", err)
+		return nil, fmt.Errorf("failed to wait for project to be copied: %v", err)
 	}
-	return nil
+	job, err := getExportProjectJobById(ctx, exportRes.JobId)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get export job: %v", err)
+	}
+	return job, nil
+}
+
+func getExportProjectJobById(ctx context.Context, cid string) (*tensorleapapi.Job, error) {
+	query := *tensorleapapi.NewGetJobsFilterParams()
+	query.SetCid([]string{cid})
+
+	res, orgRes, err := api.ApiClient.GetSlimJobs(ctx).GetJobsFilterParams(query).Execute()
+	if err != nil {
+		return nil, err
+	}
+	if len(res.Jobs) == 0 {
+		return nil, fmt.Errorf("job not found")
+	}
+	var exportProjectJobs struct {
+		Jobs []struct {
+			Params tensorleapapi.ExportProjectParams `json:"params"`
+		} `json:"jobs"`
+	}
+	data, err := io.ReadAll(orgRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read response: %v", err)
+	}
+	if err := json.Unmarshal(data, &exportProjectJobs); err != nil {
+		return nil, err
+	}
+	job := res.Jobs[0]
+	// override job params with export project params - openApi not deserializing correctly
+	job.Params = &tensorleapapi.JobParams{
+		ExportProjectParams: &exportProjectJobs.Jobs[0].Params,
+	}
+	return &job, nil
 }
 
 // Not using apiClient because of the response type (file)

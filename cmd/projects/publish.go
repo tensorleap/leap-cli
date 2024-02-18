@@ -16,6 +16,7 @@ func NewPublishCmd() *cobra.Command {
 	var override bool
 	var all bool
 	var useSignedUrl bool
+	var useExportCache bool
 
 	cmd := &cobra.Command{
 		Use:   "publish [project names]",
@@ -23,6 +24,12 @@ func NewPublishCmd() *cobra.Command {
 		Long:  `publish project to the hub`,
 		RunE: func(cmd *cobra.Command, projectNames []string) error {
 			ctx := cmd.Context()
+
+			isUseExportCacheNotSet := !cmd.Flags().Changed("use-export-cache")
+			if isUseExportCacheNotSet && override {
+				useExportCache = false
+			}
+			noExportCache := !useExportCache
 
 			storageClient, err := storage.CreateStorageClient()
 			if err != nil {
@@ -53,7 +60,8 @@ func NewPublishCmd() *cobra.Command {
 				}
 
 				if useSignedUrl {
-					return StreamProjectToHubBySignedUrl(ctx, hubApi, projectContext)
+
+					return StreamProjectToHubBySignedUrl(ctx, hubApi, projectContext, noExportCache)
 				}
 				return StreamProjectToHub(ctx, hubApi, projectContext)
 			}
@@ -84,6 +92,7 @@ func NewPublishCmd() *cobra.Command {
 	}
 
 	cmd.Flags().BoolVarP(&override, "override", "o", false, "Override existing project")
+	cmd.Flags().BoolVar(&useExportCache, "use-export-cache", true, "Use project exported cache - by default it is true unless you set override flag")
 	cmd.Flags().BoolVarP(&all, "all", "a", false, "Publish all public projects")
 	cmd.Flags().BoolVarP(&useSignedUrl, "use-signed-url", "s", false, "Use signed url to publish project, make sure you have enough permission to publish project")
 
@@ -106,13 +115,13 @@ func StreamProjectToHub(ctx context.Context, hubApi *hub.HubApi, projectContext 
 	return hubApi.PublishProject(res.Body, projectContext)
 }
 
-func StreamProjectToHubBySignedUrl(ctx context.Context, hubApi *hub.HubApi, projectContext *hub.ProjectContext) error {
+func StreamProjectToHubBySignedUrl(ctx context.Context, hubApi *hub.HubApi, projectContext *hub.ProjectContext, noCache bool) error {
 	tarAccess, filesPath, err := hubApi.PublishProjectContentBySignedUrl(&projectContext.Meta)
 
 	if err != nil {
 		return fmt.Errorf("failed to get signed url: %v", err)
 	}
-	err = project.PublishProject(ctx, projectContext.Meta.SourceProjectId, tarAccess)
+	_, err = project.ExportProject(ctx, projectContext.Meta.SourceProjectId, tarAccess.Put, noCache)
 	if err != nil {
 		return fmt.Errorf("failed to publish project by signed url: %v", err)
 	}
