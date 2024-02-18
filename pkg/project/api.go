@@ -166,7 +166,7 @@ func getSignedUrl(ctx context.Context, url, method string, expire time.Duration,
 }
 
 func ExportProjectIntoFile(ctx context.Context, project *ProjectEntity, outputDir string) error {
-	res, err := ExportProject(ctx, project.GetCid())
+	res, err := DownloadProject(ctx, project.GetCid())
 	if err != nil {
 		return err
 	}
@@ -222,7 +222,7 @@ func PublishProject(ctx context.Context, projectId string, tarAccess *hub.FileAc
 }
 
 // Not using apiClient because of the response type (file)
-func ExportProject(ctx context.Context, projectId string) (*http.Response, error) {
+func DownloadProject(ctx context.Context, projectId string) (*http.Response, error) {
 	baseUrl, apiKey := api.GetAuthFromContext(ctx)
 	url := fmt.Sprintf("%s/projects/downloadProject/%s", baseUrl, projectId)
 	req, _ := http.NewRequest("GET", url, nil)
