@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.445
+  version: 0.0.456
 servers:
 - url: /api/v2
 paths:
@@ -1150,19 +1150,23 @@ paths:
           description: Ok
       security:
       - jwt: []
-  /projects/publishProject:
+  /projects/exportProject:
     post:
-      operationId: PublishProject
+      operationId: ExportProject
       parameters: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PublishProjectRequest'
+              $ref: '#/components/schemas/ExportProjectRequest'
         required: true
       responses:
-        "204":
-          description: No content
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportProjectResponse'
+          description: Ok
       security:
       - jwt: []
   /projects/downloadProject/{projectId}:
@@ -3218,7 +3222,6 @@ components:
           format: double
           type: number
       required:
-      - channel_dim
       - labels
       - name
       type: object
@@ -5888,7 +5891,7 @@ components:
       required:
       - datasetId
       type: object
-    JobTypeEnum:
+    JobType:
       enum:
       - TRAINING
       - IMPORT_MODEL
@@ -5901,6 +5904,8 @@ components:
       - ANALYZE_GRAPH
       - DRY_RUN_GRAPH
       - SLIM_LS
+      - EXPORT_PROJECT
+      - IMPORT_PROJECT
       type: string
     JobSubType:
       enum:
@@ -5914,6 +5919,9 @@ components:
       - Sample Analysis
       - Graph Validate
       - Fetch Similar
+      - Export Project
+      - Copy Project
+      - Import Project
       type: string
     JobStatus:
       enum:
@@ -6048,11 +6056,237 @@ components:
         blob_path:
           type: string
       type: object
+    Record_string.number_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
+    ScatterInsightType:
+      enum:
+      - redundant_samples_cluster
+      - weak_cluster
+      - under_representation_cluster
+      - overfitting_cluster
+      - duplication_insight
+      type: string
+    OperatorEnum:
+      enum:
+      - smaller_than
+      - equal_to
+      - larger_than
+      type: string
+    ScatterFilter:
+      additionalProperties: false
+      properties:
+        metric:
+          type: string
+        value:
+          type: string
+        operator:
+          $ref: '#/components/schemas/OperatorEnum'
+        data_state:
+          $ref: '#/components/schemas/DataStateType'
+      required:
+      - metric
+      - operator
+      - value
+      type: object
+    Direction:
+      enum:
+      - up
+      - down
+      type: string
+    MutualInformationElement:
+      additionalProperties: false
+      properties:
+        feature_name:
+          type: string
+        feature_value:
+          type: string
+        direction:
+          $ref: '#/components/schemas/Direction'
+        is_categorical:
+          type: boolean
+      required:
+      - direction
+      - feature_name
+      - is_categorical
+      type: object
+    OverfittingInsight:
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/ScatterInsightType'
+        filter:
+          $ref: '#/components/schemas/ScatterFilter'
+        mutual_info_elements:
+          items:
+            $ref: '#/components/schemas/MutualInformationElement'
+          type: array
+        blob_path:
+          type: string
+        n_samples_validation:
+          format: double
+          type: number
+        n_samples_training:
+          format: double
+          type: number
+        avg_metric_validation:
+          format: double
+          type: number
+        avg_metric_training:
+          format: double
+          type: number
+        metric_name:
+          type: string
+        configuration:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+      required:
+      - avg_metric_training
+      - avg_metric_validation
+      - filter
+      - metric_name
+      - n_samples_training
+      - n_samples_validation
+      - type
+      type: object
+    UnderRepresentationInsight:
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/ScatterInsightType'
+        filter:
+          $ref: '#/components/schemas/ScatterFilter'
+        mutual_info_elements:
+          items:
+            $ref: '#/components/schemas/MutualInformationElement'
+          type: array
+        blob_path:
+          type: string
+        under_representation_dataset:
+          $ref: '#/components/schemas/DataStateType'
+        under_representation_n_samples:
+          format: double
+          type: number
+        over_representation_dataset:
+          $ref: '#/components/schemas/DataStateType'
+        over_representation_n_samples:
+          format: double
+          type: number
+        configuration:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+      required:
+      - filter
+      - over_representation_dataset
+      - over_representation_n_samples
+      - type
+      - under_representation_dataset
+      - under_representation_n_samples
+      type: object
+    ClusterInsight:
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/ScatterInsightType'
+        filter:
+          $ref: '#/components/schemas/ScatterFilter'
+        mutual_info_elements:
+          items:
+            $ref: '#/components/schemas/MutualInformationElement'
+          type: array
+        blob_path:
+          type: string
+        n_samples:
+          format: double
+          type: number
+        avg_metric:
+          format: double
+          type: number
+        metric_name:
+          type: string
+        configuration:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+      required:
+      - avg_metric
+      - filter
+      - metric_name
+      - n_samples
+      - type
+      type: object
+    DuplicationInsight:
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/ScatterInsightType'
+        filter:
+          $ref: '#/components/schemas/ScatterFilter'
+        mutual_info_elements:
+          items:
+            $ref: '#/components/schemas/MutualInformationElement'
+          type: array
+        blob_path:
+          type: string
+        n_duplicate_samples:
+          format: double
+          type: number
+        n_cross_subset_duplications:
+          format: double
+          type: number
+      required:
+      - filter
+      - n_cross_subset_duplications
+      - n_duplicate_samples
+      - type
+      type: object
+    InsightType:
+      anyOf:
+      - $ref: '#/components/schemas/OverfittingInsight'
+      - $ref: '#/components/schemas/UnderRepresentationInsight'
+      - $ref: '#/components/schemas/ClusterInsight'
+      - $ref: '#/components/schemas/DuplicationInsight'
+    InsightFilterDisplayData:
+      additionalProperties: false
+      properties:
+        type:
+          enum:
+          - insight
+          nullable: false
+          type: string
+        insightData:
+          $ref: '#/components/schemas/InsightType'
+        sessionRun:
+          $ref: '#/components/schemas/InsightFilterDisplayData_sessionRun'
+      required:
+      - insightData
+      - sessionRun
+      - type
+      type: object
+    FetchSimilarFilterDisplayData:
+      additionalProperties: false
+      properties:
+        type:
+          enum:
+          - fetch-similar
+          nullable: false
+          type: string
+      required:
+      - type
+      type: object
+    FilterDisplayData:
+      anyOf:
+      - $ref: '#/components/schemas/InsightFilterDisplayData'
+      - $ref: '#/components/schemas/FetchSimilarFilterDisplayData'
     ESFilter:
       additionalProperties: false
       example:
         field: field
         disable: true
+        displayData: null
         value:
           lt: 6.027456183070403
           blob_path: blob_path
@@ -6071,6 +6305,8 @@ components:
           type: boolean
         value:
           $ref: '#/components/schemas/ESFilterValue'
+        displayData:
+          $ref: '#/components/schemas/FilterDisplayData'
       required:
       - field
       - operator
@@ -6143,6 +6379,20 @@ components:
       - sessionRunId
       - type
       type: object
+    ExportProjectParams:
+      additionalProperties: false
+      properties:
+        exportUrl:
+          type: string
+        projectVersion:
+          format: double
+          type: number
+        copyToUrl:
+          type: string
+      required:
+      - exportUrl
+      - projectVersion
+      type: object
     JobParams:
       anyOf:
       - $ref: '#/components/schemas/TrainingParams'
@@ -6150,6 +6400,7 @@ components:
       - $ref: '#/components/schemas/ExportModelParams'
       - $ref: '#/components/schemas/FetchSimilarJobParams'
       - $ref: '#/components/schemas/PopulationExplorationJobParams'
+      - $ref: '#/components/schemas/ExportProjectParams'
     Job:
       additionalProperties: false
       example:
@@ -6175,7 +6426,7 @@ components:
         version:
           type: string
         type:
-          $ref: '#/components/schemas/JobTypeEnum'
+          $ref: '#/components/schemas/JobType'
         subType:
           $ref: '#/components/schemas/JobSubType'
         status:
@@ -7506,6 +7757,9 @@ components:
         status:
         - null
         - null
+        cid:
+        - cid
+        - cid
       properties:
         lastUpdated:
           format: date-time
@@ -7516,7 +7770,7 @@ components:
           type: array
         types:
           items:
-            $ref: '#/components/schemas/JobTypeEnum'
+            $ref: '#/components/schemas/JobType'
           type: array
         subTypes:
           items:
@@ -7533,6 +7787,10 @@ components:
         showJobsFromDate:
           format: date-time
           type: string
+        cid:
+          items:
+            type: string
+          type: array
       type: object
     GetSlimJobsResponse:
       additionalProperties: false
@@ -7866,6 +8124,7 @@ components:
         filters:
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -7877,6 +8136,7 @@ components:
           operator: null
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -7951,6 +8211,7 @@ components:
         filters:
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -7962,6 +8223,7 @@ components:
           operator: null
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -8089,6 +8351,7 @@ components:
         filters:
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -8100,6 +8363,7 @@ components:
           operator: null
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -8197,6 +8461,7 @@ components:
         filters:
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -8208,6 +8473,7 @@ components:
           operator: null
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -8280,6 +8546,7 @@ components:
         filters:
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -8291,6 +8558,7 @@ components:
           operator: null
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -8702,6 +8970,20 @@ components:
       - level
       - params
       type: object
+    JobTypeEnum:
+      enum:
+      - TRAINING
+      - IMPORT_MODEL
+      - ANALYZE
+      - WARMUP
+      - TEST_STUB_FUNCTION
+      - TEST_CUSTOM_LOSS
+      - EXPORT_MODEL
+      - DATASET_PARSE
+      - ANALYZE_GRAPH
+      - DRY_RUN_GRAPH
+      - SLIM_LS
+      type: string
     JobNotificationBaseContext:
       additionalProperties: false
       properties:
@@ -9829,19 +10111,31 @@ components:
       required:
       - projectId
       type: object
-    PublishProjectRequest:
+    ExportProjectResponse:
       additionalProperties: false
       example:
+        jobId: jobId
+      properties:
+        jobId:
+          type: string
+      required:
+      - jobId
+      type: object
+    ExportProjectRequest:
+      additionalProperties: false
+      example:
+        noCache: true
         projectId: projectId
-        publishUrl: publishUrl
+        copyToUrl: copyToUrl
       properties:
         projectId:
           type: string
-        publishUrl:
+        copyToUrl:
           type: string
+        noCache:
+          type: boolean
       required:
       - projectId
-      - publishUrl
       type: object
     SampleCollection:
       example:
@@ -10863,6 +11157,7 @@ components:
         datasetFilter:
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -10874,6 +11169,7 @@ components:
           operator: null
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -10912,6 +11208,7 @@ components:
         datasetFilter:
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -10923,6 +11220,7 @@ components:
           operator: null
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -10966,6 +11264,7 @@ components:
         datasetFilter:
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -10977,6 +11276,7 @@ components:
           operator: null
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -13790,6 +14090,7 @@ components:
       - bbox_image
       - mask_image
       - image_heatmap
+      - grad_analysis
       type: string
     ImageData:
       additionalProperties: false
@@ -13937,33 +14238,12 @@ components:
       - $ref: '#/components/schemas/BBoxImageData'
       - $ref: '#/components/schemas/MaskImageData'
       - $ref: '#/components/schemas/MaskTextData'
-    VisualizedItem:
-      additionalProperties: false
-      properties:
-        visualizer_name:
-          type: string
-        data:
-          $ref: '#/components/schemas/VisData'
-        encoder_names:
-          items:
-            type: string
-          type: array
-        connection_name:
-          type: string
-        node_id:
-          type: string
-        has_error:
-          type: boolean
-      required:
-      - connection_name
-      - data
-      - encoder_names
-      - visualizer_name
-      type: object
     GradsItem:
       additionalProperties: false
       properties:
         node_name:
+          type: string
+        node_id:
           type: string
         label:
           type: string
@@ -13988,51 +14268,48 @@ components:
       - encoder_names
       - grads
       - label
+      - node_id
       - node_name
       - visualizer_name
       type: object
     GradsAnalysis:
       additionalProperties: false
       properties:
-        grad_cam:
+        data:
           items:
             $ref: '#/components/schemas/GradsItem'
           type: array
-        grad_by_loss:
-          items:
-            $ref: '#/components/schemas/GradsItem'
-          type: array
+        is_loss:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/DataTypeEnum'
       required:
-      - grad_by_loss
-      - grad_cam
+      - data
+      - is_loss
+      - type
       type: object
-    FeatureImportanceItem:
+    VisualizedItem:
       additionalProperties: false
       properties:
-        label:
+        visualizer_name:
           type: string
-        fi:
-          $ref: '#/components/schemas/VisData'
-        ground_truth_name:
+        data:
+          $ref: '#/components/schemas/VisualizedItem_data'
+        encoder_names:
+          items:
+            type: string
+          type: array
+        connection_name:
           type: string
+        node_id:
+          type: string
+        has_error:
+          type: boolean
       required:
-      - fi
-      - label
-      type: object
-    FeatureImportance:
-      additionalProperties: false
-      properties:
-        grad_cam:
-          items:
-            $ref: '#/components/schemas/FeatureImportanceItem'
-          type: array
-        grad_by_loss:
-          items:
-            $ref: '#/components/schemas/FeatureImportanceItem'
-          type: array
-      required:
-      - grad_by_loss
-      - grad_cam
+      - connection_name
+      - data
+      - encoder_names
+      - visualizer_name
       type: object
     SampleAnalysisViz:
       additionalProperties: false
@@ -14049,17 +14326,11 @@ components:
           items:
             $ref: '#/components/schemas/VisualizedItem'
           type: array
-        grads_analysis:
-          $ref: '#/components/schemas/GradsAnalysis'
-        feature_importance:
-          $ref: '#/components/schemas/FeatureImportance'
         metadata_map:
           description: Construct a type with a set of properties K of type T
           properties: {}
           type: object
       required:
-      - feature_importance
-      - grads_analysis
       - guid
       - metadata_map
       - sub_title
@@ -14774,6 +15045,7 @@ components:
         filters:
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -14785,6 +15057,7 @@ components:
           operator: null
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -14859,6 +15132,7 @@ components:
         filters:
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -14870,6 +15144,7 @@ components:
           operator: null
         - field: field
           disable: true
+          displayData: null
           value:
             lt: 6.027456183070403
             blob_path: blob_path
@@ -14954,6 +15229,19 @@ components:
       required:
       - success
       type: object
+    InsightFilterDisplayData_sessionRun:
+      properties:
+        sessionId:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+      - sessionId
+      type: object
     EvaluateExistingSessionParams_allOf:
       properties:
         evaluatedEpoch:
@@ -14966,6 +15254,10 @@ components:
       - sessionId
       type: object
       example: null
+    VisualizedItem_data:
+      anyOf:
+      - $ref: '#/components/schemas/VisData'
+      - $ref: '#/components/schemas/GradsAnalysis'
     FetchSimilarResponse_readyArtifacts:
       example:
         clusterPath: clusterPath

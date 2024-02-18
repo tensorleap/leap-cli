@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **NodeName** | **string** |  | 
+**NodeId** | **string** |  | 
 **Label** | **string** |  | 
 **Depth** | **float64** |  | 
 **Grads** | [**VisData**](VisData.md) |  | 
@@ -17,7 +18,7 @@ Name | Type | Description | Notes
 
 ### NewGradsItem
 
-`func NewGradsItem(nodeName string, label string, depth float64, grads VisData, visualizerName string, encoderNames []string, connectionName string, ) *GradsItem`
+`func NewGradsItem(nodeName string, nodeId string, label string, depth float64, grads VisData, visualizerName string, encoderNames []string, connectionName string, ) *GradsItem`
 
 NewGradsItem instantiates a new GradsItem object
 This constructor will assign default values to properties that have it defined,
@@ -50,6 +51,26 @@ and a boolean to check if the value has been set.
 `func (o *GradsItem) SetNodeName(v string)`
 
 SetNodeName sets NodeName field to given value.
+
+
+### GetNodeId
+
+`func (o *GradsItem) GetNodeId() string`
+
+GetNodeId returns the NodeId field if non-nil, zero value otherwise.
+
+### GetNodeIdOk
+
+`func (o *GradsItem) GetNodeIdOk() (*string, bool)`
+
+GetNodeIdOk returns a tuple with the NodeId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNodeId
+
+`func (o *GradsItem) SetNodeId(v string)`
+
+SetNodeId sets NodeId field to given value.
 
 
 ### GetLabel

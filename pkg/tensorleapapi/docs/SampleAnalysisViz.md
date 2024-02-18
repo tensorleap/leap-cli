@@ -9,15 +9,13 @@ Name | Type | Description | Notes
 **SubTitle** | **string** |  | 
 **Guid** | **string** |  | 
 **VisualizedItems** | [**[]VisualizedItem**](VisualizedItem.md) |  | 
-**GradsAnalysis** | [**GradsAnalysis**](GradsAnalysis.md) |  | 
-**FeatureImportance** | [**FeatureImportance**](FeatureImportance.md) |  | 
 **MetadataMap** | **map[string]interface{}** | Construct a type with a set of properties K of type T | 
 
 ## Methods
 
 ### NewSampleAnalysisViz
 
-`func NewSampleAnalysisViz(type_ string, title string, subTitle string, guid string, visualizedItems []VisualizedItem, gradsAnalysis GradsAnalysis, featureImportance FeatureImportance, metadataMap map[string]interface{}, ) *SampleAnalysisViz`
+`func NewSampleAnalysisViz(type_ string, title string, subTitle string, guid string, visualizedItems []VisualizedItem, metadataMap map[string]interface{}, ) *SampleAnalysisViz`
 
 NewSampleAnalysisViz instantiates a new SampleAnalysisViz object
 This constructor will assign default values to properties that have it defined,
@@ -130,46 +128,6 @@ and a boolean to check if the value has been set.
 `func (o *SampleAnalysisViz) SetVisualizedItems(v []VisualizedItem)`
 
 SetVisualizedItems sets VisualizedItems field to given value.
-
-
-### GetGradsAnalysis
-
-`func (o *SampleAnalysisViz) GetGradsAnalysis() GradsAnalysis`
-
-GetGradsAnalysis returns the GradsAnalysis field if non-nil, zero value otherwise.
-
-### GetGradsAnalysisOk
-
-`func (o *SampleAnalysisViz) GetGradsAnalysisOk() (*GradsAnalysis, bool)`
-
-GetGradsAnalysisOk returns a tuple with the GradsAnalysis field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetGradsAnalysis
-
-`func (o *SampleAnalysisViz) SetGradsAnalysis(v GradsAnalysis)`
-
-SetGradsAnalysis sets GradsAnalysis field to given value.
-
-
-### GetFeatureImportance
-
-`func (o *SampleAnalysisViz) GetFeatureImportance() FeatureImportance`
-
-GetFeatureImportance returns the FeatureImportance field if non-nil, zero value otherwise.
-
-### GetFeatureImportanceOk
-
-`func (o *SampleAnalysisViz) GetFeatureImportanceOk() (*FeatureImportance, bool)`
-
-GetFeatureImportanceOk returns a tuple with the FeatureImportance field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFeatureImportance
-
-`func (o *SampleAnalysisViz) SetFeatureImportance(v FeatureImportance)`
-
-SetFeatureImportance sets FeatureImportance field to given value.
 
 
 ### GetMetadataMap

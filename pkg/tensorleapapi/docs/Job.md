@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **Cid** | **string** |  | 
 **CreatedBy** | **string** |  | 
 **Version** | Pointer to **string** |  | [optional] 
-**Type** | [**JobTypeEnum**](JobTypeEnum.md) |  | 
+**Type** | [**JobType**](JobType.md) |  | 
 **SubType** | Pointer to [**JobSubType**](JobSubType.md) |  | [optional] 
 **Status** | [**JobStatus**](JobStatus.md) |  | 
 **CreatedAt** | **time.Time** |  | 
@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewJob
 
-`func NewJob(projectId string, cid string, createdBy string, type_ JobTypeEnum, status JobStatus, createdAt time.Time, updatedAt time.Time, teamId string, ) *Job`
+`func NewJob(projectId string, cid string, createdBy string, type_ JobType, status JobStatus, createdAt time.Time, updatedAt time.Time, teamId string, ) *Job`
 
 NewJob instantiates a new Job object
 This constructor will assign default values to properties that have it defined,
@@ -123,20 +123,20 @@ HasVersion returns a boolean if a field has been set.
 
 ### GetType
 
-`func (o *Job) GetType() JobTypeEnum`
+`func (o *Job) GetType() JobType`
 
 GetType returns the Type field if non-nil, zero value otherwise.
 
 ### GetTypeOk
 
-`func (o *Job) GetTypeOk() (*JobTypeEnum, bool)`
+`func (o *Job) GetTypeOk() (*JobType, bool)`
 
 GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetType
 
-`func (o *Job) SetType(v JobTypeEnum)`
+`func (o *Job) SetType(v JobType)`
 
 SetType sets Type field to given value.
 

@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **Field** | **string** |  | 
 **Disable** | Pointer to **bool** |  | [optional] 
 **Value** | [**ESFilterValue**](ESFilterValue.md) |  | 
+**DisplayData** | Pointer to [**FilterDisplayData**](FilterDisplayData.md) |  | [optional] 
 
 ## Methods
 
@@ -112,6 +113,31 @@ and a boolean to check if the value has been set.
 
 SetValue sets Value field to given value.
 
+
+### GetDisplayData
+
+`func (o *ESFilter) GetDisplayData() FilterDisplayData`
+
+GetDisplayData returns the DisplayData field if non-nil, zero value otherwise.
+
+### GetDisplayDataOk
+
+`func (o *ESFilter) GetDisplayDataOk() (*FilterDisplayData, bool)`
+
+GetDisplayDataOk returns a tuple with the DisplayData field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDisplayData
+
+`func (o *ESFilter) SetDisplayData(v FilterDisplayData)`
+
+SetDisplayData sets DisplayData field to given value.
+
+### HasDisplayData
+
+`func (o *ESFilter) HasDisplayData() bool`
+
+HasDisplayData returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

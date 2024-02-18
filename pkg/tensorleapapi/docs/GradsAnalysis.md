@@ -4,14 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**GradCam** | [**[]GradsItem**](GradsItem.md) |  | 
-**GradByLoss** | [**[]GradsItem**](GradsItem.md) |  | 
+**Data** | [**[]GradsItem**](GradsItem.md) |  | 
+**IsLoss** | **bool** |  | 
+**Type** | [**DataTypeEnum**](DataTypeEnum.md) |  | 
 
 ## Methods
 
 ### NewGradsAnalysis
 
-`func NewGradsAnalysis(gradCam []GradsItem, gradByLoss []GradsItem, ) *GradsAnalysis`
+`func NewGradsAnalysis(data []GradsItem, isLoss bool, type_ DataTypeEnum, ) *GradsAnalysis`
 
 NewGradsAnalysis instantiates a new GradsAnalysis object
 This constructor will assign default values to properties that have it defined,
@@ -26,44 +27,64 @@ NewGradsAnalysisWithDefaults instantiates a new GradsAnalysis object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetGradCam
+### GetData
 
-`func (o *GradsAnalysis) GetGradCam() []GradsItem`
+`func (o *GradsAnalysis) GetData() []GradsItem`
 
-GetGradCam returns the GradCam field if non-nil, zero value otherwise.
+GetData returns the Data field if non-nil, zero value otherwise.
 
-### GetGradCamOk
+### GetDataOk
 
-`func (o *GradsAnalysis) GetGradCamOk() (*[]GradsItem, bool)`
+`func (o *GradsAnalysis) GetDataOk() (*[]GradsItem, bool)`
 
-GetGradCamOk returns a tuple with the GradCam field if it's non-nil, zero value otherwise
+GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetGradCam
+### SetData
 
-`func (o *GradsAnalysis) SetGradCam(v []GradsItem)`
+`func (o *GradsAnalysis) SetData(v []GradsItem)`
 
-SetGradCam sets GradCam field to given value.
+SetData sets Data field to given value.
 
 
-### GetGradByLoss
+### GetIsLoss
 
-`func (o *GradsAnalysis) GetGradByLoss() []GradsItem`
+`func (o *GradsAnalysis) GetIsLoss() bool`
 
-GetGradByLoss returns the GradByLoss field if non-nil, zero value otherwise.
+GetIsLoss returns the IsLoss field if non-nil, zero value otherwise.
 
-### GetGradByLossOk
+### GetIsLossOk
 
-`func (o *GradsAnalysis) GetGradByLossOk() (*[]GradsItem, bool)`
+`func (o *GradsAnalysis) GetIsLossOk() (*bool, bool)`
 
-GetGradByLossOk returns a tuple with the GradByLoss field if it's non-nil, zero value otherwise
+GetIsLossOk returns a tuple with the IsLoss field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetGradByLoss
+### SetIsLoss
 
-`func (o *GradsAnalysis) SetGradByLoss(v []GradsItem)`
+`func (o *GradsAnalysis) SetIsLoss(v bool)`
 
-SetGradByLoss sets GradByLoss field to given value.
+SetIsLoss sets IsLoss field to given value.
+
+
+### GetType
+
+`func (o *GradsAnalysis) GetType() DataTypeEnum`
+
+GetType returns the Type field if non-nil, zero value otherwise.
+
+### GetTypeOk
+
+`func (o *GradsAnalysis) GetTypeOk() (*DataTypeEnum, bool)`
+
+GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetType
+
+`func (o *GradsAnalysis) SetType(v DataTypeEnum)`
+
+SetType sets Type field to given value.
 
 
 
