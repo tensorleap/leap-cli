@@ -22,12 +22,15 @@ Name | Type | Description | Notes
 **SessionRunId** | **string** |  | 
 **ProjectionMetric** | Pointer to **string** |  | [optional] 
 **NumOfSamples** | **float64** |  | 
+**ExportUrl** | **string** |  | 
+**ProjectVersion** | **float64** |  | 
+**CopyToUrl** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewJobParams
 
-`func NewJobParams(epochs float64, batchSize float64, type_ string, fromEpoch float64, batchSize float64, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, sessionRunId string, numOfSamples float64, ) *JobParams`
+`func NewJobParams(epochs float64, batchSize float64, type_ string, fromEpoch float64, batchSize float64, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, sessionRunId string, numOfSamples float64, exportUrl string, projectVersion float64, ) *JobParams`
 
 NewJobParams instantiates a new JobParams object
 This constructor will assign default values to properties that have it defined,
@@ -426,6 +429,71 @@ and a boolean to check if the value has been set.
 
 SetNumOfSamples sets NumOfSamples field to given value.
 
+
+### GetExportUrl
+
+`func (o *JobParams) GetExportUrl() string`
+
+GetExportUrl returns the ExportUrl field if non-nil, zero value otherwise.
+
+### GetExportUrlOk
+
+`func (o *JobParams) GetExportUrlOk() (*string, bool)`
+
+GetExportUrlOk returns a tuple with the ExportUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExportUrl
+
+`func (o *JobParams) SetExportUrl(v string)`
+
+SetExportUrl sets ExportUrl field to given value.
+
+
+### GetProjectVersion
+
+`func (o *JobParams) GetProjectVersion() float64`
+
+GetProjectVersion returns the ProjectVersion field if non-nil, zero value otherwise.
+
+### GetProjectVersionOk
+
+`func (o *JobParams) GetProjectVersionOk() (*float64, bool)`
+
+GetProjectVersionOk returns a tuple with the ProjectVersion field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectVersion
+
+`func (o *JobParams) SetProjectVersion(v float64)`
+
+SetProjectVersion sets ProjectVersion field to given value.
+
+
+### GetCopyToUrl
+
+`func (o *JobParams) GetCopyToUrl() string`
+
+GetCopyToUrl returns the CopyToUrl field if non-nil, zero value otherwise.
+
+### GetCopyToUrlOk
+
+`func (o *JobParams) GetCopyToUrlOk() (*string, bool)`
+
+GetCopyToUrlOk returns a tuple with the CopyToUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCopyToUrl
+
+`func (o *JobParams) SetCopyToUrl(v string)`
+
+SetCopyToUrl sets CopyToUrl field to given value.
+
+### HasCopyToUrl
+
+`func (o *JobParams) HasCopyToUrl() bool`
+
+HasCopyToUrl returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

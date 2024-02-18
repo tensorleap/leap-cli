@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VisualizerName** | **string** |  | 
-**Data** | [**VisData**](VisData.md) |  | 
+**Data** | [**VisualizedItemData**](VisualizedItemData.md) |  | 
 **EncoderNames** | **[]string** |  | 
 **ConnectionName** | **string** |  | 
 **NodeId** | Pointer to **string** |  | [optional] 
@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewVisualizedItem
 
-`func NewVisualizedItem(visualizerName string, data VisData, encoderNames []string, connectionName string, ) *VisualizedItem`
+`func NewVisualizedItem(visualizerName string, data VisualizedItemData, encoderNames []string, connectionName string, ) *VisualizedItem`
 
 NewVisualizedItem instantiates a new VisualizedItem object
 This constructor will assign default values to properties that have it defined,
@@ -52,20 +52,20 @@ SetVisualizerName sets VisualizerName field to given value.
 
 ### GetData
 
-`func (o *VisualizedItem) GetData() VisData`
+`func (o *VisualizedItem) GetData() VisualizedItemData`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *VisualizedItem) GetDataOk() (*VisData, bool)`
+`func (o *VisualizedItem) GetDataOk() (*VisualizedItemData, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *VisualizedItem) SetData(v VisData)`
+`func (o *VisualizedItem) SetData(v VisualizedItemData)`
 
 SetData sets Data field to given value.
 

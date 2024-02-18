@@ -6,12 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **LastUpdated** | Pointer to **time.Time** |  | [optional] 
 **SessionRunIds** | Pointer to **[]string** |  | [optional] 
-**Types** | Pointer to [**[]JobTypeEnum**](JobTypeEnum.md) |  | [optional] 
+**Types** | Pointer to [**[]JobType**](JobType.md) |  | [optional] 
 **SubTypes** | Pointer to [**[]JobSubType**](JobSubType.md) |  | [optional] 
 **Trigger** | Pointer to [**JobTrigger**](JobTrigger.md) |  | [optional] 
 **Status** | Pointer to [**[]JobStatus**](JobStatus.md) |  | [optional] 
 **ProjectId** | Pointer to **string** |  | [optional] 
 **ShowJobsFromDate** | Pointer to **time.Time** |  | [optional] 
+**Cid** | Pointer to **[]string** |  | [optional] 
 
 ## Methods
 
@@ -84,20 +85,20 @@ HasSessionRunIds returns a boolean if a field has been set.
 
 ### GetTypes
 
-`func (o *GetJobsFilterParams) GetTypes() []JobTypeEnum`
+`func (o *GetJobsFilterParams) GetTypes() []JobType`
 
 GetTypes returns the Types field if non-nil, zero value otherwise.
 
 ### GetTypesOk
 
-`func (o *GetJobsFilterParams) GetTypesOk() (*[]JobTypeEnum, bool)`
+`func (o *GetJobsFilterParams) GetTypesOk() (*[]JobType, bool)`
 
 GetTypesOk returns a tuple with the Types field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTypes
 
-`func (o *GetJobsFilterParams) SetTypes(v []JobTypeEnum)`
+`func (o *GetJobsFilterParams) SetTypes(v []JobType)`
 
 SetTypes sets Types field to given value.
 
@@ -231,6 +232,31 @@ SetShowJobsFromDate sets ShowJobsFromDate field to given value.
 `func (o *GetJobsFilterParams) HasShowJobsFromDate() bool`
 
 HasShowJobsFromDate returns a boolean if a field has been set.
+
+### GetCid
+
+`func (o *GetJobsFilterParams) GetCid() []string`
+
+GetCid returns the Cid field if non-nil, zero value otherwise.
+
+### GetCidOk
+
+`func (o *GetJobsFilterParams) GetCidOk() (*[]string, bool)`
+
+GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCid
+
+`func (o *GetJobsFilterParams) SetCid(v []string)`
+
+SetCid sets Cid field to given value.
+
+### HasCid
+
+`func (o *GetJobsFilterParams) HasCid() bool`
+
+HasCid returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

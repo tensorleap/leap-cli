@@ -6,13 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** |  | 
 **Labels** | **[]string** |  | 
-**ChannelDim** | **float64** |  | 
+**ChannelDim** | Pointer to **float64** |  | [optional] 
 
 ## Methods
 
 ### NewPredictionTypeInstance
 
-`func NewPredictionTypeInstance(name string, labels []string, channelDim float64, ) *PredictionTypeInstance`
+`func NewPredictionTypeInstance(name string, labels []string, ) *PredictionTypeInstance`
 
 NewPredictionTypeInstance instantiates a new PredictionTypeInstance object
 This constructor will assign default values to properties that have it defined,
@@ -86,6 +86,11 @@ and a boolean to check if the value has been set.
 
 SetChannelDim sets ChannelDim field to given value.
 
+### HasChannelDim
+
+`func (o *PredictionTypeInstance) HasChannelDim() bool`
+
+HasChannelDim returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
