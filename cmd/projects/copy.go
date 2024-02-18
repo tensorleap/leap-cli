@@ -12,6 +12,7 @@ import (
 )
 
 func NewCopyCmd() *cobra.Command {
+	var noCache bool
 	cmd := &cobra.Command{
 		Use:     "copy [env:source-name] [env:target-name]",
 		Aliases: []string{"cp"},
@@ -24,7 +25,7 @@ func NewCopyCmd() *cobra.Command {
 				return err
 			}
 
-			err = project.CopyProject(sourceCtx, sourceProject, targetCtx, targetProjectName)
+			err = project.CopyProject(sourceCtx, sourceProject, targetCtx, targetProjectName, noCache)
 
 			if err != nil {
 				return err
@@ -32,6 +33,7 @@ func NewCopyCmd() *cobra.Command {
 			return nil
 		},
 	}
+	cmd.Flags().BoolVarP(&noCache, "no-cache", "n", false, "Do not use project exported cache")
 
 	return cmd
 }
