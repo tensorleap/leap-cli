@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **JobId** | **string** |  | 
-**JobType** | [**JobTypeEnum**](JobTypeEnum.md) |  | 
+**JobType** | [**JobType**](JobType.md) |  | 
 
 ## Methods
 
 ### NewJobNotificationBaseContext
 
-`func NewJobNotificationBaseContext(jobId string, jobType JobTypeEnum, ) *JobNotificationBaseContext`
+`func NewJobNotificationBaseContext(jobId string, jobType JobType, ) *JobNotificationBaseContext`
 
 NewJobNotificationBaseContext instantiates a new JobNotificationBaseContext object
 This constructor will assign default values to properties that have it defined,
@@ -48,20 +48,20 @@ SetJobId sets JobId field to given value.
 
 ### GetJobType
 
-`func (o *JobNotificationBaseContext) GetJobType() JobTypeEnum`
+`func (o *JobNotificationBaseContext) GetJobType() JobType`
 
 GetJobType returns the JobType field if non-nil, zero value otherwise.
 
 ### GetJobTypeOk
 
-`func (o *JobNotificationBaseContext) GetJobTypeOk() (*JobTypeEnum, bool)`
+`func (o *JobNotificationBaseContext) GetJobTypeOk() (*JobType, bool)`
 
 GetJobTypeOk returns a tuple with the JobType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetJobType
 
-`func (o *JobNotificationBaseContext) SetJobType(v JobTypeEnum)`
+`func (o *JobNotificationBaseContext) SetJobType(v JobType)`
 
 SetJobType sets JobType field to given value.
 
