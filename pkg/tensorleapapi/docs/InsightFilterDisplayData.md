@@ -6,13 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | **string** |  | 
 **InsightData** | [**InsightType**](InsightType.md) |  | 
-**SessionRun** | [**InsightFilterDisplayDataSessionRun**](InsightFilterDisplayDataSessionRun.md) |  | 
+**SessionRun** | [**FilterSessionRun**](FilterSessionRun.md) |  | 
 
 ## Methods
 
 ### NewInsightFilterDisplayData
 
-`func NewInsightFilterDisplayData(type_ string, insightData InsightType, sessionRun InsightFilterDisplayDataSessionRun, ) *InsightFilterDisplayData`
+`func NewInsightFilterDisplayData(type_ string, insightData InsightType, sessionRun FilterSessionRun, ) *InsightFilterDisplayData`
 
 NewInsightFilterDisplayData instantiates a new InsightFilterDisplayData object
 This constructor will assign default values to properties that have it defined,
@@ -69,20 +69,20 @@ SetInsightData sets InsightData field to given value.
 
 ### GetSessionRun
 
-`func (o *InsightFilterDisplayData) GetSessionRun() InsightFilterDisplayDataSessionRun`
+`func (o *InsightFilterDisplayData) GetSessionRun() FilterSessionRun`
 
 GetSessionRun returns the SessionRun field if non-nil, zero value otherwise.
 
 ### GetSessionRunOk
 
-`func (o *InsightFilterDisplayData) GetSessionRunOk() (*InsightFilterDisplayDataSessionRun, bool)`
+`func (o *InsightFilterDisplayData) GetSessionRunOk() (*FilterSessionRun, bool)`
 
 GetSessionRunOk returns a tuple with the SessionRun field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSessionRun
 
-`func (o *InsightFilterDisplayData) SetSessionRun(v InsightFilterDisplayDataSessionRun)`
+`func (o *InsightFilterDisplayData) SetSessionRun(v FilterSessionRun)`
 
 SetSessionRun sets SessionRun field to given value.
 

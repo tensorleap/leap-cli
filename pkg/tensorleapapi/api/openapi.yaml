@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.456
+  version: 0.0.464
 servers:
 - url: /api/v2
 paths:
@@ -6249,6 +6249,20 @@ components:
       - $ref: '#/components/schemas/UnderRepresentationInsight'
       - $ref: '#/components/schemas/ClusterInsight'
       - $ref: '#/components/schemas/DuplicationInsight'
+    FilterSessionRun:
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        sessionId:
+          type: string
+      required:
+      - id
+      - name
+      - sessionId
+      type: object
     InsightFilterDisplayData:
       additionalProperties: false
       properties:
@@ -6260,7 +6274,7 @@ components:
         insightData:
           $ref: '#/components/schemas/InsightType'
         sessionRun:
-          $ref: '#/components/schemas/InsightFilterDisplayData_sessionRun'
+          $ref: '#/components/schemas/FilterSessionRun'
       required:
       - insightData
       - sessionRun
@@ -6274,7 +6288,28 @@ components:
           - fetch-similar
           nullable: false
           type: string
+        limit:
+          format: double
+          type: number
+        sampleIds:
+          items:
+            $ref: '#/components/schemas/SampleIdentity'
+          type: array
+        epoch:
+          format: double
+          type: number
+        filtersUsed:
+          items:
+            type: string
+          type: array
+        sessionRun:
+          $ref: '#/components/schemas/FilterSessionRun'
       required:
+      - epoch
+      - filtersUsed
+      - limit
+      - sampleIds
+      - sessionRun
       - type
       type: object
     FilterDisplayData:
@@ -8970,27 +9005,13 @@ components:
       - level
       - params
       type: object
-    JobTypeEnum:
-      enum:
-      - TRAINING
-      - IMPORT_MODEL
-      - ANALYZE
-      - WARMUP
-      - TEST_STUB_FUNCTION
-      - TEST_CUSTOM_LOSS
-      - EXPORT_MODEL
-      - DATASET_PARSE
-      - ANALYZE_GRAPH
-      - DRY_RUN_GRAPH
-      - SLIM_LS
-      type: string
     JobNotificationBaseContext:
       additionalProperties: false
       properties:
         jobId:
           type: string
         jobType:
-          $ref: '#/components/schemas/JobTypeEnum'
+          $ref: '#/components/schemas/JobType'
       required:
       - jobId
       - jobType
@@ -9001,7 +9022,7 @@ components:
         jobId:
           type: string
         jobType:
-          $ref: '#/components/schemas/JobTypeEnum'
+          $ref: '#/components/schemas/JobType'
         leepScriptName:
           type: string
         leepScriptId:
@@ -9022,7 +9043,7 @@ components:
         jobId:
           type: string
         jobType:
-          $ref: '#/components/schemas/JobTypeEnum'
+          $ref: '#/components/schemas/JobType'
         projectName:
           type: string
         projectId:
@@ -9045,7 +9066,7 @@ components:
         jobId:
           type: string
         jobType:
-          $ref: '#/components/schemas/JobTypeEnum'
+          $ref: '#/components/schemas/JobType'
         projectName:
           type: string
         projectId:
@@ -9071,7 +9092,7 @@ components:
         jobId:
           type: string
         jobType:
-          $ref: '#/components/schemas/JobTypeEnum'
+          $ref: '#/components/schemas/JobType'
         projectName:
           type: string
         projectId:
@@ -14370,6 +14391,20 @@ components:
       - payload
       - title
       type: object
+    JobTypeEnum:
+      enum:
+      - TRAINING
+      - IMPORT_MODEL
+      - ANALYZE
+      - WARMUP
+      - TEST_STUB_FUNCTION
+      - TEST_CUSTOM_LOSS
+      - EXPORT_MODEL
+      - DATASET_PARSE
+      - ANALYZE_GRAPH
+      - DRY_RUN_GRAPH
+      - SLIM_LS
+      type: string
     BasicVisualizationInfo:
       additionalProperties: false
       properties:
@@ -15228,19 +15263,6 @@ components:
           type: boolean
       required:
       - success
-      type: object
-    InsightFilterDisplayData_sessionRun:
-      properties:
-        sessionId:
-          type: string
-        id:
-          type: string
-        name:
-          type: string
-      required:
-      - id
-      - name
-      - sessionId
       type: object
     EvaluateExistingSessionParams_allOf:
       properties:

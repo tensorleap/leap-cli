@@ -115,6 +115,7 @@ docs/FetchSimilarResponse.md
 docs/FetchSimilarResponseReadyArtifacts.md
 docs/FilterDisplayData.md
 docs/FilterOperatorType.md
+docs/FilterSessionRun.md
 docs/GeneralMessageParams.md
 docs/GenericDataItem.md
 docs/GenericDataQueryParams.md
@@ -200,7 +201,6 @@ docs/ImportModelType.md
 docs/ImportNewModelParams.md
 docs/ImportProjectRequest.md
 docs/InsightFilterDisplayData.md
-docs/InsightFilterDisplayDataSessionRun.md
 docs/InsightType.md
 docs/Issue.md
 docs/IssueAction.md
@@ -500,6 +500,7 @@ model_fetch_similar_response.go
 model_fetch_similar_response_ready_artifacts.go
 model_filter_display_data.go
 model_filter_operator_type.go
+model_filter_session_run.go
 model_general_message_params.go
 model_generic_data_item.go
 model_generic_data_query_params.go
@@ -585,7 +586,6 @@ model_import_model_type.go
 model_import_new_model_params.go
 model_import_project_request.go
 model_insight_filter_display_data.go
-model_insight_filter_display_data_session_run.go
 model_insight_type.go
 model_issue.go
 model_issue_action.go

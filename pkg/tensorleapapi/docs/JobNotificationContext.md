@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **JobId** | **string** |  | 
-**JobType** | [**JobTypeEnum**](JobTypeEnum.md) |  | 
+**JobType** | [**JobType**](JobType.md) |  | 
 **LeepScriptName** | **string** |  | 
 **LeepScriptId** | **string** |  | 
 **LeepScriptVersion** | Pointer to **string** |  | [optional] 
@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewJobNotificationContext
 
-`func NewJobNotificationContext(jobId string, jobType JobTypeEnum, leepScriptName string, leepScriptId string, projectName string, projectId string, modelName string, modelExtId string, sessionRunId string, sample SampleIdentity, ) *JobNotificationContext`
+`func NewJobNotificationContext(jobId string, jobType JobType, leepScriptName string, leepScriptId string, projectName string, projectId string, modelName string, modelExtId string, sessionRunId string, sample SampleIdentity, ) *JobNotificationContext`
 
 NewJobNotificationContext instantiates a new JobNotificationContext object
 This constructor will assign default values to properties that have it defined,
@@ -58,20 +58,20 @@ SetJobId sets JobId field to given value.
 
 ### GetJobType
 
-`func (o *JobNotificationContext) GetJobType() JobTypeEnum`
+`func (o *JobNotificationContext) GetJobType() JobType`
 
 GetJobType returns the JobType field if non-nil, zero value otherwise.
 
 ### GetJobTypeOk
 
-`func (o *JobNotificationContext) GetJobTypeOk() (*JobTypeEnum, bool)`
+`func (o *JobNotificationContext) GetJobTypeOk() (*JobType, bool)`
 
 GetJobTypeOk returns a tuple with the JobType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetJobType
 
-`func (o *JobNotificationContext) SetJobType(v JobTypeEnum)`
+`func (o *JobNotificationContext) SetJobType(v JobType)`
 
 SetJobType sets JobType field to given value.
 
