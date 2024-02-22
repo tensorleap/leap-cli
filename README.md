@@ -6,7 +6,7 @@
 
 Run `leap --help` to see available options.
 
-Also available [here](docs/tensorleap.md)
+Also available [here](docs/leap.md)
 
 ### Automatic installation with script
 
