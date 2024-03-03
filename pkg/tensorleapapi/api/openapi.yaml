@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.464
+  version: 0.0.467
 servers:
 - url: /api/v2
 paths:
@@ -1609,6 +1609,26 @@ paths:
           description: No content
       security:
       - jwt: []
+  /settings/clearStorage:
+    post:
+      operationId: ClearStorage
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClearStorageRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClearStorageResponse'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
   /teams/getTeams:
     post:
       operationId: GetTeams
@@ -10142,10 +10162,19 @@ components:
       required:
       - jobId
       type: object
+    ExportOptions:
+      example:
+        excludeCalculatedFiles: true
+      properties:
+        excludeCalculatedFiles:
+          type: boolean
+      type: object
     ExportProjectRequest:
       additionalProperties: false
       example:
         noCache: true
+        options:
+          excludeCalculatedFiles: true
         projectId: projectId
         copyToUrl: copyToUrl
       properties:
@@ -10155,6 +10184,8 @@ components:
           type: string
         noCache:
           type: boolean
+        options:
+          $ref: '#/components/schemas/ExportOptions'
       required:
       - projectId
       type: object
@@ -11680,6 +11711,32 @@ components:
           items:
             $ref: '#/components/schemas/ValueWithKey'
           type: array
+      type: object
+    ClearStorageResponse:
+      example:
+        unusedDirs:
+        - name: name
+          dirs:
+          - dirs
+          - dirs
+        - name: name
+          dirs:
+          - dirs
+          - dirs
+      properties:
+        unusedDirs:
+          items:
+            $ref: '#/components/schemas/ClearStorageResponse_unusedDirs_inner'
+          type: array
+      required:
+      - unusedDirs
+      type: object
+    ClearStorageRequest:
+      example:
+        dryRun: true
+      properties:
+        dryRun:
+          type: boolean
       type: object
     SlimTeam:
       additionalProperties: false
@@ -13902,6 +13959,9 @@ components:
           type: number
         label:
           type: string
+        rotation:
+          format: double
+          type: number
       required:
       - confidence
       - height
@@ -15276,6 +15336,23 @@ components:
       - sessionId
       type: object
       example: null
+    ClearStorageResponse_unusedDirs_inner:
+      example:
+        name: name
+        dirs:
+        - dirs
+        - dirs
+      properties:
+        dirs:
+          items:
+            type: string
+          type: array
+        name:
+          type: string
+      required:
+      - dirs
+      - name
+      type: object
     VisualizedItem_data:
       anyOf:
       - $ref: '#/components/schemas/VisData'

@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**AddVersion**](DefaultApi.md#AddVersion) | **Post** /versions/addVersion | 
 [**AnalyzeGraph**](DefaultApi.md#AnalyzeGraph) | **Post** /graph/analyzeGraph | 
 [**ApplyDatasetMapping**](DefaultApi.md#ApplyDatasetMapping) | **Post** /graph/applyDatasetMapping | 
+[**ClearStorage**](DefaultApi.md#ClearStorage) | **Post** /settings/clearStorage | 
 [**ClearUserJobs**](DefaultApi.md#ClearUserJobs) | **Post** /users/clearUserJobs | 
 [**ClearUserNotifications**](DefaultApi.md#ClearUserNotifications) | **Post** /users/clearUserNotifications | 
 [**ContinueTrain**](DefaultApi.md#ContinueTrain) | **Post** /train/continueTrain | 
@@ -830,6 +831,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ApplyMappingResponse**](ApplyMappingResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ClearStorage
+
+> ClearStorageResponse ClearStorage(ctx).ClearStorageRequest(clearStorageRequest).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    clearStorageRequest := *openapiclient.NewClearStorageRequest() // ClearStorageRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.ClearStorage(context.Background()).ClearStorageRequest(clearStorageRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ClearStorage``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `ClearStorage`: ClearStorageResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ClearStorage`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiClearStorageRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **clearStorageRequest** | [**ClearStorageRequest**](ClearStorageRequest.md) |  | 
+
+### Return type
+
+[**ClearStorageResponse**](ClearStorageResponse.md)
 
 ### Authorization
 

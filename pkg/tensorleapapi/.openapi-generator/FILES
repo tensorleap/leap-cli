@@ -41,6 +41,9 @@ docs/BasicVisualizationInfo.md
 docs/BoolSchema.md
 docs/BoundingBox.md
 docs/BucketAggregation.md
+docs/ClearStorageRequest.md
+docs/ClearStorageResponse.md
+docs/ClearStorageResponseUnusedDirsInner.md
 docs/ClientFilterParams.md
 docs/ClusterInsight.md
 docs/Clusters.md
@@ -100,6 +103,7 @@ docs/EvaluateNewSessionParams.md
 docs/EvaluateParams.md
 docs/ExportModelParams.md
 docs/ExportModelTypeEnum.md
+docs/ExportOptions.md
 docs/ExportProjectParams.md
 docs/ExportProjectRequest.md
 docs/ExportProjectResponse.md
@@ -427,6 +431,9 @@ model_basic_visualization_info.go
 model_bool_schema.go
 model_bounding_box.go
 model_bucket_aggregation.go
+model_clear_storage_request.go
+model_clear_storage_response.go
+model_clear_storage_response_unused_dirs_inner.go
 model_client_filter_params.go
 model_cluster_insight.go
 model_clusters.go
@@ -485,6 +492,7 @@ model_evaluate_new_session_params.go
 model_evaluate_params.go
 model_export_model_params.go
 model_export_model_type_enum.go
+model_export_options.go
 model_export_project_params.go
 model_export_project_request.go
 model_export_project_response.go

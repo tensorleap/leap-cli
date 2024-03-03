@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **ProjectId** | **string** |  | 
 **CopyToUrl** | Pointer to **string** |  | [optional] 
 **NoCache** | Pointer to **bool** |  | [optional] 
+**Options** | Pointer to [**ExportOptions**](ExportOptions.md) |  | [optional] 
 
 ## Methods
 
@@ -96,6 +97,31 @@ SetNoCache sets NoCache field to given value.
 `func (o *ExportProjectRequest) HasNoCache() bool`
 
 HasNoCache returns a boolean if a field has been set.
+
+### GetOptions
+
+`func (o *ExportProjectRequest) GetOptions() ExportOptions`
+
+GetOptions returns the Options field if non-nil, zero value otherwise.
+
+### GetOptionsOk
+
+`func (o *ExportProjectRequest) GetOptionsOk() (*ExportOptions, bool)`
+
+GetOptionsOk returns a tuple with the Options field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOptions
+
+`func (o *ExportProjectRequest) SetOptions(v ExportOptions)`
+
+SetOptions sets Options field to given value.
+
+### HasOptions
+
+`func (o *ExportProjectRequest) HasOptions() bool`
+
+HasOptions returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
