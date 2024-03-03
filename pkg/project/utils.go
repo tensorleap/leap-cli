@@ -55,7 +55,7 @@ func BuildProjectContext(ctx context.Context, projectEntity *ProjectEntity, sche
 func CopyProject(
 	sourceCtx context.Context, sourceProject *ProjectEntity,
 	targetCtx context.Context, targetProjectName string,
-	noExportCache bool,
+	exportOptions ExportProjectParams,
 ) error {
 
 	sourceUrl, _ := api.GetAuthFromContext(sourceCtx)
@@ -72,7 +72,7 @@ func CopyProject(
 
 	log.Infof("Copying project\n\tfrom: %s:%s\n\tto:   %s:%s", sourceProject.GetName(), sourceUrl, targetProjectName, targetUrl)
 
-	exportJob, err := ExportProject(sourceCtx, sourceProject.Cid, copyToUrl, noExportCache)
+	exportJob, err := ExportProject(sourceCtx, sourceProject.Cid, copyToUrl, exportOptions)
 	if err != nil {
 		return err
 	}
