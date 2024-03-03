@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **Height** | **float64** |  | 
 **Confidence** | **float64** |  | 
 **Label** | **string** |  | 
+**Rotation** | Pointer to **float64** |  | [optional] 
 
 ## Methods
 
@@ -149,6 +150,31 @@ and a boolean to check if the value has been set.
 
 SetLabel sets Label field to given value.
 
+
+### GetRotation
+
+`func (o *BoundingBox) GetRotation() float64`
+
+GetRotation returns the Rotation field if non-nil, zero value otherwise.
+
+### GetRotationOk
+
+`func (o *BoundingBox) GetRotationOk() (*float64, bool)`
+
+GetRotationOk returns a tuple with the Rotation field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRotation
+
+`func (o *BoundingBox) SetRotation(v float64)`
+
+SetRotation sets Rotation field to given value.
+
+### HasRotation
+
+`func (o *BoundingBox) HasRotation() bool`
+
+HasRotation returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
