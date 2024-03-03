@@ -100,6 +100,7 @@ docs/EvaluateNewSessionParams.md
 docs/EvaluateParams.md
 docs/ExportModelParams.md
 docs/ExportModelTypeEnum.md
+docs/ExportOptions.md
 docs/ExportProjectParams.md
 docs/ExportProjectRequest.md
 docs/ExportProjectResponse.md
@@ -485,6 +486,7 @@ model_evaluate_new_session_params.go
 model_evaluate_params.go
 model_export_model_params.go
 model_export_model_type_enum.go
+model_export_options.go
 model_export_project_params.go
 model_export_project_request.go
 model_export_project_response.go

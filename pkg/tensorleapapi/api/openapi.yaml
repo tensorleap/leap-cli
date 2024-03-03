@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.464
+  version: 0.0.465
 servers:
 - url: /api/v2
 paths:
@@ -10142,10 +10142,19 @@ components:
       required:
       - jobId
       type: object
+    ExportOptions:
+      example:
+        excludeCalculatedFiles: true
+      properties:
+        excludeCalculatedFiles:
+          type: boolean
+      type: object
     ExportProjectRequest:
       additionalProperties: false
       example:
         noCache: true
+        options:
+          excludeCalculatedFiles: true
         projectId: projectId
         copyToUrl: copyToUrl
       properties:
@@ -10155,6 +10164,8 @@ components:
           type: string
         noCache:
           type: boolean
+        options:
+          $ref: '#/components/schemas/ExportOptions'
       required:
       - projectId
       type: object
@@ -13902,6 +13913,9 @@ components:
           type: number
         label:
           type: string
+        rotation:
+          format: double
+          type: number
       required:
       - confidence
       - height
