@@ -197,10 +197,21 @@ func ExportProjectIntoFile(ctx context.Context, project *ProjectEntity, outputDi
 
 const PUBLISH_TIMEOUT = 4 * time.Hour
 
-func ExportProject(ctx context.Context, projectId string, copyToUrl string, noCache bool) (*tensorleapapi.Job, error) {
+type ExportProjectParams struct {
+	NoCache                bool
+	ExcludeCalculatedFiles bool
+}
+
+func ExportProject(ctx context.Context, projectId string, copyToUrl string, options ExportProjectParams) (*tensorleapapi.Job, error) {
 
 	exportParams := *tensorleapapi.NewExportProjectRequest(projectId)
-	exportParams.SetNoCache(noCache)
+	exportParams.SetNoCache(options.NoCache)
+
+	exportOptions := tensorleapapi.NewExportOptions()
+	exportOptions.SetExcludeCalculatedFiles(options.ExcludeCalculatedFiles)
+
+	exportParams.SetOptions(*exportOptions)
+
 	if len(copyToUrl) > 0 {
 		log.Infof("Copy project content by signed url: %v", extractUrl(copyToUrl))
 		exportParams.SetCopyToUrl(copyToUrl)
