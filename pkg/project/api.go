@@ -154,9 +154,9 @@ func getTempUploadedSignedUrl(ctx context.Context, fileName string, origin *stri
 	return uploadUrl.Url, uploadUrl.GetFileName(), nil
 }
 
-func getSignedUrl(ctx context.Context, url, method string, expire time.Duration, origin *string) (string, error) {
+func getSignedUrl(ctx context.Context, url string, method tensorleapapi.HttpMethods, expire time.Duration, origin *string) (string, error) {
 	expireTime := float64(expire.Seconds())
-	getUrlParams := *tensorleapapi.NewGetSignedUrlParams(url, expireTime, http.MethodGet)
+	getUrlParams := *tensorleapapi.NewGetSignedUrlParams(url, expireTime, method)
 	getUrlParams.Origin = origin
 	getUrl, res, err := api.ApiClient.GetSignedUrl(ctx).
 		GetSignedUrlParams(getUrlParams).Execute()
