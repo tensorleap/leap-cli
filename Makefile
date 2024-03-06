@@ -49,10 +49,10 @@ test:
 update-server-api:
 	@./scripts/update_server_api.sh ${NODE_SERVER_BUILDER_IMAGE} ${NODE_SERVER_BRANCH} 
 
-.PHONY: shellcheck-image
-shellcheck-image:
+.PHONY: build-shellcheck-image
+build-shellcheck-image:
 	docker build -t shellcheck-image -f shellcheck.Dockerfile .
 
 .PHONY: shellcheck
-shellcheck:
+shellcheck: build-shellcheck-image
 	docker run --rm -v `pwd`:/repo shellcheck-image
