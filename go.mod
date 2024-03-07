@@ -1,8 +1,6 @@
 module github.com/tensorleap/leap-cli
 
-go 1.21
-
-toolchain go1.21.6
+go 1.20
 
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.7
