@@ -88,7 +88,7 @@ func Logout(envName string) error {
 }
 
 func IsLocalUrl(url string) bool {
-	return strings.Contains(url, "localhost") || strings.Contains(url, "127.0,0,1") || !strings.Contains(url, "https")
+	return !strings.Contains(url, ".tensorleap.ai")
 }
 
 func EnvNameFromUrl(url string) string {
