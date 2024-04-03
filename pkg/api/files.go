@@ -56,7 +56,7 @@ func UploadFile(url string, file io.Reader, fileSize int64) error {
 		req.ContentLength = fileSize
 	}
 	req.Header.Set("Content-Type", DetectContentTypeFromUrl(url))
-	client := &http.Client{}
+	client := http.DefaultClient
 	resp, err := client.Do(req)
 	if err := CheckRes(resp, err); err != nil {
 		return fmt.Errorf("failed to upload file: %v", err)

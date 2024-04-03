@@ -2,7 +2,6 @@ package api
 
 import (
 	"context"
-	"crypto/tls"
 	"net/http"
 
 	. "github.com/tensorleap/leap-cli/pkg/tensorleapapi"
@@ -19,14 +18,7 @@ func CreateAuthenticatedContext(parentCtx context.Context, apiKey string, baseUr
 func getApiClient() *DefaultApiService {
 	cfg := NewConfiguration()
 
-	// // Create a custom HTTP client with disabled SSL verification
-	customTransport := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, // Disable SSL verification
-	}
-	customHttpClient := &http.Client{
-		Transport: customTransport,
-	}
-	cfg.HTTPClient = customHttpClient // Use the custom HTTP client
+	cfg.HTTPClient = NewDefaultClient()
 
 	cfg.Servers = ServerConfigurations{
 		{

@@ -286,7 +286,7 @@ func DownloadProject(ctx context.Context, projectId string) (*http.Response, err
 	// steam response
 	req.Header.Set("Accept", "application/octet-stream")
 	api.AddAuthToRequestHeader(&req.Header, apiKey)
-	client := &http.Client{}
+	client := http.DefaultClient
 	res, err := client.Do(req)
 	if err = api.CheckRes(res, err); err != nil {
 		return nil, fmt.Errorf("failed to export project %s /n%s", projectId, err)
