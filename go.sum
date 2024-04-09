@@ -605,8 +605,8 @@ github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcU
 github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
 github.com/subosito/gotenv v1.6.0 h1:9NlTDc1FTs4qu0DDq7AEtTPNw6SVm7uBMsUCUjABIf8=
 github.com/subosito/gotenv v1.6.0/go.mod h1:Dk4QP5c2W3ibzajGcXpNraDfq2IrhjMIvMSWPKKo0FU=
-github.com/tensorleap/helm-charts v0.0.14 h1:5NQQfwpB0AdbYVyvqdSCVqJAZmQnPQsCDOjycUk7qvU=
-github.com/tensorleap/helm-charts v0.0.14/go.mod h1:nsjta69LeQGL6HjQIZNhqdfv20Qdp8swxI4WJa+Ah/Q=
+github.com/tensorleap/helm-charts v0.1.0 h1:3t7BO3/a+MdeBCCSz8eKrhsQqo8f4LpuQBe8Al0izRE=
+github.com/tensorleap/helm-charts v0.1.0/go.mod h1:nsjta69LeQGL6HjQIZNhqdfv20Qdp8swxI4WJa+Ah/Q=
 github.com/tensorleap/oras-go v1.2.5 h1:JHEt/HpYpM4IKpxfuHWQfQ/KEodTRtC5IlMRAikFFvQ=
 github.com/tensorleap/oras-go v1.2.5/go.mod h1:EPJaq6aNBD3Loyfyz7iIjn45nz8aryuLMnuYvDDNpRQ=
 github.com/theupdateframework/notary v0.7.0 h1:QyagRZ7wlSpjT5N2qQAh/pN+DVqgekv4DzbAiAiEL3c=
