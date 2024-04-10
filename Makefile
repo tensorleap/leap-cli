@@ -18,6 +18,10 @@ build-cross:
 		-ldflags "$(LDFLAGS)" \
 		.
 
+.PHONY: build-local
+build-local:
+	go build .
+
 .PHONY: docgen
 docgen:
 	rm -rf docs/*

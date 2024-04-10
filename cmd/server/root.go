@@ -32,4 +32,5 @@ func init() {
 	RootCommand.AddCommand(server.NewStopCmd())
 	RootCommand.AddCommand(server.NewUninstallCmd())
 	RootCommand.AddCommand(server.NewToolCmd())
+	RootCommand.AddCommand(NewHostnameCmd())
 }
