@@ -13,7 +13,11 @@ func NewInstallCmd() *cobra.Command {
 		Short: server.InstallCmdDescription,
 		Long:  server.InstallCmdDescription,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			err := server.RunInstallCmd(cmd, flags)
+			_, err := initDataDir(cmd.Context(), flags.DataDir)
+			if err != nil {
+				return err
+			}
+			err = server.RunInstallCmd(cmd, flags)
 			if err != nil {
 				return mapInstallationErr(err)
 			}

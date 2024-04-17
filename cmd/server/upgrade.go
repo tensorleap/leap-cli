@@ -13,7 +13,11 @@ func NewUpgradeCmd() *cobra.Command {
 		Short: server.UpgradeCmdDescription,
 		Long:  server.UpgradeCmdDescription,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			err := server.RunUpgradeCmd(cmd, flags)
+			_, err := initDataDir(cmd.Context(), "")
+			if err != nil {
+				return err
+			}
+			err = server.RunUpgradeCmd(cmd, flags)
 			if err != nil {
 				return mapInstallationErr(err)
 			}

@@ -13,7 +13,11 @@ func NewReinstallCmd() *cobra.Command {
 		Short: "Reinstall tensorleap",
 		Long:  "Reinstall tensorleap",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			err := server.RunReinstallCmd(cmd, flags)
+			isReinstalled, err := initDataDir(cmd.Context(), "")
+			if err != nil {
+				return err
+			}
+			err = server.RunReinstallCmd(cmd, flags, isReinstalled)
 			if err != nil {
 				return mapInstallationErr(err)
 			}
