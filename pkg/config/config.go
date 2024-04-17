@@ -41,3 +41,18 @@ func InitConfig(cfgFile string) error {
 	return viper.ReadInConfig()
 
 }
+
+
+func Save() error {
+	err := viper.SafeWriteConfig()
+	if err != nil {
+		_, ok := err.(viper.ConfigFileAlreadyExistsError)
+		if ok {
+			err = viper.WriteConfig()
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
