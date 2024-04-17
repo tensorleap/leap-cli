@@ -3,6 +3,8 @@ package server
 import (
 	"fmt"
 
+	"context"
+
 	"github.com/spf13/viper"
 	"github.com/tensorleap/helm-charts/pkg/local"
 	"github.com/tensorleap/helm-charts/pkg/server"
@@ -53,44 +55,27 @@ func localLogin(port uint) error {
 	return nil
 }
 
-func getDataDir() (string, error) {
+func getConfigureDataDir() string {
 	dataDir := viper.GetString(DATA_DIR_CONFIG_PATH)
-	if dataDir == "" {
-		dataDir = local.DEFAULT_DATA_DIR
-		viper.Set(DATA_DIR_CONFIG_PATH, dataDir)
-		err := config.Save()
-		if err != nil {
-			return "", fmt.Errorf("failed to save data-dir to config: %v", err)
-		}
-	}
-	return dataDir, nil
+	return dataDir
 }
 
-func initDataDir(flag string) (func() error, error) {
-	previousDir, err := getDataDir()
+func initDataDir(ctx context.Context, flag string) (bool, error) {
+	previousDir := getConfigureDataDir()
+	err := local.SetDataDir(previousDir, flag)
 	if err != nil {
-		return nil, err
+		return false, err
 	}
-	err = local.SetDataDir(previousDir, flag)
 	currentDir := local.GetServerDataDir()
 
-	save := func() error {
-		isDirNotChanged := previousDir == currentDir
-		if isDirNotChanged {
-			return nil
-		}
-		previousStatus, err := local.CheckDirectoryStatus(previousDir)
-		if err != nil {
-			return err
-		}
-		isStorageMigrated := !previousStatus.Exists
-		if isStorageMigrated {
-			log.Infof("Saving data-dir (%s) to config", currentDir)
-			viper.Set(DATA_DIR_CONFIG_PATH, currentDir)
-			return config.Save()
-		}
-		return nil
+	isTransfer, err := server.TransferData(ctx)
+	if err != nil {
+		return false, err
 	}
-
-	return save, err
+	if isTransfer || previousDir != currentDir {
+		log.Infof("Saving data-dir (%s) to config", currentDir)
+		viper.Set(DATA_DIR_CONFIG_PATH, currentDir)
+		return isTransfer, config.Save()
+	}
+	return false, nil
 }
