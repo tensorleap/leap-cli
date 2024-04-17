@@ -61,7 +61,11 @@ func getConfigureDataDir() string {
 }
 
 func initDataDir(ctx context.Context, flag string) (bool, error) {
-	previousDir := getConfigureDataDir()
+	configureDir := getConfigureDataDir()
+	previousDir := configureDir
+	if previousDir == "" {
+		previousDir = local.DEFAULT_DATA_DIR
+	}
 	err := local.SetDataDir(previousDir, flag)
 	if err != nil {
 		return false, err
@@ -72,7 +76,7 @@ func initDataDir(ctx context.Context, flag string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	if isTransfer || previousDir != currentDir {
+	if isTransfer || configureDir != currentDir {
 		log.Infof("Saving data-dir (%s) to config", currentDir)
 		viper.Set(DATA_DIR_CONFIG_PATH, currentDir)
 		return isTransfer, config.Save()
