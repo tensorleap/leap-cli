@@ -3,11 +3,17 @@ package server
 import (
 	"fmt"
 
+	"github.com/spf13/viper"
+	"github.com/tensorleap/helm-charts/pkg/local"
 	"github.com/tensorleap/helm-charts/pkg/server"
 	"github.com/tensorleap/helm-charts/pkg/server/manifest"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/cli"
+	"github.com/tensorleap/leap-cli/pkg/config"
+	"github.com/tensorleap/leap-cli/pkg/log"
 )
+
+const DATA_DIR_CONFIG_PATH = "data_dir"
 
 var ErrUnsupportedManifestVersion = fmt.Errorf(
 	`unsupported manifest version. Please update your CLI.
@@ -45,4 +51,38 @@ func localLogin(port uint) error {
 		return err
 	}
 	return nil
+}
+
+func initDataDir(flag string) (func() error, error) {
+	previousDir := viper.GetString(DATA_DIR_CONFIG_PATH)
+	if previousDir == "" {
+		previousDir = local.DEFAULT_DATA_DIR
+		viper.Set(DATA_DIR_CONFIG_PATH, previousDir)
+		err := config.Save()
+		if err != nil {
+			return nil, fmt.Errorf("failed to save data-dir to config: %v", err)
+		}
+	}
+	err := local.SetDataDir(previousDir, flag)
+	currentDir := local.GetServerDataDir()
+
+	save := func() error {
+		isDirNotChanged := previousDir == currentDir
+		if isDirNotChanged {
+			return nil
+		}
+		previousStatus, err := local.CheckDirectoryStatus(previousDir)
+		if err != nil {
+			return err
+		}
+		isStorageMigrated := !previousStatus.Exists
+		if isStorageMigrated {
+			log.Infof("Saving data-dir (%s) to config", currentDir)
+			viper.Set(DATA_DIR_CONFIG_PATH, currentDir)
+			return config.Save()
+		}
+		return nil
+	}
+
+	return save, err
 }
