@@ -53,17 +53,25 @@ func localLogin(port uint) error {
 	return nil
 }
 
-func initDataDir(flag string) (func() error, error) {
-	previousDir := viper.GetString(DATA_DIR_CONFIG_PATH)
-	if previousDir == "" {
-		previousDir = local.DEFAULT_DATA_DIR
-		viper.Set(DATA_DIR_CONFIG_PATH, previousDir)
+func getDataDir() (string, error) {
+	dataDir := viper.GetString(DATA_DIR_CONFIG_PATH)
+	if dataDir == "" {
+		dataDir = local.DEFAULT_DATA_DIR
+		viper.Set(DATA_DIR_CONFIG_PATH, dataDir)
 		err := config.Save()
 		if err != nil {
-			return nil, fmt.Errorf("failed to save data-dir to config: %v", err)
+			return "", fmt.Errorf("failed to save data-dir to config: %v", err)
 		}
 	}
-	err := local.SetDataDir(previousDir, flag)
+	return dataDir, nil
+}
+
+func initDataDir(flag string) (func() error, error) {
+	previousDir, err := getDataDir()
+	if err != nil {
+		return nil, err
+	}
+	err = local.SetDataDir(previousDir, flag)
 	currentDir := local.GetServerDataDir()
 
 	save := func() error {
