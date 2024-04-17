@@ -119,16 +119,3 @@ func setEnvAuth(auth *Env) {
 	viper.Set(getEnvAuthPath(auth.Name, API_KEY), auth.ApiKey)
 }
 
-func save() error {
-	err := viper.SafeWriteConfig()
-	if err != nil {
-		_, ok := err.(viper.ConfigFileAlreadyExistsError)
-		if ok {
-			err = viper.WriteConfig()
-			if err != nil {
-				return err
-			}
-		}
-	}
-	return nil
-}

@@ -8,6 +8,7 @@ import (
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/spf13/viper"
 	"github.com/tensorleap/leap-cli/pkg/api"
+	"github.com/tensorleap/leap-cli/pkg/config"
 	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
@@ -20,7 +21,7 @@ func Login(env *Env) (err error) {
 		setEnvAuth(env)
 	}
 
-	err = save()
+	err = config.Save()
 	if err != nil {
 		return fmt.Errorf("Login failed: %v", err)
 	}
@@ -34,7 +35,7 @@ func SelectAndSetEnv(envName string) error {
 		return err
 	}
 	setCurrentEnv(auth)
-	err = save()
+	err = config.Save()
 	if err != nil {
 		return fmt.Errorf("select failed: %v", err)
 	}
@@ -79,7 +80,7 @@ func SelectEnv(msg string, envName string) (*Env, error) {
 
 func Logout(envName string) error {
 	removeEnvAuth(envName)
-	err := save()
+	err := config.Save()
 	if err != nil {
 		return fmt.Errorf("Logout failed: %v", err)
 	}
