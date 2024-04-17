@@ -42,7 +42,6 @@ func InitConfig(cfgFile string) error {
 
 }
 
-
 func Save() error {
 	err := viper.SafeWriteConfig()
 	if err != nil {

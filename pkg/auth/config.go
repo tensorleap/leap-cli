@@ -118,4 +118,3 @@ func setEnvAuth(auth *Env) {
 	viper.Set(getEnvAuthPath(auth.Name, API_URL), auth.ApiUrl)
 	viper.Set(getEnvAuthPath(auth.Name, API_KEY), auth.ApiKey)
 }
-
