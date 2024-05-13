@@ -4,7 +4,7 @@
 
 set -e
 
-DOCKER_REGISTRY=us-central1-docker.pkg.dev/tensorleap/main
+DOCKER_REGISTRY=public.ecr.aws/tensorleap
 NODE_SERVER_REPO=node-server
 
 NODE_SERVER_BRANCH=${2:-master}
