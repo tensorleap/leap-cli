@@ -82,6 +82,10 @@ func Execute() {
 }
 
 func initConfig() {
+	cfgFileFromEnv := os.Getenv("TL_CLI_CONFIG_FILE")
+	if cfgFile == "" && cfgFileFromEnv != "" {
+		cfgFile = cfgFileFromEnv
+	}
 	err := config.InitConfig(cfgFile)
 	cobra.CheckErr(err)
 }
