@@ -50,7 +50,6 @@ Complete documentation is available at https://docs.tensorleap.ai`,
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
 
 	RootCommand.Flags().BoolVar(&showVersionInfo, "version", false, "Show version information")
 	RootCommand.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/tensorleap/config.yaml)")
@@ -72,6 +71,8 @@ func init() {
 	if hubPkg.IsHubEnabled() {
 		RootCommand.AddCommand(hub.RootCommand)
 	}
+
+	initConfig()
 }
 
 func Execute() {
@@ -82,10 +83,6 @@ func Execute() {
 }
 
 func initConfig() {
-	cfgFileFromEnv := os.Getenv("TL_CLI_CONFIG_FILE")
-	if cfgFile == "" && cfgFileFromEnv != "" {
-		cfgFile = cfgFileFromEnv
-	}
 	err := config.InitConfig(cfgFile)
 	cobra.CheckErr(err)
 }
