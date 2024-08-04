@@ -80,6 +80,8 @@ func initDataDir(ctx context.Context, flag string) (bool, error) {
 		log.Infof("Saving data-dir (%s) to config", currentDir)
 		viper.Set(DATA_DIR_CONFIG_PATH, currentDir)
 		return isTransfer, config.Save()
+	} else {
+		log.Infof("Using data-dir: %s", currentDir)
 	}
 	return false, nil
 }
