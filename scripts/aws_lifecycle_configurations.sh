@@ -45,6 +45,11 @@ ensure_leap_cli() {
         echo "Tensorleap CLI not found. Installing..."
         export BIN_DIR=$TL_BIN_DIR
         curl -s https://raw.githubusercontent.com/tensorleap/leap-cli/master/install.sh | bash
+        
+        if [ -e "$TL_CLI_CONFIG_FILE" ]; then
+            # Change permissions of the config file
+            chmod 600 "$TL_CLI_CONFIG_FILE"
+        fi
     else
         echo "Tensorleap CLI is already installed."
     fi
