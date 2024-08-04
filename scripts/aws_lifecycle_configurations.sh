@@ -46,8 +46,7 @@ update_docker_config() {
 ensure_leap_cli() {
     if ! command -v leap &> /dev/null; then
         echo "Tensorleap CLI not found. Installing..."
-        export BIN_DIR=$TL_BIN_DIR
-        curl -s https://raw.githubusercontent.com/tensorleap/leap-cli/master/install.sh | bash
+        curl -s https://raw.githubusercontent.com/tensorleap/leap-cli/master/install.sh | BIN_DIR=$TL_BIN_DIR bash
         
         if [ -e "$TL_CLI_CONFIG_FILE" ]; then
             # Change permissions of the config file
