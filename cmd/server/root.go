@@ -6,6 +6,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/helm-charts/cmd/server"
 	"github.com/tensorleap/helm-charts/pkg/local"
+	serverpkg "github.com/tensorleap/helm-charts/pkg/server"
 	"github.com/tensorleap/helm-charts/pkg/version"
 )
 
@@ -31,6 +32,7 @@ var RootCommand = &cobra.Command{
 }
 
 func init() {
+	serverpkg.SetInitDataDirFunc(initDataDir)
 	RootCommand.PersistentFlags().BoolVarP(&showInfo, "info", "i", false, "Show server info")
 	RootCommand.AddCommand(NewInstallCmd())
 	RootCommand.AddCommand(NewUpgradeCmd())
