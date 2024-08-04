@@ -5,7 +5,9 @@ set -e
 # Example of a script that can be used in AWS Lifecycle Configurations to install Tensorleap CLI
 
 # Tensorleap directory
-BASE_PATH="/home/ec2-user/SageMaker/tensorleap"
+
+VOLUME_DIR="/home/ec2-user/SageMaker"
+BASE_PATH="$VOLUME_DIR/.tensorleap"
 mkdir -p "$BASE_PATH"
 export TL_CLI_CONFIG_FILE="$BASE_PATH/cli-config.yaml"
 
@@ -19,15 +21,18 @@ export PATH="$PATH:$TL_BIN_DIR"
 # Function to update Docker configuration and restart Docker service
 update_docker_config() {
     # JSON configuration to be saved
-    DOCKER_DAEMON_CONFIG='{
-        "runtimes": {
-            "nvidia": {
-                "args": [],
-                "path": "nvidia-container-runtime"
-            }
-        },
-        "data-root":"/home/ec2-user/SageMaker/docker-data-root"
-    }'
+    DOCKER_DAEMON_CONFIG=$(cat <<EOF
+{
+    "runtimes": {
+        "nvidia": {
+            "args": [],
+            "path": "nvidia-container-runtime"
+        }
+    },
+    "data-root": "$VOLUME_DIR/docker-data-root"
+}
+EOF
+)
 
     # Path to Docker daemon configuration file
     DOCKER_DAEMON_CONFIG_PATH="/etc/docker/daemon.json"
@@ -87,3 +92,4 @@ EOL
 )
 UPGRADE_LEAP_SCRIPT_PATH="$TL_BIN_DIR/upgrade_leap"
 echo "$UPGRADE_LEAP_SCRIPT" > "$UPGRADE_LEAP_SCRIPT_PATH"
+chmod +x "$UPGRADE_LEAP_SCRIPT_PATH"
