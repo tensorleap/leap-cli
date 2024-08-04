@@ -9,6 +9,9 @@ BASE_PATH="/home/ec2-user/SageMaker/tensorleap"
 mkdir -p "$BASE_PATH"
 export TL_CLI_CONFIG_FILE="$BASE_PATH/cli-config.yaml"
 
+# kubectl location
+export KUBECONFIG="$BASE_PATH/kubeconfig"
+
 TL_BIN_DIR="$BASE_PATH/bin"
 mkdir -p "$TL_BIN_DIR"
 export PATH="$PATH:$TL_BIN_DIR"
@@ -61,8 +64,8 @@ ensure_leap_cli
 BASHRC_CONTENT=$(cat <<EOL
     export TL_CLI_CONFIG_FILE="$TL_CLI_CONFIG_FILE"
     export TL_BIN_DIR="$TL_BIN_DIR"
+    export KUBECONFIG="$KUBECONFIG"
     alias k="leap server tools kubectl -n tensorleap"
-
 EOL
 )
 
@@ -75,3 +78,13 @@ EOL
 BASHRC_FILE="/home/ec2-user/.bashrc"
 echo "$BASHRC_CONTENT" >> "$BASHRC_FILE"
 echo "$BASHRC_CONTENT_2" >> "$BASHRC_FILE"
+
+
+# Create a script to upgrade the Tensorleap CLI
+UPGRADE_LEAP_SCRIPT=$(cat <<EOL
+#!/bin/bash
+leap cli upgrade -s | BIN_DIR=$TL_BIN_DIR bash
+EOL
+)
+UPGRADE_LEAP_SCRIPT_PATH="$TL_BIN_DIR/upgrade_leap"
+echo "$UPGRADE_LEAP_SCRIPT" > "$UPGRADE_LEAP_SCRIPT_PATH"
