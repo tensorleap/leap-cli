@@ -65,7 +65,7 @@ ensure_leap_cli() {
 update_docker_config
 ensure_leap_cli
 
-BASHRC_CONTENT=$(cat <<EOL
+START_SHELL_SCRIPT=$(cat <<EOL
     export TL_CLI_CONFIG_FILE="$TL_CLI_CONFIG_FILE"
     export TL_BIN_DIR="$TL_BIN_DIR"
     export KUBECONFIG="$KUBECONFIG"
@@ -73,15 +73,22 @@ BASHRC_CONTENT=$(cat <<EOL
 EOL
 )
 
-BASHRC_CONTENT_2=$(cat <<'EOL'
+# escape the $PATH variable
+START_SHELL_SCRIPT_2=$(cat <<'EOL'
     export PATH="$PATH:$TL_BIN_DIR"
 EOL
 )
 
 
-BASHRC_FILE="/home/ec2-user/.bashrc"
-echo "$BASHRC_CONTENT" >> "$BASHRC_FILE"
-echo "$BASHRC_CONTENT_2" >> "$BASHRC_FILE"
+# Only .profile is run on login shell (not .bashrc or .bash_profile)
+PROFILE_FILE_PATH="/home/ec2-user/.profile"
+if [ ! -f "$PROFILE_FILE_PATH" ]; then
+    echo "Creating .profile file..."
+    touch "$PROFILE_FILE_PATH"
+    chmod 644 "$PROFILE_FILE_PATH"
+fi
+echo "$START_SHELL_SCRIPT" >> "$PROFILE_FILE_PATH"
+echo "$START_SHELL_SCRIPT_2" >> "$PROFILE_FILE_PATH"
 
 
 # Create a script to upgrade the Tensorleap CLI
