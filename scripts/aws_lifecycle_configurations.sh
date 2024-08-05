@@ -100,8 +100,8 @@ if [ ! -f "$UPGRADE_LEAP_SCRIPT_PATH" ]; then
     UPGRADE_LEAP_SCRIPT=$(cat <<EOL
     #!/bin/bash
     leap cli upgrade -s | BIN_DIR=$TL_BIN_DIR bash
-    EOL
-    )
+EOL
+)
     echo "$UPGRADE_LEAP_SCRIPT" > "$UPGRADE_LEAP_SCRIPT_PATH"
     chmod +x "$UPGRADE_LEAP_SCRIPT_PATH"
 fi
