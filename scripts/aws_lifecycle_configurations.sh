@@ -9,6 +9,7 @@ set -e
 VOLUME_DIR="/home/ec2-user/SageMaker"
 BASE_PATH="$VOLUME_DIR/.tensorleap"
 mkdir -p "$BASE_PATH"
+chmod 777 "$BASE_PATH"
 export TL_CLI_CONFIG_FILE="$BASE_PATH/cli-config.yaml"
 
 # kubectl location
@@ -16,6 +17,7 @@ export KUBECONFIG="$BASE_PATH/kubeconfig"
 
 TL_BIN_DIR="$BASE_PATH/bin"
 mkdir -p "$TL_BIN_DIR"
+chmod 777 "$TL_BIN_DIR"
 export PATH="$PATH:$TL_BIN_DIR"
 
 # Function to update Docker configuration and restart Docker service
@@ -53,12 +55,13 @@ ensure_leap_cli() {
         echo "Tensorleap CLI not found. Installing..."
         curl -s https://raw.githubusercontent.com/tensorleap/leap-cli/master/install.sh | BIN_DIR=$TL_BIN_DIR bash
         
-        if [ -e "$TL_CLI_CONFIG_FILE" ]; then
-            # Change permissions of the config file
-            chmod 644 "$TL_CLI_CONFIG_FILE"
-        fi
+
     else
         echo "Tensorleap CLI is already installed."
+    fi
+    if [ -e "$TL_CLI_CONFIG_FILE" ]; then
+        # Change permissions of the config file
+        chmod 777 "$TL_CLI_CONFIG_FILE"
     fi
 }
 
@@ -85,18 +88,20 @@ PROFILE_FILE_PATH="/home/ec2-user/.profile"
 if [ ! -f "$PROFILE_FILE_PATH" ]; then
     echo "Creating .profile file..."
     touch "$PROFILE_FILE_PATH"
-    chmod 644 "$PROFILE_FILE_PATH"
+    chmod 777 "$PROFILE_FILE_PATH"
 fi
 echo "$START_SHELL_SCRIPT" >> "$PROFILE_FILE_PATH"
 echo "$START_SHELL_SCRIPT_2" >> "$PROFILE_FILE_PATH"
 
 
-# Create a script to upgrade the Tensorleap CLI
-UPGRADE_LEAP_SCRIPT=$(cat <<EOL
-#!/bin/bash
-leap cli upgrade -s | BIN_DIR=$TL_BIN_DIR bash
-EOL
-)
 UPGRADE_LEAP_SCRIPT_PATH="$TL_BIN_DIR/upgrade_leap"
-echo "$UPGRADE_LEAP_SCRIPT" > "$UPGRADE_LEAP_SCRIPT_PATH"
-chmod +x "$UPGRADE_LEAP_SCRIPT_PATH"
+if [ ! -f "$UPGRADE_LEAP_SCRIPT_PATH" ]; then
+    # Create a script to upgrade the Tensorleap CLI
+    UPGRADE_LEAP_SCRIPT=$(cat <<EOL
+    #!/bin/bash
+    leap cli upgrade -s | BIN_DIR=$TL_BIN_DIR bash
+    EOL
+    )
+    echo "$UPGRADE_LEAP_SCRIPT" > "$UPGRADE_LEAP_SCRIPT_PATH"
+    chmod +x "$UPGRADE_LEAP_SCRIPT_PATH"
+fi
