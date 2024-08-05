@@ -55,7 +55,7 @@ ensure_leap_cli() {
         
         if [ -e "$TL_CLI_CONFIG_FILE" ]; then
             # Change permissions of the config file
-            chmod 600 "$TL_CLI_CONFIG_FILE"
+            chmod 644 "$TL_CLI_CONFIG_FILE"
         fi
     else
         echo "Tensorleap CLI is already installed."
