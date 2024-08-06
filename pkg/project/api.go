@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"os"
 	"path"
-	"strings"
 	"time"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
@@ -166,28 +165,33 @@ func getSignedUrl(ctx context.Context, url string, method tensorleapapi.HttpMeth
 	return getUrl.Url, nil
 }
 
-func ExportProjectIntoFile(ctx context.Context, project *ProjectEntity, outputDir string) error {
-	res, err := DownloadProject(ctx, project.GetCid())
+func ExportProjectIntoFile(ctx context.Context, project *ProjectEntity, outputDir string, options ExportProjectParams) error {
+	job, err := ExportProject(ctx, project.GetCid(), "", options)
 	if err != nil {
 		return err
 	}
 
-	fileName := getFileNameFromResponse(res)
+	exportParams := job.Params.ExportProjectParams
+	exportUrl := exportParams.ExportUrl
 
-	defer res.Body.Close()
-
+	fileName := fmt.Sprintf("%s-%v.tar.gz", project.Name, exportParams.ProjectVersion)
 	filePath := path.Join(outputDir, fileName)
+
 	file, err := os.Create(filePath)
 	if err != nil {
 		return err
 	}
 	defer file.Close()
-
 	start, stop, _ := log.NewSpinner(fmt.Sprintf("Exporting project '%s', into: '%s'", project.Name, filePath))
 	start()
 	defer stop()
-
-	_, err = io.Copy(file, res.Body)
+	res, _, err := api.ApiClient.GetDownloadSignedUrl(ctx).
+		GetDownloadSignedUrlParams(*tensorleapapi.NewGetDownloadSignedUrlParams(exportUrl)).
+		Execute()
+	if err != nil {
+		return fmt.Errorf("failed to get download signed url: %v", err)
+	}
+	err = api.DownloadFile(res.GetUrl(), file)
 	if err != nil && err != io.EOF {
 		defer os.Remove(filePath)
 		return err
@@ -292,12 +296,4 @@ func DownloadProject(ctx context.Context, projectId string) (*http.Response, err
 		return nil, fmt.Errorf("failed to export project %s /n%s", projectId, err)
 	}
 	return res, nil
-}
-
-func getFileNameFromResponse(res *http.Response) string {
-	contentDisposition := res.Header.Get("Content-Disposition")
-	// e.g attachment; filename="mnist-v95.tar.zip"
-	fileName := contentDisposition[len("attachment; filename="):]
-	fileName = strings.Trim(fileName, "\"")
-	return fileName
 }
