@@ -106,4 +106,3 @@ EOL
     chmod +x "$UPGRADE_LEAP_SCRIPT_PATH"
 fi
 
-source "$PROFILE_FILE_PATH"
