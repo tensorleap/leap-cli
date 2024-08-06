@@ -8,6 +8,7 @@ import (
 
 func NewExportCmd() *cobra.Command {
 	var outputDir string
+	var exportOptions = project.ExportProjectParams{}
 
 	cmd := &cobra.Command{
 		Use:   "export [project name]",
@@ -31,9 +32,14 @@ func NewExportCmd() *cobra.Command {
 				return err
 			}
 
-			return project.ExportProjectIntoFile(ctx, projectEntity, outputDir)
+			return project.ExportProjectIntoFile(ctx, projectEntity, outputDir, exportOptions)
 		},
 	}
+
+	cmd.Flags().StringVarP(&outputDir, "output-dir", "o", "", "Output directory")
+	cmd.Flags().BoolVar(&exportOptions.NoCache, "no-cache", false, "Do not use previously cached export")
+	cmd.Flags().BoolVar(&exportOptions.ExcludeCalculatedFiles, "exclude-calc-files", false, "Do not include calculated files in the export (will decrease export size)")
+
 	return cmd
 }
 
