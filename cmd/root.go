@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"os"
 
@@ -34,7 +35,7 @@ Complete documentation is available at https://docs.tensorleap.ai`,
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
 		env := authPkg.GetCurrentEnv()
 		authCtx := env.AuthContext(
-			cmd.Context(),
+			context.Background(),
 		)
 		cmd.SetContext(authCtx)
 	},
