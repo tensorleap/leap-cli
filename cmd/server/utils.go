@@ -9,7 +9,6 @@ import (
 	"github.com/tensorleap/helm-charts/pkg/local"
 	"github.com/tensorleap/helm-charts/pkg/server"
 	"github.com/tensorleap/helm-charts/pkg/server/manifest"
-	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/cli"
 	"github.com/tensorleap/leap-cli/pkg/config"
 	"github.com/tensorleap/leap-cli/pkg/log"
@@ -45,14 +44,17 @@ func mapInstallationErr(err error) error {
 }
 
 func localLogin(port uint) error {
-	baseLink := fmt.Sprintf("http://127.0.0.1:%v", port)
-	apiLink := fmt.Sprintf("%s/api/v2", baseLink)
-	envName := auth.EnvNameFromUrl(apiLink)
-	authData := auth.NewEnv(envName, apiLink, "")
-	if err := auth.Login(authData); err != nil {
-		return err
-	}
+
+	// TODO: Skip login
 	return nil
+	// baseLink := fmt.Sprintf("http://127.0.0.1:%v", port)
+	// apiLink := fmt.Sprintf("%s/api/v2", baseLink)
+	// envName := auth.EnvNameFromUrl(apiLink)
+	// authData := auth.NewEnv(envName, apiLink, "")
+	// if err := auth.Login(authData); err != nil {
+	// 	return err
+	// }
+	// return nil
 }
 
 func getConfigureDataDir() string {
