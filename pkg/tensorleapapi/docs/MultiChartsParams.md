@@ -5,25 +5,20 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**XField** | **string** |  | 
-**YField** | **string** |  | 
-**AggregationMethod** | [**AggregationMethod**](AggregationMethod.md) |  | 
 **SessionRunIds** | **[]string** |  | 
-**VerticalSplit** | Pointer to **string** |  | [optional] 
-**HorizontalSplit** | Pointer to **string** |  | [optional] 
-**InnerSplit** | Pointer to **string** |  | [optional] 
+**X** | [**SplitAgg**](SplitAgg.md) |  | 
+**Y** | [**Aggregations**](Aggregations.md) |  | 
+**VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
+**HorizontalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
+**InnerSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
-**DataDistributionType** | [**DataDistributionType**](DataDistributionType.md) |  | 
-**OrderByParam** | Pointer to **string** |  | [optional] 
-**OrderParams** | Pointer to [**OrderType**](OrderType.md) |  | [optional] 
-**XAxisSizeInterval** | **float64** |  | 
 **LastEpochOnly** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
 ### NewMultiChartsParams
 
-`func NewMultiChartsParams(projectId string, xField string, yField string, aggregationMethod AggregationMethod, sessionRunIds []string, dataDistributionType DataDistributionType, xAxisSizeInterval float64, ) *MultiChartsParams`
+`func NewMultiChartsParams(projectId string, sessionRunIds []string, x SplitAgg, y Aggregations, ) *MultiChartsParams`
 
 NewMultiChartsParams instantiates a new MultiChartsParams object
 This constructor will assign default values to properties that have it defined,
@@ -58,66 +53,6 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetXField
-
-`func (o *MultiChartsParams) GetXField() string`
-
-GetXField returns the XField field if non-nil, zero value otherwise.
-
-### GetXFieldOk
-
-`func (o *MultiChartsParams) GetXFieldOk() (*string, bool)`
-
-GetXFieldOk returns a tuple with the XField field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetXField
-
-`func (o *MultiChartsParams) SetXField(v string)`
-
-SetXField sets XField field to given value.
-
-
-### GetYField
-
-`func (o *MultiChartsParams) GetYField() string`
-
-GetYField returns the YField field if non-nil, zero value otherwise.
-
-### GetYFieldOk
-
-`func (o *MultiChartsParams) GetYFieldOk() (*string, bool)`
-
-GetYFieldOk returns a tuple with the YField field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetYField
-
-`func (o *MultiChartsParams) SetYField(v string)`
-
-SetYField sets YField field to given value.
-
-
-### GetAggregationMethod
-
-`func (o *MultiChartsParams) GetAggregationMethod() AggregationMethod`
-
-GetAggregationMethod returns the AggregationMethod field if non-nil, zero value otherwise.
-
-### GetAggregationMethodOk
-
-`func (o *MultiChartsParams) GetAggregationMethodOk() (*AggregationMethod, bool)`
-
-GetAggregationMethodOk returns a tuple with the AggregationMethod field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAggregationMethod
-
-`func (o *MultiChartsParams) SetAggregationMethod(v AggregationMethod)`
-
-SetAggregationMethod sets AggregationMethod field to given value.
-
-
 ### GetSessionRunIds
 
 `func (o *MultiChartsParams) GetSessionRunIds() []string`
@@ -138,22 +73,62 @@ and a boolean to check if the value has been set.
 SetSessionRunIds sets SessionRunIds field to given value.
 
 
+### GetX
+
+`func (o *MultiChartsParams) GetX() SplitAgg`
+
+GetX returns the X field if non-nil, zero value otherwise.
+
+### GetXOk
+
+`func (o *MultiChartsParams) GetXOk() (*SplitAgg, bool)`
+
+GetXOk returns a tuple with the X field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetX
+
+`func (o *MultiChartsParams) SetX(v SplitAgg)`
+
+SetX sets X field to given value.
+
+
+### GetY
+
+`func (o *MultiChartsParams) GetY() Aggregations`
+
+GetY returns the Y field if non-nil, zero value otherwise.
+
+### GetYOk
+
+`func (o *MultiChartsParams) GetYOk() (*Aggregations, bool)`
+
+GetYOk returns a tuple with the Y field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetY
+
+`func (o *MultiChartsParams) SetY(v Aggregations)`
+
+SetY sets Y field to given value.
+
+
 ### GetVerticalSplit
 
-`func (o *MultiChartsParams) GetVerticalSplit() string`
+`func (o *MultiChartsParams) GetVerticalSplit() SplitAgg`
 
 GetVerticalSplit returns the VerticalSplit field if non-nil, zero value otherwise.
 
 ### GetVerticalSplitOk
 
-`func (o *MultiChartsParams) GetVerticalSplitOk() (*string, bool)`
+`func (o *MultiChartsParams) GetVerticalSplitOk() (*SplitAgg, bool)`
 
 GetVerticalSplitOk returns a tuple with the VerticalSplit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetVerticalSplit
 
-`func (o *MultiChartsParams) SetVerticalSplit(v string)`
+`func (o *MultiChartsParams) SetVerticalSplit(v SplitAgg)`
 
 SetVerticalSplit sets VerticalSplit field to given value.
 
@@ -165,20 +140,20 @@ HasVerticalSplit returns a boolean if a field has been set.
 
 ### GetHorizontalSplit
 
-`func (o *MultiChartsParams) GetHorizontalSplit() string`
+`func (o *MultiChartsParams) GetHorizontalSplit() SplitAgg`
 
 GetHorizontalSplit returns the HorizontalSplit field if non-nil, zero value otherwise.
 
 ### GetHorizontalSplitOk
 
-`func (o *MultiChartsParams) GetHorizontalSplitOk() (*string, bool)`
+`func (o *MultiChartsParams) GetHorizontalSplitOk() (*SplitAgg, bool)`
 
 GetHorizontalSplitOk returns a tuple with the HorizontalSplit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHorizontalSplit
 
-`func (o *MultiChartsParams) SetHorizontalSplit(v string)`
+`func (o *MultiChartsParams) SetHorizontalSplit(v SplitAgg)`
 
 SetHorizontalSplit sets HorizontalSplit field to given value.
 
@@ -190,20 +165,20 @@ HasHorizontalSplit returns a boolean if a field has been set.
 
 ### GetInnerSplit
 
-`func (o *MultiChartsParams) GetInnerSplit() string`
+`func (o *MultiChartsParams) GetInnerSplit() SplitAgg`
 
 GetInnerSplit returns the InnerSplit field if non-nil, zero value otherwise.
 
 ### GetInnerSplitOk
 
-`func (o *MultiChartsParams) GetInnerSplitOk() (*string, bool)`
+`func (o *MultiChartsParams) GetInnerSplitOk() (*SplitAgg, bool)`
 
 GetInnerSplitOk returns a tuple with the InnerSplit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetInnerSplit
 
-`func (o *MultiChartsParams) SetInnerSplit(v string)`
+`func (o *MultiChartsParams) SetInnerSplit(v SplitAgg)`
 
 SetInnerSplit sets InnerSplit field to given value.
 
@@ -237,96 +212,6 @@ SetFilters sets Filters field to given value.
 `func (o *MultiChartsParams) HasFilters() bool`
 
 HasFilters returns a boolean if a field has been set.
-
-### GetDataDistributionType
-
-`func (o *MultiChartsParams) GetDataDistributionType() DataDistributionType`
-
-GetDataDistributionType returns the DataDistributionType field if non-nil, zero value otherwise.
-
-### GetDataDistributionTypeOk
-
-`func (o *MultiChartsParams) GetDataDistributionTypeOk() (*DataDistributionType, bool)`
-
-GetDataDistributionTypeOk returns a tuple with the DataDistributionType field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDataDistributionType
-
-`func (o *MultiChartsParams) SetDataDistributionType(v DataDistributionType)`
-
-SetDataDistributionType sets DataDistributionType field to given value.
-
-
-### GetOrderByParam
-
-`func (o *MultiChartsParams) GetOrderByParam() string`
-
-GetOrderByParam returns the OrderByParam field if non-nil, zero value otherwise.
-
-### GetOrderByParamOk
-
-`func (o *MultiChartsParams) GetOrderByParamOk() (*string, bool)`
-
-GetOrderByParamOk returns a tuple with the OrderByParam field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetOrderByParam
-
-`func (o *MultiChartsParams) SetOrderByParam(v string)`
-
-SetOrderByParam sets OrderByParam field to given value.
-
-### HasOrderByParam
-
-`func (o *MultiChartsParams) HasOrderByParam() bool`
-
-HasOrderByParam returns a boolean if a field has been set.
-
-### GetOrderParams
-
-`func (o *MultiChartsParams) GetOrderParams() OrderType`
-
-GetOrderParams returns the OrderParams field if non-nil, zero value otherwise.
-
-### GetOrderParamsOk
-
-`func (o *MultiChartsParams) GetOrderParamsOk() (*OrderType, bool)`
-
-GetOrderParamsOk returns a tuple with the OrderParams field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetOrderParams
-
-`func (o *MultiChartsParams) SetOrderParams(v OrderType)`
-
-SetOrderParams sets OrderParams field to given value.
-
-### HasOrderParams
-
-`func (o *MultiChartsParams) HasOrderParams() bool`
-
-HasOrderParams returns a boolean if a field has been set.
-
-### GetXAxisSizeInterval
-
-`func (o *MultiChartsParams) GetXAxisSizeInterval() float64`
-
-GetXAxisSizeInterval returns the XAxisSizeInterval field if non-nil, zero value otherwise.
-
-### GetXAxisSizeIntervalOk
-
-`func (o *MultiChartsParams) GetXAxisSizeIntervalOk() (*float64, bool)`
-
-GetXAxisSizeIntervalOk returns a tuple with the XAxisSizeInterval field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetXAxisSizeInterval
-
-`func (o *MultiChartsParams) SetXAxisSizeInterval(v float64)`
-
-SetXAxisSizeInterval sets XAxisSizeInterval field to given value.
-
 
 ### GetLastEpochOnly
 

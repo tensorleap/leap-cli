@@ -23,6 +23,8 @@
 
 * `GRAD_ANALYSIS` (value: `"grad_analysis"`)
 
+* `COMPOSITE_VISUALIZATION` (value: `"composite_visualization"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

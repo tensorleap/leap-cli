@@ -29,6 +29,8 @@
 
 * `IMPORT_PROJECT` (value: `"Import Project"`)
 
+* `DATASET_PARSE` (value: `"Dataset Parse"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

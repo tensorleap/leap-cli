@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Metadata** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
 **Data** | **map[string]interface{}** | Construct a type with a set of properties K of type T | 
+**InnerKey** | Pointer to [**NumberOrString**](NumberOrString.md) |  | [optional] 
 
 ## Methods
 
@@ -70,6 +71,31 @@ and a boolean to check if the value has been set.
 
 SetData sets Data field to given value.
 
+
+### GetInnerKey
+
+`func (o *GenericDataItem) GetInnerKey() NumberOrString`
+
+GetInnerKey returns the InnerKey field if non-nil, zero value otherwise.
+
+### GetInnerKeyOk
+
+`func (o *GenericDataItem) GetInnerKeyOk() (*NumberOrString, bool)`
+
+GetInnerKeyOk returns a tuple with the InnerKey field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInnerKey
+
+`func (o *GenericDataItem) SetInnerKey(v NumberOrString)`
+
+SetInnerKey sets InnerKey field to given value.
+
+### HasInnerKey
+
+`func (o *GenericDataItem) HasInnerKey() bool`
+
+HasInnerKey returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

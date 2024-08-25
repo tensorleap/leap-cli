@@ -5,24 +5,29 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **JobId** | **string** |  | 
-**VersionName** | **string** |  | 
-**VersionId** | **string** |  | 
-**ProjectName** | **string** |  | 
+**ProcessId** | **string** |  | 
+**VersionName** | Pointer to **string** |  | [optional] 
+**VersionId** | Pointer to **string** |  | [optional] 
+**ProjectId** | Pointer to **string** |  | [optional] 
+**ProjectName** | Pointer to **string** |  | [optional] 
+**DatasetName** | Pointer to **string** |  | [optional] 
 **JobType** | **string** |  | 
 **Status** | [**JobStatus**](JobStatus.md) |  | 
 **CreatedAt** | **string** |  | 
 **UpdatedAt** | **string** |  | 
-**SessionName** | **string** |  | 
-**SessionRunName** | **string** |  | 
+**SessionName** | Pointer to **string** |  | [optional] 
+**SessionRunName** | Pointer to **string** |  | [optional] 
 **SessionRunId** | Pointer to **string** |  | [optional] 
 **Events** | [**[]JobEvent**](JobEvent.md) |  | 
 **Params** | Pointer to [**JobParams**](JobParams.md) |  | [optional] 
+**MachineType** | Pointer to **string** |  | [optional] 
+**BatchSize** | Pointer to **float64** |  | [optional] 
 
 ## Methods
 
 ### NewRunProcess
 
-`func NewRunProcess(jobId string, versionName string, versionId string, projectName string, jobType string, status JobStatus, createdAt string, updatedAt string, sessionName string, sessionRunName string, events []JobEvent, ) *RunProcess`
+`func NewRunProcess(jobId string, processId string, jobType string, status JobStatus, createdAt string, updatedAt string, events []JobEvent, ) *RunProcess`
 
 NewRunProcess instantiates a new RunProcess object
 This constructor will assign default values to properties that have it defined,
@@ -57,6 +62,26 @@ and a boolean to check if the value has been set.
 SetJobId sets JobId field to given value.
 
 
+### GetProcessId
+
+`func (o *RunProcess) GetProcessId() string`
+
+GetProcessId returns the ProcessId field if non-nil, zero value otherwise.
+
+### GetProcessIdOk
+
+`func (o *RunProcess) GetProcessIdOk() (*string, bool)`
+
+GetProcessIdOk returns a tuple with the ProcessId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProcessId
+
+`func (o *RunProcess) SetProcessId(v string)`
+
+SetProcessId sets ProcessId field to given value.
+
+
 ### GetVersionName
 
 `func (o *RunProcess) GetVersionName() string`
@@ -76,6 +101,11 @@ and a boolean to check if the value has been set.
 
 SetVersionName sets VersionName field to given value.
 
+### HasVersionName
+
+`func (o *RunProcess) HasVersionName() bool`
+
+HasVersionName returns a boolean if a field has been set.
 
 ### GetVersionId
 
@@ -96,6 +126,36 @@ and a boolean to check if the value has been set.
 
 SetVersionId sets VersionId field to given value.
 
+### HasVersionId
+
+`func (o *RunProcess) HasVersionId() bool`
+
+HasVersionId returns a boolean if a field has been set.
+
+### GetProjectId
+
+`func (o *RunProcess) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *RunProcess) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *RunProcess) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
+
+### HasProjectId
+
+`func (o *RunProcess) HasProjectId() bool`
+
+HasProjectId returns a boolean if a field has been set.
 
 ### GetProjectName
 
@@ -116,6 +176,36 @@ and a boolean to check if the value has been set.
 
 SetProjectName sets ProjectName field to given value.
 
+### HasProjectName
+
+`func (o *RunProcess) HasProjectName() bool`
+
+HasProjectName returns a boolean if a field has been set.
+
+### GetDatasetName
+
+`func (o *RunProcess) GetDatasetName() string`
+
+GetDatasetName returns the DatasetName field if non-nil, zero value otherwise.
+
+### GetDatasetNameOk
+
+`func (o *RunProcess) GetDatasetNameOk() (*string, bool)`
+
+GetDatasetNameOk returns a tuple with the DatasetName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDatasetName
+
+`func (o *RunProcess) SetDatasetName(v string)`
+
+SetDatasetName sets DatasetName field to given value.
+
+### HasDatasetName
+
+`func (o *RunProcess) HasDatasetName() bool`
+
+HasDatasetName returns a boolean if a field has been set.
 
 ### GetJobType
 
@@ -216,6 +306,11 @@ and a boolean to check if the value has been set.
 
 SetSessionName sets SessionName field to given value.
 
+### HasSessionName
+
+`func (o *RunProcess) HasSessionName() bool`
+
+HasSessionName returns a boolean if a field has been set.
 
 ### GetSessionRunName
 
@@ -236,6 +331,11 @@ and a boolean to check if the value has been set.
 
 SetSessionRunName sets SessionRunName field to given value.
 
+### HasSessionRunName
+
+`func (o *RunProcess) HasSessionRunName() bool`
+
+HasSessionRunName returns a boolean if a field has been set.
 
 ### GetSessionRunId
 
@@ -306,6 +406,56 @@ SetParams sets Params field to given value.
 `func (o *RunProcess) HasParams() bool`
 
 HasParams returns a boolean if a field has been set.
+
+### GetMachineType
+
+`func (o *RunProcess) GetMachineType() string`
+
+GetMachineType returns the MachineType field if non-nil, zero value otherwise.
+
+### GetMachineTypeOk
+
+`func (o *RunProcess) GetMachineTypeOk() (*string, bool)`
+
+GetMachineTypeOk returns a tuple with the MachineType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMachineType
+
+`func (o *RunProcess) SetMachineType(v string)`
+
+SetMachineType sets MachineType field to given value.
+
+### HasMachineType
+
+`func (o *RunProcess) HasMachineType() bool`
+
+HasMachineType returns a boolean if a field has been set.
+
+### GetBatchSize
+
+`func (o *RunProcess) GetBatchSize() float64`
+
+GetBatchSize returns the BatchSize field if non-nil, zero value otherwise.
+
+### GetBatchSizeOk
+
+`func (o *RunProcess) GetBatchSizeOk() (*float64, bool)`
+
+GetBatchSizeOk returns a tuple with the BatchSize field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBatchSize
+
+`func (o *RunProcess) SetBatchSize(v float64)`
+
+SetBatchSize sets BatchSize field to given value.
+
+### HasBatchSize
+
+`func (o *RunProcess) HasBatchSize() bool`
+
+HasBatchSize returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

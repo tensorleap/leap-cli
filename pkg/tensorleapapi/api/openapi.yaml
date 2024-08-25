@@ -4,10 +4,52 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.465
+  version: 0.0.526
 servers:
 - url: /api/v2
 paths:
+  /auth/refreshLocalAuth:
+    post:
+      operationId: RefreshLocalAuth
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocalLoginResponse'
+          description: Ok
+      security: []
+  /auth/localAuth:
+    post:
+      operationId: LocalAuth
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocalLoginParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocalLoginResponse'
+          description: Ok
+      security: []
+  /auth/getAuthProvider:
+    post:
+      operationId: GetAuthProvider
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAuthProviderResponse'
+          description: Ok
+      security: []
   /auth/login:
     post:
       operationId: Login
@@ -52,24 +94,6 @@ paths:
           description: Ok
       security:
       - jwt: []
-  /auth/signup:
-    post:
-      operationId: Signup
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SignupParams'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SignupResponse'
-          description: Ok
-      security: []
   /auth/activate:
     post:
       operationId: Activate
@@ -249,6 +273,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDashletFieldsResponse'
+          description: Ok
+      security:
+      - jwt: []
+  /dashletsGenerator/getGeneratedDashlets:
+    post:
+      operationId: GetGeneratedDashlets
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetGeneratedDashletsParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetGeneratedDashletsResponse'
           description: Ok
       security:
       - jwt: []
@@ -462,6 +505,26 @@ paths:
       security:
       - jwt:
         - not-demo
+  /evaluate/continueEvaluate:
+    post:
+      operationId: ContinueEvaluate
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContinueEvaluateParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
   /exportedsessionruns/getExportedSessionJobs:
     post:
       operationId: GetExportedSessionJobs
@@ -501,6 +564,21 @@ paths:
       security:
       - jwt:
         - not-demo
+  /externalepochdata/logExternalEpochData:
+    post:
+      operationId: LogExternalEpochData
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogExternalEpochDataRequest'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
   /graph/analyzeGraph:
     post:
       operationId: AnalyzeGraph
@@ -788,6 +866,26 @@ paths:
       security:
       - jwt:
         - not-demo
+  /jobs/terminateAllJobs:
+    post:
+      operationId: TerminateAllJobs
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TerminateAllJobsParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerminateAllJobsResponse'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
   /jobs/warmup:
     post:
       operationId: Warmup
@@ -993,6 +1091,82 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MultiChartsResponse'
+          description: Ok
+      security:
+      - jwt: []
+  /sessionmetrics/getConfusionMatrixTable:
+    post:
+      operationId: GetConfusionMatrixTable
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfusionMatrixTableParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiChartsResponse'
+          description: Ok
+      security:
+      - jwt: []
+  /sessionmetrics/getMeanAveragePrecision:
+    post:
+      operationId: GetMeanAveragePrecision
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfusionMatrixParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiChartsResponse'
+          description: Ok
+      security:
+      - jwt: []
+  /sessionmetrics/getConfusionMatrixResultCombinations:
+    post:
+      operationId: GetConfusionMatrixResultCombinations
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetConfusionMatrixResultCombinationsParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiChartsResponse'
+          description: Ok
+      security:
+      - jwt: []
+  /sessionmetrics/getConfusionMatrixLabels:
+    post:
+      operationId: GetConfusionMatrixLabels
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetConfusionMatrixLabels'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfusionMatrixLabelsResponse'
           description: Ok
       security:
       - jwt: []
@@ -1793,8 +1967,7 @@ paths:
                 $ref: '#/components/schemas/GetTeamUsersResponse'
           description: Ok
       security:
-      - jwt:
-        - admin-only
+      - jwt: []
   /users/getAllSlimUserData:
     post:
       operationId: GetAllSlimUserData
@@ -1951,6 +2124,26 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/ImportNewModelParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalImportModelStorageResponse'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /versions/importExternalModel:
+    post:
+      operationId: ImportExternalModel
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportExternalModelParams'
         required: true
       responses:
         "200":
@@ -2123,6 +2316,98 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UpdateVersionNameParams'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt:
+        - not-demo
+  /versions/tagModel:
+    post:
+      operationId: TagModel
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagModelRequest'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt:
+        - not-demo
+  /versions/getUploadModelSignedUrl:
+    post:
+      operationId: GetUploadModelSignedUrl
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetUploadModelSignedUrlRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalImportModelStorage'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /versions/getSessionEpochs:
+    post:
+      operationId: GetSessionEpochs
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetSessionEpochsRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSessionEpochsResponse'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /versions/initExperiment:
+    post:
+      operationId: InitExperiment
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InitExperimentRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitExperimentResponse'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /versions/setExperimentProperties:
+    post:
+      operationId: SetExperimentProperties
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetExperimentPropertiesRequest'
         required: true
       responses:
         "204":
@@ -2386,11 +2671,9 @@ components:
   schemas:
     UserRole:
       enum:
-      - demo
-      - trial
       - user
       - admin
-      - singleUser
+      - demo
       type: string
     UserDataLocal:
       additionalProperties: false
@@ -2517,7 +2800,42 @@ components:
       - role
       - teamName
       type: object
-    LoginParams:
+    LocalLoginResponse:
+      additionalProperties: false
+      example:
+        user:
+          teamName: teamName
+          metadata:
+            dnnLevel: dnnLevel
+            company: company
+            title: title
+            companySize: companySize
+          role: null
+          recordSession: true
+          local:
+            teamId: teamId
+            name: name
+            email: email
+            trialRequested: true
+          singleUserMode:
+            firstName: firstName
+            lastName: lastName
+            phoneNumber: phoneNumber
+            role: role
+            company: company
+            trialStarted: true
+            email: email
+            expirationDate: 2000-01-23T04:56:07.000+00:00
+          cid: cid
+          activated: true
+        token: token
+      properties:
+        token:
+          type: string
+        user:
+          $ref: '#/components/schemas/UserData'
+      type: object
+    LocalLoginParams:
       additionalProperties: false
       example:
         password: password
@@ -2530,6 +2848,43 @@ components:
       required:
       - email
       - password
+      type: object
+    AuthProviderEnum:
+      enum:
+      - local
+      - keycloak
+      type: string
+    GetAuthProviderResponse:
+      additionalProperties: false
+      example:
+        authProvider: null
+      properties:
+        authProvider:
+          $ref: '#/components/schemas/AuthProviderEnum'
+      required:
+      - authProvider
+      type: object
+    LoginParams:
+      additionalProperties: false
+      example:
+        firstName: firstName
+        lastName: lastName
+        userName: userName
+        email: email
+      properties:
+        email:
+          type: string
+        userName:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+      required:
+      - email
+      - firstName
+      - lastName
+      - userName
       type: object
     RotateApiKeyResponse:
       additionalProperties: false
@@ -2540,41 +2895,6 @@ components:
           type: string
       required:
       - apiKey
-      type: object
-    SignupResponse:
-      additionalProperties: false
-      example:
-        success: true
-        userCid: userCid
-      properties:
-        userCid:
-          type: string
-        success:
-          enum:
-          - true
-          nullable: false
-          type: boolean
-      required:
-      - success
-      - userCid
-      type: object
-    SignupParams:
-      additionalProperties: false
-      example:
-        password: password
-        name: name
-        email: email
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-        password:
-          type: string
-      required:
-      - email
-      - name
-      - password
       type: object
     ActivationParams:
       additionalProperties: false
@@ -2726,26 +3046,67 @@ components:
       - sm
       - xs
       type: object
-    AnalyticsDashlet:
+    FilterOperatorType:
+      enum:
+      - between
+      - not-between
+      - equal
+      - not-equal
+      - in
+      - greater-than
+      - less-than
+      - cluster
+      type: string
+    NumberOrString:
+      anyOf:
+      - format: double
+        type: number
+      - type: string
+    ESFilterValue:
       additionalProperties: false
+      example:
+        lt: 6.027456183070403
+        blob_path: blob_path
+        eq: null
+        lst:
+        - null
+        - null
+        gt: 0.8008281904610115
       properties:
-        cid:
+        gt:
+          format: double
+          type: number
+        lt:
+          format: double
+          type: number
+        eq:
+          $ref: '#/components/schemas/NumberOrString'
+        lst:
+          items:
+            $ref: '#/components/schemas/NumberOrString'
+          type: array
+        blob_path:
           type: string
-        layout:
-          $ref: '#/components/schemas/SizedLayout'
-        type:
-          enum:
-          - Analytics
-          nullable: false
-          type: string
-        data:
-          $ref: '#/components/schemas/AnalyticsDashletData'
-      required:
-      - cid
-      - data
-      - layout
-      - type
       type: object
+    Record_string.number_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
+    ScatterInsightType:
+      enum:
+      - redundant_samples_cluster
+      - weak_cluster
+      - under_representation_cluster
+      - overfitting_cluster
+      - duplication_insight
+      - data_leakage_insight
+      type: string
+    OperatorEnum:
+      enum:
+      - smaller_than
+      - equal_to
+      - larger_than
+      type: string
     DataStateType:
       enum:
       - training
@@ -2753,6 +3114,294 @@ components:
       - test
       - unlabeled
       type: string
+    ScatterFilter:
+      additionalProperties: false
+      properties:
+        metric:
+          type: string
+        value:
+          type: string
+        operator:
+          $ref: '#/components/schemas/OperatorEnum'
+        data_state:
+          $ref: '#/components/schemas/DataStateType'
+      required:
+      - metric
+      - operator
+      - value
+      type: object
+    Direction:
+      enum:
+      - up
+      - down
+      type: string
+    MutualInformationElement:
+      additionalProperties: false
+      properties:
+        feature_name:
+          type: string
+        feature_value:
+          type: string
+        direction:
+          $ref: '#/components/schemas/Direction'
+        is_categorical:
+          type: boolean
+        value_in_cluster:
+          format: double
+          type: number
+        value_outside_cluster:
+          format: double
+          type: number
+        score:
+          format: double
+          type: number
+      required:
+      - direction
+      - feature_name
+      - is_categorical
+      type: object
+    InsightSubCategoryDSCuration:
+      enum:
+      - under_presentation
+      - over_presentation
+      - data_leakage
+      type: string
+    InsightSubCategoryPerformance:
+      enum:
+      - failing_clusters
+      - over_fit
+      type: string
+    OverfittingInsight:
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/ScatterInsightType'
+        filter:
+          $ref: '#/components/schemas/ScatterFilter'
+        mutual_info_elements:
+          items:
+            $ref: '#/components/schemas/MutualInformationElement'
+          type: array
+        blob_path:
+          type: string
+        insight_sub_category_ds_curation:
+          $ref: '#/components/schemas/InsightSubCategoryDSCuration'
+        insight_category_performance:
+          $ref: '#/components/schemas/InsightSubCategoryPerformance'
+        index:
+          format: double
+          type: number
+        n_samples_validation:
+          format: double
+          type: number
+        n_samples_training:
+          format: double
+          type: number
+        avg_metric_validation:
+          format: double
+          type: number
+        avg_metric_training:
+          format: double
+          type: number
+        metric_name:
+          type: string
+        configuration:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+      required:
+      - avg_metric_training
+      - avg_metric_validation
+      - filter
+      - metric_name
+      - n_samples_training
+      - n_samples_validation
+      - type
+      type: object
+    UnderRepresentationInsight:
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/ScatterInsightType'
+        filter:
+          $ref: '#/components/schemas/ScatterFilter'
+        mutual_info_elements:
+          items:
+            $ref: '#/components/schemas/MutualInformationElement'
+          type: array
+        blob_path:
+          type: string
+        insight_sub_category_ds_curation:
+          $ref: '#/components/schemas/InsightSubCategoryDSCuration'
+        insight_category_performance:
+          $ref: '#/components/schemas/InsightSubCategoryPerformance'
+        index:
+          format: double
+          type: number
+        under_representation_dataset:
+          $ref: '#/components/schemas/DataStateType'
+        under_representation_n_samples:
+          format: double
+          type: number
+        over_representation_dataset:
+          $ref: '#/components/schemas/DataStateType'
+        over_representation_n_samples:
+          format: double
+          type: number
+        configuration:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+      required:
+      - filter
+      - over_representation_dataset
+      - over_representation_n_samples
+      - type
+      - under_representation_dataset
+      - under_representation_n_samples
+      type: object
+    ClusterInsight:
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/ScatterInsightType'
+        filter:
+          $ref: '#/components/schemas/ScatterFilter'
+        mutual_info_elements:
+          items:
+            $ref: '#/components/schemas/MutualInformationElement'
+          type: array
+        blob_path:
+          type: string
+        insight_sub_category_ds_curation:
+          $ref: '#/components/schemas/InsightSubCategoryDSCuration'
+        insight_category_performance:
+          $ref: '#/components/schemas/InsightSubCategoryPerformance'
+        index:
+          format: double
+          type: number
+        n_samples:
+          format: double
+          type: number
+        avg_metric:
+          format: double
+          type: number
+        metric_name:
+          type: string
+        configuration:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+      required:
+      - avg_metric
+      - filter
+      - metric_name
+      - n_samples
+      - type
+      type: object
+    DuplicationInsight:
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/ScatterInsightType'
+        filter:
+          $ref: '#/components/schemas/ScatterFilter'
+        mutual_info_elements:
+          items:
+            $ref: '#/components/schemas/MutualInformationElement'
+          type: array
+        blob_path:
+          type: string
+        insight_sub_category_ds_curation:
+          $ref: '#/components/schemas/InsightSubCategoryDSCuration'
+        insight_category_performance:
+          $ref: '#/components/schemas/InsightSubCategoryPerformance'
+        index:
+          format: double
+          type: number
+        subset:
+          $ref: '#/components/schemas/DataStateType'
+        n_duplicate_samples:
+          format: double
+          type: number
+      required:
+      - filter
+      - n_duplicate_samples
+      - subset
+      - type
+      type: object
+    DataLeakageInsight:
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/ScatterInsightType'
+        filter:
+          $ref: '#/components/schemas/ScatterFilter'
+        mutual_info_elements:
+          items:
+            $ref: '#/components/schemas/MutualInformationElement'
+          type: array
+        blob_path:
+          type: string
+        insight_sub_category_ds_curation:
+          $ref: '#/components/schemas/InsightSubCategoryDSCuration'
+        insight_category_performance:
+          $ref: '#/components/schemas/InsightSubCategoryPerformance'
+        index:
+          format: double
+          type: number
+        first_subset:
+          $ref: '#/components/schemas/DataStateType'
+        second_subset:
+          $ref: '#/components/schemas/DataStateType'
+        n_cross_subsets_duplications:
+          format: double
+          type: number
+      required:
+      - filter
+      - first_subset
+      - n_cross_subsets_duplications
+      - second_subset
+      - type
+      type: object
+    InsightType:
+      anyOf:
+      - $ref: '#/components/schemas/OverfittingInsight'
+      - $ref: '#/components/schemas/UnderRepresentationInsight'
+      - $ref: '#/components/schemas/ClusterInsight'
+      - $ref: '#/components/schemas/DuplicationInsight'
+      - $ref: '#/components/schemas/DataLeakageInsight'
+    FilterSessionRun:
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        sessionId:
+          type: string
+      required:
+      - id
+      - name
+      - sessionId
+      type: object
+    InsightFilterDisplayData:
+      additionalProperties: false
+      properties:
+        type:
+          enum:
+          - insight
+          nullable: false
+          type: string
+        insightData:
+          $ref: '#/components/schemas/InsightType'
+        sessionRun:
+          $ref: '#/components/schemas/FilterSessionRun'
+      required:
+      - insightData
+      - sessionRun
+      - type
+      type: object
     SampleIdentity:
       additionalProperties: false
       example:
@@ -2767,6 +3416,97 @@ components:
       required:
       - index
       - state
+      type: object
+    FetchSimilarFilterDisplayData:
+      additionalProperties: false
+      properties:
+        type:
+          enum:
+          - fetch-similar
+          nullable: false
+          type: string
+        limit:
+          format: double
+          type: number
+        sampleIds:
+          items:
+            $ref: '#/components/schemas/SampleIdentity'
+          type: array
+        epoch:
+          format: double
+          type: number
+        filtersUsed:
+          items:
+            type: string
+          type: array
+        sessionRun:
+          $ref: '#/components/schemas/FilterSessionRun'
+      required:
+      - epoch
+      - filtersUsed
+      - limit
+      - sampleIds
+      - sessionRun
+      - type
+      type: object
+    FilterDisplayData:
+      anyOf:
+      - $ref: '#/components/schemas/InsightFilterDisplayData'
+      - $ref: '#/components/schemas/FetchSimilarFilterDisplayData'
+    ESFilter:
+      additionalProperties: false
+      example:
+        field: field
+        disable: true
+        displayData: null
+        value:
+          lt: 6.027456183070403
+          blob_path: blob_path
+          eq: null
+          lst:
+          - null
+          - null
+          gt: 0.8008281904610115
+        operator: null
+      properties:
+        operator:
+          $ref: '#/components/schemas/FilterOperatorType'
+        field:
+          type: string
+        disable:
+          type: boolean
+        value:
+          $ref: '#/components/schemas/ESFilterValue'
+        displayData:
+          $ref: '#/components/schemas/FilterDisplayData'
+      required:
+      - field
+      - operator
+      - value
+      type: object
+    AnalyticsDashlet:
+      additionalProperties: false
+      properties:
+        cid:
+          type: string
+        layout:
+          $ref: '#/components/schemas/SizedLayout'
+        pinFilters:
+          items:
+            $ref: '#/components/schemas/ESFilter'
+          type: array
+        type:
+          enum:
+          - Analytics
+          nullable: false
+          type: string
+        data:
+          $ref: '#/components/schemas/AnalyticsDashletData'
+      required:
+      - cid
+      - data
+      - layout
+      - type
       type: object
     SampleAssetNames:
       enum:
@@ -2792,6 +3532,10 @@ components:
           type: string
         layout:
           $ref: '#/components/schemas/SizedLayout'
+        pinFilters:
+          items:
+            $ref: '#/components/schemas/ESFilter'
+          type: array
         type:
           enum:
           - SampleAnalysis
@@ -2821,6 +3565,10 @@ components:
           type: string
         layout:
           $ref: '#/components/schemas/SizedLayout'
+        pinFilters:
+          items:
+            $ref: '#/components/schemas/ESFilter'
+          type: array
         type:
           enum:
           - PopulationExploration
@@ -2843,6 +3591,9 @@ components:
       additionalProperties: false
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
+        ignoreSuggestedDashletsHashes:
+        - ignoreSuggestedDashletsHashes
+        - ignoreSuggestedDashletsHashes
         createdBy: createdBy
         name: name
         description: description
@@ -2873,10 +3624,15 @@ components:
           type: array
         description:
           type: string
+        ignoreSuggestedDashletsHashes:
+          items:
+            type: string
+          type: array
       required:
       - cid
       - createdAt
       - createdBy
+      - ignoreSuggestedDashletsHashes
       - items
       - name
       - projectId
@@ -2887,6 +3643,9 @@ components:
       example:
         dashboards:
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          ignoreSuggestedDashletsHashes:
+          - ignoreSuggestedDashletsHashes
+          - ignoreSuggestedDashletsHashes
           createdBy: createdBy
           name: name
           description: description
@@ -2897,6 +3656,9 @@ components:
           cid: cid
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          ignoreSuggestedDashletsHashes:
+          - ignoreSuggestedDashletsHashes
+          - ignoreSuggestedDashletsHashes
           createdBy: createdBy
           name: name
           description: description
@@ -2929,6 +3691,9 @@ components:
       example:
         dashboard:
           createdAt: 2000-01-23T04:56:07.000+00:00
+          ignoreSuggestedDashletsHashes:
+          - ignoreSuggestedDashletsHashes
+          - ignoreSuggestedDashletsHashes
           createdBy: createdBy
           name: name
           description: description
@@ -3010,6 +3775,9 @@ components:
     UpdateDashboardParams:
       additionalProperties: false
       example:
+        ignoreSuggestedDashletsHashes:
+        - ignoreSuggestedDashletsHashes
+        - ignoreSuggestedDashletsHashes
         dashboardId: dashboardId
         name: name
         description: description
@@ -3028,6 +3796,10 @@ components:
           type: array
         description:
           type: string
+        ignoreSuggestedDashletsHashes:
+          items:
+            type: string
+          type: array
         projectId:
           type: string
       required:
@@ -3075,6 +3847,233 @@ components:
           type: string
       required:
       - projectId
+      type: object
+    GeneratedDashletType:
+      enum:
+      - heatmap
+      - bar
+      - line
+      type: string
+    DistributionType:
+      enum:
+      - continuous
+      - distinct
+      type: string
+    OrderType:
+      enum:
+      - asc
+      - desc
+      type: string
+    ContinuesAgg:
+      additionalProperties: false
+      properties:
+        field:
+          type: string
+        order:
+          $ref: '#/components/schemas/OrderType'
+        limit:
+          format: double
+          type: number
+        order_field:
+          type: string
+        interval:
+          format: double
+          type: number
+        distribution:
+          $ref: '#/components/schemas/DistributionType'
+      required:
+      - distribution
+      - field
+      - interval
+      - order
+      - order_field
+      type: object
+    DistinctAgg:
+      additionalProperties: false
+      properties:
+        field:
+          type: string
+        order:
+          $ref: '#/components/schemas/OrderType'
+        limit:
+          format: double
+          type: number
+        order_field:
+          type: string
+        distribution:
+          $ref: '#/components/schemas/DistributionType'
+      required:
+      - distribution
+      - field
+      - order
+      - order_field
+      type: object
+    SplitAgg:
+      anyOf:
+      - $ref: '#/components/schemas/ContinuesAgg'
+      - $ref: '#/components/schemas/DistinctAgg'
+    AggregationMethod:
+      enum:
+      - Average
+      - Count
+      - Min
+      - Max
+      type: string
+    AggFunc:
+      additionalProperties: false
+      properties:
+        field:
+          type: string
+        aggregation:
+          $ref: '#/components/schemas/AggregationMethod'
+      required:
+      - aggregation
+      - field
+      type: object
+    XYChart:
+      additionalProperties: false
+      properties:
+        x:
+          $ref: '#/components/schemas/SplitAgg'
+        "y":
+          $ref: '#/components/schemas/AggFunc'
+      required:
+      - x
+      - "y"
+      type: object
+    HeatmapChart:
+      additionalProperties: false
+      properties:
+        x:
+          $ref: '#/components/schemas/SplitAgg'
+        "y":
+          $ref: '#/components/schemas/SplitAgg'
+      required:
+      - x
+      - "y"
+      type: object
+    GeneratedChartData:
+      anyOf:
+      - $ref: '#/components/schemas/XYChart'
+      - $ref: '#/components/schemas/HeatmapChart'
+    GeneratedDashlet:
+      additionalProperties: false
+      example:
+        data: null
+        name: name
+        priority: 0.8008281904610115
+        type: null
+      properties:
+        priority:
+          format: double
+          type: number
+        type:
+          $ref: '#/components/schemas/GeneratedDashletType'
+        data:
+          $ref: '#/components/schemas/GeneratedChartData'
+        name:
+          type: string
+      required:
+      - data
+      - priority
+      - type
+      type: object
+    JobStatus:
+      enum:
+      - UNSTARTED
+      - STARTED
+      - PENDING
+      - STOPPED
+      - TERMINATED
+      - FINISHED
+      - FAILED
+      type: string
+    GetGeneratedDashletsBySessionRun:
+      additionalProperties: false
+      example:
+        dashlets:
+        - data: null
+          name: name
+          priority: 0.8008281904610115
+          type: null
+        - data: null
+          name: name
+          priority: 0.8008281904610115
+          type: null
+        sessionRunId: sessionRunId
+        status: null
+      properties:
+        dashlets:
+          items:
+            $ref: '#/components/schemas/GeneratedDashlet'
+          type: array
+        sessionRunId:
+          type: string
+        status:
+          $ref: '#/components/schemas/JobStatus'
+      required:
+      - dashlets
+      - sessionRunId
+      - status
+      type: object
+    GetGeneratedDashletsResponse:
+      additionalProperties: false
+      example:
+        data:
+        - dashlets:
+          - data: null
+            name: name
+            priority: 0.8008281904610115
+            type: null
+          - data: null
+            name: name
+            priority: 0.8008281904610115
+            type: null
+          sessionRunId: sessionRunId
+          status: null
+        - dashlets:
+          - data: null
+            name: name
+            priority: 0.8008281904610115
+            type: null
+          - data: null
+            name: name
+            priority: 0.8008281904610115
+            type: null
+          sessionRunId: sessionRunId
+          status: null
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/GetGeneratedDashletsBySessionRun'
+          type: array
+      required:
+      - data
+      type: object
+    GetGeneratedDashletsParams:
+      additionalProperties: false
+      example:
+        resetPrevious: true
+        threshold: 0.8008281904610115
+        projectId: projectId
+        sessionRunIds:
+        - sessionRunIds
+        - sessionRunIds
+      properties:
+        projectId:
+          type: string
+        sessionRunIds:
+          items:
+            type: string
+          type: array
+        threshold:
+          format: double
+          type: number
+        resetPrevious:
+          type: boolean
+      required:
+      - projectId
+      - sessionRunIds
       type: object
     DatasetAccess:
       enum:
@@ -3180,6 +4179,7 @@ components:
       - ImageMask
       - TextMask
       - ImageWithBBox
+      - ImageWithHeatmap
       type: string
     VisualizerInstance:
       additionalProperties: false
@@ -3472,7 +4472,6 @@ components:
       - call_arg_names
       - init_arg_names
       - name
-      - use_custom_latent_space
       type: object
     ModelSetup:
       additionalProperties: false
@@ -5904,6 +6903,8 @@ components:
       - ANALYZE_GRAPH
       - DRY_RUN_GRAPH
       - SLIM_LS
+      - STREAMING_HANDLER
+      - DASHLETS_GENERATOR
       - EXPORT_PROJECT
       - IMPORT_PROJECT
       type: string
@@ -5922,16 +6923,7 @@ components:
       - Export Project
       - Copy Project
       - Import Project
-      type: string
-    JobStatus:
-      enum:
-      - UNSTARTED
-      - STARTED
-      - PENDING
-      - STOPPED
-      - TERMINATED
-      - FINISHED
-      - FAILED
+      - Dataset Parse
       type: string
     EarlyStopParams:
       additionalProperties: false
@@ -5964,6 +6956,40 @@ components:
       - batch_size
       - epochs
       type: object
+    EvaluateNewSessionParams:
+      additionalProperties: false
+      properties:
+        versionId:
+          type: string
+        projectId:
+          type: string
+        batchSize:
+          format: double
+          type: number
+        dataStates:
+          items:
+            $ref: '#/components/schemas/DataStateType'
+          type: array
+        name:
+          type: string
+        skipMetricsEstimation:
+          type: boolean
+      required:
+      - batchSize
+      - dataStates
+      - name
+      - projectId
+      - skipMetricsEstimation
+      - versionId
+      type: object
+    EvaluateExistingSessionParams:
+      allOf:
+      - $ref: '#/components/schemas/EvaluateNewSessionParams'
+      - $ref: '#/components/schemas/EvaluateExistingSessionParams_allOf'
+    EvaluateParams:
+      anyOf:
+      - $ref: '#/components/schemas/EvaluateNewSessionParams'
+      - $ref: '#/components/schemas/EvaluateExistingSessionParams'
     AnalyzeTypeEnum:
       enum:
       - population_exploration
@@ -6013,339 +7039,6 @@ components:
       - epoch
       - title
       - type
-      type: object
-    FilterOperatorType:
-      enum:
-      - between
-      - not-between
-      - equal
-      - not-equal
-      - in
-      - greater-than
-      - less-than
-      - cluster
-      type: string
-    NumberOrString:
-      anyOf:
-      - format: double
-        type: number
-      - type: string
-    ESFilterValue:
-      additionalProperties: false
-      example:
-        lt: 6.027456183070403
-        blob_path: blob_path
-        eq: null
-        lst:
-        - null
-        - null
-        gt: 0.8008281904610115
-      properties:
-        gt:
-          format: double
-          type: number
-        lt:
-          format: double
-          type: number
-        eq:
-          $ref: '#/components/schemas/NumberOrString'
-        lst:
-          items:
-            $ref: '#/components/schemas/NumberOrString'
-          type: array
-        blob_path:
-          type: string
-      type: object
-    Record_string.number_:
-      description: Construct a type with a set of properties K of type T
-      properties: {}
-      type: object
-    ScatterInsightType:
-      enum:
-      - redundant_samples_cluster
-      - weak_cluster
-      - under_representation_cluster
-      - overfitting_cluster
-      - duplication_insight
-      type: string
-    OperatorEnum:
-      enum:
-      - smaller_than
-      - equal_to
-      - larger_than
-      type: string
-    ScatterFilter:
-      additionalProperties: false
-      properties:
-        metric:
-          type: string
-        value:
-          type: string
-        operator:
-          $ref: '#/components/schemas/OperatorEnum'
-        data_state:
-          $ref: '#/components/schemas/DataStateType'
-      required:
-      - metric
-      - operator
-      - value
-      type: object
-    Direction:
-      enum:
-      - up
-      - down
-      type: string
-    MutualInformationElement:
-      additionalProperties: false
-      properties:
-        feature_name:
-          type: string
-        feature_value:
-          type: string
-        direction:
-          $ref: '#/components/schemas/Direction'
-        is_categorical:
-          type: boolean
-      required:
-      - direction
-      - feature_name
-      - is_categorical
-      type: object
-    OverfittingInsight:
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/ScatterInsightType'
-        filter:
-          $ref: '#/components/schemas/ScatterFilter'
-        mutual_info_elements:
-          items:
-            $ref: '#/components/schemas/MutualInformationElement'
-          type: array
-        blob_path:
-          type: string
-        n_samples_validation:
-          format: double
-          type: number
-        n_samples_training:
-          format: double
-          type: number
-        avg_metric_validation:
-          format: double
-          type: number
-        avg_metric_training:
-          format: double
-          type: number
-        metric_name:
-          type: string
-        configuration:
-          description: Construct a type with a set of properties K of type T
-          properties: {}
-          type: object
-      required:
-      - avg_metric_training
-      - avg_metric_validation
-      - filter
-      - metric_name
-      - n_samples_training
-      - n_samples_validation
-      - type
-      type: object
-    UnderRepresentationInsight:
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/ScatterInsightType'
-        filter:
-          $ref: '#/components/schemas/ScatterFilter'
-        mutual_info_elements:
-          items:
-            $ref: '#/components/schemas/MutualInformationElement'
-          type: array
-        blob_path:
-          type: string
-        under_representation_dataset:
-          $ref: '#/components/schemas/DataStateType'
-        under_representation_n_samples:
-          format: double
-          type: number
-        over_representation_dataset:
-          $ref: '#/components/schemas/DataStateType'
-        over_representation_n_samples:
-          format: double
-          type: number
-        configuration:
-          description: Construct a type with a set of properties K of type T
-          properties: {}
-          type: object
-      required:
-      - filter
-      - over_representation_dataset
-      - over_representation_n_samples
-      - type
-      - under_representation_dataset
-      - under_representation_n_samples
-      type: object
-    ClusterInsight:
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/ScatterInsightType'
-        filter:
-          $ref: '#/components/schemas/ScatterFilter'
-        mutual_info_elements:
-          items:
-            $ref: '#/components/schemas/MutualInformationElement'
-          type: array
-        blob_path:
-          type: string
-        n_samples:
-          format: double
-          type: number
-        avg_metric:
-          format: double
-          type: number
-        metric_name:
-          type: string
-        configuration:
-          description: Construct a type with a set of properties K of type T
-          properties: {}
-          type: object
-      required:
-      - avg_metric
-      - filter
-      - metric_name
-      - n_samples
-      - type
-      type: object
-    DuplicationInsight:
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/ScatterInsightType'
-        filter:
-          $ref: '#/components/schemas/ScatterFilter'
-        mutual_info_elements:
-          items:
-            $ref: '#/components/schemas/MutualInformationElement'
-          type: array
-        blob_path:
-          type: string
-        n_duplicate_samples:
-          format: double
-          type: number
-        n_cross_subset_duplications:
-          format: double
-          type: number
-      required:
-      - filter
-      - n_cross_subset_duplications
-      - n_duplicate_samples
-      - type
-      type: object
-    InsightType:
-      anyOf:
-      - $ref: '#/components/schemas/OverfittingInsight'
-      - $ref: '#/components/schemas/UnderRepresentationInsight'
-      - $ref: '#/components/schemas/ClusterInsight'
-      - $ref: '#/components/schemas/DuplicationInsight'
-    FilterSessionRun:
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        id:
-          type: string
-        sessionId:
-          type: string
-      required:
-      - id
-      - name
-      - sessionId
-      type: object
-    InsightFilterDisplayData:
-      additionalProperties: false
-      properties:
-        type:
-          enum:
-          - insight
-          nullable: false
-          type: string
-        insightData:
-          $ref: '#/components/schemas/InsightType'
-        sessionRun:
-          $ref: '#/components/schemas/FilterSessionRun'
-      required:
-      - insightData
-      - sessionRun
-      - type
-      type: object
-    FetchSimilarFilterDisplayData:
-      additionalProperties: false
-      properties:
-        type:
-          enum:
-          - fetch-similar
-          nullable: false
-          type: string
-        limit:
-          format: double
-          type: number
-        sampleIds:
-          items:
-            $ref: '#/components/schemas/SampleIdentity'
-          type: array
-        epoch:
-          format: double
-          type: number
-        filtersUsed:
-          items:
-            type: string
-          type: array
-        sessionRun:
-          $ref: '#/components/schemas/FilterSessionRun'
-      required:
-      - epoch
-      - filtersUsed
-      - limit
-      - sampleIds
-      - sessionRun
-      - type
-      type: object
-    FilterDisplayData:
-      anyOf:
-      - $ref: '#/components/schemas/InsightFilterDisplayData'
-      - $ref: '#/components/schemas/FetchSimilarFilterDisplayData'
-    ESFilter:
-      additionalProperties: false
-      example:
-        field: field
-        disable: true
-        displayData: null
-        value:
-          lt: 6.027456183070403
-          blob_path: blob_path
-          eq: null
-          lst:
-          - null
-          - null
-          gt: 0.8008281904610115
-        operator: null
-      properties:
-        operator:
-          $ref: '#/components/schemas/FilterOperatorType'
-        field:
-          type: string
-        disable:
-          type: boolean
-        value:
-          $ref: '#/components/schemas/ESFilterValue'
-        displayData:
-          $ref: '#/components/schemas/FilterDisplayData'
-      required:
-      - field
-      - operator
-      - value
       type: object
     FetchSimilarJobParams:
       properties:
@@ -6414,6 +7107,47 @@ components:
       - sessionRunId
       - type
       type: object
+    ExportOptions:
+      example:
+        excludeCalculatedFiles: true
+      properties:
+        excludeCalculatedFiles:
+          type: boolean
+      type: object
+    Record_string.string-or-string-Array_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
+    ExportProjectMeta:
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        categories:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+        bgImagePath:
+          type: string
+        schemaVersion:
+          format: double
+          type: number
+        sourceProjectId:
+          type: string
+      required:
+      - bgImagePath
+      - categories
+      - name
+      - schemaVersion
+      - sourceProjectId
+      - tags
+      type: object
     ExportProjectParams:
       additionalProperties: false
       properties:
@@ -6422,20 +7156,83 @@ components:
         projectVersion:
           format: double
           type: number
+        exportOptions:
+          $ref: '#/components/schemas/ExportOptions'
+        alreadyExported:
+          type: boolean
+        projectExportMeta:
+          $ref: '#/components/schemas/ExportProjectMeta'
         copyToUrl:
           type: string
       required:
+      - alreadyExported
+      - exportOptions
       - exportUrl
+      - projectExportMeta
       - projectVersion
+      type: object
+    HubPublishPolicy:
+      enum:
+      - public
+      - alpha
+      - no_publish
+      type: string
+    ProjectMeta:
+      additionalProperties: false
+      example:
+        hubPublishPolicy: null
+        name: name
+        description: description
+        bgImageUrl: bgImageUrl
+        categories: "{}"
+        tags:
+        - tags
+        - tags
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        hubPublishPolicy:
+          $ref: '#/components/schemas/HubPublishPolicy'
+        bgImageUrl:
+          type: string
+        categories:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+      required:
+      - description
+      - hubPublishPolicy
+      - name
+      - tags
+      type: object
+    ImportProjectParams:
+      additionalProperties: false
+      properties:
+        importUrl:
+          type: string
+        projectMeta:
+          $ref: '#/components/schemas/ProjectMeta'
+      required:
+      - importUrl
+      - projectMeta
       type: object
     JobParams:
       anyOf:
       - $ref: '#/components/schemas/TrainingParams'
+      - $ref: '#/components/schemas/EvaluateParams'
       - $ref: '#/components/schemas/AnalyzeParams'
       - $ref: '#/components/schemas/ExportModelParams'
       - $ref: '#/components/schemas/FetchSimilarJobParams'
       - $ref: '#/components/schemas/PopulationExplorationJobParams'
       - $ref: '#/components/schemas/ExportProjectParams'
+      - $ref: '#/components/schemas/ImportProjectParams'
+      - $ref: '#/components/schemas/SaveDatasetVersionParams'
     Job:
       additionalProperties: false
       example:
@@ -6482,43 +7279,25 @@ components:
       - cid
       - createdAt
       - createdBy
-      - projectId
       - status
       - teamId
       - type
       - updatedAt
       type: object
-    EvaluateNewSessionParams:
+    ContinueEvaluateParams:
       additionalProperties: false
+      example:
+        sessionRunId: sessionRunId
+        projectId: projectId
       properties:
-        versionId:
+        sessionRunId:
           type: string
         projectId:
           type: string
-        batchSize:
-          format: double
-          type: number
-        dataStates:
-          items:
-            $ref: '#/components/schemas/DataStateType'
-          type: array
-        name:
-          type: string
       required:
-      - batchSize
-      - dataStates
-      - name
       - projectId
-      - versionId
+      - sessionRunId
       type: object
-    EvaluateExistingSessionParams:
-      allOf:
-      - $ref: '#/components/schemas/EvaluateNewSessionParams'
-      - $ref: '#/components/schemas/EvaluateExistingSessionParams_allOf'
-    EvaluateParams:
-      anyOf:
-      - $ref: '#/components/schemas/EvaluateNewSessionParams'
-      - $ref: '#/components/schemas/EvaluateExistingSessionParams'
     ExportedModelData:
       additionalProperties: false
       example:
@@ -6645,6 +7424,46 @@ components:
       - sessionWeightId
       - title
       type: object
+    EpochMetricsValue:
+      anyOf:
+      - $ref: '#/components/schemas/EpochMetricsValue_anyOf'
+      - $ref: '#/components/schemas/EpochMetricsValue_anyOf_1'
+      - $ref: '#/components/schemas/EpochMetricsValue_anyOf_2'
+    EpochMetrics:
+      additionalProperties:
+        $ref: '#/components/schemas/EpochMetricsValue'
+      properties: {}
+      type: object
+    LogExternalEpochDataRequest:
+      additionalProperties: false
+      example:
+        experimentId: experimentId
+        epoch: 0.8008281904610115
+        force: true
+        metrics:
+          key: null
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        experimentId:
+          type: string
+        epoch:
+          format: double
+          type: number
+        metrics:
+          additionalProperties:
+            $ref: '#/components/schemas/EpochMetricsValue'
+          properties: {}
+          type: object
+        force:
+          type: boolean
+      required:
+      - epoch
+      - experimentId
+      - metrics
+      - projectId
+      type: object
     Record_string.NodeCalculatedData_:
       description: Construct a type with a set of properties K of type T
       properties: {}
@@ -6744,9 +7563,9 @@ components:
       properties:
         name:
           type: string
-        node_id:
-          type: string
         connection_name:
+          type: string
+        node_id:
           type: string
         error:
           type: string
@@ -6764,9 +7583,9 @@ components:
       properties:
         name:
           type: string
-        node_id:
-          type: string
         connection_name:
+          type: string
+        node_id:
           type: string
         error:
           type: string
@@ -6789,6 +7608,15 @@ components:
           error: error
           node_id: node_id
         inputs:
+        - connection_name: connection_name
+          name: name
+          error: error
+          node_id: node_id
+        - connection_name: connection_name
+          name: name
+          error: error
+          node_id: node_id
+        custom_layers:
         - connection_name: connection_name
           name: name
           error: error
@@ -6874,9 +7702,14 @@ components:
           items:
             $ref: '#/components/schemas/ValidatedNode'
           type: array
+        custom_layers:
+          items:
+            $ref: '#/components/schemas/ValidatedNode'
+          type: array
         general_error:
           type: string
       required:
+      - custom_layers
       - ground_truths
       - inputs
       - losses
@@ -6899,6 +7732,15 @@ components:
             error: error
             node_id: node_id
           inputs:
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          custom_layers:
           - connection_name: connection_name
             name: name
             error: error
@@ -7641,14 +8483,18 @@ components:
       example:
         sessionRunName: sessionRunName
         sessionName: sessionName
+        datasetName: datasetName
         versionName: versionName
         params: null
         jobId: jobId
         createdAt: createdAt
         versionId: versionId
         sessionRunId: sessionRunId
+        processId: processId
         projectName: projectName
         jobType: jobType
+        batchSize: 1.4658129805029452
+        projectId: projectId
         events:
         - name: name
           progress:
@@ -7662,16 +8508,23 @@ components:
             current: 6.027456183070403
           id: id
           status: null
+        machineType: machineType
         status: null
         updatedAt: updatedAt
       properties:
         jobId:
           type: string
+        processId:
+          type: string
         versionName:
           type: string
         versionId:
           type: string
+        projectId:
+          type: string
         projectName:
+          type: string
+        datasetName:
           type: string
         jobType:
           type: string
@@ -7693,18 +8546,19 @@ components:
           type: array
         params:
           $ref: '#/components/schemas/JobParams'
+        machineType:
+          type: string
+        batchSize:
+          format: double
+          type: number
       required:
       - createdAt
       - events
       - jobId
       - jobType
-      - projectName
-      - sessionName
-      - sessionRunName
+      - processId
       - status
       - updatedAt
-      - versionId
-      - versionName
       type: object
     GetJobsResponse:
       additionalProperties: false
@@ -7712,14 +8566,18 @@ components:
         processes:
         - sessionRunName: sessionRunName
           sessionName: sessionName
+          datasetName: datasetName
           versionName: versionName
           params: null
           jobId: jobId
           createdAt: createdAt
           versionId: versionId
           sessionRunId: sessionRunId
+          processId: processId
           projectName: projectName
           jobType: jobType
+          batchSize: 1.4658129805029452
+          projectId: projectId
           events:
           - name: name
             progress:
@@ -7733,18 +8591,23 @@ components:
               current: 6.027456183070403
             id: id
             status: null
+          machineType: machineType
           status: null
           updatedAt: updatedAt
         - sessionRunName: sessionRunName
           sessionName: sessionName
+          datasetName: datasetName
           versionName: versionName
           params: null
           jobId: jobId
           createdAt: createdAt
           versionId: versionId
           sessionRunId: sessionRunId
+          processId: processId
           projectName: projectName
           jobType: jobType
+          batchSize: 1.4658129805029452
+          projectId: projectId
           events:
           - name: name
             progress:
@@ -7758,6 +8621,7 @@ components:
               current: 6.027456183070403
             id: id
             status: null
+          machineType: machineType
           status: null
           updatedAt: updatedAt
       properties:
@@ -7917,6 +8781,35 @@ components:
       required:
       - jobId
       type: object
+    TerminateAllJobsResponse:
+      additionalProperties: false
+      example:
+        job_ids:
+        - job_ids
+        - job_ids
+        status: sent_terminate_signal
+      properties:
+        status:
+          enum:
+          - sent_terminate_signal
+          nullable: false
+          type: string
+        job_ids:
+          items:
+            type: string
+          type: array
+      required:
+      - job_ids
+      - status
+      type: object
+    TerminateAllJobsParams:
+      additionalProperties: false
+      example:
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+      type: object
     GetMaxActiveUsersResponse:
       additionalProperties: false
       example:
@@ -8001,6 +8894,11 @@ components:
       - hubUrl
       - schemaVersion
       type: object
+    SplitValue:
+      anyOf:
+      - type: string
+      - format: double
+        type: number
     Record_NumberOrString.NumberOrString_:
       description: Construct a type with a set of properties K of type T
       properties: {}
@@ -8009,6 +8907,7 @@ components:
       example:
         metadata: "{}"
         data: "{}"
+        innerKey: null
       properties:
         metadata:
           description: Construct a type with a set of properties K of type T
@@ -8018,6 +8917,8 @@ components:
           description: Construct a type with a set of properties K of type T
           properties: {}
           type: object
+        innerKey:
+          $ref: '#/components/schemas/NumberOrString'
       required:
       - data
       type: object
@@ -8027,8 +8928,10 @@ components:
         data:
         - metadata: "{}"
           data: "{}"
+          innerKey: null
         - metadata: "{}"
           data: "{}"
+          innerKey: null
       properties:
         data:
           items:
@@ -8037,297 +8940,60 @@ components:
       required:
       - data
       type: object
-    HorizontalCharts:
+    ChartData:
       additionalProperties: false
       example:
-        label: label
-        chart:
+        verticalKey: null
+        data:
           data:
           - metadata: "{}"
             data: "{}"
+            innerKey: null
           - metadata: "{}"
             data: "{}"
+            innerKey: null
+        horizontalKey: null
       properties:
-        label:
-          type: string
-        chart:
+        horizontalKey:
+          $ref: '#/components/schemas/SplitValue'
+        verticalKey:
+          $ref: '#/components/schemas/SplitValue'
+        data:
           $ref: '#/components/schemas/GenericDataResponse'
       required:
-      - chart
-      - label
-      type: object
-    VerticalCharts:
-      additionalProperties: false
-      example:
-        horizontal:
-        - label: label
-          chart:
-            data:
-            - metadata: "{}"
-              data: "{}"
-            - metadata: "{}"
-              data: "{}"
-        - label: label
-          chart:
-            data:
-            - metadata: "{}"
-              data: "{}"
-            - metadata: "{}"
-              data: "{}"
-        label: label
-      properties:
-        label:
-          type: string
-        horizontal:
-          items:
-            $ref: '#/components/schemas/HorizontalCharts'
-          type: array
-      required:
-      - horizontal
-      - label
+      - data
       type: object
     MultiChartsResponse:
       additionalProperties: false
       example:
-        vertical:
-        - horizontal:
-          - label: label
-            chart:
-              data:
-              - metadata: "{}"
-                data: "{}"
-              - metadata: "{}"
-                data: "{}"
-          - label: label
-            chart:
-              data:
-              - metadata: "{}"
-                data: "{}"
-              - metadata: "{}"
-                data: "{}"
-          label: label
-        - horizontal:
-          - label: label
-            chart:
-              data:
-              - metadata: "{}"
-                data: "{}"
-              - metadata: "{}"
-                data: "{}"
-          - label: label
-            chart:
-              data:
-              - metadata: "{}"
-                data: "{}"
-              - metadata: "{}"
-                data: "{}"
-          label: label
+        charts:
+        - verticalKey: null
+          data:
+            data:
+            - metadata: "{}"
+              data: "{}"
+              innerKey: null
+            - metadata: "{}"
+              data: "{}"
+              innerKey: null
+          horizontalKey: null
+        - verticalKey: null
+          data:
+            data:
+            - metadata: "{}"
+              data: "{}"
+              innerKey: null
+            - metadata: "{}"
+              data: "{}"
+              innerKey: null
+          horizontalKey: null
       properties:
-        vertical:
+        charts:
           items:
-            $ref: '#/components/schemas/VerticalCharts'
+            $ref: '#/components/schemas/ChartData'
           type: array
       required:
-      - vertical
-      type: object
-    AggregationMethod:
-      enum:
-      - Average
-      - Count
-      - Min
-      - Max
-      type: string
-    DataDistributionType:
-      enum:
-      - distinct
-      - continuous
-      type: string
-    OrderType:
-      enum:
-      - desc
-      - asc
-      type: string
-    MultiChartsParams:
-      additionalProperties: false
-      example:
-        horizontalSplit: horizontalSplit
-        yField: yField
-        innerSplit: innerSplit
-        dataDistributionType: null
-        verticalSplit: verticalSplit
-        xAxisSizeInterval: 1.4658129805029452
-        filters:
-        - field: field
-          disable: true
-          displayData: null
-          value:
-            lt: 6.027456183070403
-            blob_path: blob_path
-            eq: null
-            lst:
-            - null
-            - null
-            gt: 0.8008281904610115
-          operator: null
-        - field: field
-          disable: true
-          displayData: null
-          value:
-            lt: 6.027456183070403
-            blob_path: blob_path
-            eq: null
-            lst:
-            - null
-            - null
-            gt: 0.8008281904610115
-          operator: null
-        lastEpochOnly: true
-        orderParams: null
-        xField: xField
-        orderByParam: orderByParam
-        aggregationMethod: null
-        projectId: projectId
-        sessionRunIds:
-        - sessionRunIds
-        - sessionRunIds
-      properties:
-        projectId:
-          type: string
-        xField:
-          type: string
-        yField:
-          type: string
-        aggregationMethod:
-          $ref: '#/components/schemas/AggregationMethod'
-        sessionRunIds:
-          items:
-            type: string
-          type: array
-        verticalSplit:
-          type: string
-        horizontalSplit:
-          type: string
-        innerSplit:
-          type: string
-        filters:
-          items:
-            $ref: '#/components/schemas/ESFilter'
-          type: array
-        dataDistributionType:
-          $ref: '#/components/schemas/DataDistributionType'
-        orderByParam:
-          type: string
-        orderParams:
-          $ref: '#/components/schemas/OrderType'
-        xAxisSizeInterval:
-          format: double
-          type: number
-        lastEpochOnly:
-          type: boolean
-      required:
-      - aggregationMethod
-      - dataDistributionType
-      - projectId
-      - sessionRunIds
-      - xAxisSizeInterval
-      - xField
-      - yField
-      type: object
-    HeatmapChartsParams:
-      additionalProperties: false
-      example:
-        yAxisSizeInterval: 6.027456183070403
-        horizontalSplit: horizontalSplit
-        yField: yField
-        xAxisSizeInterval: 0.8008281904610115
-        xOrderParams: null
-        verticalSplit: verticalSplit
-        colorAggregationMethod: null
-        filters:
-        - field: field
-          disable: true
-          displayData: null
-          value:
-            lt: 6.027456183070403
-            blob_path: blob_path
-            eq: null
-            lst:
-            - null
-            - null
-            gt: 0.8008281904610115
-          operator: null
-        - field: field
-          disable: true
-          displayData: null
-          value:
-            lt: 6.027456183070403
-            blob_path: blob_path
-            eq: null
-            lst:
-            - null
-            - null
-            gt: 0.8008281904610115
-          operator: null
-        lastEpochOnly: true
-        colorField: colorField
-        yDataDistributionType: null
-        xField: xField
-        xDataDistributionType: null
-        yOrderParams: null
-        projectId: projectId
-        sessionRunIds:
-        - sessionRunIds
-        - sessionRunIds
-      properties:
-        projectId:
-          type: string
-        xField:
-          type: string
-        xAxisSizeInterval:
-          format: double
-          type: number
-        xDataDistributionType:
-          $ref: '#/components/schemas/DataDistributionType'
-        xOrderParams:
-          $ref: '#/components/schemas/OrderType'
-        yField:
-          type: string
-        yAxisSizeInterval:
-          format: double
-          type: number
-        yDataDistributionType:
-          $ref: '#/components/schemas/DataDistributionType'
-        yOrderParams:
-          $ref: '#/components/schemas/OrderType'
-        colorField:
-          type: string
-        colorAggregationMethod:
-          $ref: '#/components/schemas/AggregationMethod'
-        sessionRunIds:
-          items:
-            type: string
-          type: array
-        verticalSplit:
-          type: string
-        horizontalSplit:
-          type: string
-        filters:
-          items:
-            $ref: '#/components/schemas/ESFilter'
-          type: array
-        lastEpochOnly:
-          type: boolean
-      required:
-      - colorAggregationMethod
-      - colorField
-      - projectId
-      - sessionRunIds
-      - xAxisSizeInterval
-      - xDataDistributionType
-      - xField
-      - yAxisSizeInterval
-      - yDataDistributionType
-      - yField
+      - charts
       type: object
     Aggregations:
       additionalProperties: false
@@ -8343,46 +9009,154 @@ components:
       - aggregation
       - field
       type: object
-    BucketAggregation:
+    MultiChartsParams:
       additionalProperties: false
       example:
-        orderParams: asc
-        xField: xField
-        dataDistributionType: null
-        xAxisSizeInterval: 0.8008281904610115
+        horizontalSplit: null
+        x: null
+        innerSplit: null
+        "y":
+          field: field
+          aggregation: null
+        verticalSplit: null
+        filters:
+        - field: field
+          disable: true
+          displayData: null
+          value:
+            lt: 6.027456183070403
+            blob_path: blob_path
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 0.8008281904610115
+          operator: null
+        - field: field
+          disable: true
+          displayData: null
+          value:
+            lt: 6.027456183070403
+            blob_path: blob_path
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 0.8008281904610115
+          operator: null
+        projectId: projectId
+        sessionRunIds:
+        - sessionRunIds
+        - sessionRunIds
+        lastEpochOnly: true
       properties:
-        xField:
+        projectId:
           type: string
-        dataDistributionType:
-          $ref: '#/components/schemas/DataDistributionType'
-        xAxisSizeInterval:
-          format: double
-          type: number
-        orderParams:
-          enum:
-          - asc
-          - desc
-          type: string
+        sessionRunIds:
+          items:
+            type: string
+          type: array
+        x:
+          $ref: '#/components/schemas/SplitAgg'
+        "y":
+          $ref: '#/components/schemas/Aggregations'
+        verticalSplit:
+          $ref: '#/components/schemas/SplitAgg'
+        horizontalSplit:
+          $ref: '#/components/schemas/SplitAgg'
+        innerSplit:
+          $ref: '#/components/schemas/SplitAgg'
+        filters:
+          items:
+            $ref: '#/components/schemas/ESFilter'
+          type: array
+        lastEpochOnly:
+          type: boolean
       required:
-      - dataDistributionType
-      - orderParams
-      - xAxisSizeInterval
-      - xField
+      - projectId
+      - sessionRunIds
+      - x
+      - "y"
+      type: object
+    HeatmapChartsParams:
+      additionalProperties: false
+      example:
+        horizontalSplit: null
+        color:
+          field: field
+          aggregation: null
+        x: null
+        "y": null
+        verticalSplit: null
+        filters:
+        - field: field
+          disable: true
+          displayData: null
+          value:
+            lt: 6.027456183070403
+            blob_path: blob_path
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 0.8008281904610115
+          operator: null
+        - field: field
+          disable: true
+          displayData: null
+          value:
+            lt: 6.027456183070403
+            blob_path: blob_path
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 0.8008281904610115
+          operator: null
+        projectId: projectId
+        sessionRunIds:
+        - sessionRunIds
+        - sessionRunIds
+        lastEpochOnly: true
+      properties:
+        projectId:
+          type: string
+        x:
+          $ref: '#/components/schemas/SplitAgg'
+        "y":
+          $ref: '#/components/schemas/SplitAgg'
+        color:
+          $ref: '#/components/schemas/Aggregations'
+        sessionRunIds:
+          items:
+            type: string
+          type: array
+        verticalSplit:
+          $ref: '#/components/schemas/SplitAgg'
+        horizontalSplit:
+          $ref: '#/components/schemas/SplitAgg'
+        filters:
+          items:
+            $ref: '#/components/schemas/ESFilter'
+          type: array
+        lastEpochOnly:
+          type: boolean
+      required:
+      - color
+      - projectId
+      - sessionRunIds
+      - x
+      - "y"
       type: object
     GenericDataQueryParams:
       additionalProperties: false
       example:
-        horizontalSplit: horizontalSplit
+        horizontalSplit: null
         buckets:
-        - orderParams: asc
-          xField: xField
-          dataDistributionType: null
-          xAxisSizeInterval: 0.8008281904610115
-        - orderParams: asc
-          xField: xField
-          dataDistributionType: null
-          xAxisSizeInterval: 0.8008281904610115
-        verticalSplit: verticalSplit
+        - null
+        - null
+        innerSplit: null
+        verticalSplit: null
         filters:
         - field: field
           disable: true
@@ -8430,16 +9204,18 @@ components:
             $ref: '#/components/schemas/ESFilter'
           type: array
         verticalSplit:
-          type: string
+          $ref: '#/components/schemas/SplitAgg'
         horizontalSplit:
-          type: string
+          $ref: '#/components/schemas/SplitAgg'
+        innerSplit:
+          $ref: '#/components/schemas/SplitAgg'
         aggregations:
           items:
             $ref: '#/components/schemas/Aggregations'
           type: array
         buckets:
           items:
-            $ref: '#/components/schemas/BucketAggregation'
+            $ref: '#/components/schemas/SplitAgg'
           type: array
         lastEpochOnly:
           type: boolean
@@ -8479,19 +9255,13 @@ components:
       - projectId
       - sessionRunIds
       type: object
-    EsBatchAggregationType:
-      enum:
-      - histogram
-      - batch
-      type: string
     ConfusionMatrixParams:
       additionalProperties: false
       example:
-        horizontalSplit: horizontalSplit
-        xFieldAggregationType: null
-        dataDistributionType: null
-        verticalSplit: verticalSplit
-        xAxisSizeInterval: 6.027456183070403
+        horizontalSplit: null
+        x: null
+        innerSplit: null
+        verticalSplit: null
         threshold: 0.8008281904610115
         filters:
         - field: field
@@ -8518,28 +9288,27 @@ components:
             - null
             gt: 0.8008281904610115
           operator: null
-        lastEpochOnly: true
-        customMetricName: customMetricName
-        orderParams: null
-        xField: xField
-        orderByParam: orderByParam
         projectId: projectId
         sessionRunIds:
         - sessionRunIds
         - sessionRunIds
+        lastEpochOnly: true
+        customMetricName: customMetricName
       properties:
         projectId:
-          type: string
-        xField:
           type: string
         sessionRunIds:
           items:
             type: string
           type: array
+        x:
+          $ref: '#/components/schemas/SplitAgg'
         verticalSplit:
-          type: string
+          $ref: '#/components/schemas/SplitAgg'
         horizontalSplit:
-          type: string
+          $ref: '#/components/schemas/SplitAgg'
+        innerSplit:
+          $ref: '#/components/schemas/SplitAgg'
         threshold:
           format: double
           type: number
@@ -8549,25 +9318,13 @@ components:
           items:
             $ref: '#/components/schemas/ESFilter'
           type: array
-        xFieldAggregationType:
-          $ref: '#/components/schemas/EsBatchAggregationType'
-        dataDistributionType:
-          $ref: '#/components/schemas/DataDistributionType'
-        orderByParam:
-          type: string
-        orderParams:
-          $ref: '#/components/schemas/OrderType'
-        xAxisSizeInterval:
-          format: double
-          type: number
         lastEpochOnly:
           type: boolean
       required:
       - customMetricName
       - projectId
       - sessionRunIds
-      - xAxisSizeInterval
-      - xField
+      - x
       type: object
     GetBalancedAccuracyParams:
       $ref: '#/components/schemas/ConfusionMatrixParams'
@@ -8576,8 +9333,8 @@ components:
     MultiThresholdConfusionMatrixParams:
       additionalProperties: false
       example:
-        horizontalSplit: horizontalSplit
-        verticalSplit: verticalSplit
+        horizontalSplit: null
+        verticalSplit: null
         filters:
         - field: field
           disable: true
@@ -8618,9 +9375,9 @@ components:
         customMetricName:
           type: string
         verticalSplit:
-          type: string
+          $ref: '#/components/schemas/SplitAgg'
         horizontalSplit:
-          type: string
+          $ref: '#/components/schemas/SplitAgg'
         filters:
           items:
             $ref: '#/components/schemas/ESFilter'
@@ -8632,8 +9389,132 @@ components:
       type: object
     GetPrCurveParams:
       $ref: '#/components/schemas/MultiThresholdConfusionMatrixParams'
+    RocConfusionMatrixParams:
+      additionalProperties: false
+      example:
+        horizontalSplit: null
+        absAxis: true
+        verticalSplit: null
+        filters:
+        - field: field
+          disable: true
+          displayData: null
+          value:
+            lt: 6.027456183070403
+            blob_path: blob_path
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 0.8008281904610115
+          operator: null
+        - field: field
+          disable: true
+          displayData: null
+          value:
+            lt: 6.027456183070403
+            blob_path: blob_path
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 0.8008281904610115
+          operator: null
+        sessionRunIds:
+        - sessionRunIds
+        - sessionRunIds
+        projectId: projectId
+        customMetricName: customMetricName
+      properties:
+        sessionRunIds:
+          items:
+            type: string
+          type: array
+        projectId:
+          type: string
+        customMetricName:
+          type: string
+        verticalSplit:
+          $ref: '#/components/schemas/SplitAgg'
+        horizontalSplit:
+          $ref: '#/components/schemas/SplitAgg'
+        filters:
+          items:
+            $ref: '#/components/schemas/ESFilter'
+          type: array
+        absAxis:
+          type: boolean
+      required:
+      - customMetricName
+      - projectId
+      - sessionRunIds
+      type: object
     GetRocParams:
-      $ref: '#/components/schemas/MultiThresholdConfusionMatrixParams'
+      $ref: '#/components/schemas/RocConfusionMatrixParams'
+    ConfusionMatrixTableParams:
+      allOf:
+      - $ref: '#/components/schemas/MultiThresholdConfusionMatrixParams'
+      - $ref: '#/components/schemas/ConfusionMatrixTableParams_allOf'
+    GetConfusionMatrixResultCombinationsParams:
+      allOf:
+      - $ref: '#/components/schemas/ConfusionMatrixParams'
+      - $ref: '#/components/schemas/GetConfusionMatrixResultCombinationsParams_allOf'
+    PredictionLabels:
+      additionalProperties: false
+      example:
+        predictionName: predictionName
+        labels:
+        - labels
+        - labels
+      properties:
+        predictionName:
+          type: string
+        labels:
+          items:
+            type: string
+          type: array
+      required:
+      - labels
+      - predictionName
+      type: object
+    ConfusionMatrixLabelsResponse:
+      additionalProperties: false
+      example:
+        labelsByPrediction:
+        - predictionName: predictionName
+          labels:
+          - labels
+          - labels
+        - predictionName: predictionName
+          labels:
+          - labels
+          - labels
+      properties:
+        labelsByPrediction:
+          items:
+            $ref: '#/components/schemas/PredictionLabels'
+          type: array
+      required:
+      - labelsByPrediction
+      type: object
+    GetConfusionMatrixLabels:
+      additionalProperties: false
+      example:
+        projectId: projectId
+        sessionRunIds:
+        - sessionRunIds
+        - sessionRunIds
+      properties:
+        projectId:
+          type: string
+        sessionRunIds:
+          items:
+            type: string
+          type: array
+      required:
+      - projectId
+      - sessionRunIds
+      type: object
     HealthStatus:
       additionalProperties: false
       properties:
@@ -9214,16 +10095,6 @@ components:
       - public
       - local
       type: string
-    HubPublishPolicy:
-      enum:
-      - public
-      - alpha
-      - no_publish
-      type: string
-    Record_string.string-or-string-Array_:
-      description: Construct a type with a set of properties K of type T
-      properties: {}
-      type: object
     Project:
       additionalProperties: false
       example:
@@ -9416,8 +10287,6 @@ components:
       - cid
       - createdAt
       - createdBy
-      - data
-      - datasetSetup
       - extId
       - isFavourite
       - notes
@@ -9539,40 +10408,6 @@ components:
       required:
       - project
       - version
-      type: object
-    ProjectMeta:
-      additionalProperties: false
-      example:
-        hubPublishPolicy: null
-        name: name
-        description: description
-        bgImageUrl: bgImageUrl
-        categories: "{}"
-        tags:
-        - tags
-        - tags
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        tags:
-          items:
-            type: string
-          type: array
-        hubPublishPolicy:
-          $ref: '#/components/schemas/HubPublishPolicy'
-        bgImageUrl:
-          type: string
-        categories:
-          description: Construct a type with a set of properties K of type T
-          properties: {}
-          type: object
-      required:
-      - description
-      - hubPublishPolicy
-      - name
-      - tags
       type: object
     UpdateProjectMetaRequest:
       additionalProperties: false
@@ -10142,13 +10977,6 @@ components:
       required:
       - jobId
       type: object
-    ExportOptions:
-      example:
-        excludeCalculatedFiles: true
-      properties:
-        excludeCalculatedFiles:
-          type: boolean
-      type: object
     ExportProjectRequest:
       additionalProperties: false
       example:
@@ -10339,13 +11167,17 @@ components:
       additionalProperties: false
       example:
         success: true
+        cid: cid
       properties:
+        cid:
+          type: string
         success:
           enum:
           - true
           nullable: false
           type: boolean
       required:
+      - cid
       - success
       type: object
     AddSecretManagerParams:
@@ -10451,6 +11283,10 @@ components:
       required:
       - cid
       - name
+      type: object
+    Record_string.any_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
       type: object
     Session:
       additionalProperties: false
@@ -10561,6 +11397,7 @@ components:
           status: null
         projectId: projectId
         hash: hash
+        properties: "{}"
         cid: cid
       properties:
         projectId:
@@ -10591,6 +11428,10 @@ components:
           items:
             $ref: '#/components/schemas/SessionWeightData'
           type: array
+        properties:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
       required:
       - cid
       - createdAt
@@ -10708,6 +11549,7 @@ components:
             status: null
           projectId: projectId
           hash: hash
+          properties: "{}"
           cid: cid
         - modelName: modelName
           createdAt: 2000-01-23T04:56:07.000+00:00
@@ -10815,6 +11657,7 @@ components:
             status: null
           projectId: projectId
           hash: hash
+          properties: "{}"
           cid: cid
       properties:
         sessions:
@@ -11603,6 +12446,8 @@ components:
           type: boolean
         placeholder:
           type: string
+        suffix:
+          type: string
       required:
       - type
       type: object
@@ -12186,6 +13031,28 @@ components:
       - projectId
       - versionName
       type: object
+    ImportExternalModelParams:
+      additionalProperties: false
+      example:
+        transformInputs: true
+        epoch: 0.8008281904610115
+        sessionId: sessionId
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        sessionId:
+          type: string
+        epoch:
+          format: double
+          type: number
+        transformInputs:
+          type: boolean
+      required:
+      - epoch
+      - projectId
+      - sessionId
+      type: object
     AddVersionResponse:
       additionalProperties: false
       example:
@@ -12750,6 +13617,7 @@ components:
             status: null
           projectId: projectId
           hash: hash
+          properties: "{}"
           cid: cid
         - modelName: modelName
           createdAt: 2000-01-23T04:56:07.000+00:00
@@ -12857,6 +13725,7 @@ components:
             status: null
           projectId: projectId
           hash: hash
+          properties: "{}"
           cid: cid
         notes: notes
         datasetSetup:
@@ -12970,7 +13839,6 @@ components:
       - cid
       - createdAt
       - createdBy
-      - datasetSetup
       - isFavourite
       - notes
       - projectId
@@ -13089,6 +13957,7 @@ components:
               status: null
             projectId: projectId
             hash: hash
+            properties: "{}"
             cid: cid
           - modelName: modelName
             createdAt: 2000-01-23T04:56:07.000+00:00
@@ -13196,6 +14065,7 @@ components:
               status: null
             projectId: projectId
             hash: hash
+            properties: "{}"
             cid: cid
           notes: notes
           datasetSetup:
@@ -13383,6 +14253,7 @@ components:
               status: null
             projectId: projectId
             hash: hash
+            properties: "{}"
             cid: cid
           - modelName: modelName
             createdAt: 2000-01-23T04:56:07.000+00:00
@@ -13490,6 +14361,7 @@ components:
               status: null
             projectId: projectId
             hash: hash
+            properties: "{}"
             cid: cid
           notes: notes
           datasetSetup:
@@ -13687,6 +14559,469 @@ components:
       - name
       - projectId
       type: object
+    TagModelRequest:
+      additionalProperties: false
+      example:
+        experimentId: experimentId
+        epoch: 0.8008281904610115
+        projectId: projectId
+        tags:
+        - tags
+        - tags
+      properties:
+        projectId:
+          type: string
+        experimentId:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        epoch:
+          format: double
+          type: number
+      required:
+      - epoch
+      - experimentId
+      - projectId
+      - tags
+      type: object
+    UploadModelFileType:
+      enum:
+      - onnx
+      - h5
+      type: string
+    GetUploadModelSignedUrlRequest:
+      additionalProperties: false
+      example:
+        versionId: versionId
+        origin: origin
+        epoch: 0.8008281904610115
+        experimentId: experimentId
+        projectId: projectId
+        fileType: null
+      properties:
+        epoch:
+          format: double
+          type: number
+        origin:
+          type: string
+        experimentId:
+          type: string
+        fileType:
+          $ref: '#/components/schemas/UploadModelFileType'
+        versionId:
+          type: string
+        projectId:
+          type: string
+      required:
+      - epoch
+      - experimentId
+      - fileType
+      - projectId
+      - versionId
+      type: object
+    EpochData:
+      additionalProperties: false
+      example:
+        weightsData:
+          globalStep: 5.637376656633329
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          teamId: teamId
+          epoch: 5.962133916683182
+          sessionId: sessionId
+          cid: cid
+          status: null
+        uploadedModelFilePath: uploadedModelFilePath
+        externalData:
+          metrics:
+            key: null
+        epoch: 0.8008281904610115
+        runs:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          weightAssets:
+          - esMetricIndex: esMetricIndex
+            sessionWeightId: sessionWeightId
+          - esMetricIndex: esMetricIndex
+            sessionWeightId: sessionWeightId
+          createdBy: createdBy
+          teamId: teamId
+          jobs:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            sessionRunId: sessionRunId
+            createdBy: createdBy
+            teamId: teamId
+            subType: null
+            type: null
+            params: null
+            projectId: projectId
+            version: version
+            cid: cid
+            status: null
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            sessionRunId: sessionRunId
+            createdBy: createdBy
+            teamId: teamId
+            subType: null
+            type: null
+            params: null
+            projectId: projectId
+            version: version
+            cid: cid
+            status: null
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          name: name
+          sessionId: sessionId
+          projectId: projectId
+          cid: cid
+          isEvaluate: true
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          weightAssets:
+          - esMetricIndex: esMetricIndex
+            sessionWeightId: sessionWeightId
+          - esMetricIndex: esMetricIndex
+            sessionWeightId: sessionWeightId
+          createdBy: createdBy
+          teamId: teamId
+          jobs:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            sessionRunId: sessionRunId
+            createdBy: createdBy
+            teamId: teamId
+            subType: null
+            type: null
+            params: null
+            projectId: projectId
+            version: version
+            cid: cid
+            status: null
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            sessionRunId: sessionRunId
+            createdBy: createdBy
+            teamId: teamId
+            subType: null
+            type: null
+            params: null
+            projectId: projectId
+            version: version
+            cid: cid
+            status: null
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          name: name
+          sessionId: sessionId
+          projectId: projectId
+          cid: cid
+          isEvaluate: true
+        tags:
+        - tags
+        - tags
+      properties:
+        epoch:
+          format: double
+          type: number
+        tags:
+          items:
+            type: string
+          type: array
+        weightsData:
+          $ref: '#/components/schemas/SessionWeightData'
+        uploadedModelFilePath:
+          type: string
+        runs:
+          items:
+            $ref: '#/components/schemas/SessionRunData'
+          type: array
+        externalData:
+          $ref: '#/components/schemas/EpochData_externalData'
+      required:
+      - epoch
+      - runs
+      - tags
+      type: object
+    GetSessionEpochsResponse:
+      additionalProperties: false
+      example:
+        epochs:
+        - weightsData:
+            globalStep: 5.637376656633329
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            epoch: 5.962133916683182
+            sessionId: sessionId
+            cid: cid
+            status: null
+          uploadedModelFilePath: uploadedModelFilePath
+          externalData:
+            metrics:
+              key: null
+          epoch: 0.8008281904610115
+          runs:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            weightAssets:
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            createdBy: createdBy
+            teamId: teamId
+            jobs:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            name: name
+            sessionId: sessionId
+            projectId: projectId
+            cid: cid
+            isEvaluate: true
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            weightAssets:
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            createdBy: createdBy
+            teamId: teamId
+            jobs:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            name: name
+            sessionId: sessionId
+            projectId: projectId
+            cid: cid
+            isEvaluate: true
+          tags:
+          - tags
+          - tags
+        - weightsData:
+            globalStep: 5.637376656633329
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            epoch: 5.962133916683182
+            sessionId: sessionId
+            cid: cid
+            status: null
+          uploadedModelFilePath: uploadedModelFilePath
+          externalData:
+            metrics:
+              key: null
+          epoch: 0.8008281904610115
+          runs:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            weightAssets:
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            createdBy: createdBy
+            teamId: teamId
+            jobs:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            name: name
+            sessionId: sessionId
+            projectId: projectId
+            cid: cid
+            isEvaluate: true
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            weightAssets:
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            - esMetricIndex: esMetricIndex
+              sessionWeightId: sessionWeightId
+            createdBy: createdBy
+            teamId: teamId
+            jobs:
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            - createdAt: 2000-01-23T04:56:07.000+00:00
+              sessionRunId: sessionRunId
+              createdBy: createdBy
+              teamId: teamId
+              subType: null
+              type: null
+              params: null
+              projectId: projectId
+              version: version
+              cid: cid
+              status: null
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            name: name
+            sessionId: sessionId
+            projectId: projectId
+            cid: cid
+            isEvaluate: true
+          tags:
+          - tags
+          - tags
+      properties:
+        epochs:
+          items:
+            $ref: '#/components/schemas/EpochData'
+          type: array
+      required:
+      - epochs
+      type: object
+    GetSessionEpochsRequest:
+      additionalProperties: false
+      example:
+        sessionId: sessionId
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        sessionId:
+          type: string
+      required:
+      - projectId
+      - sessionId
+      type: object
+    InitExperimentResponse:
+      additionalProperties: false
+      example:
+        versionId: versionId
+        isCreatedProject: true
+        experimentId: experimentId
+        projectId: projectId
+      properties:
+        experimentId:
+          type: string
+        projectId:
+          type: string
+        versionId:
+          type: string
+        isCreatedProject:
+          type: boolean
+      required:
+      - experimentId
+      - isCreatedProject
+      - projectId
+      - versionId
+      type: object
+    InitExperimentRequest:
+      additionalProperties: false
+      example:
+        codeIntegrationId: codeIntegrationId
+        codeIntegrationName: codeIntegrationName
+        projectName: projectName
+        projectId: projectId
+        experimentName: experimentName
+        removeUntaggedUploadedModels: true
+      properties:
+        projectId:
+          type: string
+        projectName:
+          type: string
+        codeIntegrationName:
+          type: string
+        experimentName:
+          type: string
+        removeUntaggedUploadedModels:
+          type: boolean
+        codeIntegrationId:
+          type: string
+      required:
+      - experimentName
+      type: object
+    SetExperimentPropertiesRequest:
+      additionalProperties: false
+      example:
+        experimentId: experimentId
+        projectId: projectId
+        properties: "{}"
+      properties:
+        projectId:
+          type: string
+        experimentId:
+          type: string
+        properties:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+      required:
+      - experimentId
+      - projectId
+      - properties
+      type: object
     ImageViz:
       additionalProperties: false
       properties:
@@ -13799,55 +15134,69 @@ components:
       - title
       - type
       type: object
-    TextScatterLabel:
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-        text_visualizations:
-          items:
-            $ref: '#/components/schemas/TextViz'
-          type: array
-        input_name:
-          type: string
-      required:
-      - text_visualizations
-      - type
+    Record_string.Metadata_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
       type: object
-    ImageScatterLabel:
+    Record_string.Record_string.Array_MutualInformationElement___:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
+    Record_string.Record_string.string__:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
+    ScatterVizDataState:
       additionalProperties: false
       properties:
-        data:
+        data_state:
+          $ref: '#/components/schemas/DataStateType'
+        scatter_data:
           items:
             items:
               format: double
               type: number
             type: array
           type: array
-        blob:
-          type: string
-        type:
-          type: string
-        input_name:
-          type: string
+        samples:
+          items:
+            $ref: '#/components/schemas/SampleIdentity'
+          type: array
+        metadata:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+        mi_by_cluster:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+        clusters_blob_path:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
       required:
-      - blob
-      - data
-      - type
+      - metadata
+      - samples
+      - scatter_data
       type: object
-    GraphScatterLabel:
+    ScatterViz:
       additionalProperties: false
       properties:
         type:
           type: string
-        graph_visualizations:
-          items:
-            $ref: '#/components/schemas/GraphViz'
-          type: array
-        input_name:
+        title:
           type: string
+        sub_title:
+          type: string
+        guid:
+          type: string
+        scatter_data:
+          $ref: '#/components/schemas/ScatterVizDataState'
       required:
-      - graph_visualizations
+      - guid
+      - scatter_data
+      - sub_title
+      - title
       - type
       type: object
     HorizontalBarViz:
@@ -13878,20 +15227,9 @@ components:
       - title
       - type
       type: object
-    HorizontalBarScatterLabel:
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-        horizontal_bar_visualizations:
-          items:
-            $ref: '#/components/schemas/HorizontalBarViz'
-          type: array
-        input_name:
-          type: string
-      required:
-      - horizontal_bar_visualizations
-      - type
+    Record_string.string-or-number-or-number_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
       type: object
     BoundingBox:
       additionalProperties: false
@@ -13916,6 +15254,10 @@ components:
         rotation:
           format: double
           type: number
+        metadata:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
       required:
       - confidence
       - height
@@ -13923,170 +15265,6 @@ components:
       - width
       - x
       - "y"
-      type: object
-    BBoxImageScatterLabel:
-      additionalProperties: false
-      properties:
-        data:
-          items:
-            items:
-              format: double
-              type: number
-            type: array
-          type: array
-        blob:
-          type: string
-        type:
-          type: string
-        bounding_boxes:
-          items:
-            items:
-              $ref: '#/components/schemas/BoundingBox'
-            type: array
-          type: array
-        input_name:
-          type: string
-      required:
-      - blob
-      - bounding_boxes
-      - data
-      - type
-      type: object
-    MaskImageScatterLabel:
-      additionalProperties: false
-      properties:
-        data:
-          items:
-            items:
-              format: double
-              type: number
-            type: array
-          type: array
-        blob:
-          type: string
-        type:
-          type: string
-        mask_blob:
-          type: string
-        labels:
-          items:
-            type: string
-          type: array
-        input_name:
-          type: string
-      required:
-      - blob
-      - data
-      - labels
-      - mask_blob
-      - type
-      type: object
-    TextMaskScatterLabel:
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-        text_visualizations:
-          items:
-            $ref: '#/components/schemas/TextViz'
-          type: array
-        mask:
-          items:
-            items:
-              format: double
-              type: number
-            type: array
-          type: array
-        labels:
-          items:
-            type: string
-          type: array
-        input_name:
-          type: string
-      required:
-      - labels
-      - mask
-      - text_visualizations
-      - type
-      type: object
-    ScatterLabel:
-      anyOf:
-      - $ref: '#/components/schemas/TextScatterLabel'
-      - $ref: '#/components/schemas/ImageScatterLabel'
-      - $ref: '#/components/schemas/GraphScatterLabel'
-      - $ref: '#/components/schemas/HorizontalBarScatterLabel'
-      - $ref: '#/components/schemas/BBoxImageScatterLabel'
-      - $ref: '#/components/schemas/MaskImageScatterLabel'
-      - $ref: '#/components/schemas/TextMaskScatterLabel'
-    Record_string.Metadata_:
-      description: Construct a type with a set of properties K of type T
-      properties: {}
-      type: object
-    Record_string.Record_string.Array_MutualInformationElement___:
-      description: Construct a type with a set of properties K of type T
-      properties: {}
-      type: object
-    Record_string.Record_string.string__:
-      description: Construct a type with a set of properties K of type T
-      properties: {}
-      type: object
-    ScatterVizDataState:
-      additionalProperties: false
-      properties:
-        data_state:
-          $ref: '#/components/schemas/DataStateType'
-        scatter_data:
-          items:
-            items:
-              format: double
-              type: number
-            type: array
-          type: array
-        labels:
-          items:
-            $ref: '#/components/schemas/ScatterLabel'
-          type: array
-        samples:
-          items:
-            $ref: '#/components/schemas/SampleIdentity'
-          type: array
-        metadata:
-          description: Construct a type with a set of properties K of type T
-          properties: {}
-          type: object
-        mi_by_cluster:
-          description: Construct a type with a set of properties K of type T
-          properties: {}
-          type: object
-        clusters_blob_path:
-          description: Construct a type with a set of properties K of type T
-          properties: {}
-          type: object
-      required:
-      - labels
-      - metadata
-      - samples
-      - scatter_data
-      type: object
-    ScatterViz:
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-        title:
-          type: string
-        sub_title:
-          type: string
-        guid:
-          type: string
-        scatter_data:
-          $ref: '#/components/schemas/ScatterVizDataState'
-      required:
-      - guid
-      - scatter_data
-      - sub_title
-      - title
-      - type
       type: object
     BBoxImageViz:
       additionalProperties: false
@@ -14126,6 +15304,7 @@ components:
       - mask_image
       - image_heatmap
       - grad_analysis
+      - composite_visualization
       type: string
     ImageData:
       additionalProperties: false
@@ -14314,13 +15493,46 @@ components:
           items:
             $ref: '#/components/schemas/GradsItem'
           type: array
-        is_loss:
-          type: boolean
         type:
           $ref: '#/components/schemas/DataTypeEnum'
       required:
       - data
-      - is_loss
+      - type
+      type: object
+    CompositeVizItem:
+      additionalProperties: false
+      properties:
+        node_name:
+          type: string
+        node_id:
+          type: string
+        label:
+          type: string
+        data:
+          $ref: '#/components/schemas/VisData'
+        visualizer_name:
+          type: string
+        connection_name:
+          type: string
+      required:
+      - connection_name
+      - data
+      - label
+      - node_id
+      - node_name
+      - visualizer_name
+      type: object
+    CompositeVizData:
+      additionalProperties: false
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/CompositeVizItem'
+          type: array
+        type:
+          $ref: '#/components/schemas/DataTypeEnum'
+      required:
+      - data
       - type
       type: object
     VisualizedItem:
@@ -14418,6 +15630,8 @@ components:
       - ANALYZE_GRAPH
       - DRY_RUN_GRAPH
       - SLIM_LS
+      - STREAMING_HANDLER
+      - DASHLETS_GENERATOR
       type: string
     BasicVisualizationInfo:
       additionalProperties: false
@@ -15290,10 +16504,89 @@ components:
       - sessionId
       type: object
       example: null
+    EpochMetricsValue_anyOf:
+      properties:
+        value:
+          type: string
+        type:
+          enum:
+          - string
+          nullable: false
+          type: string
+      required:
+      - type
+      - value
+      type: object
+    EpochMetricsValue_anyOf_1:
+      properties:
+        value:
+          format: double
+          type: number
+        type:
+          enum:
+          - number
+          nullable: false
+          type: string
+      required:
+      - type
+      - value
+      type: object
+    EpochMetricsValue_anyOf_2:
+      properties:
+        value:
+          type: string
+        type:
+          enum:
+          - image
+          nullable: false
+          type: string
+      required:
+      - type
+      - value
+      type: object
+    ConfusionMatrixTableParams_allOf:
+      properties:
+        splitByLabelOrder:
+          $ref: '#/components/schemas/OrderType'
+        splitByLabel:
+          type: boolean
+        filterLabels:
+          items:
+            type: string
+          type: array
+        threshold:
+          format: double
+          type: number
+      required:
+      - splitByLabel
+      type: object
+      example: null
+    GetConfusionMatrixResultCombinationsParams_allOf:
+      properties:
+        filterLabels:
+          items:
+            type: string
+          type: array
+      type: object
+      example: null
+    EpochData_externalData:
+      example:
+        metrics:
+          key: null
+      properties:
+        metrics:
+          additionalProperties:
+            $ref: '#/components/schemas/EpochMetricsValue'
+          properties: {}
+          type: object
+      required:
+      - metrics
+      type: object
     VisualizedItem_data:
       anyOf:
       - $ref: '#/components/schemas/VisData'
       - $ref: '#/components/schemas/GradsAnalysis'
+      - $ref: '#/components/schemas/CompositeVizData'
     FetchSimilarResponse_readyArtifacts:
       example:
         clusterPath: clusterPath

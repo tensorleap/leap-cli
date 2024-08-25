@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**ApplyDatasetMapping**](DefaultApi.md#ApplyDatasetMapping) | **Post** /graph/applyDatasetMapping | 
 [**ClearUserJobs**](DefaultApi.md#ClearUserJobs) | **Post** /users/clearUserJobs | 
 [**ClearUserNotifications**](DefaultApi.md#ClearUserNotifications) | **Post** /users/clearUserNotifications | 
+[**ContinueEvaluate**](DefaultApi.md#ContinueEvaluate) | **Post** /evaluate/continueEvaluate | 
 [**ContinueTrain**](DefaultApi.md#ContinueTrain) | **Post** /train/continueTrain | 
 [**CreateSamplesVisualizations**](DefaultApi.md#CreateSamplesVisualizations) | **Post** /visualizations/createSamplesVisualizations | 
 [**CreateSessionTest**](DefaultApi.md#CreateSessionTest) | **Post** /sessions-tests/createSessionTest | 
@@ -38,8 +39,12 @@ Method | HTTP request | Description
 [**FetchSimilar**](DefaultApi.md#FetchSimilar) | **Post** /visualizations/fetchSimilar | 
 [**GetAllProjectSessionTests**](DefaultApi.md#GetAllProjectSessionTests) | **Post** /sessions-tests/getAllProjectSessionTests | 
 [**GetAllSlimUserData**](DefaultApi.md#GetAllSlimUserData) | **Post** /users/getAllSlimUserData | 
+[**GetAuthProvider**](DefaultApi.md#GetAuthProvider) | **Post** /auth/getAuthProvider | 
 [**GetBalancedAccuracy**](DefaultApi.md#GetBalancedAccuracy) | **Post** /sessionmetrics/getBalancedAccuracy | 
 [**GetCodeIntegrationMappingErrorsByVersionId**](DefaultApi.md#GetCodeIntegrationMappingErrorsByVersionId) | **Post** /graph/getCodeIntegrationMappingErrorsByVersionId | 
+[**GetConfusionMatrixLabels**](DefaultApi.md#GetConfusionMatrixLabels) | **Post** /sessionmetrics/getConfusionMatrixLabels | 
+[**GetConfusionMatrixResultCombinations**](DefaultApi.md#GetConfusionMatrixResultCombinations) | **Post** /sessionmetrics/getConfusionMatrixResultCombinations | 
+[**GetConfusionMatrixTable**](DefaultApi.md#GetConfusionMatrixTable) | **Post** /sessionmetrics/getConfusionMatrixTable | 
 [**GetConfusionMetricNames**](DefaultApi.md#GetConfusionMetricNames) | **Post** /sessionmetrics/getConfusionMetricNames | 
 [**GetCurrentProjectVersion**](DefaultApi.md#GetCurrentProjectVersion) | **Post** /projects/getCurrentProjectVersion | 
 [**GetDashboard**](DefaultApi.md#GetDashboard) | **Post** /dashboards/getDashboard | 
@@ -54,11 +59,13 @@ Method | HTTP request | Description
 [**GetExportedSessionJobs**](DefaultApi.md#GetExportedSessionJobs) | **Post** /exportedsessionruns/getExportedSessionJobs | 
 [**GetF1Score**](DefaultApi.md#GetF1Score) | **Post** /sessionmetrics/getF1Score | 
 [**GetFetchSimilarStatus**](DefaultApi.md#GetFetchSimilarStatus) | **Post** /visualizations/getFetchSimilarStatus | 
+[**GetGeneratedDashlets**](DefaultApi.md#GetGeneratedDashlets) | **Post** /dashletsGenerator/getGeneratedDashlets | 
 [**GetHeatmapChart**](DefaultApi.md#GetHeatmapChart) | **Post** /sessionmetrics/getHeatmapChart | 
 [**GetIssueFileUploadSignedUrl**](DefaultApi.md#GetIssueFileUploadSignedUrl) | **Post** /issues/getIssueFileUploadSignedUrl | 
 [**GetLatestDatasetVersion**](DefaultApi.md#GetLatestDatasetVersion) | **Post** /datasetVersions/getLatestDatasetVersion | 
 [**GetMachineTypes**](DefaultApi.md#GetMachineTypes) | **Post** /teams/getMachineTypes | 
 [**GetMaxActiveUsers**](DefaultApi.md#GetMaxActiveUsers) | **Post** /metadata/getMaxActiveUsers | 
+[**GetMeanAveragePrecision**](DefaultApi.md#GetMeanAveragePrecision) | **Post** /sessionmetrics/getMeanAveragePrecision | 
 [**GetNotifications**](DefaultApi.md#GetNotifications) | **Post** /notifications/getNotifications | 
 [**GetPopulationExplorationStatus**](DefaultApi.md#GetPopulationExplorationStatus) | **Post** /visualizations/getPopulationExplorationStatus | 
 [**GetPrCurve**](DefaultApi.md#GetPrCurve) | **Post** /sessionmetrics/getPrCurve | 
@@ -72,6 +79,7 @@ Method | HTTP request | Description
 [**GetSampleVisualizationsPath**](DefaultApi.md#GetSampleVisualizationsPath) | **Post** /visualizations/getSampleVisualizationsPath | 
 [**GetScatterSampleVisualizations**](DefaultApi.md#GetScatterSampleVisualizations) | **Post** /visualizations/getScatterSampleVisualizations | 
 [**GetSecretManagerList**](DefaultApi.md#GetSecretManagerList) | **Post** /secret-manager/getSecretManagerList | 
+[**GetSessionEpochs**](DefaultApi.md#GetSessionEpochs) | **Post** /versions/getSessionEpochs | 
 [**GetSessionRunsVisualizations**](DefaultApi.md#GetSessionRunsVisualizations) | **Post** /visualizations/getSessionRunsVisualizations | 
 [**GetSessionTestResult**](DefaultApi.md#GetSessionTestResult) | **Post** /sessions-tests/getSessionTestResult | 
 [**GetSessionsByHash**](DefaultApi.md#GetSessionsByHash) | **Post** /sessions/getSessionsByHash | 
@@ -86,20 +94,26 @@ Method | HTTP request | Description
 [**GetTeamJobs**](DefaultApi.md#GetTeamJobs) | **Post** /jobs/getTeamJobs | 
 [**GetTeamSlimUserData**](DefaultApi.md#GetTeamSlimUserData) | **Post** /users/getTeamSlimUserData | 
 [**GetTeams**](DefaultApi.md#GetTeams) | **Post** /teams/getTeams | 
+[**GetUploadModelSignedUrl**](DefaultApi.md#GetUploadModelSignedUrl) | **Post** /versions/getUploadModelSignedUrl | 
 [**GetUploadSignedUrl**](DefaultApi.md#GetUploadSignedUrl) | **Post** /versions/getUploadSignedUrl | 
 [**GetValidateGraphProcessState**](DefaultApi.md#GetValidateGraphProcessState) | **Post** /graph/getValidateGraphProcessState | 
 [**GetVisualization**](DefaultApi.md#GetVisualization) | **Post** /visualizations/getVisualization | 
 [**GetXYChart**](DefaultApi.md#GetXYChart) | **Post** /sessionmetrics/getXYChart | 
 [**HealthCheck**](DefaultApi.md#HealthCheck) | **Get** /monitor/healthCheck | 
+[**ImportExternalModel**](DefaultApi.md#ImportExternalModel) | **Post** /versions/importExternalModel | 
 [**ImportModel**](DefaultApi.md#ImportModel) | **Post** /versions/importModel | 
 [**ImportProject**](DefaultApi.md#ImportProject) | **Post** /projects/importProject | 
+[**InitExperiment**](DefaultApi.md#InitExperiment) | **Post** /versions/initExperiment | 
 [**KeyGen**](DefaultApi.md#KeyGen) | **Post** /auth/keygen | 
 [**LoadModel**](DefaultApi.md#LoadModel) | **Post** /projects/loadModel | 
 [**LoadVersion**](DefaultApi.md#LoadVersion) | **Post** /versions/loadVersion | 
+[**LocalAuth**](DefaultApi.md#LocalAuth) | **Post** /auth/localAuth | 
+[**LogExternalEpochData**](DefaultApi.md#LogExternalEpochData) | **Post** /externalepochdata/logExternalEpochData | 
 [**Login**](DefaultApi.md#Login) | **Post** /auth/login | 
 [**Logout**](DefaultApi.md#Logout) | **Post** /auth/logout | 
 [**ModifyDatasetVersionNote**](DefaultApi.md#ModifyDatasetVersionNote) | **Post** /datasetVersions/modifyDatasetVersionNote | 
 [**PopulationExploration**](DefaultApi.md#PopulationExploration) | **Post** /visualizations/populationExploration | 
+[**RefreshLocalAuth**](DefaultApi.md#RefreshLocalAuth) | **Post** /auth/refreshLocalAuth | 
 [**RemoveSamplesCollection**](DefaultApi.md#RemoveSamplesCollection) | **Post** /sample-collection/removeSampleCollections | 
 [**ResolveConcurrentUsersConflict**](DefaultApi.md#ResolveConcurrentUsersConflict) | **Post** /auth/resolveConcurrentUsersConflict | 
 [**SampleAnalysis**](DefaultApi.md#SampleAnalysis) | **Post** /visualizations/sampleAnalysis | 
@@ -108,11 +122,13 @@ Method | HTTP request | Description
 [**SaveDatasetVersionNoParse**](DefaultApi.md#SaveDatasetVersionNoParse) | **Post** /datasetVersions/saveDatasetVersionNoParse | 
 [**SendUserMessage**](DefaultApi.md#SendUserMessage) | **Post** /users/sendUserMessage | 
 [**SetDefaultTeam**](DefaultApi.md#SetDefaultTeam) | **Post** /teams/setDefaultTeam | 
+[**SetExperimentProperties**](DefaultApi.md#SetExperimentProperties) | **Post** /versions/setExperimentProperties | 
 [**SetMachineType**](DefaultApi.md#SetMachineType) | **Post** /teams/setMachineType | 
 [**SetUserNotificationsAsRead**](DefaultApi.md#SetUserNotificationsAsRead) | **Post** /notifications/setUserNotificationsAsRead | 
-[**Signup**](DefaultApi.md#Signup) | **Post** /auth/signup | 
 [**StartTrial**](DefaultApi.md#StartTrial) | **Post** /auth/startTrial | 
 [**StopJob**](DefaultApi.md#StopJob) | **Post** /jobs/stopJob | 
+[**TagModel**](DefaultApi.md#TagModel) | **Post** /versions/tagModel | 
+[**TerminateAllJobs**](DefaultApi.md#TerminateAllJobs) | **Post** /jobs/terminateAllJobs | 
 [**TerminateJob**](DefaultApi.md#TerminateJob) | **Post** /jobs/terminateJob | 
 [**TrainFromInitialWeights**](DefaultApi.md#TrainFromInitialWeights) | **Post** /train/trainFromInitialWeights | 
 [**TrainFromScratch**](DefaultApi.md#TrainFromScratch) | **Post** /train/trainFromScratch | 
@@ -953,6 +969,70 @@ Other parameters are passed through a pointer to a apiClearUserNotificationsRequ
 
 - **Content-Type**: Not defined
 - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ContinueEvaluate
+
+> Job ContinueEvaluate(ctx).ContinueEvaluateParams(continueEvaluateParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    continueEvaluateParams := *openapiclient.NewContinueEvaluateParams("SessionRunId_example", "ProjectId_example") // ContinueEvaluateParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.ContinueEvaluate(context.Background()).ContinueEvaluateParams(continueEvaluateParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ContinueEvaluate``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `ContinueEvaluate`: Job
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ContinueEvaluate`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiContinueEvaluateRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **continueEvaluateParams** | [**ContinueEvaluateParams**](ContinueEvaluateParams.md) |  | 
+
+### Return type
+
+[**Job**](Job.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1920,7 +2000,7 @@ import (
 )
 
 func main() {
-    evaluateParams := *openapiclient.NewEvaluateParams("VersionId_example", "ProjectId_example", float64(123), []openapiclient.DataStateType{openapiclient.DataStateType("training")}, "Name_example", float64(123), "SessionId_example") // EvaluateParams | 
+    evaluateParams := *openapiclient.NewEvaluateParams("VersionId_example", "ProjectId_example", float64(123), []openapiclient.DataStateType{openapiclient.DataStateType("training")}, "Name_example", false, float64(123), "SessionId_example") // EvaluateParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -2280,6 +2360,65 @@ Other parameters are passed through a pointer to a apiGetAllSlimUserDataRequest 
 [[Back to README]](../README.md)
 
 
+## GetAuthProvider
+
+> GetAuthProviderResponse GetAuthProvider(ctx).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetAuthProvider(context.Background()).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetAuthProvider``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetAuthProvider`: GetAuthProviderResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetAuthProvider`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAuthProviderRequest struct via the builder pattern
+
+
+### Return type
+
+[**GetAuthProviderResponse**](GetAuthProviderResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetBalancedAccuracy
 
 > MultiChartsResponse GetBalancedAccuracy(ctx).Body(body).Execute()
@@ -2393,6 +2532,198 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**CodeIntegrationMappingErrorsResponse**](CodeIntegrationMappingErrorsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetConfusionMatrixLabels
+
+> ConfusionMatrixLabelsResponse GetConfusionMatrixLabels(ctx).GetConfusionMatrixLabels(getConfusionMatrixLabels).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    getConfusionMatrixLabels := *openapiclient.NewGetConfusionMatrixLabels("ProjectId_example", []string{"SessionRunIds_example"}) // GetConfusionMatrixLabels | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetConfusionMatrixLabels(context.Background()).GetConfusionMatrixLabels(getConfusionMatrixLabels).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetConfusionMatrixLabels``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetConfusionMatrixLabels`: ConfusionMatrixLabelsResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetConfusionMatrixLabels`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetConfusionMatrixLabelsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getConfusionMatrixLabels** | [**GetConfusionMatrixLabels**](GetConfusionMatrixLabels.md) |  | 
+
+### Return type
+
+[**ConfusionMatrixLabelsResponse**](ConfusionMatrixLabelsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetConfusionMatrixResultCombinations
+
+> MultiChartsResponse GetConfusionMatrixResultCombinations(ctx).GetConfusionMatrixResultCombinationsParams(getConfusionMatrixResultCombinationsParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    getConfusionMatrixResultCombinationsParams := *openapiclient.NewGetConfusionMatrixResultCombinationsParams("ProjectId_example", []string{"SessionRunIds_example"}, *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), "CustomMetricName_example") // GetConfusionMatrixResultCombinationsParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetConfusionMatrixResultCombinations(context.Background()).GetConfusionMatrixResultCombinationsParams(getConfusionMatrixResultCombinationsParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetConfusionMatrixResultCombinations``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetConfusionMatrixResultCombinations`: MultiChartsResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetConfusionMatrixResultCombinations`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetConfusionMatrixResultCombinationsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getConfusionMatrixResultCombinationsParams** | [**GetConfusionMatrixResultCombinationsParams**](GetConfusionMatrixResultCombinationsParams.md) |  | 
+
+### Return type
+
+[**MultiChartsResponse**](MultiChartsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetConfusionMatrixTable
+
+> MultiChartsResponse GetConfusionMatrixTable(ctx).ConfusionMatrixTableParams(confusionMatrixTableParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    confusionMatrixTableParams := *openapiclient.NewConfusionMatrixTableParams([]string{"SessionRunIds_example"}, "ProjectId_example", "CustomMetricName_example", false) // ConfusionMatrixTableParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetConfusionMatrixTable(context.Background()).ConfusionMatrixTableParams(confusionMatrixTableParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetConfusionMatrixTable``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetConfusionMatrixTable`: MultiChartsResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetConfusionMatrixTable`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetConfusionMatrixTableRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **confusionMatrixTableParams** | [**ConfusionMatrixTableParams**](ConfusionMatrixTableParams.md) |  | 
+
+### Return type
+
+[**MultiChartsResponse**](MultiChartsResponse.md)
 
 ### Authorization
 
@@ -3289,6 +3620,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetGeneratedDashlets
+
+> GetGeneratedDashletsResponse GetGeneratedDashlets(ctx).GetGeneratedDashletsParams(getGeneratedDashletsParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    getGeneratedDashletsParams := *openapiclient.NewGetGeneratedDashletsParams("ProjectId_example", []string{"SessionRunIds_example"}) // GetGeneratedDashletsParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetGeneratedDashlets(context.Background()).GetGeneratedDashletsParams(getGeneratedDashletsParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetGeneratedDashlets``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetGeneratedDashlets`: GetGeneratedDashletsResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetGeneratedDashlets`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetGeneratedDashletsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getGeneratedDashletsParams** | [**GetGeneratedDashletsParams**](GetGeneratedDashletsParams.md) |  | 
+
+### Return type
+
+[**GetGeneratedDashletsResponse**](GetGeneratedDashletsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetHeatmapChart
 
 > MultiChartsResponse GetHeatmapChart(ctx).HeatmapChartsParams(heatmapChartsParams).Execute()
@@ -3308,7 +3703,7 @@ import (
 )
 
 func main() {
-    heatmapChartsParams := *openapiclient.NewHeatmapChartsParams("ProjectId_example", "XField_example", float64(123), openapiclient.DataDistributionType("distinct"), "YField_example", float64(123), openapiclient.DataDistributionType("distinct"), "ColorField_example", openapiclient.AggregationMethod("Average"), []string{"SessionRunIds_example"}) // HeatmapChartsParams | 
+    heatmapChartsParams := *openapiclient.NewHeatmapChartsParams("ProjectId_example", *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), *openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average")), []string{"SessionRunIds_example"}) // HeatmapChartsParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3592,6 +3987,70 @@ Other parameters are passed through a pointer to a apiGetMaxActiveUsersRequest s
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetMeanAveragePrecision
+
+> MultiChartsResponse GetMeanAveragePrecision(ctx).ConfusionMatrixParams(confusionMatrixParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    confusionMatrixParams := *openapiclient.NewConfusionMatrixParams("ProjectId_example", []string{"SessionRunIds_example"}, *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), "CustomMetricName_example") // ConfusionMatrixParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetMeanAveragePrecision(context.Background()).ConfusionMatrixParams(confusionMatrixParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetMeanAveragePrecision``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetMeanAveragePrecision`: MultiChartsResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetMeanAveragePrecision`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetMeanAveragePrecisionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **confusionMatrixParams** | [**ConfusionMatrixParams**](ConfusionMatrixParams.md) |  | 
+
+### Return type
+
+[**MultiChartsResponse**](MultiChartsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -4120,7 +4579,7 @@ import (
 )
 
 func main() {
-    body := MultiThresholdConfusionMatrixParams(987) // MultiThresholdConfusionMatrixParams | 
+    body := RocConfusionMatrixParams(987) // RocConfusionMatrixParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -4145,7 +4604,7 @@ Other parameters are passed through a pointer to a apiGetRocRequest struct via t
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | **MultiThresholdConfusionMatrixParams** |  | 
+ **body** | **RocConfusionMatrixParams** |  | 
 
 ### Return type
 
@@ -4409,6 +4868,70 @@ Other parameters are passed through a pointer to a apiGetSecretManagerListReques
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetSessionEpochs
+
+> GetSessionEpochsResponse GetSessionEpochs(ctx).GetSessionEpochsRequest(getSessionEpochsRequest).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    getSessionEpochsRequest := *openapiclient.NewGetSessionEpochsRequest("ProjectId_example", "SessionId_example") // GetSessionEpochsRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetSessionEpochs(context.Background()).GetSessionEpochsRequest(getSessionEpochsRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSessionEpochs``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetSessionEpochs`: GetSessionEpochsResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSessionEpochs`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetSessionEpochsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getSessionEpochsRequest** | [**GetSessionEpochsRequest**](GetSessionEpochsRequest.md) |  | 
+
+### Return type
+
+[**GetSessionEpochsResponse**](GetSessionEpochsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -5075,7 +5598,7 @@ import (
 )
 
 func main() {
-    genericDataQueryParams := *openapiclient.NewGenericDataQueryParams("ProjectId_example", []string{"SessionRunIds_example"}, []openapiclient.Aggregations{*openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average"))}, []openapiclient.BucketAggregation{*openapiclient.NewBucketAggregation("XField_example", openapiclient.DataDistributionType("distinct"), float64(123), "OrderParams_example")}) // GenericDataQueryParams | 
+    genericDataQueryParams := *openapiclient.NewGenericDataQueryParams("ProjectId_example", []string{"SessionRunIds_example"}, []openapiclient.Aggregations{*openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average"))}, []openapiclient.SplitAgg{*openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous"))}) // GenericDataQueryParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5302,6 +5825,70 @@ Other parameters are passed through a pointer to a apiGetTeamsRequest struct via
 [[Back to README]](../README.md)
 
 
+## GetUploadModelSignedUrl
+
+> ExternalImportModelStorage GetUploadModelSignedUrl(ctx).GetUploadModelSignedUrlRequest(getUploadModelSignedUrlRequest).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    getUploadModelSignedUrlRequest := *openapiclient.NewGetUploadModelSignedUrlRequest(float64(123), "ExperimentId_example", openapiclient.UploadModelFileType("onnx"), "VersionId_example", "ProjectId_example") // GetUploadModelSignedUrlRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetUploadModelSignedUrl(context.Background()).GetUploadModelSignedUrlRequest(getUploadModelSignedUrlRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetUploadModelSignedUrl``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetUploadModelSignedUrl`: ExternalImportModelStorage
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetUploadModelSignedUrl`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetUploadModelSignedUrlRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getUploadModelSignedUrlRequest** | [**GetUploadModelSignedUrlRequest**](GetUploadModelSignedUrlRequest.md) |  | 
+
+### Return type
+
+[**ExternalImportModelStorage**](ExternalImportModelStorage.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetUploadSignedUrl
 
 > ExternalImportModelStorage GetUploadSignedUrl(ctx).GetUploadSignedUrlParams(getUploadSignedUrlParams).Execute()
@@ -5513,7 +6100,7 @@ import (
 )
 
 func main() {
-    multiChartsParams := *openapiclient.NewMultiChartsParams("ProjectId_example", "XField_example", "YField_example", openapiclient.AggregationMethod("Average"), []string{"SessionRunIds_example"}, openapiclient.DataDistributionType("distinct"), float64(123)) // MultiChartsParams | 
+    multiChartsParams := *openapiclient.NewMultiChartsParams("ProjectId_example", []string{"SessionRunIds_example"}, *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), *openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average"))) // MultiChartsParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -5610,6 +6197,70 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ImportExternalModel
+
+> ExternalImportModelStorageResponse ImportExternalModel(ctx).ImportExternalModelParams(importExternalModelParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    importExternalModelParams := *openapiclient.NewImportExternalModelParams("ProjectId_example", "SessionId_example", float64(123)) // ImportExternalModelParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.ImportExternalModel(context.Background()).ImportExternalModelParams(importExternalModelParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ImportExternalModel``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `ImportExternalModel`: ExternalImportModelStorageResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ImportExternalModel`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiImportExternalModelRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **importExternalModelParams** | [**ImportExternalModelParams**](ImportExternalModelParams.md) |  | 
+
+### Return type
+
+[**ExternalImportModelStorageResponse**](ExternalImportModelStorageResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -5737,6 +6388,70 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## InitExperiment
+
+> InitExperimentResponse InitExperiment(ctx).InitExperimentRequest(initExperimentRequest).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    initExperimentRequest := *openapiclient.NewInitExperimentRequest("ExperimentName_example") // InitExperimentRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.InitExperiment(context.Background()).InitExperimentRequest(initExperimentRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.InitExperiment``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `InitExperiment`: InitExperimentResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.InitExperiment`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiInitExperimentRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **initExperimentRequest** | [**InitExperimentRequest**](InitExperimentRequest.md) |  | 
+
+### Return type
+
+[**InitExperimentResponse**](InitExperimentResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -5930,6 +6645,132 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## LocalAuth
+
+> LocalLoginResponse LocalAuth(ctx).LocalLoginParams(localLoginParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    localLoginParams := *openapiclient.NewLocalLoginParams("Email_example", "Password_example") // LocalLoginParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.LocalAuth(context.Background()).LocalLoginParams(localLoginParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.LocalAuth``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `LocalAuth`: LocalLoginResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.LocalAuth`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiLocalAuthRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **localLoginParams** | [**LocalLoginParams**](LocalLoginParams.md) |  | 
+
+### Return type
+
+[**LocalLoginResponse**](LocalLoginResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## LogExternalEpochData
+
+> LogExternalEpochData(ctx).LogExternalEpochDataRequest(logExternalEpochDataRequest).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    logExternalEpochDataRequest := *openapiclient.NewLogExternalEpochDataRequest("ProjectId_example", "ExperimentId_example", float64(123), map[string]EpochMetricsValue{"key": *openapiclient.NewEpochMetricsValue("Value_example", "Type_example")}) // LogExternalEpochDataRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.DefaultApi.LogExternalEpochData(context.Background()).LogExternalEpochDataRequest(logExternalEpochDataRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.LogExternalEpochData``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiLogExternalEpochDataRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **logExternalEpochDataRequest** | [**LogExternalEpochDataRequest**](LogExternalEpochDataRequest.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## Login
 
 > UserData Login(ctx).LoginParams(loginParams).Execute()
@@ -5949,7 +6790,7 @@ import (
 )
 
 func main() {
-    loginParams := *openapiclient.NewLoginParams("Email_example", "Password_example") // LoginParams | 
+    loginParams := *openapiclient.NewLoginParams("Email_example", "UserName_example", "FirstName_example", "LastName_example") // LoginParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -6172,6 +7013,65 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RefreshLocalAuth
+
+> LocalLoginResponse RefreshLocalAuth(ctx).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.RefreshLocalAuth(context.Background()).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.RefreshLocalAuth``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `RefreshLocalAuth`: LocalLoginResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.RefreshLocalAuth`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRefreshLocalAuthRequest struct via the builder pattern
+
+
+### Return type
+
+[**LocalLoginResponse**](LocalLoginResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -6678,6 +7578,68 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## SetExperimentProperties
+
+> SetExperimentProperties(ctx).SetExperimentPropertiesRequest(setExperimentPropertiesRequest).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    setExperimentPropertiesRequest := *openapiclient.NewSetExperimentPropertiesRequest("ProjectId_example", "ExperimentId_example", map[string]interface{}(123)) // SetExperimentPropertiesRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.DefaultApi.SetExperimentProperties(context.Background()).SetExperimentPropertiesRequest(setExperimentPropertiesRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.SetExperimentProperties``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSetExperimentPropertiesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **setExperimentPropertiesRequest** | [**SetExperimentPropertiesRequest**](SetExperimentPropertiesRequest.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## SetMachineType
 
 > SetMachineType(ctx).SetTeamMachineTypeParams(setTeamMachineTypeParams).Execute()
@@ -6799,70 +7761,6 @@ Other parameters are passed through a pointer to a apiSetUserNotificationsAsRead
 [[Back to README]](../README.md)
 
 
-## Signup
-
-> SignupResponse Signup(ctx).SignupParams(signupParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    signupParams := *openapiclient.NewSignupParams("Name_example", "Email_example", "Password_example") // SignupParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.Signup(context.Background()).SignupParams(signupParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.Signup``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `Signup`: SignupResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.Signup`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiSignupRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **signupParams** | [**SignupParams**](SignupParams.md) |  | 
-
-### Return type
-
-[**SignupResponse**](SignupResponse.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## StartTrial
 
 > UserData StartTrial(ctx).StartTrialParams(startTrialParams).Execute()
@@ -6976,6 +7874,132 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**StopJobResponse**](StopJobResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## TagModel
+
+> TagModel(ctx).TagModelRequest(tagModelRequest).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    tagModelRequest := *openapiclient.NewTagModelRequest("ProjectId_example", "ExperimentId_example", []string{"Tags_example"}, float64(123)) // TagModelRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.DefaultApi.TagModel(context.Background()).TagModelRequest(tagModelRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.TagModel``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiTagModelRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **tagModelRequest** | [**TagModelRequest**](TagModelRequest.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## TerminateAllJobs
+
+> TerminateAllJobsResponse TerminateAllJobs(ctx).TerminateAllJobsParams(terminateAllJobsParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    terminateAllJobsParams := *openapiclient.NewTerminateAllJobsParams() // TerminateAllJobsParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.TerminateAllJobs(context.Background()).TerminateAllJobsParams(terminateAllJobsParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.TerminateAllJobs``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `TerminateAllJobs`: TerminateAllJobsResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.TerminateAllJobs`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiTerminateAllJobsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **terminateAllJobsParams** | [**TerminateAllJobsParams**](TerminateAllJobsParams.md) |  | 
+
+### Return type
+
+[**TerminateAllJobsResponse**](TerminateAllJobsResponse.md)
 
 ### Authorization
 

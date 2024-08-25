@@ -5,25 +5,21 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**XField** | **string** |  | 
 **SessionRunIds** | **[]string** |  | 
-**VerticalSplit** | Pointer to **string** |  | [optional] 
-**HorizontalSplit** | Pointer to **string** |  | [optional] 
+**X** | [**SplitAgg**](SplitAgg.md) |  | 
+**VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
+**HorizontalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
+**InnerSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **Threshold** | Pointer to **float64** |  | [optional] 
 **CustomMetricName** | **string** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
-**XFieldAggregationType** | Pointer to [**EsBatchAggregationType**](EsBatchAggregationType.md) |  | [optional] 
-**DataDistributionType** | Pointer to [**DataDistributionType**](DataDistributionType.md) |  | [optional] 
-**OrderByParam** | Pointer to **string** |  | [optional] 
-**OrderParams** | Pointer to [**OrderType**](OrderType.md) |  | [optional] 
-**XAxisSizeInterval** | **float64** |  | 
 **LastEpochOnly** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
 ### NewConfusionMatrixParams
 
-`func NewConfusionMatrixParams(projectId string, xField string, sessionRunIds []string, customMetricName string, xAxisSizeInterval float64, ) *ConfusionMatrixParams`
+`func NewConfusionMatrixParams(projectId string, sessionRunIds []string, x SplitAgg, customMetricName string, ) *ConfusionMatrixParams`
 
 NewConfusionMatrixParams instantiates a new ConfusionMatrixParams object
 This constructor will assign default values to properties that have it defined,
@@ -58,26 +54,6 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetXField
-
-`func (o *ConfusionMatrixParams) GetXField() string`
-
-GetXField returns the XField field if non-nil, zero value otherwise.
-
-### GetXFieldOk
-
-`func (o *ConfusionMatrixParams) GetXFieldOk() (*string, bool)`
-
-GetXFieldOk returns a tuple with the XField field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetXField
-
-`func (o *ConfusionMatrixParams) SetXField(v string)`
-
-SetXField sets XField field to given value.
-
-
 ### GetSessionRunIds
 
 `func (o *ConfusionMatrixParams) GetSessionRunIds() []string`
@@ -98,22 +74,42 @@ and a boolean to check if the value has been set.
 SetSessionRunIds sets SessionRunIds field to given value.
 
 
+### GetX
+
+`func (o *ConfusionMatrixParams) GetX() SplitAgg`
+
+GetX returns the X field if non-nil, zero value otherwise.
+
+### GetXOk
+
+`func (o *ConfusionMatrixParams) GetXOk() (*SplitAgg, bool)`
+
+GetXOk returns a tuple with the X field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetX
+
+`func (o *ConfusionMatrixParams) SetX(v SplitAgg)`
+
+SetX sets X field to given value.
+
+
 ### GetVerticalSplit
 
-`func (o *ConfusionMatrixParams) GetVerticalSplit() string`
+`func (o *ConfusionMatrixParams) GetVerticalSplit() SplitAgg`
 
 GetVerticalSplit returns the VerticalSplit field if non-nil, zero value otherwise.
 
 ### GetVerticalSplitOk
 
-`func (o *ConfusionMatrixParams) GetVerticalSplitOk() (*string, bool)`
+`func (o *ConfusionMatrixParams) GetVerticalSplitOk() (*SplitAgg, bool)`
 
 GetVerticalSplitOk returns a tuple with the VerticalSplit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetVerticalSplit
 
-`func (o *ConfusionMatrixParams) SetVerticalSplit(v string)`
+`func (o *ConfusionMatrixParams) SetVerticalSplit(v SplitAgg)`
 
 SetVerticalSplit sets VerticalSplit field to given value.
 
@@ -125,20 +121,20 @@ HasVerticalSplit returns a boolean if a field has been set.
 
 ### GetHorizontalSplit
 
-`func (o *ConfusionMatrixParams) GetHorizontalSplit() string`
+`func (o *ConfusionMatrixParams) GetHorizontalSplit() SplitAgg`
 
 GetHorizontalSplit returns the HorizontalSplit field if non-nil, zero value otherwise.
 
 ### GetHorizontalSplitOk
 
-`func (o *ConfusionMatrixParams) GetHorizontalSplitOk() (*string, bool)`
+`func (o *ConfusionMatrixParams) GetHorizontalSplitOk() (*SplitAgg, bool)`
 
 GetHorizontalSplitOk returns a tuple with the HorizontalSplit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHorizontalSplit
 
-`func (o *ConfusionMatrixParams) SetHorizontalSplit(v string)`
+`func (o *ConfusionMatrixParams) SetHorizontalSplit(v SplitAgg)`
 
 SetHorizontalSplit sets HorizontalSplit field to given value.
 
@@ -147,6 +143,31 @@ SetHorizontalSplit sets HorizontalSplit field to given value.
 `func (o *ConfusionMatrixParams) HasHorizontalSplit() bool`
 
 HasHorizontalSplit returns a boolean if a field has been set.
+
+### GetInnerSplit
+
+`func (o *ConfusionMatrixParams) GetInnerSplit() SplitAgg`
+
+GetInnerSplit returns the InnerSplit field if non-nil, zero value otherwise.
+
+### GetInnerSplitOk
+
+`func (o *ConfusionMatrixParams) GetInnerSplitOk() (*SplitAgg, bool)`
+
+GetInnerSplitOk returns a tuple with the InnerSplit field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInnerSplit
+
+`func (o *ConfusionMatrixParams) SetInnerSplit(v SplitAgg)`
+
+SetInnerSplit sets InnerSplit field to given value.
+
+### HasInnerSplit
+
+`func (o *ConfusionMatrixParams) HasInnerSplit() bool`
+
+HasInnerSplit returns a boolean if a field has been set.
 
 ### GetThreshold
 
@@ -217,126 +238,6 @@ SetFilters sets Filters field to given value.
 `func (o *ConfusionMatrixParams) HasFilters() bool`
 
 HasFilters returns a boolean if a field has been set.
-
-### GetXFieldAggregationType
-
-`func (o *ConfusionMatrixParams) GetXFieldAggregationType() EsBatchAggregationType`
-
-GetXFieldAggregationType returns the XFieldAggregationType field if non-nil, zero value otherwise.
-
-### GetXFieldAggregationTypeOk
-
-`func (o *ConfusionMatrixParams) GetXFieldAggregationTypeOk() (*EsBatchAggregationType, bool)`
-
-GetXFieldAggregationTypeOk returns a tuple with the XFieldAggregationType field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetXFieldAggregationType
-
-`func (o *ConfusionMatrixParams) SetXFieldAggregationType(v EsBatchAggregationType)`
-
-SetXFieldAggregationType sets XFieldAggregationType field to given value.
-
-### HasXFieldAggregationType
-
-`func (o *ConfusionMatrixParams) HasXFieldAggregationType() bool`
-
-HasXFieldAggregationType returns a boolean if a field has been set.
-
-### GetDataDistributionType
-
-`func (o *ConfusionMatrixParams) GetDataDistributionType() DataDistributionType`
-
-GetDataDistributionType returns the DataDistributionType field if non-nil, zero value otherwise.
-
-### GetDataDistributionTypeOk
-
-`func (o *ConfusionMatrixParams) GetDataDistributionTypeOk() (*DataDistributionType, bool)`
-
-GetDataDistributionTypeOk returns a tuple with the DataDistributionType field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDataDistributionType
-
-`func (o *ConfusionMatrixParams) SetDataDistributionType(v DataDistributionType)`
-
-SetDataDistributionType sets DataDistributionType field to given value.
-
-### HasDataDistributionType
-
-`func (o *ConfusionMatrixParams) HasDataDistributionType() bool`
-
-HasDataDistributionType returns a boolean if a field has been set.
-
-### GetOrderByParam
-
-`func (o *ConfusionMatrixParams) GetOrderByParam() string`
-
-GetOrderByParam returns the OrderByParam field if non-nil, zero value otherwise.
-
-### GetOrderByParamOk
-
-`func (o *ConfusionMatrixParams) GetOrderByParamOk() (*string, bool)`
-
-GetOrderByParamOk returns a tuple with the OrderByParam field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetOrderByParam
-
-`func (o *ConfusionMatrixParams) SetOrderByParam(v string)`
-
-SetOrderByParam sets OrderByParam field to given value.
-
-### HasOrderByParam
-
-`func (o *ConfusionMatrixParams) HasOrderByParam() bool`
-
-HasOrderByParam returns a boolean if a field has been set.
-
-### GetOrderParams
-
-`func (o *ConfusionMatrixParams) GetOrderParams() OrderType`
-
-GetOrderParams returns the OrderParams field if non-nil, zero value otherwise.
-
-### GetOrderParamsOk
-
-`func (o *ConfusionMatrixParams) GetOrderParamsOk() (*OrderType, bool)`
-
-GetOrderParamsOk returns a tuple with the OrderParams field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetOrderParams
-
-`func (o *ConfusionMatrixParams) SetOrderParams(v OrderType)`
-
-SetOrderParams sets OrderParams field to given value.
-
-### HasOrderParams
-
-`func (o *ConfusionMatrixParams) HasOrderParams() bool`
-
-HasOrderParams returns a boolean if a field has been set.
-
-### GetXAxisSizeInterval
-
-`func (o *ConfusionMatrixParams) GetXAxisSizeInterval() float64`
-
-GetXAxisSizeInterval returns the XAxisSizeInterval field if non-nil, zero value otherwise.
-
-### GetXAxisSizeIntervalOk
-
-`func (o *ConfusionMatrixParams) GetXAxisSizeIntervalOk() (*float64, bool)`
-
-GetXAxisSizeIntervalOk returns a tuple with the XAxisSizeInterval field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetXAxisSizeInterval
-
-`func (o *ConfusionMatrixParams) SetXAxisSizeInterval(v float64)`
-
-SetXAxisSizeInterval sets XAxisSizeInterval field to given value.
-
 
 ### GetLastEpochOnly
 

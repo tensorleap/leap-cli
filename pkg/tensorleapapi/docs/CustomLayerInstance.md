@@ -7,13 +7,13 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **InitArgNames** | **[]string** |  | 
 **CallArgNames** | **[]string** |  | 
-**UseCustomLatentSpace** | **bool** |  | 
+**UseCustomLatentSpace** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
 ### NewCustomLayerInstance
 
-`func NewCustomLayerInstance(name string, initArgNames []string, callArgNames []string, useCustomLatentSpace bool, ) *CustomLayerInstance`
+`func NewCustomLayerInstance(name string, initArgNames []string, callArgNames []string, ) *CustomLayerInstance`
 
 NewCustomLayerInstance instantiates a new CustomLayerInstance object
 This constructor will assign default values to properties that have it defined,
@@ -107,6 +107,11 @@ and a boolean to check if the value has been set.
 
 SetUseCustomLatentSpace sets UseCustomLatentSpace field to given value.
 
+### HasUseCustomLatentSpace
+
+`func (o *CustomLayerInstance) HasUseCustomLatentSpace() bool`
+
+HasUseCustomLatentSpace returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

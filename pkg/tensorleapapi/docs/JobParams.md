@@ -7,9 +7,16 @@ Name | Type | Description | Notes
 **Epochs** | **float64** |  | 
 **BatchSize** | **float64** |  | 
 **EarlyStopParams** | Pointer to [**EarlyStopParams**](EarlyStopParams.md) |  | [optional] 
+**VersionId** | **string** |  | 
+**ProjectId** | **string** |  | 
+**BatchSize** | **float64** |  | 
+**DataStates** | [**[]DataStateType**](DataStateType.md) |  | 
+**Name** | **string** |  | 
+**SkipMetricsEstimation** | **bool** |  | 
+**EvaluatedEpoch** | **float64** |  | 
+**SessionId** | **string** |  | 
 **Type** | **string** |  | 
 **FromEpoch** | **float64** |  | 
-**BatchSize** | **float64** |  | 
 **SampleIdentity** | Pointer to [**SampleIdentity**](SampleIdentity.md) |  | [optional] 
 **FromDatasetSlice** | Pointer to [**DataStateType**](DataStateType.md) |  | [optional] 
 **ExtId** | **string** |  | 
@@ -24,13 +31,24 @@ Name | Type | Description | Notes
 **NumOfSamples** | **float64** |  | 
 **ExportUrl** | **string** |  | 
 **ProjectVersion** | **float64** |  | 
+**ExportOptions** | [**ExportOptions**](ExportOptions.md) |  | 
+**AlreadyExported** | **bool** |  | 
+**ProjectExportMeta** | [**ExportProjectMeta**](ExportProjectMeta.md) |  | 
 **CopyToUrl** | Pointer to **string** |  | [optional] 
+**ImportUrl** | **string** |  | 
+**ProjectMeta** | [**ProjectMeta**](ProjectMeta.md) |  | 
+**DatasetId** | **string** |  | 
+**Setup** | Pointer to [**DatasetSetup**](DatasetSetup.md) |  | [optional] 
+**SecretManagerId** | Pointer to **string** |  | [optional] 
+**CodeUrl** | **string** |  | 
+**CodeEntryFile** | **string** |  | 
+**Note** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewJobParams
 
-`func NewJobParams(epochs float64, batchSize float64, type_ string, fromEpoch float64, batchSize float64, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, sessionRunId string, numOfSamples float64, exportUrl string, projectVersion float64, ) *JobParams`
+`func NewJobParams(epochs float64, batchSize float64, versionId string, projectId string, batchSize float64, dataStates []DataStateType, name string, skipMetricsEstimation bool, evaluatedEpoch float64, sessionId string, type_ string, fromEpoch float64, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, sessionRunId string, numOfSamples float64, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, datasetId string, codeUrl string, codeEntryFile string, ) *JobParams`
 
 NewJobParams instantiates a new JobParams object
 This constructor will assign default values to properties that have it defined,
@@ -110,6 +128,166 @@ SetEarlyStopParams sets EarlyStopParams field to given value.
 
 HasEarlyStopParams returns a boolean if a field has been set.
 
+### GetVersionId
+
+`func (o *JobParams) GetVersionId() string`
+
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
+
+### GetVersionIdOk
+
+`func (o *JobParams) GetVersionIdOk() (*string, bool)`
+
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVersionId
+
+`func (o *JobParams) SetVersionId(v string)`
+
+SetVersionId sets VersionId field to given value.
+
+
+### GetProjectId
+
+`func (o *JobParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *JobParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *JobParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
+
+
+### GetBatchSize
+
+`func (o *JobParams) GetBatchSize() float64`
+
+GetBatchSize returns the BatchSize field if non-nil, zero value otherwise.
+
+### GetBatchSizeOk
+
+`func (o *JobParams) GetBatchSizeOk() (*float64, bool)`
+
+GetBatchSizeOk returns a tuple with the BatchSize field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBatchSize
+
+`func (o *JobParams) SetBatchSize(v float64)`
+
+SetBatchSize sets BatchSize field to given value.
+
+
+### GetDataStates
+
+`func (o *JobParams) GetDataStates() []DataStateType`
+
+GetDataStates returns the DataStates field if non-nil, zero value otherwise.
+
+### GetDataStatesOk
+
+`func (o *JobParams) GetDataStatesOk() (*[]DataStateType, bool)`
+
+GetDataStatesOk returns a tuple with the DataStates field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDataStates
+
+`func (o *JobParams) SetDataStates(v []DataStateType)`
+
+SetDataStates sets DataStates field to given value.
+
+
+### GetName
+
+`func (o *JobParams) GetName() string`
+
+GetName returns the Name field if non-nil, zero value otherwise.
+
+### GetNameOk
+
+`func (o *JobParams) GetNameOk() (*string, bool)`
+
+GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetName
+
+`func (o *JobParams) SetName(v string)`
+
+SetName sets Name field to given value.
+
+
+### GetSkipMetricsEstimation
+
+`func (o *JobParams) GetSkipMetricsEstimation() bool`
+
+GetSkipMetricsEstimation returns the SkipMetricsEstimation field if non-nil, zero value otherwise.
+
+### GetSkipMetricsEstimationOk
+
+`func (o *JobParams) GetSkipMetricsEstimationOk() (*bool, bool)`
+
+GetSkipMetricsEstimationOk returns a tuple with the SkipMetricsEstimation field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSkipMetricsEstimation
+
+`func (o *JobParams) SetSkipMetricsEstimation(v bool)`
+
+SetSkipMetricsEstimation sets SkipMetricsEstimation field to given value.
+
+
+### GetEvaluatedEpoch
+
+`func (o *JobParams) GetEvaluatedEpoch() float64`
+
+GetEvaluatedEpoch returns the EvaluatedEpoch field if non-nil, zero value otherwise.
+
+### GetEvaluatedEpochOk
+
+`func (o *JobParams) GetEvaluatedEpochOk() (*float64, bool)`
+
+GetEvaluatedEpochOk returns a tuple with the EvaluatedEpoch field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEvaluatedEpoch
+
+`func (o *JobParams) SetEvaluatedEpoch(v float64)`
+
+SetEvaluatedEpoch sets EvaluatedEpoch field to given value.
+
+
+### GetSessionId
+
+`func (o *JobParams) GetSessionId() string`
+
+GetSessionId returns the SessionId field if non-nil, zero value otherwise.
+
+### GetSessionIdOk
+
+`func (o *JobParams) GetSessionIdOk() (*string, bool)`
+
+GetSessionIdOk returns a tuple with the SessionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSessionId
+
+`func (o *JobParams) SetSessionId(v string)`
+
+SetSessionId sets SessionId field to given value.
+
+
 ### GetType
 
 `func (o *JobParams) GetType() string`
@@ -148,26 +326,6 @@ and a boolean to check if the value has been set.
 `func (o *JobParams) SetFromEpoch(v float64)`
 
 SetFromEpoch sets FromEpoch field to given value.
-
-
-### GetBatchSize
-
-`func (o *JobParams) GetBatchSize() float64`
-
-GetBatchSize returns the BatchSize field if non-nil, zero value otherwise.
-
-### GetBatchSizeOk
-
-`func (o *JobParams) GetBatchSizeOk() (*float64, bool)`
-
-GetBatchSizeOk returns a tuple with the BatchSize field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetBatchSize
-
-`func (o *JobParams) SetBatchSize(v float64)`
-
-SetBatchSize sets BatchSize field to given value.
 
 
 ### GetSampleIdentity
@@ -470,6 +628,66 @@ and a boolean to check if the value has been set.
 SetProjectVersion sets ProjectVersion field to given value.
 
 
+### GetExportOptions
+
+`func (o *JobParams) GetExportOptions() ExportOptions`
+
+GetExportOptions returns the ExportOptions field if non-nil, zero value otherwise.
+
+### GetExportOptionsOk
+
+`func (o *JobParams) GetExportOptionsOk() (*ExportOptions, bool)`
+
+GetExportOptionsOk returns a tuple with the ExportOptions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExportOptions
+
+`func (o *JobParams) SetExportOptions(v ExportOptions)`
+
+SetExportOptions sets ExportOptions field to given value.
+
+
+### GetAlreadyExported
+
+`func (o *JobParams) GetAlreadyExported() bool`
+
+GetAlreadyExported returns the AlreadyExported field if non-nil, zero value otherwise.
+
+### GetAlreadyExportedOk
+
+`func (o *JobParams) GetAlreadyExportedOk() (*bool, bool)`
+
+GetAlreadyExportedOk returns a tuple with the AlreadyExported field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAlreadyExported
+
+`func (o *JobParams) SetAlreadyExported(v bool)`
+
+SetAlreadyExported sets AlreadyExported field to given value.
+
+
+### GetProjectExportMeta
+
+`func (o *JobParams) GetProjectExportMeta() ExportProjectMeta`
+
+GetProjectExportMeta returns the ProjectExportMeta field if non-nil, zero value otherwise.
+
+### GetProjectExportMetaOk
+
+`func (o *JobParams) GetProjectExportMetaOk() (*ExportProjectMeta, bool)`
+
+GetProjectExportMetaOk returns a tuple with the ProjectExportMeta field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectExportMeta
+
+`func (o *JobParams) SetProjectExportMeta(v ExportProjectMeta)`
+
+SetProjectExportMeta sets ProjectExportMeta field to given value.
+
+
 ### GetCopyToUrl
 
 `func (o *JobParams) GetCopyToUrl() string`
@@ -494,6 +712,181 @@ SetCopyToUrl sets CopyToUrl field to given value.
 `func (o *JobParams) HasCopyToUrl() bool`
 
 HasCopyToUrl returns a boolean if a field has been set.
+
+### GetImportUrl
+
+`func (o *JobParams) GetImportUrl() string`
+
+GetImportUrl returns the ImportUrl field if non-nil, zero value otherwise.
+
+### GetImportUrlOk
+
+`func (o *JobParams) GetImportUrlOk() (*string, bool)`
+
+GetImportUrlOk returns a tuple with the ImportUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetImportUrl
+
+`func (o *JobParams) SetImportUrl(v string)`
+
+SetImportUrl sets ImportUrl field to given value.
+
+
+### GetProjectMeta
+
+`func (o *JobParams) GetProjectMeta() ProjectMeta`
+
+GetProjectMeta returns the ProjectMeta field if non-nil, zero value otherwise.
+
+### GetProjectMetaOk
+
+`func (o *JobParams) GetProjectMetaOk() (*ProjectMeta, bool)`
+
+GetProjectMetaOk returns a tuple with the ProjectMeta field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectMeta
+
+`func (o *JobParams) SetProjectMeta(v ProjectMeta)`
+
+SetProjectMeta sets ProjectMeta field to given value.
+
+
+### GetDatasetId
+
+`func (o *JobParams) GetDatasetId() string`
+
+GetDatasetId returns the DatasetId field if non-nil, zero value otherwise.
+
+### GetDatasetIdOk
+
+`func (o *JobParams) GetDatasetIdOk() (*string, bool)`
+
+GetDatasetIdOk returns a tuple with the DatasetId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDatasetId
+
+`func (o *JobParams) SetDatasetId(v string)`
+
+SetDatasetId sets DatasetId field to given value.
+
+
+### GetSetup
+
+`func (o *JobParams) GetSetup() DatasetSetup`
+
+GetSetup returns the Setup field if non-nil, zero value otherwise.
+
+### GetSetupOk
+
+`func (o *JobParams) GetSetupOk() (*DatasetSetup, bool)`
+
+GetSetupOk returns a tuple with the Setup field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSetup
+
+`func (o *JobParams) SetSetup(v DatasetSetup)`
+
+SetSetup sets Setup field to given value.
+
+### HasSetup
+
+`func (o *JobParams) HasSetup() bool`
+
+HasSetup returns a boolean if a field has been set.
+
+### GetSecretManagerId
+
+`func (o *JobParams) GetSecretManagerId() string`
+
+GetSecretManagerId returns the SecretManagerId field if non-nil, zero value otherwise.
+
+### GetSecretManagerIdOk
+
+`func (o *JobParams) GetSecretManagerIdOk() (*string, bool)`
+
+GetSecretManagerIdOk returns a tuple with the SecretManagerId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSecretManagerId
+
+`func (o *JobParams) SetSecretManagerId(v string)`
+
+SetSecretManagerId sets SecretManagerId field to given value.
+
+### HasSecretManagerId
+
+`func (o *JobParams) HasSecretManagerId() bool`
+
+HasSecretManagerId returns a boolean if a field has been set.
+
+### GetCodeUrl
+
+`func (o *JobParams) GetCodeUrl() string`
+
+GetCodeUrl returns the CodeUrl field if non-nil, zero value otherwise.
+
+### GetCodeUrlOk
+
+`func (o *JobParams) GetCodeUrlOk() (*string, bool)`
+
+GetCodeUrlOk returns a tuple with the CodeUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCodeUrl
+
+`func (o *JobParams) SetCodeUrl(v string)`
+
+SetCodeUrl sets CodeUrl field to given value.
+
+
+### GetCodeEntryFile
+
+`func (o *JobParams) GetCodeEntryFile() string`
+
+GetCodeEntryFile returns the CodeEntryFile field if non-nil, zero value otherwise.
+
+### GetCodeEntryFileOk
+
+`func (o *JobParams) GetCodeEntryFileOk() (*string, bool)`
+
+GetCodeEntryFileOk returns a tuple with the CodeEntryFile field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCodeEntryFile
+
+`func (o *JobParams) SetCodeEntryFile(v string)`
+
+SetCodeEntryFile sets CodeEntryFile field to given value.
+
+
+### GetNote
+
+`func (o *JobParams) GetNote() string`
+
+GetNote returns the Note field if non-nil, zero value otherwise.
+
+### GetNoteOk
+
+`func (o *JobParams) GetNoteOk() (*string, bool)`
+
+GetNoteOk returns a tuple with the Note field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNote
+
+`func (o *JobParams) SetNote(v string)`
+
+SetNote sets Note field to given value.
+
+### HasNote
+
+`func (o *JobParams) HasNote() bool`
+
+HasNote returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

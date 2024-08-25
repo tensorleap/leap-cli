@@ -17,6 +17,8 @@
 
 * `IMAGE_WITH_B_BOX` (value: `"ImageWithBBox"`)
 
+* `IMAGE_WITH_HEATMAP` (value: `"ImageWithHeatmap"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

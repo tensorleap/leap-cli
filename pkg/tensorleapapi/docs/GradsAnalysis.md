@@ -5,14 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Data** | [**[]GradsItem**](GradsItem.md) |  | 
-**IsLoss** | **bool** |  | 
 **Type** | [**DataTypeEnum**](DataTypeEnum.md) |  | 
 
 ## Methods
 
 ### NewGradsAnalysis
 
-`func NewGradsAnalysis(data []GradsItem, isLoss bool, type_ DataTypeEnum, ) *GradsAnalysis`
+`func NewGradsAnalysis(data []GradsItem, type_ DataTypeEnum, ) *GradsAnalysis`
 
 NewGradsAnalysis instantiates a new GradsAnalysis object
 This constructor will assign default values to properties that have it defined,
@@ -45,26 +44,6 @@ and a boolean to check if the value has been set.
 `func (o *GradsAnalysis) SetData(v []GradsItem)`
 
 SetData sets Data field to given value.
-
-
-### GetIsLoss
-
-`func (o *GradsAnalysis) GetIsLoss() bool`
-
-GetIsLoss returns the IsLoss field if non-nil, zero value otherwise.
-
-### GetIsLossOk
-
-`func (o *GradsAnalysis) GetIsLossOk() (*bool, bool)`
-
-GetIsLossOk returns a tuple with the IsLoss field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetIsLoss
-
-`func (o *GradsAnalysis) SetIsLoss(v bool)`
-
-SetIsLoss sets IsLoss field to given value.
 
 
 ### GetType

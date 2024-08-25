@@ -14,14 +14,13 @@ Name | Type | Description | Notes
 **MaskBlob** | **string** |  | 
 **Text** | **[]string** |  | 
 **Mask** | **[]float64** |  | 
-**Data** | [**[]GradsItem**](GradsItem.md) |  | 
-**IsLoss** | **bool** |  | 
+**Data** | [**[]CompositeVizItem**](CompositeVizItem.md) |  | 
 
 ## Methods
 
 ### NewVisualizedItemData
 
-`func NewVisualizedItemData(blob string, type_ DataTypeEnum, heatmapBlob string, body [][]float64, labels []string, boundingBox []BoundingBox, maskBlob string, text []string, mask []float64, data []GradsItem, isLoss bool, ) *VisualizedItemData`
+`func NewVisualizedItemData(blob string, type_ DataTypeEnum, heatmapBlob string, body [][]float64, labels []string, boundingBox []BoundingBox, maskBlob string, text []string, mask []float64, data []CompositeVizItem, ) *VisualizedItemData`
 
 NewVisualizedItemData instantiates a new VisualizedItemData object
 This constructor will assign default values to properties that have it defined,
@@ -243,42 +242,22 @@ SetMask sets Mask field to given value.
 
 ### GetData
 
-`func (o *VisualizedItemData) GetData() []GradsItem`
+`func (o *VisualizedItemData) GetData() []CompositeVizItem`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *VisualizedItemData) GetDataOk() (*[]GradsItem, bool)`
+`func (o *VisualizedItemData) GetDataOk() (*[]CompositeVizItem, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *VisualizedItemData) SetData(v []GradsItem)`
+`func (o *VisualizedItemData) SetData(v []CompositeVizItem)`
 
 SetData sets Data field to given value.
-
-
-### GetIsLoss
-
-`func (o *VisualizedItemData) GetIsLoss() bool`
-
-GetIsLoss returns the IsLoss field if non-nil, zero value otherwise.
-
-### GetIsLossOk
-
-`func (o *VisualizedItemData) GetIsLossOk() (*bool, bool)`
-
-GetIsLossOk returns a tuple with the IsLoss field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetIsLoss
-
-`func (o *VisualizedItemData) SetIsLoss(v bool)`
-
-SetIsLoss sets IsLoss field to given value.
 
 
 
