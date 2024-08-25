@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **Step** | Pointer to **float64** |  | [optional] 
 **Max** | Pointer to **float64** |  | [optional] 
 **Min** | Pointer to **float64** |  | [optional] 
+**Suffix** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -366,6 +367,31 @@ SetMin sets Min field to given value.
 `func (o *SettingSchema) HasMin() bool`
 
 HasMin returns a boolean if a field has been set.
+
+### GetSuffix
+
+`func (o *SettingSchema) GetSuffix() string`
+
+GetSuffix returns the Suffix field if non-nil, zero value otherwise.
+
+### GetSuffixOk
+
+`func (o *SettingSchema) GetSuffixOk() (*string, bool)`
+
+GetSuffixOk returns a tuple with the Suffix field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSuffix
+
+`func (o *SettingSchema) SetSuffix(v string)`
+
+SetSuffix sets Suffix field to given value.
+
+### HasSuffix
+
+`func (o *SettingSchema) HasSuffix() bool`
+
+HasSuffix returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ProjectId** | **string** |  | 
+**ProjectId** | Pointer to **string** |  | [optional] 
 **Cid** | **string** |  | 
 **CreatedBy** | **string** |  | 
 **Version** | Pointer to **string** |  | [optional] 
@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewJob
 
-`func NewJob(projectId string, cid string, createdBy string, type_ JobType, status JobStatus, createdAt time.Time, updatedAt time.Time, teamId string, ) *Job`
+`func NewJob(cid string, createdBy string, type_ JobType, status JobStatus, createdAt time.Time, updatedAt time.Time, teamId string, ) *Job`
 
 NewJob instantiates a new Job object
 This constructor will assign default values to properties that have it defined,
@@ -55,6 +55,11 @@ and a boolean to check if the value has been set.
 
 SetProjectId sets ProjectId field to given value.
 
+### HasProjectId
+
+`func (o *Job) HasProjectId() bool`
+
+HasProjectId returns a boolean if a field has been set.
 
 ### GetCid
 

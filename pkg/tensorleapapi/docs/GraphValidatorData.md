@@ -11,13 +11,14 @@ Name | Type | Description | Notes
 **Visualizers** | [**[]ValidatedNode**](ValidatedNode.md) |  | 
 **Losses** | [**[]ValidatedLossNode**](ValidatedLossNode.md) |  | 
 **Metrics** | [**[]ValidatedNode**](ValidatedNode.md) |  | 
+**CustomLayers** | [**[]ValidatedNode**](ValidatedNode.md) |  | 
 **GeneralError** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewGraphValidatorData
 
-`func NewGraphValidatorData(inputs []ValidatedNode, metadata []ValidatedNode, groundTruths []ValidatedNode, predictionTypes []ValidatedNode, visualizers []ValidatedNode, losses []ValidatedLossNode, metrics []ValidatedNode, ) *GraphValidatorData`
+`func NewGraphValidatorData(inputs []ValidatedNode, metadata []ValidatedNode, groundTruths []ValidatedNode, predictionTypes []ValidatedNode, visualizers []ValidatedNode, losses []ValidatedLossNode, metrics []ValidatedNode, customLayers []ValidatedNode, ) *GraphValidatorData`
 
 NewGraphValidatorData instantiates a new GraphValidatorData object
 This constructor will assign default values to properties that have it defined,
@@ -170,6 +171,26 @@ and a boolean to check if the value has been set.
 `func (o *GraphValidatorData) SetMetrics(v []ValidatedNode)`
 
 SetMetrics sets Metrics field to given value.
+
+
+### GetCustomLayers
+
+`func (o *GraphValidatorData) GetCustomLayers() []ValidatedNode`
+
+GetCustomLayers returns the CustomLayers field if non-nil, zero value otherwise.
+
+### GetCustomLayersOk
+
+`func (o *GraphValidatorData) GetCustomLayersOk() (*[]ValidatedNode, bool)`
+
+GetCustomLayersOk returns a tuple with the CustomLayers field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustomLayers
+
+`func (o *GraphValidatorData) SetCustomLayers(v []ValidatedNode)`
+
+SetCustomLayers sets CustomLayers field to given value.
 
 
 ### GetGeneralError

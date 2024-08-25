@@ -7,17 +7,18 @@ Name | Type | Description | Notes
 **ProjectId** | **string** |  | 
 **SessionRunIds** | **[]string** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
-**VerticalSplit** | Pointer to **string** |  | [optional] 
-**HorizontalSplit** | Pointer to **string** |  | [optional] 
+**VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
+**HorizontalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
+**InnerSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **Aggregations** | [**[]Aggregations**](Aggregations.md) |  | 
-**Buckets** | [**[]BucketAggregation**](BucketAggregation.md) |  | 
+**Buckets** | [**[]SplitAgg**](SplitAgg.md) |  | 
 **LastEpochOnly** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
 ### NewGenericDataQueryParams
 
-`func NewGenericDataQueryParams(projectId string, sessionRunIds []string, aggregations []Aggregations, buckets []BucketAggregation, ) *GenericDataQueryParams`
+`func NewGenericDataQueryParams(projectId string, sessionRunIds []string, aggregations []Aggregations, buckets []SplitAgg, ) *GenericDataQueryParams`
 
 NewGenericDataQueryParams instantiates a new GenericDataQueryParams object
 This constructor will assign default values to properties that have it defined,
@@ -99,20 +100,20 @@ HasFilters returns a boolean if a field has been set.
 
 ### GetVerticalSplit
 
-`func (o *GenericDataQueryParams) GetVerticalSplit() string`
+`func (o *GenericDataQueryParams) GetVerticalSplit() SplitAgg`
 
 GetVerticalSplit returns the VerticalSplit field if non-nil, zero value otherwise.
 
 ### GetVerticalSplitOk
 
-`func (o *GenericDataQueryParams) GetVerticalSplitOk() (*string, bool)`
+`func (o *GenericDataQueryParams) GetVerticalSplitOk() (*SplitAgg, bool)`
 
 GetVerticalSplitOk returns a tuple with the VerticalSplit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetVerticalSplit
 
-`func (o *GenericDataQueryParams) SetVerticalSplit(v string)`
+`func (o *GenericDataQueryParams) SetVerticalSplit(v SplitAgg)`
 
 SetVerticalSplit sets VerticalSplit field to given value.
 
@@ -124,20 +125,20 @@ HasVerticalSplit returns a boolean if a field has been set.
 
 ### GetHorizontalSplit
 
-`func (o *GenericDataQueryParams) GetHorizontalSplit() string`
+`func (o *GenericDataQueryParams) GetHorizontalSplit() SplitAgg`
 
 GetHorizontalSplit returns the HorizontalSplit field if non-nil, zero value otherwise.
 
 ### GetHorizontalSplitOk
 
-`func (o *GenericDataQueryParams) GetHorizontalSplitOk() (*string, bool)`
+`func (o *GenericDataQueryParams) GetHorizontalSplitOk() (*SplitAgg, bool)`
 
 GetHorizontalSplitOk returns a tuple with the HorizontalSplit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHorizontalSplit
 
-`func (o *GenericDataQueryParams) SetHorizontalSplit(v string)`
+`func (o *GenericDataQueryParams) SetHorizontalSplit(v SplitAgg)`
 
 SetHorizontalSplit sets HorizontalSplit field to given value.
 
@@ -146,6 +147,31 @@ SetHorizontalSplit sets HorizontalSplit field to given value.
 `func (o *GenericDataQueryParams) HasHorizontalSplit() bool`
 
 HasHorizontalSplit returns a boolean if a field has been set.
+
+### GetInnerSplit
+
+`func (o *GenericDataQueryParams) GetInnerSplit() SplitAgg`
+
+GetInnerSplit returns the InnerSplit field if non-nil, zero value otherwise.
+
+### GetInnerSplitOk
+
+`func (o *GenericDataQueryParams) GetInnerSplitOk() (*SplitAgg, bool)`
+
+GetInnerSplitOk returns a tuple with the InnerSplit field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInnerSplit
+
+`func (o *GenericDataQueryParams) SetInnerSplit(v SplitAgg)`
+
+SetInnerSplit sets InnerSplit field to given value.
+
+### HasInnerSplit
+
+`func (o *GenericDataQueryParams) HasInnerSplit() bool`
+
+HasInnerSplit returns a boolean if a field has been set.
 
 ### GetAggregations
 
@@ -169,20 +195,20 @@ SetAggregations sets Aggregations field to given value.
 
 ### GetBuckets
 
-`func (o *GenericDataQueryParams) GetBuckets() []BucketAggregation`
+`func (o *GenericDataQueryParams) GetBuckets() []SplitAgg`
 
 GetBuckets returns the Buckets field if non-nil, zero value otherwise.
 
 ### GetBucketsOk
 
-`func (o *GenericDataQueryParams) GetBucketsOk() (*[]BucketAggregation, bool)`
+`func (o *GenericDataQueryParams) GetBucketsOk() (*[]SplitAgg, bool)`
 
 GetBucketsOk returns a tuple with the Buckets field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBuckets
 
-`func (o *GenericDataQueryParams) SetBuckets(v []BucketAggregation)`
+`func (o *GenericDataQueryParams) SetBuckets(v []SplitAgg)`
 
 SetBuckets sets Buckets field to given value.
 

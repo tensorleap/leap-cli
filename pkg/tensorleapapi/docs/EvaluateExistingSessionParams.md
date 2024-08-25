@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **BatchSize** | **float64** |  | 
 **DataStates** | [**[]DataStateType**](DataStateType.md) |  | 
 **Name** | **string** |  | 
+**SkipMetricsEstimation** | **bool** |  | 
 **EvaluatedEpoch** | **float64** |  | 
 **SessionId** | **string** |  | 
 
@@ -16,7 +17,7 @@ Name | Type | Description | Notes
 
 ### NewEvaluateExistingSessionParams
 
-`func NewEvaluateExistingSessionParams(versionId string, projectId string, batchSize float64, dataStates []DataStateType, name string, evaluatedEpoch float64, sessionId string, ) *EvaluateExistingSessionParams`
+`func NewEvaluateExistingSessionParams(versionId string, projectId string, batchSize float64, dataStates []DataStateType, name string, skipMetricsEstimation bool, evaluatedEpoch float64, sessionId string, ) *EvaluateExistingSessionParams`
 
 NewEvaluateExistingSessionParams instantiates a new EvaluateExistingSessionParams object
 This constructor will assign default values to properties that have it defined,
@@ -129,6 +130,26 @@ and a boolean to check if the value has been set.
 `func (o *EvaluateExistingSessionParams) SetName(v string)`
 
 SetName sets Name field to given value.
+
+
+### GetSkipMetricsEstimation
+
+`func (o *EvaluateExistingSessionParams) GetSkipMetricsEstimation() bool`
+
+GetSkipMetricsEstimation returns the SkipMetricsEstimation field if non-nil, zero value otherwise.
+
+### GetSkipMetricsEstimationOk
+
+`func (o *EvaluateExistingSessionParams) GetSkipMetricsEstimationOk() (*bool, bool)`
+
+GetSkipMetricsEstimationOk returns a tuple with the SkipMetricsEstimation field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSkipMetricsEstimation
+
+`func (o *EvaluateExistingSessionParams) SetSkipMetricsEstimation(v bool)`
+
+SetSkipMetricsEstimation sets SkipMetricsEstimation field to given value.
 
 
 ### GetEvaluatedEpoch

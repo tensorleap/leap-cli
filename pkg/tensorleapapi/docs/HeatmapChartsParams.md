@@ -5,19 +5,12 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**XField** | **string** |  | 
-**XAxisSizeInterval** | **float64** |  | 
-**XDataDistributionType** | [**DataDistributionType**](DataDistributionType.md) |  | 
-**XOrderParams** | Pointer to [**OrderType**](OrderType.md) |  | [optional] 
-**YField** | **string** |  | 
-**YAxisSizeInterval** | **float64** |  | 
-**YDataDistributionType** | [**DataDistributionType**](DataDistributionType.md) |  | 
-**YOrderParams** | Pointer to [**OrderType**](OrderType.md) |  | [optional] 
-**ColorField** | **string** |  | 
-**ColorAggregationMethod** | [**AggregationMethod**](AggregationMethod.md) |  | 
+**X** | [**SplitAgg**](SplitAgg.md) |  | 
+**Y** | [**SplitAgg**](SplitAgg.md) |  | 
+**Color** | [**Aggregations**](Aggregations.md) |  | 
 **SessionRunIds** | **[]string** |  | 
-**VerticalSplit** | Pointer to **string** |  | [optional] 
-**HorizontalSplit** | Pointer to **string** |  | [optional] 
+**VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
+**HorizontalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **LastEpochOnly** | Pointer to **bool** |  | [optional] 
 
@@ -25,7 +18,7 @@ Name | Type | Description | Notes
 
 ### NewHeatmapChartsParams
 
-`func NewHeatmapChartsParams(projectId string, xField string, xAxisSizeInterval float64, xDataDistributionType DataDistributionType, yField string, yAxisSizeInterval float64, yDataDistributionType DataDistributionType, colorField string, colorAggregationMethod AggregationMethod, sessionRunIds []string, ) *HeatmapChartsParams`
+`func NewHeatmapChartsParams(projectId string, x SplitAgg, y SplitAgg, color Aggregations, sessionRunIds []string, ) *HeatmapChartsParams`
 
 NewHeatmapChartsParams instantiates a new HeatmapChartsParams object
 This constructor will assign default values to properties that have it defined,
@@ -60,214 +53,64 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetXField
+### GetX
 
-`func (o *HeatmapChartsParams) GetXField() string`
+`func (o *HeatmapChartsParams) GetX() SplitAgg`
 
-GetXField returns the XField field if non-nil, zero value otherwise.
+GetX returns the X field if non-nil, zero value otherwise.
 
-### GetXFieldOk
+### GetXOk
 
-`func (o *HeatmapChartsParams) GetXFieldOk() (*string, bool)`
+`func (o *HeatmapChartsParams) GetXOk() (*SplitAgg, bool)`
 
-GetXFieldOk returns a tuple with the XField field if it's non-nil, zero value otherwise
+GetXOk returns a tuple with the X field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetXField
+### SetX
 
-`func (o *HeatmapChartsParams) SetXField(v string)`
+`func (o *HeatmapChartsParams) SetX(v SplitAgg)`
 
-SetXField sets XField field to given value.
+SetX sets X field to given value.
 
 
-### GetXAxisSizeInterval
+### GetY
 
-`func (o *HeatmapChartsParams) GetXAxisSizeInterval() float64`
+`func (o *HeatmapChartsParams) GetY() SplitAgg`
 
-GetXAxisSizeInterval returns the XAxisSizeInterval field if non-nil, zero value otherwise.
+GetY returns the Y field if non-nil, zero value otherwise.
 
-### GetXAxisSizeIntervalOk
+### GetYOk
 
-`func (o *HeatmapChartsParams) GetXAxisSizeIntervalOk() (*float64, bool)`
+`func (o *HeatmapChartsParams) GetYOk() (*SplitAgg, bool)`
 
-GetXAxisSizeIntervalOk returns a tuple with the XAxisSizeInterval field if it's non-nil, zero value otherwise
+GetYOk returns a tuple with the Y field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetXAxisSizeInterval
+### SetY
 
-`func (o *HeatmapChartsParams) SetXAxisSizeInterval(v float64)`
+`func (o *HeatmapChartsParams) SetY(v SplitAgg)`
 
-SetXAxisSizeInterval sets XAxisSizeInterval field to given value.
+SetY sets Y field to given value.
 
 
-### GetXDataDistributionType
+### GetColor
 
-`func (o *HeatmapChartsParams) GetXDataDistributionType() DataDistributionType`
+`func (o *HeatmapChartsParams) GetColor() Aggregations`
 
-GetXDataDistributionType returns the XDataDistributionType field if non-nil, zero value otherwise.
+GetColor returns the Color field if non-nil, zero value otherwise.
 
-### GetXDataDistributionTypeOk
+### GetColorOk
 
-`func (o *HeatmapChartsParams) GetXDataDistributionTypeOk() (*DataDistributionType, bool)`
+`func (o *HeatmapChartsParams) GetColorOk() (*Aggregations, bool)`
 
-GetXDataDistributionTypeOk returns a tuple with the XDataDistributionType field if it's non-nil, zero value otherwise
+GetColorOk returns a tuple with the Color field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetXDataDistributionType
+### SetColor
 
-`func (o *HeatmapChartsParams) SetXDataDistributionType(v DataDistributionType)`
+`func (o *HeatmapChartsParams) SetColor(v Aggregations)`
 
-SetXDataDistributionType sets XDataDistributionType field to given value.
-
-
-### GetXOrderParams
-
-`func (o *HeatmapChartsParams) GetXOrderParams() OrderType`
-
-GetXOrderParams returns the XOrderParams field if non-nil, zero value otherwise.
-
-### GetXOrderParamsOk
-
-`func (o *HeatmapChartsParams) GetXOrderParamsOk() (*OrderType, bool)`
-
-GetXOrderParamsOk returns a tuple with the XOrderParams field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetXOrderParams
-
-`func (o *HeatmapChartsParams) SetXOrderParams(v OrderType)`
-
-SetXOrderParams sets XOrderParams field to given value.
-
-### HasXOrderParams
-
-`func (o *HeatmapChartsParams) HasXOrderParams() bool`
-
-HasXOrderParams returns a boolean if a field has been set.
-
-### GetYField
-
-`func (o *HeatmapChartsParams) GetYField() string`
-
-GetYField returns the YField field if non-nil, zero value otherwise.
-
-### GetYFieldOk
-
-`func (o *HeatmapChartsParams) GetYFieldOk() (*string, bool)`
-
-GetYFieldOk returns a tuple with the YField field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetYField
-
-`func (o *HeatmapChartsParams) SetYField(v string)`
-
-SetYField sets YField field to given value.
-
-
-### GetYAxisSizeInterval
-
-`func (o *HeatmapChartsParams) GetYAxisSizeInterval() float64`
-
-GetYAxisSizeInterval returns the YAxisSizeInterval field if non-nil, zero value otherwise.
-
-### GetYAxisSizeIntervalOk
-
-`func (o *HeatmapChartsParams) GetYAxisSizeIntervalOk() (*float64, bool)`
-
-GetYAxisSizeIntervalOk returns a tuple with the YAxisSizeInterval field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetYAxisSizeInterval
-
-`func (o *HeatmapChartsParams) SetYAxisSizeInterval(v float64)`
-
-SetYAxisSizeInterval sets YAxisSizeInterval field to given value.
-
-
-### GetYDataDistributionType
-
-`func (o *HeatmapChartsParams) GetYDataDistributionType() DataDistributionType`
-
-GetYDataDistributionType returns the YDataDistributionType field if non-nil, zero value otherwise.
-
-### GetYDataDistributionTypeOk
-
-`func (o *HeatmapChartsParams) GetYDataDistributionTypeOk() (*DataDistributionType, bool)`
-
-GetYDataDistributionTypeOk returns a tuple with the YDataDistributionType field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetYDataDistributionType
-
-`func (o *HeatmapChartsParams) SetYDataDistributionType(v DataDistributionType)`
-
-SetYDataDistributionType sets YDataDistributionType field to given value.
-
-
-### GetYOrderParams
-
-`func (o *HeatmapChartsParams) GetYOrderParams() OrderType`
-
-GetYOrderParams returns the YOrderParams field if non-nil, zero value otherwise.
-
-### GetYOrderParamsOk
-
-`func (o *HeatmapChartsParams) GetYOrderParamsOk() (*OrderType, bool)`
-
-GetYOrderParamsOk returns a tuple with the YOrderParams field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetYOrderParams
-
-`func (o *HeatmapChartsParams) SetYOrderParams(v OrderType)`
-
-SetYOrderParams sets YOrderParams field to given value.
-
-### HasYOrderParams
-
-`func (o *HeatmapChartsParams) HasYOrderParams() bool`
-
-HasYOrderParams returns a boolean if a field has been set.
-
-### GetColorField
-
-`func (o *HeatmapChartsParams) GetColorField() string`
-
-GetColorField returns the ColorField field if non-nil, zero value otherwise.
-
-### GetColorFieldOk
-
-`func (o *HeatmapChartsParams) GetColorFieldOk() (*string, bool)`
-
-GetColorFieldOk returns a tuple with the ColorField field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetColorField
-
-`func (o *HeatmapChartsParams) SetColorField(v string)`
-
-SetColorField sets ColorField field to given value.
-
-
-### GetColorAggregationMethod
-
-`func (o *HeatmapChartsParams) GetColorAggregationMethod() AggregationMethod`
-
-GetColorAggregationMethod returns the ColorAggregationMethod field if non-nil, zero value otherwise.
-
-### GetColorAggregationMethodOk
-
-`func (o *HeatmapChartsParams) GetColorAggregationMethodOk() (*AggregationMethod, bool)`
-
-GetColorAggregationMethodOk returns a tuple with the ColorAggregationMethod field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetColorAggregationMethod
-
-`func (o *HeatmapChartsParams) SetColorAggregationMethod(v AggregationMethod)`
-
-SetColorAggregationMethod sets ColorAggregationMethod field to given value.
+SetColor sets Color field to given value.
 
 
 ### GetSessionRunIds
@@ -292,20 +135,20 @@ SetSessionRunIds sets SessionRunIds field to given value.
 
 ### GetVerticalSplit
 
-`func (o *HeatmapChartsParams) GetVerticalSplit() string`
+`func (o *HeatmapChartsParams) GetVerticalSplit() SplitAgg`
 
 GetVerticalSplit returns the VerticalSplit field if non-nil, zero value otherwise.
 
 ### GetVerticalSplitOk
 
-`func (o *HeatmapChartsParams) GetVerticalSplitOk() (*string, bool)`
+`func (o *HeatmapChartsParams) GetVerticalSplitOk() (*SplitAgg, bool)`
 
 GetVerticalSplitOk returns a tuple with the VerticalSplit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetVerticalSplit
 
-`func (o *HeatmapChartsParams) SetVerticalSplit(v string)`
+`func (o *HeatmapChartsParams) SetVerticalSplit(v SplitAgg)`
 
 SetVerticalSplit sets VerticalSplit field to given value.
 
@@ -317,20 +160,20 @@ HasVerticalSplit returns a boolean if a field has been set.
 
 ### GetHorizontalSplit
 
-`func (o *HeatmapChartsParams) GetHorizontalSplit() string`
+`func (o *HeatmapChartsParams) GetHorizontalSplit() SplitAgg`
 
 GetHorizontalSplit returns the HorizontalSplit field if non-nil, zero value otherwise.
 
 ### GetHorizontalSplitOk
 
-`func (o *HeatmapChartsParams) GetHorizontalSplitOk() (*string, bool)`
+`func (o *HeatmapChartsParams) GetHorizontalSplitOk() (*SplitAgg, bool)`
 
 GetHorizontalSplitOk returns a tuple with the HorizontalSplit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHorizontalSplit
 
-`func (o *HeatmapChartsParams) SetHorizontalSplit(v string)`
+`func (o *HeatmapChartsParams) SetHorizontalSplit(v SplitAgg)`
 
 SetHorizontalSplit sets HorizontalSplit field to given value.
 

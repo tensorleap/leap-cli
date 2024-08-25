@@ -5,13 +5,15 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Email** | **string** |  | 
-**Password** | **string** |  | 
+**UserName** | **string** |  | 
+**FirstName** | **string** |  | 
+**LastName** | **string** |  | 
 
 ## Methods
 
 ### NewLoginParams
 
-`func NewLoginParams(email string, password string, ) *LoginParams`
+`func NewLoginParams(email string, userName string, firstName string, lastName string, ) *LoginParams`
 
 NewLoginParams instantiates a new LoginParams object
 This constructor will assign default values to properties that have it defined,
@@ -46,24 +48,64 @@ and a boolean to check if the value has been set.
 SetEmail sets Email field to given value.
 
 
-### GetPassword
+### GetUserName
 
-`func (o *LoginParams) GetPassword() string`
+`func (o *LoginParams) GetUserName() string`
 
-GetPassword returns the Password field if non-nil, zero value otherwise.
+GetUserName returns the UserName field if non-nil, zero value otherwise.
 
-### GetPasswordOk
+### GetUserNameOk
 
-`func (o *LoginParams) GetPasswordOk() (*string, bool)`
+`func (o *LoginParams) GetUserNameOk() (*string, bool)`
 
-GetPasswordOk returns a tuple with the Password field if it's non-nil, zero value otherwise
+GetUserNameOk returns a tuple with the UserName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetPassword
+### SetUserName
 
-`func (o *LoginParams) SetPassword(v string)`
+`func (o *LoginParams) SetUserName(v string)`
 
-SetPassword sets Password field to given value.
+SetUserName sets UserName field to given value.
+
+
+### GetFirstName
+
+`func (o *LoginParams) GetFirstName() string`
+
+GetFirstName returns the FirstName field if non-nil, zero value otherwise.
+
+### GetFirstNameOk
+
+`func (o *LoginParams) GetFirstNameOk() (*string, bool)`
+
+GetFirstNameOk returns a tuple with the FirstName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFirstName
+
+`func (o *LoginParams) SetFirstName(v string)`
+
+SetFirstName sets FirstName field to given value.
+
+
+### GetLastName
+
+`func (o *LoginParams) GetLastName() string`
+
+GetLastName returns the LastName field if non-nil, zero value otherwise.
+
+### GetLastNameOk
+
+`func (o *LoginParams) GetLastNameOk() (*string, bool)`
+
+GetLastNameOk returns a tuple with the LastName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLastName
+
+`func (o *LoginParams) SetLastName(v string)`
+
+SetLastName sets LastName field to given value.
 
 
 

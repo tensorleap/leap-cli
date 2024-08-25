@@ -11,20 +11,20 @@ Name | Type | Description | Notes
 **ProjectId** | **string** |  | 
 **Branch** | **string** |  | 
 **Tag** | **string** |  | 
-**Data** | [**ModelGraph**](ModelGraph.md) |  | 
+**Data** | Pointer to [**ModelGraph**](ModelGraph.md) |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **Notes** | **string** |  | 
 **Status** | **string** |  | 
 **IsFavourite** | **bool** |  | 
 **CodeIntegrationVersionId** | Pointer to **string** |  | [optional] 
-**DatasetSetup** | [**DatasetSetup**](DatasetSetup.md) |  | 
+**DatasetSetup** | Pointer to [**DatasetSetup**](DatasetSetup.md) |  | [optional] 
 **Hash** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewVersion
 
-`func NewVersion(cid string, extId string, createdBy string, teamId string, projectId string, branch string, tag string, data ModelGraph, createdAt time.Time, notes string, status string, isFavourite bool, datasetSetup DatasetSetup, ) *Version`
+`func NewVersion(cid string, extId string, createdBy string, teamId string, projectId string, branch string, tag string, createdAt time.Time, notes string, status string, isFavourite bool, ) *Version`
 
 NewVersion instantiates a new Version object
 This constructor will assign default values to properties that have it defined,
@@ -198,6 +198,11 @@ and a boolean to check if the value has been set.
 
 SetData sets Data field to given value.
 
+### HasData
+
+`func (o *Version) HasData() bool`
+
+HasData returns a boolean if a field has been set.
 
 ### GetCreatedAt
 
@@ -323,6 +328,11 @@ and a boolean to check if the value has been set.
 
 SetDatasetSetup sets DatasetSetup field to given value.
 
+### HasDatasetSetup
+
+`func (o *Version) HasDatasetSetup() bool`
+
+HasDatasetSetup returns a boolean if a field has been set.
 
 ### GetHash
 

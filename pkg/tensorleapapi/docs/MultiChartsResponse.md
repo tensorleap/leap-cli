@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Vertical** | [**[]VerticalCharts**](VerticalCharts.md) |  | 
+**Charts** | [**[]ChartData**](ChartData.md) |  | 
 
 ## Methods
 
 ### NewMultiChartsResponse
 
-`func NewMultiChartsResponse(vertical []VerticalCharts, ) *MultiChartsResponse`
+`func NewMultiChartsResponse(charts []ChartData, ) *MultiChartsResponse`
 
 NewMultiChartsResponse instantiates a new MultiChartsResponse object
 This constructor will assign default values to properties that have it defined,
@@ -25,24 +25,24 @@ NewMultiChartsResponseWithDefaults instantiates a new MultiChartsResponse object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetVertical
+### GetCharts
 
-`func (o *MultiChartsResponse) GetVertical() []VerticalCharts`
+`func (o *MultiChartsResponse) GetCharts() []ChartData`
 
-GetVertical returns the Vertical field if non-nil, zero value otherwise.
+GetCharts returns the Charts field if non-nil, zero value otherwise.
 
-### GetVerticalOk
+### GetChartsOk
 
-`func (o *MultiChartsResponse) GetVerticalOk() (*[]VerticalCharts, bool)`
+`func (o *MultiChartsResponse) GetChartsOk() (*[]ChartData, bool)`
 
-GetVerticalOk returns a tuple with the Vertical field if it's non-nil, zero value otherwise
+GetChartsOk returns a tuple with the Charts field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetVertical
+### SetCharts
 
-`func (o *MultiChartsResponse) SetVertical(v []VerticalCharts)`
+`func (o *MultiChartsResponse) SetCharts(v []ChartData)`
 
-SetVertical sets Vertical field to given value.
+SetCharts sets Charts field to given value.
 
 
 

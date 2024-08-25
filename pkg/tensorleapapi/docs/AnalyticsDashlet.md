@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Cid** | **string** |  | 
 **Layout** | [**SizedLayout**](SizedLayout.md) |  | 
+**PinFilters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **Type** | **string** |  | 
 **Data** | [**AnalyticsDashletData**](AnalyticsDashletData.md) |  | 
 
@@ -67,6 +68,31 @@ and a boolean to check if the value has been set.
 
 SetLayout sets Layout field to given value.
 
+
+### GetPinFilters
+
+`func (o *AnalyticsDashlet) GetPinFilters() []ESFilter`
+
+GetPinFilters returns the PinFilters field if non-nil, zero value otherwise.
+
+### GetPinFiltersOk
+
+`func (o *AnalyticsDashlet) GetPinFiltersOk() (*[]ESFilter, bool)`
+
+GetPinFiltersOk returns a tuple with the PinFilters field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPinFilters
+
+`func (o *AnalyticsDashlet) SetPinFilters(v []ESFilter)`
+
+SetPinFilters sets PinFilters field to given value.
+
+### HasPinFilters
+
+`func (o *AnalyticsDashlet) HasPinFilters() bool`
+
+HasPinFilters returns a boolean if a field has been set.
 
 ### GetType
 

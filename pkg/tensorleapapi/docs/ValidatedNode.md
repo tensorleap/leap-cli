@@ -5,8 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** |  | 
-**NodeId** | Pointer to **string** |  | [optional] 
 **ConnectionName** | Pointer to **string** |  | [optional] 
+**NodeId** | Pointer to **string** |  | [optional] 
 **Error** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -48,31 +48,6 @@ and a boolean to check if the value has been set.
 SetName sets Name field to given value.
 
 
-### GetNodeId
-
-`func (o *ValidatedNode) GetNodeId() string`
-
-GetNodeId returns the NodeId field if non-nil, zero value otherwise.
-
-### GetNodeIdOk
-
-`func (o *ValidatedNode) GetNodeIdOk() (*string, bool)`
-
-GetNodeIdOk returns a tuple with the NodeId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNodeId
-
-`func (o *ValidatedNode) SetNodeId(v string)`
-
-SetNodeId sets NodeId field to given value.
-
-### HasNodeId
-
-`func (o *ValidatedNode) HasNodeId() bool`
-
-HasNodeId returns a boolean if a field has been set.
-
 ### GetConnectionName
 
 `func (o *ValidatedNode) GetConnectionName() string`
@@ -97,6 +72,31 @@ SetConnectionName sets ConnectionName field to given value.
 `func (o *ValidatedNode) HasConnectionName() bool`
 
 HasConnectionName returns a boolean if a field has been set.
+
+### GetNodeId
+
+`func (o *ValidatedNode) GetNodeId() string`
+
+GetNodeId returns the NodeId field if non-nil, zero value otherwise.
+
+### GetNodeIdOk
+
+`func (o *ValidatedNode) GetNodeIdOk() (*string, bool)`
+
+GetNodeIdOk returns a tuple with the NodeId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNodeId
+
+`func (o *ValidatedNode) SetNodeId(v string)`
+
+SetNodeId sets NodeId field to given value.
+
+### HasNodeId
+
+`func (o *ValidatedNode) HasNodeId() bool`
+
+HasNodeId returns a boolean if a field has been set.
 
 ### GetError
 

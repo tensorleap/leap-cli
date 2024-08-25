@@ -8,6 +8,9 @@ Name | Type | Description | Notes
 **Filter** | [**ScatterFilter**](ScatterFilter.md) |  | 
 **MutualInfoElements** | Pointer to [**[]MutualInformationElement**](MutualInformationElement.md) |  | [optional] 
 **BlobPath** | Pointer to **string** |  | [optional] 
+**InsightSubCategoryDsCuration** | Pointer to [**InsightSubCategoryDSCuration**](InsightSubCategoryDSCuration.md) |  | [optional] 
+**InsightCategoryPerformance** | Pointer to [**InsightSubCategoryPerformance**](InsightSubCategoryPerformance.md) |  | [optional] 
+**Index** | Pointer to **float64** |  | [optional] 
 **NSamplesValidation** | **float64** |  | 
 **NSamplesTraining** | **float64** |  | 
 **AvgMetricValidation** | **float64** |  | 
@@ -123,6 +126,81 @@ SetBlobPath sets BlobPath field to given value.
 `func (o *OverfittingInsight) HasBlobPath() bool`
 
 HasBlobPath returns a boolean if a field has been set.
+
+### GetInsightSubCategoryDsCuration
+
+`func (o *OverfittingInsight) GetInsightSubCategoryDsCuration() InsightSubCategoryDSCuration`
+
+GetInsightSubCategoryDsCuration returns the InsightSubCategoryDsCuration field if non-nil, zero value otherwise.
+
+### GetInsightSubCategoryDsCurationOk
+
+`func (o *OverfittingInsight) GetInsightSubCategoryDsCurationOk() (*InsightSubCategoryDSCuration, bool)`
+
+GetInsightSubCategoryDsCurationOk returns a tuple with the InsightSubCategoryDsCuration field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInsightSubCategoryDsCuration
+
+`func (o *OverfittingInsight) SetInsightSubCategoryDsCuration(v InsightSubCategoryDSCuration)`
+
+SetInsightSubCategoryDsCuration sets InsightSubCategoryDsCuration field to given value.
+
+### HasInsightSubCategoryDsCuration
+
+`func (o *OverfittingInsight) HasInsightSubCategoryDsCuration() bool`
+
+HasInsightSubCategoryDsCuration returns a boolean if a field has been set.
+
+### GetInsightCategoryPerformance
+
+`func (o *OverfittingInsight) GetInsightCategoryPerformance() InsightSubCategoryPerformance`
+
+GetInsightCategoryPerformance returns the InsightCategoryPerformance field if non-nil, zero value otherwise.
+
+### GetInsightCategoryPerformanceOk
+
+`func (o *OverfittingInsight) GetInsightCategoryPerformanceOk() (*InsightSubCategoryPerformance, bool)`
+
+GetInsightCategoryPerformanceOk returns a tuple with the InsightCategoryPerformance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInsightCategoryPerformance
+
+`func (o *OverfittingInsight) SetInsightCategoryPerformance(v InsightSubCategoryPerformance)`
+
+SetInsightCategoryPerformance sets InsightCategoryPerformance field to given value.
+
+### HasInsightCategoryPerformance
+
+`func (o *OverfittingInsight) HasInsightCategoryPerformance() bool`
+
+HasInsightCategoryPerformance returns a boolean if a field has been set.
+
+### GetIndex
+
+`func (o *OverfittingInsight) GetIndex() float64`
+
+GetIndex returns the Index field if non-nil, zero value otherwise.
+
+### GetIndexOk
+
+`func (o *OverfittingInsight) GetIndexOk() (*float64, bool)`
+
+GetIndexOk returns a tuple with the Index field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIndex
+
+`func (o *OverfittingInsight) SetIndex(v float64)`
+
+SetIndex sets Index field to given value.
+
+### HasIndex
+
+`func (o *OverfittingInsight) HasIndex() bool`
+
+HasIndex returns a boolean if a field has been set.
 
 ### GetNSamplesValidation
 

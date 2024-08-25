@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **CreatedAt** | **time.Time** |  | 
 **Notes** | **string** |  | 
 **CodeIntegrationVersionId** | Pointer to **string** |  | [optional] 
-**DatasetSetup** | [**DatasetSetup**](DatasetSetup.md) |  | 
+**DatasetSetup** | Pointer to [**DatasetSetup**](DatasetSetup.md) |  | [optional] 
 **IsFavourite** | **bool** |  | 
 **Hash** | Pointer to **NullableString** |  | [optional] 
 **Sessions** | [**[]Session**](Session.md) |  | 
@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewSlimVersion
 
-`func NewSlimVersion(cid string, createdBy string, projectId string, branchName string, tags string, createdAt time.Time, notes string, datasetSetup DatasetSetup, isFavourite bool, sessions []Session, ) *SlimVersion`
+`func NewSlimVersion(cid string, createdBy string, projectId string, branchName string, tags string, createdAt time.Time, notes string, isFavourite bool, sessions []Session, ) *SlimVersion`
 
 NewSlimVersion instantiates a new SlimVersion object
 This constructor will assign default values to properties that have it defined,
@@ -220,6 +220,11 @@ and a boolean to check if the value has been set.
 
 SetDatasetSetup sets DatasetSetup field to given value.
 
+### HasDatasetSetup
+
+`func (o *SlimVersion) HasDatasetSetup() bool`
+
+HasDatasetSetup returns a boolean if a field has been set.
 
 ### GetIsFavourite
 

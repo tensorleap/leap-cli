@@ -6,7 +6,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DataState** | Pointer to [**DataStateType**](DataStateType.md) |  | [optional] 
 **ScatterData** | **[][]float64** |  | 
-**Labels** | [**[]ScatterLabel**](ScatterLabel.md) |  | 
 **Samples** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
 **Metadata** | **map[string]interface{}** | Construct a type with a set of properties K of type T | 
 **MiByCluster** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
@@ -16,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewScatterVizDataState
 
-`func NewScatterVizDataState(scatterData [][]float64, labels []ScatterLabel, samples []SampleIdentity, metadata map[string]interface{}, ) *ScatterVizDataState`
+`func NewScatterVizDataState(scatterData [][]float64, samples []SampleIdentity, metadata map[string]interface{}, ) *ScatterVizDataState`
 
 NewScatterVizDataState instantiates a new ScatterVizDataState object
 This constructor will assign default values to properties that have it defined,
@@ -74,26 +73,6 @@ and a boolean to check if the value has been set.
 `func (o *ScatterVizDataState) SetScatterData(v [][]float64)`
 
 SetScatterData sets ScatterData field to given value.
-
-
-### GetLabels
-
-`func (o *ScatterVizDataState) GetLabels() []ScatterLabel`
-
-GetLabels returns the Labels field if non-nil, zero value otherwise.
-
-### GetLabelsOk
-
-`func (o *ScatterVizDataState) GetLabelsOk() (*[]ScatterLabel, bool)`
-
-GetLabelsOk returns a tuple with the Labels field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetLabels
-
-`func (o *ScatterVizDataState) SetLabels(v []ScatterLabel)`
-
-SetLabels sets Labels field to given value.
 
 
 ### GetSamples

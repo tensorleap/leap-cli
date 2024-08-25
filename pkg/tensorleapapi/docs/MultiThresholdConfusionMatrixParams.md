@@ -7,8 +7,8 @@ Name | Type | Description | Notes
 **SessionRunIds** | **[]string** |  | 
 **ProjectId** | **string** |  | 
 **CustomMetricName** | **string** |  | 
-**VerticalSplit** | Pointer to **string** |  | [optional] 
-**HorizontalSplit** | Pointer to **string** |  | [optional] 
+**VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
+**HorizontalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 
 ## Methods
@@ -92,20 +92,20 @@ SetCustomMetricName sets CustomMetricName field to given value.
 
 ### GetVerticalSplit
 
-`func (o *MultiThresholdConfusionMatrixParams) GetVerticalSplit() string`
+`func (o *MultiThresholdConfusionMatrixParams) GetVerticalSplit() SplitAgg`
 
 GetVerticalSplit returns the VerticalSplit field if non-nil, zero value otherwise.
 
 ### GetVerticalSplitOk
 
-`func (o *MultiThresholdConfusionMatrixParams) GetVerticalSplitOk() (*string, bool)`
+`func (o *MultiThresholdConfusionMatrixParams) GetVerticalSplitOk() (*SplitAgg, bool)`
 
 GetVerticalSplitOk returns a tuple with the VerticalSplit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetVerticalSplit
 
-`func (o *MultiThresholdConfusionMatrixParams) SetVerticalSplit(v string)`
+`func (o *MultiThresholdConfusionMatrixParams) SetVerticalSplit(v SplitAgg)`
 
 SetVerticalSplit sets VerticalSplit field to given value.
 
@@ -117,20 +117,20 @@ HasVerticalSplit returns a boolean if a field has been set.
 
 ### GetHorizontalSplit
 
-`func (o *MultiThresholdConfusionMatrixParams) GetHorizontalSplit() string`
+`func (o *MultiThresholdConfusionMatrixParams) GetHorizontalSplit() SplitAgg`
 
 GetHorizontalSplit returns the HorizontalSplit field if non-nil, zero value otherwise.
 
 ### GetHorizontalSplitOk
 
-`func (o *MultiThresholdConfusionMatrixParams) GetHorizontalSplitOk() (*string, bool)`
+`func (o *MultiThresholdConfusionMatrixParams) GetHorizontalSplitOk() (*SplitAgg, bool)`
 
 GetHorizontalSplitOk returns a tuple with the HorizontalSplit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHorizontalSplit
 
-`func (o *MultiThresholdConfusionMatrixParams) SetHorizontalSplit(v string)`
+`func (o *MultiThresholdConfusionMatrixParams) SetHorizontalSplit(v SplitAgg)`
 
 SetHorizontalSplit sets HorizontalSplit field to given value.
 

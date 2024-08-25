@@ -8,14 +8,17 @@ Name | Type | Description | Notes
 **Filter** | [**ScatterFilter**](ScatterFilter.md) |  | 
 **MutualInfoElements** | Pointer to [**[]MutualInformationElement**](MutualInformationElement.md) |  | [optional] 
 **BlobPath** | Pointer to **string** |  | [optional] 
+**InsightSubCategoryDsCuration** | Pointer to [**InsightSubCategoryDSCuration**](InsightSubCategoryDSCuration.md) |  | [optional] 
+**InsightCategoryPerformance** | Pointer to [**InsightSubCategoryPerformance**](InsightSubCategoryPerformance.md) |  | [optional] 
+**Index** | Pointer to **float64** |  | [optional] 
+**Subset** | [**DataStateType**](DataStateType.md) |  | 
 **NDuplicateSamples** | **float64** |  | 
-**NCrossSubsetDuplications** | **float64** |  | 
 
 ## Methods
 
 ### NewDuplicationInsight
 
-`func NewDuplicationInsight(type_ ScatterInsightType, filter ScatterFilter, nDuplicateSamples float64, nCrossSubsetDuplications float64, ) *DuplicationInsight`
+`func NewDuplicationInsight(type_ ScatterInsightType, filter ScatterFilter, subset DataStateType, nDuplicateSamples float64, ) *DuplicationInsight`
 
 NewDuplicationInsight instantiates a new DuplicationInsight object
 This constructor will assign default values to properties that have it defined,
@@ -120,6 +123,101 @@ SetBlobPath sets BlobPath field to given value.
 
 HasBlobPath returns a boolean if a field has been set.
 
+### GetInsightSubCategoryDsCuration
+
+`func (o *DuplicationInsight) GetInsightSubCategoryDsCuration() InsightSubCategoryDSCuration`
+
+GetInsightSubCategoryDsCuration returns the InsightSubCategoryDsCuration field if non-nil, zero value otherwise.
+
+### GetInsightSubCategoryDsCurationOk
+
+`func (o *DuplicationInsight) GetInsightSubCategoryDsCurationOk() (*InsightSubCategoryDSCuration, bool)`
+
+GetInsightSubCategoryDsCurationOk returns a tuple with the InsightSubCategoryDsCuration field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInsightSubCategoryDsCuration
+
+`func (o *DuplicationInsight) SetInsightSubCategoryDsCuration(v InsightSubCategoryDSCuration)`
+
+SetInsightSubCategoryDsCuration sets InsightSubCategoryDsCuration field to given value.
+
+### HasInsightSubCategoryDsCuration
+
+`func (o *DuplicationInsight) HasInsightSubCategoryDsCuration() bool`
+
+HasInsightSubCategoryDsCuration returns a boolean if a field has been set.
+
+### GetInsightCategoryPerformance
+
+`func (o *DuplicationInsight) GetInsightCategoryPerformance() InsightSubCategoryPerformance`
+
+GetInsightCategoryPerformance returns the InsightCategoryPerformance field if non-nil, zero value otherwise.
+
+### GetInsightCategoryPerformanceOk
+
+`func (o *DuplicationInsight) GetInsightCategoryPerformanceOk() (*InsightSubCategoryPerformance, bool)`
+
+GetInsightCategoryPerformanceOk returns a tuple with the InsightCategoryPerformance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInsightCategoryPerformance
+
+`func (o *DuplicationInsight) SetInsightCategoryPerformance(v InsightSubCategoryPerformance)`
+
+SetInsightCategoryPerformance sets InsightCategoryPerformance field to given value.
+
+### HasInsightCategoryPerformance
+
+`func (o *DuplicationInsight) HasInsightCategoryPerformance() bool`
+
+HasInsightCategoryPerformance returns a boolean if a field has been set.
+
+### GetIndex
+
+`func (o *DuplicationInsight) GetIndex() float64`
+
+GetIndex returns the Index field if non-nil, zero value otherwise.
+
+### GetIndexOk
+
+`func (o *DuplicationInsight) GetIndexOk() (*float64, bool)`
+
+GetIndexOk returns a tuple with the Index field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIndex
+
+`func (o *DuplicationInsight) SetIndex(v float64)`
+
+SetIndex sets Index field to given value.
+
+### HasIndex
+
+`func (o *DuplicationInsight) HasIndex() bool`
+
+HasIndex returns a boolean if a field has been set.
+
+### GetSubset
+
+`func (o *DuplicationInsight) GetSubset() DataStateType`
+
+GetSubset returns the Subset field if non-nil, zero value otherwise.
+
+### GetSubsetOk
+
+`func (o *DuplicationInsight) GetSubsetOk() (*DataStateType, bool)`
+
+GetSubsetOk returns a tuple with the Subset field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubset
+
+`func (o *DuplicationInsight) SetSubset(v DataStateType)`
+
+SetSubset sets Subset field to given value.
+
+
 ### GetNDuplicateSamples
 
 `func (o *DuplicationInsight) GetNDuplicateSamples() float64`
@@ -138,26 +236,6 @@ and a boolean to check if the value has been set.
 `func (o *DuplicationInsight) SetNDuplicateSamples(v float64)`
 
 SetNDuplicateSamples sets NDuplicateSamples field to given value.
-
-
-### GetNCrossSubsetDuplications
-
-`func (o *DuplicationInsight) GetNCrossSubsetDuplications() float64`
-
-GetNCrossSubsetDuplications returns the NCrossSubsetDuplications field if non-nil, zero value otherwise.
-
-### GetNCrossSubsetDuplicationsOk
-
-`func (o *DuplicationInsight) GetNCrossSubsetDuplicationsOk() (*float64, bool)`
-
-GetNCrossSubsetDuplicationsOk returns a tuple with the NCrossSubsetDuplications field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNCrossSubsetDuplications
-
-`func (o *DuplicationInsight) SetNCrossSubsetDuplications(v float64)`
-
-SetNCrossSubsetDuplications sets NCrossSubsetDuplications field to given value.
 
 
 

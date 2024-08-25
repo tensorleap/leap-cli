@@ -8,6 +8,9 @@ Name | Type | Description | Notes
 **Filter** | [**ScatterFilter**](ScatterFilter.md) |  | 
 **MutualInfoElements** | Pointer to [**[]MutualInformationElement**](MutualInformationElement.md) |  | [optional] 
 **BlobPath** | Pointer to **string** |  | [optional] 
+**InsightSubCategoryDsCuration** | Pointer to [**InsightSubCategoryDSCuration**](InsightSubCategoryDSCuration.md) |  | [optional] 
+**InsightCategoryPerformance** | Pointer to [**InsightSubCategoryPerformance**](InsightSubCategoryPerformance.md) |  | [optional] 
+**Index** | Pointer to **float64** |  | [optional] 
 **NSamplesValidation** | **float64** |  | 
 **NSamplesTraining** | **float64** |  | 
 **AvgMetricValidation** | **float64** |  | 
@@ -20,14 +23,17 @@ Name | Type | Description | Notes
 **OverRepresentationNSamples** | **float64** |  | 
 **NSamples** | **float64** |  | 
 **AvgMetric** | **float64** |  | 
+**Subset** | [**DataStateType**](DataStateType.md) |  | 
 **NDuplicateSamples** | **float64** |  | 
-**NCrossSubsetDuplications** | **float64** |  | 
+**FirstSubset** | [**DataStateType**](DataStateType.md) |  | 
+**SecondSubset** | [**DataStateType**](DataStateType.md) |  | 
+**NCrossSubsetsDuplications** | **float64** |  | 
 
 ## Methods
 
 ### NewInsightType
 
-`func NewInsightType(type_ ScatterInsightType, filter ScatterFilter, nSamplesValidation float64, nSamplesTraining float64, avgMetricValidation float64, avgMetricTraining float64, metricName string, underRepresentationDataset DataStateType, underRepresentationNSamples float64, overRepresentationDataset DataStateType, overRepresentationNSamples float64, nSamples float64, avgMetric float64, nDuplicateSamples float64, nCrossSubsetDuplications float64, ) *InsightType`
+`func NewInsightType(type_ ScatterInsightType, filter ScatterFilter, nSamplesValidation float64, nSamplesTraining float64, avgMetricValidation float64, avgMetricTraining float64, metricName string, underRepresentationDataset DataStateType, underRepresentationNSamples float64, overRepresentationDataset DataStateType, overRepresentationNSamples float64, nSamples float64, avgMetric float64, subset DataStateType, nDuplicateSamples float64, firstSubset DataStateType, secondSubset DataStateType, nCrossSubsetsDuplications float64, ) *InsightType`
 
 NewInsightType instantiates a new InsightType object
 This constructor will assign default values to properties that have it defined,
@@ -131,6 +137,81 @@ SetBlobPath sets BlobPath field to given value.
 `func (o *InsightType) HasBlobPath() bool`
 
 HasBlobPath returns a boolean if a field has been set.
+
+### GetInsightSubCategoryDsCuration
+
+`func (o *InsightType) GetInsightSubCategoryDsCuration() InsightSubCategoryDSCuration`
+
+GetInsightSubCategoryDsCuration returns the InsightSubCategoryDsCuration field if non-nil, zero value otherwise.
+
+### GetInsightSubCategoryDsCurationOk
+
+`func (o *InsightType) GetInsightSubCategoryDsCurationOk() (*InsightSubCategoryDSCuration, bool)`
+
+GetInsightSubCategoryDsCurationOk returns a tuple with the InsightSubCategoryDsCuration field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInsightSubCategoryDsCuration
+
+`func (o *InsightType) SetInsightSubCategoryDsCuration(v InsightSubCategoryDSCuration)`
+
+SetInsightSubCategoryDsCuration sets InsightSubCategoryDsCuration field to given value.
+
+### HasInsightSubCategoryDsCuration
+
+`func (o *InsightType) HasInsightSubCategoryDsCuration() bool`
+
+HasInsightSubCategoryDsCuration returns a boolean if a field has been set.
+
+### GetInsightCategoryPerformance
+
+`func (o *InsightType) GetInsightCategoryPerformance() InsightSubCategoryPerformance`
+
+GetInsightCategoryPerformance returns the InsightCategoryPerformance field if non-nil, zero value otherwise.
+
+### GetInsightCategoryPerformanceOk
+
+`func (o *InsightType) GetInsightCategoryPerformanceOk() (*InsightSubCategoryPerformance, bool)`
+
+GetInsightCategoryPerformanceOk returns a tuple with the InsightCategoryPerformance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInsightCategoryPerformance
+
+`func (o *InsightType) SetInsightCategoryPerformance(v InsightSubCategoryPerformance)`
+
+SetInsightCategoryPerformance sets InsightCategoryPerformance field to given value.
+
+### HasInsightCategoryPerformance
+
+`func (o *InsightType) HasInsightCategoryPerformance() bool`
+
+HasInsightCategoryPerformance returns a boolean if a field has been set.
+
+### GetIndex
+
+`func (o *InsightType) GetIndex() float64`
+
+GetIndex returns the Index field if non-nil, zero value otherwise.
+
+### GetIndexOk
+
+`func (o *InsightType) GetIndexOk() (*float64, bool)`
+
+GetIndexOk returns a tuple with the Index field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIndex
+
+`func (o *InsightType) SetIndex(v float64)`
+
+SetIndex sets Index field to given value.
+
+### HasIndex
+
+`func (o *InsightType) HasIndex() bool`
+
+HasIndex returns a boolean if a field has been set.
 
 ### GetNSamplesValidation
 
@@ -377,6 +458,26 @@ and a boolean to check if the value has been set.
 SetAvgMetric sets AvgMetric field to given value.
 
 
+### GetSubset
+
+`func (o *InsightType) GetSubset() DataStateType`
+
+GetSubset returns the Subset field if non-nil, zero value otherwise.
+
+### GetSubsetOk
+
+`func (o *InsightType) GetSubsetOk() (*DataStateType, bool)`
+
+GetSubsetOk returns a tuple with the Subset field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubset
+
+`func (o *InsightType) SetSubset(v DataStateType)`
+
+SetSubset sets Subset field to given value.
+
+
 ### GetNDuplicateSamples
 
 `func (o *InsightType) GetNDuplicateSamples() float64`
@@ -397,24 +498,64 @@ and a boolean to check if the value has been set.
 SetNDuplicateSamples sets NDuplicateSamples field to given value.
 
 
-### GetNCrossSubsetDuplications
+### GetFirstSubset
 
-`func (o *InsightType) GetNCrossSubsetDuplications() float64`
+`func (o *InsightType) GetFirstSubset() DataStateType`
 
-GetNCrossSubsetDuplications returns the NCrossSubsetDuplications field if non-nil, zero value otherwise.
+GetFirstSubset returns the FirstSubset field if non-nil, zero value otherwise.
 
-### GetNCrossSubsetDuplicationsOk
+### GetFirstSubsetOk
 
-`func (o *InsightType) GetNCrossSubsetDuplicationsOk() (*float64, bool)`
+`func (o *InsightType) GetFirstSubsetOk() (*DataStateType, bool)`
 
-GetNCrossSubsetDuplicationsOk returns a tuple with the NCrossSubsetDuplications field if it's non-nil, zero value otherwise
+GetFirstSubsetOk returns a tuple with the FirstSubset field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetNCrossSubsetDuplications
+### SetFirstSubset
 
-`func (o *InsightType) SetNCrossSubsetDuplications(v float64)`
+`func (o *InsightType) SetFirstSubset(v DataStateType)`
 
-SetNCrossSubsetDuplications sets NCrossSubsetDuplications field to given value.
+SetFirstSubset sets FirstSubset field to given value.
+
+
+### GetSecondSubset
+
+`func (o *InsightType) GetSecondSubset() DataStateType`
+
+GetSecondSubset returns the SecondSubset field if non-nil, zero value otherwise.
+
+### GetSecondSubsetOk
+
+`func (o *InsightType) GetSecondSubsetOk() (*DataStateType, bool)`
+
+GetSecondSubsetOk returns a tuple with the SecondSubset field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSecondSubset
+
+`func (o *InsightType) SetSecondSubset(v DataStateType)`
+
+SetSecondSubset sets SecondSubset field to given value.
+
+
+### GetNCrossSubsetsDuplications
+
+`func (o *InsightType) GetNCrossSubsetsDuplications() float64`
+
+GetNCrossSubsetsDuplications returns the NCrossSubsetsDuplications field if non-nil, zero value otherwise.
+
+### GetNCrossSubsetsDuplicationsOk
+
+`func (o *InsightType) GetNCrossSubsetsDuplicationsOk() (*float64, bool)`
+
+GetNCrossSubsetsDuplicationsOk returns a tuple with the NCrossSubsetsDuplications field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNCrossSubsetsDuplications
+
+`func (o *InsightType) SetNCrossSubsetsDuplications(v float64)`
+
+SetNCrossSubsetsDuplications sets NCrossSubsetsDuplications field to given value.
 
 
 

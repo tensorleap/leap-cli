@@ -8,6 +8,9 @@ Name | Type | Description | Notes
 **Filter** | [**ScatterFilter**](ScatterFilter.md) |  | 
 **MutualInfoElements** | Pointer to [**[]MutualInformationElement**](MutualInformationElement.md) |  | [optional] 
 **BlobPath** | Pointer to **string** |  | [optional] 
+**InsightSubCategoryDsCuration** | Pointer to [**InsightSubCategoryDSCuration**](InsightSubCategoryDSCuration.md) |  | [optional] 
+**InsightCategoryPerformance** | Pointer to [**InsightSubCategoryPerformance**](InsightSubCategoryPerformance.md) |  | [optional] 
+**Index** | Pointer to **float64** |  | [optional] 
 **UnderRepresentationDataset** | [**DataStateType**](DataStateType.md) |  | 
 **UnderRepresentationNSamples** | **float64** |  | 
 **OverRepresentationDataset** | [**DataStateType**](DataStateType.md) |  | 
@@ -122,6 +125,81 @@ SetBlobPath sets BlobPath field to given value.
 `func (o *UnderRepresentationInsight) HasBlobPath() bool`
 
 HasBlobPath returns a boolean if a field has been set.
+
+### GetInsightSubCategoryDsCuration
+
+`func (o *UnderRepresentationInsight) GetInsightSubCategoryDsCuration() InsightSubCategoryDSCuration`
+
+GetInsightSubCategoryDsCuration returns the InsightSubCategoryDsCuration field if non-nil, zero value otherwise.
+
+### GetInsightSubCategoryDsCurationOk
+
+`func (o *UnderRepresentationInsight) GetInsightSubCategoryDsCurationOk() (*InsightSubCategoryDSCuration, bool)`
+
+GetInsightSubCategoryDsCurationOk returns a tuple with the InsightSubCategoryDsCuration field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInsightSubCategoryDsCuration
+
+`func (o *UnderRepresentationInsight) SetInsightSubCategoryDsCuration(v InsightSubCategoryDSCuration)`
+
+SetInsightSubCategoryDsCuration sets InsightSubCategoryDsCuration field to given value.
+
+### HasInsightSubCategoryDsCuration
+
+`func (o *UnderRepresentationInsight) HasInsightSubCategoryDsCuration() bool`
+
+HasInsightSubCategoryDsCuration returns a boolean if a field has been set.
+
+### GetInsightCategoryPerformance
+
+`func (o *UnderRepresentationInsight) GetInsightCategoryPerformance() InsightSubCategoryPerformance`
+
+GetInsightCategoryPerformance returns the InsightCategoryPerformance field if non-nil, zero value otherwise.
+
+### GetInsightCategoryPerformanceOk
+
+`func (o *UnderRepresentationInsight) GetInsightCategoryPerformanceOk() (*InsightSubCategoryPerformance, bool)`
+
+GetInsightCategoryPerformanceOk returns a tuple with the InsightCategoryPerformance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInsightCategoryPerformance
+
+`func (o *UnderRepresentationInsight) SetInsightCategoryPerformance(v InsightSubCategoryPerformance)`
+
+SetInsightCategoryPerformance sets InsightCategoryPerformance field to given value.
+
+### HasInsightCategoryPerformance
+
+`func (o *UnderRepresentationInsight) HasInsightCategoryPerformance() bool`
+
+HasInsightCategoryPerformance returns a boolean if a field has been set.
+
+### GetIndex
+
+`func (o *UnderRepresentationInsight) GetIndex() float64`
+
+GetIndex returns the Index field if non-nil, zero value otherwise.
+
+### GetIndexOk
+
+`func (o *UnderRepresentationInsight) GetIndexOk() (*float64, bool)`
+
+GetIndexOk returns a tuple with the Index field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIndex
+
+`func (o *UnderRepresentationInsight) SetIndex(v float64)`
+
+SetIndex sets Index field to given value.
+
+### HasIndex
+
+`func (o *UnderRepresentationInsight) HasIndex() bool`
+
+HasIndex returns a boolean if a field has been set.
 
 ### GetUnderRepresentationDataset
 

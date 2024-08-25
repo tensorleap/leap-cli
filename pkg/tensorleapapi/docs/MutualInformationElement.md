@@ -8,6 +8,9 @@ Name | Type | Description | Notes
 **FeatureValue** | Pointer to **string** |  | [optional] 
 **Direction** | [**Direction**](Direction.md) |  | 
 **IsCategorical** | **bool** |  | 
+**ValueInCluster** | Pointer to **float64** |  | [optional] 
+**ValueOutsideCluster** | Pointer to **float64** |  | [optional] 
+**Score** | Pointer to **float64** |  | [optional] 
 
 ## Methods
 
@@ -112,6 +115,81 @@ and a boolean to check if the value has been set.
 
 SetIsCategorical sets IsCategorical field to given value.
 
+
+### GetValueInCluster
+
+`func (o *MutualInformationElement) GetValueInCluster() float64`
+
+GetValueInCluster returns the ValueInCluster field if non-nil, zero value otherwise.
+
+### GetValueInClusterOk
+
+`func (o *MutualInformationElement) GetValueInClusterOk() (*float64, bool)`
+
+GetValueInClusterOk returns a tuple with the ValueInCluster field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetValueInCluster
+
+`func (o *MutualInformationElement) SetValueInCluster(v float64)`
+
+SetValueInCluster sets ValueInCluster field to given value.
+
+### HasValueInCluster
+
+`func (o *MutualInformationElement) HasValueInCluster() bool`
+
+HasValueInCluster returns a boolean if a field has been set.
+
+### GetValueOutsideCluster
+
+`func (o *MutualInformationElement) GetValueOutsideCluster() float64`
+
+GetValueOutsideCluster returns the ValueOutsideCluster field if non-nil, zero value otherwise.
+
+### GetValueOutsideClusterOk
+
+`func (o *MutualInformationElement) GetValueOutsideClusterOk() (*float64, bool)`
+
+GetValueOutsideClusterOk returns a tuple with the ValueOutsideCluster field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetValueOutsideCluster
+
+`func (o *MutualInformationElement) SetValueOutsideCluster(v float64)`
+
+SetValueOutsideCluster sets ValueOutsideCluster field to given value.
+
+### HasValueOutsideCluster
+
+`func (o *MutualInformationElement) HasValueOutsideCluster() bool`
+
+HasValueOutsideCluster returns a boolean if a field has been set.
+
+### GetScore
+
+`func (o *MutualInformationElement) GetScore() float64`
+
+GetScore returns the Score field if non-nil, zero value otherwise.
+
+### GetScoreOk
+
+`func (o *MutualInformationElement) GetScoreOk() (*float64, bool)`
+
+GetScoreOk returns a tuple with the Score field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetScore
+
+`func (o *MutualInformationElement) SetScore(v float64)`
+
+SetScore sets Score field to given value.
+
+### HasScore
+
+`func (o *MutualInformationElement) HasScore() bool`
+
+HasScore returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
