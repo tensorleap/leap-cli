@@ -41,7 +41,7 @@ func AskForNewSecret(ctx context.Context, secrets []SecretEntity, name, key *str
 	isNameNotValid := err != nil
 	if isNameNotValid {
 		if len(*name) > 0 {
-			log.Warnf(err.Error())
+			log.Warn(err.Error())
 		}
 
 		*name, err = entity.AskForName(existingNames, *name, SecretEntityDesc)
