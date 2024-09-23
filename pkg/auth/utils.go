@@ -114,3 +114,13 @@ func PrintWhoami(ctx context.Context) error {
 	fmt.Println("Team name: " + userData.TeamName)
 	return nil
 }
+
+const API_PATH = "/api/v2"
+
+func NormalizeAPIUrl(url string) string {
+	url = strings.TrimSuffix(url, "/")
+	if strings.HasSuffix(url, API_PATH) {
+		return url
+	}
+	return fmt.Sprintf("%s%s", url, API_PATH)
+}
