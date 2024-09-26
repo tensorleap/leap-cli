@@ -33,23 +33,34 @@ func NewLoginCmd() *cobra.Command {
 
 			hasUserNameOrPassword := userName != "" || password != ""
 			hasApiKey := apiKey != ""
-			askIfUseUserAndPassword := !hasUserNameOrPassword && !hasApiKey
+			askIfUseLogin := !hasUserNameOrPassword && !hasApiKey
 			useLogin := hasUserNameOrPassword
-			if askIfUseUserAndPassword {
-				useLogin, err = auth.AskIfUseUserAndPassword()
+			if askIfUseLogin {
+				useLogin, err = auth.AskIfUseLogin()
 				if err != nil {
 					return err
 				}
 			}
 
 			if useLogin {
-				userName, password, err = auth.AskForUserNameAndPassword(userName, password)
+				useBrowser, err := auth.AskIfOpenBrowser()
 				if err != nil {
 					return err
 				}
-				apiKey, err = auth.LoginAndGetAuthToken(apiUrl, userName, password)
-				if err != nil {
-					return err
+				if useBrowser {
+					apiKey, err = auth.LoginAndGetAuthTokenWithBrowser(cmd.Context(), apiUrl)
+					if err != nil {
+						return err
+					}
+				} else {
+					userName, password, err = auth.AskForUserNameAndPassword(userName, password)
+					if err != nil {
+						return err
+					}
+					apiKey, err = auth.LoginAndGetAuthToken(apiUrl, userName, password)
+					if err != nil {
+						return err
+					}
 				}
 			} else if !hasApiKey {
 				apiKey, err = auth.AskForApiKey()
