@@ -1,16 +1,22 @@
 package auth
 
 import (
+	"context"
+	"crypto/rand"
+	"crypto/sha256"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/tensorleap/helm-charts/pkg/server"
 	"github.com/tensorleap/leap-cli/pkg/api"
+	"github.com/tensorleap/leap-cli/pkg/local"
 	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
@@ -27,7 +33,7 @@ func AskForUrl(defaultUrl string) (string, error) {
 	return url, err
 }
 
-func AskIfUseUserAndPassword() (bool, error) {
+func AskIfUseLogin() (bool, error) {
 	useLogin := false
 	prompt := &survey.Confirm{
 		Message: "Login with username and password?",
@@ -35,6 +41,99 @@ func AskIfUseUserAndPassword() (bool, error) {
 	}
 	err := survey.AskOne(prompt, &useLogin)
 	return useLogin, err
+}
+
+func AskIfOpenBrowser() (bool, error) {
+	openBrowser := false
+	prompt := &survey.Confirm{
+		Message: "Open browser for authentication?",
+		Default: true,
+	}
+	err := survey.AskOne(prompt, &openBrowser)
+	return openBrowser, err
+}
+
+// the response is a json with key apiToken
+type ApiKeyResponse struct {
+	ApiKey string `json:"apiKey"`
+}
+
+func LoginAndGetAuthTokenWithBrowser(ctx context.Context, apiUrl string) (string, error) {
+	baseUrl := strings.TrimSuffix(apiUrl, API_PATH)
+	codeVerifier, err := generateCodeVerifier()
+	if err != nil {
+		return "", fmt.Errorf("failed to generate code verifier: %w", err)
+	}
+	codeChallenge := generateCodeChallenge(codeVerifier)
+
+	url := fmt.Sprintf("%s/authorization-request?code_challenge=%s", baseUrl, codeChallenge)
+	err = local.OpenLink(url)
+	if err != nil {
+		log.Warnf("Failed to open browser: %v", err)
+	}
+	log.Info("Please open the following link in your browser (if not opened automatically):")
+	log.Info(url)
+	var apiKey string
+
+	err = api.WaitForCondition(ctx, "Waiting for authentication...", func() (bool, error) {
+		url := fmt.Sprintf("%s/auth/getApiKeyByCode", apiUrl)
+		type GetApiKeyByCode struct {
+			Code string `json:"codeVerifier"`
+		}
+
+		body, err := json.Marshal(GetApiKeyByCode{Code: codeVerifier})
+		if err != nil {
+			return false, err
+		}
+
+		req, err := http.NewRequest("POST", url, strings.NewReader(string(body)))
+		if err != nil {
+			return false, err
+		}
+		req.Header.Set("Content-Type", "application/json")
+		res, err := http.DefaultClient.Do(req)
+		if err != nil {
+			return false, err
+		}
+
+		if res.StatusCode == http.StatusOK {
+			var r ApiKeyResponse
+			err = json.NewDecoder(res.Body).Decode(&r)
+			if err != nil {
+				return false, err
+			}
+			apiKey = r.ApiKey
+			return true, nil
+
+		}
+		return false, nil
+
+	}, time.Second*3, time.Minute*5)
+
+	if err != nil {
+		return "", fmt.Errorf("failed to get API key: %w", err)
+	}
+	if apiKey == "" {
+		return "", fmt.Errorf("authentication failed")
+	}
+	return apiKey, nil
+}
+
+// Generate a code verifier: a cryptographically random string
+func generateCodeVerifier() (string, error) {
+	verifier := make([]byte, 32)
+	if _, err := rand.Read(verifier); err != nil {
+		return "", err
+	}
+	// Base64-url encode without padding
+	return base64.RawURLEncoding.EncodeToString(verifier), nil
+}
+
+// Generate the code challenge by hashing the verifier with SHA-256 and base64-url encoding
+func generateCodeChallenge(verifier string) string {
+	hash := sha256.Sum256([]byte(verifier))
+	// Base64-url encode the hash without padding
+	return base64.RawURLEncoding.EncodeToString(hash[:])
 }
 
 func AskForApiKey() (string, error) {
@@ -93,10 +192,7 @@ func LoginAndGetAuthToken(apiUrl, username, password string) (string, error) {
 	if err = api.CheckRes(resp, err); err != nil {
 		return "", err
 	}
-	// the response is a json with key apiToken
-	type ApiKeyResponse struct {
-		ApiKey string `json:"apiKey"`
-	}
+
 	var apiKey ApiKeyResponse
 	err = json.NewDecoder(resp.Body).Decode(&apiKey)
 	if err != nil {
