@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"strings"
+
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 )
@@ -17,7 +19,7 @@ func NewLoginCmd() *cobra.Command {
 		Short: "Login using API key or username/password",
 		Long:  `Login to the system using either an API key or a username and password`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			var apiKey, baseUrl string
+			var baseUrl string
 			var err error
 
 			hasJustUrl := len(args) == 1
@@ -68,6 +70,7 @@ func NewLoginCmd() *cobra.Command {
 					return err
 				}
 			}
+			apiKey = strings.TrimSpace(apiKey)
 
 			if name == "" {
 				name = auth.EnvNameFromUrl(apiUrl)
