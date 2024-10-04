@@ -116,11 +116,31 @@ func PrintWhoami(ctx context.Context) error {
 }
 
 const API_PATH = "/api/v2"
+const API_CLOUD_SUBDOMAIN = "://api."
 
-func NormalizeAPIUrl(url string) string {
+func isCloudUrl(url string) bool {
+	return strings.Contains(url, ".tensorleap.ai")
+}
+
+func NormalizeAPIUrl(url string) (string, error) {
 	url = strings.TrimSuffix(url, "/")
-	if strings.HasSuffix(url, API_PATH) {
-		return url
+	hasProtocol := strings.HasPrefix(url, "http://") || strings.HasPrefix(url, "https://")
+	if !hasProtocol {
+		return "", fmt.Errorf("URL must start with http:// or https://")
 	}
-	return fmt.Sprintf("%s%s", url, API_PATH)
+	isCloud := isCloudUrl(url)
+	hasApiSubdomain := strings.Contains(url, API_CLOUD_SUBDOMAIN)
+	if isCloud && !hasApiSubdomain {
+		url = strings.Replace(url, "://", API_CLOUD_SUBDOMAIN, 1)
+	}
+
+	if strings.HasSuffix(url, API_PATH) {
+		return url, nil
+	}
+	return fmt.Sprintf("%s%s", url, API_PATH), nil
+}
+
+func ChangeToUIUrl(apiUrl string) string {
+	url := strings.Replace(apiUrl, API_PATH, "", 1)
+	return strings.Replace(url, API_CLOUD_SUBDOMAIN, "://", 1)
 }
