@@ -31,7 +31,10 @@ func NewLoginCmd() *cobra.Command {
 					return err
 				}
 			}
-			apiUrl := auth.NormalizeAPIUrl(baseUrl)
+			apiUrl, err := auth.NormalizeAPIUrl(baseUrl)
+			if err != nil {
+				return err
+			}
 
 			hasUserNameOrPassword := userName != "" || password != ""
 			hasApiKey := apiKey != ""
