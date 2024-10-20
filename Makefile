@@ -1,4 +1,4 @@
-OSARCH := linux/386 linux/amd64 linux/arm linux/arm64 darwin/amd64 darwin/arm64
+OSARCH := linux/386 linux/amd64 linux/arm linux/arm64 darwin/amd64 darwin/arm64 windows/amd64
 CLI_BUILD_VERSION ?= cli version not set
 
 # set variables for updating server api

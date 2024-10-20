@@ -1,0 +1,116 @@
+[Setup]
+AppId=leap-cli.tensorleap.ai
+AppName=Leap CLI
+AppVersion={#AppVersion}
+AppPublisher=TensorLeap
+AppPublisherURL=https://github.com/tensorleap
+DefaultDirName={commonpf}\Leap CLI
+DefaultGroupName=Leap CLI
+OutputDir=.
+OutputBaseFilename=LeapCLIInstaller_{#AppVersion}_windows_amd64
+Compression=lzma
+SolidCompression=yes
+PrivilegesRequired=admin
+
+[Files]
+; Any files you need to include directly in the installer
+
+[Code]
+const
+  REPO_URL = 'https://github.com/tensorleap/leap-cli/releases/download/';
+  URLDOWNLOADTOFILE_OK = 0;
+
+var
+  Tag: string;
+
+function GetDownloadURL(Tag: string): string;
+begin
+  // Construct the full download URL for the selected version and platform
+  Result := REPO_URL + Tag + '/leap-windows-amd64';
+end;
+
+procedure InitializeWizard();
+begin
+  // Set the version tag dynamically from the AppVersion constant.
+  Tag := '{#AppVersion}';
+end;
+
+function OnDownloadProgress(const Url, Filename: string; const Progress, ProgressMax: Int64): Boolean;
+begin
+  if ProgressMax <> 0 then
+    Log(Format('  %d of %d bytes done.', [Progress, ProgressMax]))
+  else
+    Log(Format('  %d bytes done.', [Progress]));
+  Result := True;
+end;
+
+function DownloadFile(const URL, Dest: String): Boolean;
+begin
+  try
+    DownloadTemporaryFile(URL, Dest, '', @OnDownloadProgress);
+    Result := True;
+  except
+    // If the download fails, show an error message
+    MsgBox('Failed to download the file. Please check your internet connection or URL.', mbError, MB_OK);
+  end;
+end;
+
+function AddToPath(InstallDir: string): Boolean;
+var
+  Key: string;
+  OldPath: string;
+begin
+  Key := 'HKCU\Environment';
+  if RegQueryStringValue(HKCU, 'Environment', 'Path', OldPath) then
+  begin
+    if Pos(InstallDir, OldPath) = 0 then
+    begin
+      RegWriteStringValue(HKCU, 'Environment', 'Path', OldPath + ';' + InstallDir);
+      Result := True;
+    end
+    else
+      Log('The path is already in the PATH environment variable');
+      Result := True;
+  end
+  else
+  begin
+    RegWriteStringValue(HKCU, 'Environment', 'Path', InstallDir);
+    Result := True;
+  end;
+end;
+
+procedure CurStepChanged(CurStep: TSetupStep);
+var
+  URL: string;
+  FileName: string;
+begin
+  if CurStep = ssInstall then
+  begin
+    // Download the file
+    URL := GetDownloadURL(Tag);
+    if not DownloadFile(URL, 'leap.exe') then
+    begin
+      Exit;
+    end;
+    FileName := ExpandConstant('{tmp}\leap.exe');
+
+    // Move the downloaded file to the installation directory
+    if not FileCopy(FileName, ExpandConstant('{app}\leap.exe'), False) then
+    begin
+      MsgBox('Failed to copy the file to the installation directory.', mbError, MB_OK);
+      Exit;
+    end;
+
+    // Add the installation directory to the system PATH
+    if not AddToPath(ExpandConstant('{app}')) then
+    begin
+      MsgBox('Failed to update the system PATH.', mbError, MB_OK);
+    end;
+
+    // Clean up temporary files
+    DeleteFile(FileName);
+
+    Log('Successfully downloaded and installed Leap CLI version ' + Tag);
+  end;
+end;
+
