@@ -4,7 +4,7 @@ import (
 	"embed"
 	"fmt"
 	"os"
-	"path"
+	"path/filepath"
 	"text/template"
 
 	"gopkg.in/yaml.v3"
@@ -62,10 +62,10 @@ func CreateCodeTemplate(codeIntegrationId, projectId, secretId, outputDir string
 			fmt.Println(fileName, "already exists")
 		} else {
 			fmt.Println("Adding file:", fileName)
-			filePath := path.Join("template", fileName)
+			filePath := filepath.Join("template", fileName)
 			templateContent, _ := templateDir.ReadFile(filePath)
 			tmpl, _ := template.New(fileName).Parse(string(templateContent))
-			targetPath := path.Join(outputDir, fileName)
+			targetPath := filepath.Join(outputDir, fileName)
 			targetFile, err := os.Create(targetPath)
 			if err != nil {
 				return err
@@ -120,7 +120,7 @@ func SetWorkspaceConfig(workspaceConfig *WorkspaceConfig, outputDir string) erro
 	if err != nil {
 		return err
 	}
-	fullPath := path.Join(outputDir, configFileName)
+	fullPath := filepath.Join(outputDir, configFileName)
 	err = os.WriteFile(fullPath, content, 0644)
 	if err != nil {
 		return fmt.Errorf("failed to update config (.leap.yaml) : %v", err)

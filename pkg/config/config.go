@@ -3,7 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 
 	"github.com/spf13/viper"
@@ -17,7 +17,7 @@ func getDefaultConfigPath() (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("error getting home directory: %v", err)
 	}
-	return path.Join(homeDir, ".config", "tensorleap/config.yaml"), nil
+	return filepath.Join(homeDir, ".config", "tensorleap/config.yaml"), nil
 }
 
 func validateConfigPath(cfgFile string) error {
@@ -25,7 +25,7 @@ func validateConfigPath(cfgFile string) error {
 		return fmt.Errorf("config file is required")
 	}
 
-	if !path.IsAbs(cfgFile) {
+	if !filepath.IsAbs(cfgFile) {
 		return fmt.Errorf("cli config file must be an absolute path, current path: %s", cfgFile)
 	}
 	return nil
@@ -48,12 +48,12 @@ func InitConfig(cfgFile string) error {
 		return err
 	}
 
-	cfgFile = strings.TrimSuffix(cfgFile, path.Ext(cfgFile))
+	cfgFile = strings.TrimSuffix(cfgFile, filepath.Ext(cfgFile))
 
-	configDir := path.Dir(cfgFile)
-	configName := path.Base(cfgFile)
+	configDir := filepath.Dir(cfgFile)
+	configName := filepath.Base(cfgFile)
 	configType := "yaml"
-	configPath := path.Join(configDir, fmt.Sprintf("%s.%s", configName, configType))
+	configPath := filepath.Join(configDir, fmt.Sprintf("%s.%s", configName, configType))
 	if err := os.MkdirAll(configDir, os.ModePerm); err != nil {
 		return err
 	}
