@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path"
 	"path/filepath"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
@@ -109,7 +108,7 @@ func CreateTarGzFile(filesDir string, filePaths []string, file io.Writer) error 
 	defer tarWriter.Close()
 
 	for _, relativePath := range filePaths {
-		filePath := path.Join(filesDir, relativePath)
+		filePath := filepath.Join(filesDir, relativePath)
 		fileInfo, err := os.Stat(filePath)
 		if err != nil {
 			return err

@@ -7,7 +7,7 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"path"
+	"path/filepath"
 	"time"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
@@ -175,7 +175,7 @@ func ExportProjectIntoFile(ctx context.Context, project *ProjectEntity, outputDi
 	exportUrl := exportParams.ExportUrl
 
 	fileName := fmt.Sprintf("%s-%v.tar.gz", project.Name, exportParams.ProjectVersion)
-	filePath := path.Join(outputDir, fileName)
+	filePath := filepath.Join(outputDir, fileName)
 
 	file, err := os.Create(filePath)
 	if err != nil {

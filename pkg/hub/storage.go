@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"path/filepath"
+	"path"
 	"strings"
 	"time"
 
@@ -249,7 +249,7 @@ func GenerateProjectFilePaths(namespace string, meta *ProjectMeta) *ProjectFileP
 	schemaVersion := meta.SchemaVersion
 	bgImageName := meta.BgImagePath
 
-	imgType := filepath.Ext(filepath.Base(bgImageName))
+	imgType := path.Ext(path.Base(bgImageName))
 	projectRelativeDir := CalcProjectVersionPath(name, schemaVersion)
 	now := time.Now().Unix()
 	tarPath := fmt.Sprintf("%s/%d-%s", projectRelativeDir, now, PROJECT_TAR_FILE_SUFFIX_NAME)
