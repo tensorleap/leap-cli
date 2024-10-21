@@ -7,7 +7,6 @@ on:
       - v*.*.*
 jobs:
   build:
-
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -47,5 +46,35 @@ jobs:
           generateReleaseNotes: true
           prerelease: ${{ steps.semver.outputs.prerelease != '' }}
           replacesArtifacts: true
+  build-windows-installer:
+    runs-on: windows-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
 
+      - name: Extract Tag from Ref
+        if: startsWith(github.ref, 'refs/tags/')
+        id: tag
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+        shell: bash
 
+      - name: Install Inno Setup
+        run: choco install innosetup --no-progress
+        shell: cmd
+
+      - name: Replace version in Inno Setup script
+        run: |
+          (Get-Content windows-installer.iss.template) -replace '{#AppVersion}', '${{ steps.tag.outputs.VERSION }}' | Set-Content windows-installer.iss
+        shell: pwsh
+
+      - name: Compile the installer using Inno Setup
+        run: |
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "windows-installer.iss"
+
+      - name: Upload the Windows installer to the release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./LeapCLIInstaller_${{ steps.tag.outputs.VERSION }}_windows_amd64.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
