@@ -28,6 +28,10 @@ wget -q -O - https://raw.githubusercontent.com/tensorleap/leap-cli/master/instal
 2. Rename the binary to `leap`
 3. Save it `/usr/local/bin` (or anywhere else in your `$PATH`)
 
+### Windows installation
+
+To install on Windows, go to the [releases page](https://github.com/tensorleap/leap-cli/releases)  and download the Windows installer. Please note that the server installation is not supported on Windows; you can only use this installation to connect to an existing server.
+
 ### Shell Completions
 
 In order to enabled shell completions, add `source <(leap completion zsh)` to your `~/.zshrc` file
