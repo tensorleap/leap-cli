@@ -64,7 +64,7 @@ jobs:
 
       - name: Replace version in Inno Setup script
         run: |
-          (Get-Content windows-installer.iss.template) -replace '{#AppVersion}', '${{ steps.tag.outputs.VERSION }}' | Set-Content windows-installer.iss
+          (Get-Content windows-installer.iss.template) -replace '{#AppVersion}', '${{ github.env.VERSION }}' | Set-Content windows-installer.iss
         shell: pwsh
 
       - name: Compile the installer using Inno Setup
@@ -75,6 +75,6 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         with:
-          files: ./LeapCLIInstaller_${{ steps.tag.outputs.VERSION }}_windows_amd64.exe
+          files: ./LeapCLIInstaller_${{ github.env.VERSION }}_windows_amd64.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
