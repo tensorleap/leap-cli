@@ -9,6 +9,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
 )
@@ -57,7 +58,7 @@ func ExtractTarGzFile(file io.Reader, outputDir string) ([]string, error) {
 		if readEnd {
 			return files, nil
 		}
-		files = append(files, fileName)
+		files = append(files, ConvertPathToUnix(fileName))
 	}
 }
 
@@ -118,7 +119,7 @@ func CreateTarGzFile(filesDir string, filePaths []string, file io.Writer) error 
 		if err != nil {
 			return err
 		}
-		header.Name = filePath
+		header.Name = ConvertPathToUnix(filePath)
 		err = tarWriter.WriteHeader(header)
 		if err != nil {
 			return err
@@ -134,6 +135,10 @@ func CreateTarGzFile(filesDir string, filePaths []string, file io.Writer) error 
 	}
 
 	return nil
+}
+
+func ConvertPathToUnix(windowsPath string) string {
+	return strings.ReplaceAll(windowsPath, "\\", "/")
 }
 
 func CleanupTempFile(file *os.File) {
