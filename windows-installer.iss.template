@@ -7,7 +7,7 @@ AppPublisherURL=https://github.com/tensorleap
 DefaultDirName={commonpf}\Leap CLI
 DefaultGroupName=Leap CLI
 OutputDir=.
-OutputBaseFilename=LeapCLIInstaller_{#AppVersion}_windows_amd64.exe
+OutputBaseFilename=LeapCLIInstaller_{#AppVersion}_windows_amd64
 Compression=lzma
 SolidCompression=yes
 PrivilegesRequired=admin
@@ -26,7 +26,7 @@ var
 function GetDownloadURL(Tag: string): string;
 begin
   // Construct the full download URL for the selected version and platform
-  Result := REPO_URL + Tag + '/leap-windows-amd64';
+  Result := REPO_URL + Tag + '/leap-windows-amd64.exe';
 end;
 
 procedure InitializeWizard();
