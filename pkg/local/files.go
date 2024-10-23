@@ -141,6 +141,28 @@ func ConvertPathToUnix(windowsPath string) string {
 	return strings.ReplaceAll(windowsPath, "\\", "/")
 }
 
+// Convert only the path separators (backslashes) to forward slashes while preserving escape sequences.
+func ConvertPathPatternToUnix(pattern string) string {
+	var result strings.Builder
+
+	for i := 0; i < len(pattern); i++ {
+		if pattern[i] == '\\' {
+			// Check if the next character exists and is a special character (escape sequence)
+			if i+1 < len(pattern) && strings.ContainsAny(string(pattern[i+1]), `[]{}()*+?.,\\^$|#`) {
+				result.WriteByte(pattern[i])
+				result.WriteByte(pattern[i+1])
+				i++
+			} else {
+				result.WriteByte('/')
+			}
+		} else {
+			result.WriteByte(pattern[i])
+		}
+	}
+
+	return result.String()
+}
+
 func CleanupTempFile(file *os.File) {
 	file.Close()
 	os.Remove(file.Name())

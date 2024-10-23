@@ -149,6 +149,7 @@ func getDatasetFiles(filesDir string, workspaceConfig *workspace.WorkspaceConfig
 	var allMatchedFiles []string
 	allFilePaths := append(workspaceConfig.IncludePatterns, BindingFilePath)
 	for _, pattern := range allFilePaths {
+		pattern = local.ConvertPathPatternToUnix(pattern)
 		matches, err := fs.Glob(currentDirFs, pattern)
 		if err != nil {
 			return nil, err

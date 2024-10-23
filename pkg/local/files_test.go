@@ -40,3 +40,10 @@ func TestDownloadAndExtractTarFile(t *testing.T) {
 	assert.FileExists(t, filepath.Join(outputDir, "project.json"))
 	assert.Len(t, files, 42)
 }
+
+func TestConvertPathToUnixWithEscaping(t *testing.T) {
+	assert.Equal(t, "a/b/c", ConvertPathPatternToUnix("a\\b\\c"))
+	assert.Equal(t, "a/b/c", ConvertPathPatternToUnix("a/b/c"))
+	assert.Equal(t, "a/b/c", ConvertPathPatternToUnix("a/b\\c"))
+	assert.Equal(t, "a/b/c\\[d\\]*", ConvertPathPatternToUnix("a\\b\\c\\[d\\]*"))
+}
