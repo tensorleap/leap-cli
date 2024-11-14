@@ -8,12 +8,13 @@ Name | Type | Description | Notes
 **ProjectId** | **string** |  | 
 **SampleIdentity** | [**SampleIdentity**](SampleIdentity.md) |  | 
 **FromEpoch** | **float64** |  | 
+**Algo** | [**SampleAnalysisAlgo**](SampleAnalysisAlgo.md) |  | 
 
 ## Methods
 
 ### NewSampleAnalysisParams
 
-`func NewSampleAnalysisParams(sessionRunId string, projectId string, sampleIdentity SampleIdentity, fromEpoch float64, ) *SampleAnalysisParams`
+`func NewSampleAnalysisParams(sessionRunId string, projectId string, sampleIdentity SampleIdentity, fromEpoch float64, algo SampleAnalysisAlgo, ) *SampleAnalysisParams`
 
 NewSampleAnalysisParams instantiates a new SampleAnalysisParams object
 This constructor will assign default values to properties that have it defined,
@@ -106,6 +107,26 @@ and a boolean to check if the value has been set.
 `func (o *SampleAnalysisParams) SetFromEpoch(v float64)`
 
 SetFromEpoch sets FromEpoch field to given value.
+
+
+### GetAlgo
+
+`func (o *SampleAnalysisParams) GetAlgo() SampleAnalysisAlgo`
+
+GetAlgo returns the Algo field if non-nil, zero value otherwise.
+
+### GetAlgoOk
+
+`func (o *SampleAnalysisParams) GetAlgoOk() (*SampleAnalysisAlgo, bool)`
+
+GetAlgoOk returns a tuple with the Algo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAlgo
+
+`func (o *SampleAnalysisParams) SetAlgo(v SampleAnalysisAlgo)`
+
+SetAlgo sets Algo field to given value.
 
 
 

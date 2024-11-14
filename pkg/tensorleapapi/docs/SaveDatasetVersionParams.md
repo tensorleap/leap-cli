@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **SecretManagerId** | Pointer to **string** |  | [optional] 
 **CodeUrl** | **string** |  | 
 **CodeEntryFile** | **string** |  | 
+**Branch** | Pointer to **string** |  | [optional] 
 **Note** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -139,6 +140,31 @@ and a boolean to check if the value has been set.
 
 SetCodeEntryFile sets CodeEntryFile field to given value.
 
+
+### GetBranch
+
+`func (o *SaveDatasetVersionParams) GetBranch() string`
+
+GetBranch returns the Branch field if non-nil, zero value otherwise.
+
+### GetBranchOk
+
+`func (o *SaveDatasetVersionParams) GetBranchOk() (*string, bool)`
+
+GetBranchOk returns a tuple with the Branch field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBranch
+
+`func (o *SaveDatasetVersionParams) SetBranch(v string)`
+
+SetBranch sets Branch field to given value.
+
+### HasBranch
+
+`func (o *SaveDatasetVersionParams) HasBranch() bool`
+
+HasBranch returns a boolean if a field has been set.
 
 ### GetNote
 

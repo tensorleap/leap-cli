@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **Text** | **[]string** |  | 
 **Mask** | **[]float64** |  | 
 **Data** | [**[]CompositeVizItem**](CompositeVizItem.md) |  | 
+**Algo** | Pointer to [**SampleAnalysisAlgo**](SampleAnalysisAlgo.md) |  | [optional] 
 
 ## Methods
 
@@ -259,6 +260,31 @@ and a boolean to check if the value has been set.
 
 SetData sets Data field to given value.
 
+
+### GetAlgo
+
+`func (o *VisualizedItemData) GetAlgo() SampleAnalysisAlgo`
+
+GetAlgo returns the Algo field if non-nil, zero value otherwise.
+
+### GetAlgoOk
+
+`func (o *VisualizedItemData) GetAlgoOk() (*SampleAnalysisAlgo, bool)`
+
+GetAlgoOk returns a tuple with the Algo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAlgo
+
+`func (o *VisualizedItemData) SetAlgo(v SampleAnalysisAlgo)`
+
+SetAlgo sets Algo field to given value.
+
+### HasAlgo
+
+`func (o *VisualizedItemData) HasAlgo() bool`
+
+HasAlgo returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

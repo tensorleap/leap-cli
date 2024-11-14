@@ -7,17 +7,17 @@ Name | Type | Description | Notes
 **SessionRunId** | **string** |  | 
 **ProjectId** | **string** |  | 
 **BatchSize** | **float64** |  | 
-**NumOfSamples** | **float64** |  | 
 **FromEpoch** | **float64** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **Digest** | **string** |  | 
 **ProjectionMetric** | Pointer to **string** |  | [optional] 
+**DisplayParams** | [**PopulationExplorationDisplayParams**](PopulationExplorationDisplayParams.md) |  | 
 
 ## Methods
 
 ### NewPopulationExplorationParams
 
-`func NewPopulationExplorationParams(sessionRunId string, projectId string, batchSize float64, numOfSamples float64, fromEpoch float64, digest string, ) *PopulationExplorationParams`
+`func NewPopulationExplorationParams(sessionRunId string, projectId string, batchSize float64, fromEpoch float64, digest string, displayParams PopulationExplorationDisplayParams, ) *PopulationExplorationParams`
 
 NewPopulationExplorationParams instantiates a new PopulationExplorationParams object
 This constructor will assign default values to properties that have it defined,
@@ -90,26 +90,6 @@ and a boolean to check if the value has been set.
 `func (o *PopulationExplorationParams) SetBatchSize(v float64)`
 
 SetBatchSize sets BatchSize field to given value.
-
-
-### GetNumOfSamples
-
-`func (o *PopulationExplorationParams) GetNumOfSamples() float64`
-
-GetNumOfSamples returns the NumOfSamples field if non-nil, zero value otherwise.
-
-### GetNumOfSamplesOk
-
-`func (o *PopulationExplorationParams) GetNumOfSamplesOk() (*float64, bool)`
-
-GetNumOfSamplesOk returns a tuple with the NumOfSamples field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNumOfSamples
-
-`func (o *PopulationExplorationParams) SetNumOfSamples(v float64)`
-
-SetNumOfSamples sets NumOfSamples field to given value.
 
 
 ### GetFromEpoch
@@ -201,6 +181,26 @@ SetProjectionMetric sets ProjectionMetric field to given value.
 `func (o *PopulationExplorationParams) HasProjectionMetric() bool`
 
 HasProjectionMetric returns a boolean if a field has been set.
+
+### GetDisplayParams
+
+`func (o *PopulationExplorationParams) GetDisplayParams() PopulationExplorationDisplayParams`
+
+GetDisplayParams returns the DisplayParams field if non-nil, zero value otherwise.
+
+### GetDisplayParamsOk
+
+`func (o *PopulationExplorationParams) GetDisplayParamsOk() (*PopulationExplorationDisplayParams, bool)`
+
+GetDisplayParamsOk returns a tuple with the DisplayParams field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDisplayParams
+
+`func (o *PopulationExplorationParams) SetDisplayParams(v PopulationExplorationDisplayParams)`
+
+SetDisplayParams sets DisplayParams field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -10,14 +10,14 @@ Name | Type | Description | Notes
 **SourceDatasetId** | Pointer to **string** |  | [optional] 
 **Access** | [**DatasetAccess**](DatasetAccess.md) |  | 
 **CreatedAt** | **string** |  | 
-**LatestValidVersion** | Pointer to [**DatasetVersion**](DatasetVersion.md) |  | [optional] 
-**LatestVersion** | Pointer to [**DatasetVersion**](DatasetVersion.md) |  | [optional] 
+**DefaultBranch** | **string** |  | 
+**LatestVersions** | [**[]DatasetLatestVersionsInner**](DatasetLatestVersionsInner.md) |  | 
 
 ## Methods
 
 ### NewDataset
 
-`func NewDataset(cid string, name NullableString, teamId string, access DatasetAccess, createdAt string, ) *Dataset`
+`func NewDataset(cid string, name NullableString, teamId string, access DatasetAccess, createdAt string, defaultBranch string, latestVersions []DatasetLatestVersionsInner, ) *Dataset`
 
 NewDataset instantiates a new Dataset object
 This constructor will assign default values to properties that have it defined,
@@ -167,55 +167,45 @@ and a boolean to check if the value has been set.
 SetCreatedAt sets CreatedAt field to given value.
 
 
-### GetLatestValidVersion
+### GetDefaultBranch
 
-`func (o *Dataset) GetLatestValidVersion() DatasetVersion`
+`func (o *Dataset) GetDefaultBranch() string`
 
-GetLatestValidVersion returns the LatestValidVersion field if non-nil, zero value otherwise.
+GetDefaultBranch returns the DefaultBranch field if non-nil, zero value otherwise.
 
-### GetLatestValidVersionOk
+### GetDefaultBranchOk
 
-`func (o *Dataset) GetLatestValidVersionOk() (*DatasetVersion, bool)`
+`func (o *Dataset) GetDefaultBranchOk() (*string, bool)`
 
-GetLatestValidVersionOk returns a tuple with the LatestValidVersion field if it's non-nil, zero value otherwise
+GetDefaultBranchOk returns a tuple with the DefaultBranch field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetLatestValidVersion
+### SetDefaultBranch
 
-`func (o *Dataset) SetLatestValidVersion(v DatasetVersion)`
+`func (o *Dataset) SetDefaultBranch(v string)`
 
-SetLatestValidVersion sets LatestValidVersion field to given value.
+SetDefaultBranch sets DefaultBranch field to given value.
 
-### HasLatestValidVersion
 
-`func (o *Dataset) HasLatestValidVersion() bool`
+### GetLatestVersions
 
-HasLatestValidVersion returns a boolean if a field has been set.
+`func (o *Dataset) GetLatestVersions() []DatasetLatestVersionsInner`
 
-### GetLatestVersion
+GetLatestVersions returns the LatestVersions field if non-nil, zero value otherwise.
 
-`func (o *Dataset) GetLatestVersion() DatasetVersion`
+### GetLatestVersionsOk
 
-GetLatestVersion returns the LatestVersion field if non-nil, zero value otherwise.
+`func (o *Dataset) GetLatestVersionsOk() (*[]DatasetLatestVersionsInner, bool)`
 
-### GetLatestVersionOk
-
-`func (o *Dataset) GetLatestVersionOk() (*DatasetVersion, bool)`
-
-GetLatestVersionOk returns a tuple with the LatestVersion field if it's non-nil, zero value otherwise
+GetLatestVersionsOk returns a tuple with the LatestVersions field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetLatestVersion
+### SetLatestVersions
 
-`func (o *Dataset) SetLatestVersion(v DatasetVersion)`
+`func (o *Dataset) SetLatestVersions(v []DatasetLatestVersionsInner)`
 
-SetLatestVersion sets LatestVersion field to given value.
+SetLatestVersions sets LatestVersions field to given value.
 
-### HasLatestVersion
-
-`func (o *Dataset) HasLatestVersion() bool`
-
-HasLatestVersion returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -8,8 +8,7 @@ Name | Type | Description | Notes
 **ModelGraph** | [**ModelGraph**](ModelGraph.md) |  | 
 **BranchName** | **string** |  | 
 **Description** | **string** |  | 
-**CodeIntegrationVersionId** | Pointer to **string** |  | [optional] 
-**DatasetSetup** | [**DatasetSetup**](DatasetSetup.md) |  | 
+**CodeIntegration** | Pointer to [**CodeIntegrationBinder**](CodeIntegrationBinder.md) |  | [optional] 
 **Hash** | Pointer to **string** |  | [optional] 
 **CopySessionIds** | Pointer to **[]string** |  | [optional] 
 
@@ -17,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewAddVersionParams
 
-`func NewAddVersionParams(projectId string, modelGraph ModelGraph, branchName string, description string, datasetSetup DatasetSetup, ) *AddVersionParams`
+`func NewAddVersionParams(projectId string, modelGraph ModelGraph, branchName string, description string, ) *AddVersionParams`
 
 NewAddVersionParams instantiates a new AddVersionParams object
 This constructor will assign default values to properties that have it defined,
@@ -112,50 +111,30 @@ and a boolean to check if the value has been set.
 SetDescription sets Description field to given value.
 
 
-### GetCodeIntegrationVersionId
+### GetCodeIntegration
 
-`func (o *AddVersionParams) GetCodeIntegrationVersionId() string`
+`func (o *AddVersionParams) GetCodeIntegration() CodeIntegrationBinder`
 
-GetCodeIntegrationVersionId returns the CodeIntegrationVersionId field if non-nil, zero value otherwise.
+GetCodeIntegration returns the CodeIntegration field if non-nil, zero value otherwise.
 
-### GetCodeIntegrationVersionIdOk
+### GetCodeIntegrationOk
 
-`func (o *AddVersionParams) GetCodeIntegrationVersionIdOk() (*string, bool)`
+`func (o *AddVersionParams) GetCodeIntegrationOk() (*CodeIntegrationBinder, bool)`
 
-GetCodeIntegrationVersionIdOk returns a tuple with the CodeIntegrationVersionId field if it's non-nil, zero value otherwise
+GetCodeIntegrationOk returns a tuple with the CodeIntegration field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCodeIntegrationVersionId
+### SetCodeIntegration
 
-`func (o *AddVersionParams) SetCodeIntegrationVersionId(v string)`
+`func (o *AddVersionParams) SetCodeIntegration(v CodeIntegrationBinder)`
 
-SetCodeIntegrationVersionId sets CodeIntegrationVersionId field to given value.
+SetCodeIntegration sets CodeIntegration field to given value.
 
-### HasCodeIntegrationVersionId
+### HasCodeIntegration
 
-`func (o *AddVersionParams) HasCodeIntegrationVersionId() bool`
+`func (o *AddVersionParams) HasCodeIntegration() bool`
 
-HasCodeIntegrationVersionId returns a boolean if a field has been set.
-
-### GetDatasetSetup
-
-`func (o *AddVersionParams) GetDatasetSetup() DatasetSetup`
-
-GetDatasetSetup returns the DatasetSetup field if non-nil, zero value otherwise.
-
-### GetDatasetSetupOk
-
-`func (o *AddVersionParams) GetDatasetSetupOk() (*DatasetSetup, bool)`
-
-GetDatasetSetupOk returns a tuple with the DatasetSetup field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDatasetSetup
-
-`func (o *AddVersionParams) SetDatasetSetup(v DatasetSetup)`
-
-SetDatasetSetup sets DatasetSetup field to given value.
-
+HasCodeIntegration returns a boolean if a field has been set.
 
 ### GetHash
 

@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Data** | [**[]GradsItem**](GradsItem.md) |  | 
 **Type** | [**DataTypeEnum**](DataTypeEnum.md) |  | 
+**Algo** | Pointer to [**SampleAnalysisAlgo**](SampleAnalysisAlgo.md) |  | [optional] 
 
 ## Methods
 
@@ -65,6 +66,31 @@ and a boolean to check if the value has been set.
 
 SetType sets Type field to given value.
 
+
+### GetAlgo
+
+`func (o *GradsAnalysis) GetAlgo() SampleAnalysisAlgo`
+
+GetAlgo returns the Algo field if non-nil, zero value otherwise.
+
+### GetAlgoOk
+
+`func (o *GradsAnalysis) GetAlgoOk() (*SampleAnalysisAlgo, bool)`
+
+GetAlgoOk returns a tuple with the Algo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAlgo
+
+`func (o *GradsAnalysis) SetAlgo(v SampleAnalysisAlgo)`
+
+SetAlgo sets Algo field to given value.
+
+### HasAlgo
+
+`func (o *GradsAnalysis) HasAlgo() bool`
+
+HasAlgo returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

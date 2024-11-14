@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Epoch** | **float64** |  | 
 **SampleIdentities** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
 **Digest** | **string** |  | 
+**Refresh** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -128,6 +129,31 @@ and a boolean to check if the value has been set.
 
 SetDigest sets Digest field to given value.
 
+
+### GetRefresh
+
+`func (o *CreateSampleVisualizationsParams) GetRefresh() bool`
+
+GetRefresh returns the Refresh field if non-nil, zero value otherwise.
+
+### GetRefreshOk
+
+`func (o *CreateSampleVisualizationsParams) GetRefreshOk() (*bool, bool)`
+
+GetRefreshOk returns a tuple with the Refresh field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRefresh
+
+`func (o *CreateSampleVisualizationsParams) SetRefresh(v bool)`
+
+SetRefresh sets Refresh field to given value.
+
+### HasRefresh
+
+`func (o *CreateSampleVisualizationsParams) HasRefresh() bool`
+
+HasRefresh returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

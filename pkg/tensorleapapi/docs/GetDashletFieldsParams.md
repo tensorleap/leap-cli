@@ -5,12 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
+**SessionRunIds** | **[]string** |  | 
 
 ## Methods
 
 ### NewGetDashletFieldsParams
 
-`func NewGetDashletFieldsParams(projectId string, ) *GetDashletFieldsParams`
+`func NewGetDashletFieldsParams(projectId string, sessionRunIds []string, ) *GetDashletFieldsParams`
 
 NewGetDashletFieldsParams instantiates a new GetDashletFieldsParams object
 This constructor will assign default values to properties that have it defined,
@@ -43,6 +44,26 @@ and a boolean to check if the value has been set.
 `func (o *GetDashletFieldsParams) SetProjectId(v string)`
 
 SetProjectId sets ProjectId field to given value.
+
+
+### GetSessionRunIds
+
+`func (o *GetDashletFieldsParams) GetSessionRunIds() []string`
+
+GetSessionRunIds returns the SessionRunIds field if non-nil, zero value otherwise.
+
+### GetSessionRunIdsOk
+
+`func (o *GetDashletFieldsParams) GetSessionRunIdsOk() (*[]string, bool)`
+
+GetSessionRunIdsOk returns a tuple with the SessionRunIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSessionRunIds
+
+`func (o *GetDashletFieldsParams) SetSessionRunIds(v []string)`
+
+SetSessionRunIds sets SessionRunIds field to given value.
 
 
 

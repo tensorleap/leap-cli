@@ -16,12 +16,13 @@ Name | Type | Description | Notes
 **SessionRuns** | Pointer to [**[]SessionRunData**](SessionRunData.md) |  | [optional] 
 **SessionWeights** | Pointer to [**[]SessionWeightData**](SessionWeightData.md) |  | [optional] 
 **Properties** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
+**HasExternalEpoch** | **bool** |  | 
 
 ## Methods
 
 ### NewSession
 
-`func NewSession(projectId string, cid string, modelName string, createdAt time.Time, teamId string, ) *Session`
+`func NewSession(projectId string, cid string, modelName string, createdAt time.Time, teamId string, hasExternalEpoch bool, ) *Session`
 
 NewSession instantiates a new Session object
 This constructor will assign default values to properties that have it defined,
@@ -320,6 +321,26 @@ SetProperties sets Properties field to given value.
 `func (o *Session) HasProperties() bool`
 
 HasProperties returns a boolean if a field has been set.
+
+### GetHasExternalEpoch
+
+`func (o *Session) GetHasExternalEpoch() bool`
+
+GetHasExternalEpoch returns the HasExternalEpoch field if non-nil, zero value otherwise.
+
+### GetHasExternalEpochOk
+
+`func (o *Session) GetHasExternalEpochOk() (*bool, bool)`
+
+GetHasExternalEpochOk returns a tuple with the HasExternalEpoch field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHasExternalEpoch
+
+`func (o *Session) SetHasExternalEpoch(v bool)`
+
+SetHasExternalEpoch sets HasExternalEpoch field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

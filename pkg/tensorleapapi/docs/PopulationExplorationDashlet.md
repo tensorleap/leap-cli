@@ -9,12 +9,13 @@ Name | Type | Description | Notes
 **PinFilters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **Type** | **string** |  | 
 **Name** | **string** |  | 
+**Data** | [**PopulationExplorationDashletData**](PopulationExplorationDashletData.md) |  | 
 
 ## Methods
 
 ### NewPopulationExplorationDashlet
 
-`func NewPopulationExplorationDashlet(cid string, layout SizedLayout, type_ string, name string, ) *PopulationExplorationDashlet`
+`func NewPopulationExplorationDashlet(cid string, layout SizedLayout, type_ string, name string, data PopulationExplorationDashletData, ) *PopulationExplorationDashlet`
 
 NewPopulationExplorationDashlet instantiates a new PopulationExplorationDashlet object
 This constructor will assign default values to properties that have it defined,
@@ -132,6 +133,26 @@ and a boolean to check if the value has been set.
 `func (o *PopulationExplorationDashlet) SetName(v string)`
 
 SetName sets Name field to given value.
+
+
+### GetData
+
+`func (o *PopulationExplorationDashlet) GetData() PopulationExplorationDashletData`
+
+GetData returns the Data field if non-nil, zero value otherwise.
+
+### GetDataOk
+
+`func (o *PopulationExplorationDashlet) GetDataOk() (*PopulationExplorationDashletData, bool)`
+
+GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetData
+
+`func (o *PopulationExplorationDashlet) SetData(v PopulationExplorationDashletData)`
+
+SetData sets Data field to given value.
 
 
 
