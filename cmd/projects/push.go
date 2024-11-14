@@ -18,7 +18,8 @@ func NewPushCmd() *cobra.Command {
 	var secretId string
 	var message string
 	var modelType string
-	var branchName string
+	var modelBranch string
+	var codeBranch string
 	var transformInput bool
 	var force bool
 	var noWait bool
@@ -83,6 +84,12 @@ func NewPushCmd() *cobra.Command {
 				return err
 			}
 
+			codeIntegrationBranches := code.BranchesFromCodeIntegration(codeIntegration)
+			codeBranch, err = code.SyncBranchFromFlagAndConfig(codeBranch, workspaceConfig, codeIntegrationBranches, codeIntegration.GetDefaultBranch())
+			if err != nil {
+				return err
+			}
+
 			secretId, err := secret.SyncSecretIdFromFlagAndConfig(ctx, secretId, workspaceConfig)
 			if err != nil {
 				return err
@@ -94,7 +101,7 @@ func NewPushCmd() *cobra.Command {
 			}
 			defer close()
 
-			pushed, currentVersion, err := code.PushCode(ctx, force, codeIntegration.Cid, tarGzFile, workspaceConfig.EntryFile, secretId)
+			pushed, currentVersion, err := code.PushCode(ctx, force, codeIntegration.Cid, tarGzFile, workspaceConfig.EntryFile, secretId, codeBranch)
 			if err != nil {
 				return err
 			}
@@ -119,7 +126,7 @@ func NewPushCmd() *cobra.Command {
 				return fmt.Errorf("latest code parsing failed, add --force to push anyway")
 			}
 
-			err = model.ImportModel(ctx, modelPath, currentProject.GetCid(), message, modelType, branchName, codeIntegration.GetCid(), transformInput, !noWait)
+			err = model.ImportModel(ctx, modelPath, currentProject.GetCid(), message, modelType, modelBranch, codeIntegration.GetCid(), codeBranch, transformInput, !noWait)
 			if err != nil {
 				return err
 			}
@@ -129,7 +136,8 @@ func NewPushCmd() *cobra.Command {
 
 	cmd.Flags().StringVarP(&message, "message", "m", "", "Version message")
 	cmd.Flags().StringVar(&modelType, "type", "", "Type is the type of the model file [JSON_TF2 / ONNX / PB_TF2 / H5_TF2]")
-	cmd.Flags().StringVar(&branchName, "branch", "", "Branch is the name of the branch [OPTIONAL]")
+	cmd.Flags().StringVar(&modelBranch, "model-branch", "", "Name of the model branch [OPTIONAL]")
+	cmd.Flags().StringVar(&codeBranch, "code-branch", "", "Name of the code branch [OPTIONAL]")
 	cmd.Flags().StringVar(&secretId, "secretId", "", "Secret id")
 	cmd.Flags().BoolVarP(&force, "force", "f", false, "Force push code integration")
 	cmd.Flags().BoolVar(&transformInput, "transform-input", true, "Transform input in case of ONNX model")

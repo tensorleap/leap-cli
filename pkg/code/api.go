@@ -73,9 +73,15 @@ func DeleteCodeIntegration(ctx context.Context, codeIntegration *CodeIntegration
 	return nil
 }
 
-func GetLatestVersion(ctx context.Context, codeIntegrationId string) (*tensorleapapi.DatasetVersion, error) {
+func GetLatestVersion(ctx context.Context, codeIntegrationId string, branch string) (*tensorleapapi.DatasetVersion, error) {
+	params := *tensorleapapi.NewGetLatestDatasetVersionParams(codeIntegrationId)
+	if len(branch) == 0 {
+		branch = "master"
+	}
+	params.SetBranch(branch)
+
 	version, _, err := ApiClient.GetLatestDatasetVersion(ctx).
-		GetLatestDatasetVersionParams(*tensorleapapi.NewGetLatestDatasetVersionParams(codeIntegrationId)).
+		GetLatestDatasetVersionParams(params).
 		Execute()
 	if err != nil {
 		return nil, fmt.Errorf("failed to get latest version for code integration id: %s", codeIntegrationId)
@@ -91,7 +97,7 @@ func GetCodeIntegration(ctx context.Context, id string) (*CodeIntegrationVersion
 	return &res.DatasetVersion, err
 }
 
-func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, fileSize int64, codeIntegrationId, entryFile, secretId string) (*CodeIntegrationVersion, error) {
+func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, fileSize int64, codeIntegrationId, entryFile, secretId, branch string) (*CodeIntegrationVersion, error) {
 
 	getDatasetVersionUploadUrlParams := *tensorleapapi.NewGetDatasetVersionUploadUrlParams(
 		codeIntegrationId,
@@ -116,6 +122,11 @@ func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, fileSiz
 		entryFile,
 	)
 
+	if len(branch) == 0 {
+		branch = "master"
+	}
+	saveDatasetVersionParams.SetBranch(branch)
+
 	if len(secretId) > 0 {
 		saveDatasetVersionParams.SecretManagerId = &secretId
 	}
@@ -127,8 +138,13 @@ func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, fileSiz
 	if err != nil {
 		return nil, err
 	}
+	for _, latestVersionPerBranch := range res.Dataset.LatestVersions {
+		if latestVersionPerBranch.Branch == branch {
+			return latestVersionPerBranch.Latest, nil
+		}
+	}
 
-	return res.Dataset.LatestVersion, nil
+	return nil, fmt.Errorf("failed to create a new code integration version")
 }
 
 func WaitForCodeIntegrationStatus(ctx context.Context, codeIntegrationId string) (ok bool, codeIntegrationVersion *CodeIntegrationVersion, err error) {

@@ -12,12 +12,14 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/entity"
 	"github.com/tensorleap/leap-cli/pkg/local"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 	"github.com/tensorleap/leap-cli/pkg/workspace"
+	"k8s.io/kubectl/pkg/util/slice"
 )
 
 var ErrEmptyCodeIntegrationVersion = fmt.Errorf("CodeIntegration is empty")
@@ -63,6 +65,19 @@ func AskForCodeIntegrationName(codeIntegrations []CodeIntegration) (name string,
 
 	name, err = entity.AskForName(existingNames, "", CodeIntegrationEntityDesc)
 	return
+}
+
+func AskForCodeIntegrationNameIfExisted(name string, codeIntegrations []CodeIntegration) (string, error) {
+
+	existingNames := entity.GetNames(codeIntegrations, CodeIntegrationEntityDesc)
+	if len(name) > 0 {
+		if !slice.ContainsString(existingNames, name, nil) {
+			return name, nil
+		}
+		log.Warnf("Code integration name '%s' already exists, Please select new one", name)
+	}
+
+	return entity.AskForName(existingNames, name, CodeIntegrationEntityDesc)
 }
 
 func isDatasetVersionEmpty(datasetVersion *tensorleapapi.DatasetVersion) bool {
@@ -193,11 +208,11 @@ func PrintCodeIntegrationVersionParserErr(civ *CodeIntegrationVersion) {
 	fmt.Println(*civ.Metadata.SetupStatus.PrintLog)
 }
 
-func PushCode(ctx context.Context, force bool, codeIntegrationId string, tarGzFile *os.File, entryFile, secretId string) (pushed bool, current *CodeIntegrationVersion, err error) {
+func PushCode(ctx context.Context, force bool, codeIntegrationId string, tarGzFile *os.File, entryFile, secretId, branch string) (pushed bool, current *CodeIntegrationVersion, err error) {
 	if !force {
 		log.Info("Checking if code has changed")
 
-		latestVersion, err := GetLatestVersion(ctx, codeIntegrationId)
+		latestVersion, err := GetLatestVersion(ctx, codeIntegrationId, branch)
 
 		if err != nil {
 			log.Warnf("Failed to get latest code integration version: %v", err)
@@ -219,7 +234,7 @@ func PushCode(ctx context.Context, force bool, codeIntegrationId string, tarGzFi
 		return false, nil, fmt.Errorf("failed to get file stat: %v", err)
 	}
 
-	codeIntegrationVersion, err := AddCodeIntegrationVersion(ctx, tarGzFile, fileStat.Size(), codeIntegrationId, entryFile, secretId)
+	codeIntegrationVersion, err := AddCodeIntegrationVersion(ctx, tarGzFile, fileStat.Size(), codeIntegrationId, entryFile, secretId, branch)
 	if err != nil {
 		return false, nil, err
 	}
@@ -283,8 +298,8 @@ func IsCodeParsing(codeIntegrationVersion *CodeIntegrationVersion) bool {
 	return codeIntegrationVersion.TestStatus == tensorleapapi.TESTSTATUS_DURING_TEST || codeIntegrationVersion.TestStatus == tensorleapapi.TESTSTATUS_BEFORE_TEST
 }
 
-func GetDatasetMappingYaml(ctx context.Context, codeIntegrationId string) string {
-	codeIntegrationVersion, err := GetLatestVersion(ctx, codeIntegrationId)
+func GetDatasetMappingYaml(ctx context.Context, codeIntegrationId, branch string) string {
+	codeIntegrationVersion, err := GetLatestVersion(ctx, codeIntegrationId, branch)
 	if err != nil {
 		return ""
 	}
@@ -307,4 +322,77 @@ func GetDatasetMappingYaml(ctx context.Context, codeIntegrationId string) string
 	}
 
 	return string(content)
+}
+
+func SyncBranchFromFlagAndConfig(flagBranch string, workspaceConfig *workspace.WorkspaceConfig, branches []string, defaultBranch string) (string, error) {
+	var branch string
+	if len(flagBranch) == 0 {
+		branch = workspaceConfig.Branch
+	} else {
+		branch = flagBranch
+	}
+
+	if len(branch) > 0 {
+		branch, err := CreateOrSelectBranch(branch, branches, defaultBranch)
+		if err != nil {
+			return "", err
+		}
+		if workspaceConfig.Branch != branch {
+			log.Infof("Updating leap.yaml branch to %s", branch)
+			workspaceConfig.Branch = branch
+			err = workspace.SetWorkspaceConfig(workspaceConfig, ".")
+			if err != nil {
+				return "", err
+			}
+		}
+	}
+	return branch, nil
+}
+
+func CreateOrSelectBranch(branch string, branches []string, defaultBranch string) (selectedBranch string, err error) {
+	if branch != "" {
+		selectedBranch = branch
+		return
+	}
+	// autocomplete
+	prompt := &survey.Input{
+		Message: "Enter branch name",
+		Default: defaultBranch,
+		Help:    fmt.Sprintf("Available branches: %s", branches),
+	}
+	err = survey.AskOne(prompt, &selectedBranch)
+	if err != nil {
+		return "", err
+	}
+	return selectedBranch, nil
+}
+
+func SelectBranch(branches []string, defaultBranch string) (selectedBranch string, err error) {
+	if len(branches) == 0 {
+		return "", fmt.Errorf("no version available")
+	}
+	if len(branches) == 1 {
+		selectedBranch = branches[0]
+		log.Infof("Selected branch: %s", selectedBranch)
+		return selectedBranch, nil
+	}
+
+	prompt := &survey.Select{
+		Message: "Select branch",
+		Options: branches,
+		Default: defaultBranch,
+	}
+	err = survey.AskOne(prompt, &selectedBranch)
+	if err != nil {
+		return "", err
+	}
+	return selectedBranch, nil
+}
+
+func BranchesFromCodeIntegration(codeIntegration *CodeIntegration) []string {
+	var branches []string
+	for _, latest := range codeIntegration.LatestVersions {
+		branches = append(branches, latest.Branch)
+	}
+	return branches
 }

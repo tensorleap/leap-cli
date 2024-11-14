@@ -1,6 +1,7 @@
 codeIntegrationId: {{ .CodeIntegrationId }}
 projectId: {{ .ProjectId }}
 secretId: {{ .SecretId }}
+branch: {{ .Branch }}
 entryFile: 'leap_binder.py'
 include:
   - leap_binder.py

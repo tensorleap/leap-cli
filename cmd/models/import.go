@@ -14,7 +14,8 @@ func NewImportCmd() *cobra.Command {
 	var projectId string
 	var message string
 	var modelType string
-	var branchName string
+	var modelBranch string
+	var codeIntegrationBranch string
 	var transformInput bool
 	var codeIntegrationId string
 	var noWait bool
@@ -57,7 +58,7 @@ func NewImportCmd() *cobra.Command {
 				projectId = selected.GetCid()
 			}
 
-			err = model.ImportModel(ctx, modelPath, projectId, message, modelType, branchName, codeIntegrationId, transformInput, !noWait)
+			err = model.ImportModel(ctx, modelPath, projectId, message, modelType, modelBranch, codeIntegrationId, codeIntegrationBranch, transformInput, !noWait)
 			if err != nil {
 				return err
 			}
@@ -68,7 +69,8 @@ func NewImportCmd() *cobra.Command {
 	cmd.Flags().StringVar(&projectId, "projectId", "", "ProjectId is the id of the project the model will be imported to")
 	cmd.Flags().StringVarP(&message, "message", "m", "", "Version message")
 	cmd.Flags().StringVar(&modelType, "type", "", "Type is the type of the model file [JSON_TF2 / ONNX / PB_TF2 / H5_TF2]")
-	cmd.Flags().StringVar(&branchName, "branch", "", "Branch is the name of the branch [OPTIONAL]")
+	cmd.Flags().StringVar(&modelBranch, "model-branch", "", "Name of the model branch [OPTIONAL]")
+	cmd.Flags().StringVar(&codeIntegrationBranch, "code-branch", "", "Name of the code integration branch [OPTIONAL]")
 	cmd.Flags().StringVar(&codeIntegrationId, "codeId", "", "This is a code integration id (Will use the last valid dataset version)")
 	cmd.Flags().BoolVar(&transformInput, "transform-input", true, "Transform input in case of ONNX model")
 	cmd.Flags().BoolVar(&noWait, "no-wait", false, "Do not wait for push to complete")

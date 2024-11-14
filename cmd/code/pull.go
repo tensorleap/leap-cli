@@ -13,12 +13,13 @@ import (
 
 func NewPullCmd() *cobra.Command {
 	var cmd = &cobra.Command{
-		Use:   "pull [dataset-id]",
+		Use:   "pull [dataset-id] [branch]",
 		Short: "Pull dataset into a new directory",
 		Long:  `Pull dataset into a new directory`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var selectedDataset *code.CodeIntegration
 			var err error
+			var selectedBranch string
 			ctx := cmd.Context()
 			codeIntegrations, err := code.GetCodeIntegrations(ctx)
 			if err != nil {
@@ -26,10 +27,17 @@ func NewPullCmd() *cobra.Command {
 			}
 			if len(args) == 0 {
 				selectedDataset, err = entity.SelectEntity(codeIntegrations, code.CodeIntegrationEntityDesc)
-
+				if err != nil {
+					return err
+				}
+				branches := code.BranchesFromCodeIntegration(selectedDataset)
+				selectedBranch, err = code.SelectBranch(branches, selectedDataset.DefaultBranch)
 			} else {
 				datasetId := args[0]
 				selectedDataset, err = entity.GetEntityById(datasetId, codeIntegrations, code.CodeIntegrationEntityDesc)
+				if args[1] != "" {
+					selectedBranch = args[1]
+				}
 			}
 			if err != nil {
 				return err
@@ -42,7 +50,7 @@ func NewPullCmd() *cobra.Command {
 			if dirExistsErr == nil {
 				return fmt.Errorf("can't pull '%s' dataset, directory named '%s' already exists on current directory", datasetName, datasetName)
 			}
-			latestVersion, err := code.GetLatestVersion(ctx, selectedDataset.GetCid())
+			latestVersion, err := code.GetLatestVersion(ctx, selectedDataset.GetCid(), selectedBranch)
 			secretId := latestVersion.Metadata.GetSecretManagerId()
 			if err == nil {
 				files, err := code.CloneCodeIntegrationVersion(ctx, latestVersion, datasetName)
@@ -50,14 +58,14 @@ func NewPullCmd() *cobra.Command {
 					return err
 				}
 
-				workspaceConfig := workspace.NewWorkspaceConfig(selectedDataset.GetCid(), "", latestVersion.GetCodeEntryFile(), secretId, files)
+				workspaceConfig := workspace.NewWorkspaceConfig(selectedDataset.GetCid(), "", latestVersion.GetCodeEntryFile(), secretId, latestVersion.Branch, files)
 				err = workspace.SetWorkspaceConfig(workspaceConfig, datasetName)
 				if err != nil {
 					return err
 				}
 			} else if err == code.ErrEmptyCodeIntegrationVersion {
 				log.Warn("The selected dataset is empty, Create default template")
-				err = workspace.CreateCodeTemplate(selectedDataset.GetCid(), "", secretId, datasetName)
+				err = workspace.CreateCodeTemplate(selectedDataset.GetCid(), "", secretId, datasetName, selectedBranch)
 				if err != nil {
 					return err
 				}

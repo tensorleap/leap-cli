@@ -12,6 +12,7 @@ func NewInitCmd() *cobra.Command {
 	var projectId string
 	var secretId string
 	var codeIntegrationId string
+	var codeIntegrationBranch string
 
 	var cmd = &cobra.Command{
 		Use:   "init",
@@ -35,7 +36,7 @@ func NewInitCmd() *cobra.Command {
 
 			isCreatingEmptyTemplate := true
 			if !wasCreatedCodeIntegration {
-				latestVersion, err := code.GetLatestVersion(ctx, codeIntegration.GetCid())
+				latestVersion, err := code.GetLatestVersion(ctx, codeIntegration.GetCid(), codeIntegrationBranch)
 				if err != nil && code.ErrEmptyCodeIntegrationVersion != err {
 					return err
 				} else if err == nil {
@@ -43,18 +44,21 @@ func NewInitCmd() *cobra.Command {
 						secretId = latestVersion.Metadata.GetSecretManagerId()
 					}
 					isCreatingEmptyTemplate = false
-					_, err = code.CloneCodeIntegrationVersion(ctx, latestVersion, ".")
+					files, err := code.CloneCodeIntegrationVersion(ctx, latestVersion, ".")
 					if err != nil {
 						return err
 					}
 
-					err := workspace.OverrideWorkspaceConfig(
+					err = workspace.OverrideWorkspaceConfig(
 						codeIntegration.GetCid(),
 						selectedProject.GetCid(),
 						latestVersion.GetCodeEntryFile(),
 						secretId,
+						latestVersion.Branch,
+						files,
 						".",
 					)
+
 					if err != nil {
 						return err
 					}
@@ -76,6 +80,7 @@ func NewInitCmd() *cobra.Command {
 					codeIntegration.GetCid(),
 					selectedProject.GetCid(),
 					secretId,
+					codeIntegrationBranch,
 					".",
 				)
 				if err != nil {
@@ -89,6 +94,7 @@ func NewInitCmd() *cobra.Command {
 
 	cmd.Flags().StringVar(&projectId, "projectId", "", "ProjectId is the id of the project")
 	cmd.Flags().StringVar(&projectId, "codeId", "", "CodeIntegrationId is the id of the code integration to bind")
+	cmd.Flags().StringVar(&codeIntegrationBranch, "branch", "", "Branch of the code integration to bind")
 
 	return cmd
 }
