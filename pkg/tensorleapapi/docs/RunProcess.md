@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **Params** | Pointer to [**JobParams**](JobParams.md) |  | [optional] 
 **MachineType** | Pointer to **string** |  | [optional] 
 **BatchSize** | Pointer to **float64** |  | [optional] 
+**DatasetVersionInfo** | Pointer to [**DatasetVersionInfo**](DatasetVersionInfo.md) |  | [optional] 
 
 ## Methods
 
@@ -456,6 +457,31 @@ SetBatchSize sets BatchSize field to given value.
 `func (o *RunProcess) HasBatchSize() bool`
 
 HasBatchSize returns a boolean if a field has been set.
+
+### GetDatasetVersionInfo
+
+`func (o *RunProcess) GetDatasetVersionInfo() DatasetVersionInfo`
+
+GetDatasetVersionInfo returns the DatasetVersionInfo field if non-nil, zero value otherwise.
+
+### GetDatasetVersionInfoOk
+
+`func (o *RunProcess) GetDatasetVersionInfoOk() (*DatasetVersionInfo, bool)`
+
+GetDatasetVersionInfoOk returns a tuple with the DatasetVersionInfo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDatasetVersionInfo
+
+`func (o *RunProcess) SetDatasetVersionInfo(v DatasetVersionInfo)`
+
+SetDatasetVersionInfo sets DatasetVersionInfo field to given value.
+
+### HasDatasetVersionInfo
+
+`func (o *RunProcess) HasDatasetVersionInfo() bool`
+
+HasDatasetVersionInfo returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

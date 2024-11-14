@@ -13,13 +13,14 @@ Name | Type | Description | Notes
 **TestStatus** | [**TestStatus**](TestStatus.md) |  | 
 **Metadata** | [**DatasetMetadata**](DatasetMetadata.md) |  | 
 **BlobPath** | **string** |  | 
+**Branch** | **string** |  | 
 **CodeEntryFile** | **string** |  | 
 
 ## Methods
 
 ### NewDatasetVersion
 
-`func NewDatasetVersion(cid string, teamId string, datasetId string, note string, createdAt string, createdBy string, testStatus TestStatus, metadata DatasetMetadata, blobPath string, codeEntryFile string, ) *DatasetVersion`
+`func NewDatasetVersion(cid string, teamId string, datasetId string, note string, createdAt string, createdBy string, testStatus TestStatus, metadata DatasetMetadata, blobPath string, branch string, codeEntryFile string, ) *DatasetVersion`
 
 NewDatasetVersion instantiates a new DatasetVersion object
 This constructor will assign default values to properties that have it defined,
@@ -212,6 +213,26 @@ and a boolean to check if the value has been set.
 `func (o *DatasetVersion) SetBlobPath(v string)`
 
 SetBlobPath sets BlobPath field to given value.
+
+
+### GetBranch
+
+`func (o *DatasetVersion) GetBranch() string`
+
+GetBranch returns the Branch field if non-nil, zero value otherwise.
+
+### GetBranchOk
+
+`func (o *DatasetVersion) GetBranchOk() (*string, bool)`
+
+GetBranchOk returns a tuple with the Branch field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBranch
+
+`func (o *DatasetVersion) SetBranch(v string)`
+
+SetBranch sets Branch field to given value.
 
 
 ### GetCodeEntryFile

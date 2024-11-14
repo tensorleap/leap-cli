@@ -16,8 +16,7 @@ Name | Type | Description | Notes
 **Notes** | **string** |  | 
 **Status** | **string** |  | 
 **IsFavourite** | **bool** |  | 
-**CodeIntegrationVersionId** | Pointer to **string** |  | [optional] 
-**DatasetSetup** | Pointer to [**DatasetSetup**](DatasetSetup.md) |  | [optional] 
+**CodeIntegration** | Pointer to [**CodeIntegrationBinder**](CodeIntegrationBinder.md) |  | [optional] 
 **Hash** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -284,55 +283,30 @@ and a boolean to check if the value has been set.
 SetIsFavourite sets IsFavourite field to given value.
 
 
-### GetCodeIntegrationVersionId
+### GetCodeIntegration
 
-`func (o *Version) GetCodeIntegrationVersionId() string`
+`func (o *Version) GetCodeIntegration() CodeIntegrationBinder`
 
-GetCodeIntegrationVersionId returns the CodeIntegrationVersionId field if non-nil, zero value otherwise.
+GetCodeIntegration returns the CodeIntegration field if non-nil, zero value otherwise.
 
-### GetCodeIntegrationVersionIdOk
+### GetCodeIntegrationOk
 
-`func (o *Version) GetCodeIntegrationVersionIdOk() (*string, bool)`
+`func (o *Version) GetCodeIntegrationOk() (*CodeIntegrationBinder, bool)`
 
-GetCodeIntegrationVersionIdOk returns a tuple with the CodeIntegrationVersionId field if it's non-nil, zero value otherwise
+GetCodeIntegrationOk returns a tuple with the CodeIntegration field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCodeIntegrationVersionId
+### SetCodeIntegration
 
-`func (o *Version) SetCodeIntegrationVersionId(v string)`
+`func (o *Version) SetCodeIntegration(v CodeIntegrationBinder)`
 
-SetCodeIntegrationVersionId sets CodeIntegrationVersionId field to given value.
+SetCodeIntegration sets CodeIntegration field to given value.
 
-### HasCodeIntegrationVersionId
+### HasCodeIntegration
 
-`func (o *Version) HasCodeIntegrationVersionId() bool`
+`func (o *Version) HasCodeIntegration() bool`
 
-HasCodeIntegrationVersionId returns a boolean if a field has been set.
-
-### GetDatasetSetup
-
-`func (o *Version) GetDatasetSetup() DatasetSetup`
-
-GetDatasetSetup returns the DatasetSetup field if non-nil, zero value otherwise.
-
-### GetDatasetSetupOk
-
-`func (o *Version) GetDatasetSetupOk() (*DatasetSetup, bool)`
-
-GetDatasetSetupOk returns a tuple with the DatasetSetup field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDatasetSetup
-
-`func (o *Version) SetDatasetSetup(v DatasetSetup)`
-
-SetDatasetSetup sets DatasetSetup field to given value.
-
-### HasDatasetSetup
-
-`func (o *Version) HasDatasetSetup() bool`
-
-HasDatasetSetup returns a boolean if a field has been set.
+HasCodeIntegration returns a boolean if a field has been set.
 
 ### GetHash
 

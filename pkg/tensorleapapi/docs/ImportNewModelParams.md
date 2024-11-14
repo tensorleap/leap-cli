@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **ProjectId** | **string** |  | 
 **FileName** | **string** |  | 
 **DatasetId** | Pointer to **string** |  | [optional] 
+**CodeIntegrationBranch** | Pointer to **string** |  | [optional] 
 **ModelName** | **string** |  | 
 **VersionName** | **string** |  | 
 **BranchName** | Pointer to **string** |  | [optional] 
@@ -97,6 +98,31 @@ SetDatasetId sets DatasetId field to given value.
 `func (o *ImportNewModelParams) HasDatasetId() bool`
 
 HasDatasetId returns a boolean if a field has been set.
+
+### GetCodeIntegrationBranch
+
+`func (o *ImportNewModelParams) GetCodeIntegrationBranch() string`
+
+GetCodeIntegrationBranch returns the CodeIntegrationBranch field if non-nil, zero value otherwise.
+
+### GetCodeIntegrationBranchOk
+
+`func (o *ImportNewModelParams) GetCodeIntegrationBranchOk() (*string, bool)`
+
+GetCodeIntegrationBranchOk returns a tuple with the CodeIntegrationBranch field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCodeIntegrationBranch
+
+`func (o *ImportNewModelParams) SetCodeIntegrationBranch(v string)`
+
+SetCodeIntegrationBranch sets CodeIntegrationBranch field to given value.
+
+### HasCodeIntegrationBranch
+
+`func (o *ImportNewModelParams) HasCodeIntegrationBranch() bool`
+
+HasCodeIntegrationBranch returns a boolean if a field has been set.
 
 ### GetModelName
 

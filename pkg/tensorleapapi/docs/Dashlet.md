@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **Layout** | [**SizedLayout**](SizedLayout.md) |  | 
 **PinFilters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **Type** | **string** |  | 
-**Data** | [**AnalyticsDashletData**](AnalyticsDashletData.md) |  | 
+**Data** | [**PopulationExplorationDashletData**](PopulationExplorationDashletData.md) |  | 
 **Name** | **string** |  | 
 **CollectionIds** | **[]string** |  | 
 **Sample** | Pointer to [**SampleIdentity**](SampleIdentity.md) |  | [optional] 
@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 
 ### NewDashlet
 
-`func NewDashlet(cid string, layout SizedLayout, type_ string, data AnalyticsDashletData, name string, collectionIds []string, ) *Dashlet`
+`func NewDashlet(cid string, layout SizedLayout, type_ string, data PopulationExplorationDashletData, name string, collectionIds []string, ) *Dashlet`
 
 NewDashlet instantiates a new Dashlet object
 This constructor will assign default values to properties that have it defined,
@@ -120,20 +120,20 @@ SetType sets Type field to given value.
 
 ### GetData
 
-`func (o *Dashlet) GetData() AnalyticsDashletData`
+`func (o *Dashlet) GetData() PopulationExplorationDashletData`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *Dashlet) GetDataOk() (*AnalyticsDashletData, bool)`
+`func (o *Dashlet) GetDataOk() (*PopulationExplorationDashletData, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *Dashlet) SetData(v AnalyticsDashletData)`
+`func (o *Dashlet) SetData(v PopulationExplorationDashletData)`
 
 SetData sets Data field to given value.
 

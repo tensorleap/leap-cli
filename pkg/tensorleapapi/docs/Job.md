@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **Params** | Pointer to [**JobParams**](JobParams.md) |  | [optional] 
 **SessionRunId** | Pointer to **string** |  | [optional] 
 **TeamId** | **string** |  | 
+**DatasetVersionInfo** | Pointer to [**DatasetVersionInfo**](DatasetVersionInfo.md) |  | [optional] 
 
 ## Methods
 
@@ -300,6 +301,31 @@ and a boolean to check if the value has been set.
 
 SetTeamId sets TeamId field to given value.
 
+
+### GetDatasetVersionInfo
+
+`func (o *Job) GetDatasetVersionInfo() DatasetVersionInfo`
+
+GetDatasetVersionInfo returns the DatasetVersionInfo field if non-nil, zero value otherwise.
+
+### GetDatasetVersionInfoOk
+
+`func (o *Job) GetDatasetVersionInfoOk() (*DatasetVersionInfo, bool)`
+
+GetDatasetVersionInfoOk returns a tuple with the DatasetVersionInfo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDatasetVersionInfo
+
+`func (o *Job) SetDatasetVersionInfo(v DatasetVersionInfo)`
+
+SetDatasetVersionInfo sets DatasetVersionInfo field to given value.
+
+### HasDatasetVersionInfo
+
+`func (o *Job) HasDatasetVersionInfo() bool`
+
+HasDatasetVersionInfo returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

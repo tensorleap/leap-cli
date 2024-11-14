@@ -9,12 +9,15 @@ Name | Type | Description | Notes
 **HubDefaultNamespace** | **string** |  | 
 **HubUrl** | **string** |  | 
 **DisableDatadogMetrics** | **bool** |  | 
+**IsCloud** | **bool** |  | 
+**GatewayUrl** | **string** |  | 
+**ProxyUrl** | **string** |  | 
 
 ## Methods
 
 ### NewGetEnvironmentInfoResponse
 
-`func NewGetEnvironmentInfoResponse(clientStoragePrefixUrl string, schemaVersion float64, hubDefaultNamespace string, hubUrl string, disableDatadogMetrics bool, ) *GetEnvironmentInfoResponse`
+`func NewGetEnvironmentInfoResponse(clientStoragePrefixUrl string, schemaVersion float64, hubDefaultNamespace string, hubUrl string, disableDatadogMetrics bool, isCloud bool, gatewayUrl string, proxyUrl string, ) *GetEnvironmentInfoResponse`
 
 NewGetEnvironmentInfoResponse instantiates a new GetEnvironmentInfoResponse object
 This constructor will assign default values to properties that have it defined,
@@ -127,6 +130,66 @@ and a boolean to check if the value has been set.
 `func (o *GetEnvironmentInfoResponse) SetDisableDatadogMetrics(v bool)`
 
 SetDisableDatadogMetrics sets DisableDatadogMetrics field to given value.
+
+
+### GetIsCloud
+
+`func (o *GetEnvironmentInfoResponse) GetIsCloud() bool`
+
+GetIsCloud returns the IsCloud field if non-nil, zero value otherwise.
+
+### GetIsCloudOk
+
+`func (o *GetEnvironmentInfoResponse) GetIsCloudOk() (*bool, bool)`
+
+GetIsCloudOk returns a tuple with the IsCloud field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsCloud
+
+`func (o *GetEnvironmentInfoResponse) SetIsCloud(v bool)`
+
+SetIsCloud sets IsCloud field to given value.
+
+
+### GetGatewayUrl
+
+`func (o *GetEnvironmentInfoResponse) GetGatewayUrl() string`
+
+GetGatewayUrl returns the GatewayUrl field if non-nil, zero value otherwise.
+
+### GetGatewayUrlOk
+
+`func (o *GetEnvironmentInfoResponse) GetGatewayUrlOk() (*string, bool)`
+
+GetGatewayUrlOk returns a tuple with the GatewayUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGatewayUrl
+
+`func (o *GetEnvironmentInfoResponse) SetGatewayUrl(v string)`
+
+SetGatewayUrl sets GatewayUrl field to given value.
+
+
+### GetProxyUrl
+
+`func (o *GetEnvironmentInfoResponse) GetProxyUrl() string`
+
+GetProxyUrl returns the ProxyUrl field if non-nil, zero value otherwise.
+
+### GetProxyUrlOk
+
+`func (o *GetEnvironmentInfoResponse) GetProxyUrlOk() (*string, bool)`
+
+GetProxyUrlOk returns a tuple with the ProxyUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProxyUrl
+
+`func (o *GetEnvironmentInfoResponse) SetProxyUrl(v string)`
+
+SetProxyUrl sets ProxyUrl field to given value.
 
 
 

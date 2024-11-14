@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **ExperimentId** | **string** |  | 
 **Epoch** | **float64** |  | 
 **Metrics** | [**map[string]EpochMetricsValue**](EpochMetricsValue.md) |  | 
-**Force** | Pointer to **bool** |  | [optional] 
+**Override** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -109,30 +109,30 @@ and a boolean to check if the value has been set.
 SetMetrics sets Metrics field to given value.
 
 
-### GetForce
+### GetOverride
 
-`func (o *LogExternalEpochDataRequest) GetForce() bool`
+`func (o *LogExternalEpochDataRequest) GetOverride() bool`
 
-GetForce returns the Force field if non-nil, zero value otherwise.
+GetOverride returns the Override field if non-nil, zero value otherwise.
 
-### GetForceOk
+### GetOverrideOk
 
-`func (o *LogExternalEpochDataRequest) GetForceOk() (*bool, bool)`
+`func (o *LogExternalEpochDataRequest) GetOverrideOk() (*bool, bool)`
 
-GetForceOk returns a tuple with the Force field if it's non-nil, zero value otherwise
+GetOverrideOk returns a tuple with the Override field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetForce
+### SetOverride
 
-`func (o *LogExternalEpochDataRequest) SetForce(v bool)`
+`func (o *LogExternalEpochDataRequest) SetOverride(v bool)`
 
-SetForce sets Force field to given value.
+SetOverride sets Override field to given value.
 
-### HasForce
+### HasOverride
 
-`func (o *LogExternalEpochDataRequest) HasForce() bool`
+`func (o *LogExternalEpochDataRequest) HasOverride() bool`
 
-HasForce returns a boolean if a field has been set.
+HasOverride returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -35,6 +35,7 @@ docs/AnalyzeParams.md
 docs/AnalyzeTypeEnum.md
 docs/ApplyDatasetMappingsParams.md
 docs/ApplyMappingResponse.md
+docs/ArchiveInsightsParams.md
 docs/AuthProviderEnum.md
 docs/BBoxImageData.md
 docs/BBoxImageViz.md
@@ -45,6 +46,9 @@ docs/ChartData.md
 docs/ClientFilterParams.md
 docs/ClusterInsight.md
 docs/Clusters.md
+docs/CodeIntegrationBinder.md
+docs/CodeIntegrationBinderByBranch.md
+docs/CodeIntegrationBinderById.md
 docs/CodeIntegrationMappingErrorsParams.md
 docs/CodeIntegrationMappingErrorsResponse.md
 docs/CompositeVizData.md
@@ -74,6 +78,7 @@ docs/DataTypeEnum.md
 docs/Dataset.md
 docs/DatasetAccess.md
 docs/DatasetInputInstance.md
+docs/DatasetLatestVersionsInner.md
 docs/DatasetMessageParams.md
 docs/DatasetMetadata.md
 docs/DatasetMetadataInstance.md
@@ -84,6 +89,7 @@ docs/DatasetSetup.md
 docs/DatasetSetupStatus.md
 docs/DatasetTestResultPayload.md
 docs/DatasetVersion.md
+docs/DatasetVersionInfo.md
 docs/DatasetVersionUploadUrlResponse.md
 docs/DefaultApi.md
 docs/DeleteDashboardParams.md
@@ -141,6 +147,8 @@ docs/GenericDataItem.md
 docs/GenericDataQueryParams.md
 docs/GenericDataResponse.md
 docs/GetAllProjectSessionTestsRequest.md
+docs/GetApiKeyByCodeRequest.md
+docs/GetArchiveInsightsParams.md
 docs/GetAuthProviderResponse.md
 docs/GetConfusionMatrixLabels.md
 docs/GetConfusionMatrixResultCombinationsParams.md
@@ -162,6 +170,9 @@ docs/GetDownloadSignedUrlResponse.md
 docs/GetEnvironmentInfoResponse.md
 docs/GetExportedSessionRunJobsParams.md
 docs/GetExportedSessionRunJobsResponse.md
+docs/GetFieldsValuesRequest.md
+docs/GetFieldsValuesResponse.md
+docs/GetFieldsValuesResponseResultsInner.md
 docs/GetGeneratedDashletsBySessionRun.md
 docs/GetGeneratedDashletsParams.md
 docs/GetGeneratedDashletsResponse.md
@@ -187,11 +198,11 @@ docs/GetSampleVisualizationsPathsResponse.md
 docs/GetScatterSampleVisualizationsParams.md
 docs/GetScatterSampleVisualizationsResponse.md
 docs/GetSecretManagerListResponse.md
-docs/GetSessionEpochsRequest.md
 docs/GetSessionEpochsResponse.md
 docs/GetSessionRunsVisualizationsParams.md
 docs/GetSessionRunsVisualizationsResponse.md
 docs/GetSessionTestResultsRequest.md
+docs/GetSessionsEpochsRequest.md
 docs/GetSignedUrlParams.md
 docs/GetSingleIssueParams.md
 docs/GetSingleSessionTestRequest.md
@@ -302,6 +313,8 @@ docs/PanelLayout.md
 docs/PartialPopulationExplorationArtifacts.md
 docs/PopExploreInfo.md
 docs/PopulationExplorationDashlet.md
+docs/PopulationExplorationDashletData.md
+docs/PopulationExplorationDisplayParams.md
 docs/PopulationExplorationJobParams.md
 docs/PopulationExplorationParams.md
 docs/PopulationExplorationResponse.md
@@ -311,12 +324,15 @@ docs/Project.md
 docs/ProjectAccess.md
 docs/ProjectMeta.md
 docs/ProjectStatus.md
+docs/QueryFieldValues.md
 docs/RecentSessionsResponse.md
 docs/RecentTeamSessionsRequestParams.md
+docs/ReductionAlgorithm.md
 docs/RemoveSampleCollectionParams.md
 docs/RocConfusionMatrixParams.md
 docs/RotateApiKeyResponse.md
 docs/RunProcess.md
+docs/SampleAnalysisAlgo.md
 docs/SampleAnalysisDashlet.md
 docs/SampleAnalysisParams.md
 docs/SampleAnalysisViz.md
@@ -326,6 +342,7 @@ docs/SampleCollection.md
 docs/SampleIdentity.md
 docs/SampleSelectionInfo.md
 docs/SampleVisualizationInfo.md
+docs/SamplesVisualizationsRefreshParams.md
 docs/SaveAnalyzerLayoutParams.md
 docs/SaveDatasetSetupResponse.md
 docs/SaveDatasetVersionNoParseParams.md
@@ -351,6 +368,7 @@ docs/SessionTestResultSuccess.md
 docs/SessionVersionIdRequestParams.md
 docs/SessionWeightData.md
 docs/SessionsResponse.md
+docs/SetCodeChallengeRequest.md
 docs/SetDefaultTeamRequest.md
 docs/SetExperimentPropertiesRequest.md
 docs/SetSettingValueWrapper.md
@@ -460,6 +478,7 @@ model_analyze_params.go
 model_analyze_type_enum.go
 model_apply_dataset_mappings_params.go
 model_apply_mapping_response.go
+model_archive_insights_params.go
 model_auth_provider_enum.go
 model_b_box_image_data.go
 model_b_box_image_viz.go
@@ -470,6 +489,9 @@ model_chart_data.go
 model_client_filter_params.go
 model_cluster_insight.go
 model_clusters.go
+model_code_integration_binder.go
+model_code_integration_binder_by_branch.go
+model_code_integration_binder_by_id.go
 model_code_integration_mapping_errors_params.go
 model_code_integration_mapping_errors_response.go
 model_composite_viz_data.go
@@ -499,6 +521,7 @@ model_data_type_enum.go
 model_dataset.go
 model_dataset_access.go
 model_dataset_input_instance.go
+model_dataset_latest_versions_inner.go
 model_dataset_message_params.go
 model_dataset_metadata.go
 model_dataset_metadata_instance.go
@@ -509,6 +532,7 @@ model_dataset_setup.go
 model_dataset_setup_status.go
 model_dataset_test_result_payload.go
 model_dataset_version.go
+model_dataset_version_info.go
 model_dataset_version_upload_url_response.go
 model_delete_dashboard_params.go
 model_delete_issue_params.go
@@ -565,6 +589,8 @@ model_generic_data_item.go
 model_generic_data_query_params.go
 model_generic_data_response.go
 model_get_all_project_session_tests_request.go
+model_get_api_key_by_code_request.go
+model_get_archive_insights_params.go
 model_get_auth_provider_response.go
 model_get_confusion_matrix_labels.go
 model_get_confusion_matrix_result_combinations_params.go
@@ -586,6 +612,9 @@ model_get_download_signed_url_response.go
 model_get_environment_info_response.go
 model_get_exported_session_run_jobs_params.go
 model_get_exported_session_run_jobs_response.go
+model_get_fields_values_request.go
+model_get_fields_values_response.go
+model_get_fields_values_response_results_inner.go
 model_get_generated_dashlets_by_session_run.go
 model_get_generated_dashlets_params.go
 model_get_generated_dashlets_response.go
@@ -611,11 +640,11 @@ model_get_sample_visualizations_paths_response.go
 model_get_scatter_sample_visualizations_params.go
 model_get_scatter_sample_visualizations_response.go
 model_get_secret_manager_list_response.go
-model_get_session_epochs_request.go
 model_get_session_epochs_response.go
 model_get_session_runs_visualizations_params.go
 model_get_session_runs_visualizations_response.go
 model_get_session_test_results_request.go
+model_get_sessions_epochs_request.go
 model_get_signed_url_params.go
 model_get_single_issue_params.go
 model_get_single_session_test_request.go
@@ -726,6 +755,8 @@ model_panel_layout.go
 model_partial_population_exploration_artifacts_.go
 model_pop_explore_info.go
 model_population_exploration_dashlet.go
+model_population_exploration_dashlet_data.go
+model_population_exploration_display_params.go
 model_population_exploration_job_params.go
 model_population_exploration_params.go
 model_population_exploration_response.go
@@ -735,12 +766,15 @@ model_project.go
 model_project_access.go
 model_project_meta.go
 model_project_status.go
+model_query_field_values.go
 model_recent_sessions_response.go
 model_recent_team_sessions_request_params.go
+model_reduction_algorithm.go
 model_remove_sample_collection_params.go
 model_roc_confusion_matrix_params.go
 model_rotate_api_key_response.go
 model_run_process.go
+model_sample_analysis_algo.go
 model_sample_analysis_dashlet.go
 model_sample_analysis_params.go
 model_sample_analysis_viz.go
@@ -750,6 +784,7 @@ model_sample_collection.go
 model_sample_identity.go
 model_sample_selection_info.go
 model_sample_visualization_info.go
+model_samples_visualizations_refresh_params.go
 model_save_analyzer_layout_params.go
 model_save_dataset_setup_response.go
 model_save_dataset_version_no_parse_params.go
@@ -775,6 +810,7 @@ model_session_test_result_success.go
 model_session_version_id_request_params.go
 model_session_weight_data.go
 model_sessions_response.go
+model_set_code_challenge_request.go
 model_set_default_team_request.go
 model_set_experiment_properties_request.go
 model_set_setting_value_wrapper.go

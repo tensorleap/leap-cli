@@ -154,6 +154,17 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultApiService ArchiveInsight", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		httpRes, err := apiClient.DefaultApi.ArchiveInsight(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultApiService ClearUserJobs", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -431,6 +442,30 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultApiService GetApiKeyByCode", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultApi.GetApiKeyByCode(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultApiService GetArchiveInsights", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultApi.GetArchiveInsights(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultApiService GetAuthProvider", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -460,6 +495,18 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultApi.GetCodeIntegrationMappingErrorsByVersionId(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultApiService GetCodeIntegrationVersionFromBinder", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultApi.GetCodeIntegrationVersionFromBinder(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -664,6 +711,18 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultApi.GetFetchSimilarStatus(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultApiService GetFieldsValues", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultApi.GetFieldsValues(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -911,18 +970,6 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 
 	})
 
-	t.Run("Test DefaultApiService GetSessionEpochs", func(t *testing.T) {
-
-		t.Skip("skip test") // remove to run test
-
-		resp, httpRes, err := apiClient.DefaultApi.GetSessionEpochs(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test DefaultApiService GetSessionRunsVisualizations", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -964,6 +1011,18 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultApi.GetSessionsByVersionId(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultApiService GetSessionsEpochs", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultApi.GetSessionsEpochs(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1362,6 +1421,17 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultApiService SamplesVisualizationsRefresh", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		httpRes, err := apiClient.DefaultApi.SamplesVisualizationsRefresh(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultApiService SaveAnalyzerLayout", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -1405,6 +1475,17 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultApiService SetCodeChallenge", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		httpRes, err := apiClient.DefaultApi.SetCodeChallenge(context.Background()).Execute()
+
+		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -1557,6 +1638,17 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultApiService UnarchiveInsight", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		httpRes, err := apiClient.DefaultApi.UnarchiveInsight(context.Background()).Execute()
+
+		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

@@ -27,8 +27,8 @@ Name | Type | Description | Notes
 **SampleIds** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
 **Limit** | **float64** |  | 
 **SessionRunId** | **string** |  | 
+**DisplayParams** | [**PopulationExplorationDisplayParams**](PopulationExplorationDisplayParams.md) |  | 
 **ProjectionMetric** | Pointer to **string** |  | [optional] 
-**NumOfSamples** | **float64** |  | 
 **ExportUrl** | **string** |  | 
 **ProjectVersion** | **float64** |  | 
 **ExportOptions** | [**ExportOptions**](ExportOptions.md) |  | 
@@ -42,13 +42,14 @@ Name | Type | Description | Notes
 **SecretManagerId** | Pointer to **string** |  | [optional] 
 **CodeUrl** | **string** |  | 
 **CodeEntryFile** | **string** |  | 
+**Branch** | Pointer to **string** |  | [optional] 
 **Note** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewJobParams
 
-`func NewJobParams(epochs float64, batchSize float64, versionId string, projectId string, batchSize float64, dataStates []DataStateType, name string, skipMetricsEstimation bool, evaluatedEpoch float64, sessionId string, type_ string, fromEpoch float64, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, sessionRunId string, numOfSamples float64, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, datasetId string, codeUrl string, codeEntryFile string, ) *JobParams`
+`func NewJobParams(epochs float64, batchSize float64, versionId string, projectId string, batchSize float64, dataStates []DataStateType, name string, skipMetricsEstimation bool, evaluatedEpoch float64, sessionId string, type_ string, fromEpoch float64, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, sessionRunId string, displayParams PopulationExplorationDisplayParams, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, datasetId string, codeUrl string, codeEntryFile string, ) *JobParams`
 
 NewJobParams instantiates a new JobParams object
 This constructor will assign default values to properties that have it defined,
@@ -543,6 +544,26 @@ and a boolean to check if the value has been set.
 SetSessionRunId sets SessionRunId field to given value.
 
 
+### GetDisplayParams
+
+`func (o *JobParams) GetDisplayParams() PopulationExplorationDisplayParams`
+
+GetDisplayParams returns the DisplayParams field if non-nil, zero value otherwise.
+
+### GetDisplayParamsOk
+
+`func (o *JobParams) GetDisplayParamsOk() (*PopulationExplorationDisplayParams, bool)`
+
+GetDisplayParamsOk returns a tuple with the DisplayParams field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDisplayParams
+
+`func (o *JobParams) SetDisplayParams(v PopulationExplorationDisplayParams)`
+
+SetDisplayParams sets DisplayParams field to given value.
+
+
 ### GetProjectionMetric
 
 `func (o *JobParams) GetProjectionMetric() string`
@@ -567,26 +588,6 @@ SetProjectionMetric sets ProjectionMetric field to given value.
 `func (o *JobParams) HasProjectionMetric() bool`
 
 HasProjectionMetric returns a boolean if a field has been set.
-
-### GetNumOfSamples
-
-`func (o *JobParams) GetNumOfSamples() float64`
-
-GetNumOfSamples returns the NumOfSamples field if non-nil, zero value otherwise.
-
-### GetNumOfSamplesOk
-
-`func (o *JobParams) GetNumOfSamplesOk() (*float64, bool)`
-
-GetNumOfSamplesOk returns a tuple with the NumOfSamples field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNumOfSamples
-
-`func (o *JobParams) SetNumOfSamples(v float64)`
-
-SetNumOfSamples sets NumOfSamples field to given value.
-
 
 ### GetExportUrl
 
@@ -862,6 +863,31 @@ and a boolean to check if the value has been set.
 
 SetCodeEntryFile sets CodeEntryFile field to given value.
 
+
+### GetBranch
+
+`func (o *JobParams) GetBranch() string`
+
+GetBranch returns the Branch field if non-nil, zero value otherwise.
+
+### GetBranchOk
+
+`func (o *JobParams) GetBranchOk() (*string, bool)`
+
+GetBranchOk returns a tuple with the Branch field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBranch
+
+`func (o *JobParams) SetBranch(v string)`
+
+SetBranch sets Branch field to given value.
+
+### HasBranch
+
+`func (o *JobParams) HasBranch() bool`
+
+HasBranch returns a boolean if a field has been set.
 
 ### GetNote
 

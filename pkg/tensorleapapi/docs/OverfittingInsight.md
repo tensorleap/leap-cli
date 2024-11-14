@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **AvgMetricTraining** | **float64** |  | 
 **MetricName** | **string** |  | 
 **Configuration** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
+**MetricsNames** | Pointer to **[]string** |  | [optional] 
 
 ## Methods
 
@@ -326,6 +327,31 @@ SetConfiguration sets Configuration field to given value.
 `func (o *OverfittingInsight) HasConfiguration() bool`
 
 HasConfiguration returns a boolean if a field has been set.
+
+### GetMetricsNames
+
+`func (o *OverfittingInsight) GetMetricsNames() []string`
+
+GetMetricsNames returns the MetricsNames field if non-nil, zero value otherwise.
+
+### GetMetricsNamesOk
+
+`func (o *OverfittingInsight) GetMetricsNamesOk() (*[]string, bool)`
+
+GetMetricsNamesOk returns a tuple with the MetricsNames field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMetricsNames
+
+`func (o *OverfittingInsight) SetMetricsNames(v []string)`
+
+SetMetricsNames sets MetricsNames field to given value.
+
+### HasMetricsNames
+
+`func (o *OverfittingInsight) HasMetricsNames() bool`
+
+HasMetricsNames returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

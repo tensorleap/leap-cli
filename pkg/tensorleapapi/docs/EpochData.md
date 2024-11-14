@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**SessionId** | **string** |  | 
 **Epoch** | **float64** |  | 
 **Tags** | **[]string** |  | 
 **WeightsData** | Pointer to [**SessionWeightData**](SessionWeightData.md) |  | [optional] 
@@ -15,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewEpochData
 
-`func NewEpochData(epoch float64, tags []string, runs []SessionRunData, ) *EpochData`
+`func NewEpochData(sessionId string, epoch float64, tags []string, runs []SessionRunData, ) *EpochData`
 
 NewEpochData instantiates a new EpochData object
 This constructor will assign default values to properties that have it defined,
@@ -29,6 +30,26 @@ will change when the set of required properties is changed
 NewEpochDataWithDefaults instantiates a new EpochData object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetSessionId
+
+`func (o *EpochData) GetSessionId() string`
+
+GetSessionId returns the SessionId field if non-nil, zero value otherwise.
+
+### GetSessionIdOk
+
+`func (o *EpochData) GetSessionIdOk() (*string, bool)`
+
+GetSessionIdOk returns a tuple with the SessionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSessionId
+
+`func (o *EpochData) SetSessionId(v string)`
+
+SetSessionId sets SessionId field to given value.
+
 
 ### GetEpoch
 

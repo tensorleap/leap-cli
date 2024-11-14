@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**DisplayParams** | [**PopulationExplorationDisplayParams**](PopulationExplorationDisplayParams.md) |  | 
 **ProjectionMetric** | Pointer to **string** |  | [optional] 
 **Digest** | **string** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **FromEpoch** | **float64** |  | 
-**NumOfSamples** | **float64** |  | 
 **BatchSize** | **float64** |  | 
 **SessionRunId** | **string** |  | 
 **Type** | **string** |  | 
@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 
 ### NewPopulationExplorationJobParams
 
-`func NewPopulationExplorationJobParams(digest string, fromEpoch float64, numOfSamples float64, batchSize float64, sessionRunId string, type_ string, ) *PopulationExplorationJobParams`
+`func NewPopulationExplorationJobParams(displayParams PopulationExplorationDisplayParams, digest string, fromEpoch float64, batchSize float64, sessionRunId string, type_ string, ) *PopulationExplorationJobParams`
 
 NewPopulationExplorationJobParams instantiates a new PopulationExplorationJobParams object
 This constructor will assign default values to properties that have it defined,
@@ -31,6 +31,26 @@ will change when the set of required properties is changed
 NewPopulationExplorationJobParamsWithDefaults instantiates a new PopulationExplorationJobParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetDisplayParams
+
+`func (o *PopulationExplorationJobParams) GetDisplayParams() PopulationExplorationDisplayParams`
+
+GetDisplayParams returns the DisplayParams field if non-nil, zero value otherwise.
+
+### GetDisplayParamsOk
+
+`func (o *PopulationExplorationJobParams) GetDisplayParamsOk() (*PopulationExplorationDisplayParams, bool)`
+
+GetDisplayParamsOk returns a tuple with the DisplayParams field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDisplayParams
+
+`func (o *PopulationExplorationJobParams) SetDisplayParams(v PopulationExplorationDisplayParams)`
+
+SetDisplayParams sets DisplayParams field to given value.
+
 
 ### GetProjectionMetric
 
@@ -120,26 +140,6 @@ and a boolean to check if the value has been set.
 `func (o *PopulationExplorationJobParams) SetFromEpoch(v float64)`
 
 SetFromEpoch sets FromEpoch field to given value.
-
-
-### GetNumOfSamples
-
-`func (o *PopulationExplorationJobParams) GetNumOfSamples() float64`
-
-GetNumOfSamples returns the NumOfSamples field if non-nil, zero value otherwise.
-
-### GetNumOfSamplesOk
-
-`func (o *PopulationExplorationJobParams) GetNumOfSamplesOk() (*float64, bool)`
-
-GetNumOfSamplesOk returns a tuple with the NumOfSamples field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNumOfSamples
-
-`func (o *PopulationExplorationJobParams) SetNumOfSamples(v float64)`
-
-SetNumOfSamples sets NumOfSamples field to given value.
 
 
 ### GetBatchSize
