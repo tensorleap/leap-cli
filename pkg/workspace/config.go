@@ -14,19 +14,20 @@ import (
 //go:embed template/*
 var templateDir embed.FS
 
-const configFileName = "leap.yaml"
+const CONFIG_FILE_NAME = "leap.yaml"
 
 type WorkspaceConfig struct {
 	CodeIntegrationId string `yaml:"codeIntegrationId"`
 	ProjectId         string `yaml:"projectId"`
 	SecretId          string `yaml:"secretId"`
+	Branch            string `yaml:"branch,omitempty"`
 	// deprecated
 	SecretManagerId string   `yaml:"secretManagerId,omitempty"`
 	EntryFile       string   `yaml:"entryFile"`
 	IncludePatterns []string `yaml:"include"`
 }
 
-func NewWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId string, files []string) *WorkspaceConfig {
+func NewWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, branch string, files []string) *WorkspaceConfig {
 	if len(entryFile) == 0 {
 		entryFile = "leap_binder.py"
 	}
@@ -38,6 +39,7 @@ func NewWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId string
 		CodeIntegrationId: codeIntegrationId,
 		EntryFile:         entryFile,
 		SecretId:          secretId,
+		Branch:            branch,
 		IncludePatterns:   files,
 	}
 }
@@ -46,9 +48,10 @@ type InitTemplateValues struct {
 	CodeIntegrationId string
 	ProjectId         string
 	SecretId          string
+	Branch            string
 }
 
-func CreateCodeTemplate(codeIntegrationId, projectId, secretId, outputDir string) error {
+func CreateCodeTemplate(codeIntegrationId, projectId, secretId, branch, outputDir string) error {
 	// Create the directory for the file if it doesn't exist
 	err := os.MkdirAll(outputDir, 0755)
 	if err != nil {
@@ -76,6 +79,7 @@ func CreateCodeTemplate(codeIntegrationId, projectId, secretId, outputDir string
 				CodeIntegrationId: codeIntegrationId,
 				ProjectId:         projectId,
 				SecretId:          secretId,
+				Branch:            branch,
 			}); err != nil {
 				return err
 			}
@@ -84,10 +88,10 @@ func CreateCodeTemplate(codeIntegrationId, projectId, secretId, outputDir string
 	return nil
 }
 
-func OverrideWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, outputDir string) error {
+func OverrideWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, branch string, files []string, outputDir string) error {
 	wc, err := GetWorkspaceConfig()
 	if err != nil {
-		wc = NewWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, nil)
+		wc = NewWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, branch, files)
 	} else {
 		wc.CodeIntegrationId = codeIntegrationId
 		wc.ProjectId = projectId
@@ -98,7 +102,7 @@ func OverrideWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, 
 }
 
 func GetWorkspaceConfig() (*WorkspaceConfig, error) {
-	content, err := os.ReadFile(configFileName)
+	content, err := os.ReadFile(CONFIG_FILE_NAME)
 	if err != nil {
 		return nil, fmt.Errorf("not found config file, please make sure to init: %v", err)
 	}
@@ -120,15 +124,15 @@ func SetWorkspaceConfig(workspaceConfig *WorkspaceConfig, outputDir string) erro
 	if err != nil {
 		return err
 	}
-	fullPath := filepath.Join(outputDir, configFileName)
+	fullPath := filepath.Join(outputDir, CONFIG_FILE_NAME)
 	err = os.WriteFile(fullPath, content, 0644)
 	if err != nil {
-		return fmt.Errorf("failed to update config (.leap.yaml) : %v", err)
+		return fmt.Errorf("failed to update config (%s) : %v", CONFIG_FILE_NAME, err)
 	}
 	return nil
 }
 
 func IsWorkspaceDir() bool {
-	_, err := os.Stat(configFileName)
+	_, err := os.Stat(CONFIG_FILE_NAME)
 	return err == nil
 }

@@ -53,7 +53,7 @@ func NewCreateCmd() *cobra.Command {
 				secretId = selectedSecret.GetCid()
 			}
 
-			err = workspace.CreateCodeTemplate(codeIntegration.GetCid(), "", secretId, codeIntegrationName)
+			err = workspace.CreateCodeTemplate(codeIntegration.GetCid(), "", secretId, codeIntegration.GetDefaultBranch(), codeIntegrationName)
 			if err != nil {
 				return err
 			}

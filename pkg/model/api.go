@@ -15,7 +15,7 @@ import (
 	tlApi "github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
-func ImportModel(ctx context.Context, filePath, projectId, message, modelType, branchName, datasetId string, transformInput bool, waitForResults bool) error {
+func ImportModel(ctx context.Context, filePath, projectId, message, modelType, branchName, datasetId, codeBranch string, transformInput bool, waitForResults bool) error {
 	fileName := filepath.Base(filePath)
 	versionName := message
 	modelName := strings.TrimSuffix(fileName, filepath.Ext(fileName))
@@ -49,11 +49,14 @@ func ImportModel(ctx context.Context, filePath, projectId, message, modelType, b
 	var mappingYaml string = ""
 	if len(datasetId) > 0 {
 		importModelParams.DatasetId = &datasetId
-		mappingYaml = code.GetDatasetMappingYaml(ctx, datasetId)
+		mappingYaml = code.GetDatasetMappingYaml(ctx, datasetId, codeBranch)
 		importModelParams.MappingYaml = &mappingYaml
 	}
 	if transformInput && modelType == string(tlApi.IMPORTMODELTYPE_ONNX) {
 		importModelParams.TransformInputs = &transformInput
+	}
+	if codeBranch != "" {
+		importModelParams.SetCodeIntegrationBranch(codeBranch)
 	}
 	importModelData, _, err := api.ApiClient.ImportModel(ctx).ImportNewModelParams(importModelParams).Execute()
 	if err != nil {

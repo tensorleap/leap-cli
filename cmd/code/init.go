@@ -14,6 +14,7 @@ func init() {
 	var codeIntegrationId string
 	var newCodeIntegrationName string
 	var secretId string
+	var branch string
 
 	var cmd = &cobra.Command{
 		Use:   "init",
@@ -28,8 +29,16 @@ func init() {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx := cmd.Context()
 			var codeIntegration *code.CodeIntegration = nil
-			var err error
+			codeIntegrations, err := code.GetCodeIntegrations(ctx)
+			if err != nil {
+				return err
+			}
+
 			if len(newCodeIntegrationName) > 0 {
+				newCodeIntegrationName, err = code.AskForCodeIntegrationNameIfExisted(newCodeIntegrationName, codeIntegrations)
+				if err != nil {
+					return err
+				}
 				codeIntegration, err = code.AddCodeIntegration(ctx, newCodeIntegrationName)
 				if err != nil {
 					return err
@@ -48,29 +57,27 @@ func init() {
 				}
 
 			} else if len(codeIntegrationId) > 0 {
-				codeIntegrations, err := code.GetCodeIntegrations(ctx)
-				if err != nil {
-					return err
-				}
+
 				codeIntegration, err = entity.GetEntityById(codeIntegrationId, codeIntegrations, code.CodeIntegrationEntityDesc)
 				if err != nil {
 					return err
 				}
 				if len(secretId) == 0 {
-					latestVersion, err := code.GetLatestVersion(ctx, codeIntegration.GetCid())
+					latestVersion, err := code.GetLatestVersion(ctx, codeIntegration.GetCid(), branch)
 					if err != nil && err != code.ErrEmptyCodeIntegrationVersion {
 						return err
 					}
 					secretId = latestVersion.Metadata.GetSecretManagerId()
 				}
 			}
-			return workspace.CreateCodeTemplate(codeIntegration.GetCid(), "", secretId, ".")
+			return workspace.CreateCodeTemplate(codeIntegration.GetCid(), "", secretId, branch, ".")
 		},
 	}
 
 	cmd.Flags().StringVar(&codeIntegrationId, "codeId", "", "Code integration id of existing dataset")
 	cmd.Flags().StringVar(&newCodeIntegrationName, "new", "", "Name for new database")
 	cmd.Flags().StringVar(&secretId, "secretId", "", "Secret manager id for new code integration")
+	cmd.Flags().StringVarP(&branch, "branch", "b", "", "Branch for code integration")
 	cmd.MarkFlagsMutuallyExclusive("new", "codeId")
 	RootCommand.AddCommand(cmd)
 }
