@@ -114,7 +114,15 @@ func CreateOrSelectIfSecretNotFound(ctx context.Context, secretId string) (selec
 	if selectedSecret != nil {
 		return selectedSecret, true, false, nil
 	}
-	log.Warnf("Secret with id %s not found. Select or create new secret.", secretId)
+	log.Warnf("Secret with id %s not found", secretId)
+
+	isUsingSecret, err := AskIfUseSecret()
+	if err != nil {
+		return nil, false, false, err
+	}
+	if !isUsingSecret {
+		return nil, false, false, nil
+	}
 
 	selectedSecret, wasCreateNew, err = SelectOrCreateSecret(ctx, secrets, true)
 	if err != nil {
