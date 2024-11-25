@@ -15,6 +15,7 @@ func init() {
 	RootCommand.AddCommand(NewUpgradeCmd())
 	RootCommand.AddCommand(NewReinstallCmd())
 	RootCommand.AddCommand(NewUninstallCmd())
+	RootCommand.AddCommand(NewInfoCmd())
 	RootCommand.AddCommand(server.NewRunCmd())
 	RootCommand.AddCommand(server.NewStopCmd())
 	RootCommand.AddCommand(server.NewToolCmd())
