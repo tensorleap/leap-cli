@@ -2,7 +2,9 @@ package log
 
 import (
 	"fmt"
+	"io"
 	"os"
+	"sync/atomic"
 	"time"
 
 	"github.com/briandowns/spinner"
@@ -23,6 +25,32 @@ func ConnectFileToVerboseLogOutput(filePath string) (close func(), err error) {
 		file.Close()
 	}
 	return
+}
+
+type ProgressReader struct {
+	reader     io.Reader
+	totalSize  int64
+	bytesRead  int64
+	updateFunc func(percent int)
+}
+
+func NewProgressReader(reader io.Reader, totalSize int64, updateFunc func(percent int)) *ProgressReader {
+	return &ProgressReader{
+		reader:     reader,
+		totalSize:  totalSize,
+		updateFunc: updateFunc,
+	}
+}
+
+// Read reads from the underlying reader and updates the progress.
+func (pr *ProgressReader) Read(p []byte) (int, error) {
+	n, err := pr.reader.Read(p)
+	if n > 0 {
+		atomic.AddInt64(&pr.bytesRead, int64(n))
+		percent := int(float64(pr.bytesRead) / float64(pr.totalSize) * 100)
+		pr.updateFunc(percent)
+	}
+	return n, err
 }
 
 // Spinner is a custom type that wraps a spinner with additional functionality.

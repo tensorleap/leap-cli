@@ -48,7 +48,14 @@ func UploadFile(url string, file io.Reader, fileSize int64) error {
 	s.Start()
 	defer s.Stop()
 
-	req, err := http.NewRequest(http.MethodPut, url, file)
+	progressReader := log.NewProgressReader(
+		file,
+		fileSize,
+		s.UpdateProgress,
+	)
+
+	req, err := http.NewRequest(http.MethodPut, url, progressReader)
+
 	if err != nil {
 		return err
 	}
