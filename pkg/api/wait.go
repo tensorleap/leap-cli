@@ -13,10 +13,9 @@ var ErrorTimeout = errors.New("timeout")
 func WaitForCondition(ctx context.Context, message string, condition func() (bool, error), sleepDuration time.Duration, timeoutDuration time.Duration) error {
 	startTime := time.Now()
 
-	start, stop, _ := log.NewSpinner(message)
-	start()
-
-	defer stop()
+	s := log.NewSpinner(message)
+	s.Start()
+	defer s.Stop()
 
 	for time.Since(startTime) < timeoutDuration {
 		select {

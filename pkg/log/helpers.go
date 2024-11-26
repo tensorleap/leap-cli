@@ -25,16 +25,41 @@ func ConnectFileToVerboseLogOutput(filePath string) (close func(), err error) {
 	return
 }
 
-func NewSpinner(message string, a ...any) (start func(), stop func(), s *spinner.Spinner) {
+// Spinner is a custom type that wraps a spinner with additional functionality.
+type Spinner struct {
+	s          *spinner.Spinner
+	message    string
+	percentage int
+}
+
+// NewSpinner creates a new Spinner instance with the specified message.
+func NewSpinner(message string, a ...any) *Spinner {
 	message = fmt.Sprintf(message, a...)
-	s = spinner.New(spinner.CharSets[33], 500*time.Millisecond)
+	s := spinner.New(spinner.CharSets[33], 500*time.Millisecond)
 	s.Suffix = fmt.Sprintf(" %s", message)
-	start = s.Start
 
-	stop = func() {
-		s.Stop()
-		Info(message)
+	return &Spinner{
+		s:       s,
+		message: message,
 	}
+}
 
-	return
+// Start begins the spinner animation.
+func (sp *Spinner) Start() {
+	sp.s.Start()
+}
+
+// Stop stops the spinner animation and prints a completion message.
+func (sp *Spinner) Stop() {
+	sp.s.Stop()
+	Infof("%s - Completed\n", sp.message)
+}
+
+// UpdateProgress updates the progress percentage displayed with the spinner.
+func (sp *Spinner) UpdateProgress(percent int) {
+	if percent > 100 {
+		percent = 100
+	}
+	sp.percentage = percent
+	sp.s.Suffix = fmt.Sprintf(" %s [%d%%]", sp.message, percent)
 }
