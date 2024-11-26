@@ -182,9 +182,9 @@ func ExportProjectIntoFile(ctx context.Context, project *ProjectEntity, outputDi
 		return err
 	}
 	defer file.Close()
-	start, stop, _ := log.NewSpinner(fmt.Sprintf("Exporting project '%s', into: '%s'", project.Name, filePath))
-	start()
-	defer stop()
+	s := log.NewSpinner(fmt.Sprintf("Exporting project '%s', into: '%s'", project.Name, filePath))
+	s.Start()
+	defer s.Stop()
 	res, _, err := api.ApiClient.GetDownloadSignedUrl(ctx).
 		GetDownloadSignedUrlParams(*tensorleapapi.NewGetDownloadSignedUrlParams(exportUrl)).
 		Execute()

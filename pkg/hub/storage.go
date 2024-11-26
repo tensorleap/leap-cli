@@ -87,9 +87,9 @@ func (hs *HubStorageApi) UploadProjectContent(fileStream io.Reader, meta *Projec
 
 	filePaths := GenerateProjectFilePaths(hs.Namespace, meta)
 
-	start, stop, _ := log.NewSpinner(fmt.Sprintf("HubStorage - Uploading content of project: '%s' version: %d", name, schemaVersion))
-	start()
-	defer stop()
+	s := log.NewSpinner(fmt.Sprintf("HubStorage - Uploading content of project: '%s' version: %d", name, schemaVersion))
+	s.Start()
+	defer s.Stop()
 	err := hs.FilesClient.UploadFile(filePaths.TarPath, fileStream, nil)
 	if err != nil {
 		return nil, err
@@ -147,9 +147,9 @@ func (hs *HubStorageApi) DownloadProject(projectName string, projectVersion int,
 		return fmt.Errorf("not found tar file for project: %s version: %d", projectName, projectVersion)
 	}
 
-	start, stop, _ := log.NewSpinner(fmt.Sprintf("Downloading project: %s, into: %s", projectName, destFileName))
-	start()
-	defer stop()
+	s := log.NewSpinner(fmt.Sprintf("Downloading project: %s, into: %s", projectName, destFileName))
+	s.Start()
+	defer s.Stop()
 	return hs.FilesClient.DownloadFile(fileName, destFileName)
 }
 
