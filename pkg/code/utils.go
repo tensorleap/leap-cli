@@ -208,7 +208,7 @@ func PrintCodeIntegrationVersionParserErr(civ *CodeIntegrationVersion) {
 	fmt.Println(*civ.Metadata.SetupStatus.PrintLog)
 }
 
-func PushCode(ctx context.Context, force bool, codeIntegrationId string, tarGzFile *os.File, entryFile, secretId, branch string) (pushed bool, current *CodeIntegrationVersion, err error) {
+func PushCode(ctx context.Context, force bool, codeIntegrationId string, tarGzFile *os.File, entryFile, secretId, branch, message string) (pushed bool, current *CodeIntegrationVersion, err error) {
 	if !force {
 		log.Info("Checking if code has changed")
 
@@ -234,7 +234,7 @@ func PushCode(ctx context.Context, force bool, codeIntegrationId string, tarGzFi
 		return false, nil, fmt.Errorf("failed to get file stat: %v", err)
 	}
 
-	codeIntegrationVersion, err := AddCodeIntegrationVersion(ctx, tarGzFile, fileStat.Size(), codeIntegrationId, entryFile, secretId, branch)
+	codeIntegrationVersion, err := AddCodeIntegrationVersion(ctx, tarGzFile, fileStat.Size(), codeIntegrationId, entryFile, secretId, branch, message)
 	if err != nil {
 		return false, nil, err
 	}

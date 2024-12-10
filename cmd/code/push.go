@@ -16,6 +16,7 @@ func NewPushCmd() *cobra.Command {
 	var branch string
 	var noWait bool
 	var force bool
+	var message string
 
 	cmd := &cobra.Command{
 		Use:   "push",
@@ -52,7 +53,7 @@ func NewPushCmd() *cobra.Command {
 				return err
 			}
 
-			_, currentVersion, err := code.PushCode(ctx, force, codeIntegration.Cid, tarGzFile, workspaceConfig.EntryFile, secretId, branch)
+			_, currentVersion, err := code.PushCode(ctx, force, codeIntegration.Cid, tarGzFile, workspaceConfig.EntryFile, secretId, branch, message)
 			if err != nil {
 				return err
 			}
@@ -80,6 +81,7 @@ func NewPushCmd() *cobra.Command {
 
 	cmd.Flags().StringVar(&secretId, "secretId", "", "Secret id")
 	cmd.Flags().StringVarP(&branch, "branch", "b", "", "Branch")
+	cmd.Flags().StringVarP(&message, "message", "m", "", "Commit message")
 	cmd.Flags().BoolVar(&noWait, "no-wait", false, "Do not wait for code parsing")
 	cmd.Flags().BoolVarP(&force, "force", "f", false, "Force push code integration")
 
