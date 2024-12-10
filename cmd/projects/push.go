@@ -101,7 +101,7 @@ func NewPushCmd() *cobra.Command {
 			}
 			defer close()
 
-			pushed, currentVersion, err := code.PushCode(ctx, force, codeIntegration.Cid, tarGzFile, workspaceConfig.EntryFile, secretId, codeBranch)
+			pushed, currentVersion, err := code.PushCode(ctx, force, codeIntegration.Cid, tarGzFile, workspaceConfig.EntryFile, secretId, codeBranch, message)
 			if err != nil {
 				return err
 			}
@@ -134,7 +134,7 @@ func NewPushCmd() *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&message, "message", "m", "", "Version message")
+	cmd.Flags().StringVarP(&message, "message", "m", "", "Model version and code integration message")
 	cmd.Flags().StringVar(&modelType, "type", "", "Type is the type of the model file [JSON_TF2 / ONNX / PB_TF2 / H5_TF2]")
 	cmd.Flags().StringVar(&modelBranch, "model-branch", "", "Name of the model branch [OPTIONAL]")
 	cmd.Flags().StringVar(&codeBranch, "code-branch", "", "Name of the code branch [OPTIONAL]")
