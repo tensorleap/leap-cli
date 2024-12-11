@@ -58,7 +58,8 @@ func NewPushCmd() *cobra.Command {
 				return err
 			}
 			supposedToWait := !noWait
-			waitNeeded := supposedToWait && !code.IsCodeParsing(currentVersion)
+			waitNeeded := supposedToWait && code.IsCodeParsing(currentVersion)
+
 			if waitNeeded {
 				ok, codeIntegrationVersion, err := code.WaitForCodeIntegrationStatus(ctx, currentVersion.Cid)
 				if err != nil {
