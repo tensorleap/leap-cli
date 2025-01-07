@@ -72,7 +72,7 @@ func NewImportCmd() *cobra.Command {
 	cmd.Flags().StringVar(&modelBranch, "model-branch", "", "Name of the model branch [OPTIONAL]")
 	cmd.Flags().StringVar(&codeIntegrationBranch, "code-branch", "", "Name of the code integration branch [OPTIONAL]")
 	cmd.Flags().StringVar(&codeIntegrationId, "codeId", "", "This is a code integration id (Will use the last valid dataset version)")
-	cmd.Flags().BoolVar(&transformInput, "transform-input", true, "Transform input in case of ONNX model")
+	cmd.Flags().BoolVar(&transformInput, "transform-input", false, "Transform input in case of ONNX model")
 	cmd.Flags().BoolVar(&noWait, "no-wait", false, "Do not wait for push to complete")
 
 	return cmd
