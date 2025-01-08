@@ -42,7 +42,7 @@ func ExtractProjectContextFromTar(tarStream io.Reader) (*ProjectContext, error) 
 		}
 
 		if header.Typeflag == tar.TypeReg {
-			if header.Name == "project.json" {
+			if strings.HasSuffix(header.Name, "project.json") {
 				foundFilesCount++
 				err := json.NewDecoder(tarReader).Decode(&projectMeta)
 				if err != nil {
