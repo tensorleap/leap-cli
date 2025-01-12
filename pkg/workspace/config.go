@@ -16,6 +16,8 @@ var templateDir embed.FS
 
 const CONFIG_FILE_NAME = "leap.yaml"
 
+const UNDEFINED_WORKSPACE_CONFIG = "undefined"
+
 type WorkspaceConfig struct {
 	CodeIntegrationId string `yaml:"codeIntegrationId"`
 	ProjectId         string `yaml:"projectId"`
@@ -103,6 +105,10 @@ func OverrideWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, 
 
 func GetWorkspaceConfig() (*WorkspaceConfig, error) {
 	content, err := os.ReadFile(CONFIG_FILE_NAME)
+	if os.IsNotExist(err) {
+		return nil, err
+	}
+
 	if err != nil {
 		return nil, fmt.Errorf("not found config file, please make sure to init: %v", err)
 	}
