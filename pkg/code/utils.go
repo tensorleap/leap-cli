@@ -84,7 +84,7 @@ func isDatasetVersionEmpty(datasetVersion *tensorleapapi.DatasetVersion) bool {
 	return len(datasetVersion.GetBlobPath()) == 0
 }
 
-func CloneCodeIntegrationVersion(ctx context.Context, codeIntegrationVersion *tensorleapapi.DatasetVersion, outputDir string) ([]string, error) {
+func CloneCodeIntegrationVersion(ctx context.Context, codeIntegrationVersion *tensorleapapi.DatasetVersion, outputDir string, specificFileName string) ([]string, error) {
 	if isDatasetVersionEmpty(codeIntegrationVersion) {
 		return []string{}, ErrEmptyCodeIntegrationVersion
 	}
@@ -96,7 +96,7 @@ func CloneCodeIntegrationVersion(ctx context.Context, codeIntegrationVersion *te
 		return nil, err
 	}
 
-	files, err := local.DownloadAndExtractTarFile(res.GetUrl(), outputDir)
+	files, err := local.DownloadAndExtractTarFile(res.GetUrl(), outputDir, specificFileName)
 	if err != nil {
 		return nil, err
 	}

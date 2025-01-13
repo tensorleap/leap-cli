@@ -14,7 +14,7 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/api"
 )
 
-func DownloadAndExtractTarFile(url string, outputDir string) ([]string, error) {
+func DownloadAndExtractTarFile(url string, outputDir string, specificFileName string) ([]string, error) {
 	reader, writer := io.Pipe()
 
 	downloadErrCh := make(chan error, 1)
@@ -23,7 +23,7 @@ func DownloadAndExtractTarFile(url string, outputDir string) ([]string, error) {
 		downloadErrCh <- api.DownloadFile(url, writer)
 	}()
 
-	files, extractionErr := ExtractTarGzFile(reader, outputDir)
+	files, extractionErr := ExtractTarGzFile(reader, outputDir, specificFileName)
 
 	downloadErr := <-downloadErrCh
 
@@ -37,7 +37,7 @@ func DownloadAndExtractTarFile(url string, outputDir string) ([]string, error) {
 	return files, nil
 }
 
-func ExtractTarGzFile(file io.Reader, outputDir string) ([]string, error) {
+func ExtractTarGzFile(file io.Reader, outputDir string, specificFileName string) ([]string, error) {
 	fmt.Println("Extract files...")
 	gzipReader, err := gzip.NewReader(file)
 	files := []string{}
@@ -49,55 +49,71 @@ func ExtractTarGzFile(file io.Reader, outputDir string) ([]string, error) {
 
 	tarReader := tar.NewReader(gzipReader)
 
-	// Iterate through the tar archive and extract the files
-	for {
-		fileName, readEnd, err := readNextTarFile(tarReader, outputDir)
-		if err != nil {
-			return files, err
-		}
-		if readEnd {
-			return files, nil
-		}
-		files = append(files, ConvertPathToUnix(fileName))
+	// Determine if we are targeting a specific file
+	var targetFile string
+	if len(specificFileName) > 0 {
+		targetFile = filepath.Clean(specificFileName)
 	}
+
+	for {
+		// Read the next header
+		header, err := tarReader.Next()
+		if err == io.EOF {
+			// End of archive
+			break
+		}
+		if err != nil {
+			return files, fmt.Errorf("error reading tar header: %w", err)
+		}
+
+		// Clean and normalize the file name
+		fileName := filepath.Clean(header.Name)
+
+		// If specific file is provided, skip others
+		if targetFile != "" && fileName != targetFile {
+			continue
+		}
+
+		// Extract the file or directory
+		extractedFilePath, err := readNextTarFile(tarReader, header, outputDir)
+		if err != nil {
+			return files, fmt.Errorf("failed to extract %s: %w", fileName, err)
+		}
+
+		files = append(files, ConvertPathToUnix(extractedFilePath))
+	}
+
+	return files, nil
 }
 
-func readNextTarFile(tarReader *tar.Reader, outputDir string) (fileName string, readEnd bool, err error) {
-	header, err := tarReader.Next()
-	if err == io.EOF {
-		readEnd = true
-		err = nil
-		return
-	}
-	if err != nil {
-		return
-	}
-
-	// Clean the path to prevent path traversal attacks
+func readNextTarFile(tarReader *tar.Reader, header *tar.Header, outputDir string) (fileName string, err error) {
 	fileName = filepath.Clean(header.Name)
+	extractedFilePath := filepath.Join(outputDir, fileName)
 
-	extractedFilePath := filepath.Join(outputDir, header.Name)
 	if header.FileInfo().IsDir() {
+		// Create the directory
 		err = os.MkdirAll(extractedFilePath, header.FileInfo().Mode())
 		return
 	}
 
-	// Create the directory for the file if it doesn't exist
+	// Ensure the directory for the file exists
 	err = os.MkdirAll(filepath.Dir(extractedFilePath), 0755)
 	if err != nil {
 		return
 	}
 
-	file, err := os.Create(extractedFilePath)
+	// Create the file and copy the content
+	outFile, err := os.Create(extractedFilePath)
 	if err != nil {
 		return
 	}
-	defer file.Close()
+	defer outFile.Close()
 
-	_, err = io.Copy(file, tarReader)
-	if err == io.EOF {
-		err = nil
+	_, err = io.Copy(outFile, tarReader)
+	if err != nil {
+		return
 	}
+
 	return
 }
 

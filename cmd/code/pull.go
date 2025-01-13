@@ -11,7 +11,11 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/workspace"
 )
 
+const MAPPING_FILE_NAME = "leap_mapping.yaml"
+
 func NewPullCmd() *cobra.Command {
+	var mappingOnly bool
+
 	var cmd = &cobra.Command{
 		Use:   "pull [dataset-id] [branch]",
 		Short: "Pull dataset into a new directory",
@@ -53,15 +57,21 @@ func NewPullCmd() *cobra.Command {
 			latestVersion, err := code.GetLatestVersion(ctx, selectedDataset.GetCid(), selectedBranch)
 			secretId := latestVersion.Metadata.GetSecretManagerId()
 			if err == nil {
-				files, err := code.CloneCodeIntegrationVersion(ctx, latestVersion, datasetName)
+				var specificFileName = ""
+				if mappingOnly {
+					specificFileName = MAPPING_FILE_NAME
+				}
+				files, err := code.CloneCodeIntegrationVersion(ctx, latestVersion, datasetName, specificFileName)
 				if err != nil {
 					return err
 				}
 
-				workspaceConfig := workspace.NewWorkspaceConfig(selectedDataset.GetCid(), "", latestVersion.GetCodeEntryFile(), secretId, latestVersion.Branch, files)
-				err = workspace.SetWorkspaceConfig(workspaceConfig, datasetName)
-				if err != nil {
-					return err
+				if !mappingOnly {
+					workspaceConfig := workspace.NewWorkspaceConfig(selectedDataset.GetCid(), "", latestVersion.GetCodeEntryFile(), secretId, latestVersion.Branch, files)
+					err = workspace.SetWorkspaceConfig(workspaceConfig, datasetName)
+					if err != nil {
+						return err
+					}
 				}
 			} else if err == code.ErrEmptyCodeIntegrationVersion {
 				log.Warn("The selected dataset is empty, Create default template")
@@ -77,6 +87,9 @@ func NewPullCmd() *cobra.Command {
 			return nil
 		},
 	}
+
+	cmd.Flags().BoolVarP(&mappingOnly, "mapping-only", "f", false, "Pull mapping only")
+
 	return cmd
 }
 
