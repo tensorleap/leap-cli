@@ -2,12 +2,14 @@ package models
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 
 	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/model"
 	"github.com/tensorleap/leap-cli/pkg/project"
+	"github.com/tensorleap/leap-cli/pkg/workspace"
 )
 
 func NewImportCmd() *cobra.Command {
@@ -44,6 +46,21 @@ func NewImportCmd() *cobra.Command {
 			err = model.InitMessage(&message)
 			if err != nil {
 				return err
+			}
+
+			workspaceConfig, err := workspace.GetWorkspaceConfig()
+			if !os.IsNotExist(err) && err != nil {
+				return err
+			}
+
+			if workspaceConfig != nil {
+				if len(projectId) == 0 {
+					projectId = workspaceConfig.ProjectId
+				}
+
+				if len(codeIntegrationId) == 0 {
+					codeIntegrationId = workspaceConfig.CodeIntegrationId
+				}
 			}
 
 			if len(projectId) == 0 {
