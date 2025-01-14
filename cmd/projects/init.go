@@ -44,7 +44,7 @@ func NewInitCmd() *cobra.Command {
 						secretId = latestVersion.Metadata.GetSecretManagerId()
 					}
 					isCreatingEmptyTemplate = false
-					files, err := code.CloneCodeIntegrationVersion(ctx, latestVersion, ".")
+					files, err := code.CloneCodeIntegrationVersion(ctx, latestVersion, ".", "")
 					if err != nil {
 						return err
 					}
