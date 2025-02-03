@@ -6,6 +6,7 @@ import (
 	"io"
 	"time"
 
+	"github.com/tensorleap/leap-cli/pkg/api"
 	. "github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/entity"
 	"github.com/tensorleap/leap-cli/pkg/log"
@@ -93,7 +94,10 @@ func GetLatestVersion(ctx context.Context, codeIntegrationId string, branch stri
 }
 
 func GetCodeIntegration(ctx context.Context, id string) (*CodeIntegrationVersion, error) {
-	res, _, err := ApiClient.GetDatasetVersion(ctx).GetDatasetVersionParams(*tensorleapapi.NewGetDatasetVersionParams(id)).Execute()
+	res, response, err := ApiClient.GetDatasetVersion(ctx).GetDatasetVersionParams(*tensorleapapi.NewGetDatasetVersionParams(id)).Execute()
+	if err = api.CheckRes(response, err); err != nil {
+		return nil, err
+	}
 	return &res.DatasetVersion, err
 }
 
