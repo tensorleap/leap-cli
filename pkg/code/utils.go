@@ -203,9 +203,27 @@ func GetAndUpdateCodeIntegrationIfNotExists(ctx context.Context, workspaceConfig
 }
 
 func PrintCodeIntegrationVersionParserErr(civ *CodeIntegrationVersion) {
+
 	log.Error("Code parsing failed, see error below:")
-	fmt.Println(*civ.Metadata.SetupStatus.GeneralError)
-	fmt.Println(*civ.Metadata.SetupStatus.PrintLog)
+	if civ.Metadata.SetupStatus.GeneralError != nil {
+		log.Error("General error:")
+		fmt.Println(*civ.Metadata.SetupStatus.GeneralError)
+	}
+
+	for _, binderStatus := range civ.Metadata.SetupStatus.BindersStatus {
+		if !binderStatus.IsPassed && len(binderStatus.Display) > 0 {
+			log.Errorf("binder error: %s", binderStatus.Name)
+			for key, display := range binderStatus.Display {
+				fmt.Printf("%s: %s\n", key, display)
+			}
+		}
+	}
+
+	if civ.Metadata.SetupStatus.PrintLog != nil {
+		log.Info("Log:")
+		fmt.Println(*civ.Metadata.SetupStatus.PrintLog)
+		return
+	}
 }
 
 func PushCode(ctx context.Context, force bool, codeIntegrationId string, tarGzFile *os.File, entryFile, secretId, branch, message string) (pushed bool, current *CodeIntegrationVersion, err error) {
