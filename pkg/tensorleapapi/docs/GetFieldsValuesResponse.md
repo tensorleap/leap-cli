@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Results** | [**[]GetFieldsValuesResponseResultsInner**](GetFieldsValuesResponseResultsInner.md) |  | 
+**Results** | [**[]GetDashletFieldsResponseNumericFieldsOptionsInner**](GetDashletFieldsResponseNumericFieldsOptionsInner.md) |  | 
 
 ## Methods
 
 ### NewGetFieldsValuesResponse
 
-`func NewGetFieldsValuesResponse(results []GetFieldsValuesResponseResultsInner, ) *GetFieldsValuesResponse`
+`func NewGetFieldsValuesResponse(results []GetDashletFieldsResponseNumericFieldsOptionsInner, ) *GetFieldsValuesResponse`
 
 NewGetFieldsValuesResponse instantiates a new GetFieldsValuesResponse object
 This constructor will assign default values to properties that have it defined,
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetResults
 
-`func (o *GetFieldsValuesResponse) GetResults() []GetFieldsValuesResponseResultsInner`
+`func (o *GetFieldsValuesResponse) GetResults() []GetDashletFieldsResponseNumericFieldsOptionsInner`
 
 GetResults returns the Results field if non-nil, zero value otherwise.
 
 ### GetResultsOk
 
-`func (o *GetFieldsValuesResponse) GetResultsOk() (*[]GetFieldsValuesResponseResultsInner, bool)`
+`func (o *GetFieldsValuesResponse) GetResultsOk() (*[]GetDashletFieldsResponseNumericFieldsOptionsInner, bool)`
 
 GetResultsOk returns a tuple with the Results field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetResults
 
-`func (o *GetFieldsValuesResponse) SetResults(v []GetFieldsValuesResponseResultsInner)`
+`func (o *GetFieldsValuesResponse) SetResults(v []GetDashletFieldsResponseNumericFieldsOptionsInner)`
 
 SetResults sets Results field to given value.
 

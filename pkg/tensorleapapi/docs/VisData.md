@@ -10,6 +10,10 @@ Name | Type | Description | Notes
 **Body** | **[][]float64** |  | 
 **Heatmap** | Pointer to [**Heatmap**](Heatmap.md) |  | [optional] 
 **Labels** | **[]string** |  | 
+**Gt** | Pointer to **[]float64** |  | [optional] 
+**XLabel** | Pointer to **string** |  | [optional] 
+**YLabel** | Pointer to **string** |  | [optional] 
+**XRange** | Pointer to **[]float64** |  | [optional] 
 **BoundingBox** | [**[]BoundingBox**](BoundingBox.md) |  | 
 **MaskBlob** | **string** |  | 
 **Text** | **[]string** |  | 
@@ -158,6 +162,106 @@ and a boolean to check if the value has been set.
 
 SetLabels sets Labels field to given value.
 
+
+### GetGt
+
+`func (o *VisData) GetGt() []float64`
+
+GetGt returns the Gt field if non-nil, zero value otherwise.
+
+### GetGtOk
+
+`func (o *VisData) GetGtOk() (*[]float64, bool)`
+
+GetGtOk returns a tuple with the Gt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGt
+
+`func (o *VisData) SetGt(v []float64)`
+
+SetGt sets Gt field to given value.
+
+### HasGt
+
+`func (o *VisData) HasGt() bool`
+
+HasGt returns a boolean if a field has been set.
+
+### GetXLabel
+
+`func (o *VisData) GetXLabel() string`
+
+GetXLabel returns the XLabel field if non-nil, zero value otherwise.
+
+### GetXLabelOk
+
+`func (o *VisData) GetXLabelOk() (*string, bool)`
+
+GetXLabelOk returns a tuple with the XLabel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetXLabel
+
+`func (o *VisData) SetXLabel(v string)`
+
+SetXLabel sets XLabel field to given value.
+
+### HasXLabel
+
+`func (o *VisData) HasXLabel() bool`
+
+HasXLabel returns a boolean if a field has been set.
+
+### GetYLabel
+
+`func (o *VisData) GetYLabel() string`
+
+GetYLabel returns the YLabel field if non-nil, zero value otherwise.
+
+### GetYLabelOk
+
+`func (o *VisData) GetYLabelOk() (*string, bool)`
+
+GetYLabelOk returns a tuple with the YLabel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetYLabel
+
+`func (o *VisData) SetYLabel(v string)`
+
+SetYLabel sets YLabel field to given value.
+
+### HasYLabel
+
+`func (o *VisData) HasYLabel() bool`
+
+HasYLabel returns a boolean if a field has been set.
+
+### GetXRange
+
+`func (o *VisData) GetXRange() []float64`
+
+GetXRange returns the XRange field if non-nil, zero value otherwise.
+
+### GetXRangeOk
+
+`func (o *VisData) GetXRangeOk() (*[]float64, bool)`
+
+GetXRangeOk returns a tuple with the XRange field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetXRange
+
+`func (o *VisData) SetXRange(v []float64)`
+
+SetXRange sets XRange field to given value.
+
+### HasXRange
+
+`func (o *VisData) HasXRange() bool`
+
+HasXRange returns a boolean if a field has been set.
 
 ### GetBoundingBox
 

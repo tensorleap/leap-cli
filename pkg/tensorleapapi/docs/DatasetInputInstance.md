@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** |  | 
 **Shape** | **[]float64** |  | 
+**ChannelDim** | Pointer to **float64** |  | [optional] 
 
 ## Methods
 
@@ -65,6 +66,31 @@ and a boolean to check if the value has been set.
 
 SetShape sets Shape field to given value.
 
+
+### GetChannelDim
+
+`func (o *DatasetInputInstance) GetChannelDim() float64`
+
+GetChannelDim returns the ChannelDim field if non-nil, zero value otherwise.
+
+### GetChannelDimOk
+
+`func (o *DatasetInputInstance) GetChannelDimOk() (*float64, bool)`
+
+GetChannelDimOk returns a tuple with the ChannelDim field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetChannelDim
+
+`func (o *DatasetInputInstance) SetChannelDim(v float64)`
+
+SetChannelDim sets ChannelDim field to given value.
+
+### HasChannelDim
+
+`func (o *DatasetInputInstance) HasChannelDim() bool`
+
+HasChannelDim returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

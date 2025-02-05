@@ -199,18 +199,6 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 
 	})
 
-	t.Run("Test DefaultApiService ContinueTrain", func(t *testing.T) {
-
-		t.Skip("skip test") // remove to run test
-
-		resp, httpRes, err := apiClient.DefaultApi.ContinueTrain(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test DefaultApiService CreateSamplesVisualizations", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -742,6 +730,18 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultApiService GetGenericBaseImageTypes", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultApi.GetGenericBaseImageTypes(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultApiService GetHeatmapChart", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -759,6 +759,18 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultApi.GetIssueFileUploadSignedUrl(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultApiService GetJobLogs", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultApi.GetJobLogs(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1083,6 +1095,18 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultApi.GetSlimVisualization(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultApiService GetState", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultApi.GetState(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1594,30 +1618,6 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 
 	})
 
-	t.Run("Test DefaultApiService TrainFromInitialWeights", func(t *testing.T) {
-
-		t.Skip("skip test") // remove to run test
-
-		resp, httpRes, err := apiClient.DefaultApi.TrainFromInitialWeights(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test DefaultApiService TrainFromScratch", func(t *testing.T) {
-
-		t.Skip("skip test") // remove to run test
-
-		resp, httpRes, err := apiClient.DefaultApi.TrainFromScratch(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test DefaultApiService TrashDataset", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -1732,11 +1732,11 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 
 	})
 
-	t.Run("Test DefaultApiService UpdateSessionRunName", func(t *testing.T) {
+	t.Run("Test DefaultApiService UpdateSessionRun", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
 
-		httpRes, err := apiClient.DefaultApi.UpdateSessionRunName(context.Background()).Execute()
+		httpRes, err := apiClient.DefaultApi.UpdateSessionRun(context.Background()).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -1845,6 +1845,18 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 		httpRes, err := apiClient.DefaultApi.UploadProject(context.Background(), projectName).Execute()
 
 		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultApiService UpsertState", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultApi.UpsertState(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

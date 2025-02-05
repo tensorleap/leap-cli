@@ -60,7 +60,6 @@ docs/ConfusionMatrixTableParamsAllOf.md
 docs/ConfusionMetricNamesParams.md
 docs/ConfusionMetricNamesResponse.md
 docs/ContinueEvaluateParams.md
-docs/ContinueTrainParams.md
 docs/ContinuesAgg.md
 docs/CreateSampleVisualizationsParams.md
 docs/CreateSessionTestRequest.md
@@ -143,6 +142,7 @@ docs/GeneralMessageParams.md
 docs/GeneratedChartData.md
 docs/GeneratedDashlet.md
 docs/GeneratedDashletType.md
+docs/GenericBaseImage.md
 docs/GenericDataItem.md
 docs/GenericDataQueryParams.md
 docs/GenericDataResponse.md
@@ -159,6 +159,7 @@ docs/GetDashboardParams.md
 docs/GetDashboardResponse.md
 docs/GetDashletFieldsParams.md
 docs/GetDashletFieldsResponse.md
+docs/GetDashletFieldsResponseNumericFieldsOptionsInner.md
 docs/GetDatasetVersionParams.md
 docs/GetDatasetVersionResponse.md
 docs/GetDatasetVersionUploadUrlParams.md
@@ -172,11 +173,13 @@ docs/GetExportedSessionRunJobsParams.md
 docs/GetExportedSessionRunJobsResponse.md
 docs/GetFieldsValuesRequest.md
 docs/GetFieldsValuesResponse.md
-docs/GetFieldsValuesResponseResultsInner.md
 docs/GetGeneratedDashletsBySessionRun.md
 docs/GetGeneratedDashletsParams.md
 docs/GetGeneratedDashletsResponse.md
+docs/GetGenericBaseImageTypesResponse.md
 docs/GetIssueFileUploadSignedUrl.md
+docs/GetJobLogsParams.md
+docs/GetJobLogsResponse.md
 docs/GetJobsFilterParams.md
 docs/GetJobsResponse.md
 docs/GetLatestDatasetVersionParams.md
@@ -209,6 +212,8 @@ docs/GetSingleSessionTestRequest.md
 docs/GetSlimJobsResponse.md
 docs/GetSlimVisualizationParams.md
 docs/GetSlimVisualizationResponse.md
+docs/GetStateParams.md
+docs/GetStateResponse.md
 docs/GetStatisticsParams.md
 docs/GetStatisticsResponse.md
 docs/GetTeamUsersResponse.md
@@ -311,6 +316,7 @@ docs/OrderType.md
 docs/OverfittingInsight.md
 docs/PanelLayout.md
 docs/PartialPopulationExplorationArtifacts.md
+docs/PodLogs.md
 docs/PopExploreInfo.md
 docs/PopulationExplorationDashlet.md
 docs/PopulationExplorationDashletData.md
@@ -318,6 +324,7 @@ docs/PopulationExplorationDisplayParams.md
 docs/PopulationExplorationJobParams.md
 docs/PopulationExplorationParams.md
 docs/PopulationExplorationResponse.md
+docs/PopulationExplorationResponseStatus.md
 docs/PredictionLabels.md
 docs/PredictionTypeInstance.md
 docs/Project.md
@@ -359,6 +366,7 @@ docs/Session.md
 docs/SessionHashRequestParams.md
 docs/SessionPopulatedJob.md
 docs/SessionRunData.md
+docs/SessionRunToEpoch.md
 docs/SessionTest.md
 docs/SessionTestData.md
 docs/SessionTestResult.md
@@ -399,8 +407,6 @@ docs/TerminateJobResponse.md
 docs/TestStatus.md
 docs/TextData.md
 docs/TextViz.md
-docs/TrainFromInitialWeightsParams.md
-docs/TrainFromScratchParams.md
 docs/TrainingParams.md
 docs/TrashDatasetParams.md
 docs/TrashSecretManagerParams.md
@@ -424,6 +430,8 @@ docs/UpdateVersionNameParams.md
 docs/UpdateVersionParams.md
 docs/UpdateVersionResponse.md
 docs/UploadModelFileType.md
+docs/UpsertStateParams.md
+docs/UpsertStateResponse.md
 docs/UserData.md
 docs/UserDataLocal.md
 docs/UserDataMetadata.md
@@ -503,7 +511,6 @@ model_confusion_matrix_table_params_all_of.go
 model_confusion_metric_names_params.go
 model_confusion_metric_names_response.go
 model_continue_evaluate_params.go
-model_continue_train_params.go
 model_continues_agg.go
 model_create_sample_visualizations_params.go
 model_create_session_test_request.go
@@ -585,6 +592,7 @@ model_general_message_params.go
 model_generated_chart_data.go
 model_generated_dashlet.go
 model_generated_dashlet_type.go
+model_generic_base_image.go
 model_generic_data_item.go
 model_generic_data_query_params.go
 model_generic_data_response.go
@@ -601,6 +609,7 @@ model_get_dashboard_params.go
 model_get_dashboard_response.go
 model_get_dashlet_fields_params.go
 model_get_dashlet_fields_response.go
+model_get_dashlet_fields_response_numeric_fields_options_inner.go
 model_get_dataset_version_params.go
 model_get_dataset_version_response.go
 model_get_dataset_version_upload_url_params.go
@@ -614,11 +623,13 @@ model_get_exported_session_run_jobs_params.go
 model_get_exported_session_run_jobs_response.go
 model_get_fields_values_request.go
 model_get_fields_values_response.go
-model_get_fields_values_response_results_inner.go
 model_get_generated_dashlets_by_session_run.go
 model_get_generated_dashlets_params.go
 model_get_generated_dashlets_response.go
+model_get_generic_base_image_types_response.go
 model_get_issue_file_upload_signed_url.go
+model_get_job_logs_params.go
+model_get_job_logs_response.go
 model_get_jobs_filter_params.go
 model_get_jobs_response.go
 model_get_latest_dataset_version_params.go
@@ -651,6 +662,8 @@ model_get_single_session_test_request.go
 model_get_slim_jobs_response.go
 model_get_slim_visualization_params.go
 model_get_slim_visualization_response.go
+model_get_state_params.go
+model_get_state_response.go
 model_get_statistics_params.go
 model_get_statistics_response.go
 model_get_team_users_response.go
@@ -753,6 +766,7 @@ model_order_type.go
 model_overfitting_insight.go
 model_panel_layout.go
 model_partial_population_exploration_artifacts_.go
+model_pod_logs.go
 model_pop_explore_info.go
 model_population_exploration_dashlet.go
 model_population_exploration_dashlet_data.go
@@ -760,6 +774,7 @@ model_population_exploration_display_params.go
 model_population_exploration_job_params.go
 model_population_exploration_params.go
 model_population_exploration_response.go
+model_population_exploration_response_status.go
 model_prediction_labels.go
 model_prediction_type_instance.go
 model_project.go
@@ -801,6 +816,7 @@ model_session.go
 model_session_hash_request_params.go
 model_session_populated_job.go
 model_session_run_data.go
+model_session_run_to_epoch.go
 model_session_test_.go
 model_session_test_data.go
 model_session_test_result.go
@@ -841,8 +857,6 @@ model_terminate_job_response.go
 model_test_status.go
 model_text_data.go
 model_text_viz.go
-model_train_from_initial_weights_params.go
-model_train_from_scratch_params.go
 model_training_params.go
 model_trash_dataset_params.go
 model_trash_secret_manager_params.go
@@ -866,6 +880,8 @@ model_update_version_name_params.go
 model_update_version_params.go
 model_update_version_response.go
 model_upload_model_file_type.go
+model_upsert_state_params.go
+model_upsert_state_response.go
 model_user_data.go
 model_user_data_local.go
 model_user_data_metadata.go

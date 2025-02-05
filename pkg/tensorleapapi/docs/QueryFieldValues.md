@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Page** | Pointer to **float64** |  | [optional] 
 **Size** | Pointer to **float64** |  | [optional] 
+**Type** | **string** |  | 
 **Query** | Pointer to [**NumberOrString**](NumberOrString.md) |  | [optional] 
 **Field** | **string** |  | 
 
@@ -13,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewQueryFieldValues
 
-`func NewQueryFieldValues(field string, ) *QueryFieldValues`
+`func NewQueryFieldValues(type_ string, field string, ) *QueryFieldValues`
 
 NewQueryFieldValues instantiates a new QueryFieldValues object
 This constructor will assign default values to properties that have it defined,
@@ -77,6 +78,26 @@ SetSize sets Size field to given value.
 `func (o *QueryFieldValues) HasSize() bool`
 
 HasSize returns a boolean if a field has been set.
+
+### GetType
+
+`func (o *QueryFieldValues) GetType() string`
+
+GetType returns the Type field if non-nil, zero value otherwise.
+
+### GetTypeOk
+
+`func (o *QueryFieldValues) GetTypeOk() (*string, bool)`
+
+GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetType
+
+`func (o *QueryFieldValues) SetType(v string)`
+
+SetType sets Type field to given value.
+
 
 ### GetQuery
 

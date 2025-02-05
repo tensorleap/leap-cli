@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**SessionRunIds** | **[]string** |  | 
+**SessionRunsToEpochs** | [**[]SessionRunToEpoch**](SessionRunToEpoch.md) |  | 
 **X** | [**SplitAgg**](SplitAgg.md) |  | 
 **VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **HorizontalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
@@ -13,14 +13,13 @@ Name | Type | Description | Notes
 **Threshold** | Pointer to **float64** |  | [optional] 
 **CustomMetricName** | **string** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
-**LastEpochOnly** | Pointer to **bool** |  | [optional] 
 **FilterLabels** | Pointer to **[]string** |  | [optional] 
 
 ## Methods
 
 ### NewGetConfusionMatrixResultCombinationsParams
 
-`func NewGetConfusionMatrixResultCombinationsParams(projectId string, sessionRunIds []string, x SplitAgg, customMetricName string, ) *GetConfusionMatrixResultCombinationsParams`
+`func NewGetConfusionMatrixResultCombinationsParams(projectId string, sessionRunsToEpochs []SessionRunToEpoch, x SplitAgg, customMetricName string, ) *GetConfusionMatrixResultCombinationsParams`
 
 NewGetConfusionMatrixResultCombinationsParams instantiates a new GetConfusionMatrixResultCombinationsParams object
 This constructor will assign default values to properties that have it defined,
@@ -55,24 +54,24 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetSessionRunIds
+### GetSessionRunsToEpochs
 
-`func (o *GetConfusionMatrixResultCombinationsParams) GetSessionRunIds() []string`
+`func (o *GetConfusionMatrixResultCombinationsParams) GetSessionRunsToEpochs() []SessionRunToEpoch`
 
-GetSessionRunIds returns the SessionRunIds field if non-nil, zero value otherwise.
+GetSessionRunsToEpochs returns the SessionRunsToEpochs field if non-nil, zero value otherwise.
 
-### GetSessionRunIdsOk
+### GetSessionRunsToEpochsOk
 
-`func (o *GetConfusionMatrixResultCombinationsParams) GetSessionRunIdsOk() (*[]string, bool)`
+`func (o *GetConfusionMatrixResultCombinationsParams) GetSessionRunsToEpochsOk() (*[]SessionRunToEpoch, bool)`
 
-GetSessionRunIdsOk returns a tuple with the SessionRunIds field if it's non-nil, zero value otherwise
+GetSessionRunsToEpochsOk returns a tuple with the SessionRunsToEpochs field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunIds
+### SetSessionRunsToEpochs
 
-`func (o *GetConfusionMatrixResultCombinationsParams) SetSessionRunIds(v []string)`
+`func (o *GetConfusionMatrixResultCombinationsParams) SetSessionRunsToEpochs(v []SessionRunToEpoch)`
 
-SetSessionRunIds sets SessionRunIds field to given value.
+SetSessionRunsToEpochs sets SessionRunsToEpochs field to given value.
 
 
 ### GetX
@@ -239,31 +238,6 @@ SetFilters sets Filters field to given value.
 `func (o *GetConfusionMatrixResultCombinationsParams) HasFilters() bool`
 
 HasFilters returns a boolean if a field has been set.
-
-### GetLastEpochOnly
-
-`func (o *GetConfusionMatrixResultCombinationsParams) GetLastEpochOnly() bool`
-
-GetLastEpochOnly returns the LastEpochOnly field if non-nil, zero value otherwise.
-
-### GetLastEpochOnlyOk
-
-`func (o *GetConfusionMatrixResultCombinationsParams) GetLastEpochOnlyOk() (*bool, bool)`
-
-GetLastEpochOnlyOk returns a tuple with the LastEpochOnly field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetLastEpochOnly
-
-`func (o *GetConfusionMatrixResultCombinationsParams) SetLastEpochOnly(v bool)`
-
-SetLastEpochOnly sets LastEpochOnly field to given value.
-
-### HasLastEpochOnly
-
-`func (o *GetConfusionMatrixResultCombinationsParams) HasLastEpochOnly() bool`
-
-HasLastEpochOnly returns a boolean if a field has been set.
 
 ### GetFilterLabels
 

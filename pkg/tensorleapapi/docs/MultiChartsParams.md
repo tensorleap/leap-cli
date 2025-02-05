@@ -5,20 +5,20 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**SessionRunIds** | **[]string** |  | 
 **X** | [**SplitAgg**](SplitAgg.md) |  | 
 **Y** | [**Aggregations**](Aggregations.md) |  | 
 **VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **HorizontalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **InnerSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
-**LastEpochOnly** | Pointer to **bool** |  | [optional] 
+**SessionRunsToEpochs** | [**[]SessionRunToEpoch**](SessionRunToEpoch.md) |  | 
+**ShowAllEpochs** | **bool** |  | 
 
 ## Methods
 
 ### NewMultiChartsParams
 
-`func NewMultiChartsParams(projectId string, sessionRunIds []string, x SplitAgg, y Aggregations, ) *MultiChartsParams`
+`func NewMultiChartsParams(projectId string, x SplitAgg, y Aggregations, sessionRunsToEpochs []SessionRunToEpoch, showAllEpochs bool, ) *MultiChartsParams`
 
 NewMultiChartsParams instantiates a new MultiChartsParams object
 This constructor will assign default values to properties that have it defined,
@@ -51,26 +51,6 @@ and a boolean to check if the value has been set.
 `func (o *MultiChartsParams) SetProjectId(v string)`
 
 SetProjectId sets ProjectId field to given value.
-
-
-### GetSessionRunIds
-
-`func (o *MultiChartsParams) GetSessionRunIds() []string`
-
-GetSessionRunIds returns the SessionRunIds field if non-nil, zero value otherwise.
-
-### GetSessionRunIdsOk
-
-`func (o *MultiChartsParams) GetSessionRunIdsOk() (*[]string, bool)`
-
-GetSessionRunIdsOk returns a tuple with the SessionRunIds field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSessionRunIds
-
-`func (o *MultiChartsParams) SetSessionRunIds(v []string)`
-
-SetSessionRunIds sets SessionRunIds field to given value.
 
 
 ### GetX
@@ -213,30 +193,45 @@ SetFilters sets Filters field to given value.
 
 HasFilters returns a boolean if a field has been set.
 
-### GetLastEpochOnly
+### GetSessionRunsToEpochs
 
-`func (o *MultiChartsParams) GetLastEpochOnly() bool`
+`func (o *MultiChartsParams) GetSessionRunsToEpochs() []SessionRunToEpoch`
 
-GetLastEpochOnly returns the LastEpochOnly field if non-nil, zero value otherwise.
+GetSessionRunsToEpochs returns the SessionRunsToEpochs field if non-nil, zero value otherwise.
 
-### GetLastEpochOnlyOk
+### GetSessionRunsToEpochsOk
 
-`func (o *MultiChartsParams) GetLastEpochOnlyOk() (*bool, bool)`
+`func (o *MultiChartsParams) GetSessionRunsToEpochsOk() (*[]SessionRunToEpoch, bool)`
 
-GetLastEpochOnlyOk returns a tuple with the LastEpochOnly field if it's non-nil, zero value otherwise
+GetSessionRunsToEpochsOk returns a tuple with the SessionRunsToEpochs field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetLastEpochOnly
+### SetSessionRunsToEpochs
 
-`func (o *MultiChartsParams) SetLastEpochOnly(v bool)`
+`func (o *MultiChartsParams) SetSessionRunsToEpochs(v []SessionRunToEpoch)`
 
-SetLastEpochOnly sets LastEpochOnly field to given value.
+SetSessionRunsToEpochs sets SessionRunsToEpochs field to given value.
 
-### HasLastEpochOnly
 
-`func (o *MultiChartsParams) HasLastEpochOnly() bool`
+### GetShowAllEpochs
 
-HasLastEpochOnly returns a boolean if a field has been set.
+`func (o *MultiChartsParams) GetShowAllEpochs() bool`
+
+GetShowAllEpochs returns the ShowAllEpochs field if non-nil, zero value otherwise.
+
+### GetShowAllEpochsOk
+
+`func (o *MultiChartsParams) GetShowAllEpochsOk() (*bool, bool)`
+
+GetShowAllEpochsOk returns a tuple with the ShowAllEpochs field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetShowAllEpochs
+
+`func (o *MultiChartsParams) SetShowAllEpochs(v bool)`
+
+SetShowAllEpochs sets ShowAllEpochs field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

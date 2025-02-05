@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **SessionRunId** | Pointer to **string** |  | [optional] 
 **TeamId** | **string** |  | 
 **DatasetVersionInfo** | Pointer to [**DatasetVersionInfo**](DatasetVersionInfo.md) |  | [optional] 
+**LogsBlobName** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -326,6 +327,31 @@ SetDatasetVersionInfo sets DatasetVersionInfo field to given value.
 `func (o *Job) HasDatasetVersionInfo() bool`
 
 HasDatasetVersionInfo returns a boolean if a field has been set.
+
+### GetLogsBlobName
+
+`func (o *Job) GetLogsBlobName() string`
+
+GetLogsBlobName returns the LogsBlobName field if non-nil, zero value otherwise.
+
+### GetLogsBlobNameOk
+
+`func (o *Job) GetLogsBlobNameOk() (*string, bool)`
+
+GetLogsBlobNameOk returns a tuple with the LogsBlobName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLogsBlobName
+
+`func (o *Job) SetLogsBlobName(v string)`
+
+SetLogsBlobName sets LogsBlobName field to given value.
+
+### HasLogsBlobName
+
+`func (o *Job) HasLogsBlobName() bool`
+
+HasLogsBlobName returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

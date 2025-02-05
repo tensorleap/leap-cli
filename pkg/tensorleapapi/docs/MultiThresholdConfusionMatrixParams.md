@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SessionRunIds** | **[]string** |  | 
+**SessionRunsToEpochs** | [**[]SessionRunToEpoch**](SessionRunToEpoch.md) |  | 
 **ProjectId** | **string** |  | 
 **CustomMetricName** | **string** |  | 
 **VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewMultiThresholdConfusionMatrixParams
 
-`func NewMultiThresholdConfusionMatrixParams(sessionRunIds []string, projectId string, customMetricName string, ) *MultiThresholdConfusionMatrixParams`
+`func NewMultiThresholdConfusionMatrixParams(sessionRunsToEpochs []SessionRunToEpoch, projectId string, customMetricName string, ) *MultiThresholdConfusionMatrixParams`
 
 NewMultiThresholdConfusionMatrixParams instantiates a new MultiThresholdConfusionMatrixParams object
 This constructor will assign default values to properties that have it defined,
@@ -30,24 +30,24 @@ NewMultiThresholdConfusionMatrixParamsWithDefaults instantiates a new MultiThres
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetSessionRunIds
+### GetSessionRunsToEpochs
 
-`func (o *MultiThresholdConfusionMatrixParams) GetSessionRunIds() []string`
+`func (o *MultiThresholdConfusionMatrixParams) GetSessionRunsToEpochs() []SessionRunToEpoch`
 
-GetSessionRunIds returns the SessionRunIds field if non-nil, zero value otherwise.
+GetSessionRunsToEpochs returns the SessionRunsToEpochs field if non-nil, zero value otherwise.
 
-### GetSessionRunIdsOk
+### GetSessionRunsToEpochsOk
 
-`func (o *MultiThresholdConfusionMatrixParams) GetSessionRunIdsOk() (*[]string, bool)`
+`func (o *MultiThresholdConfusionMatrixParams) GetSessionRunsToEpochsOk() (*[]SessionRunToEpoch, bool)`
 
-GetSessionRunIdsOk returns a tuple with the SessionRunIds field if it's non-nil, zero value otherwise
+GetSessionRunsToEpochsOk returns a tuple with the SessionRunsToEpochs field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunIds
+### SetSessionRunsToEpochs
 
-`func (o *MultiThresholdConfusionMatrixParams) SetSessionRunIds(v []string)`
+`func (o *MultiThresholdConfusionMatrixParams) SetSessionRunsToEpochs(v []SessionRunToEpoch)`
 
-SetSessionRunIds sets SessionRunIds field to given value.
+SetSessionRunsToEpochs sets SessionRunsToEpochs field to given value.
 
 
 ### GetProjectId

@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **BlobPath** | **string** |  | 
 **Branch** | **string** |  | 
 **CodeEntryFile** | **string** |  | 
+**GenericBaseImageType** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -254,6 +255,31 @@ and a boolean to check if the value has been set.
 
 SetCodeEntryFile sets CodeEntryFile field to given value.
 
+
+### GetGenericBaseImageType
+
+`func (o *DatasetVersion) GetGenericBaseImageType() string`
+
+GetGenericBaseImageType returns the GenericBaseImageType field if non-nil, zero value otherwise.
+
+### GetGenericBaseImageTypeOk
+
+`func (o *DatasetVersion) GetGenericBaseImageTypeOk() (*string, bool)`
+
+GetGenericBaseImageTypeOk returns a tuple with the GenericBaseImageType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGenericBaseImageType
+
+`func (o *DatasetVersion) SetGenericBaseImageType(v string)`
+
+SetGenericBaseImageType sets GenericBaseImageType field to given value.
+
+### HasGenericBaseImageType
+
+`func (o *DatasetVersion) HasGenericBaseImageType() bool`
+
+HasGenericBaseImageType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

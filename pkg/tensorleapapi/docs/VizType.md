@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **Heatmap** | Pointer to [**Heatmap**](Heatmap.md) |  | [optional] 
 **Clusters** | Pointer to [**Clusters**](Clusters.md) |  | [optional] 
 **ScatterData** | [**ScatterVizDataState**](ScatterVizDataState.md) |  | 
+**Gt** | Pointer to **[]float64** |  | [optional] 
 **BoundingBoxes** | [**[]BoundingBox**](BoundingBox.md) |  | 
 **VisualizedItems** | [**[]VisualizedItem**](VisualizedItem.md) |  | 
 **MetadataMap** | **map[string]interface{}** | Construct a type with a set of properties K of type T | 
@@ -246,6 +247,31 @@ and a boolean to check if the value has been set.
 
 SetScatterData sets ScatterData field to given value.
 
+
+### GetGt
+
+`func (o *VizType) GetGt() []float64`
+
+GetGt returns the Gt field if non-nil, zero value otherwise.
+
+### GetGtOk
+
+`func (o *VizType) GetGtOk() (*[]float64, bool)`
+
+GetGtOk returns a tuple with the Gt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGt
+
+`func (o *VizType) SetGt(v []float64)`
+
+SetGt sets Gt field to given value.
+
+### HasGt
+
+`func (o *VizType) HasGt() bool`
+
+HasGt returns a boolean if a field has been set.
 
 ### GetBoundingBoxes
 

@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**TriggerCreateSampleVisualiztions** | Pointer to **bool** |  | [optional] 
 **DisplayParams** | [**PopulationExplorationDisplayParams**](PopulationExplorationDisplayParams.md) |  | 
 **ProjectionMetric** | Pointer to **string** |  | [optional] 
 **Digest** | **string** |  | 
@@ -31,6 +32,31 @@ will change when the set of required properties is changed
 NewPopulationExplorationJobParamsWithDefaults instantiates a new PopulationExplorationJobParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetTriggerCreateSampleVisualiztions
+
+`func (o *PopulationExplorationJobParams) GetTriggerCreateSampleVisualiztions() bool`
+
+GetTriggerCreateSampleVisualiztions returns the TriggerCreateSampleVisualiztions field if non-nil, zero value otherwise.
+
+### GetTriggerCreateSampleVisualiztionsOk
+
+`func (o *PopulationExplorationJobParams) GetTriggerCreateSampleVisualiztionsOk() (*bool, bool)`
+
+GetTriggerCreateSampleVisualiztionsOk returns a tuple with the TriggerCreateSampleVisualiztions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTriggerCreateSampleVisualiztions
+
+`func (o *PopulationExplorationJobParams) SetTriggerCreateSampleVisualiztions(v bool)`
+
+SetTriggerCreateSampleVisualiztions sets TriggerCreateSampleVisualiztions field to given value.
+
+### HasTriggerCreateSampleVisualiztions
+
+`func (o *PopulationExplorationJobParams) HasTriggerCreateSampleVisualiztions() bool`
+
+HasTriggerCreateSampleVisualiztions returns a boolean if a field has been set.
 
 ### GetDisplayParams
 
