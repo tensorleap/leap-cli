@@ -5,20 +5,20 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**SessionRunIds** | **[]string** |  | 
+**SessionRunsToEpochs** | [**[]SessionRunToEpoch**](SessionRunToEpoch.md) |  | 
+**ShowAllEpochs** | **bool** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **HorizontalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **InnerSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **Aggregations** | [**[]Aggregations**](Aggregations.md) |  | 
 **Buckets** | [**[]SplitAgg**](SplitAgg.md) |  | 
-**LastEpochOnly** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
 ### NewGenericDataQueryParams
 
-`func NewGenericDataQueryParams(projectId string, sessionRunIds []string, aggregations []Aggregations, buckets []SplitAgg, ) *GenericDataQueryParams`
+`func NewGenericDataQueryParams(projectId string, sessionRunsToEpochs []SessionRunToEpoch, showAllEpochs bool, aggregations []Aggregations, buckets []SplitAgg, ) *GenericDataQueryParams`
 
 NewGenericDataQueryParams instantiates a new GenericDataQueryParams object
 This constructor will assign default values to properties that have it defined,
@@ -53,24 +53,44 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetSessionRunIds
+### GetSessionRunsToEpochs
 
-`func (o *GenericDataQueryParams) GetSessionRunIds() []string`
+`func (o *GenericDataQueryParams) GetSessionRunsToEpochs() []SessionRunToEpoch`
 
-GetSessionRunIds returns the SessionRunIds field if non-nil, zero value otherwise.
+GetSessionRunsToEpochs returns the SessionRunsToEpochs field if non-nil, zero value otherwise.
 
-### GetSessionRunIdsOk
+### GetSessionRunsToEpochsOk
 
-`func (o *GenericDataQueryParams) GetSessionRunIdsOk() (*[]string, bool)`
+`func (o *GenericDataQueryParams) GetSessionRunsToEpochsOk() (*[]SessionRunToEpoch, bool)`
 
-GetSessionRunIdsOk returns a tuple with the SessionRunIds field if it's non-nil, zero value otherwise
+GetSessionRunsToEpochsOk returns a tuple with the SessionRunsToEpochs field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunIds
+### SetSessionRunsToEpochs
 
-`func (o *GenericDataQueryParams) SetSessionRunIds(v []string)`
+`func (o *GenericDataQueryParams) SetSessionRunsToEpochs(v []SessionRunToEpoch)`
 
-SetSessionRunIds sets SessionRunIds field to given value.
+SetSessionRunsToEpochs sets SessionRunsToEpochs field to given value.
+
+
+### GetShowAllEpochs
+
+`func (o *GenericDataQueryParams) GetShowAllEpochs() bool`
+
+GetShowAllEpochs returns the ShowAllEpochs field if non-nil, zero value otherwise.
+
+### GetShowAllEpochsOk
+
+`func (o *GenericDataQueryParams) GetShowAllEpochsOk() (*bool, bool)`
+
+GetShowAllEpochsOk returns a tuple with the ShowAllEpochs field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetShowAllEpochs
+
+`func (o *GenericDataQueryParams) SetShowAllEpochs(v bool)`
+
+SetShowAllEpochs sets ShowAllEpochs field to given value.
 
 
 ### GetFilters
@@ -212,31 +232,6 @@ and a boolean to check if the value has been set.
 
 SetBuckets sets Buckets field to given value.
 
-
-### GetLastEpochOnly
-
-`func (o *GenericDataQueryParams) GetLastEpochOnly() bool`
-
-GetLastEpochOnly returns the LastEpochOnly field if non-nil, zero value otherwise.
-
-### GetLastEpochOnlyOk
-
-`func (o *GenericDataQueryParams) GetLastEpochOnlyOk() (*bool, bool)`
-
-GetLastEpochOnlyOk returns a tuple with the LastEpochOnly field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetLastEpochOnly
-
-`func (o *GenericDataQueryParams) SetLastEpochOnly(v bool)`
-
-SetLastEpochOnly sets LastEpochOnly field to given value.
-
-### HasLastEpochOnly
-
-`func (o *GenericDataQueryParams) HasLastEpochOnly() bool`
-
-HasLastEpochOnly returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

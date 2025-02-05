@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**SessionRunIds** | **[]string** |  | 
+**SessionRunsToEpochs** | [**[]SessionRunToEpoch**](SessionRunToEpoch.md) |  | 
 **X** | [**SplitAgg**](SplitAgg.md) |  | 
 **VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **HorizontalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
@@ -13,13 +13,12 @@ Name | Type | Description | Notes
 **Threshold** | Pointer to **float64** |  | [optional] 
 **CustomMetricName** | **string** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
-**LastEpochOnly** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
 ### NewConfusionMatrixParams
 
-`func NewConfusionMatrixParams(projectId string, sessionRunIds []string, x SplitAgg, customMetricName string, ) *ConfusionMatrixParams`
+`func NewConfusionMatrixParams(projectId string, sessionRunsToEpochs []SessionRunToEpoch, x SplitAgg, customMetricName string, ) *ConfusionMatrixParams`
 
 NewConfusionMatrixParams instantiates a new ConfusionMatrixParams object
 This constructor will assign default values to properties that have it defined,
@@ -54,24 +53,24 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetSessionRunIds
+### GetSessionRunsToEpochs
 
-`func (o *ConfusionMatrixParams) GetSessionRunIds() []string`
+`func (o *ConfusionMatrixParams) GetSessionRunsToEpochs() []SessionRunToEpoch`
 
-GetSessionRunIds returns the SessionRunIds field if non-nil, zero value otherwise.
+GetSessionRunsToEpochs returns the SessionRunsToEpochs field if non-nil, zero value otherwise.
 
-### GetSessionRunIdsOk
+### GetSessionRunsToEpochsOk
 
-`func (o *ConfusionMatrixParams) GetSessionRunIdsOk() (*[]string, bool)`
+`func (o *ConfusionMatrixParams) GetSessionRunsToEpochsOk() (*[]SessionRunToEpoch, bool)`
 
-GetSessionRunIdsOk returns a tuple with the SessionRunIds field if it's non-nil, zero value otherwise
+GetSessionRunsToEpochsOk returns a tuple with the SessionRunsToEpochs field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunIds
+### SetSessionRunsToEpochs
 
-`func (o *ConfusionMatrixParams) SetSessionRunIds(v []string)`
+`func (o *ConfusionMatrixParams) SetSessionRunsToEpochs(v []SessionRunToEpoch)`
 
-SetSessionRunIds sets SessionRunIds field to given value.
+SetSessionRunsToEpochs sets SessionRunsToEpochs field to given value.
 
 
 ### GetX
@@ -238,31 +237,6 @@ SetFilters sets Filters field to given value.
 `func (o *ConfusionMatrixParams) HasFilters() bool`
 
 HasFilters returns a boolean if a field has been set.
-
-### GetLastEpochOnly
-
-`func (o *ConfusionMatrixParams) GetLastEpochOnly() bool`
-
-GetLastEpochOnly returns the LastEpochOnly field if non-nil, zero value otherwise.
-
-### GetLastEpochOnlyOk
-
-`func (o *ConfusionMatrixParams) GetLastEpochOnlyOk() (*bool, bool)`
-
-GetLastEpochOnlyOk returns a tuple with the LastEpochOnly field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetLastEpochOnly
-
-`func (o *ConfusionMatrixParams) SetLastEpochOnly(v bool)`
-
-SetLastEpochOnly sets LastEpochOnly field to given value.
-
-### HasLastEpochOnly
-
-`func (o *ConfusionMatrixParams) HasLastEpochOnly() bool`
-
-HasLastEpochOnly returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

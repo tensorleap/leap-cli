@@ -23,6 +23,7 @@ Name | Type | Description | Notes
 **MachineType** | Pointer to **string** |  | [optional] 
 **BatchSize** | Pointer to **float64** |  | [optional] 
 **DatasetVersionInfo** | Pointer to [**DatasetVersionInfo**](DatasetVersionInfo.md) |  | [optional] 
+**LogsBlobName** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -482,6 +483,31 @@ SetDatasetVersionInfo sets DatasetVersionInfo field to given value.
 `func (o *RunProcess) HasDatasetVersionInfo() bool`
 
 HasDatasetVersionInfo returns a boolean if a field has been set.
+
+### GetLogsBlobName
+
+`func (o *RunProcess) GetLogsBlobName() string`
+
+GetLogsBlobName returns the LogsBlobName field if non-nil, zero value otherwise.
+
+### GetLogsBlobNameOk
+
+`func (o *RunProcess) GetLogsBlobNameOk() (*string, bool)`
+
+GetLogsBlobNameOk returns a tuple with the LogsBlobName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLogsBlobName
+
+`func (o *RunProcess) SetLogsBlobName(v string)`
+
+SetLogsBlobName sets LogsBlobName field to given value.
+
+### HasLogsBlobName
+
+`func (o *RunProcess) HasLogsBlobName() bool`
+
+HasLogsBlobName returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

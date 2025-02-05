@@ -12,6 +12,8 @@ Name | Type | Description | Notes
 **Digest** | **string** |  | 
 **ProjectionMetric** | Pointer to **string** |  | [optional] 
 **DisplayParams** | [**PopulationExplorationDisplayParams**](PopulationExplorationDisplayParams.md) |  | 
+**TriggerCreateSampleVisualiztions** | Pointer to **bool** |  | [optional] 
+**ReRunAfterFail** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -201,6 +203,56 @@ and a boolean to check if the value has been set.
 
 SetDisplayParams sets DisplayParams field to given value.
 
+
+### GetTriggerCreateSampleVisualiztions
+
+`func (o *PopulationExplorationParams) GetTriggerCreateSampleVisualiztions() bool`
+
+GetTriggerCreateSampleVisualiztions returns the TriggerCreateSampleVisualiztions field if non-nil, zero value otherwise.
+
+### GetTriggerCreateSampleVisualiztionsOk
+
+`func (o *PopulationExplorationParams) GetTriggerCreateSampleVisualiztionsOk() (*bool, bool)`
+
+GetTriggerCreateSampleVisualiztionsOk returns a tuple with the TriggerCreateSampleVisualiztions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTriggerCreateSampleVisualiztions
+
+`func (o *PopulationExplorationParams) SetTriggerCreateSampleVisualiztions(v bool)`
+
+SetTriggerCreateSampleVisualiztions sets TriggerCreateSampleVisualiztions field to given value.
+
+### HasTriggerCreateSampleVisualiztions
+
+`func (o *PopulationExplorationParams) HasTriggerCreateSampleVisualiztions() bool`
+
+HasTriggerCreateSampleVisualiztions returns a boolean if a field has been set.
+
+### GetReRunAfterFail
+
+`func (o *PopulationExplorationParams) GetReRunAfterFail() bool`
+
+GetReRunAfterFail returns the ReRunAfterFail field if non-nil, zero value otherwise.
+
+### GetReRunAfterFailOk
+
+`func (o *PopulationExplorationParams) GetReRunAfterFailOk() (*bool, bool)`
+
+GetReRunAfterFailOk returns a tuple with the ReRunAfterFail field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReRunAfterFail
+
+`func (o *PopulationExplorationParams) SetReRunAfterFail(v bool)`
+
+SetReRunAfterFail sets ReRunAfterFail field to given value.
+
+### HasReRunAfterFail
+
+`func (o *PopulationExplorationParams) HasReRunAfterFail() bool`
+
+HasReRunAfterFail returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

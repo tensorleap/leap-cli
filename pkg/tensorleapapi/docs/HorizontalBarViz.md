@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **Title** | **string** |  | 
 **SubTitle** | **string** |  | 
 **Guid** | **string** |  | 
+**Gt** | Pointer to **[]float64** |  | [optional] 
 **Body** | **[]float64** |  | 
 **Labels** | **[]string** |  | 
 
@@ -109,6 +110,31 @@ and a boolean to check if the value has been set.
 
 SetGuid sets Guid field to given value.
 
+
+### GetGt
+
+`func (o *HorizontalBarViz) GetGt() []float64`
+
+GetGt returns the Gt field if non-nil, zero value otherwise.
+
+### GetGtOk
+
+`func (o *HorizontalBarViz) GetGtOk() (*[]float64, bool)`
+
+GetGtOk returns a tuple with the Gt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGt
+
+`func (o *HorizontalBarViz) SetGt(v []float64)`
+
+SetGt sets Gt field to given value.
+
+### HasGt
+
+`func (o *HorizontalBarViz) HasGt() bool`
+
+HasGt returns a boolean if a field has been set.
 
 ### GetBody
 

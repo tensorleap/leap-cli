@@ -14,12 +14,13 @@ Name | Type | Description | Notes
 **CreatedBy** | **string** |  | 
 **WeightAssets** | [**[]WeightAssetData**](WeightAssetData.md) |  | 
 **Jobs** | [**[]Job**](Job.md) |  | 
+**Description** | **string** |  | 
 
 ## Methods
 
 ### NewSessionRunData
 
-`func NewSessionRunData(projectId string, cid string, sessionId string, name string, teamId string, isEvaluate bool, createdAt time.Time, createdBy string, weightAssets []WeightAssetData, jobs []Job, ) *SessionRunData`
+`func NewSessionRunData(projectId string, cid string, sessionId string, name string, teamId string, isEvaluate bool, createdAt time.Time, createdBy string, weightAssets []WeightAssetData, jobs []Job, description string, ) *SessionRunData`
 
 NewSessionRunData instantiates a new SessionRunData object
 This constructor will assign default values to properties that have it defined,
@@ -232,6 +233,26 @@ and a boolean to check if the value has been set.
 `func (o *SessionRunData) SetJobs(v []Job)`
 
 SetJobs sets Jobs field to given value.
+
+
+### GetDescription
+
+`func (o *SessionRunData) GetDescription() string`
+
+GetDescription returns the Description field if non-nil, zero value otherwise.
+
+### GetDescriptionOk
+
+`func (o *SessionRunData) GetDescriptionOk() (*string, bool)`
+
+GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDescription
+
+`func (o *SessionRunData) SetDescription(v string)`
+
+SetDescription sets Description field to given value.
 
 
 

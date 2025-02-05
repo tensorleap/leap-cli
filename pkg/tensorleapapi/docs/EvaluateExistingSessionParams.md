@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **BatchSize** | **float64** |  | 
 **DataStates** | [**[]DataStateType**](DataStateType.md) |  | 
 **Name** | **string** |  | 
+**Description** | **string** |  | 
 **SkipMetricsEstimation** | **bool** |  | 
 **EvaluatedEpoch** | **float64** |  | 
 **SessionId** | **string** |  | 
@@ -17,7 +18,7 @@ Name | Type | Description | Notes
 
 ### NewEvaluateExistingSessionParams
 
-`func NewEvaluateExistingSessionParams(versionId string, projectId string, batchSize float64, dataStates []DataStateType, name string, skipMetricsEstimation bool, evaluatedEpoch float64, sessionId string, ) *EvaluateExistingSessionParams`
+`func NewEvaluateExistingSessionParams(versionId string, projectId string, batchSize float64, dataStates []DataStateType, name string, description string, skipMetricsEstimation bool, evaluatedEpoch float64, sessionId string, ) *EvaluateExistingSessionParams`
 
 NewEvaluateExistingSessionParams instantiates a new EvaluateExistingSessionParams object
 This constructor will assign default values to properties that have it defined,
@@ -130,6 +131,26 @@ and a boolean to check if the value has been set.
 `func (o *EvaluateExistingSessionParams) SetName(v string)`
 
 SetName sets Name field to given value.
+
+
+### GetDescription
+
+`func (o *EvaluateExistingSessionParams) GetDescription() string`
+
+GetDescription returns the Description field if non-nil, zero value otherwise.
+
+### GetDescriptionOk
+
+`func (o *EvaluateExistingSessionParams) GetDescriptionOk() (*string, bool)`
+
+GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDescription
+
+`func (o *EvaluateExistingSessionParams) SetDescription(v string)`
+
+SetDescription sets Description field to given value.
 
 
 ### GetSkipMetricsEstimation

@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **CodeEntryFile** | **string** |  | 
 **Branch** | Pointer to **string** |  | [optional] 
 **Note** | Pointer to **string** |  | [optional] 
+**GenericBaseImageType** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -190,6 +191,31 @@ SetNote sets Note field to given value.
 `func (o *SaveDatasetVersionParams) HasNote() bool`
 
 HasNote returns a boolean if a field has been set.
+
+### GetGenericBaseImageType
+
+`func (o *SaveDatasetVersionParams) GetGenericBaseImageType() string`
+
+GetGenericBaseImageType returns the GenericBaseImageType field if non-nil, zero value otherwise.
+
+### GetGenericBaseImageTypeOk
+
+`func (o *SaveDatasetVersionParams) GetGenericBaseImageTypeOk() (*string, bool)`
+
+GetGenericBaseImageTypeOk returns a tuple with the GenericBaseImageType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGenericBaseImageType
+
+`func (o *SaveDatasetVersionParams) SetGenericBaseImageType(v string)`
+
+SetGenericBaseImageType sets GenericBaseImageType field to given value.
+
+### HasGenericBaseImageType
+
+`func (o *SaveDatasetVersionParams) HasGenericBaseImageType() bool`
+
+HasGenericBaseImageType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

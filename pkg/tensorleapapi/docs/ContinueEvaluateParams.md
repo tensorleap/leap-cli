@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SessionRunId** | **string** |  | 
+**JobId** | **string** |  | 
 **ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewContinueEvaluateParams
 
-`func NewContinueEvaluateParams(sessionRunId string, projectId string, ) *ContinueEvaluateParams`
+`func NewContinueEvaluateParams(jobId string, projectId string, ) *ContinueEvaluateParams`
 
 NewContinueEvaluateParams instantiates a new ContinueEvaluateParams object
 This constructor will assign default values to properties that have it defined,
@@ -26,24 +26,24 @@ NewContinueEvaluateParamsWithDefaults instantiates a new ContinueEvaluateParams 
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetSessionRunId
+### GetJobId
 
-`func (o *ContinueEvaluateParams) GetSessionRunId() string`
+`func (o *ContinueEvaluateParams) GetJobId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetJobId returns the JobId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetJobIdOk
 
-`func (o *ContinueEvaluateParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *ContinueEvaluateParams) GetJobIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetJobIdOk returns a tuple with the JobId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetJobId
 
-`func (o *ContinueEvaluateParams) SetSessionRunId(v string)`
+`func (o *ContinueEvaluateParams) SetJobId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetJobId sets JobId field to given value.
 
 
 ### GetProjectId

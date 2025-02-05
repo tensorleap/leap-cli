@@ -8,12 +8,13 @@ Name | Type | Description | Notes
 **DatasetName** | **string** |  | 
 **DatasetVersionId** | **string** |  | 
 **DatasetVersionDisplayIndex** | **float64** |  | 
+**DatasetBranchName** | **string** |  | 
 
 ## Methods
 
 ### NewDatasetVersionInfo
 
-`func NewDatasetVersionInfo(datasetId string, datasetName string, datasetVersionId string, datasetVersionDisplayIndex float64, ) *DatasetVersionInfo`
+`func NewDatasetVersionInfo(datasetId string, datasetName string, datasetVersionId string, datasetVersionDisplayIndex float64, datasetBranchName string, ) *DatasetVersionInfo`
 
 NewDatasetVersionInfo instantiates a new DatasetVersionInfo object
 This constructor will assign default values to properties that have it defined,
@@ -106,6 +107,26 @@ and a boolean to check if the value has been set.
 `func (o *DatasetVersionInfo) SetDatasetVersionDisplayIndex(v float64)`
 
 SetDatasetVersionDisplayIndex sets DatasetVersionDisplayIndex field to given value.
+
+
+### GetDatasetBranchName
+
+`func (o *DatasetVersionInfo) GetDatasetBranchName() string`
+
+GetDatasetBranchName returns the DatasetBranchName field if non-nil, zero value otherwise.
+
+### GetDatasetBranchNameOk
+
+`func (o *DatasetVersionInfo) GetDatasetBranchNameOk() (*string, bool)`
+
+GetDatasetBranchNameOk returns a tuple with the DatasetBranchName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDatasetBranchName
+
+`func (o *DatasetVersionInfo) SetDatasetBranchName(v string)`
+
+SetDatasetBranchName sets DatasetBranchName field to given value.
 
 
 

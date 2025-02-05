@@ -8,17 +8,17 @@ Name | Type | Description | Notes
 **X** | [**SplitAgg**](SplitAgg.md) |  | 
 **Y** | [**SplitAgg**](SplitAgg.md) |  | 
 **Color** | [**Aggregations**](Aggregations.md) |  | 
-**SessionRunIds** | **[]string** |  | 
+**SessionRunsToEpochs** | [**[]SessionRunToEpoch**](SessionRunToEpoch.md) |  | 
+**ShowAllEpochs** | **bool** |  | 
 **VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **HorizontalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
-**LastEpochOnly** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
 ### NewHeatmapChartsParams
 
-`func NewHeatmapChartsParams(projectId string, x SplitAgg, y SplitAgg, color Aggregations, sessionRunIds []string, ) *HeatmapChartsParams`
+`func NewHeatmapChartsParams(projectId string, x SplitAgg, y SplitAgg, color Aggregations, sessionRunsToEpochs []SessionRunToEpoch, showAllEpochs bool, ) *HeatmapChartsParams`
 
 NewHeatmapChartsParams instantiates a new HeatmapChartsParams object
 This constructor will assign default values to properties that have it defined,
@@ -113,24 +113,44 @@ and a boolean to check if the value has been set.
 SetColor sets Color field to given value.
 
 
-### GetSessionRunIds
+### GetSessionRunsToEpochs
 
-`func (o *HeatmapChartsParams) GetSessionRunIds() []string`
+`func (o *HeatmapChartsParams) GetSessionRunsToEpochs() []SessionRunToEpoch`
 
-GetSessionRunIds returns the SessionRunIds field if non-nil, zero value otherwise.
+GetSessionRunsToEpochs returns the SessionRunsToEpochs field if non-nil, zero value otherwise.
 
-### GetSessionRunIdsOk
+### GetSessionRunsToEpochsOk
 
-`func (o *HeatmapChartsParams) GetSessionRunIdsOk() (*[]string, bool)`
+`func (o *HeatmapChartsParams) GetSessionRunsToEpochsOk() (*[]SessionRunToEpoch, bool)`
 
-GetSessionRunIdsOk returns a tuple with the SessionRunIds field if it's non-nil, zero value otherwise
+GetSessionRunsToEpochsOk returns a tuple with the SessionRunsToEpochs field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunIds
+### SetSessionRunsToEpochs
 
-`func (o *HeatmapChartsParams) SetSessionRunIds(v []string)`
+`func (o *HeatmapChartsParams) SetSessionRunsToEpochs(v []SessionRunToEpoch)`
 
-SetSessionRunIds sets SessionRunIds field to given value.
+SetSessionRunsToEpochs sets SessionRunsToEpochs field to given value.
+
+
+### GetShowAllEpochs
+
+`func (o *HeatmapChartsParams) GetShowAllEpochs() bool`
+
+GetShowAllEpochs returns the ShowAllEpochs field if non-nil, zero value otherwise.
+
+### GetShowAllEpochsOk
+
+`func (o *HeatmapChartsParams) GetShowAllEpochsOk() (*bool, bool)`
+
+GetShowAllEpochsOk returns a tuple with the ShowAllEpochs field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetShowAllEpochs
+
+`func (o *HeatmapChartsParams) SetShowAllEpochs(v bool)`
+
+SetShowAllEpochs sets ShowAllEpochs field to given value.
 
 
 ### GetVerticalSplit
@@ -207,31 +227,6 @@ SetFilters sets Filters field to given value.
 `func (o *HeatmapChartsParams) HasFilters() bool`
 
 HasFilters returns a boolean if a field has been set.
-
-### GetLastEpochOnly
-
-`func (o *HeatmapChartsParams) GetLastEpochOnly() bool`
-
-GetLastEpochOnly returns the LastEpochOnly field if non-nil, zero value otherwise.
-
-### GetLastEpochOnlyOk
-
-`func (o *HeatmapChartsParams) GetLastEpochOnlyOk() (*bool, bool)`
-
-GetLastEpochOnlyOk returns a tuple with the LastEpochOnly field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetLastEpochOnly
-
-`func (o *HeatmapChartsParams) SetLastEpochOnly(v bool)`
-
-SetLastEpochOnly sets LastEpochOnly field to given value.
-
-### HasLastEpochOnly
-
-`func (o *HeatmapChartsParams) HasLastEpochOnly() bool`
-
-HasLastEpochOnly returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

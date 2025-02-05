@@ -7,6 +7,9 @@ Name | Type | Description | Notes
 **Body** | **[][]float64** |  | 
 **Heatmap** | Pointer to [**Heatmap**](Heatmap.md) |  | [optional] 
 **Type** | [**DataTypeEnum**](DataTypeEnum.md) |  | 
+**XLabel** | Pointer to **string** |  | [optional] 
+**YLabel** | Pointer to **string** |  | [optional] 
+**XRange** | Pointer to **[]float64** |  | [optional] 
 
 ## Methods
 
@@ -91,6 +94,81 @@ and a boolean to check if the value has been set.
 
 SetType sets Type field to given value.
 
+
+### GetXLabel
+
+`func (o *GraphData) GetXLabel() string`
+
+GetXLabel returns the XLabel field if non-nil, zero value otherwise.
+
+### GetXLabelOk
+
+`func (o *GraphData) GetXLabelOk() (*string, bool)`
+
+GetXLabelOk returns a tuple with the XLabel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetXLabel
+
+`func (o *GraphData) SetXLabel(v string)`
+
+SetXLabel sets XLabel field to given value.
+
+### HasXLabel
+
+`func (o *GraphData) HasXLabel() bool`
+
+HasXLabel returns a boolean if a field has been set.
+
+### GetYLabel
+
+`func (o *GraphData) GetYLabel() string`
+
+GetYLabel returns the YLabel field if non-nil, zero value otherwise.
+
+### GetYLabelOk
+
+`func (o *GraphData) GetYLabelOk() (*string, bool)`
+
+GetYLabelOk returns a tuple with the YLabel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetYLabel
+
+`func (o *GraphData) SetYLabel(v string)`
+
+SetYLabel sets YLabel field to given value.
+
+### HasYLabel
+
+`func (o *GraphData) HasYLabel() bool`
+
+HasYLabel returns a boolean if a field has been set.
+
+### GetXRange
+
+`func (o *GraphData) GetXRange() []float64`
+
+GetXRange returns the XRange field if non-nil, zero value otherwise.
+
+### GetXRangeOk
+
+`func (o *GraphData) GetXRangeOk() (*[]float64, bool)`
+
+GetXRangeOk returns a tuple with the XRange field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetXRange
+
+`func (o *GraphData) SetXRange(v []float64)`
+
+SetXRange sets XRange field to given value.
+
+### HasXRange
+
+`func (o *GraphData) HasXRange() bool`
+
+HasXRange returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -7,12 +7,13 @@ Name | Type | Description | Notes
 **AggregatableFields** | **[]string** |  | 
 **NumericFields** | **[]string** |  | 
 **StringFields** | **[]string** |  | 
+**NumericFieldsOptions** | [**[]GetDashletFieldsResponseNumericFieldsOptionsInner**](GetDashletFieldsResponseNumericFieldsOptionsInner.md) |  | 
 
 ## Methods
 
 ### NewGetDashletFieldsResponse
 
-`func NewGetDashletFieldsResponse(aggregatableFields []string, numericFields []string, stringFields []string, ) *GetDashletFieldsResponse`
+`func NewGetDashletFieldsResponse(aggregatableFields []string, numericFields []string, stringFields []string, numericFieldsOptions []GetDashletFieldsResponseNumericFieldsOptionsInner, ) *GetDashletFieldsResponse`
 
 NewGetDashletFieldsResponse instantiates a new GetDashletFieldsResponse object
 This constructor will assign default values to properties that have it defined,
@@ -85,6 +86,26 @@ and a boolean to check if the value has been set.
 `func (o *GetDashletFieldsResponse) SetStringFields(v []string)`
 
 SetStringFields sets StringFields field to given value.
+
+
+### GetNumericFieldsOptions
+
+`func (o *GetDashletFieldsResponse) GetNumericFieldsOptions() []GetDashletFieldsResponseNumericFieldsOptionsInner`
+
+GetNumericFieldsOptions returns the NumericFieldsOptions field if non-nil, zero value otherwise.
+
+### GetNumericFieldsOptionsOk
+
+`func (o *GetDashletFieldsResponse) GetNumericFieldsOptionsOk() (*[]GetDashletFieldsResponseNumericFieldsOptionsInner, bool)`
+
+GetNumericFieldsOptionsOk returns a tuple with the NumericFieldsOptions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNumericFieldsOptions
+
+`func (o *GetDashletFieldsResponse) SetNumericFieldsOptions(v []GetDashletFieldsResponseNumericFieldsOptionsInner)`
+
+SetNumericFieldsOptions sets NumericFieldsOptions field to given value.
 
 
 

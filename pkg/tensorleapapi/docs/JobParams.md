@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **BatchSize** | **float64** |  | 
 **DataStates** | [**[]DataStateType**](DataStateType.md) |  | 
 **Name** | **string** |  | 
+**Description** | **string** |  | 
 **SkipMetricsEstimation** | **bool** |  | 
 **EvaluatedEpoch** | **float64** |  | 
 **SessionId** | **string** |  | 
@@ -27,6 +28,7 @@ Name | Type | Description | Notes
 **SampleIds** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
 **Limit** | **float64** |  | 
 **SessionRunId** | **string** |  | 
+**TriggerCreateSampleVisualiztions** | Pointer to **bool** |  | [optional] 
 **DisplayParams** | [**PopulationExplorationDisplayParams**](PopulationExplorationDisplayParams.md) |  | 
 **ProjectionMetric** | Pointer to **string** |  | [optional] 
 **ExportUrl** | **string** |  | 
@@ -44,12 +46,13 @@ Name | Type | Description | Notes
 **CodeEntryFile** | **string** |  | 
 **Branch** | Pointer to **string** |  | [optional] 
 **Note** | Pointer to **string** |  | [optional] 
+**GenericBaseImageType** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewJobParams
 
-`func NewJobParams(epochs float64, batchSize float64, versionId string, projectId string, batchSize float64, dataStates []DataStateType, name string, skipMetricsEstimation bool, evaluatedEpoch float64, sessionId string, type_ string, fromEpoch float64, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, sessionRunId string, displayParams PopulationExplorationDisplayParams, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, datasetId string, codeUrl string, codeEntryFile string, ) *JobParams`
+`func NewJobParams(epochs float64, batchSize float64, versionId string, projectId string, batchSize float64, dataStates []DataStateType, name string, description string, skipMetricsEstimation bool, evaluatedEpoch float64, sessionId string, type_ string, fromEpoch float64, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, sessionRunId string, displayParams PopulationExplorationDisplayParams, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, datasetId string, codeUrl string, codeEntryFile string, ) *JobParams`
 
 NewJobParams instantiates a new JobParams object
 This constructor will assign default values to properties that have it defined,
@@ -227,6 +230,26 @@ and a boolean to check if the value has been set.
 `func (o *JobParams) SetName(v string)`
 
 SetName sets Name field to given value.
+
+
+### GetDescription
+
+`func (o *JobParams) GetDescription() string`
+
+GetDescription returns the Description field if non-nil, zero value otherwise.
+
+### GetDescriptionOk
+
+`func (o *JobParams) GetDescriptionOk() (*string, bool)`
+
+GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDescription
+
+`func (o *JobParams) SetDescription(v string)`
+
+SetDescription sets Description field to given value.
 
 
 ### GetSkipMetricsEstimation
@@ -543,6 +566,31 @@ and a boolean to check if the value has been set.
 
 SetSessionRunId sets SessionRunId field to given value.
 
+
+### GetTriggerCreateSampleVisualiztions
+
+`func (o *JobParams) GetTriggerCreateSampleVisualiztions() bool`
+
+GetTriggerCreateSampleVisualiztions returns the TriggerCreateSampleVisualiztions field if non-nil, zero value otherwise.
+
+### GetTriggerCreateSampleVisualiztionsOk
+
+`func (o *JobParams) GetTriggerCreateSampleVisualiztionsOk() (*bool, bool)`
+
+GetTriggerCreateSampleVisualiztionsOk returns a tuple with the TriggerCreateSampleVisualiztions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTriggerCreateSampleVisualiztions
+
+`func (o *JobParams) SetTriggerCreateSampleVisualiztions(v bool)`
+
+SetTriggerCreateSampleVisualiztions sets TriggerCreateSampleVisualiztions field to given value.
+
+### HasTriggerCreateSampleVisualiztions
+
+`func (o *JobParams) HasTriggerCreateSampleVisualiztions() bool`
+
+HasTriggerCreateSampleVisualiztions returns a boolean if a field has been set.
 
 ### GetDisplayParams
 
@@ -913,6 +961,31 @@ SetNote sets Note field to given value.
 `func (o *JobParams) HasNote() bool`
 
 HasNote returns a boolean if a field has been set.
+
+### GetGenericBaseImageType
+
+`func (o *JobParams) GetGenericBaseImageType() string`
+
+GetGenericBaseImageType returns the GenericBaseImageType field if non-nil, zero value otherwise.
+
+### GetGenericBaseImageTypeOk
+
+`func (o *JobParams) GetGenericBaseImageTypeOk() (*string, bool)`
+
+GetGenericBaseImageTypeOk returns a tuple with the GenericBaseImageType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGenericBaseImageType
+
+`func (o *JobParams) SetGenericBaseImageType(v string)`
+
+SetGenericBaseImageType sets GenericBaseImageType field to given value.
+
+### HasGenericBaseImageType
+
+`func (o *JobParams) HasGenericBaseImageType() bool`
+
+HasGenericBaseImageType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
