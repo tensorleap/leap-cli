@@ -46,7 +46,6 @@ Complete documentation is available at https://docs.tensorleap.ai`,
 		}
 
 		fmt.Println(version.CliVersion)
-		// TODO: Print local installation version
 	},
 }
 
