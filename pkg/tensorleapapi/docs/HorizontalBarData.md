@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Body** | **[]float64** |  | 
 **Labels** | **[]string** |  | 
-**Type** | [**DataTypeEnum**](DataTypeEnum.md) |  | 
 **Gt** | Pointer to **[]float64** |  | [optional] 
+**Type** | [**DataTypeEnum**](DataTypeEnum.md) |  | 
 
 ## Methods
 
@@ -68,26 +68,6 @@ and a boolean to check if the value has been set.
 SetLabels sets Labels field to given value.
 
 
-### GetType
-
-`func (o *HorizontalBarData) GetType() DataTypeEnum`
-
-GetType returns the Type field if non-nil, zero value otherwise.
-
-### GetTypeOk
-
-`func (o *HorizontalBarData) GetTypeOk() (*DataTypeEnum, bool)`
-
-GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetType
-
-`func (o *HorizontalBarData) SetType(v DataTypeEnum)`
-
-SetType sets Type field to given value.
-
-
 ### GetGt
 
 `func (o *HorizontalBarData) GetGt() []float64`
@@ -112,6 +92,26 @@ SetGt sets Gt field to given value.
 `func (o *HorizontalBarData) HasGt() bool`
 
 HasGt returns a boolean if a field has been set.
+
+### GetType
+
+`func (o *HorizontalBarData) GetType() DataTypeEnum`
+
+GetType returns the Type field if non-nil, zero value otherwise.
+
+### GetTypeOk
+
+`func (o *HorizontalBarData) GetTypeOk() (*DataTypeEnum, bool)`
+
+GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetType
+
+`func (o *HorizontalBarData) SetType(v DataTypeEnum)`
+
+SetType sets Type field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

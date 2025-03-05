@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **Description** | **string** |  | 
 **SkipMetricsEstimation** | **bool** |  | 
+**Monitor** | Pointer to **bool** |  | [optional] 
 **EvaluatedEpoch** | **float64** |  | 
 **SessionId** | **string** |  | 
 **Type** | **string** |  | 
@@ -30,6 +31,7 @@ Name | Type | Description | Notes
 **SessionRunId** | **string** |  | 
 **TriggerCreateSampleVisualiztions** | Pointer to **bool** |  | [optional] 
 **DisplayParams** | [**PopulationExplorationDisplayParams**](PopulationExplorationDisplayParams.md) |  | 
+**DomainGapMetadata** | Pointer to **string** |  | [optional] 
 **ProjectionMetric** | Pointer to **string** |  | [optional] 
 **ExportUrl** | **string** |  | 
 **ProjectVersion** | **float64** |  | 
@@ -271,6 +273,31 @@ and a boolean to check if the value has been set.
 
 SetSkipMetricsEstimation sets SkipMetricsEstimation field to given value.
 
+
+### GetMonitor
+
+`func (o *JobParams) GetMonitor() bool`
+
+GetMonitor returns the Monitor field if non-nil, zero value otherwise.
+
+### GetMonitorOk
+
+`func (o *JobParams) GetMonitorOk() (*bool, bool)`
+
+GetMonitorOk returns a tuple with the Monitor field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMonitor
+
+`func (o *JobParams) SetMonitor(v bool)`
+
+SetMonitor sets Monitor field to given value.
+
+### HasMonitor
+
+`func (o *JobParams) HasMonitor() bool`
+
+HasMonitor returns a boolean if a field has been set.
 
 ### GetEvaluatedEpoch
 
@@ -611,6 +638,31 @@ and a boolean to check if the value has been set.
 
 SetDisplayParams sets DisplayParams field to given value.
 
+
+### GetDomainGapMetadata
+
+`func (o *JobParams) GetDomainGapMetadata() string`
+
+GetDomainGapMetadata returns the DomainGapMetadata field if non-nil, zero value otherwise.
+
+### GetDomainGapMetadataOk
+
+`func (o *JobParams) GetDomainGapMetadataOk() (*string, bool)`
+
+GetDomainGapMetadataOk returns a tuple with the DomainGapMetadata field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDomainGapMetadata
+
+`func (o *JobParams) SetDomainGapMetadata(v string)`
+
+SetDomainGapMetadata sets DomainGapMetadata field to given value.
+
+### HasDomainGapMetadata
+
+`func (o *JobParams) HasDomainGapMetadata() bool`
+
+HasDomainGapMetadata returns a boolean if a field has been set.
 
 ### GetProjectionMetric
 

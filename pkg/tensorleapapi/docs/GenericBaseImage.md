@@ -7,13 +7,12 @@ Name | Type | Description | Notes
 **Id** | **string** |  | 
 **DisplayName** | **string** |  | 
 **Image** | **string** |  | 
-**Tag** | **string** |  | 
 
 ## Methods
 
 ### NewGenericBaseImage
 
-`func NewGenericBaseImage(id string, displayName string, image string, tag string, ) *GenericBaseImage`
+`func NewGenericBaseImage(id string, displayName string, image string, ) *GenericBaseImage`
 
 NewGenericBaseImage instantiates a new GenericBaseImage object
 This constructor will assign default values to properties that have it defined,
@@ -86,26 +85,6 @@ and a boolean to check if the value has been set.
 `func (o *GenericBaseImage) SetImage(v string)`
 
 SetImage sets Image field to given value.
-
-
-### GetTag
-
-`func (o *GenericBaseImage) GetTag() string`
-
-GetTag returns the Tag field if non-nil, zero value otherwise.
-
-### GetTagOk
-
-`func (o *GenericBaseImage) GetTagOk() (*string, bool)`
-
-GetTagOk returns a tuple with the Tag field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTag
-
-`func (o *GenericBaseImage) SetTag(v string)`
-
-SetTag sets Tag field to given value.
 
 
 

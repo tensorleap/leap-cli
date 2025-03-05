@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.592
+  version: 0.0.607
 servers:
 - url: /api/v2
 paths:
@@ -530,8 +530,7 @@ paths:
                 $ref: '#/components/schemas/GetGenericBaseImageTypesResponse'
           description: Ok
       security:
-      - jwt:
-        - admin-only
+      - jwt: []
   /evaluate/evaluate:
     post:
       operationId: Evaluate
@@ -2811,6 +2810,22 @@ paths:
       security:
       - jwt:
         - not-demo
+  /visualizations/deleteSampleAnalysis:
+    post:
+      operationId: DeleteSampleAnalysis
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteSamplesAnalysisParams'
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt:
+        - not-demo
 components:
   examples: {}
   headers: {}
@@ -3236,20 +3251,24 @@ components:
     ESFilterValue:
       additionalProperties: false
       example:
-        lt: 6.027456183070403
+        lt: null
         blob_path: blob_path
+        gte: null
+        lte: null
         eq: null
         lst:
         - null
         - null
-        gt: 0.8008281904610115
+        gt: null
       properties:
         gt:
-          format: double
-          type: number
+          $ref: '#/components/schemas/NumberOrString'
         lt:
-          format: double
-          type: number
+          $ref: '#/components/schemas/NumberOrString'
+        gte:
+          $ref: '#/components/schemas/NumberOrString'
+        lte:
+          $ref: '#/components/schemas/NumberOrString'
         eq:
           $ref: '#/components/schemas/NumberOrString'
         lst:
@@ -3581,17 +3600,21 @@ components:
       - sessionRun
       - type
       type: object
+    SampleIdType:
+      anyOf:
+      - format: double
+        type: number
+      - type: string
     SampleIdentity:
       additionalProperties: false
       example:
-        index: 0.8008281904610115
+        index: null
         state: null
       properties:
         state:
           $ref: '#/components/schemas/DataStateType'
         index:
-          format: double
-          type: number
+          $ref: '#/components/schemas/SampleIdType'
       required:
       - index
       - state
@@ -3639,13 +3662,15 @@ components:
         disable: true
         displayData: null
         value:
-          lt: 6.027456183070403
+          lt: null
           blob_path: blob_path
+          gte: null
+          lte: null
           eq: null
           lst:
           - null
           - null
-          gt: 0.8008281904610115
+          gt: null
         operator: null
       properties:
         operator:
@@ -4008,15 +4033,9 @@ components:
     GetDashletFieldsResponse:
       additionalProperties: false
       example:
-        numericFieldsOptions:
-        - field: field
-          values:
-          - null
-          - null
-        - field: field
-          values:
-          - null
-          - null
+        dateFields:
+        - dateFields
+        - dateFields
         numericFields:
         - numericFields
         - numericFields
@@ -4039,14 +4058,14 @@ components:
           items:
             type: string
           type: array
-        numericFieldsOptions:
+        dateFields:
           items:
-            $ref: '#/components/schemas/GetDashletFieldsResponse_numericFieldsOptions_inner'
+            type: string
           type: array
       required:
       - aggregatableFields
+      - dateFields
       - numericFields
-      - numericFieldsOptions
       - stringFields
       type: object
     GetDashletFieldsParams:
@@ -8463,7 +8482,6 @@ components:
         image: image
         displayName: displayName
         id: id
-        tag: tag
       properties:
         id:
           type: string
@@ -8471,13 +8489,10 @@ components:
           type: string
         image:
           type: string
-        tag:
-          type: string
       required:
       - displayName
       - id
       - image
-      - tag
       type: object
     GetGenericBaseImageTypesResponse:
       additionalProperties: false
@@ -8486,11 +8501,9 @@ components:
         - image: image
           displayName: displayName
           id: id
-          tag: tag
         - image: image
           displayName: displayName
           id: id
-          tag: tag
         defaultBaseImageType: defaultBaseImageType
       properties:
         baseImageTypes:
@@ -8586,6 +8599,8 @@ components:
         description:
           type: string
         skipMetricsEstimation:
+          type: boolean
+        monitor:
           type: boolean
       required:
       - batchSize
@@ -8725,6 +8740,8 @@ components:
           type: boolean
         displayParams:
           $ref: '#/components/schemas/PopulationExplorationDisplayParams'
+        domainGapMetadata:
+          type: string
         projectionMetric:
           type: string
         digest:
@@ -10840,7 +10857,7 @@ components:
       additionalProperties: false
       example:
         sessionRunId: sessionRunId
-        epoch: 1.4658129805029452
+        epoch: 0.8008281904610115
       properties:
         sessionRunId:
           type: string
@@ -10866,31 +10883,35 @@ components:
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         - field: field
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         sessionRunsToEpochs:
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         projectId: projectId
         showAllEpochs: true
       properties:
@@ -10938,31 +10959,35 @@ components:
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         - field: field
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         sessionRunsToEpochs:
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         projectId: projectId
         showAllEpochs: true
       properties:
@@ -11010,31 +11035,35 @@ components:
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         - field: field
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         sessionRunsToEpochs:
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         projectId: projectId
         aggregations:
         - field: field
@@ -11119,31 +11148,35 @@ components:
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         - field: field
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         sessionRunsToEpochs:
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         projectId: projectId
         customMetricName: customMetricName
       properties:
@@ -11190,31 +11223,35 @@ components:
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         - field: field
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         sessionRunsToEpochs:
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         projectId: projectId
         customMetricName: customMetricName
       properties:
@@ -11252,31 +11289,35 @@ components:
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         - field: field
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         sessionRunsToEpochs:
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         projectId: projectId
         customMetricName: customMetricName
       properties:
@@ -11383,7 +11424,7 @@ components:
       properties:
         results:
           items:
-            $ref: '#/components/schemas/GetDashletFieldsResponse_numericFieldsOptions_inner'
+            $ref: '#/components/schemas/GetFieldsValuesResponse_results_inner'
           type: array
       required:
       - results
@@ -11422,25 +11463,29 @@ components:
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         - field: field
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         fields:
         - size: 6.027456183070403
@@ -12988,9 +13033,9 @@ components:
         description: description
         projectId: projectId
         samples:
-        - index: 0.8008281904610115
+        - index: null
           state: null
-        - index: 0.8008281904610115
+        - index: null
           state: null
         cid: cid
       properties:
@@ -13031,9 +13076,9 @@ components:
           description: description
           projectId: projectId
           samples:
-          - index: 0.8008281904610115
+          - index: null
             state: null
-          - index: 0.8008281904610115
+          - index: null
             state: null
           cid: cid
         - createdAt: 2000-01-23T04:56:07.000+00:00
@@ -13043,9 +13088,9 @@ components:
           description: description
           projectId: projectId
           samples:
-          - index: 0.8008281904610115
+          - index: null
             state: null
-          - index: 0.8008281904610115
+          - index: null
             state: null
           cid: cid
       properties:
@@ -13080,9 +13125,9 @@ components:
         description: description
         projectId: projectId
         samples:
-        - index: 0.8008281904610115
+        - index: null
           state: null
-        - index: 0.8008281904610115
+        - index: null
           state: null
       properties:
         samples:
@@ -13124,9 +13169,9 @@ components:
         description: description
         projectId: projectId
         samples:
-        - index: 0.8008281904610115
+        - index: null
           state: null
-        - index: 0.8008281904610115
+        - index: null
           state: null
       properties:
         samples:
@@ -14176,25 +14221,29 @@ components:
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         - field: field
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         projectId: projectId
       properties:
@@ -14227,25 +14276,29 @@ components:
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         - field: field
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         projectId: projectId
         cid: cid
@@ -14283,25 +14336,29 @@ components:
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         - field: field
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         projectId: projectId
         cid: cid
@@ -16998,6 +17055,10 @@ components:
       description: Construct a type with a set of properties K of type T
       properties: {}
       type: object
+    Record_string.Record_string.number__:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
     ScatterVizDataState:
       additionalProperties: false
       properties:
@@ -17023,6 +17084,10 @@ components:
           properties: {}
           type: object
         clusters_blob_path:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+        domain_gap_dist:
           description: Construct a type with a set of properties K of type T
           properties: {}
           type: object
@@ -17215,13 +17280,13 @@ components:
           items:
             type: string
           type: array
-        type:
-          $ref: '#/components/schemas/DataTypeEnum'
         gt:
           items:
             format: double
             type: number
           type: array
+        type:
+          $ref: '#/components/schemas/DataTypeEnum'
       required:
       - body
       - labels
@@ -18122,7 +18187,7 @@ components:
         projectId: projectId
         algo: null
         sampleIdentity:
-          index: 0.8008281904610115
+          index: null
           state: null
       properties:
         sessionRunId:
@@ -18185,6 +18250,36 @@ components:
       additionalProperties: false
       example:
         fromEpoch: 6.027456183070403
+        filters:
+        - field: field
+          disable: true
+          displayData: null
+          value:
+            lt: null
+            blob_path: blob_path
+            gte: null
+            lte: null
+            eq: null
+            lst:
+            - null
+            - null
+            gt: null
+          operator: null
+        - field: field
+          disable: true
+          displayData: null
+          value:
+            lt: null
+            blob_path: blob_path
+            gte: null
+            lte: null
+            eq: null
+            lst:
+            - null
+            - null
+            gt: null
+          operator: null
+        triggerCreateSampleVisualiztions: true
         sessionRunId: sessionRunId
         projectionMetric: projectionMetric
         displayParams:
@@ -18195,34 +18290,25 @@ components:
           reduction_algorithm: null
           should_fill_remaining_with_unbalance: true
         digest: digest
-        filters:
-        - field: field
-          disable: true
-          displayData: null
-          value:
-            lt: 6.027456183070403
-            blob_path: blob_path
-            eq: null
-            lst:
-            - null
-            - null
-            gt: 0.8008281904610115
-          operator: null
-        - field: field
-          disable: true
-          displayData: null
-          value:
-            lt: 6.027456183070403
-            blob_path: blob_path
-            eq: null
-            lst:
-            - null
-            - null
-            gt: 0.8008281904610115
-          operator: null
+        notApplyTimeFilterOnUnlabeledOnly: true
         batchSize: 0.8008281904610115
-        triggerCreateSampleVisualiztions: true
         projectId: projectId
+        domainGapMetadata: domainGapMetadata
+        timeFilter:
+          field: field
+          disable: true
+          displayData: null
+          value:
+            lt: null
+            blob_path: blob_path
+            gte: null
+            lte: null
+            eq: null
+            lst:
+            - null
+            - null
+            gt: null
+          operator: null
         reRunAfterFail: true
       properties:
         sessionRunId:
@@ -18239,9 +18325,15 @@ components:
           items:
             $ref: '#/components/schemas/ESFilter'
           type: array
+        timeFilter:
+          $ref: '#/components/schemas/ESFilter'
+        notApplyTimeFilterOnUnlabeledOnly:
+          type: boolean
         digest:
           type: string
         projectionMetric:
+          type: string
+        domainGapMetadata:
           type: string
         displayParams:
           $ref: '#/components/schemas/PopulationExplorationDisplayParams'
@@ -18281,9 +18373,9 @@ components:
         sessionRunId: sessionRunId
         limit: 0.8008281904610115
         sampleIds:
-        - index: 0.8008281904610115
+        - index: null
           state: null
-        - index: 0.8008281904610115
+        - index: null
           state: null
         digest: digest
         epoch: 6.027456183070403
@@ -18292,25 +18384,29 @@ components:
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         - field: field
           disable: true
           displayData: null
           value:
-            lt: 6.027456183070403
+            lt: null
             blob_path: blob_path
+            gte: null
+            lte: null
             eq: null
             lst:
             - null
             - null
-            gt: 0.8008281904610115
+            gt: null
           operator: null
         projectId: projectId
       properties:
@@ -18351,9 +18447,9 @@ components:
         epoch: 0.8008281904610115
         projectId: projectId
         sampleIdentities:
-        - index: 0.8008281904610115
+        - index: null
           state: null
-        - index: 0.8008281904610115
+        - index: null
           state: null
       properties:
         projectId:
@@ -18392,6 +18488,34 @@ components:
       - projectId
       - sessionRunId
       type: object
+    DeleteSamplesAnalysisParams:
+      additionalProperties: false
+      example:
+        samplesIdentities:
+        - index: null
+          state: null
+        - index: null
+          state: null
+        projectId: projectId
+        sessionRunIds:
+        - sessionRunIds
+        - sessionRunIds
+      properties:
+        projectId:
+          type: string
+        sessionRunIds:
+          items:
+            type: string
+          type: array
+        samplesIdentities:
+          items:
+            $ref: '#/components/schemas/SampleIdentity'
+          type: array
+      required:
+      - projectId
+      - samplesIdentities
+      - sessionRunIds
+      type: object
     SetUserNotificationsAsRead_200_response:
       example:
         success: true
@@ -18403,23 +18527,6 @@ components:
           type: boolean
       required:
       - success
-      type: object
-    GetDashletFieldsResponse_numericFieldsOptions_inner:
-      example:
-        field: field
-        values:
-        - null
-        - null
-      properties:
-        values:
-          items:
-            $ref: '#/components/schemas/NumberOrString'
-          type: array
-        field:
-          type: string
-      required:
-      - field
-      - values
       type: object
     Dataset_latestVersions_inner:
       example:
@@ -18757,6 +18864,23 @@ components:
           type: array
       type: object
       example: null
+    GetFieldsValuesResponse_results_inner:
+      example:
+        field: field
+        values:
+        - null
+        - null
+      properties:
+        values:
+          items:
+            $ref: '#/components/schemas/NumberOrString'
+          type: array
+        field:
+          type: string
+      required:
+      - field
+      - values
+      type: object
     EpochData_externalData:
       example:
         metrics:

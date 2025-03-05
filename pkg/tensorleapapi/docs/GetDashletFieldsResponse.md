@@ -7,13 +7,13 @@ Name | Type | Description | Notes
 **AggregatableFields** | **[]string** |  | 
 **NumericFields** | **[]string** |  | 
 **StringFields** | **[]string** |  | 
-**NumericFieldsOptions** | [**[]GetDashletFieldsResponseNumericFieldsOptionsInner**](GetDashletFieldsResponseNumericFieldsOptionsInner.md) |  | 
+**DateFields** | **[]string** |  | 
 
 ## Methods
 
 ### NewGetDashletFieldsResponse
 
-`func NewGetDashletFieldsResponse(aggregatableFields []string, numericFields []string, stringFields []string, numericFieldsOptions []GetDashletFieldsResponseNumericFieldsOptionsInner, ) *GetDashletFieldsResponse`
+`func NewGetDashletFieldsResponse(aggregatableFields []string, numericFields []string, stringFields []string, dateFields []string, ) *GetDashletFieldsResponse`
 
 NewGetDashletFieldsResponse instantiates a new GetDashletFieldsResponse object
 This constructor will assign default values to properties that have it defined,
@@ -88,24 +88,24 @@ and a boolean to check if the value has been set.
 SetStringFields sets StringFields field to given value.
 
 
-### GetNumericFieldsOptions
+### GetDateFields
 
-`func (o *GetDashletFieldsResponse) GetNumericFieldsOptions() []GetDashletFieldsResponseNumericFieldsOptionsInner`
+`func (o *GetDashletFieldsResponse) GetDateFields() []string`
 
-GetNumericFieldsOptions returns the NumericFieldsOptions field if non-nil, zero value otherwise.
+GetDateFields returns the DateFields field if non-nil, zero value otherwise.
 
-### GetNumericFieldsOptionsOk
+### GetDateFieldsOk
 
-`func (o *GetDashletFieldsResponse) GetNumericFieldsOptionsOk() (*[]GetDashletFieldsResponseNumericFieldsOptionsInner, bool)`
+`func (o *GetDashletFieldsResponse) GetDateFieldsOk() (*[]string, bool)`
 
-GetNumericFieldsOptionsOk returns a tuple with the NumericFieldsOptions field if it's non-nil, zero value otherwise
+GetDateFieldsOk returns a tuple with the DateFields field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetNumericFieldsOptions
+### SetDateFields
 
-`func (o *GetDashletFieldsResponse) SetNumericFieldsOptions(v []GetDashletFieldsResponseNumericFieldsOptionsInner)`
+`func (o *GetDashletFieldsResponse) SetDateFields(v []string)`
 
-SetNumericFieldsOptions sets NumericFieldsOptions field to given value.
+SetDateFields sets DateFields field to given value.
 
 
 

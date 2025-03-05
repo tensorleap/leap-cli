@@ -9,8 +9,11 @@ Name | Type | Description | Notes
 **BatchSize** | **float64** |  | 
 **FromEpoch** | **float64** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
+**TimeFilter** | Pointer to [**ESFilter**](ESFilter.md) |  | [optional] 
+**NotApplyTimeFilterOnUnlabeledOnly** | Pointer to **bool** |  | [optional] 
 **Digest** | **string** |  | 
 **ProjectionMetric** | Pointer to **string** |  | [optional] 
+**DomainGapMetadata** | Pointer to **string** |  | [optional] 
 **DisplayParams** | [**PopulationExplorationDisplayParams**](PopulationExplorationDisplayParams.md) |  | 
 **TriggerCreateSampleVisualiztions** | Pointer to **bool** |  | [optional] 
 **ReRunAfterFail** | Pointer to **bool** |  | [optional] 
@@ -139,6 +142,56 @@ SetFilters sets Filters field to given value.
 
 HasFilters returns a boolean if a field has been set.
 
+### GetTimeFilter
+
+`func (o *PopulationExplorationParams) GetTimeFilter() ESFilter`
+
+GetTimeFilter returns the TimeFilter field if non-nil, zero value otherwise.
+
+### GetTimeFilterOk
+
+`func (o *PopulationExplorationParams) GetTimeFilterOk() (*ESFilter, bool)`
+
+GetTimeFilterOk returns a tuple with the TimeFilter field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTimeFilter
+
+`func (o *PopulationExplorationParams) SetTimeFilter(v ESFilter)`
+
+SetTimeFilter sets TimeFilter field to given value.
+
+### HasTimeFilter
+
+`func (o *PopulationExplorationParams) HasTimeFilter() bool`
+
+HasTimeFilter returns a boolean if a field has been set.
+
+### GetNotApplyTimeFilterOnUnlabeledOnly
+
+`func (o *PopulationExplorationParams) GetNotApplyTimeFilterOnUnlabeledOnly() bool`
+
+GetNotApplyTimeFilterOnUnlabeledOnly returns the NotApplyTimeFilterOnUnlabeledOnly field if non-nil, zero value otherwise.
+
+### GetNotApplyTimeFilterOnUnlabeledOnlyOk
+
+`func (o *PopulationExplorationParams) GetNotApplyTimeFilterOnUnlabeledOnlyOk() (*bool, bool)`
+
+GetNotApplyTimeFilterOnUnlabeledOnlyOk returns a tuple with the NotApplyTimeFilterOnUnlabeledOnly field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNotApplyTimeFilterOnUnlabeledOnly
+
+`func (o *PopulationExplorationParams) SetNotApplyTimeFilterOnUnlabeledOnly(v bool)`
+
+SetNotApplyTimeFilterOnUnlabeledOnly sets NotApplyTimeFilterOnUnlabeledOnly field to given value.
+
+### HasNotApplyTimeFilterOnUnlabeledOnly
+
+`func (o *PopulationExplorationParams) HasNotApplyTimeFilterOnUnlabeledOnly() bool`
+
+HasNotApplyTimeFilterOnUnlabeledOnly returns a boolean if a field has been set.
+
 ### GetDigest
 
 `func (o *PopulationExplorationParams) GetDigest() string`
@@ -183,6 +236,31 @@ SetProjectionMetric sets ProjectionMetric field to given value.
 `func (o *PopulationExplorationParams) HasProjectionMetric() bool`
 
 HasProjectionMetric returns a boolean if a field has been set.
+
+### GetDomainGapMetadata
+
+`func (o *PopulationExplorationParams) GetDomainGapMetadata() string`
+
+GetDomainGapMetadata returns the DomainGapMetadata field if non-nil, zero value otherwise.
+
+### GetDomainGapMetadataOk
+
+`func (o *PopulationExplorationParams) GetDomainGapMetadataOk() (*string, bool)`
+
+GetDomainGapMetadataOk returns a tuple with the DomainGapMetadata field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDomainGapMetadata
+
+`func (o *PopulationExplorationParams) SetDomainGapMetadata(v string)`
+
+SetDomainGapMetadata sets DomainGapMetadata field to given value.
+
+### HasDomainGapMetadata
+
+`func (o *PopulationExplorationParams) HasDomainGapMetadata() bool`
+
+HasDomainGapMetadata returns a boolean if a field has been set.
 
 ### GetDisplayParams
 
