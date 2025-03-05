@@ -55,8 +55,9 @@ func NewPullCmd() *cobra.Command {
 				return fmt.Errorf("can't pull '%s' dataset, directory named '%s' already exists on current directory", datasetName, datasetName)
 			}
 			latestVersion, err := code.GetLatestVersion(ctx, selectedDataset.GetCid(), selectedBranch)
-			secretId := latestVersion.Metadata.GetSecretManagerId()
+			var secretId string
 			if err == nil {
+				secretId = latestVersion.Metadata.GetSecretManagerId()
 				var specificFileName = ""
 				if mappingOnly {
 					specificFileName = MAPPING_FILE_NAME
@@ -67,7 +68,7 @@ func NewPullCmd() *cobra.Command {
 				}
 
 				if !mappingOnly {
-					workspaceConfig := workspace.NewWorkspaceConfig(selectedDataset.GetCid(), "", latestVersion.GetCodeEntryFile(), secretId, latestVersion.Branch, latestVersion.GenericBaseImageType, files)
+					workspaceConfig := workspace.NewWorkspaceConfig(selectedDataset.GetCid(), "", latestVersion.GetCodeEntryFile(), secretId, latestVersion.Branch, latestVersion.GetGenericBaseImageType(), files)
 					err = workspace.SetWorkspaceConfig(workspaceConfig, datasetName)
 					if err != nil {
 						return err

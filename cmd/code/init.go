@@ -67,8 +67,13 @@ func init() {
 				if err != nil && err != code.ErrEmptyCodeIntegrationVersion {
 					return err
 				}
-				if len(secretId) == 0 {
-					secretId = latestVersion.Metadata.GetSecretManagerId()
+				if err == nil {
+					if len(secretId) == 0 {
+						secretId = latestVersion.Metadata.GetSecretManagerId()
+					}
+					if len(pythonVersion) == 0 {
+						pythonVersion = latestVersion.GetGenericBaseImageType()
+					}
 				}
 				if len(pythonVersion) == 0 {
 					pythonVersion = latestVersion.GetGenericBaseImageType()
