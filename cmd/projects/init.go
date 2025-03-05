@@ -40,7 +40,8 @@ func NewInitCmd() *cobra.Command {
 				latestVersion, err := code.GetLatestVersion(ctx, codeIntegration.GetCid(), codeIntegrationBranch)
 				if err != nil && code.ErrEmptyCodeIntegrationVersion != err {
 					return err
-				} else if err == nil {
+				}
+				if err == nil {
 					if secretId == "" {
 						secretId = latestVersion.Metadata.GetSecretManagerId()
 					}
@@ -59,6 +60,7 @@ func NewInitCmd() *cobra.Command {
 						latestVersion.GetCodeEntryFile(),
 						secretId,
 						latestVersion.Branch,
+						pythonVersion,
 						files,
 						".",
 					)
