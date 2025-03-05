@@ -17,6 +17,7 @@ func NewPushCmd() *cobra.Command {
 	var noWait bool
 	var force bool
 	var message string
+	var pythonVersion string
 
 	cmd := &cobra.Command{
 		Use:   "push",
@@ -47,13 +48,18 @@ func NewPushCmd() *cobra.Command {
 				return err
 			}
 
+			pythonVersion, err = code.SyncPythonVersionFromFlagAndConfig(ctx, pythonVersion, workspaceConfig)
+			if err != nil {
+				return err
+			}
+
 			branches := code.BranchesFromCodeIntegration(codeIntegration)
 			branch, err := code.SyncBranchFromFlagAndConfig(branch, workspaceConfig, branches, codeIntegration.DefaultBranch)
 			if err != nil {
 				return err
 			}
 
-			_, currentVersion, err := code.PushCode(ctx, force, codeIntegration.Cid, tarGzFile, workspaceConfig.EntryFile, secretId, branch, message)
+			_, currentVersion, err := code.PushCode(ctx, force, codeIntegration.Cid, tarGzFile, workspaceConfig.EntryFile, secretId, branch, message, pythonVersion)
 			if err != nil {
 				return err
 			}
@@ -85,6 +91,7 @@ func NewPushCmd() *cobra.Command {
 	cmd.Flags().StringVarP(&message, "message", "m", "", "Commit message")
 	cmd.Flags().BoolVar(&noWait, "no-wait", false, "Do not wait for code parsing")
 	cmd.Flags().BoolVarP(&force, "force", "f", false, "Force push code integration")
+	cmd.Flags().StringVarP(&pythonVersion, "python-version", "p", "", "Python version")
 
 	return cmd
 }

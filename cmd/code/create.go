@@ -52,8 +52,12 @@ func NewCreateCmd() *cobra.Command {
 			if selectedSecret != nil {
 				secretId = selectedSecret.GetCid()
 			}
+			pythonVersionId, err := code.GetPythonVersionFromFlag(ctx, "")
+			if err != nil {
+				return err
+			}
 
-			err = workspace.CreateCodeTemplate(codeIntegration.GetCid(), "", secretId, codeIntegration.GetDefaultBranch(), codeIntegrationName)
+			err = workspace.CreateCodeTemplate(codeIntegration.GetCid(), "", secretId, codeIntegration.GetDefaultBranch(), codeIntegrationName, pythonVersionId)
 			if err != nil {
 				return err
 			}

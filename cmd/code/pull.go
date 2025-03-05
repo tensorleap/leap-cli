@@ -75,7 +75,7 @@ func NewPullCmd() *cobra.Command {
 				}
 			} else if err == code.ErrEmptyCodeIntegrationVersion {
 				log.Warn("The selected dataset is empty, Create default template")
-				err = workspace.CreateCodeTemplate(selectedDataset.GetCid(), "", secretId, datasetName, selectedBranch)
+				err = workspace.CreateCodeTemplate(selectedDataset.GetCid(), "", secretId, datasetName, selectedBranch, latestVersion.GetGenericBaseImageType())
 				if err != nil {
 					return err
 				}
