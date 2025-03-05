@@ -3,6 +3,7 @@ projectId: {{ .ProjectId }}
 secretId: {{ .SecretId }}
 branch: {{ .Branch }}
 entryFile: 'leap_binder.py'
+pythonVersion: {{ .PythonVersion }}
 include:
   - leap_binder.py
   - leap_test.py

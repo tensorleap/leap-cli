@@ -67,7 +67,7 @@ func NewPullCmd() *cobra.Command {
 				}
 
 				if !mappingOnly {
-					workspaceConfig := workspace.NewWorkspaceConfig(selectedDataset.GetCid(), "", latestVersion.GetCodeEntryFile(), secretId, latestVersion.Branch, files)
+					workspaceConfig := workspace.NewWorkspaceConfig(selectedDataset.GetCid(), "", latestVersion.GetCodeEntryFile(), secretId, latestVersion.Branch, latestVersion.GenericBaseImageType, files)
 					err = workspace.SetWorkspaceConfig(workspaceConfig, datasetName)
 					if err != nil {
 						return err

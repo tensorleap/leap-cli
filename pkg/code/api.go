@@ -135,6 +135,10 @@ func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, fileSiz
 		saveDatasetVersionParams.SecretManagerId = &secretId
 	}
 
+	if len(pythonVersion) > 0 {
+		saveDatasetVersionParams.GenericBaseImageType = &pythonVersion
+	}
+
 	if len(message) > 0 {
 		saveDatasetVersionParams.SetNote(message)
 	}
