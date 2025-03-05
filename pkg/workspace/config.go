@@ -94,10 +94,10 @@ func CreateCodeTemplate(codeIntegrationId, projectId, secretId, branch, outputDi
 	return nil
 }
 
-func OverrideWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, branch string, files []string, outputDir string) error {
+func OverrideWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, branch, pythonVersion string, files []string, outputDir string) error {
 	wc, err := GetWorkspaceConfig()
 	if err != nil {
-		wc = NewWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, branch, files)
+		wc = NewWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, branch, pythonVersion, files)
 	} else {
 		wc.CodeIntegrationId = codeIntegrationId
 		wc.ProjectId = projectId

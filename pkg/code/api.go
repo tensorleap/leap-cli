@@ -87,6 +87,9 @@ func GetLatestVersion(ctx context.Context, codeIntegrationId string, branch stri
 	if err != nil {
 		return nil, fmt.Errorf("failed to get latest version for code integration id: %s", codeIntegrationId)
 	}
+	if version.LatestVersion == nil {
+		return nil, ErrEmptyCodeIntegrationVersion
+	}
 	if isDatasetVersionEmpty(version.LatestVersion) {
 		return version.LatestVersion, ErrEmptyCodeIntegrationVersion
 	}
