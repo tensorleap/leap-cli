@@ -341,9 +341,10 @@ func PushCode(ctx context.Context, force bool, codeIntegrationId string, tarGzFi
 
 		latestVersion, err := GetLatestVersion(ctx, codeIntegrationId, branch)
 
-		if err != nil {
+		if err != nil && !errors.Is(err, ErrEmptyCodeIntegrationVersion) {
 			log.Warnf("Failed to get latest code integration version: %v", err)
-		} else {
+		}
+		if err == nil {
 			change, err := CompareCodeVersion(ctx, latestVersion, tarGzFile, entryFile, secretId, pythonVersion)
 			if err != nil {
 				log.Warnf("Failed to check if code changed: %v", err)
