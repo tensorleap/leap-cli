@@ -117,35 +117,56 @@ func readNextTarFile(tarReader *tar.Reader, header *tar.Header, outputDir string
 	return
 }
 
-func CreateTarGzFile(filesDir string, filePaths []string, file io.Writer) error {
+func addFileToTar(tarWriter *tar.Writer, filePath string, fileName string) error {
+	fileInfo, err := os.Stat(filePath)
+	if err != nil {
+		return err
+	}
+
+	if fileName == "" {
+		fileName = fileInfo.Name()
+	}
+
+	fmt.Println("Adding:", filePath)
+	header, err := tar.FileInfoHeader(fileInfo, fileName)
+	if err != nil {
+		return err
+	}
+
+	header.Name = ConvertPathToUnix(fileName)
+
+	if err := tarWriter.WriteHeader(header); err != nil {
+		return err
+	}
+
+	file, err := os.Open(filePath)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	_, err = io.Copy(tarWriter, file)
+	return err
+}
+
+func CreateTarGzFile(filesDir string, filePaths []string, file io.Writer, externalFilePath string, externalFileName string) error {
 	fmt.Println("Packing files...")
-	gzip := gzip.NewWriter(file)
-	defer gzip.Close()
-	tarWriter := tar.NewWriter(gzip)
+
+	gzipWriter := gzip.NewWriter(file)
+	defer gzipWriter.Close()
+
+	tarWriter := tar.NewWriter(gzipWriter)
 	defer tarWriter.Close()
 
 	for _, relativePath := range filePaths {
-		filePath := filepath.Join(filesDir, relativePath)
-		fileInfo, err := os.Stat(filePath)
-		if err != nil {
+		fullFilePath := filepath.Join(filesDir, relativePath)
+		if err := addFileToTar(tarWriter, fullFilePath, relativePath); err != nil {
 			return err
 		}
-		fmt.Println(filePath)
-		header, err := tar.FileInfoHeader(fileInfo, fileInfo.Name())
-		if err != nil {
-			return err
-		}
-		header.Name = ConvertPathToUnix(filePath)
-		err = tarWriter.WriteHeader(header)
-		if err != nil {
-			return err
-		}
-		fileContents, err := os.ReadFile(filePath)
-		if err != nil {
-			return err
-		}
-		_, err = tarWriter.Write(fileContents)
-		if err != nil {
+	}
+
+	if externalFilePath != "" {
+		if err := addFileToTar(tarWriter, externalFilePath, externalFileName); err != nil {
 			return err
 		}
 	}
