@@ -25,6 +25,7 @@ Method | HTTP request | Description
 [**DeleteDashboard**](DefaultApi.md#DeleteDashboard) | **Post** /dashboards/deleteDashboard | 
 [**DeleteIssue**](DefaultApi.md#DeleteIssue) | **Post** /issues/deleteIssue | 
 [**DeleteProject**](DefaultApi.md#DeleteProject) | **Post** /projects/deleteProject | 
+[**DeleteSampleAnalysis**](DefaultApi.md#DeleteSampleAnalysis) | **Post** /visualizations/deleteSampleAnalysis | 
 [**DeleteSession**](DefaultApi.md#DeleteSession) | **Post** /sessions/deleteSession | 
 [**DeleteSessionRun**](DefaultApi.md#DeleteSessionRun) | **Post** /sessions/deleteSessionRun | 
 [**DeleteSessionTest**](DefaultApi.md#DeleteSessionTest) | **Post** /sessions-tests/deleteSessionTest | 
@@ -569,7 +570,7 @@ import (
 )
 
 func main() {
-    addSampleCollectionParams := *openapiclient.NewAddSampleCollectionParams([]openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), float64(123))}, "ProjectId_example", "Name_example") // AddSampleCollectionParams | 
+    addSampleCollectionParams := *openapiclient.NewAddSampleCollectionParams([]openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType())}, "ProjectId_example", "Name_example") // AddSampleCollectionParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1129,7 +1130,7 @@ import (
 )
 
 func main() {
-    createSampleVisualizationsParams := *openapiclient.NewCreateSampleVisualizationsParams("ProjectId_example", "SessionRunId_example", float64(123), []openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), float64(123))}, "Digest_example") // CreateSampleVisualizationsParams | 
+    createSampleVisualizationsParams := *openapiclient.NewCreateSampleVisualizationsParams("ProjectId_example", "SessionRunId_example", float64(123), []openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType())}, "Digest_example") // CreateSampleVisualizationsParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -1469,6 +1470,68 @@ Other parameters are passed through a pointer to a apiDeleteProjectRequest struc
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **deleteProjectParams** | [**DeleteProjectParams**](DeleteProjectParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteSampleAnalysis
+
+> DeleteSampleAnalysis(ctx).DeleteSamplesAnalysisParams(deleteSamplesAnalysisParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    deleteSamplesAnalysisParams := *openapiclient.NewDeleteSamplesAnalysisParams("ProjectId_example", []string{"SessionRunIds_example"}, []openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType())}) // DeleteSamplesAnalysisParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.DefaultApi.DeleteSampleAnalysis(context.Background()).DeleteSamplesAnalysisParams(deleteSamplesAnalysisParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteSampleAnalysis``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteSampleAnalysisRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **deleteSamplesAnalysisParams** | [**DeleteSamplesAnalysisParams**](DeleteSamplesAnalysisParams.md) |  | 
 
 ### Return type
 
@@ -2199,7 +2262,7 @@ import (
 )
 
 func main() {
-    fetchSimilarRequestParams := *openapiclient.NewFetchSimilarRequestParams("SessionRunId_example", "ProjectId_example", float64(123), []openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), float64(123))}, float64(123), "Digest_example") // FetchSimilarRequestParams | 
+    fetchSimilarRequestParams := *openapiclient.NewFetchSimilarRequestParams("SessionRunId_example", "ProjectId_example", float64(123), []openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType())}, float64(123), "Digest_example") // FetchSimilarRequestParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -3774,7 +3837,7 @@ import (
 )
 
 func main() {
-    fetchSimilarRequestParams := *openapiclient.NewFetchSimilarRequestParams("SessionRunId_example", "ProjectId_example", float64(123), []openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), float64(123))}, float64(123), "Digest_example") // FetchSimilarRequestParams | 
+    fetchSimilarRequestParams := *openapiclient.NewFetchSimilarRequestParams("SessionRunId_example", "ProjectId_example", float64(123), []openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType())}, float64(123), "Digest_example") // FetchSimilarRequestParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -7667,7 +7730,7 @@ import (
 )
 
 func main() {
-    sampleAnalysisParams := *openapiclient.NewSampleAnalysisParams("SessionRunId_example", "ProjectId_example", *openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), float64(123)), float64(123), openapiclient.SampleAnalysisAlgo("focus_layer_cam")) // SampleAnalysisParams | 
+    sampleAnalysisParams := *openapiclient.NewSampleAnalysisParams("SessionRunId_example", "ProjectId_example", *openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType()), float64(123), openapiclient.SampleAnalysisAlgo("focus_layer_cam")) // SampleAnalysisParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)

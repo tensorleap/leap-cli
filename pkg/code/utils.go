@@ -11,6 +11,7 @@ import (
 	"io/fs"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/tensorleap/leap-cli/pkg/api"
@@ -78,6 +79,114 @@ func AskForCodeIntegrationNameIfExisted(name string, codeIntegrations []CodeInte
 	}
 
 	return entity.AskForName(existingNames, name, CodeIntegrationEntityDesc)
+}
+
+func AskForPythonVersion(defaultVersionId string, baseImageTypes []tensorleapapi.GenericBaseImage) (string, error) {
+	displayNames := []string{}
+	versionIds := []string{}
+	defaultVersionDisplay := ""
+	for _, version := range baseImageTypes {
+		displayNames = append(displayNames, version.DisplayName)
+		versionIds = append(versionIds, version.Id)
+		if version.Id == defaultVersionId {
+			defaultVersionDisplay = version.DisplayName
+		}
+	}
+	prompt := &survey.Select{
+		Message: "Select python version",
+		Options: displayNames,
+		Default: defaultVersionDisplay,
+	}
+
+	var pythonVersion string
+	err := survey.AskOne(prompt, &pythonVersion)
+	if err != nil {
+		return "", err
+	}
+	for i, displayName := range displayNames {
+		if displayName == pythonVersion {
+			return versionIds[i], nil
+		}
+	}
+	return "", fmt.Errorf("python version %s is not available", pythonVersion)
+}
+
+func GetPythonVersions(ctx context.Context) ([]tensorleapapi.GenericBaseImage, string, error) {
+	currentVersions, res, err := api.ApiClient.GetGenericBaseImageTypes(ctx).Execute()
+	if err := api.CheckRes(res, err); err != nil {
+		return nil, "", fmt.Errorf("failed to get python versions: %v", err)
+	}
+
+	return currentVersions.BaseImageTypes, currentVersions.DefaultBaseImageType, nil
+}
+
+func selectPythonVersionFromFlag(flag string, baseImages []tensorleapapi.GenericBaseImage) (string, error) {
+	if len(flag) > 0 {
+		id := ""
+		for _, baseImage := range baseImages {
+			if baseImage.Id == flag || strings.HasSuffix(baseImage.DisplayName, flag) {
+				id = baseImage.Id
+				break
+			}
+		}
+
+		if len(id) == 0 {
+			return "", fmt.Errorf("python version %s is not available", flag)
+		}
+		return id, nil
+	}
+	return "", nil
+}
+
+func GetPythonVersionFromFlag(ctx context.Context, flag string) (string, error) {
+	return SyncPythonVersionFromFlagAndConfig(ctx, flag, nil)
+}
+
+func SyncPythonVersionFromFlagAndConfig(ctx context.Context, flag string, workspaceConfig *workspace.WorkspaceConfig) (string, error) {
+	baseImages, defaultVersionId, err := GetPythonVersions(ctx)
+	if err != nil {
+		return "", err
+	}
+
+	flagVersionId, err := selectPythonVersionFromFlag(flag, baseImages)
+	if err != nil {
+		return "", err
+	}
+
+	updateConfig := func(versionId string) error {
+		if workspaceConfig == nil {
+			return nil
+		}
+		workspaceConfig.PythonVersion = versionId
+		err = workspace.SetWorkspaceConfig(workspaceConfig, ".")
+		return err
+	}
+	if len(flagVersionId) > 0 {
+		err = updateConfig(flagVersionId)
+		if err != nil {
+			return "", err
+		}
+		return flagVersionId, nil
+	}
+
+	if workspaceConfig != nil && len(workspaceConfig.PythonVersion) > 0 {
+		found, _ := selectPythonVersionFromFlag(workspaceConfig.PythonVersion, baseImages)
+		if len(found) >= 0 {
+			return found, nil
+		}
+		log.Warnf("Python version %s is not available", workspaceConfig.PythonVersion)
+	}
+
+	selectedVersionId, err := AskForPythonVersion(defaultVersionId, baseImages)
+	if err != nil {
+		return "", err
+	}
+
+	err = updateConfig(selectedVersionId)
+	if err != nil {
+		return "", err
+	}
+	return selectedVersionId, nil
 }
 
 func isDatasetVersionEmpty(datasetVersion *tensorleapapi.DatasetVersion) bool {
@@ -226,7 +335,7 @@ func PrintCodeIntegrationVersionParserErr(civ *CodeIntegrationVersion) {
 	}
 }
 
-func PushCode(ctx context.Context, force bool, codeIntegrationId string, tarGzFile *os.File, entryFile, secretId, branch, message string) (pushed bool, current *CodeIntegrationVersion, err error) {
+func PushCode(ctx context.Context, force bool, codeIntegrationId string, tarGzFile *os.File, entryFile, secretId, branch, message, pythonVersion string) (pushed bool, current *CodeIntegrationVersion, err error) {
 	if !force {
 		log.Info("Checking if code has changed")
 
@@ -235,7 +344,7 @@ func PushCode(ctx context.Context, force bool, codeIntegrationId string, tarGzFi
 		if err != nil {
 			log.Warnf("Failed to get latest code integration version: %v", err)
 		} else {
-			change, err := CompareCodeVersion(ctx, latestVersion, tarGzFile, entryFile, secretId)
+			change, err := CompareCodeVersion(ctx, latestVersion, tarGzFile, entryFile, secretId, pythonVersion)
 			if err != nil {
 				log.Warnf("Failed to check if code changed: %v", err)
 			}
@@ -252,20 +361,20 @@ func PushCode(ctx context.Context, force bool, codeIntegrationId string, tarGzFi
 		return false, nil, fmt.Errorf("failed to get file stat: %v", err)
 	}
 
-	codeIntegrationVersion, err := AddCodeIntegrationVersion(ctx, tarGzFile, fileStat.Size(), codeIntegrationId, entryFile, secretId, branch, message)
+	codeIntegrationVersion, err := AddCodeIntegrationVersion(ctx, tarGzFile, fileStat.Size(), codeIntegrationId, entryFile, secretId, branch, message, pythonVersion)
 	if err != nil {
 		return false, nil, err
 	}
 	return true, codeIntegrationVersion, nil
 }
 
-func CompareCodeVersion(ctx context.Context, compareVersion *CodeIntegrationVersion, tarGzFile *os.File, entryFile, secretId string) (bool, error) {
+func CompareCodeVersion(ctx context.Context, compareVersion *CodeIntegrationVersion, tarGzFile *os.File, entryFile, secretId, pythonVersion string) (bool, error) {
 
 	if isDatasetVersionEmpty(compareVersion) {
 		return true, nil
 	}
 
-	if compareVersion.Metadata.GetSecretManagerId() != secretId || compareVersion.CodeEntryFile != entryFile {
+	if compareVersion.Metadata.GetSecretManagerId() != secretId || compareVersion.CodeEntryFile != entryFile || compareVersion.GetGenericBaseImageType() != pythonVersion {
 		return true, nil
 	}
 

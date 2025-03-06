@@ -94,6 +94,7 @@ docs/DefaultApi.md
 docs/DeleteDashboardParams.md
 docs/DeleteIssueParams.md
 docs/DeleteProjectParams.md
+docs/DeleteSamplesAnalysisParams.md
 docs/DeleteSessionParams.md
 docs/DeleteSessionRunParams.md
 docs/DeleteSessionTestRequest.md
@@ -159,7 +160,6 @@ docs/GetDashboardParams.md
 docs/GetDashboardResponse.md
 docs/GetDashletFieldsParams.md
 docs/GetDashletFieldsResponse.md
-docs/GetDashletFieldsResponseNumericFieldsOptionsInner.md
 docs/GetDatasetVersionParams.md
 docs/GetDatasetVersionResponse.md
 docs/GetDatasetVersionUploadUrlParams.md
@@ -173,6 +173,7 @@ docs/GetExportedSessionRunJobsParams.md
 docs/GetExportedSessionRunJobsResponse.md
 docs/GetFieldsValuesRequest.md
 docs/GetFieldsValuesResponse.md
+docs/GetFieldsValuesResponseResultsInner.md
 docs/GetGeneratedDashletsBySessionRun.md
 docs/GetGeneratedDashletsParams.md
 docs/GetGeneratedDashletsResponse.md
@@ -346,6 +347,7 @@ docs/SampleAnalysisViz.md
 docs/SampleAssetId.md
 docs/SampleAssetNames.md
 docs/SampleCollection.md
+docs/SampleIdType.md
 docs/SampleIdentity.md
 docs/SampleSelectionInfo.md
 docs/SampleVisualizationInfo.md
@@ -544,6 +546,7 @@ model_dataset_version_upload_url_response.go
 model_delete_dashboard_params.go
 model_delete_issue_params.go
 model_delete_project_params.go
+model_delete_samples_analysis_params.go
 model_delete_session_params.go
 model_delete_session_run_params.go
 model_delete_session_test_request.go
@@ -609,7 +612,6 @@ model_get_dashboard_params.go
 model_get_dashboard_response.go
 model_get_dashlet_fields_params.go
 model_get_dashlet_fields_response.go
-model_get_dashlet_fields_response_numeric_fields_options_inner.go
 model_get_dataset_version_params.go
 model_get_dataset_version_response.go
 model_get_dataset_version_upload_url_params.go
@@ -623,6 +625,7 @@ model_get_exported_session_run_jobs_params.go
 model_get_exported_session_run_jobs_response.go
 model_get_fields_values_request.go
 model_get_fields_values_response.go
+model_get_fields_values_response_results_inner.go
 model_get_generated_dashlets_by_session_run.go
 model_get_generated_dashlets_params.go
 model_get_generated_dashlets_response.go
@@ -796,6 +799,7 @@ model_sample_analysis_viz.go
 model_sample_asset_id.go
 model_sample_asset_names.go
 model_sample_collection.go
+model_sample_id_type.go
 model_sample_identity.go
 model_sample_selection_info.go
 model_sample_visualization_info.go

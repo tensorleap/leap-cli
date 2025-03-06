@@ -15,6 +15,7 @@ func init() {
 	var newCodeIntegrationName string
 	var secretId string
 	var branch string
+	var pythonVersion string
 
 	var cmd = &cobra.Command{
 		Use:   "init",
@@ -62,15 +63,24 @@ func init() {
 				if err != nil {
 					return err
 				}
+				latestVersion, err := code.GetLatestVersion(ctx, codeIntegration.GetCid(), branch)
+				if err != nil && err != code.ErrEmptyCodeIntegrationVersion {
+					return err
+				}
 				if len(secretId) == 0 {
-					latestVersion, err := code.GetLatestVersion(ctx, codeIntegration.GetCid(), branch)
-					if err != nil && err != code.ErrEmptyCodeIntegrationVersion {
-						return err
-					}
 					secretId = latestVersion.Metadata.GetSecretManagerId()
 				}
+				if len(pythonVersion) == 0 {
+					pythonVersion = latestVersion.GetGenericBaseImageType()
+				}
 			}
-			return workspace.CreateCodeTemplate(codeIntegration.GetCid(), "", secretId, branch, ".")
+
+			pythonVersion, err = code.GetPythonVersionFromFlag(cmd.Context(), pythonVersion)
+			if err != nil {
+				return err
+			}
+
+			return workspace.CreateCodeTemplate(codeIntegration.GetCid(), "", secretId, branch, ".", pythonVersion)
 		},
 	}
 
@@ -78,6 +88,7 @@ func init() {
 	cmd.Flags().StringVar(&newCodeIntegrationName, "new", "", "Name for new database")
 	cmd.Flags().StringVar(&secretId, "secretId", "", "Secret manager id for new code integration")
 	cmd.Flags().StringVarP(&branch, "branch", "b", "", "Branch for code integration")
+	cmd.Flags().StringVarP(&pythonVersion, "pythonVersion", "p", "", "Python version for code integration")
 	cmd.MarkFlagsMutuallyExclusive("new", "codeId")
 	RootCommand.AddCommand(cmd)
 }

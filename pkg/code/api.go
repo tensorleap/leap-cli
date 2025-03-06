@@ -101,7 +101,7 @@ func GetCodeIntegration(ctx context.Context, id string) (*CodeIntegrationVersion
 	return &res.DatasetVersion, err
 }
 
-func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, fileSize int64, codeIntegrationId, entryFile, secretId, branch, message string) (*CodeIntegrationVersion, error) {
+func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, fileSize int64, codeIntegrationId, entryFile, secretId, branch, message, pythonVersion string) (*CodeIntegrationVersion, error) {
 
 	getDatasetVersionUploadUrlParams := *tensorleapapi.NewGetDatasetVersionUploadUrlParams(
 		codeIntegrationId,
@@ -133,6 +133,10 @@ func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, fileSiz
 
 	if len(secretId) > 0 {
 		saveDatasetVersionParams.SecretManagerId = &secretId
+	}
+
+	if len(pythonVersion) > 0 {
+		saveDatasetVersionParams.GenericBaseImageType = &pythonVersion
 	}
 
 	if len(message) > 0 {

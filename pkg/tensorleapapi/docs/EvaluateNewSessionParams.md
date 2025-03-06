@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **Description** | **string** |  | 
 **SkipMetricsEstimation** | **bool** |  | 
+**Monitor** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -170,6 +171,31 @@ and a boolean to check if the value has been set.
 
 SetSkipMetricsEstimation sets SkipMetricsEstimation field to given value.
 
+
+### GetMonitor
+
+`func (o *EvaluateNewSessionParams) GetMonitor() bool`
+
+GetMonitor returns the Monitor field if non-nil, zero value otherwise.
+
+### GetMonitorOk
+
+`func (o *EvaluateNewSessionParams) GetMonitorOk() (*bool, bool)`
+
+GetMonitorOk returns a tuple with the Monitor field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMonitor
+
+`func (o *EvaluateNewSessionParams) SetMonitor(v bool)`
+
+SetMonitor sets Monitor field to given value.
+
+### HasMonitor
+
+`func (o *EvaluateNewSessionParams) HasMonitor() bool`
+
+HasMonitor returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

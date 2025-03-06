@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TriggerCreateSampleVisualiztions** | Pointer to **bool** |  | [optional] 
 **DisplayParams** | [**PopulationExplorationDisplayParams**](PopulationExplorationDisplayParams.md) |  | 
+**DomainGapMetadata** | Pointer to **string** |  | [optional] 
 **ProjectionMetric** | Pointer to **string** |  | [optional] 
 **Digest** | **string** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
@@ -77,6 +78,31 @@ and a boolean to check if the value has been set.
 
 SetDisplayParams sets DisplayParams field to given value.
 
+
+### GetDomainGapMetadata
+
+`func (o *PopulationExplorationJobParams) GetDomainGapMetadata() string`
+
+GetDomainGapMetadata returns the DomainGapMetadata field if non-nil, zero value otherwise.
+
+### GetDomainGapMetadataOk
+
+`func (o *PopulationExplorationJobParams) GetDomainGapMetadataOk() (*string, bool)`
+
+GetDomainGapMetadataOk returns a tuple with the DomainGapMetadata field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDomainGapMetadata
+
+`func (o *PopulationExplorationJobParams) SetDomainGapMetadata(v string)`
+
+SetDomainGapMetadata sets DomainGapMetadata field to given value.
+
+### HasDomainGapMetadata
+
+`func (o *PopulationExplorationJobParams) HasDomainGapMetadata() bool`
+
+HasDomainGapMetadata returns a boolean if a field has been set.
 
 ### GetProjectionMetric
 

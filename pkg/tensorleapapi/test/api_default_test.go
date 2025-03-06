@@ -268,6 +268,17 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultApiService DeleteSampleAnalysis", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		httpRes, err := apiClient.DefaultApi.DeleteSampleAnalysis(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultApiService DeleteSession", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test

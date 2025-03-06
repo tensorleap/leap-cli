@@ -23,6 +23,7 @@ func NewPushCmd() *cobra.Command {
 	var transformInput bool
 	var force bool
 	var noWait bool
+	var pythonVersion string
 
 	var cmd = &cobra.Command{
 		Use:   "push <modelPath>",
@@ -95,13 +96,18 @@ func NewPushCmd() *cobra.Command {
 				return err
 			}
 
+			pythonVersion, err = code.SyncPythonVersionFromFlagAndConfig(ctx, pythonVersion, workspaceConfig)
+			if err != nil {
+				return err
+			}
+
 			close, tarGzFile, err := code.BundleCodeIntoTempFile(".", workspaceConfig)
 			if err != nil {
 				return err
 			}
 			defer close()
 
-			pushed, currentVersion, err := code.PushCode(ctx, force, codeIntegration.Cid, tarGzFile, workspaceConfig.EntryFile, secretId, codeBranch, message)
+			pushed, currentVersion, err := code.PushCode(ctx, force, codeIntegration.Cid, tarGzFile, workspaceConfig.EntryFile, secretId, codeBranch, message, pythonVersion)
 			if err != nil {
 				return err
 			}

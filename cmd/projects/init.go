@@ -11,6 +11,7 @@ import (
 func NewInitCmd() *cobra.Command {
 	var projectId string
 	var secretId string
+	var pythonVersion string
 	var codeIntegrationId string
 	var codeIntegrationBranch string
 
@@ -42,6 +43,9 @@ func NewInitCmd() *cobra.Command {
 				} else if err == nil {
 					if secretId == "" {
 						secretId = latestVersion.Metadata.GetSecretManagerId()
+					}
+					if len(pythonVersion) == 0 {
+						pythonVersion = latestVersion.GetGenericBaseImageType()
 					}
 					isCreatingEmptyTemplate = false
 					files, err := code.CloneCodeIntegrationVersion(ctx, latestVersion, ".", "")
@@ -75,6 +79,11 @@ func NewInitCmd() *cobra.Command {
 				}
 			}
 
+			pythonVersion, err = code.GetPythonVersionFromFlag(ctx, pythonVersion)
+			if err != nil {
+				return err
+			}
+
 			if isCreatingEmptyTemplate {
 				err = workspace.CreateCodeTemplate(
 					codeIntegration.GetCid(),
@@ -82,6 +91,7 @@ func NewInitCmd() *cobra.Command {
 					secretId,
 					codeIntegrationBranch,
 					".",
+					pythonVersion,
 				)
 				if err != nil {
 					return err
@@ -94,6 +104,8 @@ func NewInitCmd() *cobra.Command {
 
 	cmd.Flags().StringVar(&projectId, "projectId", "", "ProjectId is the id of the project")
 	cmd.Flags().StringVar(&projectId, "codeId", "", "CodeIntegrationId is the id of the code integration to bind")
+	cmd.Flags().StringVar(&secretId, "secretId", "", "Secret manager id for new code integration")
+	cmd.Flags().StringVar(&pythonVersion, "pythonVersion", "", "Python version for the code integration")
 	cmd.Flags().StringVar(&codeIntegrationBranch, "branch", "", "Branch of the code integration to bind")
 
 	return cmd

@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **Description** | **string** |  | 
 **SkipMetricsEstimation** | **bool** |  | 
+**Monitor** | Pointer to **bool** |  | [optional] 
 **EvaluatedEpoch** | **float64** |  | 
 **SessionId** | **string** |  | 
 
@@ -172,6 +173,31 @@ and a boolean to check if the value has been set.
 
 SetSkipMetricsEstimation sets SkipMetricsEstimation field to given value.
 
+
+### GetMonitor
+
+`func (o *EvaluateParams) GetMonitor() bool`
+
+GetMonitor returns the Monitor field if non-nil, zero value otherwise.
+
+### GetMonitorOk
+
+`func (o *EvaluateParams) GetMonitorOk() (*bool, bool)`
+
+GetMonitorOk returns a tuple with the Monitor field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMonitor
+
+`func (o *EvaluateParams) SetMonitor(v bool)`
+
+SetMonitor sets Monitor field to given value.
+
+### HasMonitor
+
+`func (o *EvaluateParams) HasMonitor() bool`
+
+HasMonitor returns a boolean if a field has been set.
 
 ### GetEvaluatedEpoch
 

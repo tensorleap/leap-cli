@@ -27,9 +27,10 @@ type WorkspaceConfig struct {
 	SecretManagerId string   `yaml:"secretManagerId,omitempty"`
 	EntryFile       string   `yaml:"entryFile"`
 	IncludePatterns []string `yaml:"include"`
+	PythonVersion   string   `yaml:"pythonVersion,omitempty"`
 }
 
-func NewWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, branch string, files []string) *WorkspaceConfig {
+func NewWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, branch, pythonVersion string, files []string) *WorkspaceConfig {
 	if len(entryFile) == 0 {
 		entryFile = "leap_binder.py"
 	}
@@ -42,6 +43,7 @@ func NewWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, branc
 		EntryFile:         entryFile,
 		SecretId:          secretId,
 		Branch:            branch,
+		PythonVersion:     pythonVersion,
 		IncludePatterns:   files,
 	}
 }
@@ -51,9 +53,10 @@ type InitTemplateValues struct {
 	ProjectId         string
 	SecretId          string
 	Branch            string
+	PythonVersion     string
 }
 
-func CreateCodeTemplate(codeIntegrationId, projectId, secretId, branch, outputDir string) error {
+func CreateCodeTemplate(codeIntegrationId, projectId, secretId, branch, outputDir, pythonVersionId string) error {
 	// Create the directory for the file if it doesn't exist
 	err := os.MkdirAll(outputDir, 0755)
 	if err != nil {
@@ -82,6 +85,7 @@ func CreateCodeTemplate(codeIntegrationId, projectId, secretId, branch, outputDi
 				ProjectId:         projectId,
 				SecretId:          secretId,
 				Branch:            branch,
+				PythonVersion:     pythonVersionId,
 			}); err != nil {
 				return err
 			}

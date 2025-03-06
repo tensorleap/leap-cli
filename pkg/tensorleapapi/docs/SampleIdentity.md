@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **State** | [**DataStateType**](DataStateType.md) |  | 
-**Index** | **float64** |  | 
+**Index** | [**SampleIdType**](SampleIdType.md) |  | 
 
 ## Methods
 
 ### NewSampleIdentity
 
-`func NewSampleIdentity(state DataStateType, index float64, ) *SampleIdentity`
+`func NewSampleIdentity(state DataStateType, index SampleIdType, ) *SampleIdentity`
 
 NewSampleIdentity instantiates a new SampleIdentity object
 This constructor will assign default values to properties that have it defined,
@@ -48,20 +48,20 @@ SetState sets State field to given value.
 
 ### GetIndex
 
-`func (o *SampleIdentity) GetIndex() float64`
+`func (o *SampleIdentity) GetIndex() SampleIdType`
 
 GetIndex returns the Index field if non-nil, zero value otherwise.
 
 ### GetIndexOk
 
-`func (o *SampleIdentity) GetIndexOk() (*float64, bool)`
+`func (o *SampleIdentity) GetIndexOk() (*SampleIdType, bool)`
 
 GetIndexOk returns a tuple with the Index field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIndex
 
-`func (o *SampleIdentity) SetIndex(v float64)`
+`func (o *SampleIdentity) SetIndex(v SampleIdType)`
 
 SetIndex sets Index field to given value.
 

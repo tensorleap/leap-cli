@@ -67,7 +67,7 @@ func NewPullCmd() *cobra.Command {
 				}
 
 				if !mappingOnly {
-					workspaceConfig := workspace.NewWorkspaceConfig(selectedDataset.GetCid(), "", latestVersion.GetCodeEntryFile(), secretId, latestVersion.Branch, files)
+					workspaceConfig := workspace.NewWorkspaceConfig(selectedDataset.GetCid(), "", latestVersion.GetCodeEntryFile(), secretId, latestVersion.Branch, latestVersion.GenericBaseImageType, files)
 					err = workspace.SetWorkspaceConfig(workspaceConfig, datasetName)
 					if err != nil {
 						return err
@@ -75,7 +75,7 @@ func NewPullCmd() *cobra.Command {
 				}
 			} else if err == code.ErrEmptyCodeIntegrationVersion {
 				log.Warn("The selected dataset is empty, Create default template")
-				err = workspace.CreateCodeTemplate(selectedDataset.GetCid(), "", secretId, datasetName, selectedBranch)
+				err = workspace.CreateCodeTemplate(selectedDataset.GetCid(), "", secretId, datasetName, selectedBranch, latestVersion.GetGenericBaseImageType())
 				if err != nil {
 					return err
 				}
