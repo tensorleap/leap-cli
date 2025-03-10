@@ -149,7 +149,7 @@ func NewPushCmd() *cobra.Command {
 	cmd.Flags().BoolVarP(&force, "force", "f", false, "Force push code integration")
 	cmd.Flags().BoolVar(&transformInput, "transform-input", false, "Transform input in case of ONNX model")
 	cmd.Flags().BoolVar(&noWait, "no-wait", false, "Do not wait for push to complete")
-	cmd.Flags().StringVar(&leapMappingPath, "leap-mapping", "", "Path to leap mapping file")
+	cmd.Flags().StringVar(&leapMappingPath, "leap-mapping", "", "Path to external leap mapping file")
 
 	return cmd
 }

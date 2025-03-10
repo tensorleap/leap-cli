@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
+	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
 func DownloadAndExtractTarFile(url string, outputDir string, specificFileName string) ([]string, error) {
@@ -150,7 +151,7 @@ func addFileToTar(tarWriter *tar.Writer, filePath string, fileName string) error
 }
 
 func CreateTarGzFile(filesDir string, filePaths []string, file io.Writer, externalFilePath string, externalFileName string) error {
-	fmt.Println("Packing files...")
+	log.Info("Packing files...")
 
 	gzipWriter := gzip.NewWriter(file)
 	defer gzipWriter.Close()
