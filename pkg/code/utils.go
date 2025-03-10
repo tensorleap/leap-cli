@@ -247,10 +247,14 @@ func FetchFileFromTarGz(blobURL string, filename string) (string, error) {
 	return "", errors.New("file not found in tar.gz")
 }
 
-func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.WorkspaceConfig) (close func(), tarGzFile *os.File, err error) {
+func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.WorkspaceConfig, externalLeapMappingPath string) (close func(), tarGzFile *os.File, err error) {
 	filePaths, err := getDatasetFiles(filesDir, workspaceConfig)
 	if err != nil {
 		return
+	}
+
+	if externalLeapMappingPath != "" {
+		filePaths = filterOutBySuffix(filePaths, BindingFilePath)
 	}
 
 	tarGzFile, err = os.CreateTemp("", "tensorleap-*.tar.gz")
@@ -259,7 +263,7 @@ func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.Workspac
 	}
 	close = func() { local.CleanupTempFile(tarGzFile) }
 
-	if err = local.CreateTarGzFile(filesDir, filePaths, tarGzFile); err != nil {
+	if err = local.CreateTarGzFile(filesDir, filePaths, tarGzFile, externalLeapMappingPath, BindingFilePath); err != nil {
 		close()
 		return
 	}
@@ -278,9 +282,36 @@ func getDatasetFiles(filesDir string, workspaceConfig *workspace.WorkspaceConfig
 		if err != nil {
 			return nil, err
 		}
+
 		allMatchedFiles = append(allMatchedFiles, matches...)
 	}
-	return allMatchedFiles, nil
+
+	uniqueFilePaths := distinctStrings(allMatchedFiles)
+	return uniqueFilePaths, nil
+}
+
+func filterOutBySuffix(paths []string, suffix string) []string {
+	var filtered []string
+	for _, path := range paths {
+		if !strings.HasSuffix(path, suffix) {
+			filtered = append(filtered, path)
+		}
+	}
+	return filtered
+}
+
+func distinctStrings(arr []string) []string {
+	uniqueMap := make(map[string]bool)
+	var result []string
+
+	for _, str := range arr {
+		if !uniqueMap[str] {
+			uniqueMap[str] = true
+			result = append(result, str)
+		}
+	}
+
+	return result
 }
 
 func GetAndUpdateCodeIntegrationIfNotExists(ctx context.Context, workspaceConfig *workspace.WorkspaceConfig) (code *CodeIntegration, wasCreated bool, err error) {

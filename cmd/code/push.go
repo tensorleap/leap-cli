@@ -18,6 +18,7 @@ func NewPushCmd() *cobra.Command {
 	var force bool
 	var message string
 	var pythonVersion string
+	var leapMappingPath string
 
 	cmd := &cobra.Command{
 		Use:   "push",
@@ -31,7 +32,7 @@ func NewPushCmd() *cobra.Command {
 			if err := auth.CheckLoggedIn(); err != nil {
 				return err
 			}
-			close, tarGzFile, err := code.BundleCodeIntoTempFile(".", workspaceConfig)
+			close, tarGzFile, err := code.BundleCodeIntoTempFile(".", workspaceConfig, leapMappingPath)
 			if err != nil {
 				return err
 			}
@@ -92,6 +93,7 @@ func NewPushCmd() *cobra.Command {
 	cmd.Flags().BoolVar(&noWait, "no-wait", false, "Do not wait for code parsing")
 	cmd.Flags().BoolVarP(&force, "force", "f", false, "Force push code integration")
 	cmd.Flags().StringVarP(&pythonVersion, "python-version", "p", "", "Python version")
+	cmd.Flags().StringVar(&leapMappingPath, "leap-mapping", "", "Path to leap mapping file")
 
 	return cmd
 }

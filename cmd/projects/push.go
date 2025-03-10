@@ -24,6 +24,7 @@ func NewPushCmd() *cobra.Command {
 	var force bool
 	var noWait bool
 	var pythonVersion string
+	var leapMappingPath string
 
 	var cmd = &cobra.Command{
 		Use:   "push <modelPath>",
@@ -101,7 +102,7 @@ func NewPushCmd() *cobra.Command {
 				return err
 			}
 
-			close, tarGzFile, err := code.BundleCodeIntoTempFile(".", workspaceConfig)
+			close, tarGzFile, err := code.BundleCodeIntoTempFile(".", workspaceConfig, leapMappingPath)
 			if err != nil {
 				return err
 			}
@@ -148,6 +149,7 @@ func NewPushCmd() *cobra.Command {
 	cmd.Flags().BoolVarP(&force, "force", "f", false, "Force push code integration")
 	cmd.Flags().BoolVar(&transformInput, "transform-input", false, "Transform input in case of ONNX model")
 	cmd.Flags().BoolVar(&noWait, "no-wait", false, "Do not wait for push to complete")
+	cmd.Flags().StringVar(&leapMappingPath, "leap-mapping", "", "Path to leap mapping file")
 
 	return cmd
 }
