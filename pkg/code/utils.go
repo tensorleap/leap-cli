@@ -8,12 +8,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/fs"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/bmatcuk/doublestar/v4"
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/entity"
 	"github.com/tensorleap/leap-cli/pkg/local"
@@ -273,21 +274,56 @@ func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.Workspac
 }
 
 func getDatasetFiles(filesDir string, workspaceConfig *workspace.WorkspaceConfig) ([]string, error) {
-	currentDirFs := os.DirFS(filesDir)
-	var allMatchedFiles []string
-	allFilePaths := append(workspaceConfig.IncludePatterns, BindingFilePath)
-	for _, pattern := range allFilePaths {
-		pattern = local.ConvertPathPatternToUnix(pattern)
-		matches, err := fs.Glob(currentDirFs, pattern)
+	includePatterns := workspaceConfig.IncludePatterns
+	excludePatterns := workspaceConfig.ExcludePatterns
+
+	if len(includePatterns) == 0 {
+		includePatterns = []string{"**"}
+	}
+	includePatterns = append(includePatterns, BindingFilePath)
+
+	fileSet := make(map[string]struct{})
+
+	for _, pattern := range includePatterns {
+		unixPattern := local.ConvertPathPatternToUnix(pattern)
+		matches, err := doublestar.FilepathGlob(filepath.Join(filesDir, unixPattern))
 		if err != nil {
 			return nil, err
 		}
-
-		allMatchedFiles = append(allMatchedFiles, matches...)
+		for _, match := range matches {
+			info, err := os.Stat(match)
+			if err != nil {
+				return nil, err
+			}
+			if !info.IsDir() {
+				relPath, err := filepath.Rel(filesDir, match)
+				if err != nil {
+					return nil, err
+				}
+				fileSet[relPath] = struct{}{}
+			}
+		}
 	}
 
-	uniqueFilePaths := distinctStrings(allMatchedFiles)
-	return uniqueFilePaths, nil
+	finalFiles := make([]string, 0, len(fileSet))
+	for file := range fileSet {
+		if !isExcluded(file, excludePatterns) {
+			finalFiles = append(finalFiles, file)
+		}
+	}
+
+	return finalFiles, nil
+}
+
+func isExcluded(path string, excludePatterns []string) bool {
+	for _, pattern := range excludePatterns {
+		unixPattern := local.ConvertPathPatternToUnix(pattern)
+		matched, err := doublestar.PathMatch(unixPattern, path)
+		if err == nil && matched {
+			return true
+		}
+	}
+	return false
 }
 
 func filterOutBySuffix(paths []string, suffix string) []string {
@@ -298,20 +334,6 @@ func filterOutBySuffix(paths []string, suffix string) []string {
 		}
 	}
 	return filtered
-}
-
-func distinctStrings(arr []string) []string {
-	uniqueMap := make(map[string]bool)
-	var result []string
-
-	for _, str := range arr {
-		if !uniqueMap[str] {
-			uniqueMap[str] = true
-			result = append(result, str)
-		}
-	}
-
-	return result
 }
 
 func GetAndUpdateCodeIntegrationIfNotExists(ctx context.Context, workspaceConfig *workspace.WorkspaceConfig) (code *CodeIntegration, wasCreated bool, err error) {
