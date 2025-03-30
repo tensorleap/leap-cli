@@ -16,7 +16,8 @@ import (
 func NewPushCmd() *cobra.Command {
 
 	var secretId string
-	var message string
+	var modelVersionName string
+	var codeVersionMessage string
 	var modelType string
 	var modelBranch string
 	var codeBranch string
@@ -48,7 +49,7 @@ func NewPushCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			err = model.InitMessage(&message)
+			err = model.InitMessage(&modelVersionName)
 			if err != nil {
 				return err
 			}
@@ -108,7 +109,7 @@ func NewPushCmd() *cobra.Command {
 			}
 			defer close()
 
-			pushed, currentVersion, err := code.PushCode(ctx, force, codeIntegration.Cid, tarGzFile, workspaceConfig.EntryFile, secretId, codeBranch, message, pythonVersion)
+			pushed, currentVersion, err := code.PushCode(ctx, force, codeIntegration.Cid, tarGzFile, workspaceConfig.EntryFile, secretId, codeBranch, codeVersionMessage, pythonVersion)
 			if err != nil {
 				return err
 			}
@@ -133,7 +134,7 @@ func NewPushCmd() *cobra.Command {
 				return fmt.Errorf("latest code parsing failed, add --force to push anyway")
 			}
 
-			err = model.ImportModel(ctx, modelPath, currentProject.GetCid(), message, modelType, modelBranch, codeIntegration.GetCid(), codeBranch, transformInput, !noWait)
+			err = model.ImportModel(ctx, modelPath, currentProject.GetCid(), modelVersionName, modelType, modelBranch, codeIntegration.GetCid(), codeBranch, transformInput, !noWait)
 			if err != nil {
 				return err
 			}
@@ -141,7 +142,8 @@ func NewPushCmd() *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&message, "message", "m", "", "Model version and code integration message")
+	cmd.Flags().StringVarP(&modelVersionName, "model-name", "m", "", "Model version name")
+	cmd.Flags().StringVar(&codeVersionMessage, "code-message", "", "Code version message")
 	cmd.Flags().StringVar(&modelType, "type", "", "Type is the type of the model file [JSON_TF2 / ONNX / PB_TF2 / H5_TF2]")
 	cmd.Flags().StringVar(&modelBranch, "model-branch", "", "Name of the model branch [OPTIONAL]")
 	cmd.Flags().StringVar(&codeBranch, "code-branch", "", "Name of the code branch [OPTIONAL]")
