@@ -27,6 +27,7 @@ type WorkspaceConfig struct {
 	SecretManagerId string   `yaml:"secretManagerId,omitempty"`
 	EntryFile       string   `yaml:"entryFile"`
 	IncludePatterns []string `yaml:"include"`
+	ExcludePatterns []string `yaml:"exclude,omitempty"`
 	PythonVersion   string   `yaml:"pythonVersion,omitempty"`
 }
 

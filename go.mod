@@ -4,6 +4,7 @@ go 1.21
 
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.7
+	github.com/bmatcuk/doublestar/v4 v4.8.1
 	github.com/briandowns/spinner v1.23.0
 	github.com/docker/cli v24.0.7+incompatible
 	github.com/docker/docker v24.0.7+incompatible
