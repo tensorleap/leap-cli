@@ -5,6 +5,8 @@
 
 * `IMAGE` (value: `"Image"`)
 
+* `VIDEO` (value: `"Video"`)
+
 * `TEXT` (value: `"Text"`)
 
 * `GRAPH` (value: `"Graph"`)

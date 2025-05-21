@@ -4,10 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Type** | **string** |  | 
 **Title** | Pointer to **string** |  | [optional] 
-**Def** | Pointer to **NullableFloat64** |  | [optional] 
 **Description** | Pointer to **string** |  | [optional] 
+**Category** | [**SettingsCategory**](SettingsCategory.md) |  | 
+**Type** | **string** |  | 
+**Def** | Pointer to **NullableFloat64** |  | [optional] 
 **Options** | Pointer to **[]float64** |  | [optional] 
 **Step** | Pointer to **float64** |  | [optional] 
 **Max** | Pointer to **float64** |  | [optional] 
@@ -15,12 +16,13 @@ Name | Type | Description | Notes
 **Required** | Pointer to **bool** |  | [optional] 
 **Placeholder** | Pointer to **string** |  | [optional] 
 **Suffix** | Pointer to **string** |  | [optional] 
+**LimitedBy** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewNumberSchema
 
-`func NewNumberSchema(type_ string, ) *NumberSchema`
+`func NewNumberSchema(category SettingsCategory, type_ string, ) *NumberSchema`
 
 NewNumberSchema instantiates a new NumberSchema object
 This constructor will assign default values to properties that have it defined,
@@ -34,26 +36,6 @@ will change when the set of required properties is changed
 NewNumberSchemaWithDefaults instantiates a new NumberSchema object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetType
-
-`func (o *NumberSchema) GetType() string`
-
-GetType returns the Type field if non-nil, zero value otherwise.
-
-### GetTypeOk
-
-`func (o *NumberSchema) GetTypeOk() (*string, bool)`
-
-GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetType
-
-`func (o *NumberSchema) SetType(v string)`
-
-SetType sets Type field to given value.
-
 
 ### GetTitle
 
@@ -79,6 +61,71 @@ SetTitle sets Title field to given value.
 `func (o *NumberSchema) HasTitle() bool`
 
 HasTitle returns a boolean if a field has been set.
+
+### GetDescription
+
+`func (o *NumberSchema) GetDescription() string`
+
+GetDescription returns the Description field if non-nil, zero value otherwise.
+
+### GetDescriptionOk
+
+`func (o *NumberSchema) GetDescriptionOk() (*string, bool)`
+
+GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDescription
+
+`func (o *NumberSchema) SetDescription(v string)`
+
+SetDescription sets Description field to given value.
+
+### HasDescription
+
+`func (o *NumberSchema) HasDescription() bool`
+
+HasDescription returns a boolean if a field has been set.
+
+### GetCategory
+
+`func (o *NumberSchema) GetCategory() SettingsCategory`
+
+GetCategory returns the Category field if non-nil, zero value otherwise.
+
+### GetCategoryOk
+
+`func (o *NumberSchema) GetCategoryOk() (*SettingsCategory, bool)`
+
+GetCategoryOk returns a tuple with the Category field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCategory
+
+`func (o *NumberSchema) SetCategory(v SettingsCategory)`
+
+SetCategory sets Category field to given value.
+
+
+### GetType
+
+`func (o *NumberSchema) GetType() string`
+
+GetType returns the Type field if non-nil, zero value otherwise.
+
+### GetTypeOk
+
+`func (o *NumberSchema) GetTypeOk() (*string, bool)`
+
+GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetType
+
+`func (o *NumberSchema) SetType(v string)`
+
+SetType sets Type field to given value.
+
 
 ### GetDef
 
@@ -115,31 +162,6 @@ HasDef returns a boolean if a field has been set.
 `func (o *NumberSchema) UnsetDef()`
 
 UnsetDef ensures that no value is present for Def, not even an explicit nil
-### GetDescription
-
-`func (o *NumberSchema) GetDescription() string`
-
-GetDescription returns the Description field if non-nil, zero value otherwise.
-
-### GetDescriptionOk
-
-`func (o *NumberSchema) GetDescriptionOk() (*string, bool)`
-
-GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDescription
-
-`func (o *NumberSchema) SetDescription(v string)`
-
-SetDescription sets Description field to given value.
-
-### HasDescription
-
-`func (o *NumberSchema) HasDescription() bool`
-
-HasDescription returns a boolean if a field has been set.
-
 ### GetOptions
 
 `func (o *NumberSchema) GetOptions() []float64`
@@ -314,6 +336,31 @@ SetSuffix sets Suffix field to given value.
 `func (o *NumberSchema) HasSuffix() bool`
 
 HasSuffix returns a boolean if a field has been set.
+
+### GetLimitedBy
+
+`func (o *NumberSchema) GetLimitedBy() string`
+
+GetLimitedBy returns the LimitedBy field if non-nil, zero value otherwise.
+
+### GetLimitedByOk
+
+`func (o *NumberSchema) GetLimitedByOk() (*string, bool)`
+
+GetLimitedByOk returns a tuple with the LimitedBy field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLimitedBy
+
+`func (o *NumberSchema) SetLimitedBy(v string)`
+
+SetLimitedBy sets LimitedBy field to given value.
+
+### HasLimitedBy
+
+`func (o *NumberSchema) HasLimitedBy() bool`
+
+HasLimitedBy returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

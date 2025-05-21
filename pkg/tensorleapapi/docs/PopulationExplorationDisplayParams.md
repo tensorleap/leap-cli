@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **BalanceBy** | **[]string** |  | 
 **ShouldFillRemainingWithUnbalance** | **bool** |  | 
 **ReductionAlgorithm** | [**ReductionAlgorithm**](ReductionAlgorithm.md) |  | 
+**OptionalAnalysis** | Pointer to [**[]OptionalAnalysis**](OptionalAnalysis.md) |  | [optional] 
 
 ## Methods
 
@@ -107,6 +108,31 @@ and a boolean to check if the value has been set.
 
 SetReductionAlgorithm sets ReductionAlgorithm field to given value.
 
+
+### GetOptionalAnalysis
+
+`func (o *PopulationExplorationDisplayParams) GetOptionalAnalysis() []OptionalAnalysis`
+
+GetOptionalAnalysis returns the OptionalAnalysis field if non-nil, zero value otherwise.
+
+### GetOptionalAnalysisOk
+
+`func (o *PopulationExplorationDisplayParams) GetOptionalAnalysisOk() (*[]OptionalAnalysis, bool)`
+
+GetOptionalAnalysisOk returns a tuple with the OptionalAnalysis field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOptionalAnalysis
+
+`func (o *PopulationExplorationDisplayParams) SetOptionalAnalysis(v []OptionalAnalysis)`
+
+SetOptionalAnalysis sets OptionalAnalysis field to given value.
+
+### HasOptionalAnalysis
+
+`func (o *PopulationExplorationDisplayParams) HasOptionalAnalysis() bool`
+
+HasOptionalAnalysis returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

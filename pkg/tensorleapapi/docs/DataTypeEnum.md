@@ -5,6 +5,8 @@
 
 * `IMAGE` (value: `"image"`)
 
+* `VIDEO` (value: `"video"`)
+
 * `WORD` (value: `"word"`)
 
 * `TEXT` (value: `"text"`)

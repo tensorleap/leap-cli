@@ -4,10 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Type** | **string** |  | 
 **Title** | Pointer to **string** |  | [optional] 
-**Def** | Pointer to **NullableFloat64** |  | [optional] 
 **Description** | Pointer to **string** |  | [optional] 
+**Category** | [**SettingsCategory**](SettingsCategory.md) |  | 
+**Type** | **string** |  | 
+**Def** | Pointer to **NullableFloat64** |  | [optional] 
 **Options** | Pointer to **[]float64** |  | [optional] 
 **MaxLength** | Pointer to **float64** |  | [optional] 
 **MinLength** | Pointer to **float64** |  | [optional] 
@@ -18,12 +19,13 @@ Name | Type | Description | Notes
 **Max** | Pointer to **float64** |  | [optional] 
 **Min** | Pointer to **float64** |  | [optional] 
 **Suffix** | Pointer to **string** |  | [optional] 
+**LimitedBy** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewSettingSchema
 
-`func NewSettingSchema(type_ string, ) *SettingSchema`
+`func NewSettingSchema(category SettingsCategory, type_ string, ) *SettingSchema`
 
 NewSettingSchema instantiates a new SettingSchema object
 This constructor will assign default values to properties that have it defined,
@@ -37,26 +39,6 @@ will change when the set of required properties is changed
 NewSettingSchemaWithDefaults instantiates a new SettingSchema object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetType
-
-`func (o *SettingSchema) GetType() string`
-
-GetType returns the Type field if non-nil, zero value otherwise.
-
-### GetTypeOk
-
-`func (o *SettingSchema) GetTypeOk() (*string, bool)`
-
-GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetType
-
-`func (o *SettingSchema) SetType(v string)`
-
-SetType sets Type field to given value.
-
 
 ### GetTitle
 
@@ -82,6 +64,71 @@ SetTitle sets Title field to given value.
 `func (o *SettingSchema) HasTitle() bool`
 
 HasTitle returns a boolean if a field has been set.
+
+### GetDescription
+
+`func (o *SettingSchema) GetDescription() string`
+
+GetDescription returns the Description field if non-nil, zero value otherwise.
+
+### GetDescriptionOk
+
+`func (o *SettingSchema) GetDescriptionOk() (*string, bool)`
+
+GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDescription
+
+`func (o *SettingSchema) SetDescription(v string)`
+
+SetDescription sets Description field to given value.
+
+### HasDescription
+
+`func (o *SettingSchema) HasDescription() bool`
+
+HasDescription returns a boolean if a field has been set.
+
+### GetCategory
+
+`func (o *SettingSchema) GetCategory() SettingsCategory`
+
+GetCategory returns the Category field if non-nil, zero value otherwise.
+
+### GetCategoryOk
+
+`func (o *SettingSchema) GetCategoryOk() (*SettingsCategory, bool)`
+
+GetCategoryOk returns a tuple with the Category field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCategory
+
+`func (o *SettingSchema) SetCategory(v SettingsCategory)`
+
+SetCategory sets Category field to given value.
+
+
+### GetType
+
+`func (o *SettingSchema) GetType() string`
+
+GetType returns the Type field if non-nil, zero value otherwise.
+
+### GetTypeOk
+
+`func (o *SettingSchema) GetTypeOk() (*string, bool)`
+
+GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetType
+
+`func (o *SettingSchema) SetType(v string)`
+
+SetType sets Type field to given value.
+
 
 ### GetDef
 
@@ -118,31 +165,6 @@ HasDef returns a boolean if a field has been set.
 `func (o *SettingSchema) UnsetDef()`
 
 UnsetDef ensures that no value is present for Def, not even an explicit nil
-### GetDescription
-
-`func (o *SettingSchema) GetDescription() string`
-
-GetDescription returns the Description field if non-nil, zero value otherwise.
-
-### GetDescriptionOk
-
-`func (o *SettingSchema) GetDescriptionOk() (*string, bool)`
-
-GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDescription
-
-`func (o *SettingSchema) SetDescription(v string)`
-
-SetDescription sets Description field to given value.
-
-### HasDescription
-
-`func (o *SettingSchema) HasDescription() bool`
-
-HasDescription returns a boolean if a field has been set.
-
 ### GetOptions
 
 `func (o *SettingSchema) GetOptions() []float64`
@@ -392,6 +414,31 @@ SetSuffix sets Suffix field to given value.
 `func (o *SettingSchema) HasSuffix() bool`
 
 HasSuffix returns a boolean if a field has been set.
+
+### GetLimitedBy
+
+`func (o *SettingSchema) GetLimitedBy() string`
+
+GetLimitedBy returns the LimitedBy field if non-nil, zero value otherwise.
+
+### GetLimitedByOk
+
+`func (o *SettingSchema) GetLimitedByOk() (*string, bool)`
+
+GetLimitedByOk returns a tuple with the LimitedBy field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLimitedBy
+
+`func (o *SettingSchema) SetLimitedBy(v string)`
+
+SetLimitedBy sets LimitedBy field to given value.
+
+### HasLimitedBy
+
+`func (o *SettingSchema) HasLimitedBy() bool`
+
+HasLimitedBy returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
