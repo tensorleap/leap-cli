@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.607
+  version: 0.0.618
 servers:
 - url: /api/v2
 paths:
@@ -1160,6 +1160,44 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/GetF1ScoreParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiChartsResponse'
+          description: Ok
+      security:
+      - jwt: []
+  /sessionmetrics/getPrecisionScore:
+    post:
+      operationId: GetPrecisionScore
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetPrecisionScoreParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiChartsResponse'
+          description: Ok
+      security:
+      - jwt: []
+  /sessionmetrics/getRecallScore:
+    post:
+      operationId: GetRecallScore
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetRecallScoreParams'
         required: true
       responses:
         "200":
@@ -4415,6 +4453,7 @@ components:
     LeapDataType:
       enum:
       - Image
+      - Video
       - Text
       - Graph
       - HorizontalBar
@@ -8707,10 +8746,18 @@ components:
       - TSNE
       - PCA
       type: string
+    OptionalAnalysis:
+      enum:
+      - representation all
+      - duplication insight
+      type: string
     PopulationExplorationDisplayParams:
       additionalProperties: false
       example:
         population_exploration_n_samples: 1.4658129805029452
+        optional_analysis:
+        - null
+        - null
         balance_by:
         - balance_by
         - balance_by
@@ -8728,6 +8775,10 @@ components:
           type: boolean
         reduction_algorithm:
           $ref: '#/components/schemas/ReductionAlgorithm'
+        optional_analysis:
+          items:
+            $ref: '#/components/schemas/OptionalAnalysis'
+          type: array
       required:
       - balance_by
       - population_exploration_n_samples
@@ -11213,6 +11264,10 @@ components:
       $ref: '#/components/schemas/ConfusionMatrixParams'
     GetF1ScoreParams:
       $ref: '#/components/schemas/ConfusionMatrixParams'
+    GetPrecisionScoreParams:
+      $ref: '#/components/schemas/ConfusionMatrixParams'
+    GetRecallScoreParams:
+      $ref: '#/components/schemas/ConfusionMatrixParams'
     MultiThresholdConfusionMatrixParams:
       additionalProperties: false
       example:
@@ -11865,6 +11920,8 @@ components:
       - $ref: '#/components/schemas/MetricMessageParams'
     JobMessageParams:
       properties:
+        message:
+          type: string
         module:
           enum:
           - JobStatus
@@ -14560,20 +14617,30 @@ components:
       - projectId
       - sessionsTestData
       type: object
+    SettingsCategory:
+      enum:
+      - EVALUATION_MAIN
+      - EVALUATION_WORKERS
+      - POP_EXPLORATION
+      - GENERAL
+      nullable: false
+      type: string
     StringSchema:
       additionalProperties: false
       properties:
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          $ref: '#/components/schemas/SettingsCategory'
         type:
           enum:
           - string
           nullable: false
           type: string
-        title:
-          type: string
         def:
           nullable: true
-          type: string
-        description:
           type: string
         options:
           items:
@@ -14592,41 +14659,47 @@ components:
         placeholder:
           type: string
       required:
+      - category
       - type
       type: object
     BoolSchema:
       additionalProperties: false
       properties:
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          $ref: '#/components/schemas/SettingsCategory'
         type:
           enum:
           - boolean
           nullable: false
           type: string
-        title:
-          type: string
         def:
           type: boolean
-        description:
-          type: string
       required:
+      - category
       - type
       type: object
     NumberSchema:
       additionalProperties: false
       properties:
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          $ref: '#/components/schemas/SettingsCategory'
         type:
           enum:
           - number
           nullable: false
           type: string
-        title:
-          type: string
         def:
           format: double
           nullable: true
           type: number
-        description:
-          type: string
         options:
           items:
             format: double
@@ -14647,7 +14720,10 @@ components:
           type: string
         suffix:
           type: string
+        limitedBy:
+          type: string
       required:
+      - category
       - type
       type: object
     SettingSchema:
@@ -17217,6 +17293,7 @@ components:
     DataTypeEnum:
       enum:
       - image
+      - video
       - word
       - text
       - mask_text
@@ -17378,6 +17455,17 @@ components:
       - text
       - type
       type: object
+    VideoData:
+      additionalProperties: false
+      properties:
+        video_blob:
+          type: string
+        type:
+          $ref: '#/components/schemas/DataTypeEnum'
+      required:
+      - type
+      - video_blob
+      type: object
     VisData:
       anyOf:
       - $ref: '#/components/schemas/ImageData'
@@ -17388,6 +17476,7 @@ components:
       - $ref: '#/components/schemas/BBoxImageData'
       - $ref: '#/components/schemas/MaskImageData'
       - $ref: '#/components/schemas/MaskTextData'
+      - $ref: '#/components/schemas/VideoData'
     GradsItem:
       additionalProperties: false
       properties:
@@ -18284,6 +18373,9 @@ components:
         projectionMetric: projectionMetric
         displayParams:
           population_exploration_n_samples: 1.4658129805029452
+          optional_analysis:
+          - null
+          - null
           balance_by:
           - balance_by
           - balance_by

@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **MaskBlob** | **string** |  | 
 **Text** | **[]string** |  | 
 **Mask** | **[]float64** |  | 
+**VideoBlob** | **string** |  | 
 **Data** | [**[]CompositeVizItem**](CompositeVizItem.md) |  | 
 **Algo** | Pointer to [**SampleAnalysisAlgo**](SampleAnalysisAlgo.md) |  | [optional] 
 
@@ -25,7 +26,7 @@ Name | Type | Description | Notes
 
 ### NewVisualizedItemData
 
-`func NewVisualizedItemData(blob string, type_ DataTypeEnum, heatmapBlob string, body [][]float64, labels []string, boundingBox []BoundingBox, maskBlob string, text []string, mask []float64, data []CompositeVizItem, ) *VisualizedItemData`
+`func NewVisualizedItemData(blob string, type_ DataTypeEnum, heatmapBlob string, body [][]float64, labels []string, boundingBox []BoundingBox, maskBlob string, text []string, mask []float64, videoBlob string, data []CompositeVizItem, ) *VisualizedItemData`
 
 NewVisualizedItemData instantiates a new VisualizedItemData object
 This constructor will assign default values to properties that have it defined,
@@ -343,6 +344,26 @@ and a boolean to check if the value has been set.
 `func (o *VisualizedItemData) SetMask(v []float64)`
 
 SetMask sets Mask field to given value.
+
+
+### GetVideoBlob
+
+`func (o *VisualizedItemData) GetVideoBlob() string`
+
+GetVideoBlob returns the VideoBlob field if non-nil, zero value otherwise.
+
+### GetVideoBlobOk
+
+`func (o *VisualizedItemData) GetVideoBlobOk() (*string, bool)`
+
+GetVideoBlobOk returns a tuple with the VideoBlob field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVideoBlob
+
+`func (o *VisualizedItemData) SetVideoBlob(v string)`
+
+SetVideoBlob sets VideoBlob field to given value.
 
 
 ### GetData

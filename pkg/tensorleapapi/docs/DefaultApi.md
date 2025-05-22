@@ -76,10 +76,12 @@ Method | HTTP request | Description
 [**GetNotifications**](DefaultApi.md#GetNotifications) | **Post** /notifications/getNotifications | 
 [**GetPopulationExplorationStatus**](DefaultApi.md#GetPopulationExplorationStatus) | **Post** /visualizations/getPopulationExplorationStatus | 
 [**GetPrCurve**](DefaultApi.md#GetPrCurve) | **Post** /sessionmetrics/getPrCurve | 
+[**GetPrecisionScore**](DefaultApi.md#GetPrecisionScore) | **Post** /sessionmetrics/getPrecisionScore | 
 [**GetProjectDashboards**](DefaultApi.md#GetProjectDashboards) | **Post** /dashboards/getProjectDashboards | 
 [**GetProjectIssues**](DefaultApi.md#GetProjectIssues) | **Post** /issues/getProjectIssues | 
 [**GetProjectSlimVersions**](DefaultApi.md#GetProjectSlimVersions) | **Post** /versions/getProjectSlimVersions | 
 [**GetProjects**](DefaultApi.md#GetProjects) | **Post** /projects/getProjects | 
+[**GetRecallScore**](DefaultApi.md#GetRecallScore) | **Post** /sessionmetrics/getRecallScore | 
 [**GetRecentTeamSessions**](DefaultApi.md#GetRecentTeamSessions) | **Post** /sessions/getRecentTeamSessions | 
 [**GetRoc**](DefaultApi.md#GetRoc) | **Post** /sessionmetrics/getRoc | 
 [**GetSampleCollections**](DefaultApi.md#GetSampleCollections) | **Post** /sample-collection/getSampleCollections | 
@@ -4694,6 +4696,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetPrecisionScore
+
+> MultiChartsResponse GetPrecisionScore(ctx).Body(body).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    body := ConfusionMatrixParams(987) // ConfusionMatrixParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetPrecisionScore(context.Background()).Body(body).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetPrecisionScore``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetPrecisionScore`: MultiChartsResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetPrecisionScore`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetPrecisionScoreRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | **ConfusionMatrixParams** |  | 
+
+### Return type
+
+[**MultiChartsResponse**](MultiChartsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetProjectDashboards
 
 > GetProjectDashboardsResponse GetProjectDashboards(ctx).GetProjectDashboardsParams(getProjectDashboardsParams).Execute()
@@ -4938,6 +5004,70 @@ Other parameters are passed through a pointer to a apiGetProjectsRequest struct 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetRecallScore
+
+> MultiChartsResponse GetRecallScore(ctx).Body(body).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    body := ConfusionMatrixParams(987) // ConfusionMatrixParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetRecallScore(context.Background()).Body(body).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetRecallScore``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetRecallScore`: MultiChartsResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetRecallScore`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetRecallScoreRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | **ConfusionMatrixParams** |  | 
+
+### Return type
+
+[**MultiChartsResponse**](MultiChartsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

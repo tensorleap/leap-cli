@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Message** | Pointer to **string** |  | [optional] 
 **Module** | **string** |  | 
 **JobStatus** | [**JobStatus**](JobStatus.md) |  | 
 
@@ -25,6 +26,31 @@ will change when the set of required properties is changed
 NewJobMessageParamsWithDefaults instantiates a new JobMessageParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetMessage
+
+`func (o *JobMessageParams) GetMessage() string`
+
+GetMessage returns the Message field if non-nil, zero value otherwise.
+
+### GetMessageOk
+
+`func (o *JobMessageParams) GetMessageOk() (*string, bool)`
+
+GetMessageOk returns a tuple with the Message field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMessage
+
+`func (o *JobMessageParams) SetMessage(v string)`
+
+SetMessage sets Message field to given value.
+
+### HasMessage
+
+`func (o *JobMessageParams) HasMessage() bool`
+
+HasMessage returns a boolean if a field has been set.
 
 ### GetModule
 

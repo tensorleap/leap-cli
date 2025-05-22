@@ -313,6 +313,7 @@ docs/Notification.md
 docs/NumberOrString.md
 docs/NumberSchema.md
 docs/OperatorEnum.md
+docs/OptionalAnalysis.md
 docs/OrderType.md
 docs/OverfittingInsight.md
 docs/PanelLayout.md
@@ -387,6 +388,7 @@ docs/SetUserNotificationsAsRead200Response.md
 docs/SettingSchema.md
 docs/SettingValue.md
 docs/SettingsAndValuesWrapper.md
+docs/SettingsCategory.md
 docs/SingleUserModeSettings.md
 docs/SizedLayout.md
 docs/SlimTeam.md
@@ -444,6 +446,7 @@ docs/ValidatedLossNode.md
 docs/ValidatedNode.md
 docs/ValueWithKey.md
 docs/Version.md
+docs/VideoData.md
 docs/VisData.md
 docs/Visualization.md
 docs/VisualizationData.md
@@ -765,6 +768,7 @@ model_notification.go
 model_number_or_string.go
 model_number_schema.go
 model_operator_enum.go
+model_optional_analysis.go
 model_order_type.go
 model_overfitting_insight.go
 model_panel_layout.go
@@ -839,6 +843,7 @@ model_set_user_notifications_as_read_200_response.go
 model_setting_schema.go
 model_setting_value.go
 model_settings_and_values_wrapper.go
+model_settings_category.go
 model_single_user_mode_settings.go
 model_sized_layout.go
 model_slim_team.go
@@ -896,6 +901,7 @@ model_validated_loss_node.go
 model_validated_node.go
 model_value_with_key.go
 model_version.go
+model_video_data.go
 model_vis_data.go
 model_visualization.go
 model_visualization_data.go
