@@ -37,6 +37,27 @@ func CreateCodeIntegration(ctx context.Context, codeIntegrations []CodeIntegrati
 	return AddCodeIntegration(ctx, name)
 }
 
+func GetCodeIntegrationById(ctx context.Context, codeIntegrationId string) (*CodeIntegration, error) {
+	codeIntegrations, err := GetCodeIntegrations(ctx)
+	if err != nil {
+		return nil, err
+	}
+	selected, err := entity.GetEntityById(codeIntegrationId, codeIntegrations, CodeIntegrationEntityDesc)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get code integration by id %s: %v", codeIntegrationId, err)
+	}
+	return selected, nil
+}
+
+func CodeIntegrationInfo(codeIntegration *CodeIntegration) {
+	fmt.Printf("Code Integration Name: %s\n", codeIntegration.GetName())
+	for _, version := range codeIntegration.LatestVersions {
+		fmt.Printf("Branch: %s\n", version.Branch)
+		fmt.Printf("Latest Version: %s\n", version.Latest.Note)
+		fmt.Printf("Latest Valid Version: %s\n", version.LatestValid.Note)
+	}
+}
+
 func GetCodeIntegrationFromFlag(ctx context.Context, codeIntegrationIdFlag string, askForNewProjectFirst bool) (code *CodeIntegration, wasCreated bool, err error) {
 	codeIntegrations, err := GetCodeIntegrations(ctx)
 	if err != nil {
