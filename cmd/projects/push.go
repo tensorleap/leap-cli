@@ -149,7 +149,7 @@ func NewPushCmd() *cobra.Command {
 	cmd.Flags().StringVar(&codeBranch, "code-branch", "", "Name of the code branch [OPTIONAL]")
 	cmd.Flags().StringVar(&secretId, "secretId", "", "Secret id")
 	cmd.Flags().BoolVarP(&force, "force", "f", false, "Force push code integration")
-	cmd.Flags().BoolVar(&transformInput, "transform-input", false, "Transform input in case of ONNX model")
+	cmd.Flags().BoolVar(&transformInput, "transform-input", false, "Transpose the input data to channel-last format")
 	cmd.Flags().BoolVar(&noWait, "no-wait", false, "Do not wait for push to complete")
 	cmd.Flags().StringVar(&leapMappingPath, "leap-mapping", "", "Path to external leap mapping file")
 
