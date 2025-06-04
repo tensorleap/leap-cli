@@ -49,7 +49,7 @@ func GetCodeIntegrationById(ctx context.Context, codeIntegrationId string) (*Cod
 	return selected, nil
 }
 
-func CodeIntegrationInfo(codeIntegration *CodeIntegration) {
+func PrintCodeIntegrationInfo(codeIntegration *CodeIntegration) {
 	fmt.Printf("Code Integration Name: %s\n", codeIntegration.GetName())
 	for _, version := range codeIntegration.LatestVersions {
 		fmt.Printf("Branch: %s\n", version.Branch)

@@ -38,7 +38,7 @@ func NewInfoCmd() *cobra.Command {
 				return fmt.Errorf("failed to get code integration: %w", err)
 			}
 
-			code.CodeIntegrationInfo(codeIntegration)
+			code.PrintCodeIntegrationInfo(codeIntegration)
 
 			return nil
 		},
