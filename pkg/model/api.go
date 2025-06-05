@@ -60,7 +60,7 @@ func ImportModel(ctx context.Context, filePath, projectId, message, modelType, b
 	}
 	importModelData, _, err := api.ApiClient.ImportModel(ctx).ImportNewModelParams(importModelParams).Execute()
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to import model: %v", err)
 	}
 
 	importModelJobId := importModelData.GetImportModelJobId()
