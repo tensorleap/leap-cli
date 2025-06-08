@@ -24,6 +24,11 @@ func NewInfoCmd() *cobra.Command {
 			}
 
 			log.Info("Installation information:")
+			currentVersion, err := server.GetCurrentInsalledHelmChartVersion(cmd.Context())
+			if err != nil {
+				return err
+			}
+			installationParams.Version = currentVersion
 			installationParamsYaml, err := yaml.Marshal(installationParams)
 			if err != nil {
 				return err
