@@ -17,10 +17,11 @@ import (
 )
 
 func BuildProjectContext(ctx context.Context, projectEntity *ProjectEntity, schemaVersion int) (*hub.ProjectContext, error) {
-	bgImageBlobUrl := ""
-	if projectEntity.BgImagePath != nil {
-		bgImageBlobUrl = fmt.Sprintf("projects/%s/%s", projectEntity.Cid, *projectEntity.BgImagePath)
+	if projectEntity.BgImagePath == nil || *projectEntity.BgImagePath == "" {
+		return nil, fmt.Errorf("project %s has no background image configured", projectEntity.Name)
 	}
+
+	bgImageBlobUrl := fmt.Sprintf("projects/%s/%s", projectEntity.Cid, *projectEntity.BgImagePath)
 	urlRes, _, err := api.ApiClient.GetDownloadSignedUrl(ctx).GetDownloadSignedUrlParams(*tensorleapapi.NewGetDownloadSignedUrlParams(bgImageBlobUrl)).Execute()
 	if err != nil {
 		return nil, fmt.Errorf("failed to get download signed url: %v", err)

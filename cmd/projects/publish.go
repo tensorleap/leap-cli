@@ -52,7 +52,7 @@ func NewPublishCmd() *cobra.Command {
 			publishProject := func(projectEntity *project.ProjectEntity) error {
 				projectContext, err := project.BuildProjectContext(ctx, projectEntity, version)
 				if err != nil {
-					return fmt.Errorf("failed to extract project context: %v", err)
+					return err
 				}
 
 				err = hub.HandleProjectExistsOnPublish(ctx, hubApi, meta, &projectContext.Meta, override)
