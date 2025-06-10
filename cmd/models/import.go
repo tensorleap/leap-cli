@@ -7,6 +7,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/tensorleap/leap-cli/pkg/auth"
+	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/model"
 	"github.com/tensorleap/leap-cli/pkg/project"
 	"github.com/tensorleap/leap-cli/pkg/workspace"
@@ -54,28 +55,23 @@ func NewImportCmd() *cobra.Command {
 			}
 
 			if workspaceConfig != nil {
-				if len(projectId) == 0 {
+				if len(projectId) == 0 && len(workspaceConfig.ProjectId) > 0 {
+					log.Infof("Using projectId('%s') from workspace config", workspaceConfig.ProjectId)
 					projectId = workspaceConfig.ProjectId
 				}
 
 				if len(codeIntegrationId) == 0 {
 					codeIntegrationId = workspaceConfig.CodeIntegrationId
 				}
+
 			}
 
-			if len(projectId) == 0 {
-				projects, err := project.GetProjects(ctx)
-				if err != nil {
-					return err
-				}
-				selected, _, err := project.SelectOrCreateProject(ctx, projects, true)
-				if err != nil {
-					return err
-				}
-				projectId = selected.GetCid()
+			currentProject, _, err := project.GetProjectFromProjectId(ctx, projectId, true)
+			if err != nil {
+				return err
 			}
 
-			err = model.ImportModel(ctx, modelPath, projectId, message, modelType, modelBranch, codeIntegrationId, codeIntegrationBranch, transformInput, !noWait)
+			err = model.ImportModel(ctx, modelPath, currentProject.Cid, message, modelType, modelBranch, codeIntegrationId, codeIntegrationBranch, transformInput, !noWait)
 			if err != nil {
 				return err
 			}

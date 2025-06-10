@@ -5,21 +5,28 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/tensorleap/leap-cli/pkg/entity"
+	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
+	"github.com/tensorleap/leap-cli/pkg/workspace"
 )
 
-func GetProjectFromFlag(ctx context.Context, projectIdFlag string, askForNewProjectFirst bool) (project *ProjectEntity, wasCreated bool, err error) {
+func GetProjectFromProjectId(ctx context.Context, projectId string, askForNewProjectFirst bool) (project *ProjectEntity, wasCreated bool, err error) {
 	projects, err := GetProjects(ctx)
 	if err != nil {
 		return nil, false, err
 	}
-	if len(projectIdFlag) > 0 {
-		project, err = entity.GetEntityById(projectIdFlag, projects, ProjectEntityDesc)
-	} else {
-		project, wasCreated, err = SelectOrCreateProject(ctx, projects, askForNewProjectFirst)
+	if len(projectId) > 0 {
+		project, _ = entity.GetEntityById(projectId, projects, ProjectEntityDesc)
+		if project == nil {
+			log.Warnf("Project with ID '%s' not found, please select a valid project", projectId)
+		}
 	}
-	if err != nil {
-		return nil, false, err
+
+	if project == nil {
+		project, wasCreated, err = SelectOrCreateProject(ctx, projects, askForNewProjectFirst)
+		if err != nil {
+			return nil, false, err
+		}
 	}
 	return project, wasCreated, nil
 }
@@ -30,6 +37,25 @@ func SelectOrCreateProject(ctx context.Context, projects []ProjectEntity, askFor
 		return AskAndAddProject(ctx, &projectDetails, projects)
 	}
 	return entity.SelectEntityOrCreateOne(projects, createProject, askForNewProjectFirst, ProjectEntityDesc)
+}
+
+func SyncProjectIdToWorkspaceConfig(ctx context.Context, workspaceConfig *workspace.WorkspaceConfig) (*ProjectEntity, error) {
+
+	currentProject, _, err := GetProjectFromProjectId(ctx, workspaceConfig.ProjectId, true)
+
+	if err != nil {
+		return nil, err
+	}
+	if currentProject.Cid != workspaceConfig.ProjectId {
+
+		log.Info("Updating projectId")
+		workspaceConfig.ProjectId = currentProject.GetCid()
+		err = workspace.SetWorkspaceConfig(workspaceConfig, "")
+		if err != nil {
+			return nil, err
+		}
+	}
+	return currentProject, nil
 }
 
 func AskAndAddProject(ctx context.Context, projectDetails *AddProjectDetails, projects []ProjectEntity) (*ProjectEntity, error) {

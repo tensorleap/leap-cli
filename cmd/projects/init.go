@@ -25,7 +25,7 @@ func NewInitCmd() *cobra.Command {
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx := cmd.Context()
-			selectedProject, _, err := project.GetProjectFromFlag(ctx, projectId, true)
+			selectedProject, _, err := project.GetProjectFromProjectId(ctx, projectId, true)
 			if err != nil {
 				return err
 			}

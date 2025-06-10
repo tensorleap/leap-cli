@@ -5,7 +5,6 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/code"
-	"github.com/tensorleap/leap-cli/pkg/entity"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/model"
 	"github.com/tensorleap/leap-cli/pkg/project"
@@ -40,12 +39,8 @@ func NewPushCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx := cmd.Context()
 			modelPath := args[0]
-			projects, err := project.GetProjects(ctx)
-			if err != nil {
-				return err
-			}
 
-			err = model.SelectModelType(&modelType, modelPath)
+			err := model.SelectModelType(&modelType, modelPath)
 			if err != nil {
 				return err
 			}
@@ -58,28 +53,10 @@ func NewPushCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			var currentProject *project.ProjectEntity
 
-			configContainProjectId := len(workspaceConfig.ProjectId) > 0
-			if configContainProjectId {
-				currentProject, _ = entity.GetEntityById(workspaceConfig.ProjectId, projects, project.ProjectEntityDesc)
-			}
-			if currentProject == nil {
-				if configContainProjectId {
-					log.Infof("Not found project ID %s", workspaceConfig.ProjectId)
-				} else {
-					log.Info("Project ID not found on local config file")
-				}
-				currentProject, _, err = project.SelectOrCreateProject(ctx, projects, true)
-				if err != nil {
-					return err
-				}
-				log.Info("Updating projectId")
-				workspaceConfig.ProjectId = currentProject.GetCid()
-				err = workspace.SetWorkspaceConfig(workspaceConfig, "")
-				if err != nil {
-					return err
-				}
+			currentProject, err := project.SyncProjectIdToWorkspaceConfig(ctx, workspaceConfig)
+			if err != nil {
+				return err
 			}
 
 			codeIntegration, _, err := code.GetAndUpdateCodeIntegrationIfNotExists(ctx, workspaceConfig)
