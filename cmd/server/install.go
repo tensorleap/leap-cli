@@ -3,6 +3,8 @@ package server
 import (
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/helm-charts/cmd/server"
+
+	leapdocker "github.com/tensorleap/leap-cli/pkg/docker"
 )
 
 func NewInstallCmd() *cobra.Command {
@@ -17,6 +19,7 @@ func NewInstallCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+			leapdocker.CheckNvidiaRuntime()
 			err = server.RunInstallCmd(cmd, flags)
 			if err != nil {
 				return mapInstallationErr(err)
