@@ -111,7 +111,7 @@ func OverrideWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, 
 func GetWorkspaceConfig() (*WorkspaceConfig, error) {
 	content, err := os.ReadFile(CONFIG_FILE_NAME)
 	if os.IsNotExist(err) {
-		return nil, err
+		return nil, fmt.Errorf("cannot detect leap.yaml file, please ensure it is located in the root of the project")
 	}
 
 	if err != nil {
