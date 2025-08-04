@@ -59,6 +59,21 @@ leap --version    # Show version information
 **Options**:
 - `--version`: Show version information
 
+### `leap completion` - Shell Completion
+
+**Description**: Generate the autocompletion script for leap for the specified shell
+
+**Usage**:
+```bash
+leap completion [command]
+```
+
+**Available Commands**:
+- `leap completion bash` - Generate the autocompletion script for bash
+- `leap completion fish` - Generate the autocompletion script for fish  
+- `leap completion powershell` - Generate the autocompletion script for powershell
+- `leap completion zsh` - Generate the autocompletion script for zsh
+
 ---
 
 ## Authentication Commands
@@ -700,19 +715,76 @@ leap server tools kubectl [flags]
 - `--username string`: Username for basic authentication
 - `--warnings-as-errors`: Treat warnings as errors
 
-#### Kubectl Resource Management Commands
+#### Kubectl Commands - Organized by Category
 
-**Core Resource Operations**:
-- `leap server tools kubectl get` - Display one or many resources
-- `leap server tools kubectl describe` - Show details of a specific resource
+**Basic Commands (Beginner)**:
 - `leap server tools kubectl create` - Create a resource from a file or stdin
-- `leap server tools kubectl apply` - Apply a configuration to a resource
-- `leap server tools kubectl delete` - Delete resources
-- `leap server tools kubectl edit` - Edit a resource on the server
-- `leap server tools kubectl replace` - Replace a resource
-- `leap server tools kubectl patch` - Update fields of a resource
+- `leap server tools kubectl expose` - Take a replication controller, service, deployment or pod and expose it as a new Kubernetes service
+- `leap server tools kubectl run` - Run a particular image on the cluster
+- `leap server tools kubectl set` - Set specific features on objects
 
-**Resource Creation Commands**:
+**Basic Commands (Intermediate)**:
+- `leap server tools kubectl explain` - Get documentation for a resource
+- `leap server tools kubectl get` - Display one or many resources
+- `leap server tools kubectl edit` - Edit a resource on the server
+- `leap server tools kubectl delete` - Delete resources by file names, stdin, resources and names, or by resources and label selector
+
+**Deploy Commands**:
+- `leap server tools kubectl rollout` - Manage the rollout of a resource
+- `leap server tools kubectl scale` - Set a new size for a deployment, replica set, or replication controller
+- `leap server tools kubectl autoscale` - Auto-scale a deployment, replica set, stateful set, or replication controller
+
+**Cluster Management Commands**:
+- `leap server tools kubectl certificate` - Modify certificate resources
+- `leap server tools kubectl cluster-info` - Display cluster information
+- `leap server tools kubectl top` - Display resource (CPU/memory) usage
+- `leap server tools kubectl cordon` - Mark node as unschedulable
+- `leap server tools kubectl uncordon` - Mark node as schedulable
+- `leap server tools kubectl drain` - Drain node in preparation for maintenance
+- `leap server tools kubectl taint` - Update the taints on one or more nodes
+
+**Troubleshooting and Debugging Commands**:
+- `leap server tools kubectl describe` - Show details of a specific resource or group of resources
+- `leap server tools kubectl logs` - Print the logs for a container in a pod
+- `leap server tools kubectl attach` - Attach to a running container
+- `leap server tools kubectl exec` - Execute a command in a container
+- `leap server tools kubectl port-forward` - Forward one or more local ports to a pod
+- `leap server tools kubectl proxy` - Run a proxy to the Kubernetes API server
+- `leap server tools kubectl cp` - Copy files and directories to and from containers
+- `leap server tools kubectl auth` - Inspect authorization
+- `leap server tools kubectl debug` - Create debugging sessions for troubleshooting workloads and nodes
+- `leap server tools kubectl events` - List events
+
+**Advanced Commands**:
+- `leap server tools kubectl diff` - Diff the live version against a would-be applied version
+- `leap server tools kubectl apply` - Apply a configuration to a resource by file name or stdin
+- `leap server tools kubectl patch` - Update fields of a resource
+- `leap server tools kubectl replace` - Replace a resource by file name or stdin
+- `leap server tools kubectl wait` - Experimental: Wait for a specific condition on one or many resources
+- `leap server tools kubectl kustomize` - Build a kustomization target from a directory or URL
+
+**Settings Commands**:
+- `leap server tools kubectl label` - Update the labels on a resource
+- `leap server tools kubectl annotate` - Update the annotations on a resource
+- `leap server tools kubectl completion` - Output shell completion code for the specified shell (bash, zsh, fish, or powershell)
+
+**Other Commands**:
+- `leap server tools kubectl api-resources` - Print the supported API resources on the server
+- `leap server tools kubectl api-versions` - Print the supported API versions on the server, in the form of "group/version"
+- `leap server tools kubectl config` - Modify kubeconfig files
+- `leap server tools kubectl plugin` - Provides utilities for interacting with plugins
+- `leap server tools kubectl version` - Print the client and server version information
+
+#### Detailed kubectl Subcommands
+
+**Certificate Management**:
+- `leap server tools kubectl certificate approve` - Approve a certificate signing request
+- `leap server tools kubectl certificate deny` - Deny a certificate signing request
+
+**Cluster Information**:
+- `leap server tools kubectl cluster-info dump` - Dump cluster information
+
+**Resource Creation**:
 - `leap server tools kubectl create clusterrole` - Create a cluster role
 - `leap server tools kubectl create clusterrolebinding` - Create a cluster role binding
 - `leap server tools kubectl create configmap` - Create a configmap
@@ -738,104 +810,57 @@ leap server tools kubectl [flags]
 - `leap server tools kubectl create serviceaccount` - Create a service account
 - `leap server tools kubectl create token` - Create a token
 
-**Workload Management**:
-- `leap server tools kubectl run` - Run a particular image on the cluster
-- `leap server tools kubectl expose` - Expose a resource as a new Kubernetes service
-- `leap server tools kubectl scale` - Set a new size for a deployment, replica set, or replication controller
-- `leap server tools kubectl autoscale` - Auto-scale a deployment, replica set, stateful set, or replication controller
-
 **Rollout Management**:
-- `leap server tools kubectl rollout` - Manage the rollout of a resource
-  - `leap server tools kubectl rollout history` - View rollout history
-  - `leap server tools kubectl rollout pause` - Mark the provided resource as paused
-  - `leap server tools kubectl rollout restart` - Restart a resource
-  - `leap server tools kubectl rollout resume` - Resume a paused resource
-  - `leap server tools kubectl rollout status` - Show the status of the rollout
-  - `leap server tools kubectl rollout undo` - Undo a previous rollout
+- `leap server tools kubectl rollout history` - View rollout history
+- `leap server tools kubectl rollout pause` - Mark the provided resource as paused
+- `leap server tools kubectl rollout restart` - Restart a resource
+- `leap server tools kubectl rollout resume` - Resume a paused resource
+- `leap server tools kubectl rollout status` - Show the status of the rollout
+- `leap server tools kubectl rollout undo` - Undo a previous rollout
 
 **Configuration Management**:
-- `leap server tools kubectl config` - Modify kubeconfig files
-  - `leap server tools kubectl config current-context` - Display current-context
-  - `leap server tools kubectl config delete-cluster` - Delete the specified cluster
-  - `leap server tools kubectl config delete-context` - Delete the specified context
-  - `leap server tools kubectl config delete-user` - Delete the specified user
-  - `leap server tools kubectl config get-clusters` - Display clusters
-  - `leap server tools kubectl config get-contexts` - Display list of contexts
-  - `leap server tools kubectl config get-users` - Display users
-  - `leap server tools kubectl config rename-context` - Rename a context
-  - `leap server tools kubectl config set-cluster` - Set a cluster entry
-  - `leap server tools kubectl config set-context` - Set a context entry
-  - `leap server tools kubectl config set-credentials` - Set a user entry
-  - `leap server tools kubectl config set` - Set an individual value
-  - `leap server tools kubectl config unset` - Unset an individual value
-  - `leap server tools kubectl config use-context` - Set the current-context
-  - `leap server tools kubectl config view` - Display merged kubeconfig settings
+- `leap server tools kubectl config current-context` - Display current-context
+- `leap server tools kubectl config delete-cluster` - Delete the specified cluster
+- `leap server tools kubectl config delete-context` - Delete the specified context
+- `leap server tools kubectl config delete-user` - Delete the specified user
+- `leap server tools kubectl config get-clusters` - Display clusters
+- `leap server tools kubectl config get-contexts` - Display list of contexts
+- `leap server tools kubectl config get-users` - Display users
+- `leap server tools kubectl config rename-context` - Rename a context
+- `leap server tools kubectl config set-cluster` - Set a cluster entry
+- `leap server tools kubectl config set-context` - Set a context entry
+- `leap server tools kubectl config set-credentials` - Set a user entry
+- `leap server tools kubectl config set` - Set an individual value
+- `leap server tools kubectl config unset` - Unset an individual value
+- `leap server tools kubectl config use-context` - Set the current-context
+- `leap server tools kubectl config view` - Display merged kubeconfig settings
 
-**Resource Modification**:
-- `leap server tools kubectl annotate` - Update the annotations on a resource
-- `leap server tools kubectl label` - Update the labels on a resource
-- `leap server tools kubectl set` - Set specific features on objects
-  - `leap server tools kubectl set env` - Update environment variables
-  - `leap server tools kubectl set image` - Update image of a pod template
-  - `leap server tools kubectl set resources` - Update resource requests/limits
-  - `leap server tools kubectl set selector` - Set the selector on a resource
-  - `leap server tools kubectl set serviceaccount` - Update ServiceAccount of a resource
-  - `leap server tools kubectl set subject` - Update User, Group or ServiceAccount
-
-**Node Management**:
-- `leap server tools kubectl cordon` - Mark node as unschedulable
-- `leap server tools kubectl uncordon` - Mark node as schedulable
-- `leap server tools kubectl drain` - Drain node in preparation for maintenance
-- `leap server tools kubectl taint` - Update the taints on one or more nodes
-
-**Debugging & Monitoring**:
-- `leap server tools kubectl logs` - Print the logs for a container in a pod
-- `leap server tools kubectl exec` - Execute a command in a container
-- `leap server tools kubectl attach` - Attach to a running container
-- `leap server tools kubectl debug` - Create debugging sessions for troubleshooting workloads and nodes
-- `leap server tools kubectl port-forward` - Forward one or more local ports to a pod
-- `leap server tools kubectl proxy` - Run a proxy to the Kubernetes API server
-- `leap server tools kubectl cp` - Copy files and directories to and from containers
-
-**Resource Information**:
-- `leap server tools kubectl explain` - Get documentation for a resource
-- `leap server tools kubectl api-resources` - Print the supported API resources on the server
-- `leap server tools kubectl api-versions` - Print the supported API versions on the server
-- `leap server tools kubectl version` - Print the client and server version information
-- `leap server tools kubectl cluster-info` - Display cluster information
-  - `leap server tools kubectl cluster-info dump` - Dump cluster information
+**Resource Modification with Set**:
+- `leap server tools kubectl set env` - Update environment variables
+- `leap server tools kubectl set image` - Update image of a pod template
+- `leap server tools kubectl set resources` - Update resource requests/limits
+- `leap server tools kubectl set selector` - Set the selector on a resource
+- `leap server tools kubectl set serviceaccount` - Update ServiceAccount of a resource
+- `leap server tools kubectl set subject` - Update User, Group or ServiceAccount
 
 **Resource Monitoring**:
-- `leap server tools kubectl top` - Display resource (CPU/memory) usage
-  - `leap server tools kubectl top node` - Display resource usage of nodes
-  - `leap server tools kubectl top pod` - Display resource usage of pods
-- `leap server tools kubectl events` - List events
-- `leap server tools kubectl wait` - Wait for a specific condition on one or many resources
+- `leap server tools kubectl top node` - Display resource usage of nodes
+- `leap server tools kubectl top pod` - Display resource usage of pods
 
 **Authentication & Authorization**:
-- `leap server tools kubectl auth` - Inspect authorization
-  - `leap server tools kubectl auth can-i` - Check whether an action is allowed
-  - `leap server tools kubectl auth reconcile` - Reconcile rules for RBAC objects
-  - `leap server tools kubectl auth whoami` - Display information about the current user
-
-**Certificate Management**:
-- `leap server tools kubectl certificate` - Modify certificate resources
-  - `leap server tools kubectl certificate approve` - Approve a certificate signing request
-  - `leap server tools kubectl certificate deny` - Deny a certificate signing request
-
-**Advanced Operations**:
-- `leap server tools kubectl diff` - Diff the live version against a would-be applied version
-- `leap server tools kubectl kustomize` - Build a kustomization target from a directory or URL
-- `leap server tools kubectl plugin` - Provides utilities for interacting with plugins
-  - `leap server tools kubectl plugin list` - List all available plugin files
+- `leap server tools kubectl auth can-i` - Check whether an action is allowed
+- `leap server tools kubectl auth reconcile` - Reconcile rules for RBAC objects
+- `leap server tools kubectl auth whoami` - Display information about the current user
 
 **Apply Sub-commands**:
 - `leap server tools kubectl apply edit-last-applied` - Edit latest last-applied-configuration annotations
 - `leap server tools kubectl apply set-last-applied` - Set the last-applied-configuration annotation
 - `leap server tools kubectl apply view-last-applied` - View latest last-applied-configuration annotations
 
+**Plugin Management**:
+- `leap server tools kubectl plugin list` - List all available plugin files
+
 **Utility Commands**:
-- `leap server tools kubectl completion` - Output shell completion code for the specified shell (bash, zsh, fish, or powershell)
 - `leap server tools kubectl options` - Print the list of flags inherited by all commands
 
 ---
