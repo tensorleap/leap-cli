@@ -10,7 +10,7 @@ import (
 
 func init() {
 	serverpkg.SetInitDataDirFunc(initDataDir)
-	RootCommand.PersistentFlags().BoolVarP(&showInfo, "info", "i", false, "Show server info")
+	RootCommand.PersistentFlags().BoolVar(&showInfo, "info", false, "Show server info")
 	RootCommand.AddCommand(NewInstallCmd())
 	RootCommand.AddCommand(NewUpgradeCmd())
 	RootCommand.AddCommand(NewReinstallCmd())
