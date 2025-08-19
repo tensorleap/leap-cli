@@ -14,6 +14,7 @@ import (
 	"github.com/tensorleap/leap-cli/cmd/secrets"
 	"github.com/tensorleap/leap-cli/cmd/server"
 	. "github.com/tensorleap/leap-cli/pkg/api"
+	"github.com/tensorleap/leap-cli/pkg/analytics"
 	authPkg "github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/config"
 	"github.com/tensorleap/leap-cli/pkg/log"
@@ -71,6 +72,9 @@ func init() {
 }
 
 func Execute() {
+	// Track CLI installation start
+	analytics.TrackCLIInstall()
+	
 	if err := RootCommand.Execute(); err != nil {
 		log.Error(err)
 		os.Exit(1)
