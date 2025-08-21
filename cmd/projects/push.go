@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/model"
@@ -37,57 +38,139 @@ func NewPushCmd() *cobra.Command {
 			return nil
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
+			// Define base properties for all analytics events
+			properties := map[string]interface{}{
+				"secret_id": secretId,
+				"model_version_name": modelVersionName,
+				"code_version_message": codeVersionMessage,
+				"model_type": modelType,
+				"model_branch": modelBranch,
+				"code_branch": codeBranch,
+				"transform_input": transformInput,
+				"force": force,
+				"no_wait": noWait,
+				"python_version": pythonVersion,
+				"leap_mapping_path": leapMappingPath,
+			}
+			
+			// Track projects push started
+			if err := analytics.SendEvent(analytics.EventCliProjectsPushStarted, properties); err != nil {
+				log.Warnf("Failed to track projects push start event: %v", err)
+			}
+			
 			ctx := cmd.Context()
 			modelPath := args[0]
+			properties["model_path"] = modelPath
 
 			err := model.SelectModelType(&modelType, modelPath)
 			if err != nil {
+				// Track projects push failed
+				properties["error"] = err.Error()
+				properties["stage"] = "select_model_type"
+				if err := analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties); err != nil {
+					log.Warnf("Failed to track projects push failure event: %v", err)
+				}
 				return err
 			}
 			err = model.InitMessage(&modelVersionName)
 			if err != nil {
+				// Track projects push failed
+				properties["error"] = err.Error()
+				properties["stage"] = "init_message"
+				if err := analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties); err != nil {
+					log.Warnf("Failed to track projects push failure event: %v", err)
+				}
 				return err
 			}
 
 			workspaceConfig, err := workspace.GetWorkspaceConfig()
 			if err != nil {
+				// Track projects push failed
+				properties["error"] = err.Error()
+				properties["stage"] = "get_workspace_config"
+				if err := analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties); err != nil {
+					log.Warnf("Failed to track projects push failure event: %v", err)
+				}
 				return err
 			}
 
 			currentProject, err := project.SyncProjectIdToWorkspaceConfig(ctx, workspaceConfig)
 			if err != nil {
+				// Track projects push failed
+				properties["error"] = err.Error()
+				properties["stage"] = "sync_project"
+				if err := analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties); err != nil {
+					log.Warnf("Failed to track projects push failure event: %v", err)
+				}
 				return err
 			}
 
 			codeIntegration, _, err := code.GetAndUpdateCodeIntegrationIfNotExists(ctx, workspaceConfig)
 			if err != nil {
+				// Track projects push failed
+				properties["error"] = err.Error()
+				properties["stage"] = "get_code_integration"
+				if err := analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties); err != nil {
+					log.Warnf("Failed to track projects push failure event: %v", err)
+				}
 				return err
 			}
 
 			codeIntegrationBranches := code.BranchesFromCodeIntegration(codeIntegration)
 			codeBranch, err = code.SyncBranchFromFlagAndConfig(codeBranch, workspaceConfig, codeIntegrationBranches, codeIntegration.GetDefaultBranch())
 			if err != nil {
+				// Track projects push failed
+				properties["error"] = err.Error()
+				properties["stage"] = "sync_branch"
+				if err := analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties); err != nil {
+					log.Warnf("Failed to track projects push failure event: %v", err)
+				}
 				return err
 			}
 
 			secretId, err := secret.SyncSecretIdFromFlagAndConfig(ctx, secretId, workspaceConfig)
 			if err != nil {
+				// Track projects push failed
+				properties["error"] = err.Error()
+				properties["stage"] = "sync_secret"
+				if err := analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties); err != nil {
+					log.Warnf("Failed to track projects push failure event: %v", err)
+				}
 				return err
 			}
 
 			pythonVersion, err = code.SyncPythonVersionFromFlagAndConfig(ctx, pythonVersion, workspaceConfig)
 			if err != nil {
+				// Track projects push failed
+				properties["error"] = err.Error()
+				properties["stage"] = "sync_python_version"
+				if err := analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties); err != nil {
+					log.Warnf("Failed to track projects push failure event: %v", err)
+				}
 				return err
 			}
 
 			close, tarGzFile, err := code.BundleCodeIntoTempFile(".", workspaceConfig, leapMappingPath)
 			if err != nil {
+				// Track projects push failed
+				properties["error"] = err.Error()
+				properties["stage"] = "bundle_code"
+				if err := analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties); err != nil {
+					log.Warnf("Failed to track projects push failure event: %v", err)
+				}
 				return err
 			}
 			defer close()
 
 			pushed, currentVersion, err := code.PushCode(ctx, force, codeIntegration.Cid, tarGzFile, workspaceConfig.EntryFile, secretId, codeBranch, codeVersionMessage, pythonVersion)
 			if err != nil {
+				// Track projects push failed
+				properties["error"] = err.Error()
+				properties["stage"] = "push_code"
+				properties["code_integration_id"] = codeIntegration.Cid
+				if err := analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties); err != nil {
+					log.Warnf("Failed to track projects push failure event: %v", err)
+				}
 				return err
 			}
 			if pushed || code.IsCodeParsing(currentVersion) {
@@ -98,23 +181,72 @@ func NewPushCmd() *cobra.Command {
 
 				ok, codeIntegrationVersion, err := code.WaitForCodeIntegrationStatus(ctx, currentVersion.Cid)
 				if err != nil {
+					// Track projects push failed
+					properties["error"] = err.Error()
+					properties["stage"] = "wait_for_code_parsing"
+					properties["code_integration_id"] = codeIntegration.Cid
+					properties["version_id"] = currentVersion.Cid
+					if err := analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties); err != nil {
+						log.Warnf("Failed to track projects push failure event: %v", err)
+					}
 					return err
 				}
 				if ok {
 					log.Info("Code parsed successfully")
 				} else {
 					code.PrintCodeIntegrationVersionParserErr(codeIntegrationVersion)
+					// Track projects push failed due to code parsing failure
+					properties["error"] = "code parsing failed"
+					properties["stage"] = "code_parsing"
+					properties["code_integration_id"] = codeIntegration.Cid
+					properties["version_id"] = currentVersion.Cid
+					if err := analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties); err != nil {
+						log.Warnf("Failed to track projects push failure event: %v", err)
+					}
 					return fmt.Errorf("code parsing failed")
 				}
 			} else if code.IsCodeParseFailed(currentVersion) {
 				code.PrintCodeIntegrationVersionParserErr(currentVersion)
+				// Track projects push failed due to previous code parsing failure
+				properties["error"] = "latest code parsing failed"
+				properties["stage"] = "previous_code_parsing_failed"
+				properties["code_integration_id"] = codeIntegration.Cid
+				properties["version_id"] = currentVersion.Cid
+				if err := analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties); err != nil {
+					log.Warnf("Failed to track projects push failure event: %v", err)
+				}
 				return fmt.Errorf("latest code parsing failed, add --force to push anyway")
 			}
 
 			err = model.ImportModel(ctx, modelPath, currentProject.GetCid(), modelVersionName, modelType, modelBranch, codeIntegration.GetCid(), codeBranch, transformInput, !noWait)
 			if err != nil {
+				// Track projects push failed
+				properties["error"] = err.Error()
+				properties["stage"] = "import_model"
+				properties["code_integration_id"] = codeIntegration.Cid
+				properties["version_id"] = currentVersion.Cid
+				properties["project_id"] = currentProject.GetCid()
+				if err := analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties); err != nil {
+					log.Warnf("Failed to track projects push failure event: %v", err)
+				}
 				return err
 			}
+			// Track projects push success
+			properties["code_integration_id"] = codeIntegration.Cid
+			properties["version_id"] = currentVersion.Cid
+			properties["project_id"] = currentProject.GetCid()
+			properties["final_secret_id"] = secretId
+			properties["final_code_branch"] = codeBranch
+			properties["final_python_version"] = pythonVersion
+			properties["final_model_type"] = modelType
+			properties["final_model_branch"] = modelBranch
+			properties["final_transform_input"] = transformInput
+			properties["final_wait"] = !noWait
+			properties["code_pushed"] = pushed
+			if err := analytics.SendEvent(analytics.EventCliProjectsPushSuccess, properties); err != nil {
+				log.Warnf("Failed to track projects push success event: %v", err)
+			}
+			
 			return nil
 		},
 	}

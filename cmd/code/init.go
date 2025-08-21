@@ -4,8 +4,10 @@ import (
 	"errors"
 
 	"github.com/spf13/cobra"
+	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/entity"
+	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/secret"
 	"github.com/tensorleap/leap-cli/pkg/workspace"
 )
@@ -29,19 +31,52 @@ func init() {
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx := cmd.Context()
+			
+			// Define base properties for all analytics events
+			properties := map[string]interface{}{
+				"code_id": codeIntegrationId,
+				"code_integration_name": newCodeIntegrationName,
+				"secret_id": secretId,
+				"branch": branch,
+				"python_version": pythonVersion,
+			}
+			
+			// Track code init started
+			if err := analytics.SendEvent(analytics.EventCliCodeInitStarted, properties); err != nil {
+				log.Warnf("Failed to track code init start event: %v", err)
+			}
+			
 			var codeIntegration *code.CodeIntegration = nil
 			codeIntegrations, err := code.GetCodeIntegrations(ctx)
 			if err != nil {
+				// Track code init failed
+				properties["error"] = err.Error()
+				properties["stage"] = "get_code_integrations"
+				if err := analytics.SendEvent(analytics.EventCliCodeInitFailed, properties); err != nil {
+					log.Warnf("Failed to track code init failure event: %v", err)
+				}
 				return err
 			}
 
 			if len(newCodeIntegrationName) > 0 {
 				newCodeIntegrationName, err = code.AskForCodeIntegrationNameIfExisted(newCodeIntegrationName, codeIntegrations)
 				if err != nil {
+					// Track code init failed
+					properties["error"] = err.Error()
+					properties["stage"] = "ask_code_integration_name"
+					if err := analytics.SendEvent(analytics.EventCliCodeInitFailed, properties); err != nil {
+						log.Warnf("Failed to track code init failure event: %v", err)
+					}
 					return err
 				}
 				codeIntegration, err = code.AddCodeIntegration(ctx, newCodeIntegrationName)
 				if err != nil {
+					// Track code init failed
+					properties["error"] = err.Error()
+					properties["stage"] = "add_code_integration"
+					if err := analytics.SendEvent(analytics.EventCliCodeInitFailed, properties); err != nil {
+						log.Warnf("Failed to track code init failure event: %v", err)
+					}
 					return err
 				}
 				var selectedSecret *secret.SecretEntity
@@ -51,6 +86,12 @@ func init() {
 					selectedSecret, _, _, err = secret.CreateOrSelectIfSecretNotFound(ctx, secretId)
 				}
 				if err != nil {
+					// Track code init failed
+					properties["error"] = err.Error()
+					properties["stage"] = "secret_creation_selection"
+					if err := analytics.SendEvent(analytics.EventCliCodeInitFailed, properties); err != nil {
+						log.Warnf("Failed to track code init failure event: %v", err)
+					}
 					return err
 				}
 				if selectedSecret != nil {
@@ -61,6 +102,13 @@ func init() {
 
 				codeIntegration, err = entity.GetEntityById(codeIntegrationId, codeIntegrations, code.CodeIntegrationEntityDesc)
 				if err != nil {
+					// Track code init failed
+					properties["error"] = err.Error()
+					properties["stage"] = "get_existing_code_integration"
+					properties["requested_code_id"] = codeIntegrationId
+					if err := analytics.SendEvent(analytics.EventCliCodeInitFailed, properties); err != nil {
+						log.Warnf("Failed to track code init failure event: %v", err)
+					}
 					return err
 				}
 				latestVersion, err := code.GetLatestVersion(ctx, codeIntegration.GetCid(), branch)
@@ -82,10 +130,35 @@ func init() {
 
 			pythonVersion, err = code.GetPythonVersionFromFlag(cmd.Context(), pythonVersion)
 			if err != nil {
+				// Track code init failed
+				properties["error"] = err.Error()
+				properties["stage"] = "python_version_validation"
+				if err := analytics.SendEvent(analytics.EventCliCodeInitFailed, properties); err != nil {
+					log.Warnf("Failed to track code init failure event: %v", err)
+				}
 				return err
 			}
 
-			return workspace.CreateCodeTemplate(codeIntegration.GetCid(), "", secretId, branch, ".", pythonVersion)
+			err = workspace.CreateCodeTemplate(codeIntegration.GetCid(), "", secretId, branch, ".", pythonVersion)
+			if err != nil {
+				// Track code init failed
+				properties["error"] = err.Error()
+				properties["stage"] = "template_creation"
+				properties["code_integration_id"] = codeIntegration.GetCid()
+				if err := analytics.SendEvent(analytics.EventCliCodeInitFailed, properties); err != nil {
+					log.Warnf("Failed to track code init failure event: %v", err)
+				}
+				return err
+			}
+
+			// Track code init success
+			properties["code_integration_id"] = codeIntegration.GetCid()
+			properties["final_python_version"] = pythonVersion
+			if err := analytics.SendEvent(analytics.EventCliCodeInitSuccess, properties); err != nil {
+				log.Warnf("Failed to track code init success event: %v", err)
+			}
+
+			return nil
 		},
 	}
 
