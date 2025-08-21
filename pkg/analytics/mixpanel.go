@@ -23,7 +23,9 @@ type EventType string
 const (
 	EventAuthLoginSuccess EventType = "auth_login_success"
 	EventAuthLoginFailed  EventType = "auth_login_failed"
-	EventServerInstall    EventType = "server_install"
+	EventServerInstallStarted EventType = "server_install_started"
+	EventServerInstallSuccess EventType = "server_install_success"
+	EventServerInstallFailed  EventType = "server_install_failed"
 )
 
 // deviceIDFile stores the path to the device ID file
@@ -136,6 +138,25 @@ func SendEvent(eventType EventType, properties map[string]interface{}) error {
 	}
 
 	return nil
+}
+
+// SendEventWithUserData sends an event to Mixpanel and enriches it with user data from a callback
+func SendEventWithUserData(eventType EventType, properties map[string]interface{}, userDataFetcher func() map[string]interface{}) error {
+	if properties == nil {
+		properties = make(map[string]interface{})
+	}
+
+	// Try to get user data if fetcher is provided
+	if userDataFetcher != nil {
+		if userData := userDataFetcher(); userData != nil {
+			// Merge user data into properties
+			for k, v := range userData {
+				properties[k] = v
+			}
+		}
+	}
+
+	return SendEvent(eventType, properties)
 }
 
 

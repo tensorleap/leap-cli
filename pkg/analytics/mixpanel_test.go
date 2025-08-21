@@ -13,7 +13,9 @@ func TestTrackServerInstall(t *testing.T) {
 	}
 	
 	// This will fail in tests since we don't have network access, but it tests compilation
-	_ = SendEvent(EventServerInstall, properties)
+	_ = SendEvent(EventServerInstallStarted, properties)
+	_ = SendEvent(EventServerInstallSuccess, properties)
+	_ = SendEvent(EventServerInstallFailed, properties)
 }
 
 func TestTrackAuthLogin(t *testing.T) {
