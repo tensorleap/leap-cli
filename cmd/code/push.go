@@ -130,6 +130,20 @@ func NewPushCmd() *cobra.Command {
 				}
 				return err
 			}
+			
+			// Track dataset parse started (happens automatically when code is pushed)
+			parseProperties := map[string]interface{}{
+				"code_integration_id": codeIntegration.Cid,
+				"version_id": currentVersion.Cid,
+				"branch": branch,
+				"python_version": pythonVersion,
+				"entry_file": workspaceConfig.EntryFile,
+				"force_push": force,
+			}
+			if err := analytics.SendEvent(analytics.EventCliDatasetParseStarted, parseProperties); err != nil {
+				log.Warnf("Failed to track dataset parse start event: %v", err)
+			}
+
 			supposedToWait := !noWait
 			waitNeeded := supposedToWait && code.IsCodeParsing(currentVersion)
 
@@ -148,8 +162,35 @@ func NewPushCmd() *cobra.Command {
 				}
 				if ok {
 					log.Info("Code parsed successfully")
+					// Track dataset parse success
+					parseSuccessProperties := map[string]interface{}{
+						"code_integration_id": codeIntegration.Cid,
+						"version_id": currentVersion.Cid,
+						"branch": branch,
+						"python_version": pythonVersion,
+						"entry_file": workspaceConfig.EntryFile,
+						"force_push": force,
+						"parse_duration": "waited_for_completion",
+					}
+					if err := analytics.SendEvent(analytics.EventCliDatasetParseSuccess, parseSuccessProperties); err != nil {
+						log.Warnf("Failed to track dataset parse success event: %v", err)
+					}
 				} else {
 					code.PrintCodeIntegrationVersionParserErr(codeIntegrationVersion)
+					// Track dataset parse failed
+					parseFailProperties := map[string]interface{}{
+						"code_integration_id": codeIntegration.Cid,
+						"version_id": currentVersion.Cid,
+						"branch": branch,
+						"python_version": pythonVersion,
+						"entry_file": workspaceConfig.EntryFile,
+						"force_push": force,
+						"parse_duration": "waited_for_completion",
+						"error": "code parsing failed",
+					}
+					if err := analytics.SendEvent(analytics.EventCliDatasetParseFailed, parseFailProperties); err != nil {
+						log.Warnf("Failed to track dataset parse failure event: %v", err)
+					}
 					// Track code push failed due to parsing failure
 					properties["error"] = "code parsing failed"
 					properties["stage"] = "code_parsing"
@@ -162,6 +203,20 @@ func NewPushCmd() *cobra.Command {
 				}
 			} else if supposedToWait && code.IsCodeParseFailed(currentVersion) {
 				code.PrintCodeIntegrationVersionParserErr(currentVersion)
+				// Track dataset parse failed due to previous parsing failure
+				parseFailProperties := map[string]interface{}{
+					"code_integration_id": codeIntegration.Cid,
+					"version_id": currentVersion.Cid,
+					"branch": branch,
+					"python_version": pythonVersion,
+					"entry_file": workspaceConfig.EntryFile,
+					"force_push": force,
+					"parse_duration": "previous_version_failed",
+					"error": "latest code parsing failed",
+				}
+				if err := analytics.SendEvent(analytics.EventCliDatasetParseFailed, parseFailProperties); err != nil {
+					log.Warnf("Failed to track dataset parse failure event: %v", err)
+				}
 				// Track code push failed due to previous parsing failure
 				properties["error"] = "latest code parsing failed"
 				properties["stage"] = "previous_parsing_failed"
@@ -181,6 +236,23 @@ func NewPushCmd() *cobra.Command {
 			properties["final_python_version"] = pythonVersion
 			properties["wait_needed"] = waitNeeded
 			properties["parsing_successful"] = !waitNeeded || (!code.IsCodeParsing(currentVersion) && !code.IsCodeParseFailed(currentVersion))
+			
+			// Track dataset parse success if parsing was already completed
+			if !waitNeeded && !code.IsCodeParsing(currentVersion) && !code.IsCodeParseFailed(currentVersion) {
+				parseSuccessProperties := map[string]interface{}{
+					"code_integration_id": codeIntegration.Cid,
+					"version_id": currentVersion.Cid,
+					"branch": branch,
+					"python_version": pythonVersion,
+					"entry_file": workspaceConfig.EntryFile,
+					"force_push": force,
+					"parse_duration": "already_completed",
+				}
+				if err := analytics.SendEvent(analytics.EventCliDatasetParseSuccess, parseSuccessProperties); err != nil {
+					log.Warnf("Failed to track dataset parse success event: %v", err)
+				}
+			}
+			
 			if err := analytics.SendEvent(analytics.EventCliCodePushSuccess, properties); err != nil {
 				log.Warnf("Failed to track code push success event: %v", err)
 			}
