@@ -111,6 +111,20 @@ func isValidHex(s string) bool {
 	return true
 }
 
+// getCurrentUsername gets the current username from environment variables or user info
+func getCurrentUsername() string {
+	// Try to get from environment variables first (cross-platform)
+	if username := os.Getenv("USER"); username != "" {
+		return username
+	}
+	if username := os.Getenv("USERNAME"); username != "" {
+		return username
+	}
+	
+	// Fallback to unknown
+	return "unknown"
+}
+
 // SendEvent sends an event to Mixpanel with the given event type and properties
 func SendEvent(eventType EventType, properties map[string]interface{}) error {
 	if properties == nil {
@@ -121,9 +135,14 @@ func SendEvent(eventType EventType, properties map[string]interface{}) error {
 	properties["time"] = time.Now().Unix()
 	properties["os"] = runtime.GOOS
 	properties["arch"] = runtime.GOARCH
-	properties["timestamp"] = time.Now().Format(time.RFC3339)
-	properties["distinct_id"] = getDeviceID()
 	properties["device_id"] = getDeviceID()
+	properties["whoami"] = getCurrentUsername()
+
+	if userID, exists := properties["user_id"]; exists {
+		properties["distinct_id"] = userID
+	} else {
+		properties["distinct_id"] = getDeviceID()
+	}
 
 	if username := os.Getenv("USER"); username != "" {
 		properties["os_username"] = username
