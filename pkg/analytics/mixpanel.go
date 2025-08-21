@@ -128,3 +128,52 @@ func TrackServerInstall(properties map[string]interface{}) error {
 
 	return nil
 }
+
+// TrackAuthLogin sends an authentication login event to Mixpanel
+func TrackAuthLogin(properties map[string]interface{}) error {
+	if properties == nil {
+		properties = make(map[string]interface{})
+	}
+
+	properties["token"] = MixpanelToken
+	properties["time"] = time.Now().Unix()
+	properties["os"] = runtime.GOOS
+	properties["arch"] = runtime.GOARCH
+	properties["timestamp"] = time.Now().Format(time.RFC3339)
+	properties["distinct_id"] = getDeviceID()
+	properties["device_id"] = getDeviceID()
+
+	if username := os.Getenv("USER"); username != "" {
+		properties["os_username"] = username
+	}
+
+	event := map[string]interface{}{
+		"event":      "auth_login",
+		"properties": properties,
+	}
+
+	eventData, err := json.Marshal(event)
+	if err != nil {
+		return fmt.Errorf("failed to marshal event: %w", err)
+	}
+
+	// Mixpanel expects the data to be base64 encoded
+	encodedData := []byte(fmt.Sprintf("data=%s", eventData))
+
+	// Create HTTP client with timeout
+	client := &http.Client{
+		Timeout: 10 * time.Second,
+	}
+
+	resp, err := client.Post(MixpanelEndpoint, "application/x-www-form-urlencoded", bytes.NewBuffer(encodedData))
+	if err != nil {
+		return fmt.Errorf("failed to send event to Mixpanel: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("Mixpanel API returned status: %d", resp.StatusCode)
+	}
+
+	return nil
+}
