@@ -29,6 +29,8 @@ const (
 	EventCliCodeInitFailed  EventType = "cli_code_init_failed"
 	EventAuthLoginSuccess EventType = "auth_login_success"
 	EventAuthLoginFailed  EventType = "auth_login_failed"
+	EventAuthLogoutSuccess EventType = "auth_logout_success"
+	EventAuthLogoutFailed  EventType = "auth_logout_failed"
 	EventServerInstallStarted EventType = "server_install_started"
 	EventServerInstallSuccess EventType = "server_install_success"
 	EventServerInstallFailed  EventType = "server_install_failed"
