@@ -21,6 +21,9 @@ const (
 type EventType string
 
 const (
+	EventCliInstallStarted EventType = "cli_install_started"
+	EventCliInstallSuccess EventType = "cli_install_success"
+	EventCliInstallFailed  EventType = "cli_install_failed"
 	EventAuthLoginSuccess EventType = "auth_login_success"
 	EventAuthLoginFailed  EventType = "auth_login_failed"
 	EventServerInstallStarted EventType = "server_install_started"

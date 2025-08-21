@@ -142,6 +142,9 @@ installFile() {
 fail_trap() {
   result=$?
   if [ "$result" != "0" ]; then
+    # Track CLI installation failed
+    trackEvent "cli_install_failed" "\"bin_dir\":\"$BIN_DIR\",\"use_sudo\":\"$USE_SUDO\",\"exit_code\":\"$result\""
+    
     if [[ -n "$INPUT_ARGUMENTS" ]]; then
       echo "Failed to install $APP_NAME with the arguments provided: $INPUT_ARGUMENTS"
       help
@@ -169,6 +172,38 @@ help () {
   echo "Accepted cli arguments are:"
   echo -e "\t[--help|-h ] ->> prints this help"
   echo -e "\t[--no-sudo]  ->> install without sudo"
+}
+
+# trackEvent sends an analytics event to track CLI installation
+trackEvent() {
+  local event_type="$1"
+  local properties="$2"
+  
+  # Only track if curl is available and we're not in a test environment
+  if type "curl" > /dev/null && [[ -z "${TESTING:-}" ]]; then
+    # Detect AWS environment
+    local aws_env="false"
+    if [[ -n "${AWS_EXECUTION_ENV:-}" ]] || [[ -f "/sys/hypervisor/uuid" ]] || [[ -f "/var/lib/cloud/instance" ]]; then
+      aws_env="true"
+    fi
+    
+    # Prepare the event data
+    local event_data="{\"event\":\"$event_type\",\"properties\":{\"token\":\"f1bf46fb339d8c2930cde8c1acf65491\",\"time\":$(date +%s),\"os\":\"$(uname | tr '[:upper:]' '[:lower:]')\",\"arch\":\"$(uname -m)\",\"timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"distinct_id\":\"$(whoami 2>/dev/null || echo 'unknown')\",\"device_id\":\"$(whoami 2>/dev/null || echo 'unknown')\",\"aws_environment\":\"$aws_env\""
+    
+    # Add custom properties if provided
+    if [[ -n "$properties" ]]; then
+      event_data="$event_data,$properties"
+    fi
+    
+    event_data="$event_data}}"
+    
+    # Send the event to Mixpanel (non-blocking)
+    curl -s -X POST "https://api.mixpanel.com/track" \
+      -d "data=$(echo "$event_data" | base64)" \
+      --max-time 5 \
+      --connect-timeout 3 \
+      >/dev/null 2>&1 &
+  fi
 }
 
 # cleanup temporary files
@@ -208,12 +243,20 @@ set +u
 initArch
 initOS
 verifySupported
+
+# Track CLI installation started
+trackEvent "cli_install_started" "\"bin_dir\":\"$BIN_DIR\",\"use_sudo\":\"$USE_SUDO\""
+
 checkTagProvided || checkLatestVersion
 if ! checkInstalledVersion; then
   downloadFile
   installFile
 fi
 testVersion
+
+# Track CLI installation success
+trackEvent "cli_install_success" "\"bin_dir\":\"$BIN_DIR\",\"use_sudo\":\"$USE_SUDO\""
+
 cleanup
 
 leap -h
