@@ -52,7 +52,7 @@ func Login(env *Env) (err error) {
 		log.Warnf("Failed to get user data for analytics: %v", err)
 	}
 	
-	if err := analytics.TrackAuthLogin(properties); err != nil {
+	if err := analytics.SendEvent(analytics.EventAuthLoginSuccess, properties); err != nil {
 		// Log error but don't fail the login
 		log.Warnf("Failed to track login event: %v", err)
 	}

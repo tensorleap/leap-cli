@@ -17,6 +17,15 @@ const (
 	MixpanelToken   = "f1bf46fb339d8c2930cde8c1acf65491"
 )
 
+// EventType represents the type of event to track
+type EventType string
+
+const (
+	EventAuthLoginSuccess EventType = "auth_login_success"
+	EventAuthLoginFailed  EventType = "auth_login_failed"
+	EventServerInstall    EventType = "server_install"
+)
+
 // deviceIDFile stores the path to the device ID file
 var deviceIDFile string
 
@@ -80,8 +89,8 @@ func isValidHex(s string) bool {
 	return true
 }
 
-// TrackServerInstall sends a server installation event to Mixpanel
-func TrackServerInstall(properties map[string]interface{}) error {
+// SendEvent sends an event to Mixpanel with the given event type and properties
+func SendEvent(eventType EventType, properties map[string]interface{}) error {
 	if properties == nil {
 		properties = make(map[string]interface{})
 	}
@@ -99,7 +108,7 @@ func TrackServerInstall(properties map[string]interface{}) error {
 	}
 
 	event := map[string]interface{}{
-		"event":      "server_install",
+		"event":      string(eventType),
 		"properties": properties,
 	}
 
@@ -129,51 +138,4 @@ func TrackServerInstall(properties map[string]interface{}) error {
 	return nil
 }
 
-// TrackAuthLogin sends an authentication login event to Mixpanel
-func TrackAuthLogin(properties map[string]interface{}) error {
-	if properties == nil {
-		properties = make(map[string]interface{})
-	}
 
-	properties["token"] = MixpanelToken
-	properties["time"] = time.Now().Unix()
-	properties["os"] = runtime.GOOS
-	properties["arch"] = runtime.GOARCH
-	properties["timestamp"] = time.Now().Format(time.RFC3339)
-	properties["distinct_id"] = getDeviceID()
-	properties["device_id"] = getDeviceID()
-
-	if username := os.Getenv("USER"); username != "" {
-		properties["os_username"] = username
-	}
-
-	event := map[string]interface{}{
-		"event":      "auth_login",
-		"properties": properties,
-	}
-
-	eventData, err := json.Marshal(event)
-	if err != nil {
-		return fmt.Errorf("failed to marshal event: %w", err)
-	}
-
-	// Mixpanel expects the data to be base64 encoded
-	encodedData := []byte(fmt.Sprintf("data=%s", eventData))
-
-	// Create HTTP client with timeout
-	client := &http.Client{
-		Timeout: 10 * time.Second,
-	}
-
-	resp, err := client.Post(MixpanelEndpoint, "application/x-www-form-urlencoded", bytes.NewBuffer(encodedData))
-	if err != nil {
-		return fmt.Errorf("failed to send event to Mixpanel: %w", err)
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("Mixpanel API returned status: %d", resp.StatusCode)
-	}
-
-	return nil
-}

@@ -28,11 +28,16 @@ func NewInstallCmd() *cobra.Command {
 			}
 
 			// Track successful installation
+			log.Info("Server installation completed successfully, starting analytics tracking...")
 			properties := map[string]interface{}{}
 			
-			if err := analytics.TrackServerInstall(properties); err != nil {
+			log.Infof("Analytics properties: %+v", properties)
+			log.Info("Calling analytics.SendEvent...")
+			if err := analytics.SendEvent(analytics.EventServerInstall, properties); err != nil {
 				// Log error but don't fail the installation
 				log.Warnf("Failed to track installation event: %v", err)
+			} else {
+				log.Info("Analytics tracking completed successfully")
 			}
 
 			return nil
