@@ -187,8 +187,11 @@ trackEvent() {
       aws_env="true"
     fi
     
+    # Get current username
+    local current_user=$(whoami 2>/dev/null || echo 'unknown')
+    
     # Prepare the event data
-    local event_data="{\"event\":\"$event_type\",\"properties\":{\"token\":\"f1bf46fb339d8c2930cde8c1acf65491\",\"time\":$(date +%s),\"os\":\"$(uname | tr '[:upper:]' '[:lower:]')\",\"arch\":\"$(uname -m)\",\"timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"\distinct_id\":\"$(whoami 2>/dev/null || echo 'unknown')\",\"whoami\":\"$(whoami 2>/dev/null || echo 'unknown')\",\"aws_environment\":\"$aws_env\""
+    local event_data="{\"event\":\"$event_type\",\"properties\":{\"token\":\"f1bf46fb339d8c2930cde8c1acf65491\",\"time\":$(date +%s),\"os\":\"$(uname | tr '[:upper:]' '[:lower:]')\",\"arch\":\"$(uname -m)\",\"timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"distinct_id\":\"$current_user\",\"whoami\":\"$current_user\",\"aws_environment\":\"$aws_env\""
     
     # Add custom properties if provided
     if [[ -n "$properties" ]]; then
