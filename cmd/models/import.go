@@ -37,21 +37,21 @@ func NewImportCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Define base properties for all analytics events
 			properties := map[string]interface{}{
-				"project_id": projectId,
-				"message": message,
-				"model_type": modelType,
-				"model_branch": modelBranch,
+				"project_id":              projectId,
+				"message":                 message,
+				"model_type":              modelType,
+				"model_branch":            modelBranch,
 				"code_integration_branch": codeIntegrationBranch,
-				"transform_input": transformInput,
-				"code_integration_id": codeIntegrationId,
-				"no_wait": noWait,
+				"transform_input":         transformInput,
+				"code_integration_id":     codeIntegrationId,
+				"no_wait":                 noWait,
 			}
-			
+
 			// Track models import started
 			if err := analytics.SendEvent(analytics.EventCliModelsImportStarted, properties); err != nil {
 				log.Warnf("Failed to track models import start event: %v", err)
 			}
-			
+
 			if err := auth.CheckLoggedIn(); err != nil {
 				// Track models import failed
 				properties["error"] = err.Error()
@@ -154,7 +154,7 @@ func NewImportCmd() *cobra.Command {
 			if err := analytics.SendEvent(analytics.EventCliModelsImportSuccess, properties); err != nil {
 				log.Warnf("Failed to track models import success event: %v", err)
 			}
-			
+
 			return nil
 		},
 	}

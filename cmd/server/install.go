@@ -71,7 +71,7 @@ func NewInstallCmd() *cobra.Command {
 				"data_dir": flags.DataDir,
 				"port":     flags.Port,
 			}
-			
+
 			log.Infof("Analytics properties: %+v", successProperties)
 			log.Info("Calling analytics.SendEvent...")
 			if err := analytics.SendEvent(analytics.EventServerInstallSuccess, successProperties); err != nil {

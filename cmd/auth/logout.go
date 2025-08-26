@@ -17,10 +17,10 @@ func NewLogoutCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Track logout started
 			properties := map[string]interface{}{
-				"environment_name": name,
+				"environment_name":     name,
 				"has_environment_name": len(name) > 0,
 			}
-			
+
 			err := auth.Logout(name)
 			if err != nil {
 				// Track logout failed
@@ -31,13 +31,13 @@ func NewLogoutCmd() *cobra.Command {
 				}
 				return err
 			}
-			
+
 			// Track logout success
 			properties["stage"] = "logout_execution"
 			if err := analytics.SendEvent(analytics.EventAuthLogoutSuccess, properties); err != nil {
 				log.Warnf("Failed to track logout success event: %v", err)
 			}
-			
+
 			return nil
 		},
 	}

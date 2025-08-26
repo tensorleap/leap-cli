@@ -31,21 +31,21 @@ func init() {
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx := cmd.Context()
-			
+
 			// Define base properties for all analytics events
 			properties := map[string]interface{}{
-				"code_id": codeIntegrationId,
+				"code_id":               codeIntegrationId,
 				"code_integration_name": newCodeIntegrationName,
-				"secret_id": secretId,
-				"branch": branch,
-				"python_version": pythonVersion,
+				"secret_id":             secretId,
+				"branch":                branch,
+				"python_version":        pythonVersion,
 			}
-			
+
 			// Track code init started
 			if err := analytics.SendEvent(analytics.EventCliCodeInitStarted, properties); err != nil {
 				log.Warnf("Failed to track code init start event: %v", err)
 			}
-			
+
 			var codeIntegration *code.CodeIntegration = nil
 			codeIntegrations, err := code.GetCodeIntegrations(ctx)
 			if err != nil {

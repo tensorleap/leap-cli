@@ -14,22 +14,22 @@ import (
 
 const (
 	MixpanelEndpoint = "https://api.mixpanel.com/track"
-	MixpanelToken   = "f1bf46fb339d8c2930cde8c1acf65491"
+	MixpanelToken    = "f1bf46fb339d8c2930cde8c1acf65491"
 )
 
 // EventType represents the type of event to track
 type EventType string
 
 const (
-	EventCliInstallStarted EventType = "cli_install_started"
-	EventCliInstallSuccess EventType = "cli_install_success"
-	EventCliInstallFailed  EventType = "cli_install_failed"
-	EventCliCodeInitStarted EventType = "cli_code_init_started"
-	EventCliCodeInitSuccess EventType = "cli_code_init_success"
-	EventCliCodeInitFailed  EventType = "cli_code_init_failed"
-	EventCliCodePushStarted EventType = "cli_code_push_started"
-	EventCliCodePushSuccess EventType = "cli_code_push_success"
-	EventCliCodePushFailed  EventType = "cli_code_push_failed"
+	EventCliInstallStarted      EventType = "cli_install_started"
+	EventCliInstallSuccess      EventType = "cli_install_success"
+	EventCliInstallFailed       EventType = "cli_install_failed"
+	EventCliCodeInitStarted     EventType = "cli_code_init_started"
+	EventCliCodeInitSuccess     EventType = "cli_code_init_success"
+	EventCliCodeInitFailed      EventType = "cli_code_init_failed"
+	EventCliCodePushStarted     EventType = "cli_code_push_started"
+	EventCliCodePushSuccess     EventType = "cli_code_push_success"
+	EventCliCodePushFailed      EventType = "cli_code_push_failed"
 	EventCliDatasetParseStarted EventType = "cli_dataset_parse_started"
 	EventCliDatasetParseSuccess EventType = "cli_dataset_parse_success"
 	EventCliDatasetParseFailed  EventType = "cli_dataset_parse_failed"
@@ -39,13 +39,13 @@ const (
 	EventCliProjectsPushStarted EventType = "cli_projects_push_started"
 	EventCliProjectsPushSuccess EventType = "cli_projects_push_success"
 	EventCliProjectsPushFailed  EventType = "cli_projects_push_failed"
-	EventAuthLoginSuccess EventType = "auth_login_success"
-	EventAuthLoginFailed  EventType = "auth_login_failed"
-	EventAuthLogoutSuccess EventType = "auth_logout_success"
-	EventAuthLogoutFailed  EventType = "auth_logout_failed"
-	EventServerInstallStarted EventType = "server_install_started"
-	EventServerInstallSuccess EventType = "server_install_success"
-	EventServerInstallFailed  EventType = "server_install_failed"
+	EventAuthLoginSuccess       EventType = "auth_login_success"
+	EventAuthLoginFailed        EventType = "auth_login_failed"
+	EventAuthLogoutSuccess      EventType = "auth_logout_success"
+	EventAuthLogoutFailed       EventType = "auth_logout_failed"
+	EventServerInstallStarted   EventType = "server_install_started"
+	EventServerInstallSuccess   EventType = "server_install_success"
+	EventServerInstallFailed    EventType = "server_install_failed"
 )
 
 // userIDFile stores the path to the user ID file
@@ -59,14 +59,14 @@ func init() {
 		// Fallback to current directory if home directory is not accessible
 		homeDir = "."
 	}
-	
+
 	// Create .tensorleap directory if it doesn't exist
 	tensorleapDir := filepath.Join(homeDir, ".tensorleap")
 	if err := os.MkdirAll(tensorleapDir, 0755); err != nil {
 		// Fallback to current directory if we can't create the directory
 		tensorleapDir = "."
 	}
-	
+
 	userIDFile = filepath.Join(tensorleapDir, "user_id")
 }
 
@@ -127,7 +127,7 @@ func callMixpanelAlias(whoami, userID string) error {
 func saveUserID(userID string) error {
 	// Get current username (whoami)
 	currentUsername := getCurrentUsername()
-	
+
 	// Send alias to Mixpanel to link whoami with user_id
 	if currentUsername != "unknown" {
 		if err := callMixpanelAlias(currentUsername, userID); err != nil {
@@ -136,7 +136,7 @@ func saveUserID(userID string) error {
 			fmt.Printf("Warning: Failed to send Mixpanel alias: %v\n", err)
 		}
 	}
-	
+
 	// Save the user ID to the persistent file
 	return os.WriteFile(userIDFile, []byte(userID), 0600)
 }
@@ -151,7 +151,7 @@ func getUserID() string {
 			return userID
 		}
 	}
-	
+
 	// No user ID found, return empty string
 	return ""
 }
@@ -170,7 +170,7 @@ func getCurrentUsername() string {
 	if username := os.Getenv("USERNAME"); username != "" {
 		return username
 	}
-	
+
 	// Fallback to unknown
 	return "unknown"
 }
@@ -191,7 +191,7 @@ func SendEvent(eventType EventType, properties map[string]interface{}) error {
 	if userID, exists := properties["user_id"]; exists {
 		userIDStr := fmt.Sprintf("%v", userID)
 		savedUserID := getUserID()
-		
+
 		// If we have a different saved user_id, update it
 		if savedUserID != "" && savedUserID != userIDStr {
 			// Update the saved user_id
@@ -275,5 +275,3 @@ func SendEventWithUserData(eventType EventType, properties map[string]interface{
 
 	return SendEvent(eventType, properties)
 }
-
-

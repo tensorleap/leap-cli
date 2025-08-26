@@ -40,24 +40,24 @@ func NewPushCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Define base properties for all analytics events
 			properties := map[string]interface{}{
-				"secret_id": secretId,
-				"model_version_name": modelVersionName,
+				"secret_id":            secretId,
+				"model_version_name":   modelVersionName,
 				"code_version_message": codeVersionMessage,
-				"model_type": modelType,
-				"model_branch": modelBranch,
-				"code_branch": codeBranch,
-				"transform_input": transformInput,
-				"force": force,
-				"no_wait": noWait,
-				"python_version": pythonVersion,
-				"leap_mapping_path": leapMappingPath,
+				"model_type":           modelType,
+				"model_branch":         modelBranch,
+				"code_branch":          codeBranch,
+				"transform_input":      transformInput,
+				"force":                force,
+				"no_wait":              noWait,
+				"python_version":       pythonVersion,
+				"leap_mapping_path":    leapMappingPath,
 			}
-			
+
 			// Track projects push started
 			if err := analytics.SendEvent(analytics.EventCliProjectsPushStarted, properties); err != nil {
 				log.Warnf("Failed to track projects push start event: %v", err)
 			}
-			
+
 			ctx := cmd.Context()
 			modelPath := args[0]
 			properties["model_path"] = modelPath
@@ -246,7 +246,7 @@ func NewPushCmd() *cobra.Command {
 			if err := analytics.SendEvent(analytics.EventCliProjectsPushSuccess, properties); err != nil {
 				log.Warnf("Failed to track projects push success event: %v", err)
 			}
-			
+
 			return nil
 		},
 	}

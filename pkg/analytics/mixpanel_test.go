@@ -11,7 +11,7 @@ func TestTrackServerInstall(t *testing.T) {
 		"gpus": 2,
 		"test": true,
 	}
-	
+
 	// This will fail in tests since we don't have network access, but it tests compilation
 	_ = SendEvent(EventServerInstallStarted, properties)
 	_ = SendEvent(EventServerInstallSuccess, properties)
@@ -24,7 +24,7 @@ func TestTrackAuthLogin(t *testing.T) {
 		"api_url": "https://api.example.com",
 		"test":    true,
 	}
-	
+
 	// This will fail in tests since we don't have network access, but it tests compilation
 	_ = SendEvent(EventAuthLoginSuccess, properties)
 	_ = SendEvent(EventAuthLoginFailed, properties)

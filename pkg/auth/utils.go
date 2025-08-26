@@ -7,8 +7,8 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/spf13/viper"
-	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
+	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/config"
 	"github.com/tensorleap/leap-cli/pkg/log"
 )
@@ -27,16 +27,16 @@ func Login(env *Env) (err error) {
 		return fmt.Errorf("Login failed: %v", err)
 	}
 	log.Println("Saved credentials to: ", viper.ConfigFileUsed())
-	
+
 	// Track successful login
 	properties := map[string]interface{}{
-		"api_url": env.ApiUrl,
+		"api_url":  env.ApiUrl,
 		"env_name": env.Name,
-		"method": "api_key",
-		"success": true,
+		"method":   "api_key",
+		"success":  true,
 		"is_local": IsLocalUrl(env.ApiUrl),
 	}
-	
+
 	// Try to get user data to enrich the analytics event
 	// Create a context with the API URL for the whoami call
 	ctx := api.CreateAuthenticatedContext(context.Background(), env.ApiKey, env.ApiUrl)
@@ -51,12 +51,12 @@ func Login(env *Env) (err error) {
 		// Log warning but don't fail the tracking
 		log.Warnf("Failed to get user data for analytics: %v", err)
 	}
-	
+
 	if err := analytics.SendEvent(analytics.EventAuthLoginSuccess, properties); err != nil {
 		// Log error but don't fail the login
 		log.Warnf("Failed to track login event: %v", err)
 	}
-	
+
 	return
 }
 

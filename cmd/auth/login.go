@@ -4,8 +4,8 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
-	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
+	"github.com/tensorleap/leap-cli/pkg/auth"
 )
 
 func NewLoginCmd() *cobra.Command {
@@ -31,12 +31,12 @@ func NewLoginCmd() *cobra.Command {
 				baseUrl, err = auth.AskForUrl("")
 				if err != nil {
 					// Track failed login attempt
-									properties := map[string]interface{}{
-					"error": err.Error(),
-					"success": false,
-					"method": "url_input",
-				}
-				_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
+					properties := map[string]interface{}{
+						"error":   err.Error(),
+						"success": false,
+						"method":  "url_input",
+					}
+					_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 					return err
 				}
 			}
@@ -45,9 +45,9 @@ func NewLoginCmd() *cobra.Command {
 				// Track failed login attempt
 				properties := map[string]interface{}{
 					"api_url": baseUrl,
-					"error": err.Error(),
+					"error":   err.Error(),
 					"success": false,
-					"method": "url_validation",
+					"method":  "url_validation",
 				}
 				_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 				return err
@@ -63,9 +63,9 @@ func NewLoginCmd() *cobra.Command {
 					// Track failed login attempt
 					properties := map[string]interface{}{
 						"api_url": apiUrl,
-						"error": err.Error(),
+						"error":   err.Error(),
 						"success": false,
-						"method": "method_selection",
+						"method":  "method_selection",
 					}
 					_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 					return err
@@ -74,17 +74,17 @@ func NewLoginCmd() *cobra.Command {
 
 			if useLogin {
 				useBrowser, err := auth.AskIfOpenBrowser()
-									if err != nil {
-						// Track failed login attempt
-						properties := map[string]interface{}{
-							"api_url": apiUrl,
-							"error": err.Error(),
-							"success": false,
-							"method": "browser_selection",
-						}
-						_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
-						return err
+				if err != nil {
+					// Track failed login attempt
+					properties := map[string]interface{}{
+						"api_url": apiUrl,
+						"error":   err.Error(),
+						"success": false,
+						"method":  "browser_selection",
 					}
+					_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
+					return err
+				}
 				if useBrowser {
 					loginMethod = "browser_oauth"
 					apiKey, err = auth.LoginAndGetAuthTokenWithBrowser(cmd.Context(), apiUrl)
@@ -92,9 +92,9 @@ func NewLoginCmd() *cobra.Command {
 						// Track failed login attempt
 						properties := map[string]interface{}{
 							"api_url": apiUrl,
-							"error": err.Error(),
+							"error":   err.Error(),
 							"success": false,
-							"method": loginMethod,
+							"method":  loginMethod,
 						}
 						_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 						return err
@@ -106,16 +106,16 @@ func NewLoginCmd() *cobra.Command {
 						// Track failed login attempt
 						properties := map[string]interface{}{
 							"api_url": apiUrl,
-							"error": err.Error(),
+							"error":   err.Error(),
 							"success": false,
-							"method": loginMethod,
+							"method":  loginMethod,
 						}
-						
+
 						// Add username if available
 						if userName != "" {
 							properties["inserted_username"] = userName
 						}
-						
+
 						_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 						return err
 					}
@@ -124,16 +124,16 @@ func NewLoginCmd() *cobra.Command {
 						// Track failed login attempt
 						properties := map[string]interface{}{
 							"api_url": apiUrl,
-							"error": err.Error(),
+							"error":   err.Error(),
 							"success": false,
-							"method": loginMethod,
+							"method":  loginMethod,
 						}
-						
+
 						// Add username if available
 						if userName != "" {
 							properties["inserted_username"] = userName
 						}
-						
+
 						_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 						return err
 					}
@@ -145,9 +145,9 @@ func NewLoginCmd() *cobra.Command {
 					// Track failed login attempt
 					properties := map[string]interface{}{
 						"api_url": apiUrl,
-						"error": err.Error(),
+						"error":   err.Error(),
 						"success": false,
-						"method": loginMethod,
+						"method":  loginMethod,
 					}
 					_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 					return err
@@ -167,17 +167,16 @@ func NewLoginCmd() *cobra.Command {
 			if err != nil {
 				// Track failed login attempt
 				properties := map[string]interface{}{
-					"api_url": apiUrl,
+					"api_url":  apiUrl,
 					"env_name": name,
-					"error": err.Error(),
-					"success": false,
-					"method": loginMethod,
+					"error":    err.Error(),
+					"success":  false,
+					"method":   loginMethod,
 				}
 				_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 				return err
 			}
 
-			
 			return auth.Login(env)
 
 		},

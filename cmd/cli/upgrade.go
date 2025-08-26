@@ -27,7 +27,7 @@ func NewUpgradeCliCmd() *cobra.Command {
 				fmt.Println(cli.UpgradeCmd)
 				return nil
 			}
-			
+
 			// Track upgrade script request
 			if err := analytics.SendEvent(analytics.EventCliInstallStarted, map[string]interface{}{
 				"action": "upgrade_script_requested",
@@ -35,7 +35,7 @@ func NewUpgradeCliCmd() *cobra.Command {
 			}); err != nil {
 				log.Warnf("Failed to track upgrade script request: %v", err)
 			}
-			
+
 			err := printScript()
 			if err != nil {
 				return err
