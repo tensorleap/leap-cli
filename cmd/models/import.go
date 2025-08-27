@@ -71,6 +71,14 @@ func NewImportCmd() *cobra.Command {
 				return err
 			}
 
+			if workspaceConfig != nil && currentProject.Cid != workspaceConfig.ProjectId {
+				workspaceConfig.ProjectId = projectId
+				err = workspace.SetWorkspaceConfig(workspaceConfig, "")
+				if err != nil {
+					return err
+				}
+			}
+
 			err = model.ImportModel(ctx, modelPath, currentProject.Cid, message, modelType, modelBranch, codeIntegrationId, codeIntegrationBranch, transformInput, !noWait)
 			if err != nil {
 				return err
