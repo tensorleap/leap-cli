@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
+	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 )
 
@@ -21,6 +22,7 @@ func NewLoginCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var baseUrl string
 			var err error
+			var loginMethod string
 
 			hasJustUrl := len(args) == 1
 			if hasJustUrl {
@@ -28,11 +30,26 @@ func NewLoginCmd() *cobra.Command {
 			} else {
 				baseUrl, err = auth.AskForUrl("")
 				if err != nil {
+					// Track failed login attempt
+					properties := map[string]interface{}{
+						"error":   err.Error(),
+						"success": false,
+						"method":  "url_input",
+					}
+					_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 					return err
 				}
 			}
 			apiUrl, err := auth.NormalizeAPIUrl(baseUrl)
 			if err != nil {
+				// Track failed login attempt
+				properties := map[string]interface{}{
+					"api_url": baseUrl,
+					"error":   err.Error(),
+					"success": false,
+					"method":  "url_validation",
+				}
+				_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 				return err
 			}
 
@@ -43,6 +60,14 @@ func NewLoginCmd() *cobra.Command {
 			if askIfUseLogin {
 				useLogin, err = auth.AskIfUseLogin()
 				if err != nil {
+					// Track failed login attempt
+					properties := map[string]interface{}{
+						"api_url": apiUrl,
+						"error":   err.Error(),
+						"success": false,
+						"method":  "method_selection",
+					}
+					_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 					return err
 				}
 			}
@@ -50,28 +75,85 @@ func NewLoginCmd() *cobra.Command {
 			if useLogin {
 				useBrowser, err := auth.AskIfOpenBrowser()
 				if err != nil {
+					// Track failed login attempt
+					properties := map[string]interface{}{
+						"api_url": apiUrl,
+						"error":   err.Error(),
+						"success": false,
+						"method":  "browser_selection",
+					}
+					_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 					return err
 				}
 				if useBrowser {
+					loginMethod = "browser_oauth"
 					apiKey, err = auth.LoginAndGetAuthTokenWithBrowser(cmd.Context(), apiUrl)
 					if err != nil {
+						// Track failed login attempt
+						properties := map[string]interface{}{
+							"api_url": apiUrl,
+							"error":   err.Error(),
+							"success": false,
+							"method":  loginMethod,
+						}
+						_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 						return err
 					}
 				} else {
+					loginMethod = "username_password"
 					userName, password, err = auth.AskForUserNameAndPassword(userName, password)
 					if err != nil {
+						// Track failed login attempt
+						properties := map[string]interface{}{
+							"api_url": apiUrl,
+							"error":   err.Error(),
+							"success": false,
+							"method":  loginMethod,
+						}
+
+						// Add username if available
+						if userName != "" {
+							properties["inserted_username"] = userName
+						}
+
+						_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 						return err
 					}
 					apiKey, err = auth.LoginAndGetAuthToken(apiUrl, userName, password)
 					if err != nil {
+						// Track failed login attempt
+						properties := map[string]interface{}{
+							"api_url": apiUrl,
+							"error":   err.Error(),
+							"success": false,
+							"method":  loginMethod,
+						}
+
+						// Add username if available
+						if userName != "" {
+							properties["inserted_username"] = userName
+						}
+
+						_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 						return err
 					}
 				}
 			} else if !hasApiKey {
+				loginMethod = "api_key_input"
 				apiKey, err = auth.AskForApiKey()
 				if err != nil {
+					// Track failed login attempt
+					properties := map[string]interface{}{
+						"api_url": apiUrl,
+						"error":   err.Error(),
+						"success": false,
+						"method":  loginMethod,
+					}
+					_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 					return err
 				}
+			} else {
+				loginMethod = "api_key_flag"
 			}
 			apiKey = strings.TrimSpace(apiKey)
 
@@ -83,6 +165,15 @@ func NewLoginCmd() *cobra.Command {
 
 			err = env.PrintWhoami(cmd.Context())
 			if err != nil {
+				// Track failed login attempt
+				properties := map[string]interface{}{
+					"api_url":  apiUrl,
+					"env_name": name,
+					"error":    err.Error(),
+					"success":  false,
+					"method":   loginMethod,
+				}
+				_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 				return err
 			}
 

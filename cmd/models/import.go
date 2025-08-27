@@ -6,6 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/model"
@@ -34,7 +35,30 @@ func NewImportCmd() *cobra.Command {
 			return nil
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
+			// Define base properties for all analytics events
+			properties := map[string]interface{}{
+				"project_id":              projectId,
+				"message":                 message,
+				"model_type":              modelType,
+				"model_branch":            modelBranch,
+				"code_integration_branch": codeIntegrationBranch,
+				"transform_input":         transformInput,
+				"code_integration_id":     codeIntegrationId,
+				"no_wait":                 noWait,
+			}
+
+			// Track models import started
+			if err := analytics.SendEvent(analytics.EventCliModelsImportStarted, properties); err != nil {
+				log.Warnf("Failed to track models import start event: %v", err)
+			}
+
 			if err := auth.CheckLoggedIn(); err != nil {
+				// Track models import failed
+				properties["error"] = err.Error()
+				properties["stage"] = "auth_check"
+				if err := analytics.SendEvent(analytics.EventCliModelsImportFailed, properties); err != nil {
+					log.Warnf("Failed to track models import failure event: %v", err)
+				}
 				return err
 			}
 			modelPath := args[0]
@@ -42,15 +66,36 @@ func NewImportCmd() *cobra.Command {
 
 			err := model.SelectModelType(&modelType, modelPath)
 			if err != nil {
+				// Track models import failed
+				properties["error"] = err.Error()
+				properties["stage"] = "select_model_type"
+				properties["model_path"] = modelPath
+				if err := analytics.SendEvent(analytics.EventCliModelsImportFailed, properties); err != nil {
+					log.Warnf("Failed to track models import failure event: %v", err)
+				}
 				return err
 			}
 			err = model.InitMessage(&message)
 			if err != nil {
+				// Track models import failed
+				properties["error"] = err.Error()
+				properties["stage"] = "init_message"
+				properties["model_path"] = modelPath
+				if err := analytics.SendEvent(analytics.EventCliModelsImportFailed, properties); err != nil {
+					log.Warnf("Failed to track models import failure event: %v", err)
+				}
 				return err
 			}
 
 			workspaceConfig, err := workspace.GetWorkspaceConfig()
 			if !os.IsNotExist(err) && err != nil {
+				// Track models import failed
+				properties["error"] = err.Error()
+				properties["stage"] = "get_workspace_config"
+				properties["model_path"] = modelPath
+				if err := analytics.SendEvent(analytics.EventCliModelsImportFailed, properties); err != nil {
+					log.Warnf("Failed to track models import failure event: %v", err)
+				}
 				return err
 			}
 
@@ -68,6 +113,14 @@ func NewImportCmd() *cobra.Command {
 
 			currentProject, _, err := project.GetProjectFromProjectId(ctx, projectId, true)
 			if err != nil {
+				// Track models import failed
+				properties["error"] = err.Error()
+				properties["stage"] = "get_project"
+				properties["model_path"] = modelPath
+				properties["final_project_id"] = projectId
+				if err := analytics.SendEvent(analytics.EventCliModelsImportFailed, properties); err != nil {
+					log.Warnf("Failed to track models import failure event: %v", err)
+				}
 				return err
 			}
 
@@ -81,8 +134,35 @@ func NewImportCmd() *cobra.Command {
 
 			err = model.ImportModel(ctx, modelPath, currentProject.Cid, message, modelType, modelBranch, codeIntegrationId, codeIntegrationBranch, transformInput, !noWait)
 			if err != nil {
+				// Track models import failed
+				properties["error"] = err.Error()
+				properties["stage"] = "import_model"
+				properties["model_path"] = modelPath
+				properties["final_project_id"] = currentProject.Cid
+				properties["final_model_type"] = modelType
+				properties["final_model_branch"] = modelBranch
+				properties["final_code_integration_id"] = codeIntegrationId
+				properties["final_code_integration_branch"] = codeIntegrationBranch
+				properties["final_transform_input"] = transformInput
+				properties["final_wait"] = !noWait
+				if err := analytics.SendEvent(analytics.EventCliModelsImportFailed, properties); err != nil {
+					log.Warnf("Failed to track models import failure event: %v", err)
+				}
 				return err
 			}
+			// Track models import success
+			properties["model_path"] = modelPath
+			properties["final_project_id"] = currentProject.Cid
+			properties["final_model_type"] = modelType
+			properties["final_model_branch"] = modelBranch
+			properties["final_code_integration_id"] = codeIntegrationId
+			properties["final_code_integration_branch"] = codeIntegrationBranch
+			properties["final_transform_input"] = transformInput
+			properties["final_wait"] = !noWait
+			if err := analytics.SendEvent(analytics.EventCliModelsImportSuccess, properties); err != nil {
+				log.Warnf("Failed to track models import success event: %v", err)
+			}
+
 			return nil
 		},
 	}
