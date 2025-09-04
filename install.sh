@@ -174,6 +174,38 @@ help () {
   echo -e "\t[--no-sudo]  ->> install without sudo"
 }
 
+# getDeviceID retrieves or generates a persistent device ID
+getDeviceID() {
+  local device_id_file="$HOME/.tensorleap/device_id"
+  
+  # Create .tensorleap directory if it doesn't exist
+  mkdir -p "$(dirname "$device_id_file")"
+  
+  # Try to read existing device ID
+  if [[ -f "$device_id_file" ]] && [[ -s "$device_id_file" ]]; then
+    cat "$device_id_file"
+    return
+  fi
+  
+  # Generate new device ID
+  local device_id
+  if command -v openssl >/dev/null 2>&1; then
+    # Use openssl to generate random hex string
+    device_id=$(openssl rand -hex 16)
+  elif command -v od >/dev/null 2>&1; then
+    # Fallback to od for random generation
+    device_id=$(od -An -N16 -tx1 /dev/urandom | tr -d ' \n' | tr '[:upper:]' '[:lower:]')
+  else
+    # Last resort: timestamp-based ID
+    device_id="device_$(date +%s%N)"
+  fi
+  
+  # Save the device ID
+  echo "$device_id" > "$device_id_file" 2>/dev/null || true
+  
+  echo "$device_id"
+}
+
 # trackEvent sends an analytics event to track CLI installation
 trackEvent() {
   local event_type="$1"
@@ -187,13 +219,15 @@ trackEvent() {
       aws_env="true"
     fi
     
-    # Get current username
+    # Get device ID and current username
+    local device_id
     local current_user
+    device_id=$(getDeviceID)
     current_user=$(whoami 2>/dev/null || echo 'unknown')
     
     # Prepare the event data
     local event_data
-    event_data="{\"event\":\"$event_type\",\"properties\":{\"token\":\"f1bf46fb339d8c2930cde8c1acf65491\",\"time\":$(date +%s),\"os\":\"$(uname | tr '[:upper:]' '[:lower:]')\",\"arch\":\"$(uname -m)\",\"timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"distinct_id\":\"$current_user\",\"whoami\":\"$current_user\",\"aws_environment\":\"$aws_env\""
+    event_data="{\"event\":\"$event_type\",\"properties\":{\"token\":\"f1bf46fb339d8c2930cde8c1acf65491\",\"time\":$(date +%s),\"os\":\"$(uname | tr '[:upper:]' '[:lower:]')\",\"arch\":\"$(uname -m)\",\"timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"\$device_id\":\"$device_id\",\"distinct_id\":\"$device_id\",\"whoami\":\"$current_user\",\"aws_environment\":\"$aws_env\""
     
     # Add custom properties if provided
     if [[ -n "$properties" ]]; then

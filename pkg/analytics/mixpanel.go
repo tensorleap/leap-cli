@@ -2,9 +2,10 @@ package analytics
 
 import (
 	"bytes"
+	"crypto/rand"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -51,6 +52,9 @@ const (
 // userIDFile stores the path to the user ID file
 var userIDFile string
 
+// deviceIDFile stores the path to the device ID file
+var deviceIDFile string
+
 // init initializes the user ID file path
 func init() {
 	// Get user's home directory
@@ -68,75 +72,10 @@ func init() {
 	}
 
 	userIDFile = filepath.Join(tensorleapDir, "user_id")
+	deviceIDFile = filepath.Join(tensorleapDir, "device_id")
 }
 
-// callMixpanelAlias calls Mixpanel's track API with alias event to link whoami with user_id
-func callMixpanelAlias(whoami, userID string) error {
-	// Validate input parameters
-	if whoami == "" || whoami == "unknown" {
-		return fmt.Errorf("invalid whoami value: %s", whoami)
-	}
-	if userID == "" {
-		return fmt.Errorf("invalid userID value: %s", userID)
-	}
-
-	// Mixpanel alias is handled through the track API with special properties
-	aliasData := map[string]interface{}{
-		"token":       MixpanelToken,
-		"distinct_id": whoami,
-		"$set": map[string]interface{}{
-			"$alias": userID,
-		},
-		"time": time.Now().Unix(),
-	}
-
-	aliasJSON, err := json.Marshal(aliasData)
-	if err != nil {
-		return fmt.Errorf("failed to marshal alias data: %w", err)
-	}
-
-	// Mixpanel expects the data to be base64 encoded
-	encodedData := []byte(fmt.Sprintf("data=%s", aliasJSON))
-
-	// Create HTTP client with timeout
-	client := &http.Client{
-		Timeout: 10 * time.Second,
-	}
-
-	// Send the request to the track endpoint
-	resp, err := client.Post(MixpanelEndpoint, "application/x-www-form-urlencoded", bytes.NewBuffer(encodedData))
-	if err != nil {
-		return fmt.Errorf("failed to send alias to Mixpanel: %w", err)
-	}
-	defer resp.Body.Close()
-
-	// Read response body for better error debugging
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return fmt.Errorf("failed to read response body: %w", err)
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("Mixpanel alias API returned status: %d, body: %s", resp.StatusCode, string(body))
-	}
-
-	return nil
-}
-
-// saveUserID saves a user ID to the persistent file and sends alias to Mixpanel
 func saveUserID(userID string) error {
-	// Get current username (whoami)
-	currentUsername := getCurrentUsername()
-
-	// Send alias to Mixpanel to link whoami with user_id
-	if currentUsername != "unknown" {
-		if err := callMixpanelAlias(currentUsername, userID); err != nil {
-			// Log the error but don't fail the save operation
-			// This ensures the user_id is still saved locally
-			fmt.Printf("Warning: Failed to send Mixpanel alias: %v\n", err)
-		}
-	}
-
 	// Save the user ID to the persistent file
 	return os.WriteFile(userIDFile, []byte(userID), 0600)
 }
@@ -159,6 +98,50 @@ func getUserID() string {
 // DeleteUserID removes the persistent user ID file
 func DeleteUserID() error {
 	return os.Remove(userIDFile)
+}
+
+// generateDeviceID generates a new random device ID
+func generateDeviceID() (string, error) {
+	// Generate 16 random bytes
+	bytes := make([]byte, 16)
+	if _, err := rand.Read(bytes); err != nil {
+		return "", err
+	}
+	// Convert to hex string
+	return hex.EncodeToString(bytes), nil
+}
+
+// saveDeviceID saves the device ID to the persistent file
+func saveDeviceID(deviceID string) error {
+	// Save the device ID to the persistent file
+	return os.WriteFile(deviceIDFile, []byte(deviceID), 0600)
+}
+
+// getDeviceID retrieves the persistent device ID, generating one if it doesn't exist
+func getDeviceID() string {
+	// Try to read existing device ID
+	if data, err := os.ReadFile(deviceIDFile); err == nil && len(data) > 0 {
+		deviceID := string(data)
+		// Validate that it's not empty
+		if len(deviceID) > 0 {
+			return deviceID
+		}
+	}
+
+	// No device ID found, generate a new one
+	deviceID, err := generateDeviceID()
+	if err != nil {
+		// Fallback to a timestamp-based ID if generation fails
+		deviceID = fmt.Sprintf("device_%d", time.Now().UnixNano())
+	}
+
+	// Save the new device ID
+	if err := saveDeviceID(deviceID); err != nil {
+		// If we can't save, still return the generated ID
+		return deviceID
+	}
+
+	return deviceID
 }
 
 // getCurrentUsername gets the current username from environment variables or user info
@@ -185,10 +168,13 @@ func SendEvent(eventType EventType, properties map[string]interface{}) error {
 	properties["time"] = time.Now().Unix()
 	properties["os"] = runtime.GOOS
 	properties["arch"] = runtime.GOARCH
+	properties["$device_id"] = getDeviceID()
 	properties["whoami"] = getCurrentUsername()
 
 	// Check if user_id is provided in properties
 	if userID, exists := properties["user_id"]; exists {
+		properties["$user_id"] = userID
+		properties["user_id"] = userID
 		userIDStr := fmt.Sprintf("%v", userID)
 		savedUserID := getUserID()
 
@@ -197,28 +183,38 @@ func SendEvent(eventType EventType, properties map[string]interface{}) error {
 			// Update the saved user_id
 			if err := saveUserID(userIDStr); err == nil {
 				properties["distinct_id"] = userID
+				properties["$user_id"] = userID
 			} else {
 				// If we can't save, still use the provided user_id
 				properties["distinct_id"] = userID
+				properties["$user_id"] = userID
 			}
 		} else if savedUserID == "" {
 			// No saved user_id, save the new one
 			if err := saveUserID(userIDStr); err == nil {
 				properties["distinct_id"] = userID
+				properties["$user_id"] = userID
 			} else {
 				// If we can't save, still use the provided user_id
 				properties["distinct_id"] = userID
+				properties["$user_id"] = userID
 			}
 		} else {
 			// Same user_id, use it
 			properties["distinct_id"] = userID
+			properties["$user_id"] = userID
 		}
 	} else {
-		// Try to get saved user_id, fallback to current username
+		// Try to get saved user_id, fallback to device_id
 		if savedUserID := getUserID(); savedUserID != "" {
+			properties["$user_id"] = savedUserID
+			properties["user_id"] = savedUserID
 			properties["distinct_id"] = savedUserID
+			properties["$user_id"] = savedUserID
 		} else {
-			properties["distinct_id"] = getCurrentUsername()
+			// No userId found, use device_id as distinct_id
+			deviceID := getDeviceID()
+			properties["distinct_id"] = deviceID
 		}
 	}
 
@@ -251,7 +247,7 @@ func SendEvent(eventType EventType, properties map[string]interface{}) error {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("Mixpanel API returned status: %d", resp.StatusCode)
+		return fmt.Errorf("mixpanel API returned status: %d", resp.StatusCode)
 	}
 
 	return nil
