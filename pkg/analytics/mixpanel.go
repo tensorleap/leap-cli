@@ -47,6 +47,12 @@ const (
 	EventServerInstallStarted   EventType = "server_install_started"
 	EventServerInstallSuccess   EventType = "server_install_success"
 	EventServerInstallFailed    EventType = "server_install_failed"
+	EventServerReinstallStarted EventType = "server_reinstall_started"
+	EventServerReinstallSuccess EventType = "server_reinstall_success"
+	EventServerReinstallFailed  EventType = "server_reinstall_failed"
+	EventServerUpgradeStarted   EventType = "server_upgrade_started"
+	EventServerUpgradeSuccess   EventType = "server_upgrade_success"
+	EventServerUpgradeFailed    EventType = "server_upgrade_failed"
 )
 
 // userIDFile stores the path to the user ID file
