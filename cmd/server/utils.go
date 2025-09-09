@@ -12,6 +12,7 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/cli"
 	"github.com/tensorleap/leap-cli/pkg/config"
 	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/version"
 )
 
 const DATA_DIR_CONFIG_PATH = "data_dir"
@@ -86,4 +87,18 @@ func initDataDir(ctx context.Context, flag string) (bool, error) {
 		log.Infof("Using data-dir: %s", currentDir)
 	}
 	return false, nil
+}
+
+func recommendCliUpgradeMessage() {
+	currentVersion := version.CliVersion
+	latestVersion, err := version.GetLatestVersion()
+	if err != nil {
+		log.Warnf("Failed to get latest version: %v", err)
+		return
+	}
+	if currentVersion != latestVersion {
+		log.Warnf("Your CLI version is %s, but the latest version is %s. Please upgrade your CLI. \n leap cli upgrade -s | bash", currentVersion, latestVersion)
+	} else {
+		log.Infof("Your CLI version is %s, which is the latest version.", currentVersion)
+	}
 }
