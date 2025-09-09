@@ -8,6 +8,7 @@ import (
 
 	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/auth"
+	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/model"
 	"github.com/tensorleap/leap-cli/pkg/project"
@@ -124,8 +125,18 @@ func NewImportCmd() *cobra.Command {
 				return err
 			}
 
-			if workspaceConfig != nil && currentProject.Cid != workspaceConfig.ProjectId {
-				workspaceConfig.ProjectId = projectId
+			if len(codeIntegrationId) > 0 {
+				codeIntegrationId, err = code.ValidateOrOptionalSelectingCodeIntegration(ctx, codeIntegrationId, workspaceConfig)
+				if err != nil {
+					return err
+				}
+			}
+
+			if workspaceConfig != nil {
+				workspaceConfig.ProjectId = currentProject.Cid
+				if len(codeIntegrationId) > 0 {
+					workspaceConfig.CodeIntegrationId = codeIntegrationId
+				}
 				err = workspace.SetWorkspaceConfig(workspaceConfig, "")
 				if err != nil {
 					return err
