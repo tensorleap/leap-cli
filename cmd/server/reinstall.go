@@ -67,6 +67,9 @@ func NewReinstallCmd() *cobra.Command {
 			if err := analytics.SendEvent(analytics.EventServerReinstallSuccess, successProperties); err != nil {
 				log.Warnf("Failed to track reinstallation success event: %v", err)
 			}
+			if len(flags.AirGapInstallationFilePath) == 0 {
+				recommendCliUpgradeMessage()
+			}
 
 			return nil
 		},

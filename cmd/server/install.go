@@ -75,6 +75,9 @@ func NewInstallCmd() *cobra.Command {
 				log.Warnf("Failed to track installation success event: %v", err)
 			}
 
+			if len(flags.AirGapInstallationFilePath) == 0 {
+				recommendCliUpgradeMessage()
+			}
 			return nil
 		},
 	}

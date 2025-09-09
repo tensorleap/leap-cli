@@ -56,6 +56,8 @@ func NewUpgradeCmd() *cobra.Command {
 				// Log error but don't fail the upgrade
 				log.Warnf("Failed to track upgrade success event: %v", err)
 			}
+			
+			recommendCliUpgradeMessage()
 
 			return nil
 		},
