@@ -43,9 +43,14 @@ func GetCodeIntegrationById(ctx context.Context, codeIntegrationId string) (*Cod
 		return nil, err
 	}
 	selected, err := entity.GetEntityById(codeIntegrationId, codeIntegrations, CodeIntegrationEntityDesc)
+	if err == entity.ErrEntityNotFound {
+		return nil, err
+	}
+
 	if err != nil {
 		return nil, fmt.Errorf("failed to get code integration by id %s: %v", codeIntegrationId, err)
 	}
+
 	return selected, nil
 }
 
@@ -597,4 +602,41 @@ func BranchesFromCodeIntegration(codeIntegration *CodeIntegration) []string {
 		branches = append(branches, latest.Branch)
 	}
 	return branches
+}
+
+// ValidateOrOptionalSelectingCodeIntegration validates the code integration ID and handles creation if needed
+func ValidateOrOptionalSelectingCodeIntegration(ctx context.Context, codeIntegrationId string, workspaceConfig *workspace.WorkspaceConfig) (string, error) {
+	codeIntegration, err := GetCodeIntegrationById(ctx, codeIntegrationId)
+	if err == entity.ErrEntityNotFound {
+		isSelectOrCreateCodeIntegration := true
+
+		prompt := &survey.Confirm{
+			Message: fmt.Sprintf("Code integration with id %s not found, do you want to select or create a new one?", codeIntegrationId),
+			Default: isSelectOrCreateCodeIntegration,
+		}
+
+		err = survey.AskOne(prompt, &isSelectOrCreateCodeIntegration)
+		if err != nil {
+			return "", err
+		}
+
+		if isSelectOrCreateCodeIntegration {
+			codeIntegrations, err := GetCodeIntegrations(ctx)
+			if err != nil {
+				return "", err
+			}
+			codeIntegration, _, err = SelectOrCreateCodeIntegration(ctx, codeIntegrations, true)
+			if err != nil {
+				return "", err
+			}
+		}
+	} else if err != nil {
+		return "", err
+	}
+
+	if codeIntegration == nil {
+		return "", nil
+	}
+	finalCodeIntegrationId := codeIntegration.Cid
+	return finalCodeIntegrationId, nil
 }

@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"text/tabwriter"
@@ -9,13 +10,15 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
+var ErrEntityNotFound = errors.New("entity not found")
+
 func GetEntityById[TEntity any](entityId string, entities []TEntity, desc *EntityDescriptor[TEntity]) (*TEntity, error) {
 	for _, entity := range entities {
 		if desc.GetID(&entity) == entityId {
 			return &entity, nil
 		}
 	}
-	return nil, fmt.Errorf("not found %s id: %s", entityId, desc.Name)
+	return nil, ErrEntityNotFound
 }
 
 func GetEntityByDisplayName[TEntity any](entityName string, entities []TEntity, desc *EntityDescriptor[TEntity]) (*TEntity, error) {
