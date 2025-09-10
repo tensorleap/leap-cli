@@ -2,6 +2,8 @@ package server
 
 import (
 	"fmt"
+	"net/http"
+	"time"
 
 	"context"
 
@@ -101,4 +103,25 @@ func recommendCliUpgradeMessage() {
 	} else {
 		log.Infof("Your CLI version is %s, which is the latest version.", currentVersion)
 	}
+}
+
+func checkInternetAvailability(isAirGapInstallation bool) bool {
+	internetShouldBeAvailable := !isAirGapInstallation
+	if internetShouldBeAvailable {
+		internetShouldBeAvailable = hasInternet()
+		if !internetShouldBeAvailable {
+			log.Warnf("No internet connection found, it may cause some issues during installation")
+		}
+	}
+	return internetShouldBeAvailable
+}
+
+func hasInternet() bool {
+	client := http.Client{Timeout: 3 * time.Second}
+	resp, err := client.Get("https://www.google.com/generate_204")
+	if err != nil {
+		return false
+	}
+	resp.Body.Close()
+	return resp.StatusCode == 204
 }

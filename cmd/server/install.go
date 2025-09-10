@@ -19,9 +19,12 @@ func NewInstallCmd() *cobra.Command {
 			startProperties := map[string]interface{}{
 				"data_dir": flags.DataDir,
 			}
+			isInternetAvailable := checkInternetAvailability(len(flags.AirGapInstallationFilePath) > 0)
+
 			if err := analytics.SendEvent(analytics.EventServerInstallStarted, startProperties); err != nil {
 				log.Warnf("Failed to track installation start event: %v", err)
 			}
+
 
 			_, err := initDataDir(cmd.Context(), flags.DataDir)
 			if err != nil {
@@ -75,7 +78,7 @@ func NewInstallCmd() *cobra.Command {
 				log.Warnf("Failed to track installation success event: %v", err)
 			}
 
-			if len(flags.AirGapInstallationFilePath) == 0 {
+			if isInternetAvailable {
 				recommendCliUpgradeMessage()
 			}
 			return nil

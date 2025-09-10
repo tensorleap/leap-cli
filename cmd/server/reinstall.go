@@ -18,6 +18,8 @@ func NewReinstallCmd() *cobra.Command {
 			startProperties := map[string]interface{}{
 				"data_dir": flags.DataDir,
 			}
+			isInternetAvailable := checkInternetAvailability(len(flags.AirGapInstallationFilePath) > 0)
+
 			if err := analytics.SendEvent(analytics.EventServerReinstallStarted, startProperties); err != nil {
 				log.Warnf("Failed to track reinstallation start event: %v", err)
 			}
@@ -67,7 +69,7 @@ func NewReinstallCmd() *cobra.Command {
 			if err := analytics.SendEvent(analytics.EventServerReinstallSuccess, successProperties); err != nil {
 				log.Warnf("Failed to track reinstallation success event: %v", err)
 			}
-			if len(flags.AirGapInstallationFilePath) == 0 {
+			if isInternetAvailable {
 				recommendCliUpgradeMessage()
 			}
 
