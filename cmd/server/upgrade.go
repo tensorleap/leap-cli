@@ -18,6 +18,8 @@ func NewUpgradeCmd() *cobra.Command {
 			startProperties := map[string]interface{}{
 				"tag": flags.Tag,
 			}
+			isInternetAvailable := checkInternetAvailability(len(flags.AirGapInstallationFilePath) > 0)
+
 			if err := analytics.SendEvent(analytics.EventServerUpgradeStarted, startProperties); err != nil {
 				log.Warnf("Failed to track upgrade start event: %v", err)
 			}
@@ -56,8 +58,9 @@ func NewUpgradeCmd() *cobra.Command {
 				// Log error but don't fail the upgrade
 				log.Warnf("Failed to track upgrade success event: %v", err)
 			}
-			
-			recommendCliUpgradeMessage()
+			if isInternetAvailable {
+				recommendCliUpgradeMessage()
+			}
 
 			return nil
 		},
