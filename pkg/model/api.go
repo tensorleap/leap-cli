@@ -86,10 +86,11 @@ func ImportModel(ctx context.Context, filePath, projectId, message, modelType, b
 	return nil
 }
 
+const TIMEOUT_FOR_IMPORT_MODEL_JOB = 30 * time.Minute
+
 func waitForImportModelJob(ctx context.Context, projectId, importModelJobId string) (ok bool, job *tlApi.Job, err error) {
 	message := "Waiting for import model result..."
 	sleepDuration := 3 * time.Second
-	timeoutDuration := 10 * time.Minute
 
 	getJobParams := *tlApi.NewGetJobsFilterParams()
 	getJobParams.SetProjectId(projectId)
@@ -118,7 +119,7 @@ func waitForImportModelJob(ctx context.Context, projectId, importModelJobId stri
 		return false, nil
 	}
 
-	err = api.WaitForCondition(ctx, message, condition, sleepDuration, timeoutDuration)
+	err = api.WaitForCondition(ctx, message, condition, sleepDuration, TIMEOUT_FOR_IMPORT_MODEL_JOB)
 
 	if err == api.ErrorTimeout {
 		return false, nil, fmt.Errorf("timeout occurred while waiting for import job status")

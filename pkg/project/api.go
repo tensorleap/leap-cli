@@ -199,7 +199,7 @@ func ExportProjectIntoFile(ctx context.Context, project *ProjectEntity, outputDi
 	return nil
 }
 
-const PUBLISH_TIMEOUT = 4 * time.Hour
+const TIMEOUT_FOR_PROJECT_PUBLISH = 4 * time.Hour
 
 type ExportProjectParams struct {
 	NoCache                bool
@@ -238,7 +238,7 @@ func ExportProject(ctx context.Context, projectId string, copyToUrl string, opti
 		}
 
 		return false, nil
-	}, 20*time.Second, PUBLISH_TIMEOUT)
+	}, 20*time.Second, TIMEOUT_FOR_PROJECT_PUBLISH)
 
 	if err != nil {
 		return nil, fmt.Errorf("failed to wait for project to be copied: %v", err)

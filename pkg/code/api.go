@@ -162,10 +162,11 @@ func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, fileSiz
 	return nil, fmt.Errorf("failed to create a new code integration version")
 }
 
+const TIMEOUT_FOR_CODE_INTEGRATION_STATUS = 30 * time.Minute
+
 func WaitForCodeIntegrationStatus(ctx context.Context, codeIntegrationId string) (ok bool, codeIntegrationVersion *CodeIntegrationVersion, err error) {
 	message := "Waiting for code parser result..."
 	sleepDuration := 3 * time.Second
-	timeoutDuration := 10 * time.Minute
 	condition := func() (bool, error) {
 		codeIntegrationVersion, err = GetCodeIntegration(ctx, codeIntegrationId)
 		if err != nil {
@@ -184,7 +185,7 @@ func WaitForCodeIntegrationStatus(ctx context.Context, codeIntegrationId string)
 		return false, nil
 	}
 
-	err = WaitForCondition(ctx, message, condition, sleepDuration, timeoutDuration)
+	err = WaitForCondition(ctx, message, condition, sleepDuration, TIMEOUT_FOR_CODE_INTEGRATION_STATUS)
 
 	if err == ErrorTimeout {
 		return false, nil, fmt.Errorf("timeout occurred while waiting for the integration code status")

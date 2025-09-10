@@ -25,7 +25,6 @@ func NewInstallCmd() *cobra.Command {
 				log.Warnf("Failed to track installation start event: %v", err)
 			}
 
-
 			_, err := initDataDir(cmd.Context(), flags.DataDir)
 			if err != nil {
 				// Track installation failed
