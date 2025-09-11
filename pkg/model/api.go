@@ -12,6 +12,7 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/run"
 	tlApi "github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
@@ -77,7 +78,16 @@ func ImportModel(ctx context.Context, filePath, projectId, message, modelType, b
 				printMappingValidationErrors(ctx, job.GetVersion(), projectId, mappingYaml)
 			}
 		} else {
-			return fmt.Errorf("failed to import model")
+			topLogs, err := run.GetRunLogs(ctx, importModelJobId)
+			if err != nil {
+				return err
+			}
+			logs := run.GetTopLogs(topLogs, "import-model", 40)
+			if logs == "" {
+				logs = "-- logs not found --"
+			}
+			fmt.Printf("%s\n", logs)
+			return fmt.Errorf("failed to import model show the logs above for more details run `leap runs logs %s` to view the full logs", importModelJobId)
 		}
 		return nil
 	}
