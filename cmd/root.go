@@ -13,6 +13,7 @@ import (
 	"github.com/tensorleap/leap-cli/cmd/hub"
 	"github.com/tensorleap/leap-cli/cmd/models"
 	"github.com/tensorleap/leap-cli/cmd/projects"
+	"github.com/tensorleap/leap-cli/cmd/run"
 	"github.com/tensorleap/leap-cli/cmd/secrets"
 	"github.com/tensorleap/leap-cli/cmd/server"
 	authPkg "github.com/tensorleap/leap-cli/pkg/auth"
@@ -68,6 +69,7 @@ func init() {
 	RootCommand.AddCommand(models.RootCommand)
 	RootCommand.AddCommand(cli.RootCommand)
 	RootCommand.AddCommand(projects.RootCommand)
+	RootCommand.AddCommand(run.RootCommand)
 	if hubPkg.IsHubEnabled() {
 		RootCommand.AddCommand(hub.RootCommand)
 	}
