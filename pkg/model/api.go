@@ -109,7 +109,7 @@ func waitForImportModelJob(ctx context.Context, projectId, importModelJobId stri
 		job = findRunProcessByJobId(data.Jobs, importModelJobId)
 		switch job.Status {
 		case tlApi.JOBSTATUS_FAILED:
-			ok = true
+			ok = false
 			return true, nil
 		case tlApi.JOBSTATUS_FINISHED:
 			ok = true
