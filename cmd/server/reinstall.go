@@ -4,7 +4,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/helm-charts/cmd/server"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
-	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
 func NewReinstallCmd() *cobra.Command {
@@ -20,9 +19,7 @@ func NewReinstallCmd() *cobra.Command {
 			}
 			isInternetAvailable := checkInternetAvailability(len(flags.AirGapInstallationFilePath) > 0)
 
-			if err := analytics.SendEvent(analytics.EventServerReinstallStarted, startProperties); err != nil {
-				log.Warnf("Failed to track reinstallation start event: %v", err)
-			}
+			analytics.SendEvent(analytics.EventServerReinstallStarted, startProperties)
 
 			isReinstalled, err := initDataDir(cmd.Context(), "")
 			if err != nil {
@@ -31,9 +28,7 @@ func NewReinstallCmd() *cobra.Command {
 					"error":    err.Error(),
 					"stage":    "init_data_dir",
 				}
-				if err := analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties); err != nil {
-					log.Warnf("Failed to track reinstallation failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties)
 				return err
 			}
 			err = server.RunReinstallCmd(cmd, flags, isReinstalled)
@@ -43,9 +38,7 @@ func NewReinstallCmd() *cobra.Command {
 					"error":    err.Error(),
 					"stage":    "run_reinstall_cmd",
 				}
-				if err := analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties); err != nil {
-					log.Warnf("Failed to track reinstallation failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties)
 				return mapInstallationErr(err)
 			}
 			if err := localLogin(flags.Port); err != nil {
@@ -55,9 +48,7 @@ func NewReinstallCmd() *cobra.Command {
 					"error":    err.Error(),
 					"stage":    "local_login",
 				}
-				if err := analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties); err != nil {
-					log.Warnf("Failed to track reinstallation failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties)
 				return err
 			}
 
@@ -66,9 +57,7 @@ func NewReinstallCmd() *cobra.Command {
 				"port":     flags.Port,
 			}
 
-			if err := analytics.SendEvent(analytics.EventServerReinstallSuccess, successProperties); err != nil {
-				log.Warnf("Failed to track reinstallation success event: %v", err)
-			}
+			analytics.SendEvent(analytics.EventServerReinstallSuccess, successProperties)
 			if isInternetAvailable {
 				recommendCliUpgradeMessage()
 			}

@@ -165,7 +165,7 @@ func getCurrentUsername() string {
 }
 
 // SendEvent sends an event to Mixpanel with the given event type and properties
-func SendEvent(eventType EventType, properties map[string]interface{}) error {
+func SendEvent(eventType EventType, properties map[string]interface{}) {
 	if properties == nil {
 		properties = make(map[string]interface{})
 	}
@@ -235,7 +235,7 @@ func SendEvent(eventType EventType, properties map[string]interface{}) error {
 
 	eventData, err := json.Marshal(event)
 	if err != nil {
-		return fmt.Errorf("failed to marshal event: %w", err)
+		return
 	}
 
 	// Mixpanel expects the data to be base64 encoded
@@ -248,15 +248,13 @@ func SendEvent(eventType EventType, properties map[string]interface{}) error {
 
 	resp, err := client.Post(MixpanelEndpoint, "application/x-www-form-urlencoded", bytes.NewBuffer(encodedData))
 	if err != nil {
-		return fmt.Errorf("failed to send event to Mixpanel: %w", err)
+		return
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("mixpanel API returned status: %d", resp.StatusCode)
+		return
 	}
-
-	return nil
 }
 
 // SendEventWithUserData sends an event to Mixpanel and enriches it with user data from a callback
@@ -275,5 +273,6 @@ func SendEventWithUserData(eventType EventType, properties map[string]interface{
 		}
 	}
 
-	return SendEvent(eventType, properties)
+	SendEvent(eventType, properties)
+	return nil
 }
