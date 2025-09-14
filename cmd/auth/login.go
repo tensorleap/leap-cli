@@ -36,7 +36,7 @@ func NewLoginCmd() *cobra.Command {
 						"success": false,
 						"method":  "url_input",
 					}
-					_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
+					analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 					return err
 				}
 			}
@@ -49,7 +49,7 @@ func NewLoginCmd() *cobra.Command {
 					"success": false,
 					"method":  "url_validation",
 				}
-				_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
+				analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 				return err
 			}
 
@@ -67,7 +67,7 @@ func NewLoginCmd() *cobra.Command {
 						"success": false,
 						"method":  "method_selection",
 					}
-					_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
+					analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 					return err
 				}
 			}
@@ -82,7 +82,7 @@ func NewLoginCmd() *cobra.Command {
 						"success": false,
 						"method":  "browser_selection",
 					}
-					_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
+					analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 					return err
 				}
 				if useBrowser {
@@ -96,7 +96,7 @@ func NewLoginCmd() *cobra.Command {
 							"success": false,
 							"method":  loginMethod,
 						}
-						_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
+						analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 						return err
 					}
 				} else {
@@ -116,7 +116,7 @@ func NewLoginCmd() *cobra.Command {
 							properties["inserted_username"] = userName
 						}
 
-						_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
+						analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 						return err
 					}
 					apiKey, err = auth.LoginAndGetAuthToken(apiUrl, userName, password)
@@ -134,7 +134,7 @@ func NewLoginCmd() *cobra.Command {
 							properties["inserted_username"] = userName
 						}
 
-						_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
+						analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 						return err
 					}
 				}
@@ -149,7 +149,7 @@ func NewLoginCmd() *cobra.Command {
 						"success": false,
 						"method":  loginMethod,
 					}
-					_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
+					analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 					return err
 				}
 			} else {
@@ -173,7 +173,7 @@ func NewLoginCmd() *cobra.Command {
 					"success":  false,
 					"method":   loginMethod,
 				}
-				_ = analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
+				analytics.SendEvent(analytics.EventAuthLoginFailed, properties)
 				return err
 			}
 

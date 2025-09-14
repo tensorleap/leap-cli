@@ -4,7 +4,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/helm-charts/cmd/server"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
-	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
 func NewInstallCmd() *cobra.Command {
@@ -21,9 +20,7 @@ func NewInstallCmd() *cobra.Command {
 			}
 			isInternetAvailable := checkInternetAvailability(len(flags.AirGapInstallationFilePath) > 0)
 
-			if err := analytics.SendEvent(analytics.EventServerInstallStarted, startProperties); err != nil {
-				log.Warnf("Failed to track installation start event: %v", err)
-			}
+			analytics.SendEvent(analytics.EventServerInstallStarted, startProperties)
 
 			_, err := initDataDir(cmd.Context(), flags.DataDir)
 			if err != nil {
@@ -33,9 +30,7 @@ func NewInstallCmd() *cobra.Command {
 					"error":    err.Error(),
 					"stage":    "init_data_dir",
 				}
-				if err := analytics.SendEvent(analytics.EventServerInstallFailed, failProperties); err != nil {
-					log.Warnf("Failed to track installation failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventServerInstallFailed, failProperties)
 				return err
 			}
 
@@ -47,9 +42,7 @@ func NewInstallCmd() *cobra.Command {
 					"error":    err.Error(),
 					"stage":    "run_install_cmd",
 				}
-				if err := analytics.SendEvent(analytics.EventServerInstallFailed, failProperties); err != nil {
-					log.Warnf("Failed to track installation failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventServerInstallFailed, failProperties)
 				return mapInstallationErr(err)
 			}
 
@@ -61,9 +54,7 @@ func NewInstallCmd() *cobra.Command {
 					"error":    err.Error(),
 					"stage":    "local_login",
 				}
-				if err := analytics.SendEvent(analytics.EventServerInstallFailed, failProperties); err != nil {
-					log.Warnf("Failed to track installation failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventServerInstallFailed, failProperties)
 				return err
 			}
 
@@ -72,10 +63,7 @@ func NewInstallCmd() *cobra.Command {
 				"port":     flags.Port,
 			}
 
-			if err := analytics.SendEvent(analytics.EventServerInstallSuccess, successProperties); err != nil {
-				// Log error but don't fail the installation
-				log.Warnf("Failed to track installation success event: %v", err)
-			}
+			analytics.SendEvent(analytics.EventServerInstallSuccess, successProperties)
 
 			if isInternetAvailable {
 				recommendCliUpgradeMessage()

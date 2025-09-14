@@ -4,7 +4,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/helm-charts/cmd/server"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
-	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
 func NewUpgradeCmd() *cobra.Command {
@@ -20,9 +19,7 @@ func NewUpgradeCmd() *cobra.Command {
 			}
 			isInternetAvailable := checkInternetAvailability(len(flags.AirGapInstallationFilePath) > 0)
 
-			if err := analytics.SendEvent(analytics.EventServerUpgradeStarted, startProperties); err != nil {
-				log.Warnf("Failed to track upgrade start event: %v", err)
-			}
+			analytics.SendEvent(analytics.EventServerUpgradeStarted, startProperties)
 
 			_, err := initDataDir(cmd.Context(), "")
 			if err != nil {
@@ -31,9 +28,7 @@ func NewUpgradeCmd() *cobra.Command {
 					"error": err.Error(),
 					"stage": "init_data_dir",
 				}
-				if err := analytics.SendEvent(analytics.EventServerUpgradeFailed, failProperties); err != nil {
-					log.Warnf("Failed to track upgrade failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventServerUpgradeFailed, failProperties)
 				return err
 			}
 			err = server.RunUpgradeCmd(cmd, flags)
@@ -44,9 +39,7 @@ func NewUpgradeCmd() *cobra.Command {
 					"error": err.Error(),
 					"stage": "run_upgrade_cmd",
 				}
-				if err := analytics.SendEvent(analytics.EventServerUpgradeFailed, failProperties); err != nil {
-					log.Warnf("Failed to track upgrade failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventServerUpgradeFailed, failProperties)
 				return mapInstallationErr(err)
 			}
 
@@ -54,10 +47,7 @@ func NewUpgradeCmd() *cobra.Command {
 				"tag": flags.Tag,
 			}
 
-			if err := analytics.SendEvent(analytics.EventServerUpgradeSuccess, successProperties); err != nil {
-				// Log error but don't fail the upgrade
-				log.Warnf("Failed to track upgrade success event: %v", err)
-			}
+			analytics.SendEvent(analytics.EventServerUpgradeSuccess, successProperties)
 			if isInternetAvailable {
 				recommendCliUpgradeMessage()
 			}

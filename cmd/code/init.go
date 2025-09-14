@@ -7,7 +7,6 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/entity"
-	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/secret"
 	"github.com/tensorleap/leap-cli/pkg/workspace"
 )
@@ -42,9 +41,7 @@ func init() {
 			}
 
 			// Track code init started
-			if err := analytics.SendEvent(analytics.EventCliCodeInitStarted, properties); err != nil {
-				log.Warnf("Failed to track code init start event: %v", err)
-			}
+			analytics.SendEvent(analytics.EventCliCodeInitStarted, properties)
 
 			var codeIntegration *code.CodeIntegration = nil
 			codeIntegrations, err := code.GetCodeIntegrations(ctx)
@@ -52,9 +49,7 @@ func init() {
 				// Track code init failed
 				properties["error"] = err.Error()
 				properties["stage"] = "get_code_integrations"
-				if err := analytics.SendEvent(analytics.EventCliCodeInitFailed, properties); err != nil {
-					log.Warnf("Failed to track code init failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliCodeInitFailed, properties)
 				return err
 			}
 
@@ -64,9 +59,7 @@ func init() {
 					// Track code init failed
 					properties["error"] = err.Error()
 					properties["stage"] = "ask_code_integration_name"
-					if err := analytics.SendEvent(analytics.EventCliCodeInitFailed, properties); err != nil {
-						log.Warnf("Failed to track code init failure event: %v", err)
-					}
+					analytics.SendEvent(analytics.EventCliCodeInitFailed, properties)
 					return err
 				}
 				codeIntegration, err = code.AddCodeIntegration(ctx, newCodeIntegrationName)
@@ -74,9 +67,7 @@ func init() {
 					// Track code init failed
 					properties["error"] = err.Error()
 					properties["stage"] = "add_code_integration"
-					if err := analytics.SendEvent(analytics.EventCliCodeInitFailed, properties); err != nil {
-						log.Warnf("Failed to track code init failure event: %v", err)
-					}
+					analytics.SendEvent(analytics.EventCliCodeInitFailed, properties)
 					return err
 				}
 				var selectedSecret *secret.SecretEntity
@@ -89,9 +80,7 @@ func init() {
 					// Track code init failed
 					properties["error"] = err.Error()
 					properties["stage"] = "secret_creation_selection"
-					if err := analytics.SendEvent(analytics.EventCliCodeInitFailed, properties); err != nil {
-						log.Warnf("Failed to track code init failure event: %v", err)
-					}
+					analytics.SendEvent(analytics.EventCliCodeInitFailed, properties)
 					return err
 				}
 				if selectedSecret != nil {
@@ -106,9 +95,7 @@ func init() {
 					properties["error"] = err.Error()
 					properties["stage"] = "get_existing_code_integration"
 					properties["requested_code_id"] = codeIntegrationId
-					if err := analytics.SendEvent(analytics.EventCliCodeInitFailed, properties); err != nil {
-						log.Warnf("Failed to track code init failure event: %v", err)
-					}
+					analytics.SendEvent(analytics.EventCliCodeInitFailed, properties)
 					return err
 				}
 				latestVersion, err := code.GetLatestVersion(ctx, codeIntegration.GetCid(), branch)
@@ -133,9 +120,7 @@ func init() {
 				// Track code init failed
 				properties["error"] = err.Error()
 				properties["stage"] = "python_version_validation"
-				if err := analytics.SendEvent(analytics.EventCliCodeInitFailed, properties); err != nil {
-					log.Warnf("Failed to track code init failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliCodeInitFailed, properties)
 				return err
 			}
 
@@ -145,18 +130,14 @@ func init() {
 				properties["error"] = err.Error()
 				properties["stage"] = "template_creation"
 				properties["code_integration_id"] = codeIntegration.GetCid()
-				if err := analytics.SendEvent(analytics.EventCliCodeInitFailed, properties); err != nil {
-					log.Warnf("Failed to track code init failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliCodeInitFailed, properties)
 				return err
 			}
 
 			// Track code init success
 			properties["code_integration_id"] = codeIntegration.GetCid()
 			properties["final_python_version"] = pythonVersion
-			if err := analytics.SendEvent(analytics.EventCliCodeInitSuccess, properties); err != nil {
-				log.Warnf("Failed to track code init success event: %v", err)
-			}
+			analytics.SendEvent(analytics.EventCliCodeInitSuccess, properties)
 
 			return nil
 		},
