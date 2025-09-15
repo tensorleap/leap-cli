@@ -4,7 +4,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/auth"
-	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
 func NewLogoutCmd() *cobra.Command {
@@ -26,17 +25,13 @@ func NewLogoutCmd() *cobra.Command {
 				// Track logout failed
 				properties["error"] = err.Error()
 				properties["stage"] = "logout_execution"
-				if err := analytics.SendEvent(analytics.EventAuthLogoutFailed, properties); err != nil {
-					log.Warnf("Failed to track logout failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventAuthLogoutFailed, properties)
 				return err
 			}
 
 			// Track logout success
 			properties["stage"] = "logout_execution"
-			if err := analytics.SendEvent(analytics.EventAuthLogoutSuccess, properties); err != nil {
-				log.Warnf("Failed to track logout success event: %v", err)
-			}
+			analytics.SendEvent(analytics.EventAuthLogoutSuccess, properties)
 
 			return nil
 		},

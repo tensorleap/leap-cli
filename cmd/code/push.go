@@ -38,27 +38,21 @@ func NewPushCmd() *cobra.Command {
 			}
 
 			// Track code push started
-			if err := analytics.SendEvent(analytics.EventCliCodePushStarted, properties); err != nil {
-				log.Warnf("Failed to track code push start event: %v", err)
-			}
+			analytics.SendEvent(analytics.EventCliCodePushStarted, properties)
 
 			workspaceConfig, err := workspace.GetWorkspaceConfig()
 			if err != nil {
 				// Track code push failed
 				properties["error"] = err.Error()
 				properties["stage"] = "get_workspace_config"
-				if err := analytics.SendEvent(analytics.EventCliCodePushFailed, properties); err != nil {
-					log.Warnf("Failed to track code push failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliCodePushFailed, properties)
 				return err
 			}
 			if err := auth.CheckLoggedIn(); err != nil {
 				// Track code push failed
 				properties["error"] = err.Error()
 				properties["stage"] = "auth_check"
-				if err := analytics.SendEvent(analytics.EventCliCodePushFailed, properties); err != nil {
-					log.Warnf("Failed to track code push failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliCodePushFailed, properties)
 				return err
 			}
 			close, tarGzFile, err := code.BundleCodeIntoTempFile(".", workspaceConfig, leapMappingPath)
@@ -66,9 +60,7 @@ func NewPushCmd() *cobra.Command {
 				// Track code push failed
 				properties["error"] = err.Error()
 				properties["stage"] = "bundle_code"
-				if err := analytics.SendEvent(analytics.EventCliCodePushFailed, properties); err != nil {
-					log.Warnf("Failed to track code push failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliCodePushFailed, properties)
 				return err
 			}
 			defer close()
@@ -79,9 +71,7 @@ func NewPushCmd() *cobra.Command {
 				// Track code push failed
 				properties["error"] = err.Error()
 				properties["stage"] = "get_code_integration"
-				if err := analytics.SendEvent(analytics.EventCliCodePushFailed, properties); err != nil {
-					log.Warnf("Failed to track code push failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliCodePushFailed, properties)
 				return err
 			}
 
@@ -90,9 +80,7 @@ func NewPushCmd() *cobra.Command {
 				// Track code push failed
 				properties["error"] = err.Error()
 				properties["stage"] = "sync_secret"
-				if err := analytics.SendEvent(analytics.EventCliCodePushFailed, properties); err != nil {
-					log.Warnf("Failed to track code push failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliCodePushFailed, properties)
 				return err
 			}
 
@@ -101,9 +89,7 @@ func NewPushCmd() *cobra.Command {
 				// Track code push failed
 				properties["error"] = err.Error()
 				properties["stage"] = "sync_python_version"
-				if err := analytics.SendEvent(analytics.EventCliCodePushFailed, properties); err != nil {
-					log.Warnf("Failed to track code push failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliCodePushFailed, properties)
 				return err
 			}
 
@@ -113,9 +99,7 @@ func NewPushCmd() *cobra.Command {
 				// Track code push failed
 				properties["error"] = err.Error()
 				properties["stage"] = "sync_branch"
-				if err := analytics.SendEvent(analytics.EventCliCodePushFailed, properties); err != nil {
-					log.Warnf("Failed to track code push failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliCodePushFailed, properties)
 				return err
 			}
 
@@ -125,9 +109,7 @@ func NewPushCmd() *cobra.Command {
 				properties["error"] = err.Error()
 				properties["stage"] = "push_code"
 				properties["code_integration_id"] = codeIntegration.Cid
-				if err := analytics.SendEvent(analytics.EventCliCodePushFailed, properties); err != nil {
-					log.Warnf("Failed to track code push failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliCodePushFailed, properties)
 				return err
 			}
 
@@ -140,9 +122,7 @@ func NewPushCmd() *cobra.Command {
 				"entry_file":          workspaceConfig.EntryFile,
 				"force_push":          force,
 			}
-			if err := analytics.SendEvent(analytics.EventCliDatasetParseStarted, parseProperties); err != nil {
-				log.Warnf("Failed to track dataset parse start event: %v", err)
-			}
+			analytics.SendEvent(analytics.EventCliDatasetParseStarted, parseProperties)
 
 			supposedToWait := !noWait
 			waitNeeded := supposedToWait && code.IsCodeParsing(currentVersion)
@@ -155,9 +135,7 @@ func NewPushCmd() *cobra.Command {
 					properties["stage"] = "wait_for_parsing"
 					properties["code_integration_id"] = codeIntegration.Cid
 					properties["version_id"] = currentVersion.Cid
-					if err := analytics.SendEvent(analytics.EventCliCodePushFailed, properties); err != nil {
-						log.Warnf("Failed to track code push failure event: %v", err)
-					}
+					analytics.SendEvent(analytics.EventCliCodePushFailed, properties)
 					return err
 				}
 				if ok {
@@ -172,9 +150,7 @@ func NewPushCmd() *cobra.Command {
 						"force_push":          force,
 						"parse_duration":      "waited_for_completion",
 					}
-					if err := analytics.SendEvent(analytics.EventCliDatasetParseSuccess, parseSuccessProperties); err != nil {
-						log.Warnf("Failed to track dataset parse success event: %v", err)
-					}
+					analytics.SendEvent(analytics.EventCliDatasetParseSuccess, parseSuccessProperties)
 				} else {
 					code.PrintCodeIntegrationVersionParserErr(codeIntegrationVersion)
 					// Track dataset parse failed
@@ -188,17 +164,13 @@ func NewPushCmd() *cobra.Command {
 						"parse_duration":      "waited_for_completion",
 						"error":               "code parsing failed",
 					}
-					if err := analytics.SendEvent(analytics.EventCliDatasetParseFailed, parseFailProperties); err != nil {
-						log.Warnf("Failed to track dataset parse failure event: %v", err)
-					}
+					analytics.SendEvent(analytics.EventCliDatasetParseFailed, parseFailProperties)
 					// Track code push failed due to parsing failure
 					properties["error"] = "code parsing failed"
 					properties["stage"] = "code_parsing"
 					properties["code_integration_id"] = codeIntegration.Cid
 					properties["version_id"] = currentVersion.Cid
-					if err := analytics.SendEvent(analytics.EventCliCodePushFailed, properties); err != nil {
-						log.Warnf("Failed to track code push failure event: %v", err)
-					}
+					analytics.SendEvent(analytics.EventCliCodePushFailed, properties)
 					return fmt.Errorf("code parsing failed")
 				}
 			} else if supposedToWait && code.IsCodeParseFailed(currentVersion) {
@@ -214,17 +186,13 @@ func NewPushCmd() *cobra.Command {
 					"parse_duration":      "previous_version_failed",
 					"error":               "latest code parsing failed",
 				}
-				if err := analytics.SendEvent(analytics.EventCliDatasetParseFailed, parseFailProperties); err != nil {
-					log.Warnf("Failed to track dataset parse failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliDatasetParseFailed, parseFailProperties)
 				// Track code push failed due to previous parsing failure
 				properties["error"] = "latest code parsing failed"
 				properties["stage"] = "previous_parsing_failed"
 				properties["code_integration_id"] = codeIntegration.Cid
 				properties["version_id"] = currentVersion.Cid
-				if err := analytics.SendEvent(analytics.EventCliCodePushFailed, properties); err != nil {
-					log.Warnf("Failed to track code push failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliCodePushFailed, properties)
 				return fmt.Errorf("latest code parsing failed, add --force to push anyway")
 			}
 
@@ -248,14 +216,10 @@ func NewPushCmd() *cobra.Command {
 					"force_push":          force,
 					"parse_duration":      "already_completed",
 				}
-				if err := analytics.SendEvent(analytics.EventCliDatasetParseSuccess, parseSuccessProperties); err != nil {
-					log.Warnf("Failed to track dataset parse success event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliDatasetParseSuccess, parseSuccessProperties)
 			}
 
-			if err := analytics.SendEvent(analytics.EventCliCodePushSuccess, properties); err != nil {
-				log.Warnf("Failed to track code push success event: %v", err)
-			}
+			analytics.SendEvent(analytics.EventCliCodePushSuccess, properties)
 
 			return nil
 		},

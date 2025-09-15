@@ -49,17 +49,13 @@ func NewImportCmd() *cobra.Command {
 			}
 
 			// Track models import started
-			if err := analytics.SendEvent(analytics.EventCliModelsImportStarted, properties); err != nil {
-				log.Warnf("Failed to track models import start event: %v", err)
-			}
+			analytics.SendEvent(analytics.EventCliModelsImportStarted, properties)
 
 			if err := auth.CheckLoggedIn(); err != nil {
 				// Track models import failed
 				properties["error"] = err.Error()
 				properties["stage"] = "auth_check"
-				if err := analytics.SendEvent(analytics.EventCliModelsImportFailed, properties); err != nil {
-					log.Warnf("Failed to track models import failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliModelsImportFailed, properties)
 				return err
 			}
 			modelPath := args[0]
@@ -71,9 +67,7 @@ func NewImportCmd() *cobra.Command {
 				properties["error"] = err.Error()
 				properties["stage"] = "select_model_type"
 				properties["model_path"] = modelPath
-				if err := analytics.SendEvent(analytics.EventCliModelsImportFailed, properties); err != nil {
-					log.Warnf("Failed to track models import failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliModelsImportFailed, properties)
 				return err
 			}
 			err = model.InitMessage(&message)
@@ -82,9 +76,7 @@ func NewImportCmd() *cobra.Command {
 				properties["error"] = err.Error()
 				properties["stage"] = "init_message"
 				properties["model_path"] = modelPath
-				if err := analytics.SendEvent(analytics.EventCliModelsImportFailed, properties); err != nil {
-					log.Warnf("Failed to track models import failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliModelsImportFailed, properties)
 				return err
 			}
 
@@ -94,9 +86,7 @@ func NewImportCmd() *cobra.Command {
 				properties["error"] = err.Error()
 				properties["stage"] = "get_workspace_config"
 				properties["model_path"] = modelPath
-				if err := analytics.SendEvent(analytics.EventCliModelsImportFailed, properties); err != nil {
-					log.Warnf("Failed to track models import failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliModelsImportFailed, properties)
 				return err
 			}
 
@@ -119,9 +109,7 @@ func NewImportCmd() *cobra.Command {
 				properties["stage"] = "get_project"
 				properties["model_path"] = modelPath
 				properties["final_project_id"] = projectId
-				if err := analytics.SendEvent(analytics.EventCliModelsImportFailed, properties); err != nil {
-					log.Warnf("Failed to track models import failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliModelsImportFailed, properties)
 				return err
 			}
 
@@ -156,9 +144,7 @@ func NewImportCmd() *cobra.Command {
 				properties["final_code_integration_branch"] = codeIntegrationBranch
 				properties["final_transform_input"] = transformInput
 				properties["final_wait"] = !noWait
-				if err := analytics.SendEvent(analytics.EventCliModelsImportFailed, properties); err != nil {
-					log.Warnf("Failed to track models import failure event: %v", err)
-				}
+				analytics.SendEvent(analytics.EventCliModelsImportFailed, properties)
 				return err
 			}
 			// Track models import success
@@ -170,9 +156,7 @@ func NewImportCmd() *cobra.Command {
 			properties["final_code_integration_branch"] = codeIntegrationBranch
 			properties["final_transform_input"] = transformInput
 			properties["final_wait"] = !noWait
-			if err := analytics.SendEvent(analytics.EventCliModelsImportSuccess, properties); err != nil {
-				log.Warnf("Failed to track models import success event: %v", err)
-			}
+			analytics.SendEvent(analytics.EventCliModelsImportSuccess, properties)
 
 			return nil
 		},
