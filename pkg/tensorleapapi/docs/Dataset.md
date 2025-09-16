@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **Access** | [**DatasetAccess**](DatasetAccess.md) |  | 
 **CreatedAt** | **string** |  | 
 **DefaultBranch** | **string** |  | 
+**Pippin** | Pointer to **bool** |  | [optional] 
 **LatestVersions** | [**[]DatasetLatestVersionsInner**](DatasetLatestVersionsInner.md) |  | 
 
 ## Methods
@@ -186,6 +187,31 @@ and a boolean to check if the value has been set.
 
 SetDefaultBranch sets DefaultBranch field to given value.
 
+
+### GetPippin
+
+`func (o *Dataset) GetPippin() bool`
+
+GetPippin returns the Pippin field if non-nil, zero value otherwise.
+
+### GetPippinOk
+
+`func (o *Dataset) GetPippinOk() (*bool, bool)`
+
+GetPippinOk returns a tuple with the Pippin field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPippin
+
+`func (o *Dataset) SetPippin(v bool)`
+
+SetPippin sets Pippin field to given value.
+
+### HasPippin
+
+`func (o *Dataset) HasPippin() bool`
+
+HasPippin returns a boolean if a field has been set.
 
 ### GetLatestVersions
 

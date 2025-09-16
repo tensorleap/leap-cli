@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **XLabel** | Pointer to **string** |  | [optional] 
 **YLabel** | Pointer to **string** |  | [optional] 
 **XRange** | Pointer to **[]float64** |  | [optional] 
+**Legend** | Pointer to **[]string** |  | [optional] 
 **BoundingBox** | [**[]BoundingBox**](BoundingBox.md) |  | 
 **MaskBlob** | **string** |  | 
 **Text** | **[]string** |  | 
@@ -263,6 +264,31 @@ SetXRange sets XRange field to given value.
 `func (o *VisData) HasXRange() bool`
 
 HasXRange returns a boolean if a field has been set.
+
+### GetLegend
+
+`func (o *VisData) GetLegend() []string`
+
+GetLegend returns the Legend field if non-nil, zero value otherwise.
+
+### GetLegendOk
+
+`func (o *VisData) GetLegendOk() (*[]string, bool)`
+
+GetLegendOk returns a tuple with the Legend field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLegend
+
+`func (o *VisData) SetLegend(v []string)`
+
+SetLegend sets Legend field to given value.
+
+### HasLegend
+
+`func (o *VisData) HasLegend() bool`
+
+HasLegend returns a boolean if a field has been set.
 
 ### GetBoundingBox
 

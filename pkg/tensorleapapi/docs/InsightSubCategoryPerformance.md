@@ -3,7 +3,7 @@
 ## Enum
 
 
-* `FAILING_CLUSTERS` (value: `"failing_clusters"`)
+* `LOW_PERFORMANCE` (value: `"low_performance"`)
 
 * `OVER_FIT` (value: `"over_fit"`)
 

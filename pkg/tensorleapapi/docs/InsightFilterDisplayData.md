@@ -5,14 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | **string** |  | 
-**InsightData** | [**InsightType**](InsightType.md) |  | 
-**SessionRun** | [**FilterSessionRun**](FilterSessionRun.md) |  | 
+**Insights** | [**[]InsightFilterDisplayDataInsightsInner**](InsightFilterDisplayDataInsightsInner.md) |  | 
 
 ## Methods
 
 ### NewInsightFilterDisplayData
 
-`func NewInsightFilterDisplayData(type_ string, insightData InsightType, sessionRun FilterSessionRun, ) *InsightFilterDisplayData`
+`func NewInsightFilterDisplayData(type_ string, insights []InsightFilterDisplayDataInsightsInner, ) *InsightFilterDisplayData`
 
 NewInsightFilterDisplayData instantiates a new InsightFilterDisplayData object
 This constructor will assign default values to properties that have it defined,
@@ -47,44 +46,24 @@ and a boolean to check if the value has been set.
 SetType sets Type field to given value.
 
 
-### GetInsightData
+### GetInsights
 
-`func (o *InsightFilterDisplayData) GetInsightData() InsightType`
+`func (o *InsightFilterDisplayData) GetInsights() []InsightFilterDisplayDataInsightsInner`
 
-GetInsightData returns the InsightData field if non-nil, zero value otherwise.
+GetInsights returns the Insights field if non-nil, zero value otherwise.
 
-### GetInsightDataOk
+### GetInsightsOk
 
-`func (o *InsightFilterDisplayData) GetInsightDataOk() (*InsightType, bool)`
+`func (o *InsightFilterDisplayData) GetInsightsOk() (*[]InsightFilterDisplayDataInsightsInner, bool)`
 
-GetInsightDataOk returns a tuple with the InsightData field if it's non-nil, zero value otherwise
+GetInsightsOk returns a tuple with the Insights field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetInsightData
+### SetInsights
 
-`func (o *InsightFilterDisplayData) SetInsightData(v InsightType)`
+`func (o *InsightFilterDisplayData) SetInsights(v []InsightFilterDisplayDataInsightsInner)`
 
-SetInsightData sets InsightData field to given value.
-
-
-### GetSessionRun
-
-`func (o *InsightFilterDisplayData) GetSessionRun() FilterSessionRun`
-
-GetSessionRun returns the SessionRun field if non-nil, zero value otherwise.
-
-### GetSessionRunOk
-
-`func (o *InsightFilterDisplayData) GetSessionRunOk() (*FilterSessionRun, bool)`
-
-GetSessionRunOk returns a tuple with the SessionRun field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSessionRun
-
-`func (o *InsightFilterDisplayData) SetSessionRun(v FilterSessionRun)`
-
-SetSessionRun sets SessionRun field to given value.
+SetInsights sets Insights field to given value.
 
 
 

@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **Lte** | Pointer to [**NumberOrString**](NumberOrString.md) |  | [optional] 
 **Eq** | Pointer to [**NumberOrString**](NumberOrString.md) |  | [optional] 
 **Lst** | Pointer to [**[]NumberOrString**](NumberOrString.md) |  | [optional] 
-**BlobPath** | Pointer to **string** |  | [optional] 
+**BlobPaths** | Pointer to **[]string** |  | [optional] 
 
 ## Methods
 
@@ -181,30 +181,30 @@ SetLst sets Lst field to given value.
 
 HasLst returns a boolean if a field has been set.
 
-### GetBlobPath
+### GetBlobPaths
 
-`func (o *ESFilterValue) GetBlobPath() string`
+`func (o *ESFilterValue) GetBlobPaths() []string`
 
-GetBlobPath returns the BlobPath field if non-nil, zero value otherwise.
+GetBlobPaths returns the BlobPaths field if non-nil, zero value otherwise.
 
-### GetBlobPathOk
+### GetBlobPathsOk
 
-`func (o *ESFilterValue) GetBlobPathOk() (*string, bool)`
+`func (o *ESFilterValue) GetBlobPathsOk() (*[]string, bool)`
 
-GetBlobPathOk returns a tuple with the BlobPath field if it's non-nil, zero value otherwise
+GetBlobPathsOk returns a tuple with the BlobPaths field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetBlobPath
+### SetBlobPaths
 
-`func (o *ESFilterValue) SetBlobPath(v string)`
+`func (o *ESFilterValue) SetBlobPaths(v []string)`
 
-SetBlobPath sets BlobPath field to given value.
+SetBlobPaths sets BlobPaths field to given value.
 
-### HasBlobPath
+### HasBlobPaths
 
-`func (o *ESFilterValue) HasBlobPath() bool`
+`func (o *ESFilterValue) HasBlobPaths() bool`
 
-HasBlobPath returns a boolean if a field has been set.
+HasBlobPaths returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

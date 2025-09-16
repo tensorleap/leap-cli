@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **SampleIdentities** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
 **Digest** | **string** |  | 
 **Refresh** | Pointer to **bool** |  | [optional] 
+**Trigger** | Pointer to [**JobTrigger**](JobTrigger.md) |  | [optional] 
 
 ## Methods
 
@@ -154,6 +155,31 @@ SetRefresh sets Refresh field to given value.
 `func (o *CreateSampleVisualizationsParams) HasRefresh() bool`
 
 HasRefresh returns a boolean if a field has been set.
+
+### GetTrigger
+
+`func (o *CreateSampleVisualizationsParams) GetTrigger() JobTrigger`
+
+GetTrigger returns the Trigger field if non-nil, zero value otherwise.
+
+### GetTriggerOk
+
+`func (o *CreateSampleVisualizationsParams) GetTriggerOk() (*JobTrigger, bool)`
+
+GetTriggerOk returns a tuple with the Trigger field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTrigger
+
+`func (o *CreateSampleVisualizationsParams) SetTrigger(v JobTrigger)`
+
+SetTrigger sets Trigger field to given value.
+
+### HasTrigger
+
+`func (o *CreateSampleVisualizationsParams) HasTrigger() bool`
+
+HasTrigger returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
