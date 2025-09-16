@@ -55,15 +55,6 @@ func NewPushCmd() *cobra.Command {
 				analytics.SendEvent(analytics.EventCliCodePushFailed, properties)
 				return err
 			}
-			close, tarGzFile, err := code.BundleCodeIntoTempFile(".", workspaceConfig, leapMappingPath)
-			if err != nil {
-				// Track code push failed
-				properties["error"] = err.Error()
-				properties["stage"] = "bundle_code"
-				analytics.SendEvent(analytics.EventCliCodePushFailed, properties)
-				return err
-			}
-			defer close()
 
 			ctx := cmd.Context()
 			codeIntegration, _, err := code.GetAndUpdateCodeIntegrationIfNotExists(ctx, workspaceConfig)
@@ -92,6 +83,16 @@ func NewPushCmd() *cobra.Command {
 				analytics.SendEvent(analytics.EventCliCodePushFailed, properties)
 				return err
 			}
+
+			close, tarGzFile, err := code.BundleCodeIntoTempFile(".", workspaceConfig, leapMappingPath, codeIntegration.GetPippin())
+			if err != nil {
+				// Track code push failed
+				properties["error"] = err.Error()
+				properties["stage"] = "bundle_code"
+				analytics.SendEvent(analytics.EventCliCodePushFailed, properties)
+				return err
+			}
+			defer close()
 
 			branches := code.BranchesFromCodeIntegration(codeIntegration)
 			branch, err := code.SyncBranchFromFlagAndConfig(branch, workspaceConfig, branches, codeIntegration.DefaultBranch)

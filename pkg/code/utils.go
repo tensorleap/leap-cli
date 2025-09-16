@@ -15,6 +15,7 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/bmatcuk/doublestar/v4"
+	"github.com/samber/lo"
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/entity"
 	"github.com/tensorleap/leap-cli/pkg/local"
@@ -274,8 +275,39 @@ func FetchFileFromTarGz(blobURL string, filename string) (string, error) {
 	return "", errors.New("file not found in tar.gz")
 }
 
-func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.WorkspaceConfig, externalLeapMappingPath string) (close func(), tarGzFile *os.File, err error) {
+var RequirementsFiles = []string{
+	"pyproject.toml",
+	"requirements.txt",
+	"tensorleap_requirements.txt",
+}
+
+func isRequirementsFile(path string) bool {
+	return lo.SomeBy(RequirementsFiles, func(file string) bool {
+		return path == file
+	})
+}
+
+func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.WorkspaceConfig, externalLeapMappingPath string, isUsePippin bool) (close func(), tarGzFile *os.File, err error) {
 	filePaths, err := getDatasetFiles(filesDir, workspaceConfig)
+	isCodeIntegrationUsePippinButNoRequirementsTxt := isUsePippin && lo.EveryBy(filePaths, func(path string) bool {
+		return !isRequirementsFile(path)
+	})
+	requirementsFilesStr := strings.Join(RequirementsFiles, ", ")
+
+	if isCodeIntegrationUsePippinButNoRequirementsTxt {
+		isContinue := false
+		prompt := &survey.Confirm{
+			Message: fmt.Sprintf("No requirements file (%s) found in the root directory. Continue?", requirementsFilesStr),
+			Default: isContinue,
+		}
+		err = survey.AskOne(prompt, &isContinue)
+		if err != nil {
+			return nil, nil, err
+		}
+		if !isContinue {
+			return nil, nil, fmt.Errorf("please ensure a requirements file (%s) exists and is specified in leap.yaml", requirementsFilesStr)
+		}
+	}
 	if err != nil {
 		return
 	}

@@ -133,7 +133,7 @@ func TestBundleCodeIntoTempFile(t *testing.T) {
 	}
 
 	// Test without externalLeapMappingPath
-	closeFunc, tarGzFile, err := BundleCodeIntoTempFile(tempDir, workspaceConfig, "")
+	closeFunc, tarGzFile, err := BundleCodeIntoTempFile(tempDir, workspaceConfig, "", false)
 	assert.NoError(t, err)
 	defer closeFunc()
 	defer tarGzFile.Close()
@@ -146,7 +146,7 @@ func TestBundleCodeIntoTempFile(t *testing.T) {
 	err = os.WriteFile(externalLeapMappingPath, []byte("mapping content"), 0644)
 	assert.NoError(t, err)
 
-	closeFunc, tarGzFile, err = BundleCodeIntoTempFile(tempDir, workspaceConfig, externalLeapMappingPath)
+	closeFunc, tarGzFile, err = BundleCodeIntoTempFile(tempDir, workspaceConfig, externalLeapMappingPath, false)
 	assert.NoError(t, err)
 	defer closeFunc()
 	defer tarGzFile.Close()

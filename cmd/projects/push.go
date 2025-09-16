@@ -132,7 +132,7 @@ func NewPushCmd() *cobra.Command {
 				return err
 			}
 
-			close, tarGzFile, err := code.BundleCodeIntoTempFile(".", workspaceConfig, leapMappingPath)
+			close, tarGzFile, err := code.BundleCodeIntoTempFile(".", workspaceConfig, leapMappingPath, codeIntegration.GetPippin())
 			if err != nil {
 				// Track projects push failed
 				properties["error"] = err.Error()
@@ -142,7 +142,7 @@ func NewPushCmd() *cobra.Command {
 			}
 			defer close()
 
-			pushed, currentVersion, err := code.PushCode(ctx, force, codeIntegration.Cid, tarGzFile, workspaceConfig.EntryFile, secretId, codeBranch, codeVersionMessage, pythonVersion)
+			pushed, currentVersion, err := code.PushCode(ctx, force, codeIntegration.GetCid(), tarGzFile, workspaceConfig.EntryFile, secretId, codeBranch, codeVersionMessage, pythonVersion)
 			if err != nil {
 				// Track projects push failed
 				properties["error"] = err.Error()
