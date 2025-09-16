@@ -70,6 +70,7 @@ Method | HTTP request | Description
 [**GetIssueFileUploadSignedUrl**](DefaultApi.md#GetIssueFileUploadSignedUrl) | **Post** /issues/getIssueFileUploadSignedUrl | 
 [**GetJobLogs**](DefaultApi.md#GetJobLogs) | **Post** /jobs/getJobLogs | 
 [**GetLatestDatasetVersion**](DefaultApi.md#GetLatestDatasetVersion) | **Post** /datasetVersions/getLatestDatasetVersion | 
+[**GetLatestExportedProject**](DefaultApi.md#GetLatestExportedProject) | **Post** /projects/getLatestExportedProject | 
 [**GetMachineTypes**](DefaultApi.md#GetMachineTypes) | **Post** /teams/getMachineTypes | 
 [**GetMaxActiveUsers**](DefaultApi.md#GetMaxActiveUsers) | **Post** /metadata/getMaxActiveUsers | 
 [**GetMeanAveragePrecision**](DefaultApi.md#GetMeanAveragePrecision) | **Post** /sessionmetrics/getMeanAveragePrecision | 
@@ -146,6 +147,7 @@ Method | HTTP request | Description
 [**TrashSecretManager**](DefaultApi.md#TrashSecretManager) | **Post** /secret-manager/trashSecretManager | 
 [**UnarchiveInsight**](DefaultApi.md#UnarchiveInsight) | **Post** /insights/unarchiveInsight | 
 [**UpdateDashboard**](DefaultApi.md#UpdateDashboard) | **Post** /dashboards/updateDashboard | 
+[**UpdateDataset**](DefaultApi.md#UpdateDataset) | **Post** /datasets/updateDataset | 
 [**UpdateEngineSettings**](DefaultApi.md#UpdateEngineSettings) | **Post** /settings/updateSetting | 
 [**UpdateIssue**](DefaultApi.md#UpdateIssue) | **Post** /issues/updateIssue | 
 [**UpdateProjectMeta**](DefaultApi.md#UpdateProjectMeta) | **Post** /projects/updateProjectMeta | 
@@ -4312,6 +4314,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetLatestDatasetVersionResponse**](GetLatestDatasetVersionResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetLatestExportedProject
+
+> LatestExportedProject GetLatestExportedProject(ctx).GetLatestExportedProjectParams(getLatestExportedProjectParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    getLatestExportedProjectParams := *openapiclient.NewGetLatestExportedProjectParams("ProjectId_example") // GetLatestExportedProjectParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetLatestExportedProject(context.Background()).GetLatestExportedProjectParams(getLatestExportedProjectParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetLatestExportedProject``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetLatestExportedProject`: LatestExportedProject
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetLatestExportedProject`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetLatestExportedProjectRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getLatestExportedProjectParams** | [**GetLatestExportedProjectParams**](GetLatestExportedProjectParams.md) |  | 
+
+### Return type
+
+[**LatestExportedProject**](LatestExportedProject.md)
 
 ### Authorization
 
@@ -9092,6 +9158,70 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateDataset
+
+> UpdateDatasetResponse UpdateDataset(ctx).UpdateDatasetParams(updateDatasetParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    updateDatasetParams := *openapiclient.NewUpdateDatasetParams("DatasetId_example", "Name_example") // UpdateDatasetParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.UpdateDataset(context.Background()).UpdateDatasetParams(updateDatasetParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateDataset``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `UpdateDataset`: UpdateDatasetResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateDataset`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateDatasetRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **updateDatasetParams** | [**UpdateDatasetParams**](UpdateDatasetParams.md) |  | 
+
+### Return type
+
+[**UpdateDatasetResponse**](UpdateDatasetResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.618
+  version: 0.0.628
 servers:
 - url: /api/v2
 paths:
@@ -357,6 +357,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AddDatasetResponse'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /datasets/updateDataset:
+    post:
+      operationId: UpdateDataset
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDatasetParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateDatasetResponse'
           description: Ok
       security:
       - jwt:
@@ -1532,6 +1552,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetCurrentProjectVersionResponse'
+          description: Ok
+      security:
+      - jwt: []
+  /projects/getLatestExportedProject:
+    post:
+      operationId: GetLatestExportedProject
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetLatestExportedProjectParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LatestExportedProject'
           description: Ok
       security:
       - jwt: []
@@ -3290,8 +3329,10 @@ components:
       additionalProperties: false
       example:
         lt: null
-        blob_path: blob_path
         gte: null
+        blob_paths:
+        - blob_paths
+        - blob_paths
         lte: null
         eq: null
         lst:
@@ -3313,21 +3354,38 @@ components:
           items:
             $ref: '#/components/schemas/NumberOrString'
           type: array
-        blob_path:
-          type: string
+        blob_paths:
+          items:
+            type: string
+          type: array
       type: object
-    Record_string.number_:
-      description: Construct a type with a set of properties K of type T
-      properties: {}
+    FilterSessionRun:
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        sessionId:
+          type: string
+        epoch:
+          format: double
+          type: number
+      required:
+      - epoch
+      - id
+      - name
+      - sessionId
       type: object
     ScatterInsightType:
       enum:
-      - redundant_samples_cluster
-      - weak_cluster
-      - under_representation_cluster
-      - overfitting_cluster
-      - duplication_insight
-      - data_leakage_insight
+      - low_performance
+      - low_performance_predicted_unlabeled
+      - under_representation
+      - over_representation
+      - duplication
+      - data_leakage
+      - overfitting
       type: string
     OperatorEnum:
       enum:
@@ -3335,24 +3393,15 @@ components:
       - equal_to
       - larger_than
       type: string
-    DataStateType:
-      enum:
-      - training
-      - validation
-      - test
-      - unlabeled
-      type: string
     ScatterFilter:
       additionalProperties: false
       properties:
         metric:
           type: string
         value:
-          type: string
+          $ref: '#/components/schemas/ScatterFilter_value'
         operator:
           $ref: '#/components/schemas/OperatorEnum'
-        data_state:
-          $ref: '#/components/schemas/DataStateType'
       required:
       - metric
       - operator
@@ -3390,22 +3439,66 @@ components:
       type: object
     InsightSubCategoryDSCuration:
       enum:
-      - under_presentation
-      - over_presentation
+      - under_representation
+      - over_representation
       - data_leakage
       type: string
     InsightSubCategoryPerformance:
       enum:
-      - failing_clusters
+      - low_performance
       - over_fit
       type: string
+    SeverityMetricElement:
+      additionalProperties: false
+      properties:
+        metric_name:
+          type: string
+        value:
+          format: double
+          type: number
+        normalized_value:
+          format: double
+          type: number
+      required:
+      - metric_name
+      - value
+      type: object
+    MetricStatisticElement:
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        value:
+          $ref: '#/components/schemas/MetricStatisticElement_value'
+      required:
+      - name
+      - value
+      type: object
+    InsightMetricInfo:
+      additionalProperties: false
+      properties:
+        metric_name:
+          type: string
+        metric_statistics:
+          items:
+            $ref: '#/components/schemas/MetricStatisticElement'
+          type: array
+      required:
+      - metric_name
+      - metric_statistics
+      type: object
     OverfittingInsight:
       additionalProperties: false
       properties:
         type:
           $ref: '#/components/schemas/ScatterInsightType'
-        filter:
-          $ref: '#/components/schemas/ScatterFilter'
+        filters:
+          items:
+            $ref: '#/components/schemas/ScatterFilter'
+          type: array
+        n_samples:
+          format: double
+          type: number
         mutual_info_elements:
           items:
             $ref: '#/components/schemas/MutualInformationElement'
@@ -3416,47 +3509,65 @@ components:
           $ref: '#/components/schemas/InsightSubCategoryDSCuration'
         insight_category_performance:
           $ref: '#/components/schemas/InsightSubCategoryPerformance'
+        severity:
+          format: double
+          type: number
+        severity_metrics:
+          items:
+            $ref: '#/components/schemas/SeverityMetricElement'
+          type: array
+        metrics_info:
+          items:
+            $ref: '#/components/schemas/InsightMetricInfo'
+          type: array
         index:
           format: double
           type: number
+        min_hash:
+          items:
+            format: double
+            type: number
+          type: array
+        csv_path:
+          type: string
         n_samples_validation:
           format: double
           type: number
         n_samples_training:
           format: double
           type: number
-        avg_metric_validation:
-          format: double
-          type: number
-        avg_metric_training:
-          format: double
-          type: number
-        metric_name:
-          type: string
-        configuration:
-          description: Construct a type with a set of properties K of type T
-          properties: {}
-          type: object
-        metrics_names:
-          items:
-            type: string
-          type: array
       required:
-      - avg_metric_training
-      - avg_metric_validation
-      - filter
-      - metric_name
+      - blob_path
+      - index
+      - metrics_info
+      - min_hash
+      - mutual_info_elements
+      - n_samples
       - n_samples_training
       - n_samples_validation
+      - severity
+      - severity_metrics
       - type
       type: object
+    DataStateType:
+      enum:
+      - training
+      - validation
+      - test
+      - unlabeled
+      type: string
     UnderRepresentationInsight:
       additionalProperties: false
       properties:
         type:
           $ref: '#/components/schemas/ScatterInsightType'
-        filter:
-          $ref: '#/components/schemas/ScatterFilter'
+        filters:
+          items:
+            $ref: '#/components/schemas/ScatterFilter'
+          type: array
+        n_samples:
+          format: double
+          type: number
         mutual_info_elements:
           items:
             $ref: '#/components/schemas/MutualInformationElement'
@@ -3467,9 +3578,27 @@ components:
           $ref: '#/components/schemas/InsightSubCategoryDSCuration'
         insight_category_performance:
           $ref: '#/components/schemas/InsightSubCategoryPerformance'
+        severity:
+          format: double
+          type: number
+        severity_metrics:
+          items:
+            $ref: '#/components/schemas/SeverityMetricElement'
+          type: array
+        metrics_info:
+          items:
+            $ref: '#/components/schemas/InsightMetricInfo'
+          type: array
         index:
           format: double
           type: number
+        min_hash:
+          items:
+            format: double
+            type: number
+          type: array
+        csv_path:
+          type: string
         under_representation_dataset:
           $ref: '#/components/schemas/DataStateType'
         under_representation_n_samples:
@@ -3480,25 +3609,33 @@ components:
         over_representation_n_samples:
           format: double
           type: number
-        configuration:
-          description: Construct a type with a set of properties K of type T
-          properties: {}
-          type: object
       required:
-      - filter
+      - blob_path
+      - index
+      - metrics_info
+      - min_hash
+      - mutual_info_elements
+      - n_samples
       - over_representation_dataset
       - over_representation_n_samples
+      - severity
+      - severity_metrics
       - type
       - under_representation_dataset
       - under_representation_n_samples
       type: object
-    ClusterInsight:
+    ScatterInsightBase:
       additionalProperties: false
       properties:
         type:
           $ref: '#/components/schemas/ScatterInsightType'
-        filter:
-          $ref: '#/components/schemas/ScatterFilter'
+        filters:
+          items:
+            $ref: '#/components/schemas/ScatterFilter'
+          type: array
+        n_samples:
+          format: double
+          type: number
         mutual_info_elements:
           items:
             $ref: '#/components/schemas/MutualInformationElement'
@@ -3509,30 +3646,36 @@ components:
           $ref: '#/components/schemas/InsightSubCategoryDSCuration'
         insight_category_performance:
           $ref: '#/components/schemas/InsightSubCategoryPerformance'
+        severity:
+          format: double
+          type: number
+        severity_metrics:
+          items:
+            $ref: '#/components/schemas/SeverityMetricElement'
+          type: array
+        metrics_info:
+          items:
+            $ref: '#/components/schemas/InsightMetricInfo'
+          type: array
         index:
           format: double
           type: number
-        n_samples:
-          format: double
-          type: number
-        avg_metric:
-          format: double
-          type: number
-        metric_name:
-          type: string
-        configuration:
-          description: Construct a type with a set of properties K of type T
-          properties: {}
-          type: object
-        metrics_names:
+        min_hash:
           items:
-            type: string
+            format: double
+            type: number
           type: array
+        csv_path:
+          type: string
       required:
-      - avg_metric
-      - filter
-      - metric_name
+      - blob_path
+      - index
+      - metrics_info
+      - min_hash
+      - mutual_info_elements
       - n_samples
+      - severity
+      - severity_metrics
       - type
       type: object
     DuplicationInsight:
@@ -3540,8 +3683,13 @@ components:
       properties:
         type:
           $ref: '#/components/schemas/ScatterInsightType'
-        filter:
-          $ref: '#/components/schemas/ScatterFilter'
+        filters:
+          items:
+            $ref: '#/components/schemas/ScatterFilter'
+          type: array
+        n_samples:
+          format: double
+          type: number
         mutual_info_elements:
           items:
             $ref: '#/components/schemas/MutualInformationElement'
@@ -3552,17 +3700,38 @@ components:
           $ref: '#/components/schemas/InsightSubCategoryDSCuration'
         insight_category_performance:
           $ref: '#/components/schemas/InsightSubCategoryPerformance'
+        severity:
+          format: double
+          type: number
+        severity_metrics:
+          items:
+            $ref: '#/components/schemas/SeverityMetricElement'
+          type: array
+        metrics_info:
+          items:
+            $ref: '#/components/schemas/InsightMetricInfo'
+          type: array
         index:
           format: double
           type: number
+        min_hash:
+          items:
+            format: double
+            type: number
+          type: array
+        csv_path:
+          type: string
         subset:
           $ref: '#/components/schemas/DataStateType'
-        n_duplicate_samples:
-          format: double
-          type: number
       required:
-      - filter
-      - n_duplicate_samples
+      - blob_path
+      - index
+      - metrics_info
+      - min_hash
+      - mutual_info_elements
+      - n_samples
+      - severity
+      - severity_metrics
       - subset
       - type
       type: object
@@ -3571,8 +3740,13 @@ components:
       properties:
         type:
           $ref: '#/components/schemas/ScatterInsightType'
-        filter:
-          $ref: '#/components/schemas/ScatterFilter'
+        filters:
+          items:
+            $ref: '#/components/schemas/ScatterFilter'
+          type: array
+        n_samples:
+          format: double
+          type: number
         mutual_info_elements:
           items:
             $ref: '#/components/schemas/MutualInformationElement'
@@ -3583,44 +3757,51 @@ components:
           $ref: '#/components/schemas/InsightSubCategoryDSCuration'
         insight_category_performance:
           $ref: '#/components/schemas/InsightSubCategoryPerformance'
+        severity:
+          format: double
+          type: number
+        severity_metrics:
+          items:
+            $ref: '#/components/schemas/SeverityMetricElement'
+          type: array
+        metrics_info:
+          items:
+            $ref: '#/components/schemas/InsightMetricInfo'
+          type: array
         index:
           format: double
           type: number
+        min_hash:
+          items:
+            format: double
+            type: number
+          type: array
+        csv_path:
+          type: string
         first_subset:
           $ref: '#/components/schemas/DataStateType'
         second_subset:
           $ref: '#/components/schemas/DataStateType'
-        n_cross_subsets_duplications:
-          format: double
-          type: number
       required:
-      - filter
+      - blob_path
       - first_subset
-      - n_cross_subsets_duplications
+      - index
+      - metrics_info
+      - min_hash
+      - mutual_info_elements
+      - n_samples
       - second_subset
+      - severity
+      - severity_metrics
       - type
       type: object
     InsightType:
       anyOf:
       - $ref: '#/components/schemas/OverfittingInsight'
       - $ref: '#/components/schemas/UnderRepresentationInsight'
-      - $ref: '#/components/schemas/ClusterInsight'
+      - $ref: '#/components/schemas/ScatterInsightBase'
       - $ref: '#/components/schemas/DuplicationInsight'
       - $ref: '#/components/schemas/DataLeakageInsight'
-    FilterSessionRun:
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        id:
-          type: string
-        sessionId:
-          type: string
-      required:
-      - id
-      - name
-      - sessionId
-      type: object
     InsightFilterDisplayData:
       additionalProperties: false
       properties:
@@ -3629,13 +3810,12 @@ components:
           - insight
           nullable: false
           type: string
-        insightData:
-          $ref: '#/components/schemas/InsightType'
-        sessionRun:
-          $ref: '#/components/schemas/FilterSessionRun'
+        insights:
+          items:
+            $ref: '#/components/schemas/InsightFilterDisplayData_insights_inner'
+          type: array
       required:
-      - insightData
-      - sessionRun
+      - insights
       - type
       type: object
     SampleIdType:
@@ -3701,8 +3881,10 @@ components:
         displayData: null
         value:
           lt: null
-          blob_path: blob_path
           gte: null
+          blob_paths:
+          - blob_paths
+          - blob_paths
           lte: null
           eq: null
           lst:
@@ -4194,6 +4376,7 @@ components:
       - Count
       - Min
       - Max
+      - Median
       type: string
     AggFunc:
       additionalProperties: false
@@ -5075,6 +5258,7 @@ components:
       example:
         createdAt: createdAt
         access: null
+        pippin: true
         teamId: teamId
         defaultBranch: defaultBranch
         name: name
@@ -5591,6 +5775,8 @@ components:
           type: string
         defaultBranch:
           type: string
+        pippin:
+          type: boolean
         latestVersions:
           items:
             $ref: '#/components/schemas/Dataset_latestVersions_inner'
@@ -5610,6 +5796,7 @@ components:
         datasets:
         - createdAt: createdAt
           access: null
+          pippin: true
           teamId: teamId
           defaultBranch: defaultBranch
           name: name
@@ -6112,6 +6299,7 @@ components:
           cid: cid
         - createdAt: createdAt
           access: null
+          pippin: true
           teamId: teamId
           defaultBranch: defaultBranch
           name: name
@@ -6626,6 +6814,7 @@ components:
         dataset:
           createdAt: createdAt
           access: null
+          pippin: true
           teamId: teamId
           defaultBranch: defaultBranch
           name: name
@@ -7143,6 +7332,536 @@ components:
       required:
       - name
       type: object
+    UpdateDatasetResponse:
+      additionalProperties: false
+      example:
+        dataset:
+          createdAt: createdAt
+          access: null
+          pippin: true
+          teamId: teamId
+          defaultBranch: defaultBranch
+          name: name
+          sourceDatasetId: sourceDatasetId
+          latestVersions:
+          - latestValid:
+              note: note
+              createdAt: createdAt
+              metadata:
+                setupStatus:
+                  generalError: generalError
+                  bindersStatus:
+                  - is_passed: true
+                    shape:
+                    - 3.616076749251911
+                    - 3.616076749251911
+                    handler_type: handler_type
+                    display: "{}"
+                    name: name
+                    raw_result: ""
+                  - is_passed: true
+                    shape:
+                    - 3.616076749251911
+                    - 3.616076749251911
+                    handler_type: handler_type
+                    display: "{}"
+                    name: name
+                    raw_result: ""
+                  printLog: printLog
+                secretManagerId: secretManagerId
+                setup:
+                  outputs:
+                  - shape:
+                    - 7.061401241503109
+                    - 7.061401241503109
+                    name: name
+                  - shape:
+                    - 7.061401241503109
+                    - 7.061401241503109
+                    name: name
+                  preprocess:
+                    validation_length: 6.027456183070403
+                    unlabeled_length: 5.962133916683182
+                    test_length: 1.4658129805029452
+                    training_length: 0.8008281904610115
+                  metadata:
+                  - name: name
+                    type: null
+                  - name: name
+                    type: null
+                  inputs:
+                  - shape:
+                    - 5.637376656633329
+                    - 5.637376656633329
+                    channel_dim: 2.3021358869347655
+                    name: name
+                  - shape:
+                    - 5.637376656633329
+                    - 5.637376656633329
+                    channel_dim: 2.3021358869347655
+                    name: name
+                  custom_losses:
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                  prediction_types:
+                  - channel_dim: 9.301444243932576
+                    name: name
+                    labels:
+                    - labels
+                    - labels
+                  - channel_dim: 9.301444243932576
+                    name: name
+                    labels:
+                    - labels
+                    - labels
+                  metrics:
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                  visualizers:
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                    type: null
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                    type: null
+                modelSetup:
+                  custom_layers:
+                  - init_arg_names:
+                    - init_arg_names
+                    - init_arg_names
+                    use_custom_latent_space: true
+                    name: name
+                    call_arg_names:
+                    - call_arg_names
+                    - call_arg_names
+                  - init_arg_names:
+                    - init_arg_names
+                    - init_arg_names
+                    use_custom_latent_space: true
+                    name: name
+                    call_arg_names:
+                    - call_arg_names
+                    - call_arg_names
+              genericBaseImageType: genericBaseImageType
+              createdBy: createdBy
+              teamId: teamId
+              testStatus: null
+              datasetId: datasetId
+              blobPath: blobPath
+              codeEntryFile: codeEntryFile
+              branch: branch
+              cid: cid
+            branch: branch
+            latest:
+              note: note
+              createdAt: createdAt
+              metadata:
+                setupStatus:
+                  generalError: generalError
+                  bindersStatus:
+                  - is_passed: true
+                    shape:
+                    - 3.616076749251911
+                    - 3.616076749251911
+                    handler_type: handler_type
+                    display: "{}"
+                    name: name
+                    raw_result: ""
+                  - is_passed: true
+                    shape:
+                    - 3.616076749251911
+                    - 3.616076749251911
+                    handler_type: handler_type
+                    display: "{}"
+                    name: name
+                    raw_result: ""
+                  printLog: printLog
+                secretManagerId: secretManagerId
+                setup:
+                  outputs:
+                  - shape:
+                    - 7.061401241503109
+                    - 7.061401241503109
+                    name: name
+                  - shape:
+                    - 7.061401241503109
+                    - 7.061401241503109
+                    name: name
+                  preprocess:
+                    validation_length: 6.027456183070403
+                    unlabeled_length: 5.962133916683182
+                    test_length: 1.4658129805029452
+                    training_length: 0.8008281904610115
+                  metadata:
+                  - name: name
+                    type: null
+                  - name: name
+                    type: null
+                  inputs:
+                  - shape:
+                    - 5.637376656633329
+                    - 5.637376656633329
+                    channel_dim: 2.3021358869347655
+                    name: name
+                  - shape:
+                    - 5.637376656633329
+                    - 5.637376656633329
+                    channel_dim: 2.3021358869347655
+                    name: name
+                  custom_losses:
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                  prediction_types:
+                  - channel_dim: 9.301444243932576
+                    name: name
+                    labels:
+                    - labels
+                    - labels
+                  - channel_dim: 9.301444243932576
+                    name: name
+                    labels:
+                    - labels
+                    - labels
+                  metrics:
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                  visualizers:
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                    type: null
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                    type: null
+                modelSetup:
+                  custom_layers:
+                  - init_arg_names:
+                    - init_arg_names
+                    - init_arg_names
+                    use_custom_latent_space: true
+                    name: name
+                    call_arg_names:
+                    - call_arg_names
+                    - call_arg_names
+                  - init_arg_names:
+                    - init_arg_names
+                    - init_arg_names
+                    use_custom_latent_space: true
+                    name: name
+                    call_arg_names:
+                    - call_arg_names
+                    - call_arg_names
+              genericBaseImageType: genericBaseImageType
+              createdBy: createdBy
+              teamId: teamId
+              testStatus: null
+              datasetId: datasetId
+              blobPath: blobPath
+              codeEntryFile: codeEntryFile
+              branch: branch
+              cid: cid
+          - latestValid:
+              note: note
+              createdAt: createdAt
+              metadata:
+                setupStatus:
+                  generalError: generalError
+                  bindersStatus:
+                  - is_passed: true
+                    shape:
+                    - 3.616076749251911
+                    - 3.616076749251911
+                    handler_type: handler_type
+                    display: "{}"
+                    name: name
+                    raw_result: ""
+                  - is_passed: true
+                    shape:
+                    - 3.616076749251911
+                    - 3.616076749251911
+                    handler_type: handler_type
+                    display: "{}"
+                    name: name
+                    raw_result: ""
+                  printLog: printLog
+                secretManagerId: secretManagerId
+                setup:
+                  outputs:
+                  - shape:
+                    - 7.061401241503109
+                    - 7.061401241503109
+                    name: name
+                  - shape:
+                    - 7.061401241503109
+                    - 7.061401241503109
+                    name: name
+                  preprocess:
+                    validation_length: 6.027456183070403
+                    unlabeled_length: 5.962133916683182
+                    test_length: 1.4658129805029452
+                    training_length: 0.8008281904610115
+                  metadata:
+                  - name: name
+                    type: null
+                  - name: name
+                    type: null
+                  inputs:
+                  - shape:
+                    - 5.637376656633329
+                    - 5.637376656633329
+                    channel_dim: 2.3021358869347655
+                    name: name
+                  - shape:
+                    - 5.637376656633329
+                    - 5.637376656633329
+                    channel_dim: 2.3021358869347655
+                    name: name
+                  custom_losses:
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                  prediction_types:
+                  - channel_dim: 9.301444243932576
+                    name: name
+                    labels:
+                    - labels
+                    - labels
+                  - channel_dim: 9.301444243932576
+                    name: name
+                    labels:
+                    - labels
+                    - labels
+                  metrics:
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                  visualizers:
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                    type: null
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                    type: null
+                modelSetup:
+                  custom_layers:
+                  - init_arg_names:
+                    - init_arg_names
+                    - init_arg_names
+                    use_custom_latent_space: true
+                    name: name
+                    call_arg_names:
+                    - call_arg_names
+                    - call_arg_names
+                  - init_arg_names:
+                    - init_arg_names
+                    - init_arg_names
+                    use_custom_latent_space: true
+                    name: name
+                    call_arg_names:
+                    - call_arg_names
+                    - call_arg_names
+              genericBaseImageType: genericBaseImageType
+              createdBy: createdBy
+              teamId: teamId
+              testStatus: null
+              datasetId: datasetId
+              blobPath: blobPath
+              codeEntryFile: codeEntryFile
+              branch: branch
+              cid: cid
+            branch: branch
+            latest:
+              note: note
+              createdAt: createdAt
+              metadata:
+                setupStatus:
+                  generalError: generalError
+                  bindersStatus:
+                  - is_passed: true
+                    shape:
+                    - 3.616076749251911
+                    - 3.616076749251911
+                    handler_type: handler_type
+                    display: "{}"
+                    name: name
+                    raw_result: ""
+                  - is_passed: true
+                    shape:
+                    - 3.616076749251911
+                    - 3.616076749251911
+                    handler_type: handler_type
+                    display: "{}"
+                    name: name
+                    raw_result: ""
+                  printLog: printLog
+                secretManagerId: secretManagerId
+                setup:
+                  outputs:
+                  - shape:
+                    - 7.061401241503109
+                    - 7.061401241503109
+                    name: name
+                  - shape:
+                    - 7.061401241503109
+                    - 7.061401241503109
+                    name: name
+                  preprocess:
+                    validation_length: 6.027456183070403
+                    unlabeled_length: 5.962133916683182
+                    test_length: 1.4658129805029452
+                    training_length: 0.8008281904610115
+                  metadata:
+                  - name: name
+                    type: null
+                  - name: name
+                    type: null
+                  inputs:
+                  - shape:
+                    - 5.637376656633329
+                    - 5.637376656633329
+                    channel_dim: 2.3021358869347655
+                    name: name
+                  - shape:
+                    - 5.637376656633329
+                    - 5.637376656633329
+                    channel_dim: 2.3021358869347655
+                    name: name
+                  custom_losses:
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                  prediction_types:
+                  - channel_dim: 9.301444243932576
+                    name: name
+                    labels:
+                    - labels
+                    - labels
+                  - channel_dim: 9.301444243932576
+                    name: name
+                    labels:
+                    - labels
+                    - labels
+                  metrics:
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                  visualizers:
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                    type: null
+                  - arg_names:
+                    - arg_names
+                    - arg_names
+                    name: name
+                    type: null
+                modelSetup:
+                  custom_layers:
+                  - init_arg_names:
+                    - init_arg_names
+                    - init_arg_names
+                    use_custom_latent_space: true
+                    name: name
+                    call_arg_names:
+                    - call_arg_names
+                    - call_arg_names
+                  - init_arg_names:
+                    - init_arg_names
+                    - init_arg_names
+                    use_custom_latent_space: true
+                    name: name
+                    call_arg_names:
+                    - call_arg_names
+                    - call_arg_names
+              genericBaseImageType: genericBaseImageType
+              createdBy: createdBy
+              teamId: teamId
+              testStatus: null
+              datasetId: datasetId
+              blobPath: blobPath
+              codeEntryFile: codeEntryFile
+              branch: branch
+              cid: cid
+          cid: cid
+      properties:
+        dataset:
+          $ref: '#/components/schemas/Dataset'
+      required:
+      - dataset
+      type: object
+    UpdateDatasetParams:
+      additionalProperties: false
+      example:
+        pippin: true
+        name: name
+        datasetId: datasetId
+      properties:
+        datasetId:
+          type: string
+        name:
+          type: string
+        pippin:
+          type: boolean
+      required:
+      - datasetId
+      - name
+      type: object
     TrashDatasetParams:
       additionalProperties: false
       example:
@@ -7159,6 +7878,7 @@ components:
         dataset:
           createdAt: createdAt
           access: null
+          pippin: true
           teamId: teamId
           defaultBranch: defaultBranch
           name: name
@@ -10935,8 +11655,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -10949,8 +11671,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -11011,8 +11735,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -11025,8 +11751,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -11087,8 +11815,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -11101,8 +11831,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -11200,8 +11932,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -11214,8 +11948,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -11279,8 +12015,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -11293,8 +12031,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -11345,8 +12085,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -11359,8 +12101,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -11519,8 +12263,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -11533,8 +12279,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -13051,6 +13799,53 @@ components:
       required:
       - projectId
       type: object
+    LatestExportedProjectItem:
+      additionalProperties: false
+      example:
+        date: 0.8008281904610115
+        filePath: filePath
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        date:
+          format: double
+          type: number
+        filePath:
+          type: string
+      required:
+      - date
+      - filePath
+      - projectId
+      type: object
+    LatestExportedProject:
+      additionalProperties: false
+      example:
+        latest:
+        - date: 0.8008281904610115
+          filePath: filePath
+          projectId: projectId
+        - date: 0.8008281904610115
+          filePath: filePath
+          projectId: projectId
+      properties:
+        latest:
+          items:
+            $ref: '#/components/schemas/LatestExportedProjectItem'
+          type: array
+      required:
+      - latest
+      type: object
+    GetLatestExportedProjectParams:
+      additionalProperties: false
+      example:
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+      required:
+      - projectId
+      type: object
     ExportProjectResponse:
       additionalProperties: false
       example:
@@ -14279,8 +15074,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -14293,8 +15090,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -14334,8 +15133,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -14348,8 +15149,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -14394,8 +15197,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -14408,8 +15213,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -17392,6 +18199,10 @@ components:
             format: double
             type: number
           type: array
+        legend:
+          items:
+            type: string
+          type: array
       required:
       - body
       - type
@@ -18345,8 +19156,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -18359,8 +19172,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -18392,8 +19207,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -18477,8 +19294,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -18491,8 +19310,10 @@ components:
           displayData: null
           value:
             lt: null
-            blob_path: blob_path
             gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
             lte: null
             eq: null
             lst:
@@ -18537,6 +19358,7 @@ components:
         digest: digest
         refresh: true
         epoch: 0.8008281904610115
+        trigger: null
         projectId: projectId
         sampleIdentities:
         - index: null
@@ -18559,6 +19381,8 @@ components:
           type: string
         refresh:
           type: boolean
+        trigger:
+          $ref: '#/components/schemas/JobTrigger'
       required:
       - digest
       - epoch
@@ -18619,6 +19443,26 @@ components:
           type: boolean
       required:
       - success
+      type: object
+    ScatterFilter_value:
+      anyOf:
+      - type: string
+      - format: double
+        type: number
+    MetricStatisticElement_value:
+      anyOf:
+      - format: double
+        type: number
+      - type: string
+    InsightFilterDisplayData_insights_inner:
+      properties:
+        insightType:
+          $ref: '#/components/schemas/InsightType'
+        sessionRun:
+          $ref: '#/components/schemas/FilterSessionRun'
+      required:
+      - insightType
+      - sessionRun
       type: object
     Dataset_latestVersions_inner:
       example:

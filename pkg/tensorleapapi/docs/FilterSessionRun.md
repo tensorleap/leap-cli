@@ -7,12 +7,13 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **Id** | **string** |  | 
 **SessionId** | **string** |  | 
+**Epoch** | **float64** |  | 
 
 ## Methods
 
 ### NewFilterSessionRun
 
-`func NewFilterSessionRun(name string, id string, sessionId string, ) *FilterSessionRun`
+`func NewFilterSessionRun(name string, id string, sessionId string, epoch float64, ) *FilterSessionRun`
 
 NewFilterSessionRun instantiates a new FilterSessionRun object
 This constructor will assign default values to properties that have it defined,
@@ -85,6 +86,26 @@ and a boolean to check if the value has been set.
 `func (o *FilterSessionRun) SetSessionId(v string)`
 
 SetSessionId sets SessionId field to given value.
+
+
+### GetEpoch
+
+`func (o *FilterSessionRun) GetEpoch() float64`
+
+GetEpoch returns the Epoch field if non-nil, zero value otherwise.
+
+### GetEpochOk
+
+`func (o *FilterSessionRun) GetEpochOk() (*float64, bool)`
+
+GetEpochOk returns a tuple with the Epoch field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEpoch
+
+`func (o *FilterSessionRun) SetEpoch(v float64)`
+
+SetEpoch sets Epoch field to given value.
 
 
 

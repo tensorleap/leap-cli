@@ -3,17 +3,19 @@
 ## Enum
 
 
-* `REDUNDANT_SAMPLES_CLUSTER` (value: `"redundant_samples_cluster"`)
+* `LOW_PERFORMANCE` (value: `"low_performance"`)
 
-* `WEAK_CLUSTER` (value: `"weak_cluster"`)
+* `LOW_PERFORMANCE_PREDICTED_UNLABELED` (value: `"low_performance_predicted_unlabeled"`)
 
-* `UNDER_REPRESENTATION_CLUSTER` (value: `"under_representation_cluster"`)
+* `UNDER_REPRESENTATION` (value: `"under_representation"`)
 
-* `OVERFITTING_CLUSTER` (value: `"overfitting_cluster"`)
+* `OVER_REPRESENTATION` (value: `"over_representation"`)
 
-* `DUPLICATION_INSIGHT` (value: `"duplication_insight"`)
+* `DUPLICATION` (value: `"duplication"`)
 
-* `DATA_LEAKAGE_INSIGHT` (value: `"data_leakage_insight"`)
+* `DATA_LEAKAGE` (value: `"data_leakage"`)
+
+* `OVERFITTING` (value: `"overfitting"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

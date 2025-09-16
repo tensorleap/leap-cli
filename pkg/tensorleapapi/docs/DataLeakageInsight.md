@@ -5,21 +5,26 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | [**ScatterInsightType**](ScatterInsightType.md) |  | 
-**Filter** | [**ScatterFilter**](ScatterFilter.md) |  | 
-**MutualInfoElements** | Pointer to [**[]MutualInformationElement**](MutualInformationElement.md) |  | [optional] 
-**BlobPath** | Pointer to **string** |  | [optional] 
+**Filters** | Pointer to [**[]ScatterFilter**](ScatterFilter.md) |  | [optional] 
+**NSamples** | **float64** |  | 
+**MutualInfoElements** | [**[]MutualInformationElement**](MutualInformationElement.md) |  | 
+**BlobPath** | **string** |  | 
 **InsightSubCategoryDsCuration** | Pointer to [**InsightSubCategoryDSCuration**](InsightSubCategoryDSCuration.md) |  | [optional] 
 **InsightCategoryPerformance** | Pointer to [**InsightSubCategoryPerformance**](InsightSubCategoryPerformance.md) |  | [optional] 
-**Index** | Pointer to **float64** |  | [optional] 
+**Severity** | **float64** |  | 
+**SeverityMetrics** | [**[]SeverityMetricElement**](SeverityMetricElement.md) |  | 
+**MetricsInfo** | [**[]InsightMetricInfo**](InsightMetricInfo.md) |  | 
+**Index** | **float64** |  | 
+**MinHash** | **[]float64** |  | 
+**CsvPath** | Pointer to **string** |  | [optional] 
 **FirstSubset** | [**DataStateType**](DataStateType.md) |  | 
 **SecondSubset** | [**DataStateType**](DataStateType.md) |  | 
-**NCrossSubsetsDuplications** | **float64** |  | 
 
 ## Methods
 
 ### NewDataLeakageInsight
 
-`func NewDataLeakageInsight(type_ ScatterInsightType, filter ScatterFilter, firstSubset DataStateType, secondSubset DataStateType, nCrossSubsetsDuplications float64, ) *DataLeakageInsight`
+`func NewDataLeakageInsight(type_ ScatterInsightType, nSamples float64, mutualInfoElements []MutualInformationElement, blobPath string, severity float64, severityMetrics []SeverityMetricElement, metricsInfo []InsightMetricInfo, index float64, minHash []float64, firstSubset DataStateType, secondSubset DataStateType, ) *DataLeakageInsight`
 
 NewDataLeakageInsight instantiates a new DataLeakageInsight object
 This constructor will assign default values to properties that have it defined,
@@ -54,24 +59,49 @@ and a boolean to check if the value has been set.
 SetType sets Type field to given value.
 
 
-### GetFilter
+### GetFilters
 
-`func (o *DataLeakageInsight) GetFilter() ScatterFilter`
+`func (o *DataLeakageInsight) GetFilters() []ScatterFilter`
 
-GetFilter returns the Filter field if non-nil, zero value otherwise.
+GetFilters returns the Filters field if non-nil, zero value otherwise.
 
-### GetFilterOk
+### GetFiltersOk
 
-`func (o *DataLeakageInsight) GetFilterOk() (*ScatterFilter, bool)`
+`func (o *DataLeakageInsight) GetFiltersOk() (*[]ScatterFilter, bool)`
 
-GetFilterOk returns a tuple with the Filter field if it's non-nil, zero value otherwise
+GetFiltersOk returns a tuple with the Filters field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFilter
+### SetFilters
 
-`func (o *DataLeakageInsight) SetFilter(v ScatterFilter)`
+`func (o *DataLeakageInsight) SetFilters(v []ScatterFilter)`
 
-SetFilter sets Filter field to given value.
+SetFilters sets Filters field to given value.
+
+### HasFilters
+
+`func (o *DataLeakageInsight) HasFilters() bool`
+
+HasFilters returns a boolean if a field has been set.
+
+### GetNSamples
+
+`func (o *DataLeakageInsight) GetNSamples() float64`
+
+GetNSamples returns the NSamples field if non-nil, zero value otherwise.
+
+### GetNSamplesOk
+
+`func (o *DataLeakageInsight) GetNSamplesOk() (*float64, bool)`
+
+GetNSamplesOk returns a tuple with the NSamples field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNSamples
+
+`func (o *DataLeakageInsight) SetNSamples(v float64)`
+
+SetNSamples sets NSamples field to given value.
 
 
 ### GetMutualInfoElements
@@ -93,11 +123,6 @@ and a boolean to check if the value has been set.
 
 SetMutualInfoElements sets MutualInfoElements field to given value.
 
-### HasMutualInfoElements
-
-`func (o *DataLeakageInsight) HasMutualInfoElements() bool`
-
-HasMutualInfoElements returns a boolean if a field has been set.
 
 ### GetBlobPath
 
@@ -118,11 +143,6 @@ and a boolean to check if the value has been set.
 
 SetBlobPath sets BlobPath field to given value.
 
-### HasBlobPath
-
-`func (o *DataLeakageInsight) HasBlobPath() bool`
-
-HasBlobPath returns a boolean if a field has been set.
 
 ### GetInsightSubCategoryDsCuration
 
@@ -174,6 +194,66 @@ SetInsightCategoryPerformance sets InsightCategoryPerformance field to given val
 
 HasInsightCategoryPerformance returns a boolean if a field has been set.
 
+### GetSeverity
+
+`func (o *DataLeakageInsight) GetSeverity() float64`
+
+GetSeverity returns the Severity field if non-nil, zero value otherwise.
+
+### GetSeverityOk
+
+`func (o *DataLeakageInsight) GetSeverityOk() (*float64, bool)`
+
+GetSeverityOk returns a tuple with the Severity field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSeverity
+
+`func (o *DataLeakageInsight) SetSeverity(v float64)`
+
+SetSeverity sets Severity field to given value.
+
+
+### GetSeverityMetrics
+
+`func (o *DataLeakageInsight) GetSeverityMetrics() []SeverityMetricElement`
+
+GetSeverityMetrics returns the SeverityMetrics field if non-nil, zero value otherwise.
+
+### GetSeverityMetricsOk
+
+`func (o *DataLeakageInsight) GetSeverityMetricsOk() (*[]SeverityMetricElement, bool)`
+
+GetSeverityMetricsOk returns a tuple with the SeverityMetrics field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSeverityMetrics
+
+`func (o *DataLeakageInsight) SetSeverityMetrics(v []SeverityMetricElement)`
+
+SetSeverityMetrics sets SeverityMetrics field to given value.
+
+
+### GetMetricsInfo
+
+`func (o *DataLeakageInsight) GetMetricsInfo() []InsightMetricInfo`
+
+GetMetricsInfo returns the MetricsInfo field if non-nil, zero value otherwise.
+
+### GetMetricsInfoOk
+
+`func (o *DataLeakageInsight) GetMetricsInfoOk() (*[]InsightMetricInfo, bool)`
+
+GetMetricsInfoOk returns a tuple with the MetricsInfo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMetricsInfo
+
+`func (o *DataLeakageInsight) SetMetricsInfo(v []InsightMetricInfo)`
+
+SetMetricsInfo sets MetricsInfo field to given value.
+
+
 ### GetIndex
 
 `func (o *DataLeakageInsight) GetIndex() float64`
@@ -193,11 +273,51 @@ and a boolean to check if the value has been set.
 
 SetIndex sets Index field to given value.
 
-### HasIndex
 
-`func (o *DataLeakageInsight) HasIndex() bool`
+### GetMinHash
 
-HasIndex returns a boolean if a field has been set.
+`func (o *DataLeakageInsight) GetMinHash() []float64`
+
+GetMinHash returns the MinHash field if non-nil, zero value otherwise.
+
+### GetMinHashOk
+
+`func (o *DataLeakageInsight) GetMinHashOk() (*[]float64, bool)`
+
+GetMinHashOk returns a tuple with the MinHash field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMinHash
+
+`func (o *DataLeakageInsight) SetMinHash(v []float64)`
+
+SetMinHash sets MinHash field to given value.
+
+
+### GetCsvPath
+
+`func (o *DataLeakageInsight) GetCsvPath() string`
+
+GetCsvPath returns the CsvPath field if non-nil, zero value otherwise.
+
+### GetCsvPathOk
+
+`func (o *DataLeakageInsight) GetCsvPathOk() (*string, bool)`
+
+GetCsvPathOk returns a tuple with the CsvPath field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCsvPath
+
+`func (o *DataLeakageInsight) SetCsvPath(v string)`
+
+SetCsvPath sets CsvPath field to given value.
+
+### HasCsvPath
+
+`func (o *DataLeakageInsight) HasCsvPath() bool`
+
+HasCsvPath returns a boolean if a field has been set.
 
 ### GetFirstSubset
 
@@ -237,26 +357,6 @@ and a boolean to check if the value has been set.
 `func (o *DataLeakageInsight) SetSecondSubset(v DataStateType)`
 
 SetSecondSubset sets SecondSubset field to given value.
-
-
-### GetNCrossSubsetsDuplications
-
-`func (o *DataLeakageInsight) GetNCrossSubsetsDuplications() float64`
-
-GetNCrossSubsetsDuplications returns the NCrossSubsetsDuplications field if non-nil, zero value otherwise.
-
-### GetNCrossSubsetsDuplicationsOk
-
-`func (o *DataLeakageInsight) GetNCrossSubsetsDuplicationsOk() (*float64, bool)`
-
-GetNCrossSubsetsDuplicationsOk returns a tuple with the NCrossSubsetsDuplications field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNCrossSubsetsDuplications
-
-`func (o *DataLeakageInsight) SetNCrossSubsetsDuplications(v float64)`
-
-SetNCrossSubsetsDuplications sets NCrossSubsetsDuplications field to given value.
 
 
 

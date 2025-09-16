@@ -3,9 +3,9 @@
 ## Enum
 
 
-* `UNDER_PRESENTATION` (value: `"under_presentation"`)
+* `UNDER_REPRESENTATION` (value: `"under_representation"`)
 
-* `OVER_PRESENTATION` (value: `"over_presentation"`)
+* `OVER_REPRESENTATION` (value: `"over_representation"`)
 
 * `DATA_LEAKAGE` (value: `"data_leakage"`)
 

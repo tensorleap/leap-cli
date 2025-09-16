@@ -5,36 +5,33 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | [**ScatterInsightType**](ScatterInsightType.md) |  | 
-**Filter** | [**ScatterFilter**](ScatterFilter.md) |  | 
-**MutualInfoElements** | Pointer to [**[]MutualInformationElement**](MutualInformationElement.md) |  | [optional] 
-**BlobPath** | Pointer to **string** |  | [optional] 
+**Filters** | Pointer to [**[]ScatterFilter**](ScatterFilter.md) |  | [optional] 
+**NSamples** | **float64** |  | 
+**MutualInfoElements** | [**[]MutualInformationElement**](MutualInformationElement.md) |  | 
+**BlobPath** | **string** |  | 
 **InsightSubCategoryDsCuration** | Pointer to [**InsightSubCategoryDSCuration**](InsightSubCategoryDSCuration.md) |  | [optional] 
 **InsightCategoryPerformance** | Pointer to [**InsightSubCategoryPerformance**](InsightSubCategoryPerformance.md) |  | [optional] 
-**Index** | Pointer to **float64** |  | [optional] 
+**Severity** | **float64** |  | 
+**SeverityMetrics** | [**[]SeverityMetricElement**](SeverityMetricElement.md) |  | 
+**MetricsInfo** | [**[]InsightMetricInfo**](InsightMetricInfo.md) |  | 
+**Index** | **float64** |  | 
+**MinHash** | **[]float64** |  | 
+**CsvPath** | Pointer to **string** |  | [optional] 
 **NSamplesValidation** | **float64** |  | 
 **NSamplesTraining** | **float64** |  | 
-**AvgMetricValidation** | **float64** |  | 
-**AvgMetricTraining** | **float64** |  | 
-**MetricName** | **string** |  | 
-**Configuration** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
-**MetricsNames** | Pointer to **[]string** |  | [optional] 
 **UnderRepresentationDataset** | [**DataStateType**](DataStateType.md) |  | 
 **UnderRepresentationNSamples** | **float64** |  | 
 **OverRepresentationDataset** | [**DataStateType**](DataStateType.md) |  | 
 **OverRepresentationNSamples** | **float64** |  | 
-**NSamples** | **float64** |  | 
-**AvgMetric** | **float64** |  | 
 **Subset** | [**DataStateType**](DataStateType.md) |  | 
-**NDuplicateSamples** | **float64** |  | 
 **FirstSubset** | [**DataStateType**](DataStateType.md) |  | 
 **SecondSubset** | [**DataStateType**](DataStateType.md) |  | 
-**NCrossSubsetsDuplications** | **float64** |  | 
 
 ## Methods
 
 ### NewInsightType
 
-`func NewInsightType(type_ ScatterInsightType, filter ScatterFilter, nSamplesValidation float64, nSamplesTraining float64, avgMetricValidation float64, avgMetricTraining float64, metricName string, underRepresentationDataset DataStateType, underRepresentationNSamples float64, overRepresentationDataset DataStateType, overRepresentationNSamples float64, nSamples float64, avgMetric float64, subset DataStateType, nDuplicateSamples float64, firstSubset DataStateType, secondSubset DataStateType, nCrossSubsetsDuplications float64, ) *InsightType`
+`func NewInsightType(type_ ScatterInsightType, nSamples float64, mutualInfoElements []MutualInformationElement, blobPath string, severity float64, severityMetrics []SeverityMetricElement, metricsInfo []InsightMetricInfo, index float64, minHash []float64, nSamplesValidation float64, nSamplesTraining float64, underRepresentationDataset DataStateType, underRepresentationNSamples float64, overRepresentationDataset DataStateType, overRepresentationNSamples float64, subset DataStateType, firstSubset DataStateType, secondSubset DataStateType, ) *InsightType`
 
 NewInsightType instantiates a new InsightType object
 This constructor will assign default values to properties that have it defined,
@@ -69,24 +66,49 @@ and a boolean to check if the value has been set.
 SetType sets Type field to given value.
 
 
-### GetFilter
+### GetFilters
 
-`func (o *InsightType) GetFilter() ScatterFilter`
+`func (o *InsightType) GetFilters() []ScatterFilter`
 
-GetFilter returns the Filter field if non-nil, zero value otherwise.
+GetFilters returns the Filters field if non-nil, zero value otherwise.
 
-### GetFilterOk
+### GetFiltersOk
 
-`func (o *InsightType) GetFilterOk() (*ScatterFilter, bool)`
+`func (o *InsightType) GetFiltersOk() (*[]ScatterFilter, bool)`
 
-GetFilterOk returns a tuple with the Filter field if it's non-nil, zero value otherwise
+GetFiltersOk returns a tuple with the Filters field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFilter
+### SetFilters
 
-`func (o *InsightType) SetFilter(v ScatterFilter)`
+`func (o *InsightType) SetFilters(v []ScatterFilter)`
 
-SetFilter sets Filter field to given value.
+SetFilters sets Filters field to given value.
+
+### HasFilters
+
+`func (o *InsightType) HasFilters() bool`
+
+HasFilters returns a boolean if a field has been set.
+
+### GetNSamples
+
+`func (o *InsightType) GetNSamples() float64`
+
+GetNSamples returns the NSamples field if non-nil, zero value otherwise.
+
+### GetNSamplesOk
+
+`func (o *InsightType) GetNSamplesOk() (*float64, bool)`
+
+GetNSamplesOk returns a tuple with the NSamples field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNSamples
+
+`func (o *InsightType) SetNSamples(v float64)`
+
+SetNSamples sets NSamples field to given value.
 
 
 ### GetMutualInfoElements
@@ -108,11 +130,6 @@ and a boolean to check if the value has been set.
 
 SetMutualInfoElements sets MutualInfoElements field to given value.
 
-### HasMutualInfoElements
-
-`func (o *InsightType) HasMutualInfoElements() bool`
-
-HasMutualInfoElements returns a boolean if a field has been set.
 
 ### GetBlobPath
 
@@ -133,11 +150,6 @@ and a boolean to check if the value has been set.
 
 SetBlobPath sets BlobPath field to given value.
 
-### HasBlobPath
-
-`func (o *InsightType) HasBlobPath() bool`
-
-HasBlobPath returns a boolean if a field has been set.
 
 ### GetInsightSubCategoryDsCuration
 
@@ -189,6 +201,66 @@ SetInsightCategoryPerformance sets InsightCategoryPerformance field to given val
 
 HasInsightCategoryPerformance returns a boolean if a field has been set.
 
+### GetSeverity
+
+`func (o *InsightType) GetSeverity() float64`
+
+GetSeverity returns the Severity field if non-nil, zero value otherwise.
+
+### GetSeverityOk
+
+`func (o *InsightType) GetSeverityOk() (*float64, bool)`
+
+GetSeverityOk returns a tuple with the Severity field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSeverity
+
+`func (o *InsightType) SetSeverity(v float64)`
+
+SetSeverity sets Severity field to given value.
+
+
+### GetSeverityMetrics
+
+`func (o *InsightType) GetSeverityMetrics() []SeverityMetricElement`
+
+GetSeverityMetrics returns the SeverityMetrics field if non-nil, zero value otherwise.
+
+### GetSeverityMetricsOk
+
+`func (o *InsightType) GetSeverityMetricsOk() (*[]SeverityMetricElement, bool)`
+
+GetSeverityMetricsOk returns a tuple with the SeverityMetrics field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSeverityMetrics
+
+`func (o *InsightType) SetSeverityMetrics(v []SeverityMetricElement)`
+
+SetSeverityMetrics sets SeverityMetrics field to given value.
+
+
+### GetMetricsInfo
+
+`func (o *InsightType) GetMetricsInfo() []InsightMetricInfo`
+
+GetMetricsInfo returns the MetricsInfo field if non-nil, zero value otherwise.
+
+### GetMetricsInfoOk
+
+`func (o *InsightType) GetMetricsInfoOk() (*[]InsightMetricInfo, bool)`
+
+GetMetricsInfoOk returns a tuple with the MetricsInfo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMetricsInfo
+
+`func (o *InsightType) SetMetricsInfo(v []InsightMetricInfo)`
+
+SetMetricsInfo sets MetricsInfo field to given value.
+
+
 ### GetIndex
 
 `func (o *InsightType) GetIndex() float64`
@@ -208,11 +280,51 @@ and a boolean to check if the value has been set.
 
 SetIndex sets Index field to given value.
 
-### HasIndex
 
-`func (o *InsightType) HasIndex() bool`
+### GetMinHash
 
-HasIndex returns a boolean if a field has been set.
+`func (o *InsightType) GetMinHash() []float64`
+
+GetMinHash returns the MinHash field if non-nil, zero value otherwise.
+
+### GetMinHashOk
+
+`func (o *InsightType) GetMinHashOk() (*[]float64, bool)`
+
+GetMinHashOk returns a tuple with the MinHash field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMinHash
+
+`func (o *InsightType) SetMinHash(v []float64)`
+
+SetMinHash sets MinHash field to given value.
+
+
+### GetCsvPath
+
+`func (o *InsightType) GetCsvPath() string`
+
+GetCsvPath returns the CsvPath field if non-nil, zero value otherwise.
+
+### GetCsvPathOk
+
+`func (o *InsightType) GetCsvPathOk() (*string, bool)`
+
+GetCsvPathOk returns a tuple with the CsvPath field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCsvPath
+
+`func (o *InsightType) SetCsvPath(v string)`
+
+SetCsvPath sets CsvPath field to given value.
+
+### HasCsvPath
+
+`func (o *InsightType) HasCsvPath() bool`
+
+HasCsvPath returns a boolean if a field has been set.
 
 ### GetNSamplesValidation
 
@@ -253,116 +365,6 @@ and a boolean to check if the value has been set.
 
 SetNSamplesTraining sets NSamplesTraining field to given value.
 
-
-### GetAvgMetricValidation
-
-`func (o *InsightType) GetAvgMetricValidation() float64`
-
-GetAvgMetricValidation returns the AvgMetricValidation field if non-nil, zero value otherwise.
-
-### GetAvgMetricValidationOk
-
-`func (o *InsightType) GetAvgMetricValidationOk() (*float64, bool)`
-
-GetAvgMetricValidationOk returns a tuple with the AvgMetricValidation field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAvgMetricValidation
-
-`func (o *InsightType) SetAvgMetricValidation(v float64)`
-
-SetAvgMetricValidation sets AvgMetricValidation field to given value.
-
-
-### GetAvgMetricTraining
-
-`func (o *InsightType) GetAvgMetricTraining() float64`
-
-GetAvgMetricTraining returns the AvgMetricTraining field if non-nil, zero value otherwise.
-
-### GetAvgMetricTrainingOk
-
-`func (o *InsightType) GetAvgMetricTrainingOk() (*float64, bool)`
-
-GetAvgMetricTrainingOk returns a tuple with the AvgMetricTraining field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAvgMetricTraining
-
-`func (o *InsightType) SetAvgMetricTraining(v float64)`
-
-SetAvgMetricTraining sets AvgMetricTraining field to given value.
-
-
-### GetMetricName
-
-`func (o *InsightType) GetMetricName() string`
-
-GetMetricName returns the MetricName field if non-nil, zero value otherwise.
-
-### GetMetricNameOk
-
-`func (o *InsightType) GetMetricNameOk() (*string, bool)`
-
-GetMetricNameOk returns a tuple with the MetricName field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMetricName
-
-`func (o *InsightType) SetMetricName(v string)`
-
-SetMetricName sets MetricName field to given value.
-
-
-### GetConfiguration
-
-`func (o *InsightType) GetConfiguration() map[string]interface{}`
-
-GetConfiguration returns the Configuration field if non-nil, zero value otherwise.
-
-### GetConfigurationOk
-
-`func (o *InsightType) GetConfigurationOk() (*map[string]interface{}, bool)`
-
-GetConfigurationOk returns a tuple with the Configuration field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetConfiguration
-
-`func (o *InsightType) SetConfiguration(v map[string]interface{})`
-
-SetConfiguration sets Configuration field to given value.
-
-### HasConfiguration
-
-`func (o *InsightType) HasConfiguration() bool`
-
-HasConfiguration returns a boolean if a field has been set.
-
-### GetMetricsNames
-
-`func (o *InsightType) GetMetricsNames() []string`
-
-GetMetricsNames returns the MetricsNames field if non-nil, zero value otherwise.
-
-### GetMetricsNamesOk
-
-`func (o *InsightType) GetMetricsNamesOk() (*[]string, bool)`
-
-GetMetricsNamesOk returns a tuple with the MetricsNames field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMetricsNames
-
-`func (o *InsightType) SetMetricsNames(v []string)`
-
-SetMetricsNames sets MetricsNames field to given value.
-
-### HasMetricsNames
-
-`func (o *InsightType) HasMetricsNames() bool`
-
-HasMetricsNames returns a boolean if a field has been set.
 
 ### GetUnderRepresentationDataset
 
@@ -444,46 +446,6 @@ and a boolean to check if the value has been set.
 SetOverRepresentationNSamples sets OverRepresentationNSamples field to given value.
 
 
-### GetNSamples
-
-`func (o *InsightType) GetNSamples() float64`
-
-GetNSamples returns the NSamples field if non-nil, zero value otherwise.
-
-### GetNSamplesOk
-
-`func (o *InsightType) GetNSamplesOk() (*float64, bool)`
-
-GetNSamplesOk returns a tuple with the NSamples field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNSamples
-
-`func (o *InsightType) SetNSamples(v float64)`
-
-SetNSamples sets NSamples field to given value.
-
-
-### GetAvgMetric
-
-`func (o *InsightType) GetAvgMetric() float64`
-
-GetAvgMetric returns the AvgMetric field if non-nil, zero value otherwise.
-
-### GetAvgMetricOk
-
-`func (o *InsightType) GetAvgMetricOk() (*float64, bool)`
-
-GetAvgMetricOk returns a tuple with the AvgMetric field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAvgMetric
-
-`func (o *InsightType) SetAvgMetric(v float64)`
-
-SetAvgMetric sets AvgMetric field to given value.
-
-
 ### GetSubset
 
 `func (o *InsightType) GetSubset() DataStateType`
@@ -502,26 +464,6 @@ and a boolean to check if the value has been set.
 `func (o *InsightType) SetSubset(v DataStateType)`
 
 SetSubset sets Subset field to given value.
-
-
-### GetNDuplicateSamples
-
-`func (o *InsightType) GetNDuplicateSamples() float64`
-
-GetNDuplicateSamples returns the NDuplicateSamples field if non-nil, zero value otherwise.
-
-### GetNDuplicateSamplesOk
-
-`func (o *InsightType) GetNDuplicateSamplesOk() (*float64, bool)`
-
-GetNDuplicateSamplesOk returns a tuple with the NDuplicateSamples field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNDuplicateSamples
-
-`func (o *InsightType) SetNDuplicateSamples(v float64)`
-
-SetNDuplicateSamples sets NDuplicateSamples field to given value.
 
 
 ### GetFirstSubset
@@ -562,26 +504,6 @@ and a boolean to check if the value has been set.
 `func (o *InsightType) SetSecondSubset(v DataStateType)`
 
 SetSecondSubset sets SecondSubset field to given value.
-
-
-### GetNCrossSubsetsDuplications
-
-`func (o *InsightType) GetNCrossSubsetsDuplications() float64`
-
-GetNCrossSubsetsDuplications returns the NCrossSubsetsDuplications field if non-nil, zero value otherwise.
-
-### GetNCrossSubsetsDuplicationsOk
-
-`func (o *InsightType) GetNCrossSubsetsDuplicationsOk() (*float64, bool)`
-
-GetNCrossSubsetsDuplicationsOk returns a tuple with the NCrossSubsetsDuplications field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNCrossSubsetsDuplications
-
-`func (o *InsightType) SetNCrossSubsetsDuplications(v float64)`
-
-SetNCrossSubsetsDuplications sets NCrossSubsetsDuplications field to given value.
 
 
 

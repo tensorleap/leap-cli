@@ -5,18 +5,18 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | **string** |  | 
-**InsightData** | [**InsightType**](InsightType.md) |  | 
-**SessionRun** | [**FilterSessionRun**](FilterSessionRun.md) |  | 
+**Insights** | [**[]InsightFilterDisplayDataInsightsInner**](InsightFilterDisplayDataInsightsInner.md) |  | 
 **Limit** | **float64** |  | 
 **SampleIds** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
 **Epoch** | **float64** |  | 
 **FiltersUsed** | **[]string** |  | 
+**SessionRun** | [**FilterSessionRun**](FilterSessionRun.md) |  | 
 
 ## Methods
 
 ### NewFilterDisplayData
 
-`func NewFilterDisplayData(type_ string, insightData InsightType, sessionRun FilterSessionRun, limit float64, sampleIds []SampleIdentity, epoch float64, filtersUsed []string, ) *FilterDisplayData`
+`func NewFilterDisplayData(type_ string, insights []InsightFilterDisplayDataInsightsInner, limit float64, sampleIds []SampleIdentity, epoch float64, filtersUsed []string, sessionRun FilterSessionRun, ) *FilterDisplayData`
 
 NewFilterDisplayData instantiates a new FilterDisplayData object
 This constructor will assign default values to properties that have it defined,
@@ -51,44 +51,24 @@ and a boolean to check if the value has been set.
 SetType sets Type field to given value.
 
 
-### GetInsightData
+### GetInsights
 
-`func (o *FilterDisplayData) GetInsightData() InsightType`
+`func (o *FilterDisplayData) GetInsights() []InsightFilterDisplayDataInsightsInner`
 
-GetInsightData returns the InsightData field if non-nil, zero value otherwise.
+GetInsights returns the Insights field if non-nil, zero value otherwise.
 
-### GetInsightDataOk
+### GetInsightsOk
 
-`func (o *FilterDisplayData) GetInsightDataOk() (*InsightType, bool)`
+`func (o *FilterDisplayData) GetInsightsOk() (*[]InsightFilterDisplayDataInsightsInner, bool)`
 
-GetInsightDataOk returns a tuple with the InsightData field if it's non-nil, zero value otherwise
+GetInsightsOk returns a tuple with the Insights field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetInsightData
+### SetInsights
 
-`func (o *FilterDisplayData) SetInsightData(v InsightType)`
+`func (o *FilterDisplayData) SetInsights(v []InsightFilterDisplayDataInsightsInner)`
 
-SetInsightData sets InsightData field to given value.
-
-
-### GetSessionRun
-
-`func (o *FilterDisplayData) GetSessionRun() FilterSessionRun`
-
-GetSessionRun returns the SessionRun field if non-nil, zero value otherwise.
-
-### GetSessionRunOk
-
-`func (o *FilterDisplayData) GetSessionRunOk() (*FilterSessionRun, bool)`
-
-GetSessionRunOk returns a tuple with the SessionRun field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSessionRun
-
-`func (o *FilterDisplayData) SetSessionRun(v FilterSessionRun)`
-
-SetSessionRun sets SessionRun field to given value.
+SetInsights sets Insights field to given value.
 
 
 ### GetLimit
@@ -169,6 +149,26 @@ and a boolean to check if the value has been set.
 `func (o *FilterDisplayData) SetFiltersUsed(v []string)`
 
 SetFiltersUsed sets FiltersUsed field to given value.
+
+
+### GetSessionRun
+
+`func (o *FilterDisplayData) GetSessionRun() FilterSessionRun`
+
+GetSessionRun returns the SessionRun field if non-nil, zero value otherwise.
+
+### GetSessionRunOk
+
+`func (o *FilterDisplayData) GetSessionRunOk() (*FilterSessionRun, bool)`
+
+GetSessionRunOk returns a tuple with the SessionRun field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSessionRun
+
+`func (o *FilterDisplayData) SetSessionRun(v FilterSessionRun)`
+
+SetSessionRun sets SessionRun field to given value.
 
 
 

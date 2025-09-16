@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 .travis.yml
 README.md
 api/openapi.yaml
@@ -44,7 +43,6 @@ docs/BoolSchema.md
 docs/BoundingBox.md
 docs/ChartData.md
 docs/ClientFilterParams.md
-docs/ClusterInsight.md
 docs/Clusters.md
 docs/CodeIntegrationBinder.md
 docs/CodeIntegrationBinderByBranch.md
@@ -185,6 +183,7 @@ docs/GetJobsFilterParams.md
 docs/GetJobsResponse.md
 docs/GetLatestDatasetVersionParams.md
 docs/GetLatestDatasetVersionResponse.md
+docs/GetLatestExportedProjectParams.md
 docs/GetMachineTypesResponse.md
 docs/GetMaxActiveUsersResponse.md
 docs/GetNotificationsResponse.md
@@ -249,6 +248,8 @@ docs/ImportProjectRequest.md
 docs/InitExperimentRequest.md
 docs/InitExperimentResponse.md
 docs/InsightFilterDisplayData.md
+docs/InsightFilterDisplayDataInsightsInner.md
+docs/InsightMetricInfo.md
 docs/InsightSubCategoryDSCuration.md
 docs/InsightSubCategoryPerformance.md
 docs/InsightType.md
@@ -274,6 +275,8 @@ docs/JobSubType.md
 docs/JobTrigger.md
 docs/JobType.md
 docs/JobTypeEnum.md
+docs/LatestExportedProject.md
+docs/LatestExportedProjectItem.md
 docs/Layout.md
 docs/LeapDataType.md
 docs/LoadSessionParams.md
@@ -293,6 +296,8 @@ docs/MaskTextData.md
 docs/MessageLevel.md
 docs/MetricInstance.md
 docs/MetricMessageParams.md
+docs/MetricStatisticElement.md
+docs/MetricStatisticElementValue.md
 docs/ModelGraph.md
 docs/ModelSetup.md
 docs/ModifyDatasetVersionNoteParams.md
@@ -358,6 +363,8 @@ docs/SaveDatasetSetupResponse.md
 docs/SaveDatasetVersionNoParseParams.md
 docs/SaveDatasetVersionParams.md
 docs/ScatterFilter.md
+docs/ScatterFilterValue.md
+docs/ScatterInsightBase.md
 docs/ScatterInsightType.md
 docs/ScatterViz.md
 docs/ScatterVizDataState.md
@@ -389,6 +396,7 @@ docs/SettingSchema.md
 docs/SettingValue.md
 docs/SettingsAndValuesWrapper.md
 docs/SettingsCategory.md
+docs/SeverityMetricElement.md
 docs/SingleUserModeSettings.md
 docs/SizedLayout.md
 docs/SlimTeam.md
@@ -417,6 +425,8 @@ docs/TrashSecretManagerParams.md
 docs/TrashSecretManagerResponse.md
 docs/UnderRepresentationInsight.md
 docs/UpdateDashboardParams.md
+docs/UpdateDatasetParams.md
+docs/UpdateDatasetResponse.md
 docs/UpdateIssueParams.md
 docs/UpdateProjectMetaRequest.md
 docs/UpdateSampleCollectionParams.md
@@ -500,7 +510,6 @@ model_bool_schema.go
 model_bounding_box.go
 model_chart_data.go
 model_client_filter_params.go
-model_cluster_insight.go
 model_clusters.go
 model_code_integration_binder.go
 model_code_integration_binder_by_branch.go
@@ -640,6 +649,7 @@ model_get_jobs_filter_params.go
 model_get_jobs_response.go
 model_get_latest_dataset_version_params.go
 model_get_latest_dataset_version_response.go
+model_get_latest_exported_project_params.go
 model_get_machine_types_response.go
 model_get_max_active_users_response.go
 model_get_notifications_response.go
@@ -704,6 +714,8 @@ model_import_project_request.go
 model_init_experiment_request.go
 model_init_experiment_response.go
 model_insight_filter_display_data.go
+model_insight_filter_display_data_insights_inner.go
+model_insight_metric_info.go
 model_insight_sub_category_ds_curation.go
 model_insight_sub_category_performance.go
 model_insight_type.go
@@ -729,6 +741,8 @@ model_job_sub_type.go
 model_job_trigger.go
 model_job_type.go
 model_job_type_enum.go
+model_latest_exported_project.go
+model_latest_exported_project_item.go
 model_layout.go
 model_leap_data_type.go
 model_load_session_params.go
@@ -748,6 +762,8 @@ model_mask_text_data.go
 model_message_level.go
 model_metric_instance.go
 model_metric_message_params.go
+model_metric_statistic_element.go
+model_metric_statistic_element_value.go
 model_model_graph.go
 model_model_setup.go
 model_modify_dataset_version_note_params.go
@@ -813,6 +829,8 @@ model_save_dataset_setup_response.go
 model_save_dataset_version_no_parse_params.go
 model_save_dataset_version_params.go
 model_scatter_filter.go
+model_scatter_filter_value.go
+model_scatter_insight_base.go
 model_scatter_insight_type.go
 model_scatter_viz.go
 model_scatter_viz_data_state.go
@@ -844,6 +862,7 @@ model_setting_schema.go
 model_setting_value.go
 model_settings_and_values_wrapper.go
 model_settings_category.go
+model_severity_metric_element.go
 model_single_user_mode_settings.go
 model_sized_layout.go
 model_slim_team.go
@@ -872,6 +891,8 @@ model_trash_secret_manager_params.go
 model_trash_secret_manager_response.go
 model_under_representation_insight.go
 model_update_dashboard_params.go
+model_update_dataset_params.go
+model_update_dataset_response.go
 model_update_issue_params.go
 model_update_project_meta_request.go
 model_update_sample_collection_params.go
@@ -915,5 +936,4 @@ model_viz_type.go
 model_weight_asset_data.go
 model_xy_chart.go
 response.go
-test/api_default_test.go
 utils.go

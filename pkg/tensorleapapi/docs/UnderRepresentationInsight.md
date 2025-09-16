@@ -5,23 +5,28 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | [**ScatterInsightType**](ScatterInsightType.md) |  | 
-**Filter** | [**ScatterFilter**](ScatterFilter.md) |  | 
-**MutualInfoElements** | Pointer to [**[]MutualInformationElement**](MutualInformationElement.md) |  | [optional] 
-**BlobPath** | Pointer to **string** |  | [optional] 
+**Filters** | Pointer to [**[]ScatterFilter**](ScatterFilter.md) |  | [optional] 
+**NSamples** | **float64** |  | 
+**MutualInfoElements** | [**[]MutualInformationElement**](MutualInformationElement.md) |  | 
+**BlobPath** | **string** |  | 
 **InsightSubCategoryDsCuration** | Pointer to [**InsightSubCategoryDSCuration**](InsightSubCategoryDSCuration.md) |  | [optional] 
 **InsightCategoryPerformance** | Pointer to [**InsightSubCategoryPerformance**](InsightSubCategoryPerformance.md) |  | [optional] 
-**Index** | Pointer to **float64** |  | [optional] 
+**Severity** | **float64** |  | 
+**SeverityMetrics** | [**[]SeverityMetricElement**](SeverityMetricElement.md) |  | 
+**MetricsInfo** | [**[]InsightMetricInfo**](InsightMetricInfo.md) |  | 
+**Index** | **float64** |  | 
+**MinHash** | **[]float64** |  | 
+**CsvPath** | Pointer to **string** |  | [optional] 
 **UnderRepresentationDataset** | [**DataStateType**](DataStateType.md) |  | 
 **UnderRepresentationNSamples** | **float64** |  | 
 **OverRepresentationDataset** | [**DataStateType**](DataStateType.md) |  | 
 **OverRepresentationNSamples** | **float64** |  | 
-**Configuration** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
 
 ## Methods
 
 ### NewUnderRepresentationInsight
 
-`func NewUnderRepresentationInsight(type_ ScatterInsightType, filter ScatterFilter, underRepresentationDataset DataStateType, underRepresentationNSamples float64, overRepresentationDataset DataStateType, overRepresentationNSamples float64, ) *UnderRepresentationInsight`
+`func NewUnderRepresentationInsight(type_ ScatterInsightType, nSamples float64, mutualInfoElements []MutualInformationElement, blobPath string, severity float64, severityMetrics []SeverityMetricElement, metricsInfo []InsightMetricInfo, index float64, minHash []float64, underRepresentationDataset DataStateType, underRepresentationNSamples float64, overRepresentationDataset DataStateType, overRepresentationNSamples float64, ) *UnderRepresentationInsight`
 
 NewUnderRepresentationInsight instantiates a new UnderRepresentationInsight object
 This constructor will assign default values to properties that have it defined,
@@ -56,24 +61,49 @@ and a boolean to check if the value has been set.
 SetType sets Type field to given value.
 
 
-### GetFilter
+### GetFilters
 
-`func (o *UnderRepresentationInsight) GetFilter() ScatterFilter`
+`func (o *UnderRepresentationInsight) GetFilters() []ScatterFilter`
 
-GetFilter returns the Filter field if non-nil, zero value otherwise.
+GetFilters returns the Filters field if non-nil, zero value otherwise.
 
-### GetFilterOk
+### GetFiltersOk
 
-`func (o *UnderRepresentationInsight) GetFilterOk() (*ScatterFilter, bool)`
+`func (o *UnderRepresentationInsight) GetFiltersOk() (*[]ScatterFilter, bool)`
 
-GetFilterOk returns a tuple with the Filter field if it's non-nil, zero value otherwise
+GetFiltersOk returns a tuple with the Filters field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFilter
+### SetFilters
 
-`func (o *UnderRepresentationInsight) SetFilter(v ScatterFilter)`
+`func (o *UnderRepresentationInsight) SetFilters(v []ScatterFilter)`
 
-SetFilter sets Filter field to given value.
+SetFilters sets Filters field to given value.
+
+### HasFilters
+
+`func (o *UnderRepresentationInsight) HasFilters() bool`
+
+HasFilters returns a boolean if a field has been set.
+
+### GetNSamples
+
+`func (o *UnderRepresentationInsight) GetNSamples() float64`
+
+GetNSamples returns the NSamples field if non-nil, zero value otherwise.
+
+### GetNSamplesOk
+
+`func (o *UnderRepresentationInsight) GetNSamplesOk() (*float64, bool)`
+
+GetNSamplesOk returns a tuple with the NSamples field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNSamples
+
+`func (o *UnderRepresentationInsight) SetNSamples(v float64)`
+
+SetNSamples sets NSamples field to given value.
 
 
 ### GetMutualInfoElements
@@ -95,11 +125,6 @@ and a boolean to check if the value has been set.
 
 SetMutualInfoElements sets MutualInfoElements field to given value.
 
-### HasMutualInfoElements
-
-`func (o *UnderRepresentationInsight) HasMutualInfoElements() bool`
-
-HasMutualInfoElements returns a boolean if a field has been set.
 
 ### GetBlobPath
 
@@ -120,11 +145,6 @@ and a boolean to check if the value has been set.
 
 SetBlobPath sets BlobPath field to given value.
 
-### HasBlobPath
-
-`func (o *UnderRepresentationInsight) HasBlobPath() bool`
-
-HasBlobPath returns a boolean if a field has been set.
 
 ### GetInsightSubCategoryDsCuration
 
@@ -176,6 +196,66 @@ SetInsightCategoryPerformance sets InsightCategoryPerformance field to given val
 
 HasInsightCategoryPerformance returns a boolean if a field has been set.
 
+### GetSeverity
+
+`func (o *UnderRepresentationInsight) GetSeverity() float64`
+
+GetSeverity returns the Severity field if non-nil, zero value otherwise.
+
+### GetSeverityOk
+
+`func (o *UnderRepresentationInsight) GetSeverityOk() (*float64, bool)`
+
+GetSeverityOk returns a tuple with the Severity field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSeverity
+
+`func (o *UnderRepresentationInsight) SetSeverity(v float64)`
+
+SetSeverity sets Severity field to given value.
+
+
+### GetSeverityMetrics
+
+`func (o *UnderRepresentationInsight) GetSeverityMetrics() []SeverityMetricElement`
+
+GetSeverityMetrics returns the SeverityMetrics field if non-nil, zero value otherwise.
+
+### GetSeverityMetricsOk
+
+`func (o *UnderRepresentationInsight) GetSeverityMetricsOk() (*[]SeverityMetricElement, bool)`
+
+GetSeverityMetricsOk returns a tuple with the SeverityMetrics field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSeverityMetrics
+
+`func (o *UnderRepresentationInsight) SetSeverityMetrics(v []SeverityMetricElement)`
+
+SetSeverityMetrics sets SeverityMetrics field to given value.
+
+
+### GetMetricsInfo
+
+`func (o *UnderRepresentationInsight) GetMetricsInfo() []InsightMetricInfo`
+
+GetMetricsInfo returns the MetricsInfo field if non-nil, zero value otherwise.
+
+### GetMetricsInfoOk
+
+`func (o *UnderRepresentationInsight) GetMetricsInfoOk() (*[]InsightMetricInfo, bool)`
+
+GetMetricsInfoOk returns a tuple with the MetricsInfo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMetricsInfo
+
+`func (o *UnderRepresentationInsight) SetMetricsInfo(v []InsightMetricInfo)`
+
+SetMetricsInfo sets MetricsInfo field to given value.
+
+
 ### GetIndex
 
 `func (o *UnderRepresentationInsight) GetIndex() float64`
@@ -195,11 +275,51 @@ and a boolean to check if the value has been set.
 
 SetIndex sets Index field to given value.
 
-### HasIndex
 
-`func (o *UnderRepresentationInsight) HasIndex() bool`
+### GetMinHash
 
-HasIndex returns a boolean if a field has been set.
+`func (o *UnderRepresentationInsight) GetMinHash() []float64`
+
+GetMinHash returns the MinHash field if non-nil, zero value otherwise.
+
+### GetMinHashOk
+
+`func (o *UnderRepresentationInsight) GetMinHashOk() (*[]float64, bool)`
+
+GetMinHashOk returns a tuple with the MinHash field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMinHash
+
+`func (o *UnderRepresentationInsight) SetMinHash(v []float64)`
+
+SetMinHash sets MinHash field to given value.
+
+
+### GetCsvPath
+
+`func (o *UnderRepresentationInsight) GetCsvPath() string`
+
+GetCsvPath returns the CsvPath field if non-nil, zero value otherwise.
+
+### GetCsvPathOk
+
+`func (o *UnderRepresentationInsight) GetCsvPathOk() (*string, bool)`
+
+GetCsvPathOk returns a tuple with the CsvPath field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCsvPath
+
+`func (o *UnderRepresentationInsight) SetCsvPath(v string)`
+
+SetCsvPath sets CsvPath field to given value.
+
+### HasCsvPath
+
+`func (o *UnderRepresentationInsight) HasCsvPath() bool`
+
+HasCsvPath returns a boolean if a field has been set.
 
 ### GetUnderRepresentationDataset
 
@@ -280,31 +400,6 @@ and a boolean to check if the value has been set.
 
 SetOverRepresentationNSamples sets OverRepresentationNSamples field to given value.
 
-
-### GetConfiguration
-
-`func (o *UnderRepresentationInsight) GetConfiguration() map[string]interface{}`
-
-GetConfiguration returns the Configuration field if non-nil, zero value otherwise.
-
-### GetConfigurationOk
-
-`func (o *UnderRepresentationInsight) GetConfigurationOk() (*map[string]interface{}, bool)`
-
-GetConfigurationOk returns a tuple with the Configuration field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetConfiguration
-
-`func (o *UnderRepresentationInsight) SetConfiguration(v map[string]interface{})`
-
-SetConfiguration sets Configuration field to given value.
-
-### HasConfiguration
-
-`func (o *UnderRepresentationInsight) HasConfiguration() bool`
-
-HasConfiguration returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
