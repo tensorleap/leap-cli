@@ -25,7 +25,7 @@ func NewUninstallCmd() *cobra.Command {
 	}
 
 	cmd.Flags().BoolVar(&purge, "purge", false, "Remove all data and cached files")
-	cmd.Flags().BoolVar(&cleanup, "cleanup", false, "Cleanup the local environment")
+	cmd.Flags().BoolVar(&cleanup, "cleanup", false, "Remove cached data")
 
 	return cmd
 }
