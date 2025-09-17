@@ -1,4 +1,5 @@
 .gitignore
+.openapi-generator-ignore
 .travis.yml
 README.md
 api/openapi.yaml
@@ -59,6 +60,8 @@ docs/ConfusionMetricNamesParams.md
 docs/ConfusionMetricNamesResponse.md
 docs/ContinueEvaluateParams.md
 docs/ContinuesAgg.md
+docs/CreateEquivalentValidationParams.md
+docs/CreateEquivalentValidationResponse.md
 docs/CreateSampleVisualizationsParams.md
 docs/CreateSessionTestRequest.md
 docs/CreateTeamRequest.md
@@ -107,6 +110,7 @@ docs/DuplicationInsight.md
 docs/ESFilter.md
 docs/ESFilterValue.md
 docs/EarlyStopParams.md
+docs/EngineSettingKey.md
 docs/EpochData.md
 docs/EpochDataExternalData.md
 docs/EpochMetricsValue.md
@@ -129,6 +133,7 @@ docs/ExtendTrialParams.md
 docs/ExtendTrialResponse.md
 docs/ExternalImportModelStorage.md
 docs/ExternalImportModelStorageResponse.md
+docs/FailureInfo.md
 docs/FetchSimilarFilterDisplayData.md
 docs/FetchSimilarJobParams.md
 docs/FetchSimilarRequestParams.md
@@ -526,6 +531,8 @@ model_confusion_metric_names_params.go
 model_confusion_metric_names_response.go
 model_continue_evaluate_params.go
 model_continues_agg.go
+model_create_equivalent_validation_params.go
+model_create_equivalent_validation_response.go
 model_create_sample_visualizations_params.go
 model_create_session_test_request.go
 model_create_team_request.go
@@ -571,6 +578,7 @@ model_distinct_agg.go
 model_distribution_type.go
 model_duplication_insight.go
 model_early_stop_params.go
+model_engine_setting_key.go
 model_epoch_data.go
 model_epoch_data_external_data.go
 model_epoch_metrics_value.go
@@ -595,6 +603,7 @@ model_extend_trial_params.go
 model_extend_trial_response.go
 model_external_import_model_storage.go
 model_external_import_model_storage_response.go
+model_failure_info.go
 model_fetch_similar_filter_display_data.go
 model_fetch_similar_job_params.go
 model_fetch_similar_request_params.go
@@ -936,4 +945,5 @@ model_viz_type.go
 model_weight_asset_data.go
 model_xy_chart.go
 response.go
+test/api_default_test.go
 utils.go

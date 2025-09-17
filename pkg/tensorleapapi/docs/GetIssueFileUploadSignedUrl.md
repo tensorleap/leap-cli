@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **FileName** | **string** |  | 
 **ProjectId** | **string** |  | 
 **IssueId** | **string** |  | 
+**Origin** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -86,6 +87,31 @@ and a boolean to check if the value has been set.
 
 SetIssueId sets IssueId field to given value.
 
+
+### GetOrigin
+
+`func (o *GetIssueFileUploadSignedUrl) GetOrigin() string`
+
+GetOrigin returns the Origin field if non-nil, zero value otherwise.
+
+### GetOriginOk
+
+`func (o *GetIssueFileUploadSignedUrl) GetOriginOk() (*string, bool)`
+
+GetOriginOk returns a tuple with the Origin field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOrigin
+
+`func (o *GetIssueFileUploadSignedUrl) SetOrigin(v string)`
+
+SetOrigin sets Origin field to given value.
+
+### HasOrigin
+
+`func (o *GetIssueFileUploadSignedUrl) HasOrigin() bool`
+
+HasOrigin returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

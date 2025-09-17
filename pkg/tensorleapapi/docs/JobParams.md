@@ -29,6 +29,8 @@ Name | Type | Description | Notes
 **SampleIds** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
 **Limit** | **float64** |  | 
 **SessionRunId** | **string** |  | 
+**NumOfSamplesToLabel** | Pointer to **float64** |  | [optional] 
+**RecommendLabeling** | Pointer to **bool** |  | [optional] 
 **TriggerCreateSampleVisualiztions** | Pointer to **bool** |  | [optional] 
 **DisplayParams** | [**PopulationExplorationDisplayParams**](PopulationExplorationDisplayParams.md) |  | 
 **DomainGapMetadata** | Pointer to **string** |  | [optional] 
@@ -593,6 +595,56 @@ and a boolean to check if the value has been set.
 
 SetSessionRunId sets SessionRunId field to given value.
 
+
+### GetNumOfSamplesToLabel
+
+`func (o *JobParams) GetNumOfSamplesToLabel() float64`
+
+GetNumOfSamplesToLabel returns the NumOfSamplesToLabel field if non-nil, zero value otherwise.
+
+### GetNumOfSamplesToLabelOk
+
+`func (o *JobParams) GetNumOfSamplesToLabelOk() (*float64, bool)`
+
+GetNumOfSamplesToLabelOk returns a tuple with the NumOfSamplesToLabel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNumOfSamplesToLabel
+
+`func (o *JobParams) SetNumOfSamplesToLabel(v float64)`
+
+SetNumOfSamplesToLabel sets NumOfSamplesToLabel field to given value.
+
+### HasNumOfSamplesToLabel
+
+`func (o *JobParams) HasNumOfSamplesToLabel() bool`
+
+HasNumOfSamplesToLabel returns a boolean if a field has been set.
+
+### GetRecommendLabeling
+
+`func (o *JobParams) GetRecommendLabeling() bool`
+
+GetRecommendLabeling returns the RecommendLabeling field if non-nil, zero value otherwise.
+
+### GetRecommendLabelingOk
+
+`func (o *JobParams) GetRecommendLabelingOk() (*bool, bool)`
+
+GetRecommendLabelingOk returns a tuple with the RecommendLabeling field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRecommendLabeling
+
+`func (o *JobParams) SetRecommendLabeling(v bool)`
+
+SetRecommendLabeling sets RecommendLabeling field to given value.
+
+### HasRecommendLabeling
+
+`func (o *JobParams) HasRecommendLabeling() bool`
+
+HasRecommendLabeling returns a boolean if a field has been set.
 
 ### GetTriggerCreateSampleVisualiztions
 

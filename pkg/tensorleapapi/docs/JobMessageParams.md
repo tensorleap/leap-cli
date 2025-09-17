@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Message** | Pointer to **string** |  | [optional] 
+**FailureInfo** | Pointer to [**FailureInfo**](FailureInfo.md) |  | [optional] 
 **Module** | **string** |  | 
 **JobStatus** | [**JobStatus**](JobStatus.md) |  | 
 
@@ -27,30 +27,30 @@ NewJobMessageParamsWithDefaults instantiates a new JobMessageParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetMessage
+### GetFailureInfo
 
-`func (o *JobMessageParams) GetMessage() string`
+`func (o *JobMessageParams) GetFailureInfo() FailureInfo`
 
-GetMessage returns the Message field if non-nil, zero value otherwise.
+GetFailureInfo returns the FailureInfo field if non-nil, zero value otherwise.
 
-### GetMessageOk
+### GetFailureInfoOk
 
-`func (o *JobMessageParams) GetMessageOk() (*string, bool)`
+`func (o *JobMessageParams) GetFailureInfoOk() (*FailureInfo, bool)`
 
-GetMessageOk returns a tuple with the Message field if it's non-nil, zero value otherwise
+GetFailureInfoOk returns a tuple with the FailureInfo field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetMessage
+### SetFailureInfo
 
-`func (o *JobMessageParams) SetMessage(v string)`
+`func (o *JobMessageParams) SetFailureInfo(v FailureInfo)`
 
-SetMessage sets Message field to given value.
+SetFailureInfo sets FailureInfo field to given value.
 
-### HasMessage
+### HasFailureInfo
 
-`func (o *JobMessageParams) HasMessage() bool`
+`func (o *JobMessageParams) HasFailureInfo() bool`
 
-HasMessage returns a boolean if a field has been set.
+HasFailureInfo returns a boolean if a field has been set.
 
 ### GetModule
 

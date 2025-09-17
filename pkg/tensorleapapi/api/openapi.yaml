@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.628
+  version: 0.0.634
 servers:
 - url: /api/v2
 paths:
@@ -743,6 +743,26 @@ paths:
           description: Ok
       security:
       - jwt: []
+  /graph/createEquivalentValidation:
+    post:
+      operationId: CreateEquivalentValidation
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEquivalentValidationParams'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateEquivalentValidationResponse'
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
   /insights/archiveInsight:
     post:
       operationId: ArchiveInsight
@@ -3828,11 +3848,14 @@ components:
       example:
         index: null
         state: null
+        hashed_index: hashed_index
       properties:
         state:
           $ref: '#/components/schemas/DataStateType'
         index:
           $ref: '#/components/schemas/SampleIdType'
+        hashed_index:
+          type: string
       required:
       - index
       - state
@@ -9228,8 +9251,11 @@ components:
     GetDatasetVersionUploadUrlParams:
       additionalProperties: false
       example:
+        origin: origin
         datasetId: datasetId
       properties:
+        origin:
+          type: string
         datasetId:
           type: string
       required:
@@ -9507,6 +9533,11 @@ components:
       type: object
     PopulationExplorationJobParams:
       properties:
+        numOfSamplesToLabel:
+          format: double
+          type: number
+        recommendLabeling:
+          type: boolean
         triggerCreateSampleVisualiztions:
           type: boolean
         displayParams:
@@ -10422,6 +10453,34 @@ components:
       - projectId
       - versionId
       type: object
+    CreateEquivalentValidationResponse:
+      additionalProperties: false
+      example:
+        success: true
+      properties:
+        success:
+          type: boolean
+      required:
+      - success
+      type: object
+    CreateEquivalentValidationParams:
+      additionalProperties: false
+      example:
+        sourceDigest: sourceDigest
+        targetDigest: targetDigest
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        sourceDigest:
+          type: string
+        targetDigest:
+          type: string
+      required:
+      - projectId
+      - sourceDigest
+      - targetDigest
+      type: object
     ArchiveInsightsParams:
       additionalProperties: false
       example:
@@ -10943,6 +11002,7 @@ components:
       example:
         fileName: fileName
         issueId: issueId
+        origin: origin
         projectId: projectId
       properties:
         fileName:
@@ -10950,6 +11010,8 @@ components:
         projectId:
           type: string
         issueId:
+          type: string
+        origin:
           type: string
       required:
       - fileName
@@ -12666,10 +12728,45 @@ components:
       - $ref: '#/components/schemas/DatasetMessageParams'
       - $ref: '#/components/schemas/LossMessageParams'
       - $ref: '#/components/schemas/MetricMessageParams'
-    JobMessageParams:
+    EngineSettingKey:
+      enum:
+      - PROCESS_REQUIRED_CPU
+      - PROCESS_LIMIT_CPU
+      - PROCESS_REQUIRED_MEMORY
+      - PROCESS_LIMIT_MEMORY
+      - N_GPUS_PER_PROCESS
+      - N_GENERIC_PROCESS_PROCESSES
+      - N_VISUALIZERS_PROCESSES
+      - KEEP_VISUALIZATION_RESOLUTION
+      - DYNAMIC_MEMORY
+      - GENERIC_CPU_REQUEST
+      - GENERIC_CPU_LIMIT
+      - GENERIC_MEMORY_REQUEST
+      - GENERIC_MEMORY_LIMIT
+      - WARMUP
+      - SLIM_JOB_CPU_REQUEST
+      - SLIM_JOB_CPU_LIMIT
+      - SLIM_JOB_REQUIRED_MEMORY
+      - SLIM_JOB_LIMIT_MEMORY
+      - SLIM_JOB_TIME_TO_LIVE
+      - PIP_INDEX_URL
+      - PIP_EXTRA_INDEX_URL
+      nullable: false
+      type: string
+    FailureInfo:
+      additionalProperties: false
       properties:
         message:
           type: string
+        engineSettingKey:
+          $ref: '#/components/schemas/EngineSettingKey'
+      required:
+      - message
+      type: object
+    JobMessageParams:
+      properties:
+        failureInfo:
+          $ref: '#/components/schemas/FailureInfo'
         module:
           enum:
           - JobStatus
@@ -13887,8 +13984,10 @@ components:
         samples:
         - index: null
           state: null
+          hashed_index: hashed_index
         - index: null
           state: null
+          hashed_index: hashed_index
         cid: cid
       properties:
         samples:
@@ -13930,8 +14029,10 @@ components:
           samples:
           - index: null
             state: null
+            hashed_index: hashed_index
           - index: null
             state: null
+            hashed_index: hashed_index
           cid: cid
         - createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
@@ -13942,8 +14043,10 @@ components:
           samples:
           - index: null
             state: null
+            hashed_index: hashed_index
           - index: null
             state: null
+            hashed_index: hashed_index
           cid: cid
       properties:
         data:
@@ -13979,8 +14082,10 @@ components:
         samples:
         - index: null
           state: null
+          hashed_index: hashed_index
         - index: null
           state: null
+          hashed_index: hashed_index
       properties:
         samples:
           items:
@@ -14023,8 +14128,10 @@ components:
         samples:
         - index: null
           state: null
+          hashed_index: hashed_index
         - index: null
           state: null
+          hashed_index: hashed_index
       properties:
         samples:
           items:
@@ -19089,6 +19196,7 @@ components:
         sampleIdentity:
           index: null
           state: null
+          hashed_index: hashed_index
       properties:
         sessionRunId:
           type: string
@@ -19184,6 +19292,7 @@ components:
             gt: null
           operator: null
         triggerCreateSampleVisualiztions: true
+        recommendLabeling: true
         sessionRunId: sessionRunId
         projectionMetric: projectionMetric
         displayParams:
@@ -19196,6 +19305,7 @@ components:
           - balance_by
           reduction_algorithm: null
           should_fill_remaining_with_unbalance: true
+        numOfSamplesToLabel: 5.962133916683182
         digest: digest
         notApplyTimeFilterOnUnlabeledOnly: true
         batchSize: 0.8008281904610115
@@ -19250,6 +19360,11 @@ components:
           type: boolean
         reRunAfterFail:
           type: boolean
+        recommendLabeling:
+          type: boolean
+        numOfSamplesToLabel:
+          format: double
+          type: number
       required:
       - batchSize
       - digest
@@ -19284,8 +19399,10 @@ components:
         sampleIds:
         - index: null
           state: null
+          hashed_index: hashed_index
         - index: null
           state: null
+          hashed_index: hashed_index
         digest: digest
         epoch: 6.027456183070403
         filters:
@@ -19363,8 +19480,10 @@ components:
         sampleIdentities:
         - index: null
           state: null
+          hashed_index: hashed_index
         - index: null
           state: null
+          hashed_index: hashed_index
       properties:
         projectId:
           type: string
@@ -19410,8 +19529,10 @@ components:
         samplesIdentities:
         - index: null
           state: null
+          hashed_index: hashed_index
         - index: null
           state: null
+          hashed_index: hashed_index
         projectId: projectId
         sessionRunIds:
         - sessionRunIds
