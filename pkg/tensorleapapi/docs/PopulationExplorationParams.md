@@ -17,6 +17,8 @@ Name | Type | Description | Notes
 **DisplayParams** | [**PopulationExplorationDisplayParams**](PopulationExplorationDisplayParams.md) |  | 
 **TriggerCreateSampleVisualiztions** | Pointer to **bool** |  | [optional] 
 **ReRunAfterFail** | Pointer to **bool** |  | [optional] 
+**RecommendLabeling** | Pointer to **bool** |  | [optional] 
+**NumOfSamplesToLabel** | Pointer to **float64** |  | [optional] 
 
 ## Methods
 
@@ -331,6 +333,56 @@ SetReRunAfterFail sets ReRunAfterFail field to given value.
 `func (o *PopulationExplorationParams) HasReRunAfterFail() bool`
 
 HasReRunAfterFail returns a boolean if a field has been set.
+
+### GetRecommendLabeling
+
+`func (o *PopulationExplorationParams) GetRecommendLabeling() bool`
+
+GetRecommendLabeling returns the RecommendLabeling field if non-nil, zero value otherwise.
+
+### GetRecommendLabelingOk
+
+`func (o *PopulationExplorationParams) GetRecommendLabelingOk() (*bool, bool)`
+
+GetRecommendLabelingOk returns a tuple with the RecommendLabeling field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRecommendLabeling
+
+`func (o *PopulationExplorationParams) SetRecommendLabeling(v bool)`
+
+SetRecommendLabeling sets RecommendLabeling field to given value.
+
+### HasRecommendLabeling
+
+`func (o *PopulationExplorationParams) HasRecommendLabeling() bool`
+
+HasRecommendLabeling returns a boolean if a field has been set.
+
+### GetNumOfSamplesToLabel
+
+`func (o *PopulationExplorationParams) GetNumOfSamplesToLabel() float64`
+
+GetNumOfSamplesToLabel returns the NumOfSamplesToLabel field if non-nil, zero value otherwise.
+
+### GetNumOfSamplesToLabelOk
+
+`func (o *PopulationExplorationParams) GetNumOfSamplesToLabelOk() (*float64, bool)`
+
+GetNumOfSamplesToLabelOk returns a tuple with the NumOfSamplesToLabel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNumOfSamplesToLabel
+
+`func (o *PopulationExplorationParams) SetNumOfSamplesToLabel(v float64)`
+
+SetNumOfSamplesToLabel sets NumOfSamplesToLabel field to given value.
+
+### HasNumOfSamplesToLabel
+
+`func (o *PopulationExplorationParams) HasNumOfSamplesToLabel() bool`
+
+HasNumOfSamplesToLabel returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

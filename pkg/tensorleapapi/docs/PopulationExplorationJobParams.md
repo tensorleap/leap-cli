@@ -4,6 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**NumOfSamplesToLabel** | Pointer to **float64** |  | [optional] 
+**RecommendLabeling** | Pointer to **bool** |  | [optional] 
 **TriggerCreateSampleVisualiztions** | Pointer to **bool** |  | [optional] 
 **DisplayParams** | [**PopulationExplorationDisplayParams**](PopulationExplorationDisplayParams.md) |  | 
 **DomainGapMetadata** | Pointer to **string** |  | [optional] 
@@ -33,6 +35,56 @@ will change when the set of required properties is changed
 NewPopulationExplorationJobParamsWithDefaults instantiates a new PopulationExplorationJobParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetNumOfSamplesToLabel
+
+`func (o *PopulationExplorationJobParams) GetNumOfSamplesToLabel() float64`
+
+GetNumOfSamplesToLabel returns the NumOfSamplesToLabel field if non-nil, zero value otherwise.
+
+### GetNumOfSamplesToLabelOk
+
+`func (o *PopulationExplorationJobParams) GetNumOfSamplesToLabelOk() (*float64, bool)`
+
+GetNumOfSamplesToLabelOk returns a tuple with the NumOfSamplesToLabel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNumOfSamplesToLabel
+
+`func (o *PopulationExplorationJobParams) SetNumOfSamplesToLabel(v float64)`
+
+SetNumOfSamplesToLabel sets NumOfSamplesToLabel field to given value.
+
+### HasNumOfSamplesToLabel
+
+`func (o *PopulationExplorationJobParams) HasNumOfSamplesToLabel() bool`
+
+HasNumOfSamplesToLabel returns a boolean if a field has been set.
+
+### GetRecommendLabeling
+
+`func (o *PopulationExplorationJobParams) GetRecommendLabeling() bool`
+
+GetRecommendLabeling returns the RecommendLabeling field if non-nil, zero value otherwise.
+
+### GetRecommendLabelingOk
+
+`func (o *PopulationExplorationJobParams) GetRecommendLabelingOk() (*bool, bool)`
+
+GetRecommendLabelingOk returns a tuple with the RecommendLabeling field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRecommendLabeling
+
+`func (o *PopulationExplorationJobParams) SetRecommendLabeling(v bool)`
+
+SetRecommendLabeling sets RecommendLabeling field to given value.
+
+### HasRecommendLabeling
+
+`func (o *PopulationExplorationJobParams) HasRecommendLabeling() bool`
+
+HasRecommendLabeling returns a boolean if a field has been set.
 
 ### GetTriggerCreateSampleVisualiztions
 

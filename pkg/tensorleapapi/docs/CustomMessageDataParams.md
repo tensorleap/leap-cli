@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **LossName** | **string** |  | 
 **MetricName** | **string** |  | 
 **LossNodeId** | Pointer to **string** |  | [optional] 
+**FailureInfo** | Pointer to [**FailureInfo**](FailureInfo.md) |  | [optional] 
 **JobStatus** | [**JobStatus**](JobStatus.md) |  | 
 
 ## Methods
@@ -312,6 +313,31 @@ SetLossNodeId sets LossNodeId field to given value.
 `func (o *CustomMessageDataParams) HasLossNodeId() bool`
 
 HasLossNodeId returns a boolean if a field has been set.
+
+### GetFailureInfo
+
+`func (o *CustomMessageDataParams) GetFailureInfo() FailureInfo`
+
+GetFailureInfo returns the FailureInfo field if non-nil, zero value otherwise.
+
+### GetFailureInfoOk
+
+`func (o *CustomMessageDataParams) GetFailureInfoOk() (*FailureInfo, bool)`
+
+GetFailureInfoOk returns a tuple with the FailureInfo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFailureInfo
+
+`func (o *CustomMessageDataParams) SetFailureInfo(v FailureInfo)`
+
+SetFailureInfo sets FailureInfo field to given value.
+
+### HasFailureInfo
+
+`func (o *CustomMessageDataParams) HasFailureInfo() bool`
+
+HasFailureInfo returns a boolean if a field has been set.
 
 ### GetJobStatus
 

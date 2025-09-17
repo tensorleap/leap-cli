@@ -19,6 +19,7 @@ Method | HTTP request | Description
 [**ClearUserJobs**](DefaultApi.md#ClearUserJobs) | **Post** /users/clearUserJobs | 
 [**ClearUserNotifications**](DefaultApi.md#ClearUserNotifications) | **Post** /users/clearUserNotifications | 
 [**ContinueEvaluate**](DefaultApi.md#ContinueEvaluate) | **Post** /evaluate/continueEvaluate | 
+[**CreateEquivalentValidation**](DefaultApi.md#CreateEquivalentValidation) | **Post** /graph/createEquivalentValidation | 
 [**CreateSamplesVisualizations**](DefaultApi.md#CreateSamplesVisualizations) | **Post** /visualizations/createSamplesVisualizations | 
 [**CreateSessionTest**](DefaultApi.md#CreateSessionTest) | **Post** /sessions-tests/createSessionTest | 
 [**CreateTeam**](DefaultApi.md#CreateTeam) | **Post** /teams/createTeam | 
@@ -1100,6 +1101,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Job**](Job.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateEquivalentValidation
+
+> CreateEquivalentValidationResponse CreateEquivalentValidation(ctx).CreateEquivalentValidationParams(createEquivalentValidationParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    createEquivalentValidationParams := *openapiclient.NewCreateEquivalentValidationParams("ProjectId_example", "SourceDigest_example", "TargetDigest_example") // CreateEquivalentValidationParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.CreateEquivalentValidation(context.Background()).CreateEquivalentValidationParams(createEquivalentValidationParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateEquivalentValidation``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `CreateEquivalentValidation`: CreateEquivalentValidationResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateEquivalentValidation`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateEquivalentValidationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createEquivalentValidationParams** | [**CreateEquivalentValidationParams**](CreateEquivalentValidationParams.md) |  | 
+
+### Return type
+
+[**CreateEquivalentValidationResponse**](CreateEquivalentValidationResponse.md)
 
 ### Authorization
 
