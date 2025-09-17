@@ -13,7 +13,6 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/entity"
 	"github.com/tensorleap/leap-cli/pkg/hub"
 	"github.com/tensorleap/leap-cli/pkg/log"
-	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
 func BuildProjectContext(ctx context.Context, projectEntity *ProjectEntity, schemaVersion int) (*hub.ProjectContext, error) {
@@ -22,11 +21,11 @@ func BuildProjectContext(ctx context.Context, projectEntity *ProjectEntity, sche
 	}
 
 	bgImageBlobUrl := fmt.Sprintf("projects/%s/%s", projectEntity.Cid, *projectEntity.BgImagePath)
-	urlRes, _, err := api.ApiClient.GetDownloadSignedUrl(ctx).GetDownloadSignedUrlParams(*tensorleapapi.NewGetDownloadSignedUrlParams(bgImageBlobUrl)).Execute()
+	downloadUrl, err := api.GetDownloadSignedUrl(ctx, bgImageBlobUrl)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get download signed url: %v", err)
 	}
-	res, err := http.Get(urlRes.GetUrl())
+	res, err := http.Get(downloadUrl)
 	if err != nil {
 		return nil, fmt.Errorf("failed to download bg image: %v", err)
 	}
@@ -93,13 +92,13 @@ func CopyProject(
 	} else {
 		exportUrl := exportJob.Params.ExportProjectParams.GetExportUrl()
 		var origin *string
-		isSourceLocal := auth.IsLocalUrl(sourceUrl)
-		if isSourceLocal {
-			// in case of local to local copy, we need to use the environment origin by setting origin to empty string
-			emptyOrigin := ""
-			origin = &emptyOrigin
+		isCopyFromLocalToLocal := auth.IsLocalUrl(sourceUrl)
+		if isCopyFromLocalToLocal {
+			emptyOriginUseServerStorageUrl := ""
+			origin = &emptyOriginUseServerStorageUrl
 		}
-		copyFromUrl, err = getSignedUrl(sourceCtx, exportUrl, http.MethodGet, time.Hour*24, origin)
+
+		copyFromUrl, err = api.GetSignedUrl(sourceCtx, exportUrl, http.MethodGet, time.Hour*24, origin)
 		if err != nil {
 			return fmt.Errorf("failed to get signed url for exported project file : %v", err)
 		}
@@ -124,14 +123,16 @@ func getCopyToSignedUrl(sourceCtx, targetCtx context.Context, fileName string) (
 		return nil, nil
 	}
 
-	var origin *string
 	ctx := targetCtx
 
-	signedUploadUrl, url, err := getTempUploadedSignedUrl(ctx, fileName, origin)
+	res, err := api.GetUploadSignedUrl(ctx, fileName)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get signed url for the uploaded project: %v", err)
 	}
-	signedGetUrl, err := getSignedUrl(ctx, url, http.MethodGet, time.Hour*24, origin)
+	signedUploadUrl := res.GetUrl()
+	url := res.GetFileName()
+
+	signedGetUrl, err := api.GetSignedUrl(ctx, url, http.MethodGet, time.Hour*24, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get singed url for the uploaded project: %v", err)
 	}

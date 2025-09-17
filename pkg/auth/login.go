@@ -59,7 +59,7 @@ type ApiKeyResponse struct {
 }
 
 func LoginAndGetAuthTokenWithBrowser(ctx context.Context, apiUrl string) (string, error) {
-	baseUrl := ChangeToUIUrl(apiUrl)
+	baseUrl := api.ChangeToUIUrl(apiUrl)
 	codeVerifier, err := generateCodeVerifier()
 	if err != nil {
 		return "", fmt.Errorf("failed to generate code verifier: %w", err)
@@ -169,7 +169,7 @@ func AskForUserNameAndPassword(userName, password string) (string, string, error
 
 func LoginAndGetAuthToken(apiUrl, username, password string) (string, error) {
 
-	baseUrl := ChangeToUIUrl(apiUrl)
+	baseUrl := api.ChangeToUIUrl(apiUrl)
 	clientID := "tensorleap-client"
 	realm := "tensorleap"
 	keycloakURL := fmt.Sprintf("%s/auth", baseUrl)

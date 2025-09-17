@@ -20,9 +20,7 @@ func ImportModel(ctx context.Context, filePath, projectId, message, modelType, b
 	fileName := filepath.Base(filePath)
 	versionName := message
 	modelName := strings.TrimSuffix(fileName, filepath.Ext(fileName))
-	tempSignedUploadUrlParams := *tlApi.NewGetUploadSignedUrlParams(fileName)
-	signedUrlData, _, err := api.ApiClient.GetUploadSignedUrl(ctx).
-		GetUploadSignedUrlParams(tempSignedUploadUrlParams).Execute()
+	signedUrlData, err := api.GetUploadSignedUrl(ctx, fileName)
 	if err != nil {
 		return err
 	}

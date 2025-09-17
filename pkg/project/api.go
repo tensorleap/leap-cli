@@ -124,10 +124,13 @@ func ImportProjectFromFile(ctx context.Context, filePath, projectName string) er
 
 func uploadProjectToTempFile(ctx context.Context, projectName string, projectReader io.Reader, projectSize int64) (string, error) {
 
-	uploadSingedUrl, uploadUrl, err := getTempUploadedSignedUrl(ctx, projectName, nil)
+	res, err := api.GetUploadSignedUrl(ctx, projectName)
+
 	if err != nil {
 		return "", fmt.Errorf("failed to get signed url for the uploaded project: %v", err)
 	}
+	uploadSingedUrl := res.GetUrl()
+	uploadUrl := res.GetFileName()
 	err = api.UploadFile(uploadSingedUrl, projectReader, projectSize)
 	if err != nil {
 		return "", fmt.Errorf("failed to upload project: %v", err)
@@ -135,34 +138,11 @@ func uploadProjectToTempFile(ctx context.Context, projectName string, projectRea
 	log.Infof("Uploaded successfully project: %s", projectName)
 
 	expireTime := time.Hour * 24
-	origin := "" // use default origin
-	getUrl, err := getSignedUrl(ctx, uploadUrl, http.MethodGet, expireTime, &origin)
+	getUrl, err := api.GetSignedUrl(ctx, uploadUrl, http.MethodGet, expireTime, nil)
 	if err != nil {
 		return "", fmt.Errorf("failed to get singed url for the uploaded project: %v", err)
 	}
 	return getUrl, nil
-}
-
-func getTempUploadedSignedUrl(ctx context.Context, fileName string, origin *string) (string, string, error) {
-	tempSignedUploadUrlParams := *tensorleapapi.NewGetUploadSignedUrlParams(fileName)
-	tempSignedUploadUrlParams.Origin = origin
-	uploadUrl, res, err := api.ApiClient.GetUploadSignedUrl(ctx).GetUploadSignedUrlParams(tempSignedUploadUrlParams).Execute()
-	if err = api.CheckRes(res, err); err != nil {
-		return "", "", fmt.Errorf("failed to get uploaded signed url: %v", err)
-	}
-	return uploadUrl.Url, uploadUrl.GetFileName(), nil
-}
-
-func getSignedUrl(ctx context.Context, url string, method tensorleapapi.HttpMethods, expire time.Duration, origin *string) (string, error) {
-	expireTime := float64(expire.Seconds())
-	getUrlParams := *tensorleapapi.NewGetSignedUrlParams(url, expireTime, method)
-	getUrlParams.Origin = origin
-	getUrl, res, err := api.ApiClient.GetSignedUrl(ctx).
-		GetSignedUrlParams(getUrlParams).Execute()
-	if err = api.CheckRes(res, err); err != nil {
-		return "", fmt.Errorf("failed to get signed url: %v", err)
-	}
-	return getUrl.Url, nil
 }
 
 func ExportProjectIntoFile(ctx context.Context, project *ProjectEntity, outputDir string, options ExportProjectParams) error {
@@ -185,13 +165,11 @@ func ExportProjectIntoFile(ctx context.Context, project *ProjectEntity, outputDi
 	s := log.NewSpinner(fmt.Sprintf("Exporting project '%s', into: '%s'", project.Name, filePath))
 	s.Start()
 	defer s.Stop()
-	res, _, err := api.ApiClient.GetDownloadSignedUrl(ctx).
-		GetDownloadSignedUrlParams(*tensorleapapi.NewGetDownloadSignedUrlParams(exportUrl)).
-		Execute()
+	downloadUrl, err := api.GetDownloadSignedUrl(ctx, exportUrl)
 	if err != nil {
 		return fmt.Errorf("failed to get download signed url: %v", err)
 	}
-	err = api.DownloadFile(res.GetUrl(), file)
+	err = api.DownloadFile(downloadUrl, file)
 	if err != nil && err != io.EOF {
 		defer os.Remove(filePath)
 		return err

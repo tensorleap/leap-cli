@@ -226,14 +226,13 @@ func CloneCodeIntegrationVersion(ctx context.Context, codeIntegrationVersion *te
 		return []string{}, ErrEmptyCodeIntegrationVersion
 	}
 	blobPath := codeIntegrationVersion.GetBlobPath()
-	res, _, err := api.ApiClient.GetDownloadSignedUrl(ctx).
-		GetDownloadSignedUrlParams(*tensorleapapi.NewGetDownloadSignedUrlParams(blobPath)).
-		Execute()
+	log.Infof("Downloading latest code integration version from %s", blobPath)
+	downloadUrl, err := api.GetDownloadSignedUrl(ctx, blobPath)
 	if err != nil {
 		return nil, err
 	}
 
-	files, err := local.DownloadAndExtractTarFile(res.GetUrl(), outputDir, specificFileName)
+	files, err := local.DownloadAndExtractTarFile(downloadUrl, outputDir, specificFileName)
 	if err != nil {
 		return nil, err
 	}
@@ -498,13 +497,11 @@ func CompareCodeVersion(ctx context.Context, compareVersion *CodeIntegrationVers
 	}
 	defer local.CleanupTempFile(tempLatestVersionFile)
 
-	res, _, err := api.ApiClient.GetDownloadSignedUrl(ctx).
-		GetDownloadSignedUrlParams(*tensorleapapi.NewGetDownloadSignedUrlParams(latestVersionBlobPath)).
-		Execute()
+	downloadUrl, err := api.GetDownloadSignedUrl(ctx, latestVersionBlobPath)
 	if err != nil {
 		return true, fmt.Errorf("failed to get download signed url: %v", err)
 	}
-	err = api.DownloadFile(res.GetUrl(), tempLatestVersionFile)
+	err = api.DownloadFile(downloadUrl, tempLatestVersionFile)
 	if err != nil {
 		return true, fmt.Errorf("failed to download latest code integration version: %v", err)
 	}
@@ -548,14 +545,11 @@ func GetDatasetMappingYaml(ctx context.Context, codeIntegrationId, branch string
 	}
 
 	blobPath := codeIntegrationVersion.GetBlobPath()
-	res, _, err := api.ApiClient.GetDownloadSignedUrl(ctx).
-		GetDownloadSignedUrlParams(*tensorleapapi.NewGetDownloadSignedUrlParams(blobPath)).
-		Execute()
+	downloadUrl, err := api.GetDownloadSignedUrl(ctx, blobPath)
 	if err != nil {
 		return ""
 	}
-
-	content, err := FetchFileFromTarGz(res.Url, BindingFilePath)
+	content, err := FetchFileFromTarGz(downloadUrl, BindingFilePath)
 	if err != nil {
 		return ""
 	}

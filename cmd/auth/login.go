@@ -5,6 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
+	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 )
 
@@ -40,7 +41,7 @@ func NewLoginCmd() *cobra.Command {
 					return err
 				}
 			}
-			apiUrl, err := auth.NormalizeAPIUrl(baseUrl)
+			apiUrl, err := api.NormalizeAPIUrl(baseUrl)
 			if err != nil {
 				// Track failed login attempt
 				properties := map[string]interface{}{

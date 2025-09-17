@@ -2,7 +2,6 @@ package server
 
 import (
 	"fmt"
-	"net/http"
 	"time"
 
 	"context"
@@ -11,6 +10,7 @@ import (
 	"github.com/tensorleap/helm-charts/pkg/local"
 	"github.com/tensorleap/helm-charts/pkg/server"
 	"github.com/tensorleap/helm-charts/pkg/server/manifest"
+	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/cli"
 	"github.com/tensorleap/leap-cli/pkg/config"
 	"github.com/tensorleap/leap-cli/pkg/log"
@@ -117,7 +117,8 @@ func checkInternetAvailability(isAirGapInstallation bool) bool {
 }
 
 func hasInternet() bool {
-	client := http.Client{Timeout: 3 * time.Second}
+	client := api.NewDefaultClient()
+	client.Timeout = 3 * time.Second
 	resp, err := client.Get("https://www.google.com/generate_204")
 	if err != nil {
 		return false
