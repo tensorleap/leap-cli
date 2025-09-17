@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/tensorleap/leap-cli/pkg/api"
 )
 
 // Meant to be replaced during build with LDFLAG: -X 'github.com/tensorleap/leap-cli/pkg/version.CliVersion=${GIT_TAG}'
@@ -30,9 +32,8 @@ type GitHubRelease struct {
 
 // GetLatestVersion fetches the latest release version from GitHub
 func GetLatestVersion() (string, error) {
-	client := &http.Client{
-		Timeout: 10 * time.Second,
-	}
+	client := api.NewDefaultClient()
+	client.Timeout = 10 * time.Second
 
 	// Use the GitHub API to get the latest release
 	url := fmt.Sprintf("%s/repos/tensorleap/leap-cli/releases/latest", GitHubAPIBaseURL)
@@ -72,15 +73,14 @@ func GetLatestVersion() (string, error) {
 // GetLatestVersionFromRedirect fetches the latest version using the redirect method (like the install script)
 // This method follows redirects to get the latest release URL and extracts the version from it
 func GetLatestVersionFromRedirect() (string, error) {
-	client := &http.Client{
-		Timeout: 10 * time.Second,
-		CheckRedirect: func(req *http.Request, via []*http.Request) error {
-			// Allow up to 10 redirects
-			if len(via) >= 10 {
-				return fmt.Errorf("too many redirects")
-			}
-			return nil
-		},
+	client := api.NewDefaultClient()
+	client.Timeout = 10 * time.Second
+	client.CheckRedirect = func(req *http.Request, via []*http.Request) error {
+		// Allow up to 10 redirects
+		if len(via) >= 10 {
+			return fmt.Errorf("too many redirects")
+		}
+		return nil
 	}
 
 	// Use the same URL as the install script

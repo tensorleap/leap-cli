@@ -12,7 +12,7 @@ import (
 )
 
 func DownloadFile(url string, file io.Writer) error {
-	log.Println("Downloading...")
+	log.Printf("Downloading %s...", url)
 
 	resp, err := http.Get(url)
 	if err != nil {

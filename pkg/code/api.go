@@ -106,19 +106,11 @@ func GetCodeIntegration(ctx context.Context, id string) (*CodeIntegrationVersion
 
 func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, fileSize int64, codeIntegrationId, entryFile, secretId, branch, message, pythonVersion string) (*CodeIntegrationVersion, error) {
 
-	getDatasetVersionUploadUrlParams := *tensorleapapi.NewGetDatasetVersionUploadUrlParams(
-		codeIntegrationId,
-	)
-
-	data, _, err := ApiClient.GetDatasetVersionUploadUrl(ctx).
-		GetDatasetVersionUploadUrlParams(getDatasetVersionUploadUrlParams).
-		Execute()
-
+	uploadUrl, err := GetCodeIntegrationVersionUploadUrl(ctx, codeIntegrationId)
 	if err != nil {
 		return nil, err
 	}
 
-	uploadUrl := data.GetUrl()
 	if err := UploadFile(uploadUrl, tarGzFile, fileSize); err != nil {
 		return nil, err
 	}
@@ -195,4 +187,17 @@ func WaitForCodeIntegrationStatus(ctx context.Context, codeIntegrationId string)
 	}
 
 	return
+}
+
+func GetCodeIntegrationVersionUploadUrl(ctx context.Context, codeIntegrationId string) (string, error) {
+	base_url := api.GetBaseUrlFromContext(ctx)
+	params := *tensorleapapi.NewGetDatasetVersionUploadUrlParams(codeIntegrationId)
+	params.SetOrigin(base_url)
+	data, _, err := ApiClient.GetDatasetVersionUploadUrl(ctx).
+		GetDatasetVersionUploadUrlParams(params).
+		Execute()
+	if err != nil {
+		return "", err
+	}
+	return data.GetUrl(), nil
 }
