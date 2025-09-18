@@ -15,7 +15,7 @@ import (
 
 const (
 	MixpanelEndpoint = "https://api.mixpanel.com/track"
-	MixpanelToken    = "f1bf46fb339d8c2930cde8c1acf65491"
+	MixpanelToken    = "0c1710c9656bbfb1056bb46093e23ca1"
 )
 
 // EventType represents the type of event to track
