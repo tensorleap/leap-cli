@@ -15,7 +15,8 @@ import (
 
 const (
 	MixpanelEndpoint = "https://api.mixpanel.com/track"
-	MixpanelToken    = "f1bf46fb339d8c2930cde8c1acf65491"
+	MixpanelToken    = "0c1710c9656bbfb1056bb46093e23ca1"
+	TRACKING_VERSION = 1
 )
 
 // EventType represents the type of event to track
@@ -171,6 +172,8 @@ func SendEvent(eventType EventType, properties map[string]interface{}) {
 	}
 
 	properties["token"] = MixpanelToken
+	properties["service"] = "leap-cli"
+	properties["tracking_version"] = TRACKING_VERSION
 	properties["time"] = time.Now().Unix()
 	properties["os"] = runtime.GOOS
 	properties["arch"] = runtime.GOARCH

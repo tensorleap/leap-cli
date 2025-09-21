@@ -227,7 +227,7 @@ trackEvent() {
     
     # Prepare the event data
     local event_data
-    event_data="{\"event\":\"$event_type\",\"properties\":{\"token\":\"f1bf46fb339d8c2930cde8c1acf65491\",\"time\":$(date +%s),\"os\":\"$(uname | tr '[:upper:]' '[:lower:]')\",\"arch\":\"$(uname -m)\",\"timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"\$device_id\":\"$device_id\",\"distinct_id\":\"$device_id\",\"whoami\":\"$current_user\",\"aws_environment\":\"$aws_env\""
+    event_data="{\"event\":\"$event_type\",\"properties\":{\"token\":\"0c1710c9656bbfb1056bb46093e23ca1\",\"time\":$(date +%s),\"os\":\"$(uname | tr '[:upper:]' '[:lower:]')\",\"arch\":\"$(uname -m)\",\"timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"\$device_id\":\"$device_id\",\"distinct_id\":\"$device_id\",\"whoami\":\"$current_user\",\"aws_environment\":\"$aws_env\",\"tracking_version\":1,\"service\":\"leap-cli\""
     
     # Add custom properties if provided
     if [[ -n "$properties" ]]; then
