@@ -288,6 +288,9 @@ func isRequirementsFile(path string) bool {
 
 func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.WorkspaceConfig, externalLeapMappingPath string, isUsePippin bool) (close func(), tarGzFile *os.File, err error) {
 	filePaths, err := getDatasetFiles(filesDir, workspaceConfig)
+	if err != nil {
+		return
+	}
 	isCodeIntegrationUsePippinButNoRequirementsTxt := isUsePippin && lo.EveryBy(filePaths, func(path string) bool {
 		return !isRequirementsFile(path)
 	})
@@ -307,8 +310,13 @@ func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.Workspac
 			return nil, nil, fmt.Errorf("please ensure a requirements file (%s) exists and is specified in leap.yaml", requirementsFilesStr)
 		}
 	}
-	if err != nil {
-		return
+
+	isEntryFileInFilePaths := lo.SomeBy(filePaths, func(path string) bool {
+		return path == workspaceConfig.EntryFile
+	})
+	if !isEntryFileInFilePaths && workspaceConfig.EntryFile != "" {
+		log.Infof("Adding entry file %s to file paths", workspaceConfig.EntryFile)
+		filePaths = append(filePaths, workspaceConfig.EntryFile)
 	}
 
 	if externalLeapMappingPath != "" {
