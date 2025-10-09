@@ -7,8 +7,13 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
-func AskUserIsCreatingNew[TEntity any](desc *EntityDescriptor[TEntity]) (bool, error) {
+func AskUserIsCreatingNew[TEntity any](desc *EntityDescriptor[TEntity], defaultNew bool) (bool, error) {
 	var response int
+	if defaultNew {
+		response = 0
+	} else {
+		response = 1
+	}
 
 	prompt := &survey.Select{
 		Message: fmt.Sprintf("Select %s to use:", desc.Name),
@@ -16,6 +21,7 @@ func AskUserIsCreatingNew[TEntity any](desc *EntityDescriptor[TEntity]) (bool, e
 			"Create new",
 			"Select existing",
 		},
+		Default: response,
 	}
 
 	err := survey.AskOne(prompt, &response)
@@ -82,21 +88,19 @@ func SelectEntityOrCreateOne[TEntity any](
 	entities []TEntity,
 	createEntity func() (*TEntity, error),
 	askForNewFirst bool,
+	isDefaultNew bool,
 	desc *EntityDescriptor[TEntity],
 ) (entity *TEntity, wasCreated bool, err error) {
 
 	thereAreProjects := len(entities) > 0
 
 	isCreatingNew := !thereAreProjects
-	if askForNewFirst {
+	if askForNewFirst && thereAreProjects {
 		var err error
-		if thereAreProjects {
-			isCreatingNew, err = AskUserIsCreatingNew(desc)
-			if err != nil {
-				return nil, false, err
-			}
+		isCreatingNew, err = AskUserIsCreatingNew(desc, isDefaultNew)
+		if err != nil {
+			return nil, false, err
 		}
-
 	}
 
 	if isCreatingNew {
