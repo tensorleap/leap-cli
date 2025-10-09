@@ -29,7 +29,7 @@ func SelectOrCreateSecret(ctx context.Context, secrets []SecretEntity, askForNew
 		}
 		return secret, nil
 	}
-	return entity.SelectEntityOrCreateOne(secrets, create, askForNewFirst, SecretEntityDesc)
+	return entity.SelectEntityOrCreateOne(secrets, create, askForNewFirst, false, SecretEntityDesc)
 }
 
 func AskForNewSecret(ctx context.Context, secrets []SecretEntity, name, key *string, keyPath string) error {

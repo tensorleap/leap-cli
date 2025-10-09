@@ -36,7 +36,7 @@ func SelectOrCreateProject(ctx context.Context, projects []ProjectEntity, askFor
 		projectDetails := AddProjectDetails{}
 		return AskAndAddProject(ctx, &projectDetails, projects)
 	}
-	return entity.SelectEntityOrCreateOne(projects, createProject, askForNewProjectFirst, ProjectEntityDesc)
+	return entity.SelectEntityOrCreateOne(projects, createProject, askForNewProjectFirst, true, ProjectEntityDesc)
 }
 
 func SyncProjectIdToWorkspaceConfig(ctx context.Context, workspaceConfig *workspace.WorkspaceConfig) (*ProjectEntity, error) {

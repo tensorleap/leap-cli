@@ -85,7 +85,7 @@ func SelectOrCreateCodeIntegration(ctx context.Context, codeIntegrations []CodeI
 	createCodeIntegration := func() (*CodeIntegration, error) {
 		return CreateCodeIntegration(ctx, codeIntegrations)
 	}
-	return entity.SelectEntityOrCreateOne(codeIntegrations, createCodeIntegration, askIsCreateNewFirst, CodeIntegrationEntityDesc)
+	return entity.SelectEntityOrCreateOne(codeIntegrations, createCodeIntegration, askIsCreateNewFirst, true, CodeIntegrationEntityDesc)
 }
 
 func AskForCodeIntegrationName(codeIntegrations []CodeIntegration) (name string, err error) {
