@@ -57,6 +57,7 @@ func WrapLogsInTarFile(logs []tlApi.PodLogs, output string, defaultFileName stri
 		}
 		err := tarWriter.WriteHeader(&tar.Header{
 			Name: fileName,
+			Size: int64(len(log.Logs)),
 		})
 		if err != nil {
 			return "", err
