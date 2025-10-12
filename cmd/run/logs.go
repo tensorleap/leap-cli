@@ -13,11 +13,11 @@ func NewLogsCmd() *cobra.Command {
 		Use:   "logs [runId]",
 		Short: "Show the logs for a run",
 		Run: func(cmd *cobra.Command, args []string) {
-			runId := args[0]
-			if runId == "" {
-				log.Error("Run id is required")
+			if len(args) == 0 {
+				log.Error("Run id is required - use 'leap run logs <runId>'")
 				return
 			}
+			runId := args[0]
 			log.Infof("Getting logs for %s", runId)
 			logs, err := runPkg.GetRunLogs(cmd.Context(), runId)
 			if err != nil {
