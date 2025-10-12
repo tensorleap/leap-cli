@@ -12,16 +12,16 @@ import (
 
 type RunEntity = tensorleapapi.RunProcess
 
-var RunEntityDesc = entity.NewEntityDescriptor[RunEntity](
+var RunEntityDesc = entity.NewEntityDescriptor(
 	"run",
 	"runs",
 	func(r *RunEntity) string {
-		updatedAt, err := ParseAndFormatDate(r.GetUpdatedAt())
+		createdAt, err := ParseAndFormatDate(r.GetCreatedAt())
 
 		if err != nil {
-			return fmt.Sprintf("%s \t %s \t %s", r.GetJobType(), r.GetUpdatedAt(), r.GetStatus())
+			return fmt.Sprintf("%s \t %s \t %s", r.GetJobType(), r.GetCreatedAt(), r.GetStatus())
 		}
-		return fmt.Sprintf("%s \t %s \t %s", r.GetJobType(), updatedAt, r.GetStatus())
+		return fmt.Sprintf("%s \t %s \t %s", r.GetJobType(), createdAt, r.GetStatus())
 	},
 	func(r *RunEntity) string { return r.GetJobId() },
 )

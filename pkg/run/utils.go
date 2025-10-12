@@ -1,6 +1,7 @@
 package run
 
 import (
+	"fmt"
 	"strings"
 	"time"
 )
@@ -14,9 +15,12 @@ func ParseAndFormatDate(raw string) (string, error) {
 
 	t, err := time.Parse(layoutIn, clean)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("failed to parse time %q: %w", clean, err)
 	}
 
-	// Desired output: Mon, 08 Sep 2025 14:46
-	return t.Format("Mon, 02 Jan 2006 15:04"), nil
+	// Convert to local time zone
+	localTime := t.Local()
+
+	// Desired output: Mon, 08 Sep 2025 14:46 (local)
+	return localTime.Format("Mon, 02 Jan 2006 15:04"), nil
 }
