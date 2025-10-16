@@ -5,7 +5,6 @@ import (
 	"io"
 	"os"
 	"sync/atomic"
-	"time"
 
 	"github.com/briandowns/spinner"
 )
@@ -63,7 +62,7 @@ type Spinner struct {
 // NewSpinner creates a new Spinner instance with the specified message.
 func NewSpinner(message string, a ...any) *Spinner {
 	message = fmt.Sprintf(message, a...)
-	s := spinner.New(spinner.CharSets[33], 500*time.Millisecond)
+	s := spinner.New(spin, FrameDuration)
 	s.Suffix = fmt.Sprintf(" %s", message)
 
 	return &Spinner{
