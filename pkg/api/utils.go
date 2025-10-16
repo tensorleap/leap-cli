@@ -8,6 +8,9 @@ import (
 	"net/http"
 	"os"
 	"strings"
+
+	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
 // HTTPError represents an error with details about an HTTP response.
@@ -127,4 +130,40 @@ func NormalizeAPIUrl(url string) (string, error) {
 func ChangeToUIUrl(apiUrl string) string {
 	url := strings.Replace(apiUrl, API_PATH, "", 1)
 	return strings.Replace(url, API_CLOUD_SUBDOMAIN, "://", 1)
+}
+
+func StepsFromJob(job *tensorleapapi.Job) []log.Step {
+	jobSteps := []log.Step{}
+	if job.EventsSnapshot == nil {
+		return jobSteps
+	}
+
+	mapStatus := func(status tensorleapapi.StatusEnum) log.StepStatus {
+		switch status {
+		case tensorleapapi.STATUSENUM_UNSTARTED:
+			return log.StepStatusPending
+		case tensorleapapi.STATUSENUM_STARTED:
+			return log.StepStatusRunning
+		case tensorleapapi.STATUSENUM_FINISHED:
+			return log.StepStatusDone
+		case tensorleapapi.STATUSENUM_FAILED:
+			return log.StepStatusFailed
+		default:
+			return log.StepStatusWaiting
+		}
+	}
+	for _, event := range job.EventsSnapshot.Events {
+		var current, total float64
+		if event.Progress != nil {
+			current = event.Progress.Current
+			total = event.Progress.Total
+		}
+		jobSteps = append(jobSteps, log.Step{
+			Name:    event.Name,
+			Status:  mapStatus(event.Status),
+			Current: current,
+			Total:   total,
+		})
+	}
+	return jobSteps
 }

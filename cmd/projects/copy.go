@@ -13,6 +13,7 @@ import (
 
 func NewCopyCmd() *cobra.Command {
 	var exportOptions project.ExportProjectParams
+	var noWait bool
 
 	cmd := &cobra.Command{
 		Use:     "copy [env:source-name] [env:target-name]",
@@ -26,7 +27,7 @@ func NewCopyCmd() *cobra.Command {
 				return err
 			}
 
-			err = project.CopyProject(sourceCtx, sourceProject, targetCtx, targetProjectName, exportOptions)
+			err = project.CopyProject(sourceCtx, sourceProject, targetCtx, targetProjectName, exportOptions, !noWait)
 
 			if err != nil {
 				return err
@@ -36,6 +37,7 @@ func NewCopyCmd() *cobra.Command {
 	}
 	cmd.Flags().BoolVarP(&exportOptions.NoCache, "no-cache", "n", false, "Do not use project exported cache")
 	cmd.Flags().BoolVar(&exportOptions.ExcludeCalculatedFiles, "exclude-calc-files", false, "Do not include calculated files in the export (will decrease export size)")
+	cmd.Flags().BoolVar(&noWait, "no-wait", false, "Do not wait for copy to complete")
 
 	return cmd
 }

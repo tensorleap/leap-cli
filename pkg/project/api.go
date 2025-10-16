@@ -67,7 +67,7 @@ func DeleteProject(ctx context.Context, project *ProjectEntity) error {
 	return nil
 }
 
-func ImportProject(ctx context.Context, projectName, importUrl string, meta *hub.ProjectMeta) error {
+func ImportProject(ctx context.Context, projectName, importUrl string, meta *hub.ProjectMeta, wait bool) error {
 	reqParams := tensorleapapi.NewImportProjectRequest(
 		projectName,
 		meta.Description,
@@ -78,15 +78,19 @@ func ImportProject(ctx context.Context, projectName, importUrl string, meta *hub
 	reqParams.SetCategories(meta.Categories)
 	reqParams.SetBgImageUrl(meta.BgImagePath)
 
-	res, err := api.ApiClient.ImportProject(ctx).ImportProjectRequest(*reqParams).Execute()
+	importJob, res, err := api.ApiClient.ImportProject(ctx).ImportProjectRequest(*reqParams).Execute()
 	if err = api.CheckRes(res, err); err != nil {
 		return fmt.Errorf("failed to import project %s/n %v", projectName, err)
 	}
-	log.Infof("Import process for '%s' is in progress on the server.", projectName)
-	return nil
+	if !wait {
+		log.Infof("Import process for '%s' is in progress on the server.", projectName)
+		return nil
+	}
+
+	return waitForImportProjectJob(ctx, importJob.JobId)
 }
 
-func ImportProjectFromFile(ctx context.Context, filePath, projectName string) error {
+func ImportProjectFromFile(ctx context.Context, filePath, projectName string, wait bool) error {
 	file, err := os.Open(filePath)
 	if err != nil {
 		return err
@@ -119,7 +123,7 @@ func ImportProjectFromFile(ctx context.Context, filePath, projectName string) er
 	if err != nil {
 		return err
 	}
-	return ImportProject(ctx, projectName, getUrl, &projectCtx.Meta)
+	return ImportProject(ctx, projectName, getUrl, &projectCtx.Meta, wait)
 }
 
 func uploadProjectToTempFile(ctx context.Context, projectName string, projectReader io.Reader, projectSize int64) (string, error) {
@@ -162,9 +166,7 @@ func ExportProjectIntoFile(ctx context.Context, project *ProjectEntity, outputDi
 		return err
 	}
 	defer file.Close()
-	s := log.NewSpinner(fmt.Sprintf("Exporting project '%s', into: '%s'", project.Name, filePath))
-	s.Start()
-	defer s.Stop()
+	log.Infof("Downloading project '%s', into: '%s'", project.Name, filePath)
 	downloadUrl, err := api.GetDownloadSignedUrl(ctx, exportUrl)
 	if err != nil {
 		return fmt.Errorf("failed to get download signed url: %v", err)
@@ -276,4 +278,38 @@ func DownloadProject(ctx context.Context, projectId string) (*http.Response, err
 		return nil, fmt.Errorf("failed to export project %s /n%s", projectId, err)
 	}
 	return res, nil
+}
+
+const TIMEOUT_FOR_IMPORT_PROJECT_JOB = 30 * time.Minute
+
+func waitForImportProjectJob(ctx context.Context, jobId string) error {
+	log.Infof("Waiting for import project job to finish...")
+	sleepDuration := 3 * time.Second
+
+	condition := func() (bool, []log.Step, error) {
+		getJobParams := *tensorleapapi.NewGetJobsFilterParams()
+		getJobParams.SetCid([]string{jobId})
+		res, _, err := api.ApiClient.GetSlimJobs(ctx).GetJobsFilterParams(getJobParams).Execute()
+		if err != nil {
+			return false, nil, fmt.Errorf("failed to get the import project job: %v", err)
+		}
+		if len(res.Jobs) == 0 {
+			return false, nil, fmt.Errorf("failed to get the import project job")
+		}
+		job := res.Jobs[0]
+		steps := api.StepsFromJob(&job)
+		switch job.Status {
+		case tensorleapapi.JOBSTATUS_FAILED:
+			return false, steps, fmt.Errorf("import project failed")
+		case tensorleapapi.JOBSTATUS_FINISHED:
+			return true, steps, nil
+		}
+
+		return false, steps, nil
+	}
+	err := api.WaitForConditionWithSteps(ctx, condition, sleepDuration, TIMEOUT_FOR_IMPORT_PROJECT_JOB)
+	if err != nil {
+		return fmt.Errorf("failed to wait for the import project job status: %v", err)
+	}
+	return nil
 }

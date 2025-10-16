@@ -56,6 +56,7 @@ func CopyProject(
 	sourceCtx context.Context, sourceProject *ProjectEntity,
 	targetCtx context.Context, targetProjectName string,
 	exportOptions ExportProjectParams,
+	waitForImport bool,
 ) error {
 
 	sourceUrl, _ := api.GetAuthFromContext(sourceCtx)
@@ -104,7 +105,7 @@ func CopyProject(
 		}
 	}
 
-	err = ImportProject(targetCtx, targetProjectName, copyFromUrl, targetProjectMeta)
+	err = ImportProject(targetCtx, targetProjectName, copyFromUrl, targetProjectMeta, waitForImport)
 	if err != nil {
 		return err
 	}

@@ -97,37 +97,39 @@ func ImportModel(ctx context.Context, filePath, projectId, message, modelType, b
 const TIMEOUT_FOR_IMPORT_MODEL_JOB = 30 * time.Minute
 
 func waitForImportModelJob(ctx context.Context, projectId, importModelJobId string) (ok bool, job *tlApi.Job, err error) {
-	message := "Waiting for import model result..."
+	fmt.Println("Waiting for import model result...")
 	sleepDuration := 3 * time.Second
 
 	getJobParams := *tlApi.NewGetJobsFilterParams()
 	getJobParams.SetProjectId(projectId)
+	getJobParams.SetCid([]string{importModelJobId})
 
-	condition := func() (bool, error) {
+	condition := func() (bool, []log.Step, error) {
 		data, _, err := api.ApiClient.GetSlimJobs(ctx).GetJobsFilterParams(
 			getJobParams,
 		).Execute()
 		if err != nil {
-			return false, fmt.Errorf("failed to wait for the import model job status: %v", err)
+			return false, nil, fmt.Errorf("failed to wait for the import model job status: %v", err)
 		}
 		if len(data.Jobs) == 0 {
-			return false, fmt.Errorf("failed to wait for the import model job status")
+			return false, nil, fmt.Errorf("failed to wait for the import model job status")
 		}
 
 		job = findRunProcessByJobId(data.Jobs, importModelJobId)
+		steps := api.StepsFromJob(job)
 		switch job.Status {
 		case tlApi.JOBSTATUS_FAILED:
 			ok = false
-			return true, nil
+			return true, steps, nil
 		case tlApi.JOBSTATUS_FINISHED:
 			ok = true
-			return true, nil
+			return true, steps, nil
 		}
 
-		return false, nil
+		return false, steps, nil
 	}
 
-	err = api.WaitForCondition(ctx, message, condition, sleepDuration, TIMEOUT_FOR_IMPORT_MODEL_JOB)
+	err = api.WaitForConditionWithSteps(ctx, condition, sleepDuration, TIMEOUT_FOR_IMPORT_MODEL_JOB)
 
 	if err == api.ErrorTimeout {
 		return false, nil, fmt.Errorf("timeout occurred while waiting for import job status")
