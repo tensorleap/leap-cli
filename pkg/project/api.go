@@ -203,19 +203,21 @@ func ExportProject(ctx context.Context, projectId string, copyToUrl string, opti
 		return nil, fmt.Errorf("failed to export project: %v", err)
 	}
 
-	err = api.WaitForCondition(ctx, "Export project...", func() (bool, error) {
+	log.Info("Export project...")
+	err = api.WaitForConditionWithSteps(ctx, func() (bool, []log.Step, error) {
 		job, err := getExportProjectJobById(ctx, exportRes.JobId)
 		if err != nil {
-			return false, err
+			return false, nil, err
 		}
+		steps := api.StepsFromJob(job)
 		switch job.Status {
 		case tensorleapapi.JOBSTATUS_FAILED:
-			return false, fmt.Errorf("export project failed")
+			return false, steps, fmt.Errorf("export project failed")
 		case tensorleapapi.JOBSTATUS_FINISHED:
-			return true, nil
+			return true, steps, nil
 		}
 
-		return false, nil
+		return false, steps, nil
 	}, 20*time.Second, TIMEOUT_FOR_PROJECT_PUBLISH)
 
 	if err != nil {
