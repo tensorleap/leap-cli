@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**AddVersion**](DefaultApi.md#AddVersion) | **Post** /versions/addVersion | 
 [**AnalyzeGraph**](DefaultApi.md#AnalyzeGraph) | **Post** /graph/analyzeGraph | 
 [**ApplyDatasetMapping**](DefaultApi.md#ApplyDatasetMapping) | **Post** /graph/applyDatasetMapping | 
+[**ApproveInsights**](DefaultApi.md#ApproveInsights) | **Post** /insights/approveInsights | 
 [**ArchiveInsight**](DefaultApi.md#ArchiveInsight) | **Post** /insights/archiveInsight | 
 [**ClearUserJobs**](DefaultApi.md#ClearUserJobs) | **Post** /users/clearUserJobs | 
 [**ClearUserNotifications**](DefaultApi.md#ClearUserNotifications) | **Post** /users/clearUserNotifications | 
@@ -42,6 +43,7 @@ Method | HTTP request | Description
 [**GetAllProjectSessionTests**](DefaultApi.md#GetAllProjectSessionTests) | **Post** /sessions-tests/getAllProjectSessionTests | 
 [**GetAllSlimUserData**](DefaultApi.md#GetAllSlimUserData) | **Post** /users/getAllSlimUserData | 
 [**GetApiKeyByCode**](DefaultApi.md#GetApiKeyByCode) | **Post** /auth/getApiKeyByCode | 
+[**GetApprovedInsights**](DefaultApi.md#GetApprovedInsights) | **Post** /insights/getApprovedInsights | 
 [**GetArchiveInsights**](DefaultApi.md#GetArchiveInsights) | **Post** /insights/getArchiveInsights | 
 [**GetAuthProvider**](DefaultApi.md#GetAuthProvider) | **Post** /auth/getAuthProvider | 
 [**GetBalancedAccuracy**](DefaultApi.md#GetBalancedAccuracy) | **Post** /sessionmetrics/getBalancedAccuracy | 
@@ -146,6 +148,7 @@ Method | HTTP request | Description
 [**TerminateJob**](DefaultApi.md#TerminateJob) | **Post** /jobs/terminateJob | 
 [**TrashDataset**](DefaultApi.md#TrashDataset) | **Post** /datasets/trashDataset | 
 [**TrashSecretManager**](DefaultApi.md#TrashSecretManager) | **Post** /secret-manager/trashSecretManager | 
+[**UnapproveInsight**](DefaultApi.md#UnapproveInsight) | **Post** /insights/unapproveInsights | 
 [**UnarchiveInsight**](DefaultApi.md#UnarchiveInsight) | **Post** /insights/unarchiveInsight | 
 [**UpdateDashboard**](DefaultApi.md#UpdateDashboard) | **Post** /dashboards/updateDashboard | 
 [**UpdateDataset**](DefaultApi.md#UpdateDataset) | **Post** /datasets/updateDataset | 
@@ -870,6 +873,68 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ApproveInsights
+
+> ApproveInsights(ctx).ApproveInsightsParams(approveInsightsParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    approveInsightsParams := *openapiclient.NewApproveInsightsParams("PopExpDigest_example", []float64{float64(123)}, "ProjectId_example") // ApproveInsightsParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.DefaultApi.ApproveInsights(context.Background()).ApproveInsightsParams(approveInsightsParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApproveInsights``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiApproveInsightsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **approveInsightsParams** | [**ApproveInsightsParams**](ApproveInsightsParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -2552,6 +2617,70 @@ Name | Type | Description  | Notes
 ### Authorization
 
 No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetApprovedInsights
+
+> map[string][]float64 GetApprovedInsights(ctx).GetApprovedInsightsParams(getApprovedInsightsParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    getApprovedInsightsParams := *openapiclient.NewGetApprovedInsightsParams([]string{"PopExpDigests_example"}, "ProjectId_example") // GetApprovedInsightsParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.GetApprovedInsights(context.Background()).GetApprovedInsightsParams(getApprovedInsightsParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetApprovedInsights``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetApprovedInsights`: map[string][]float64
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetApprovedInsights`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetApprovedInsightsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getApprovedInsightsParams** | [**GetApprovedInsightsParams**](GetApprovedInsightsParams.md) |  | 
+
+### Return type
+
+[**map[string][]float64**](array.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
 
 ### HTTP request headers
 
@@ -7108,7 +7237,7 @@ Name | Type | Description  | Notes
 
 ## ImportProject
 
-> ImportProject(ctx).ImportProjectRequest(importProjectRequest).Execute()
+> ImportProjectResponse ImportProject(ctx).ImportProjectRequest(importProjectRequest).Execute()
 
 
 
@@ -7129,11 +7258,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.ImportProject(context.Background()).ImportProjectRequest(importProjectRequest).Execute()
+    resp, r, err := apiClient.DefaultApi.ImportProject(context.Background()).ImportProjectRequest(importProjectRequest).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ImportProject``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
+    // response from `ImportProject`: ImportProjectResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ImportProject`: %v\n", resp)
 }
 ```
 
@@ -7152,7 +7283,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**ImportProjectResponse**](ImportProjectResponse.md)
 
 ### Authorization
 
@@ -7161,7 +7292,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -9099,6 +9230,68 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UnapproveInsight
+
+> UnapproveInsight(ctx).Body(body).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    body := ApproveInsightsParams(987) // ApproveInsightsParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.DefaultApi.UnapproveInsight(context.Background()).Body(body).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UnapproveInsight``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUnapproveInsightRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | **ApproveInsightsParams** |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

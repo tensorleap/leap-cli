@@ -12,6 +12,8 @@ Name | Type | Description | Notes
 **Status** | Pointer to [**[]JobStatus**](JobStatus.md) |  | [optional] 
 **ProjectId** | Pointer to **string** |  | [optional] 
 **ShowJobsFromDate** | Pointer to **time.Time** |  | [optional] 
+**CodeIntegrationVersionId** | Pointer to **string** |  | [optional] 
+**CodeIntegrationId** | Pointer to **string** |  | [optional] 
 **Cid** | Pointer to **[]string** |  | [optional] 
 
 ## Methods
@@ -232,6 +234,56 @@ SetShowJobsFromDate sets ShowJobsFromDate field to given value.
 `func (o *GetJobsFilterParams) HasShowJobsFromDate() bool`
 
 HasShowJobsFromDate returns a boolean if a field has been set.
+
+### GetCodeIntegrationVersionId
+
+`func (o *GetJobsFilterParams) GetCodeIntegrationVersionId() string`
+
+GetCodeIntegrationVersionId returns the CodeIntegrationVersionId field if non-nil, zero value otherwise.
+
+### GetCodeIntegrationVersionIdOk
+
+`func (o *GetJobsFilterParams) GetCodeIntegrationVersionIdOk() (*string, bool)`
+
+GetCodeIntegrationVersionIdOk returns a tuple with the CodeIntegrationVersionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCodeIntegrationVersionId
+
+`func (o *GetJobsFilterParams) SetCodeIntegrationVersionId(v string)`
+
+SetCodeIntegrationVersionId sets CodeIntegrationVersionId field to given value.
+
+### HasCodeIntegrationVersionId
+
+`func (o *GetJobsFilterParams) HasCodeIntegrationVersionId() bool`
+
+HasCodeIntegrationVersionId returns a boolean if a field has been set.
+
+### GetCodeIntegrationId
+
+`func (o *GetJobsFilterParams) GetCodeIntegrationId() string`
+
+GetCodeIntegrationId returns the CodeIntegrationId field if non-nil, zero value otherwise.
+
+### GetCodeIntegrationIdOk
+
+`func (o *GetJobsFilterParams) GetCodeIntegrationIdOk() (*string, bool)`
+
+GetCodeIntegrationIdOk returns a tuple with the CodeIntegrationId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCodeIntegrationId
+
+`func (o *GetJobsFilterParams) SetCodeIntegrationId(v string)`
+
+SetCodeIntegrationId sets CodeIntegrationId field to given value.
+
+### HasCodeIntegrationId
+
+`func (o *GetJobsFilterParams) HasCodeIntegrationId() bool`
+
+HasCodeIntegrationId returns a boolean if a field has been set.
 
 ### GetCid
 
