@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 .travis.yml
 README.md
 api/openapi.yaml
@@ -35,6 +34,7 @@ docs/AnalyzeParams.md
 docs/AnalyzeTypeEnum.md
 docs/ApplyDatasetMappingsParams.md
 docs/ApplyMappingResponse.md
+docs/ApproveInsightsParams.md
 docs/ArchiveInsightsParams.md
 docs/AuthProviderEnum.md
 docs/BBoxImageData.md
@@ -121,6 +121,7 @@ docs/EvaluateExistingSessionParams.md
 docs/EvaluateExistingSessionParamsAllOf.md
 docs/EvaluateNewSessionParams.md
 docs/EvaluateParams.md
+docs/EventsSnapshot.md
 docs/ExportModelParams.md
 docs/ExportModelTypeEnum.md
 docs/ExportOptions.md
@@ -152,6 +153,7 @@ docs/GenericDataQueryParams.md
 docs/GenericDataResponse.md
 docs/GetAllProjectSessionTestsRequest.md
 docs/GetApiKeyByCodeRequest.md
+docs/GetApprovedInsightsParams.md
 docs/GetArchiveInsightsParams.md
 docs/GetAuthProviderResponse.md
 docs/GetConfusionMatrixLabels.md
@@ -250,6 +252,7 @@ docs/ImportModelType.md
 docs/ImportNewModelParams.md
 docs/ImportProjectParams.md
 docs/ImportProjectRequest.md
+docs/ImportProjectResponse.md
 docs/InitExperimentRequest.md
 docs/InitExperimentResponse.md
 docs/InsightFilterDisplayData.md
@@ -506,6 +509,7 @@ model_analyze_params.go
 model_analyze_type_enum.go
 model_apply_dataset_mappings_params.go
 model_apply_mapping_response.go
+model_approve_insights_params.go
 model_archive_insights_params.go
 model_auth_provider_enum.go
 model_b_box_image_data.go
@@ -591,6 +595,7 @@ model_evaluate_existing_session_params.go
 model_evaluate_existing_session_params_all_of.go
 model_evaluate_new_session_params.go
 model_evaluate_params.go
+model_events_snapshot.go
 model_export_model_params.go
 model_export_model_type_enum.go
 model_export_options.go
@@ -622,6 +627,7 @@ model_generic_data_query_params.go
 model_generic_data_response.go
 model_get_all_project_session_tests_request.go
 model_get_api_key_by_code_request.go
+model_get_approved_insights_params.go
 model_get_archive_insights_params.go
 model_get_auth_provider_response.go
 model_get_confusion_matrix_labels.go
@@ -720,6 +726,7 @@ model_import_model_type.go
 model_import_new_model_params.go
 model_import_project_params.go
 model_import_project_request.go
+model_import_project_response.go
 model_init_experiment_request.go
 model_init_experiment_response.go
 model_insight_filter_display_data.go
@@ -945,5 +952,4 @@ model_viz_type.go
 model_weight_asset_data.go
 model_xy_chart.go
 response.go
-test/api_default_test.go
 utils.go

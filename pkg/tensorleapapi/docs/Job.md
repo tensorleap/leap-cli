@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **SessionRunId** | Pointer to **string** |  | [optional] 
 **TeamId** | **string** |  | 
 **DatasetVersionInfo** | Pointer to [**DatasetVersionInfo**](DatasetVersionInfo.md) |  | [optional] 
+**EventsSnapshot** | Pointer to [**EventsSnapshot**](EventsSnapshot.md) |  | [optional] 
 **LogsBlobName** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -327,6 +328,31 @@ SetDatasetVersionInfo sets DatasetVersionInfo field to given value.
 `func (o *Job) HasDatasetVersionInfo() bool`
 
 HasDatasetVersionInfo returns a boolean if a field has been set.
+
+### GetEventsSnapshot
+
+`func (o *Job) GetEventsSnapshot() EventsSnapshot`
+
+GetEventsSnapshot returns the EventsSnapshot field if non-nil, zero value otherwise.
+
+### GetEventsSnapshotOk
+
+`func (o *Job) GetEventsSnapshotOk() (*EventsSnapshot, bool)`
+
+GetEventsSnapshotOk returns a tuple with the EventsSnapshot field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEventsSnapshot
+
+`func (o *Job) SetEventsSnapshot(v EventsSnapshot)`
+
+SetEventsSnapshot sets EventsSnapshot field to given value.
+
+### HasEventsSnapshot
+
+`func (o *Job) HasEventsSnapshot() bool`
+
+HasEventsSnapshot returns a boolean if a field has been set.
 
 ### GetLogsBlobName
 
