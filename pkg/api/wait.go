@@ -37,8 +37,7 @@ func WaitForCondition(ctx context.Context, message string, condition func() (boo
 	return ErrorTimeout
 }
 
-
-func WaitForConditionWithSteps(ctx context.Context, condition func() (bool,[]log.Step, error), sleepDuration time.Duration, timeoutDuration time.Duration) error {
+func WaitForConditionWithSteps(ctx context.Context, condition func() (bool, []log.Step, error), sleepDuration time.Duration, timeoutDuration time.Duration) error {
 	startTime := time.Now()
 
 	renderer := log.NewRenderer()

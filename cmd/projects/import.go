@@ -11,6 +11,7 @@ import (
 
 func NewImportCmd() *cobra.Command {
 	var filePath string
+	var noWait bool
 	cmd := &cobra.Command{
 		Use:   "import [project name]",
 		Short: "Import project from hub",
@@ -24,7 +25,7 @@ func NewImportCmd() *cobra.Command {
 			}
 
 			if filePath != "" {
-				return project.ImportProjectFromFile(ctx, filePath, projectNameArg)
+				return project.ImportProjectFromFile(ctx, filePath, projectNameArg, !noWait)
 			}
 			publicHubUrl := hub.GetPublicUrl()
 			meta, err := hub.CreateWrapperMetaFromUrl(publicHubUrl)
@@ -61,10 +62,11 @@ func NewImportCmd() *cobra.Command {
 				Categories:    versionMeta.Categories,
 			}
 
-			return project.ImportProject(ctx, projectName, importUrl, projectMeta)
+			return project.ImportProject(ctx, projectName, importUrl, projectMeta, !noWait)
 		},
 	}
 	cmd.Flags().StringVarP(&filePath, "file", "f", "", "Import project from file instead of hub")
+	cmd.Flags().BoolVar(&noWait, "no-wait", false, "Do not wait for import to complete")
 	return cmd
 }
 

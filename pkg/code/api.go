@@ -157,27 +157,40 @@ func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, fileSiz
 const TIMEOUT_FOR_CODE_INTEGRATION_STATUS = 30 * time.Minute
 
 func WaitForCodeIntegrationStatus(ctx context.Context, codeIntegrationId string) (ok bool, codeIntegrationVersion *CodeIntegrationVersion, err error) {
-	message := "Waiting for code parser result..."
+	log.Info("Waiting for code parser result...")
 	sleepDuration := 3 * time.Second
-	condition := func() (bool, error) {
+
+	condition := func() (bool, []log.Step, error) {
 		codeIntegrationVersion, err = GetCodeIntegration(ctx, codeIntegrationId)
 		if err != nil {
-			return false, fmt.Errorf("failed to wait for the integration code status: %v", err)
+			return false, nil, fmt.Errorf("failed to wait for the integration code status: %v", err)
 		}
-
+		getJobParams := *tensorleapapi.NewGetJobsFilterParams()
+		getJobParams.SetCodeIntegrationVersionId(codeIntegrationVersion.GetCid())
+		codeIntegrationJobs, _, err := ApiClient.GetSlimJobs(ctx).GetJobsFilterParams(
+			getJobParams,
+		).Execute()
+		if err != nil {
+			return false, nil, fmt.Errorf("failed to get the code integration job: %v", err)
+		}
+		if len(codeIntegrationJobs.Jobs) == 0 {
+			return false, nil, fmt.Errorf("failed to get the code integration job")
+		}
+		codeIntegrationJob := codeIntegrationJobs.Jobs[0]
+		steps := api.StepsFromJob(&codeIntegrationJob)
 		switch codeIntegrationVersion.TestStatus {
 		case tensorleapapi.TESTSTATUS_TEST_SUCCESS:
 			ok = true
-			return true, nil
+			return true, steps, nil
 		case tensorleapapi.TESTSTATUS_TEST_FAIL:
 			ok = false
-			return true, nil
+			return true, steps, nil
 		}
 
-		return false, nil
+		return false, steps, nil
 	}
 
-	err = WaitForCondition(ctx, message, condition, sleepDuration, TIMEOUT_FOR_CODE_INTEGRATION_STATUS)
+	err = api.WaitForConditionWithSteps(ctx, condition, sleepDuration, TIMEOUT_FOR_CODE_INTEGRATION_STATUS)
 
 	if err == ErrorTimeout {
 		return false, nil, fmt.Errorf("timeout occurred while waiting for the integration code status")
