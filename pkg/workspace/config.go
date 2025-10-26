@@ -33,7 +33,7 @@ type WorkspaceConfig struct {
 
 func NewWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, branch, pythonVersion string, files []string) *WorkspaceConfig {
 	if len(entryFile) == 0 {
-		entryFile = "leap_binder.py"
+		entryFile = "leap_integration.py"
 	}
 	if !slice.ContainsString(files, entryFile, nil) {
 		files = append(files, entryFile)
