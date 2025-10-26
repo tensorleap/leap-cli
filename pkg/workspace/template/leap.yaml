@@ -2,9 +2,8 @@ codeIntegrationId: {{ .CodeIntegrationId }}
 projectId: {{ .ProjectId }}
 secretId: {{ .SecretId }}
 branch: {{ .Branch }}
-entryFile: 'leap_binder.py'
+entryFile: 'leap_integration.py'
 pythonVersion: {{ .PythonVersion }}
 include:
   - leap_binder.py
-  - leap_test.py
   - leap_integration.py

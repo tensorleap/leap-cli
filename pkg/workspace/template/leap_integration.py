@@ -23,14 +23,14 @@ def load_model():
     """
     pass
 
-
 @tensorleap_integration_test()
 def integration_test(idx, subset):
     """
-    Defines and runs the local Tensorleap integration test.
+    Acts as the main Tensorleap integration mapper.
 
-    Simulates Tensorleap’s data flow by connecting encoders,
-    model inference, loss, metrics, metadata, and visualizers.
+    Defines how data flows through encoders, model inference, loss,
+    metrics, metadata, and visualizers — effectively mapping the
+    full connection between all decorated components.
 
     Example:
         image = input_encoder(idx, subset)
@@ -38,25 +38,16 @@ def integration_test(idx, subset):
         model = load_model()
         y_pred = model([image])
         loss = custom_loss(gt, y_pred)
+        visualize(image_visualizer(image))
 
     Args:
         idx (int): Sample index to test.
         subset (PreprocessResponse): Dataset partition.
 
     Returns:
-        None: Used for validation and debugging of integration flow.
+        None: Used to validate the mapping between all Tensorleap components.
     """
-
-    # image = input_encoder(idx, subset)
-    # gt = gt_encoder(idx, subset)
-    # model = load_model()
-    # y_pred = model([image])
-    # loss = custom_loss(gt, y_pred)
-    # metric=custom_metric(gt, y_pred)
-    # metadata=custom_metadata(idx, subset)
-    # visualizer_obj=visualize(image)
-    # visualize(visualizer_obj)
-
+    pass
 
 
 if __name__ == '__main__':

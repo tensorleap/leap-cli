@@ -1,5 +1,17 @@
-from typing import Union, Dict
+"""
+Tensorleap Integration Template
 
+This script serves as a user template for integrating custom datasets,
+models, and functions into the Tensorleap platform. It defines the required
+decorators (preprocess, encoders, loss, metrics, metadata, visualizers, and
+integration test) to ensure compatibility with Tensorleap’s analysis workflow.
+
+For full documentation and examples, visit:
+https://docs.tensorleap.ai/tensorleap-integration
+"""
+
+
+from typing import Union, Dict
 import numpy as np
 from code_loader.visualizers.default_visualizers import default_image_visualizer
 from code_loader.inner_leap_binder.leapbinder_decorators import *
@@ -161,5 +173,3 @@ def custom_visualizer(data: np.float32):
 
 
 
-if __name__ == '__main__':
-    leap_binder.check()
