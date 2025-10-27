@@ -15,7 +15,7 @@ require (
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.17.0
 	github.com/stretchr/testify v1.10.0
-	github.com/tensorleap/helm-charts v0.5.6
+	github.com/tensorleap/helm-charts v0.5.9
 	github.com/tensorleap/leap-cli/pkg/tensorleapapi v0.0.0-00010101000000-000000000000
 	google.golang.org/api v0.149.0
 	gopkg.in/yaml.v3 v3.0.1
