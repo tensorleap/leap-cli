@@ -167,3 +167,11 @@ func StepsFromJob(job *tensorleapapi.Job) []log.Step {
 	}
 	return jobSteps
 }
+
+func IsJobFailed(jobStatus tensorleapapi.JobStatus) bool {
+	return jobStatus == tensorleapapi.JOBSTATUS_FAILED || jobStatus == tensorleapapi.JOBSTATUS_TERMINATED || jobStatus == tensorleapapi.JOBSTATUS_STOPPED
+}
+
+func IsJobFinished(jobStatus tensorleapapi.JobStatus) bool {
+	return jobStatus == tensorleapapi.JOBSTATUS_FINISHED
+}

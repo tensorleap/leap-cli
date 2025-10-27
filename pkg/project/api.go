@@ -212,10 +212,10 @@ func ExportProject(ctx context.Context, projectId string, copyToUrl string, opti
 			return false, nil, err
 		}
 		steps := api.StepsFromJob(job)
-		switch job.Status {
-		case tensorleapapi.JOBSTATUS_FAILED:
+		switch true {
+		case api.IsJobFailed(job.Status):
 			return false, steps, fmt.Errorf("export project failed")
-		case tensorleapapi.JOBSTATUS_FINISHED:
+		case api.IsJobFinished(job.Status):
 			return true, steps, nil
 		}
 
@@ -298,10 +298,10 @@ func waitForImportProjectJob(ctx context.Context, jobId string) error {
 		}
 		job := res.Jobs[0]
 		steps := api.StepsFromJob(&job)
-		switch job.Status {
-		case tensorleapapi.JOBSTATUS_FAILED:
+		switch true {
+		case api.IsJobFailed(job.Status):
 			return false, steps, fmt.Errorf("import project failed")
-		case tensorleapapi.JOBSTATUS_FINISHED:
+		case api.IsJobFinished(job.Status):
 			return true, steps, nil
 		}
 
