@@ -38,31 +38,31 @@ func mockJobUpdates() []Job {
 		{
 			ID: "job-123",
 			Steps: []Step{
-				{Name: "Initialize", Status: "running"},
+				{Name: "Initialize", Status: StepStatusRunning},
 			},
 		},
 		{
 			ID: "job-123",
 			Steps: []Step{
-				{Name: "Initialize", Status: "done"},
-				{Name: "Download Data", Status: "running", Current: 30, Total: 100},
+				{Name: "Initialize", Status: StepStatusDone},
+				{Name: "Download Data", Status: StepStatusRunning, Current: 30, Total: 100},
 			},
 		},
 		{
 			ID: "job-123",
 			Steps: []Step{
-				{Name: "Initialize", Status: "done"},
-				{Name: "Download Data", Status: "running", Current: 80, Total: 100},
-				{Name: "Train Model", Status: "running", Current: 10, Total: 200},
+				{Name: "Initialize", Status: StepStatusDone},
+				{Name: "Download Data", Status: StepStatusRunning, Current: 80, Total: 100},
+				{Name: "Train Model", Status: StepStatusRunning, Current: 10, Total: 200},
 			},
 		},
 		{
 			ID: "job-123",
 			Steps: []Step{
-				{Name: "Initialize", Status: "done"},
-				{Name: "Download Data", Status: "done"},
-				{Name: "Train Model", Status: "failed", Current: 190, Total: 200},
-				{Name: "Deploy", Status: "pending"},
+				{Name: "Initialize", Status: StepStatusDone},
+				{Name: "Download Data", Status: StepStatusDone},
+				{Name: "Train Model", Status: StepStatusFailed, Current: 190, Total: 200},
+				{Name: "Deploy", Status: StepStatusPending},
 			},
 		},
 	}

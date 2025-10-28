@@ -160,7 +160,6 @@ func (r *ttyRenderer) renderLines(spin string) []string {
 
 type blockWriter struct {
 	mu        sync.Mutex
-	anchored  bool
 	lineCount int
 }
 
@@ -170,27 +169,21 @@ func (bw *blockWriter) Render(lines []string) {
 	bw.mu.Lock()
 	defer bw.mu.Unlock()
 
-	if !bw.anchored {
-		fmt.Print("\033[s") // save cursor
-		bw.anchored = true
-	}
-	fmt.Print("\033[u") // restore cursor
-
-	// clear previous block
-	for i := 0; i < bw.lineCount; i++ {
-		fmt.Print("\033[2K")
-		if i < bw.lineCount-1 {
-			fmt.Print("\033[1B")
-		}
-	}
-	if bw.lineCount > 1 {
-		fmt.Printf("\033[%dA", bw.lineCount-1)
+	if bw.lineCount > 0 {
+		clearPreviousLines(bw.lineCount)
 	}
 
 	for _, ln := range lines {
 		fmt.Println(ln)
 	}
 	bw.lineCount = len(lines)
+}
+
+func clearPreviousLines(n int) {
+	for i := 0; i < n; i++ {
+		fmt.Print("\033[1A") // move cursor up one line
+		fmt.Print("\033[2K") // clear the entire line
+	}
 }
 
 // ====================================================================
@@ -214,13 +207,7 @@ func (r *logRenderer) Start() {
 }
 
 func (r *logRenderer) Stop() {
-	r.mu.Lock()
-	defer r.mu.Unlock()
-
-	fmt.Println()
-	for _, s := range r.steps {
-		fmt.Println(printStepStatus(s, diffIcon(s.Status)))
-	}
+	// no stopping in log mode
 }
 
 func (r *logRenderer) Update(steps []Step) {
