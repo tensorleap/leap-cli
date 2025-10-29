@@ -42,16 +42,17 @@ type rendererImpl interface {
 // -----------------------------
 
 type Renderer struct {
-	impl rendererImpl
+	impl  rendererImpl
+	IsTTY bool
 }
 
 // NewRenderer automatically picks TTY or log mode.
 func NewRenderer() *Renderer {
 	isTTY := term.IsTerminal(int(os.Stdout.Fd())) || os.Getenv("FORCE_TTY") == "1"
 	if isTTY {
-		return &Renderer{impl: newTTYRenderer()}
+		return &Renderer{impl: newTTYRenderer(), IsTTY: true}
 	}
-	return &Renderer{impl: newLogRenderer()}
+	return &Renderer{impl: newLogRenderer(), IsTTY: false}
 }
 
 func (r *Renderer) Start()              { r.impl.Start() }
