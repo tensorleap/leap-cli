@@ -47,9 +47,6 @@ func WaitForConditionWithSteps(ctx context.Context, condition func() (bool, []lo
 	defer renderer.Stop()
 
 	var doneTime *time.Time
-	pendingSteps := []log.Step{
-		{Name: "Pending...", Status: log.StepStatusRunning},
-	}
 
 	for time.Since(startTime) < timeoutDuration {
 		select {
@@ -58,10 +55,19 @@ func WaitForConditionWithSteps(ctx context.Context, condition func() (bool, []lo
 		default:
 			done, steps, err := condition()
 			if len(steps) == 0 && renderer.IsTTY {
-				steps = pendingSteps
+				status := log.StepStatusRunning
+				if done {
+					status = log.StepStatusDone
+				} else if err != nil {
+					status = log.StepStatusFailed
+				}
+				steps = []log.Step{
+					{Name: "Pending...", Status: status},
+				}
 			}
 			renderer.Update(steps)
 			if err != nil {
+				time.Sleep(log.FrameDuration)
 				return err
 			}
 			if done {
