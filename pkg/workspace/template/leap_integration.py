@@ -1,7 +1,7 @@
 from code_loader.contract.datasetclasses import PredictionTypeHandler
 from code_loader.plot_functions.visualize import visualize
 from leap_binder import *
-from code_loader.inner_leap_binder.leapbinder_decorators import tensorleap_load_model, tensorleap_integration_test, tensorleap_status_table
+from code_loader.inner_leap_binder.leapbinder_decorators import tensorleap_load_model, tensorleap_integration_test
 
 prediction_type1 = PredictionTypeHandler('<place predictions name here>', "<place labels dict here>")
 
@@ -51,7 +51,6 @@ def integration_test(idx, subset):
 
 
 if __name__ == '__main__':
-    tensorleap_status_table() # Checks users implementation status
     integration_test(0, preprocess_func_leap()[0]) # DO NOT MOVE THIS OUTSIDE OF __name__==__main__ block!
 
 
