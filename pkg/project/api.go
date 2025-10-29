@@ -142,7 +142,8 @@ func uploadProjectToTempFile(ctx context.Context, projectName string, projectRea
 	log.Infof("Uploaded successfully project: %s", projectName)
 
 	expireTime := time.Hour * 24
-	getUrl, err := api.GetSignedUrl(ctx, uploadUrl, http.MethodGet, expireTime, nil)
+	emptyOrigin := ""
+	getUrl, err := api.GetSignedUrl(ctx, uploadUrl, http.MethodGet, expireTime, &emptyOrigin)
 	if err != nil {
 		return "", fmt.Errorf("failed to get singed url for the uploaded project: %v", err)
 	}
