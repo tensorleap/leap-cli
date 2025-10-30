@@ -6,11 +6,14 @@ import (
 
 	"context"
 
+	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/tensorleap/helm-charts/pkg/local"
 	"github.com/tensorleap/helm-charts/pkg/server"
+	serverPkg "github.com/tensorleap/helm-charts/pkg/server"
 	"github.com/tensorleap/helm-charts/pkg/server/manifest"
 	"github.com/tensorleap/leap-cli/pkg/api"
+	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/cli"
 	"github.com/tensorleap/leap-cli/pkg/config"
 	"github.com/tensorleap/leap-cli/pkg/log"
@@ -125,4 +128,26 @@ func hasInternet() bool {
 	}
 	resp.Body.Close()
 	return resp.StatusCode == 204
+}
+
+func handleLicenseAfterInstall(cmd *cobra.Command, licenseFlag *auth.LicenseFlag) error {
+	if !licenseFlag.HasLicense() {
+		return nil
+	}
+	installationParams, err := serverPkg.LoadInstallationParamsFromPrevious()
+	if err != nil {
+		return err
+	}
+	baseUrl := installationParams.CalcUrl()
+	var ctx context.Context
+	ctx, err = auth.InitMaybeUnauthedContext(cmd.Context(), baseUrl)
+	if err != nil {
+		return err
+	}
+	var licenseToken string
+	licenseToken, err = licenseFlag.PrepareLicenseToken()
+	if err != nil {
+		return err
+	}
+	return auth.SetLicense(ctx, licenseToken)
 }

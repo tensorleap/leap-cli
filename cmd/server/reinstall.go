@@ -4,10 +4,12 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/helm-charts/cmd/server"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
+	"github.com/tensorleap/leap-cli/pkg/auth"
 )
 
 func NewReinstallCmd() *cobra.Command {
 	flags := &server.ReinstallFlags{}
+	licenseFlag := auth.NewLicenseFlag()
 
 	cmd := &cobra.Command{
 		Use:   "reinstall",
@@ -62,11 +64,17 @@ func NewReinstallCmd() *cobra.Command {
 				recommendCliUpgradeMessage()
 			}
 
+			err = handleLicenseAfterInstall(cmd, licenseFlag)
+			if err != nil {
+				return err
+			}
+
 			return nil
 		},
 	}
 
 	flags.SetFlags(cmd)
+	licenseFlag.AddFlags(cmd)
 
 	return cmd
 }

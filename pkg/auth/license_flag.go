@@ -49,3 +49,7 @@ func (f *LicenseFlag) PrepareLicenseToken() (string, error) {
 	}
 	return strings.TrimSpace(tokenContent), nil
 }
+
+func (f *LicenseFlag) HasLicense() bool {
+	return f.LicenseToken != "" || f.FilePath != ""
+}
