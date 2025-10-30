@@ -7,6 +7,7 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/spf13/viper"
+	"github.com/tensorleap/helm-charts/pkg/server"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/config"
@@ -141,4 +142,30 @@ func PrintWhoami(ctx context.Context) error {
 	fmt.Println("User email: " + userData.Local.Email)
 	fmt.Println("Team name: " + userData.TeamName)
 	return nil
+}
+
+func InitMaybeUnauthedContext(ctx context.Context, defaultUrl string) (context.Context, error) {
+	baseUrl, _ := api.GetAuthFromContext(ctx)
+	if baseUrl != "" {
+		return ctx, nil
+	}
+
+	if defaultUrl == "" {
+		log.Info("No URL found use `leap auth login` or enter the url")
+		prompt := survey.Input{
+			Message: "Server URL",
+			Default: fmt.Sprintf("http://localhost:%v", server.DefaultHttpPort),
+		}
+		err := survey.AskOne(&prompt, &baseUrl)
+		if err != nil {
+			return ctx, err
+		}
+	} else {
+		baseUrl = defaultUrl
+	}
+	baseUrl, err := api.NormalizeAPIUrl(baseUrl)
+	if err != nil {
+		return ctx, err
+	}
+	return api.CreateAuthenticatedContext(ctx, "", baseUrl), nil
 }
