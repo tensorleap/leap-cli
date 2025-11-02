@@ -156,7 +156,7 @@ func AddCodeIntegrationVersion(ctx context.Context, tarGzFile io.Reader, fileSiz
 
 const TIMEOUT_FOR_CODE_INTEGRATION_STATUS = 30 * time.Minute
 
-func WaitForCodeIntegrationStatus(ctx context.Context, codeIntegrationId string) (ok bool, codeIntegrationVersion *CodeIntegrationVersion, err error) {
+func WaitForCodeIntegrationStatus(ctx context.Context, codeIntegrationId string) (bool, *CodeIntegrationVersion, error) {
 	log.Info("Waiting for code parser result...")
 	sleepDuration := 3 * time.Second
 
@@ -183,7 +183,7 @@ func WaitForCodeIntegrationStatus(ctx context.Context, codeIntegrationId string)
 		return false, steps, nil
 	}
 
-	err = api.WaitForConditionWithSteps(ctx, condition, sleepDuration, TIMEOUT_FOR_CODE_INTEGRATION_STATUS)
+	err := api.WaitForConditionWithSteps(ctx, condition, sleepDuration, TIMEOUT_FOR_CODE_INTEGRATION_STATUS)
 
 	if err == ErrorTimeout {
 		return false, nil, fmt.Errorf("timeout occurred while waiting for the integration code status")
@@ -191,8 +191,11 @@ func WaitForCodeIntegrationStatus(ctx context.Context, codeIntegrationId string)
 	if err != nil {
 		return false, nil, fmt.Errorf("failed to wait for the integration code status: %v", err)
 	}
-
-	return
+	codeIntegrationVersion, err := GetCodeIntegration(ctx, codeIntegrationId)
+	if err != nil {
+		return false, nil, fmt.Errorf("failed to get the code integration version: %v", err)
+	}
+	return true, codeIntegrationVersion, nil
 }
 
 func GetCodeIntegrationVersionUploadUrl(ctx context.Context, codeIntegrationId string) (string, error) {

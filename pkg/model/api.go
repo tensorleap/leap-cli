@@ -119,10 +119,8 @@ func waitForImportModelJob(ctx context.Context, projectId, importModelJobId stri
 		steps := api.StepsFromJob(job)
 		switch true {
 		case api.IsJobFailed(job.Status):
-			ok = false
-			return true, steps, nil
+			return false, steps, fmt.Errorf("import model job failed")
 		case api.IsJobFinished(job.Status):
-			ok = true
 			return true, steps, nil
 		}
 
@@ -135,7 +133,7 @@ func waitForImportModelJob(ctx context.Context, projectId, importModelJobId stri
 		return false, nil, fmt.Errorf("timeout occurred while waiting for import job status")
 	}
 	if err != nil {
-		return false, nil, fmt.Errorf("failed to wait for import job result status: %v", err)
+		return false, nil, err
 	}
 
 	return true, job, nil
