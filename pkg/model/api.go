@@ -138,7 +138,7 @@ func waitForImportModelJob(ctx context.Context, projectId, importModelJobId stri
 		return false, nil, fmt.Errorf("failed to wait for import job result status: %v", err)
 	}
 
-	return
+	return true, job, nil
 }
 
 func findRunProcessByJobId(runProcesses []tlApi.Job, jobId string) *tlApi.Job {

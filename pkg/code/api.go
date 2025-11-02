@@ -161,12 +161,8 @@ func WaitForCodeIntegrationStatus(ctx context.Context, codeIntegrationId string)
 	sleepDuration := 3 * time.Second
 
 	condition := func() (bool, []log.Step, error) {
-		codeIntegrationVersion, err = GetCodeIntegration(ctx, codeIntegrationId)
-		if err != nil {
-			return false, nil, fmt.Errorf("failed to wait for the integration code status: %v", err)
-		}
 		getJobParams := *tensorleapapi.NewGetJobsFilterParams()
-		getJobParams.SetCodeIntegrationVersionId(codeIntegrationVersion.GetCid())
+		getJobParams.SetCodeIntegrationVersionId(codeIntegrationId)
 		codeIntegrationJobs, _, err := ApiClient.GetSlimJobs(ctx).GetJobsFilterParams(
 			getJobParams,
 		).Execute()
@@ -178,15 +174,12 @@ func WaitForCodeIntegrationStatus(ctx context.Context, codeIntegrationId string)
 		}
 		codeIntegrationJob := codeIntegrationJobs.Jobs[0]
 		steps := api.StepsFromJob(&codeIntegrationJob)
-		switch codeIntegrationVersion.TestStatus {
-		case tensorleapapi.TESTSTATUS_TEST_SUCCESS:
-			ok = true
+		switch true {
+		case api.IsJobFinished(codeIntegrationJob.Status):
 			return true, steps, nil
-		case tensorleapapi.TESTSTATUS_TEST_FAIL:
-			ok = false
-			return true, steps, nil
+		case api.IsJobFailed(codeIntegrationJob.Status):
+			return false, steps, fmt.Errorf("code integration job failed")
 		}
-
 		return false, steps, nil
 	}
 
