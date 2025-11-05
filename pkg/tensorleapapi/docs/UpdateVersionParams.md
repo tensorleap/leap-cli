@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **VersionId** | **string** |  | 
 **ProjectId** | **string** |  | 
 **Data** | [**ModelGraph**](ModelGraph.md) |  | 
-**CodeIntegration** | Pointer to [**CodeIntegrationBinder**](CodeIntegrationBinder.md) |  | [optional] 
+**CodeSnapshotId** | Pointer to **string** |  | [optional] 
 **Hash** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -89,30 +89,30 @@ and a boolean to check if the value has been set.
 SetData sets Data field to given value.
 
 
-### GetCodeIntegration
+### GetCodeSnapshotId
 
-`func (o *UpdateVersionParams) GetCodeIntegration() CodeIntegrationBinder`
+`func (o *UpdateVersionParams) GetCodeSnapshotId() string`
 
-GetCodeIntegration returns the CodeIntegration field if non-nil, zero value otherwise.
+GetCodeSnapshotId returns the CodeSnapshotId field if non-nil, zero value otherwise.
 
-### GetCodeIntegrationOk
+### GetCodeSnapshotIdOk
 
-`func (o *UpdateVersionParams) GetCodeIntegrationOk() (*CodeIntegrationBinder, bool)`
+`func (o *UpdateVersionParams) GetCodeSnapshotIdOk() (*string, bool)`
 
-GetCodeIntegrationOk returns a tuple with the CodeIntegration field if it's non-nil, zero value otherwise
+GetCodeSnapshotIdOk returns a tuple with the CodeSnapshotId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCodeIntegration
+### SetCodeSnapshotId
 
-`func (o *UpdateVersionParams) SetCodeIntegration(v CodeIntegrationBinder)`
+`func (o *UpdateVersionParams) SetCodeSnapshotId(v string)`
 
-SetCodeIntegration sets CodeIntegration field to given value.
+SetCodeSnapshotId sets CodeSnapshotId field to given value.
 
-### HasCodeIntegration
+### HasCodeSnapshotId
 
-`func (o *UpdateVersionParams) HasCodeIntegration() bool`
+`func (o *UpdateVersionParams) HasCodeSnapshotId() bool`
 
-HasCodeIntegration returns a boolean if a field has been set.
+HasCodeSnapshotId returns a boolean if a field has been set.
 
 ### GetHash
 

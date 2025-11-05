@@ -14,17 +14,23 @@ Name | Type | Description | Notes
 **Digest** | **string** |  | 
 **ProjectionMetric** | Pointer to **string** |  | [optional] 
 **DomainGapMetadata** | Pointer to **string** |  | [optional] 
-**DisplayParams** | [**PopulationExplorationDisplayParams**](PopulationExplorationDisplayParams.md) |  | 
+**NumOfSamples** | **float64** |  | 
+**BalanceBy** | **[]string** |  | 
+**ShouldFillRemainingWithUnbalanced** | **bool** |  | 
+**ReductionAlgorithm** | [**ReductionAlgorithm**](ReductionAlgorithm.md) |  | 
+**OptionalAnalysis** | Pointer to [**[]OptionalAnalysis**](OptionalAnalysis.md) |  | [optional] 
 **TriggerCreateSampleVisualiztions** | Pointer to **bool** |  | [optional] 
 **ReRunAfterFail** | Pointer to **bool** |  | [optional] 
-**RecommendLabeling** | Pointer to **bool** |  | [optional] 
-**NumOfSamplesToLabel** | Pointer to **float64** |  | [optional] 
+**UseCustomLatentSpace** | Pointer to **bool** |  | [optional] 
+**ElementInstance** | Pointer to **bool** |  | [optional] 
+**ForceExecute** | Pointer to **bool** |  | [optional] 
+**LatentSpaceType** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewPopulationExplorationParams
 
-`func NewPopulationExplorationParams(sessionRunId string, projectId string, batchSize float64, fromEpoch float64, digest string, displayParams PopulationExplorationDisplayParams, ) *PopulationExplorationParams`
+`func NewPopulationExplorationParams(sessionRunId string, projectId string, batchSize float64, fromEpoch float64, digest string, numOfSamples float64, balanceBy []string, shouldFillRemainingWithUnbalanced bool, reductionAlgorithm ReductionAlgorithm, ) *PopulationExplorationParams`
 
 NewPopulationExplorationParams instantiates a new PopulationExplorationParams object
 This constructor will assign default values to properties that have it defined,
@@ -264,25 +270,110 @@ SetDomainGapMetadata sets DomainGapMetadata field to given value.
 
 HasDomainGapMetadata returns a boolean if a field has been set.
 
-### GetDisplayParams
+### GetNumOfSamples
 
-`func (o *PopulationExplorationParams) GetDisplayParams() PopulationExplorationDisplayParams`
+`func (o *PopulationExplorationParams) GetNumOfSamples() float64`
 
-GetDisplayParams returns the DisplayParams field if non-nil, zero value otherwise.
+GetNumOfSamples returns the NumOfSamples field if non-nil, zero value otherwise.
 
-### GetDisplayParamsOk
+### GetNumOfSamplesOk
 
-`func (o *PopulationExplorationParams) GetDisplayParamsOk() (*PopulationExplorationDisplayParams, bool)`
+`func (o *PopulationExplorationParams) GetNumOfSamplesOk() (*float64, bool)`
 
-GetDisplayParamsOk returns a tuple with the DisplayParams field if it's non-nil, zero value otherwise
+GetNumOfSamplesOk returns a tuple with the NumOfSamples field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDisplayParams
+### SetNumOfSamples
 
-`func (o *PopulationExplorationParams) SetDisplayParams(v PopulationExplorationDisplayParams)`
+`func (o *PopulationExplorationParams) SetNumOfSamples(v float64)`
 
-SetDisplayParams sets DisplayParams field to given value.
+SetNumOfSamples sets NumOfSamples field to given value.
 
+
+### GetBalanceBy
+
+`func (o *PopulationExplorationParams) GetBalanceBy() []string`
+
+GetBalanceBy returns the BalanceBy field if non-nil, zero value otherwise.
+
+### GetBalanceByOk
+
+`func (o *PopulationExplorationParams) GetBalanceByOk() (*[]string, bool)`
+
+GetBalanceByOk returns a tuple with the BalanceBy field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBalanceBy
+
+`func (o *PopulationExplorationParams) SetBalanceBy(v []string)`
+
+SetBalanceBy sets BalanceBy field to given value.
+
+
+### GetShouldFillRemainingWithUnbalanced
+
+`func (o *PopulationExplorationParams) GetShouldFillRemainingWithUnbalanced() bool`
+
+GetShouldFillRemainingWithUnbalanced returns the ShouldFillRemainingWithUnbalanced field if non-nil, zero value otherwise.
+
+### GetShouldFillRemainingWithUnbalancedOk
+
+`func (o *PopulationExplorationParams) GetShouldFillRemainingWithUnbalancedOk() (*bool, bool)`
+
+GetShouldFillRemainingWithUnbalancedOk returns a tuple with the ShouldFillRemainingWithUnbalanced field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetShouldFillRemainingWithUnbalanced
+
+`func (o *PopulationExplorationParams) SetShouldFillRemainingWithUnbalanced(v bool)`
+
+SetShouldFillRemainingWithUnbalanced sets ShouldFillRemainingWithUnbalanced field to given value.
+
+
+### GetReductionAlgorithm
+
+`func (o *PopulationExplorationParams) GetReductionAlgorithm() ReductionAlgorithm`
+
+GetReductionAlgorithm returns the ReductionAlgorithm field if non-nil, zero value otherwise.
+
+### GetReductionAlgorithmOk
+
+`func (o *PopulationExplorationParams) GetReductionAlgorithmOk() (*ReductionAlgorithm, bool)`
+
+GetReductionAlgorithmOk returns a tuple with the ReductionAlgorithm field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReductionAlgorithm
+
+`func (o *PopulationExplorationParams) SetReductionAlgorithm(v ReductionAlgorithm)`
+
+SetReductionAlgorithm sets ReductionAlgorithm field to given value.
+
+
+### GetOptionalAnalysis
+
+`func (o *PopulationExplorationParams) GetOptionalAnalysis() []OptionalAnalysis`
+
+GetOptionalAnalysis returns the OptionalAnalysis field if non-nil, zero value otherwise.
+
+### GetOptionalAnalysisOk
+
+`func (o *PopulationExplorationParams) GetOptionalAnalysisOk() (*[]OptionalAnalysis, bool)`
+
+GetOptionalAnalysisOk returns a tuple with the OptionalAnalysis field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOptionalAnalysis
+
+`func (o *PopulationExplorationParams) SetOptionalAnalysis(v []OptionalAnalysis)`
+
+SetOptionalAnalysis sets OptionalAnalysis field to given value.
+
+### HasOptionalAnalysis
+
+`func (o *PopulationExplorationParams) HasOptionalAnalysis() bool`
+
+HasOptionalAnalysis returns a boolean if a field has been set.
 
 ### GetTriggerCreateSampleVisualiztions
 
@@ -334,55 +425,105 @@ SetReRunAfterFail sets ReRunAfterFail field to given value.
 
 HasReRunAfterFail returns a boolean if a field has been set.
 
-### GetRecommendLabeling
+### GetUseCustomLatentSpace
 
-`func (o *PopulationExplorationParams) GetRecommendLabeling() bool`
+`func (o *PopulationExplorationParams) GetUseCustomLatentSpace() bool`
 
-GetRecommendLabeling returns the RecommendLabeling field if non-nil, zero value otherwise.
+GetUseCustomLatentSpace returns the UseCustomLatentSpace field if non-nil, zero value otherwise.
 
-### GetRecommendLabelingOk
+### GetUseCustomLatentSpaceOk
 
-`func (o *PopulationExplorationParams) GetRecommendLabelingOk() (*bool, bool)`
+`func (o *PopulationExplorationParams) GetUseCustomLatentSpaceOk() (*bool, bool)`
 
-GetRecommendLabelingOk returns a tuple with the RecommendLabeling field if it's non-nil, zero value otherwise
+GetUseCustomLatentSpaceOk returns a tuple with the UseCustomLatentSpace field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetRecommendLabeling
+### SetUseCustomLatentSpace
 
-`func (o *PopulationExplorationParams) SetRecommendLabeling(v bool)`
+`func (o *PopulationExplorationParams) SetUseCustomLatentSpace(v bool)`
 
-SetRecommendLabeling sets RecommendLabeling field to given value.
+SetUseCustomLatentSpace sets UseCustomLatentSpace field to given value.
 
-### HasRecommendLabeling
+### HasUseCustomLatentSpace
 
-`func (o *PopulationExplorationParams) HasRecommendLabeling() bool`
+`func (o *PopulationExplorationParams) HasUseCustomLatentSpace() bool`
 
-HasRecommendLabeling returns a boolean if a field has been set.
+HasUseCustomLatentSpace returns a boolean if a field has been set.
 
-### GetNumOfSamplesToLabel
+### GetElementInstance
 
-`func (o *PopulationExplorationParams) GetNumOfSamplesToLabel() float64`
+`func (o *PopulationExplorationParams) GetElementInstance() bool`
 
-GetNumOfSamplesToLabel returns the NumOfSamplesToLabel field if non-nil, zero value otherwise.
+GetElementInstance returns the ElementInstance field if non-nil, zero value otherwise.
 
-### GetNumOfSamplesToLabelOk
+### GetElementInstanceOk
 
-`func (o *PopulationExplorationParams) GetNumOfSamplesToLabelOk() (*float64, bool)`
+`func (o *PopulationExplorationParams) GetElementInstanceOk() (*bool, bool)`
 
-GetNumOfSamplesToLabelOk returns a tuple with the NumOfSamplesToLabel field if it's non-nil, zero value otherwise
+GetElementInstanceOk returns a tuple with the ElementInstance field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetNumOfSamplesToLabel
+### SetElementInstance
 
-`func (o *PopulationExplorationParams) SetNumOfSamplesToLabel(v float64)`
+`func (o *PopulationExplorationParams) SetElementInstance(v bool)`
 
-SetNumOfSamplesToLabel sets NumOfSamplesToLabel field to given value.
+SetElementInstance sets ElementInstance field to given value.
 
-### HasNumOfSamplesToLabel
+### HasElementInstance
 
-`func (o *PopulationExplorationParams) HasNumOfSamplesToLabel() bool`
+`func (o *PopulationExplorationParams) HasElementInstance() bool`
 
-HasNumOfSamplesToLabel returns a boolean if a field has been set.
+HasElementInstance returns a boolean if a field has been set.
+
+### GetForceExecute
+
+`func (o *PopulationExplorationParams) GetForceExecute() bool`
+
+GetForceExecute returns the ForceExecute field if non-nil, zero value otherwise.
+
+### GetForceExecuteOk
+
+`func (o *PopulationExplorationParams) GetForceExecuteOk() (*bool, bool)`
+
+GetForceExecuteOk returns a tuple with the ForceExecute field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetForceExecute
+
+`func (o *PopulationExplorationParams) SetForceExecute(v bool)`
+
+SetForceExecute sets ForceExecute field to given value.
+
+### HasForceExecute
+
+`func (o *PopulationExplorationParams) HasForceExecute() bool`
+
+HasForceExecute returns a boolean if a field has been set.
+
+### GetLatentSpaceType
+
+`func (o *PopulationExplorationParams) GetLatentSpaceType() string`
+
+GetLatentSpaceType returns the LatentSpaceType field if non-nil, zero value otherwise.
+
+### GetLatentSpaceTypeOk
+
+`func (o *PopulationExplorationParams) GetLatentSpaceTypeOk() (*string, bool)`
+
+GetLatentSpaceTypeOk returns a tuple with the LatentSpaceType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLatentSpaceType
+
+`func (o *PopulationExplorationParams) SetLatentSpaceType(v string)`
+
+SetLatentSpaceType sets LatentSpaceType field to given value.
+
+### HasLatentSpaceType
+
+`func (o *PopulationExplorationParams) HasLatentSpaceType() bool`
+
+HasLatentSpaceType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

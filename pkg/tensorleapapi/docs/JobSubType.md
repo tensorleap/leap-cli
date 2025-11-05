@@ -7,6 +7,8 @@
 
 * `POPULATION_EXPLORATION` (value: `"Population Exploration"`)
 
+* `LABELING_RECOMMENDATION` (value: `"Labeling Recommendation"`)
+
 * `VISUALIZERS_CALCULATION` (value: `"Visualizers Calculation"`)
 
 * `SAMPLE_ANALYSIS` (value: `"Sample Analysis"`)
@@ -21,7 +23,7 @@
 
 * `IMPORT_PROJECT` (value: `"Import Project"`)
 
-* `DATASET_PARSE` (value: `"Dataset Parse"`)
+* `CODE_PARSE` (value: `"Code Parse"`)
 
 * `IMPORT_MODEL` (value: `"Import Model"`)
 

@@ -10,12 +10,16 @@ Name | Type | Description | Notes
 **ProjectId** | **string** |  | 
 **ModelName** | **string** |  | 
 **ModelExtId** | **string** |  | 
+**IsOverwrite** | **bool** |  | 
+**VersionId** | **string** |  | 
+**SessionId** | Pointer to **string** |  | [optional] 
+**Epoch** | Pointer to **float64** |  | [optional] 
 
 ## Methods
 
 ### NewJobNotificationModelContext
 
-`func NewJobNotificationModelContext(jobId string, jobType JobType, projectName string, projectId string, modelName string, modelExtId string, ) *JobNotificationModelContext`
+`func NewJobNotificationModelContext(jobId string, jobType JobType, projectName string, projectId string, modelName string, modelExtId string, isOverwrite bool, versionId string, ) *JobNotificationModelContext`
 
 NewJobNotificationModelContext instantiates a new JobNotificationModelContext object
 This constructor will assign default values to properties that have it defined,
@@ -149,6 +153,96 @@ and a boolean to check if the value has been set.
 
 SetModelExtId sets ModelExtId field to given value.
 
+
+### GetIsOverwrite
+
+`func (o *JobNotificationModelContext) GetIsOverwrite() bool`
+
+GetIsOverwrite returns the IsOverwrite field if non-nil, zero value otherwise.
+
+### GetIsOverwriteOk
+
+`func (o *JobNotificationModelContext) GetIsOverwriteOk() (*bool, bool)`
+
+GetIsOverwriteOk returns a tuple with the IsOverwrite field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsOverwrite
+
+`func (o *JobNotificationModelContext) SetIsOverwrite(v bool)`
+
+SetIsOverwrite sets IsOverwrite field to given value.
+
+
+### GetVersionId
+
+`func (o *JobNotificationModelContext) GetVersionId() string`
+
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
+
+### GetVersionIdOk
+
+`func (o *JobNotificationModelContext) GetVersionIdOk() (*string, bool)`
+
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVersionId
+
+`func (o *JobNotificationModelContext) SetVersionId(v string)`
+
+SetVersionId sets VersionId field to given value.
+
+
+### GetSessionId
+
+`func (o *JobNotificationModelContext) GetSessionId() string`
+
+GetSessionId returns the SessionId field if non-nil, zero value otherwise.
+
+### GetSessionIdOk
+
+`func (o *JobNotificationModelContext) GetSessionIdOk() (*string, bool)`
+
+GetSessionIdOk returns a tuple with the SessionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSessionId
+
+`func (o *JobNotificationModelContext) SetSessionId(v string)`
+
+SetSessionId sets SessionId field to given value.
+
+### HasSessionId
+
+`func (o *JobNotificationModelContext) HasSessionId() bool`
+
+HasSessionId returns a boolean if a field has been set.
+
+### GetEpoch
+
+`func (o *JobNotificationModelContext) GetEpoch() float64`
+
+GetEpoch returns the Epoch field if non-nil, zero value otherwise.
+
+### GetEpochOk
+
+`func (o *JobNotificationModelContext) GetEpochOk() (*float64, bool)`
+
+GetEpochOk returns a tuple with the Epoch field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEpoch
+
+`func (o *JobNotificationModelContext) SetEpoch(v float64)`
+
+SetEpoch sets Epoch field to given value.
+
+### HasEpoch
+
+`func (o *JobNotificationModelContext) HasEpoch() bool`
+
+HasEpoch returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

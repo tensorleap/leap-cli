@@ -5,14 +5,14 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Data** | **map[string]interface{}** | Construct a type with a set of properties K of type T | 
-**Type** | **string** |  | 
 **Name** | **string** |  | 
+**Type** | **string** |  | 
 
 ## Methods
 
 ### NewPopulationExplorationDashletData
 
-`func NewPopulationExplorationDashletData(data map[string]interface{}, type_ string, name string, ) *PopulationExplorationDashletData`
+`func NewPopulationExplorationDashletData(data map[string]interface{}, name string, type_ string, ) *PopulationExplorationDashletData`
 
 NewPopulationExplorationDashletData instantiates a new PopulationExplorationDashletData object
 This constructor will assign default values to properties that have it defined,
@@ -47,26 +47,6 @@ and a boolean to check if the value has been set.
 SetData sets Data field to given value.
 
 
-### GetType
-
-`func (o *PopulationExplorationDashletData) GetType() string`
-
-GetType returns the Type field if non-nil, zero value otherwise.
-
-### GetTypeOk
-
-`func (o *PopulationExplorationDashletData) GetTypeOk() (*string, bool)`
-
-GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetType
-
-`func (o *PopulationExplorationDashletData) SetType(v string)`
-
-SetType sets Type field to given value.
-
-
 ### GetName
 
 `func (o *PopulationExplorationDashletData) GetName() string`
@@ -85,6 +65,26 @@ and a boolean to check if the value has been set.
 `func (o *PopulationExplorationDashletData) SetName(v string)`
 
 SetName sets Name field to given value.
+
+
+### GetType
+
+`func (o *PopulationExplorationDashletData) GetType() string`
+
+GetType returns the Type field if non-nil, zero value otherwise.
+
+### GetTypeOk
+
+`func (o *PopulationExplorationDashletData) GetTypeOk() (*string, bool)`
+
+GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetType
+
+`func (o *PopulationExplorationDashletData) SetType(v string)`
+
+SetType sets Type field to given value.
 
 
 

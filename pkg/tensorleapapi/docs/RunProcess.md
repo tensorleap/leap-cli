@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 **Params** | Pointer to [**JobParams**](JobParams.md) |  | [optional] 
 **MachineType** | Pointer to **string** |  | [optional] 
 **BatchSize** | Pointer to **float64** |  | [optional] 
-**DatasetVersionInfo** | Pointer to [**DatasetVersionInfo**](DatasetVersionInfo.md) |  | [optional] 
+**CodeSnapshotInfo** | Pointer to [**CodeSnapshotInfo**](CodeSnapshotInfo.md) |  | [optional] 
 **LogsBlobName** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -459,30 +459,30 @@ SetBatchSize sets BatchSize field to given value.
 
 HasBatchSize returns a boolean if a field has been set.
 
-### GetDatasetVersionInfo
+### GetCodeSnapshotInfo
 
-`func (o *RunProcess) GetDatasetVersionInfo() DatasetVersionInfo`
+`func (o *RunProcess) GetCodeSnapshotInfo() CodeSnapshotInfo`
 
-GetDatasetVersionInfo returns the DatasetVersionInfo field if non-nil, zero value otherwise.
+GetCodeSnapshotInfo returns the CodeSnapshotInfo field if non-nil, zero value otherwise.
 
-### GetDatasetVersionInfoOk
+### GetCodeSnapshotInfoOk
 
-`func (o *RunProcess) GetDatasetVersionInfoOk() (*DatasetVersionInfo, bool)`
+`func (o *RunProcess) GetCodeSnapshotInfoOk() (*CodeSnapshotInfo, bool)`
 
-GetDatasetVersionInfoOk returns a tuple with the DatasetVersionInfo field if it's non-nil, zero value otherwise
+GetCodeSnapshotInfoOk returns a tuple with the CodeSnapshotInfo field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDatasetVersionInfo
+### SetCodeSnapshotInfo
 
-`func (o *RunProcess) SetDatasetVersionInfo(v DatasetVersionInfo)`
+`func (o *RunProcess) SetCodeSnapshotInfo(v CodeSnapshotInfo)`
 
-SetDatasetVersionInfo sets DatasetVersionInfo field to given value.
+SetCodeSnapshotInfo sets CodeSnapshotInfo field to given value.
 
-### HasDatasetVersionInfo
+### HasCodeSnapshotInfo
 
-`func (o *RunProcess) HasDatasetVersionInfo() bool`
+`func (o *RunProcess) HasCodeSnapshotInfo() bool`
 
-HasDatasetVersionInfo returns a boolean if a field has been set.
+HasCodeSnapshotInfo returns a boolean if a field has been set.
 
 ### GetLogsBlobName
 
