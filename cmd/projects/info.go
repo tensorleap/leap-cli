@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/entity"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/project"
@@ -37,15 +36,6 @@ func NewInfoCmd() *cobra.Command {
 				}
 			}
 
-			if workspaceConfig.CodeIntegrationId == "" {
-				log.Info("No code integration configured in workspace")
-				return nil
-			}
-			codeIntegration, err := code.GetCodeIntegrationById(ctx, workspaceConfig.CodeIntegrationId)
-			if err != nil {
-				return fmt.Errorf("failed to get code integration: %w", err)
-			}
-			code.PrintCodeIntegrationInfo(codeIntegration)
 			return nil
 		},
 	}
