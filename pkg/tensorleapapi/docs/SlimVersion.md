@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **Tags** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
 **Notes** | **string** |  | 
-**CodeIntegration** | Pointer to [**CodeIntegrationBinder**](CodeIntegrationBinder.md) |  | [optional] 
+**CodeSnapshotId** | Pointer to **string** |  | [optional] 
 **IsFavourite** | **bool** |  | 
 **Hash** | Pointer to **NullableString** |  | [optional] 
 **Sessions** | [**[]Session**](Session.md) |  | 
@@ -175,30 +175,30 @@ and a boolean to check if the value has been set.
 SetNotes sets Notes field to given value.
 
 
-### GetCodeIntegration
+### GetCodeSnapshotId
 
-`func (o *SlimVersion) GetCodeIntegration() CodeIntegrationBinder`
+`func (o *SlimVersion) GetCodeSnapshotId() string`
 
-GetCodeIntegration returns the CodeIntegration field if non-nil, zero value otherwise.
+GetCodeSnapshotId returns the CodeSnapshotId field if non-nil, zero value otherwise.
 
-### GetCodeIntegrationOk
+### GetCodeSnapshotIdOk
 
-`func (o *SlimVersion) GetCodeIntegrationOk() (*CodeIntegrationBinder, bool)`
+`func (o *SlimVersion) GetCodeSnapshotIdOk() (*string, bool)`
 
-GetCodeIntegrationOk returns a tuple with the CodeIntegration field if it's non-nil, zero value otherwise
+GetCodeSnapshotIdOk returns a tuple with the CodeSnapshotId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCodeIntegration
+### SetCodeSnapshotId
 
-`func (o *SlimVersion) SetCodeIntegration(v CodeIntegrationBinder)`
+`func (o *SlimVersion) SetCodeSnapshotId(v string)`
 
-SetCodeIntegration sets CodeIntegration field to given value.
+SetCodeSnapshotId sets CodeSnapshotId field to given value.
 
-### HasCodeIntegration
+### HasCodeSnapshotId
 
-`func (o *SlimVersion) HasCodeIntegration() bool`
+`func (o *SlimVersion) HasCodeSnapshotId() bool`
 
-HasCodeIntegration returns a boolean if a field has been set.
+HasCodeSnapshotId returns a boolean if a field has been set.
 
 ### GetIsFavourite
 

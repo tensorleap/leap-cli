@@ -21,7 +21,7 @@
 
 * `IMPORT_PROJECT` (value: `"Import Project"`)
 
-* `DATASET_PARSE` (value: `"Dataset Parse"`)
+* `CODE_SNAPSHOT_PARSE` (value: `"Code Snapshot Parse"`)
 
 * `IMPORT_MODEL` (value: `"Import Model"`)
 

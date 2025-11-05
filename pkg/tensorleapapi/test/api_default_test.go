@@ -46,18 +46,6 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 
 	})
 
-	t.Run("Test DefaultApiService AddDataset", func(t *testing.T) {
-
-		t.Skip("skip test") // remove to run test
-
-		resp, httpRes, err := apiClient.DefaultApi.AddDataset(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test DefaultApiService AddExportModelJob", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -142,18 +130,6 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 
 	})
 
-	t.Run("Test DefaultApiService ApplyDatasetMapping", func(t *testing.T) {
-
-		t.Skip("skip test") // remove to run test
-
-		resp, httpRes, err := apiClient.DefaultApi.ApplyDatasetMapping(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test DefaultApiService ApproveInsights", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -172,6 +148,18 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 		httpRes, err := apiClient.DefaultApi.ArchiveInsight(context.Background()).Execute()
 
 		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultApiService CalcPopulationExplorationDigest", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultApi.CalcPopulationExplorationDigest(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -524,11 +512,11 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 
 	})
 
-	t.Run("Test DefaultApiService GetCodeIntegrationMappingErrorsByVersionId", func(t *testing.T) {
+	t.Run("Test DefaultApiService GetCodeSnapshot", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
 
-		resp, httpRes, err := apiClient.DefaultApi.GetCodeIntegrationMappingErrorsByVersionId(context.Background()).Execute()
+		resp, httpRes, err := apiClient.DefaultApi.GetCodeSnapshot(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -536,11 +524,11 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 
 	})
 
-	t.Run("Test DefaultApiService GetCodeIntegrationVersionFromBinder", func(t *testing.T) {
+	t.Run("Test DefaultApiService GetCodeSnapshotUploadUrl", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
 
-		resp, httpRes, err := apiClient.DefaultApi.GetCodeIntegrationVersionFromBinder(context.Background()).Execute()
+		resp, httpRes, err := apiClient.DefaultApi.GetCodeSnapshotUploadUrl(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -625,54 +613,6 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultApi.GetDashletFields(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test DefaultApiService GetDatasetVersion", func(t *testing.T) {
-
-		t.Skip("skip test") // remove to run test
-
-		resp, httpRes, err := apiClient.DefaultApi.GetDatasetVersion(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test DefaultApiService GetDatasetVersionUploadUrl", func(t *testing.T) {
-
-		t.Skip("skip test") // remove to run test
-
-		resp, httpRes, err := apiClient.DefaultApi.GetDatasetVersionUploadUrl(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test DefaultApiService GetDatasetVersions", func(t *testing.T) {
-
-		t.Skip("skip test") // remove to run test
-
-		resp, httpRes, err := apiClient.DefaultApi.GetDatasetVersions(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test DefaultApiService GetDatasets", func(t *testing.T) {
-
-		t.Skip("skip test") // remove to run test
-
-		resp, httpRes, err := apiClient.DefaultApi.GetDatasets(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -817,18 +757,6 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultApi.GetJobLogs(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test DefaultApiService GetLatestDatasetVersion", func(t *testing.T) {
-
-		t.Skip("skip test") // remove to run test
-
-		resp, httpRes, err := apiClient.DefaultApi.GetLatestDatasetVersion(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1458,11 +1386,11 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 
 	})
 
-	t.Run("Test DefaultApiService ModifyDatasetVersionNote", func(t *testing.T) {
+	t.Run("Test DefaultApiService OverwriteModel", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
 
-		resp, httpRes, err := apiClient.DefaultApi.ModifyDatasetVersionNote(context.Background()).Execute()
+		resp, httpRes, err := apiClient.DefaultApi.OverwriteModel(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1475,6 +1403,18 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultApi.PopulationExploration(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultApiService PushCodeSnapshot", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultApi.PushCodeSnapshot(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1546,30 +1486,6 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 		httpRes, err := apiClient.DefaultApi.SaveAnalyzerLayout(context.Background()).Execute()
 
 		require.Nil(t, err)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test DefaultApiService SaveDatasetVersion", func(t *testing.T) {
-
-		t.Skip("skip test") // remove to run test
-
-		resp, httpRes, err := apiClient.DefaultApi.SaveDatasetVersion(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test DefaultApiService SaveDatasetVersionNoParse", func(t *testing.T) {
-
-		t.Skip("skip test") // remove to run test
-
-		resp, httpRes, err := apiClient.DefaultApi.SaveDatasetVersionNoParse(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -1701,18 +1617,6 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 
 	})
 
-	t.Run("Test DefaultApiService TrashDataset", func(t *testing.T) {
-
-		t.Skip("skip test") // remove to run test
-
-		resp, httpRes, err := apiClient.DefaultApi.TrashDataset(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test DefaultApiService TrashSecretManager", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -1754,18 +1658,6 @@ func Test_tensorleapapi_DefaultApiService(t *testing.T) {
 		httpRes, err := apiClient.DefaultApi.UpdateDashboard(context.Background()).Execute()
 
 		require.Nil(t, err)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test DefaultApiService UpdateDataset", func(t *testing.T) {
-
-		t.Skip("skip test") // remove to run test
-
-		resp, httpRes, err := apiClient.DefaultApi.UpdateDataset(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

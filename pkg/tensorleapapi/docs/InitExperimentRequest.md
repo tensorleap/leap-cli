@@ -9,14 +9,13 @@ Name | Type | Description | Notes
 **CodeIntegrationName** | Pointer to **string** |  | [optional] 
 **ExperimentName** | **string** |  | 
 **RemoveUntaggedUploadedModels** | Pointer to **bool** |  | [optional] 
-**CodeIntegrationId** | Pointer to **string** |  | [optional] 
-**CodeIntegrationBranch** | Pointer to **string** |  | [optional] 
+**CodeSnapshotId** | **string** |  | 
 
 ## Methods
 
 ### NewInitExperimentRequest
 
-`func NewInitExperimentRequest(experimentName string, ) *InitExperimentRequest`
+`func NewInitExperimentRequest(experimentName string, codeSnapshotId string, ) *InitExperimentRequest`
 
 NewInitExperimentRequest instantiates a new InitExperimentRequest object
 This constructor will assign default values to properties that have it defined,
@@ -151,55 +150,25 @@ SetRemoveUntaggedUploadedModels sets RemoveUntaggedUploadedModels field to given
 
 HasRemoveUntaggedUploadedModels returns a boolean if a field has been set.
 
-### GetCodeIntegrationId
+### GetCodeSnapshotId
 
-`func (o *InitExperimentRequest) GetCodeIntegrationId() string`
+`func (o *InitExperimentRequest) GetCodeSnapshotId() string`
 
-GetCodeIntegrationId returns the CodeIntegrationId field if non-nil, zero value otherwise.
+GetCodeSnapshotId returns the CodeSnapshotId field if non-nil, zero value otherwise.
 
-### GetCodeIntegrationIdOk
+### GetCodeSnapshotIdOk
 
-`func (o *InitExperimentRequest) GetCodeIntegrationIdOk() (*string, bool)`
+`func (o *InitExperimentRequest) GetCodeSnapshotIdOk() (*string, bool)`
 
-GetCodeIntegrationIdOk returns a tuple with the CodeIntegrationId field if it's non-nil, zero value otherwise
+GetCodeSnapshotIdOk returns a tuple with the CodeSnapshotId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCodeIntegrationId
+### SetCodeSnapshotId
 
-`func (o *InitExperimentRequest) SetCodeIntegrationId(v string)`
+`func (o *InitExperimentRequest) SetCodeSnapshotId(v string)`
 
-SetCodeIntegrationId sets CodeIntegrationId field to given value.
+SetCodeSnapshotId sets CodeSnapshotId field to given value.
 
-### HasCodeIntegrationId
-
-`func (o *InitExperimentRequest) HasCodeIntegrationId() bool`
-
-HasCodeIntegrationId returns a boolean if a field has been set.
-
-### GetCodeIntegrationBranch
-
-`func (o *InitExperimentRequest) GetCodeIntegrationBranch() string`
-
-GetCodeIntegrationBranch returns the CodeIntegrationBranch field if non-nil, zero value otherwise.
-
-### GetCodeIntegrationBranchOk
-
-`func (o *InitExperimentRequest) GetCodeIntegrationBranchOk() (*string, bool)`
-
-GetCodeIntegrationBranchOk returns a tuple with the CodeIntegrationBranch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCodeIntegrationBranch
-
-`func (o *InitExperimentRequest) SetCodeIntegrationBranch(v string)`
-
-SetCodeIntegrationBranch sets CodeIntegrationBranch field to given value.
-
-### HasCodeIntegrationBranch
-
-`func (o *InitExperimentRequest) HasCodeIntegrationBranch() bool`
-
-HasCodeIntegrationBranch returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

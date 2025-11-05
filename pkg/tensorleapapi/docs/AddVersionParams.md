@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **ModelGraph** | [**ModelGraph**](ModelGraph.md) |  | 
 **BranchName** | **string** |  | 
 **Description** | **string** |  | 
-**CodeIntegration** | Pointer to [**CodeIntegrationBinder**](CodeIntegrationBinder.md) |  | [optional] 
+**CodeSnapshotId** | **string** |  | 
 **Hash** | Pointer to **string** |  | [optional] 
 **CopySessionIds** | Pointer to **[]string** |  | [optional] 
 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewAddVersionParams
 
-`func NewAddVersionParams(projectId string, modelGraph ModelGraph, branchName string, description string, ) *AddVersionParams`
+`func NewAddVersionParams(projectId string, modelGraph ModelGraph, branchName string, description string, codeSnapshotId string, ) *AddVersionParams`
 
 NewAddVersionParams instantiates a new AddVersionParams object
 This constructor will assign default values to properties that have it defined,
@@ -111,30 +111,25 @@ and a boolean to check if the value has been set.
 SetDescription sets Description field to given value.
 
 
-### GetCodeIntegration
+### GetCodeSnapshotId
 
-`func (o *AddVersionParams) GetCodeIntegration() CodeIntegrationBinder`
+`func (o *AddVersionParams) GetCodeSnapshotId() string`
 
-GetCodeIntegration returns the CodeIntegration field if non-nil, zero value otherwise.
+GetCodeSnapshotId returns the CodeSnapshotId field if non-nil, zero value otherwise.
 
-### GetCodeIntegrationOk
+### GetCodeSnapshotIdOk
 
-`func (o *AddVersionParams) GetCodeIntegrationOk() (*CodeIntegrationBinder, bool)`
+`func (o *AddVersionParams) GetCodeSnapshotIdOk() (*string, bool)`
 
-GetCodeIntegrationOk returns a tuple with the CodeIntegration field if it's non-nil, zero value otherwise
+GetCodeSnapshotIdOk returns a tuple with the CodeSnapshotId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCodeIntegration
+### SetCodeSnapshotId
 
-`func (o *AddVersionParams) SetCodeIntegration(v CodeIntegrationBinder)`
+`func (o *AddVersionParams) SetCodeSnapshotId(v string)`
 
-SetCodeIntegration sets CodeIntegration field to given value.
+SetCodeSnapshotId sets CodeSnapshotId field to given value.
 
-### HasCodeIntegration
-
-`func (o *AddVersionParams) HasCodeIntegration() bool`
-
-HasCodeIntegration returns a boolean if a field has been set.
 
 ### GetHash
 
