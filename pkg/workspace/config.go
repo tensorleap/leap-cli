@@ -19,19 +19,16 @@ const CONFIG_FILE_NAME = "leap.yaml"
 const UNDEFINED_WORKSPACE_CONFIG = "undefined"
 
 type WorkspaceConfig struct {
-	CodeIntegrationId string `yaml:"codeIntegrationId"`
-	ProjectId         string `yaml:"projectId"`
-	SecretId          string `yaml:"secretId"`
-	Branch            string `yaml:"branch,omitempty"`
-	// deprecated
-	SecretManagerId string   `yaml:"secretManagerId,omitempty"`
+	ProjectId       string   `yaml:"projectId"`
+	SecretId        string   `yaml:"secretId"`
+	Branch          string   `yaml:"branch,omitempty"`
 	EntryFile       string   `yaml:"entryFile"`
 	IncludePatterns []string `yaml:"include"`
 	ExcludePatterns []string `yaml:"exclude,omitempty"`
 	PythonVersion   string   `yaml:"pythonVersion,omitempty"`
 }
 
-func NewWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, branch, pythonVersion string, files []string) *WorkspaceConfig {
+func NewWorkspaceConfig(projectId, entryFile, secretId, branch, pythonVersion string, files []string) *WorkspaceConfig {
 	if len(entryFile) == 0 {
 		entryFile = "leap_binder.py"
 	}
@@ -39,25 +36,23 @@ func NewWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, branc
 		files = append(files, entryFile)
 	}
 	return &WorkspaceConfig{
-		ProjectId:         projectId,
-		CodeIntegrationId: codeIntegrationId,
-		EntryFile:         entryFile,
-		SecretId:          secretId,
-		Branch:            branch,
-		PythonVersion:     pythonVersion,
-		IncludePatterns:   files,
+		ProjectId:       projectId,
+		EntryFile:       entryFile,
+		SecretId:        secretId,
+		Branch:          branch,
+		PythonVersion:   pythonVersion,
+		IncludePatterns: files,
 	}
 }
 
 type InitTemplateValues struct {
-	CodeIntegrationId string
-	ProjectId         string
-	SecretId          string
-	Branch            string
-	PythonVersion     string
+	ProjectId     string
+	SecretId      string
+	PythonVersion string
+	Branch        string
 }
 
-func CreateCodeTemplate(codeIntegrationId, projectId, secretId, branch, outputDir, pythonVersionId string) error {
+func CreateCodeTemplate(projectId, secretId, outputDir, pythonVersionId, branch string) error {
 	// Create the directory for the file if it doesn't exist
 	err := os.MkdirAll(outputDir, 0755)
 	if err != nil {
@@ -82,11 +77,10 @@ func CreateCodeTemplate(codeIntegrationId, projectId, secretId, branch, outputDi
 			defer targetFile.Close()
 
 			if err := tmpl.Execute(targetFile, &InitTemplateValues{
-				CodeIntegrationId: codeIntegrationId,
-				ProjectId:         projectId,
-				SecretId:          secretId,
-				Branch:            branch,
-				PythonVersion:     pythonVersionId,
+				ProjectId:     projectId,
+				SecretId:      secretId,
+				PythonVersion: pythonVersionId,
+				Branch:        branch,
 			}); err != nil {
 				return err
 			}
@@ -95,12 +89,11 @@ func CreateCodeTemplate(codeIntegrationId, projectId, secretId, branch, outputDi
 	return nil
 }
 
-func OverrideWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, branch, pythonVersion string, files []string, outputDir string) error {
+func OverrideWorkspaceConfig(projectId, entryFile, secretId, branch, pythonVersion string, files []string, outputDir string) error {
 	wc, err := GetWorkspaceConfig()
 	if err != nil {
-		wc = NewWorkspaceConfig(codeIntegrationId, projectId, entryFile, secretId, branch, pythonVersion, files)
+		wc = NewWorkspaceConfig(projectId, entryFile, secretId, branch, pythonVersion, files)
 	} else {
-		wc.CodeIntegrationId = codeIntegrationId
 		wc.ProjectId = projectId
 		wc.EntryFile = entryFile
 		wc.SecretId = secretId
@@ -119,14 +112,8 @@ func GetWorkspaceConfig() (*WorkspaceConfig, error) {
 	}
 	workspaceConfig := WorkspaceConfig{}
 	err = yaml.Unmarshal(content, &workspaceConfig)
-	// handle deprecated SecretManagerId
-	if len(workspaceConfig.SecretId) == 0 {
-		workspaceConfig.SecretId = workspaceConfig.SecretManagerId
-	}
-	if len(workspaceConfig.SecretManagerId) > 0 {
-		workspaceConfig.SecretManagerId = ""
-		_ = SetWorkspaceConfig(&workspaceConfig, ".")
-	}
+
+	_ = SetWorkspaceConfig(&workspaceConfig, ".")
 	return &workspaceConfig, err
 }
 
