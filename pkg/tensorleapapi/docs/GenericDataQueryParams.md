@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **InnerSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **Aggregations** | [**[]Aggregations**](Aggregations.md) |  | 
 **Buckets** | [**[]SplitAgg**](SplitAgg.md) |  | 
+**ElementInstance** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -232,6 +233,31 @@ and a boolean to check if the value has been set.
 
 SetBuckets sets Buckets field to given value.
 
+
+### GetElementInstance
+
+`func (o *GenericDataQueryParams) GetElementInstance() bool`
+
+GetElementInstance returns the ElementInstance field if non-nil, zero value otherwise.
+
+### GetElementInstanceOk
+
+`func (o *GenericDataQueryParams) GetElementInstanceOk() (*bool, bool)`
+
+GetElementInstanceOk returns a tuple with the ElementInstance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetElementInstance
+
+`func (o *GenericDataQueryParams) SetElementInstance(v bool)`
+
+SetElementInstance sets ElementInstance field to given value.
+
+### HasElementInstance
+
+`func (o *GenericDataQueryParams) HasElementInstance() bool`
+
+HasElementInstance returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

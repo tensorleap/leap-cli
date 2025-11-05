@@ -5,13 +5,12 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Project** | [**Project**](Project.md) |  | 
-**Version** | [**Version**](Version.md) |  | 
 
 ## Methods
 
 ### NewAddProjectResponse
 
-`func NewAddProjectResponse(project Project, version Version, ) *AddProjectResponse`
+`func NewAddProjectResponse(project Project, ) *AddProjectResponse`
 
 NewAddProjectResponse instantiates a new AddProjectResponse object
 This constructor will assign default values to properties that have it defined,
@@ -44,26 +43,6 @@ and a boolean to check if the value has been set.
 `func (o *AddProjectResponse) SetProject(v Project)`
 
 SetProject sets Project field to given value.
-
-
-### GetVersion
-
-`func (o *AddProjectResponse) GetVersion() Version`
-
-GetVersion returns the Version field if non-nil, zero value otherwise.
-
-### GetVersionOk
-
-`func (o *AddProjectResponse) GetVersionOk() (*Version, bool)`
-
-GetVersionOk returns a tuple with the Version field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetVersion
-
-`func (o *AddProjectResponse) SetVersion(v Version)`
-
-SetVersion sets Version field to given value.
 
 
 

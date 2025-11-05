@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **SessionRunsToEpochs** | [**[]SessionRunToEpoch**](SessionRunToEpoch.md) |  | 
 **ShowAllEpochs** | **bool** |  | 
+**ElementInstance** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -232,6 +233,31 @@ and a boolean to check if the value has been set.
 
 SetShowAllEpochs sets ShowAllEpochs field to given value.
 
+
+### GetElementInstance
+
+`func (o *MultiChartsParams) GetElementInstance() bool`
+
+GetElementInstance returns the ElementInstance field if non-nil, zero value otherwise.
+
+### GetElementInstanceOk
+
+`func (o *MultiChartsParams) GetElementInstanceOk() (*bool, bool)`
+
+GetElementInstanceOk returns a tuple with the ElementInstance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetElementInstance
+
+`func (o *MultiChartsParams) SetElementInstance(v bool)`
+
+SetElementInstance sets ElementInstance field to given value.
+
+### HasElementInstance
+
+`func (o *MultiChartsParams) HasElementInstance() bool`
+
+HasElementInstance returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

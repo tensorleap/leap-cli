@@ -15,9 +15,10 @@ Name | Type | Description | Notes
 **Description** | **string** |  | 
 **SkipMetricsEstimation** | **bool** |  | 
 **Monitor** | Pointer to **bool** |  | [optional] 
+**SmartVisualizations** | Pointer to **bool** |  | [optional] 
 **EvaluatedEpoch** | **float64** |  | 
 **SessionId** | **string** |  | 
-**Type** | **string** |  | 
+**Type** | [**ExportModelTypeEnum**](ExportModelTypeEnum.md) |  | 
 **FromEpoch** | **float64** |  | 
 **SampleIdentity** | Pointer to [**SampleIdentity**](SampleIdentity.md) |  | [optional] 
 **FromDatasetSlice** | Pointer to [**DataStateType**](DataStateType.md) |  | [optional] 
@@ -29,12 +30,20 @@ Name | Type | Description | Notes
 **SampleIds** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
 **Limit** | **float64** |  | 
 **SessionRunId** | **string** |  | 
-**NumOfSamplesToLabel** | Pointer to **float64** |  | [optional] 
-**RecommendLabeling** | Pointer to **bool** |  | [optional] 
+**LatentSpaceType** | Pointer to **string** |  | [optional] 
+**ForceExecute** | Pointer to **bool** |  | [optional] 
+**ElementInstance** | Pointer to **bool** |  | [optional] 
+**UseCustomLatentSpace** | Pointer to **bool** |  | [optional] 
 **TriggerCreateSampleVisualiztions** | Pointer to **bool** |  | [optional] 
-**DisplayParams** | [**PopulationExplorationDisplayParams**](PopulationExplorationDisplayParams.md) |  | 
+**OptionalAnalysis** | Pointer to [**[]OptionalAnalysis**](OptionalAnalysis.md) |  | [optional] 
+**ReductionAlgorithm** | [**ReductionAlgorithm**](ReductionAlgorithm.md) |  | 
+**ShouldFillRemainingWithUnbalanced** | **bool** |  | 
+**BalanceBy** | **[]string** |  | 
+**NumOfSamples** | **float64** |  | 
 **DomainGapMetadata** | Pointer to **string** |  | [optional] 
 **ProjectionMetric** | Pointer to **string** |  | [optional] 
+**LabelingAlgorithm** | [**LabelingAlgorithm**](LabelingAlgorithm.md) |  | 
+**NumOfSamplesToLabel** | Pointer to **float64** |  | [optional] 
 **ExportUrl** | **string** |  | 
 **ProjectVersion** | **float64** |  | 
 **ExportOptions** | [**ExportOptions**](ExportOptions.md) |  | 
@@ -43,20 +52,16 @@ Name | Type | Description | Notes
 **CopyToUrl** | Pointer to **string** |  | [optional] 
 **ImportUrl** | **string** |  | 
 **ProjectMeta** | [**ProjectMeta**](ProjectMeta.md) |  | 
-**DatasetId** | **string** |  | 
-**Setup** | Pointer to [**DatasetSetup**](DatasetSetup.md) |  | [optional] 
 **SecretManagerId** | Pointer to **string** |  | [optional] 
 **CodeUrl** | **string** |  | 
 **CodeEntryFile** | **string** |  | 
-**Branch** | Pointer to **string** |  | [optional] 
-**Note** | Pointer to **string** |  | [optional] 
 **GenericBaseImageType** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewJobParams
 
-`func NewJobParams(epochs float64, batchSize float64, versionId string, projectId string, batchSize float64, dataStates []DataStateType, name string, description string, skipMetricsEstimation bool, evaluatedEpoch float64, sessionId string, type_ string, fromEpoch float64, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, sessionRunId string, displayParams PopulationExplorationDisplayParams, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, datasetId string, codeUrl string, codeEntryFile string, ) *JobParams`
+`func NewJobParams(epochs float64, batchSize float64, versionId string, projectId string, batchSize float64, dataStates []DataStateType, name string, description string, skipMetricsEstimation bool, evaluatedEpoch float64, sessionId string, type_ ExportModelTypeEnum, fromEpoch float64, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, sessionRunId string, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, labelingAlgorithm LabelingAlgorithm, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, codeUrl string, codeEntryFile string, ) *JobParams`
 
 NewJobParams instantiates a new JobParams object
 This constructor will assign default values to properties that have it defined,
@@ -301,6 +306,31 @@ SetMonitor sets Monitor field to given value.
 
 HasMonitor returns a boolean if a field has been set.
 
+### GetSmartVisualizations
+
+`func (o *JobParams) GetSmartVisualizations() bool`
+
+GetSmartVisualizations returns the SmartVisualizations field if non-nil, zero value otherwise.
+
+### GetSmartVisualizationsOk
+
+`func (o *JobParams) GetSmartVisualizationsOk() (*bool, bool)`
+
+GetSmartVisualizationsOk returns a tuple with the SmartVisualizations field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSmartVisualizations
+
+`func (o *JobParams) SetSmartVisualizations(v bool)`
+
+SetSmartVisualizations sets SmartVisualizations field to given value.
+
+### HasSmartVisualizations
+
+`func (o *JobParams) HasSmartVisualizations() bool`
+
+HasSmartVisualizations returns a boolean if a field has been set.
+
 ### GetEvaluatedEpoch
 
 `func (o *JobParams) GetEvaluatedEpoch() float64`
@@ -343,20 +373,20 @@ SetSessionId sets SessionId field to given value.
 
 ### GetType
 
-`func (o *JobParams) GetType() string`
+`func (o *JobParams) GetType() ExportModelTypeEnum`
 
 GetType returns the Type field if non-nil, zero value otherwise.
 
 ### GetTypeOk
 
-`func (o *JobParams) GetTypeOk() (*string, bool)`
+`func (o *JobParams) GetTypeOk() (*ExportModelTypeEnum, bool)`
 
 GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetType
 
-`func (o *JobParams) SetType(v string)`
+`func (o *JobParams) SetType(v ExportModelTypeEnum)`
 
 SetType sets Type field to given value.
 
@@ -596,55 +626,105 @@ and a boolean to check if the value has been set.
 SetSessionRunId sets SessionRunId field to given value.
 
 
-### GetNumOfSamplesToLabel
+### GetLatentSpaceType
 
-`func (o *JobParams) GetNumOfSamplesToLabel() float64`
+`func (o *JobParams) GetLatentSpaceType() string`
 
-GetNumOfSamplesToLabel returns the NumOfSamplesToLabel field if non-nil, zero value otherwise.
+GetLatentSpaceType returns the LatentSpaceType field if non-nil, zero value otherwise.
 
-### GetNumOfSamplesToLabelOk
+### GetLatentSpaceTypeOk
 
-`func (o *JobParams) GetNumOfSamplesToLabelOk() (*float64, bool)`
+`func (o *JobParams) GetLatentSpaceTypeOk() (*string, bool)`
 
-GetNumOfSamplesToLabelOk returns a tuple with the NumOfSamplesToLabel field if it's non-nil, zero value otherwise
+GetLatentSpaceTypeOk returns a tuple with the LatentSpaceType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetNumOfSamplesToLabel
+### SetLatentSpaceType
 
-`func (o *JobParams) SetNumOfSamplesToLabel(v float64)`
+`func (o *JobParams) SetLatentSpaceType(v string)`
 
-SetNumOfSamplesToLabel sets NumOfSamplesToLabel field to given value.
+SetLatentSpaceType sets LatentSpaceType field to given value.
 
-### HasNumOfSamplesToLabel
+### HasLatentSpaceType
 
-`func (o *JobParams) HasNumOfSamplesToLabel() bool`
+`func (o *JobParams) HasLatentSpaceType() bool`
 
-HasNumOfSamplesToLabel returns a boolean if a field has been set.
+HasLatentSpaceType returns a boolean if a field has been set.
 
-### GetRecommendLabeling
+### GetForceExecute
 
-`func (o *JobParams) GetRecommendLabeling() bool`
+`func (o *JobParams) GetForceExecute() bool`
 
-GetRecommendLabeling returns the RecommendLabeling field if non-nil, zero value otherwise.
+GetForceExecute returns the ForceExecute field if non-nil, zero value otherwise.
 
-### GetRecommendLabelingOk
+### GetForceExecuteOk
 
-`func (o *JobParams) GetRecommendLabelingOk() (*bool, bool)`
+`func (o *JobParams) GetForceExecuteOk() (*bool, bool)`
 
-GetRecommendLabelingOk returns a tuple with the RecommendLabeling field if it's non-nil, zero value otherwise
+GetForceExecuteOk returns a tuple with the ForceExecute field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetRecommendLabeling
+### SetForceExecute
 
-`func (o *JobParams) SetRecommendLabeling(v bool)`
+`func (o *JobParams) SetForceExecute(v bool)`
 
-SetRecommendLabeling sets RecommendLabeling field to given value.
+SetForceExecute sets ForceExecute field to given value.
 
-### HasRecommendLabeling
+### HasForceExecute
 
-`func (o *JobParams) HasRecommendLabeling() bool`
+`func (o *JobParams) HasForceExecute() bool`
 
-HasRecommendLabeling returns a boolean if a field has been set.
+HasForceExecute returns a boolean if a field has been set.
+
+### GetElementInstance
+
+`func (o *JobParams) GetElementInstance() bool`
+
+GetElementInstance returns the ElementInstance field if non-nil, zero value otherwise.
+
+### GetElementInstanceOk
+
+`func (o *JobParams) GetElementInstanceOk() (*bool, bool)`
+
+GetElementInstanceOk returns a tuple with the ElementInstance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetElementInstance
+
+`func (o *JobParams) SetElementInstance(v bool)`
+
+SetElementInstance sets ElementInstance field to given value.
+
+### HasElementInstance
+
+`func (o *JobParams) HasElementInstance() bool`
+
+HasElementInstance returns a boolean if a field has been set.
+
+### GetUseCustomLatentSpace
+
+`func (o *JobParams) GetUseCustomLatentSpace() bool`
+
+GetUseCustomLatentSpace returns the UseCustomLatentSpace field if non-nil, zero value otherwise.
+
+### GetUseCustomLatentSpaceOk
+
+`func (o *JobParams) GetUseCustomLatentSpaceOk() (*bool, bool)`
+
+GetUseCustomLatentSpaceOk returns a tuple with the UseCustomLatentSpace field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUseCustomLatentSpace
+
+`func (o *JobParams) SetUseCustomLatentSpace(v bool)`
+
+SetUseCustomLatentSpace sets UseCustomLatentSpace field to given value.
+
+### HasUseCustomLatentSpace
+
+`func (o *JobParams) HasUseCustomLatentSpace() bool`
+
+HasUseCustomLatentSpace returns a boolean if a field has been set.
 
 ### GetTriggerCreateSampleVisualiztions
 
@@ -671,24 +751,109 @@ SetTriggerCreateSampleVisualiztions sets TriggerCreateSampleVisualiztions field 
 
 HasTriggerCreateSampleVisualiztions returns a boolean if a field has been set.
 
-### GetDisplayParams
+### GetOptionalAnalysis
 
-`func (o *JobParams) GetDisplayParams() PopulationExplorationDisplayParams`
+`func (o *JobParams) GetOptionalAnalysis() []OptionalAnalysis`
 
-GetDisplayParams returns the DisplayParams field if non-nil, zero value otherwise.
+GetOptionalAnalysis returns the OptionalAnalysis field if non-nil, zero value otherwise.
 
-### GetDisplayParamsOk
+### GetOptionalAnalysisOk
 
-`func (o *JobParams) GetDisplayParamsOk() (*PopulationExplorationDisplayParams, bool)`
+`func (o *JobParams) GetOptionalAnalysisOk() (*[]OptionalAnalysis, bool)`
 
-GetDisplayParamsOk returns a tuple with the DisplayParams field if it's non-nil, zero value otherwise
+GetOptionalAnalysisOk returns a tuple with the OptionalAnalysis field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDisplayParams
+### SetOptionalAnalysis
 
-`func (o *JobParams) SetDisplayParams(v PopulationExplorationDisplayParams)`
+`func (o *JobParams) SetOptionalAnalysis(v []OptionalAnalysis)`
 
-SetDisplayParams sets DisplayParams field to given value.
+SetOptionalAnalysis sets OptionalAnalysis field to given value.
+
+### HasOptionalAnalysis
+
+`func (o *JobParams) HasOptionalAnalysis() bool`
+
+HasOptionalAnalysis returns a boolean if a field has been set.
+
+### GetReductionAlgorithm
+
+`func (o *JobParams) GetReductionAlgorithm() ReductionAlgorithm`
+
+GetReductionAlgorithm returns the ReductionAlgorithm field if non-nil, zero value otherwise.
+
+### GetReductionAlgorithmOk
+
+`func (o *JobParams) GetReductionAlgorithmOk() (*ReductionAlgorithm, bool)`
+
+GetReductionAlgorithmOk returns a tuple with the ReductionAlgorithm field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReductionAlgorithm
+
+`func (o *JobParams) SetReductionAlgorithm(v ReductionAlgorithm)`
+
+SetReductionAlgorithm sets ReductionAlgorithm field to given value.
+
+
+### GetShouldFillRemainingWithUnbalanced
+
+`func (o *JobParams) GetShouldFillRemainingWithUnbalanced() bool`
+
+GetShouldFillRemainingWithUnbalanced returns the ShouldFillRemainingWithUnbalanced field if non-nil, zero value otherwise.
+
+### GetShouldFillRemainingWithUnbalancedOk
+
+`func (o *JobParams) GetShouldFillRemainingWithUnbalancedOk() (*bool, bool)`
+
+GetShouldFillRemainingWithUnbalancedOk returns a tuple with the ShouldFillRemainingWithUnbalanced field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetShouldFillRemainingWithUnbalanced
+
+`func (o *JobParams) SetShouldFillRemainingWithUnbalanced(v bool)`
+
+SetShouldFillRemainingWithUnbalanced sets ShouldFillRemainingWithUnbalanced field to given value.
+
+
+### GetBalanceBy
+
+`func (o *JobParams) GetBalanceBy() []string`
+
+GetBalanceBy returns the BalanceBy field if non-nil, zero value otherwise.
+
+### GetBalanceByOk
+
+`func (o *JobParams) GetBalanceByOk() (*[]string, bool)`
+
+GetBalanceByOk returns a tuple with the BalanceBy field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBalanceBy
+
+`func (o *JobParams) SetBalanceBy(v []string)`
+
+SetBalanceBy sets BalanceBy field to given value.
+
+
+### GetNumOfSamples
+
+`func (o *JobParams) GetNumOfSamples() float64`
+
+GetNumOfSamples returns the NumOfSamples field if non-nil, zero value otherwise.
+
+### GetNumOfSamplesOk
+
+`func (o *JobParams) GetNumOfSamplesOk() (*float64, bool)`
+
+GetNumOfSamplesOk returns a tuple with the NumOfSamples field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNumOfSamples
+
+`func (o *JobParams) SetNumOfSamples(v float64)`
+
+SetNumOfSamples sets NumOfSamples field to given value.
 
 
 ### GetDomainGapMetadata
@@ -740,6 +905,51 @@ SetProjectionMetric sets ProjectionMetric field to given value.
 `func (o *JobParams) HasProjectionMetric() bool`
 
 HasProjectionMetric returns a boolean if a field has been set.
+
+### GetLabelingAlgorithm
+
+`func (o *JobParams) GetLabelingAlgorithm() LabelingAlgorithm`
+
+GetLabelingAlgorithm returns the LabelingAlgorithm field if non-nil, zero value otherwise.
+
+### GetLabelingAlgorithmOk
+
+`func (o *JobParams) GetLabelingAlgorithmOk() (*LabelingAlgorithm, bool)`
+
+GetLabelingAlgorithmOk returns a tuple with the LabelingAlgorithm field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLabelingAlgorithm
+
+`func (o *JobParams) SetLabelingAlgorithm(v LabelingAlgorithm)`
+
+SetLabelingAlgorithm sets LabelingAlgorithm field to given value.
+
+
+### GetNumOfSamplesToLabel
+
+`func (o *JobParams) GetNumOfSamplesToLabel() float64`
+
+GetNumOfSamplesToLabel returns the NumOfSamplesToLabel field if non-nil, zero value otherwise.
+
+### GetNumOfSamplesToLabelOk
+
+`func (o *JobParams) GetNumOfSamplesToLabelOk() (*float64, bool)`
+
+GetNumOfSamplesToLabelOk returns a tuple with the NumOfSamplesToLabel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNumOfSamplesToLabel
+
+`func (o *JobParams) SetNumOfSamplesToLabel(v float64)`
+
+SetNumOfSamplesToLabel sets NumOfSamplesToLabel field to given value.
+
+### HasNumOfSamplesToLabel
+
+`func (o *JobParams) HasNumOfSamplesToLabel() bool`
+
+HasNumOfSamplesToLabel returns a boolean if a field has been set.
 
 ### GetExportUrl
 
@@ -906,51 +1116,6 @@ and a boolean to check if the value has been set.
 SetProjectMeta sets ProjectMeta field to given value.
 
 
-### GetDatasetId
-
-`func (o *JobParams) GetDatasetId() string`
-
-GetDatasetId returns the DatasetId field if non-nil, zero value otherwise.
-
-### GetDatasetIdOk
-
-`func (o *JobParams) GetDatasetIdOk() (*string, bool)`
-
-GetDatasetIdOk returns a tuple with the DatasetId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDatasetId
-
-`func (o *JobParams) SetDatasetId(v string)`
-
-SetDatasetId sets DatasetId field to given value.
-
-
-### GetSetup
-
-`func (o *JobParams) GetSetup() DatasetSetup`
-
-GetSetup returns the Setup field if non-nil, zero value otherwise.
-
-### GetSetupOk
-
-`func (o *JobParams) GetSetupOk() (*DatasetSetup, bool)`
-
-GetSetupOk returns a tuple with the Setup field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSetup
-
-`func (o *JobParams) SetSetup(v DatasetSetup)`
-
-SetSetup sets Setup field to given value.
-
-### HasSetup
-
-`func (o *JobParams) HasSetup() bool`
-
-HasSetup returns a boolean if a field has been set.
-
 ### GetSecretManagerId
 
 `func (o *JobParams) GetSecretManagerId() string`
@@ -1015,56 +1180,6 @@ and a boolean to check if the value has been set.
 
 SetCodeEntryFile sets CodeEntryFile field to given value.
 
-
-### GetBranch
-
-`func (o *JobParams) GetBranch() string`
-
-GetBranch returns the Branch field if non-nil, zero value otherwise.
-
-### GetBranchOk
-
-`func (o *JobParams) GetBranchOk() (*string, bool)`
-
-GetBranchOk returns a tuple with the Branch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetBranch
-
-`func (o *JobParams) SetBranch(v string)`
-
-SetBranch sets Branch field to given value.
-
-### HasBranch
-
-`func (o *JobParams) HasBranch() bool`
-
-HasBranch returns a boolean if a field has been set.
-
-### GetNote
-
-`func (o *JobParams) GetNote() string`
-
-GetNote returns the Note field if non-nil, zero value otherwise.
-
-### GetNoteOk
-
-`func (o *JobParams) GetNoteOk() (*string, bool)`
-
-GetNoteOk returns a tuple with the Note field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNote
-
-`func (o *JobParams) SetNote(v string)`
-
-SetNote sets Note field to given value.
-
-### HasNote
-
-`func (o *JobParams) HasNote() bool`
-
-HasNote returns a boolean if a field has been set.
 
 ### GetGenericBaseImageType
 

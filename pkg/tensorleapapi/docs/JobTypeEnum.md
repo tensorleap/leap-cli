@@ -29,8 +29,6 @@
 
 * `DASHLETS_GENERATOR` (value: `"DASHLETS_GENERATOR"`)
 
-* `FAILURE_JOBS_REPORT` (value: `"FAILURE_JOBS_REPORT"`)
-
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

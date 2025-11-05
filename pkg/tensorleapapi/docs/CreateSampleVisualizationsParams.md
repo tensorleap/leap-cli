@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **ProjectId** | **string** |  | 
 **SessionRunId** | **string** |  | 
 **Epoch** | **float64** |  | 
-**SampleIdentities** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
+**SampleIdentities** | Pointer to [**[]SampleIdentity**](SampleIdentity.md) |  | [optional] 
 **Digest** | **string** |  | 
 **Refresh** | Pointer to **bool** |  | [optional] 
 **Trigger** | Pointer to [**JobTrigger**](JobTrigger.md) |  | [optional] 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewCreateSampleVisualizationsParams
 
-`func NewCreateSampleVisualizationsParams(projectId string, sessionRunId string, epoch float64, sampleIdentities []SampleIdentity, digest string, ) *CreateSampleVisualizationsParams`
+`func NewCreateSampleVisualizationsParams(projectId string, sessionRunId string, epoch float64, digest string, ) *CreateSampleVisualizationsParams`
 
 NewCreateSampleVisualizationsParams instantiates a new CreateSampleVisualizationsParams object
 This constructor will assign default values to properties that have it defined,
@@ -110,6 +110,11 @@ and a boolean to check if the value has been set.
 
 SetSampleIdentities sets SampleIdentities field to given value.
 
+### HasSampleIdentities
+
+`func (o *CreateSampleVisualizationsParams) HasSampleIdentities() bool`
+
+HasSampleIdentities returns a boolean if a field has been set.
 
 ### GetDigest
 

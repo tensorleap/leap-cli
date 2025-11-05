@@ -6,16 +6,15 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **JobId** | **string** |  | 
 **JobType** | [**JobType**](JobType.md) |  | 
-**LeepScriptName** | **string** |  | 
-**LeepScriptId** | **string** |  | 
-**LeepScriptVersion** | Pointer to **string** |  | [optional] 
-**LeepScriptVersionId** | Pointer to **string** |  | [optional] 
+**CodeSnapshotId** | **string** |  | 
+**VersionId** | **string** |  | 
+**VersionName** | **string** |  | 
 
 ## Methods
 
 ### NewJobNotificationLeepScriptContext
 
-`func NewJobNotificationLeepScriptContext(jobId string, jobType JobType, leepScriptName string, leepScriptId string, ) *JobNotificationLeepScriptContext`
+`func NewJobNotificationLeepScriptContext(jobId string, jobType JobType, codeSnapshotId string, versionId string, versionName string, ) *JobNotificationLeepScriptContext`
 
 NewJobNotificationLeepScriptContext instantiates a new JobNotificationLeepScriptContext object
 This constructor will assign default values to properties that have it defined,
@@ -70,95 +69,65 @@ and a boolean to check if the value has been set.
 SetJobType sets JobType field to given value.
 
 
-### GetLeepScriptName
+### GetCodeSnapshotId
 
-`func (o *JobNotificationLeepScriptContext) GetLeepScriptName() string`
+`func (o *JobNotificationLeepScriptContext) GetCodeSnapshotId() string`
 
-GetLeepScriptName returns the LeepScriptName field if non-nil, zero value otherwise.
+GetCodeSnapshotId returns the CodeSnapshotId field if non-nil, zero value otherwise.
 
-### GetLeepScriptNameOk
+### GetCodeSnapshotIdOk
 
-`func (o *JobNotificationLeepScriptContext) GetLeepScriptNameOk() (*string, bool)`
+`func (o *JobNotificationLeepScriptContext) GetCodeSnapshotIdOk() (*string, bool)`
 
-GetLeepScriptNameOk returns a tuple with the LeepScriptName field if it's non-nil, zero value otherwise
+GetCodeSnapshotIdOk returns a tuple with the CodeSnapshotId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetLeepScriptName
+### SetCodeSnapshotId
 
-`func (o *JobNotificationLeepScriptContext) SetLeepScriptName(v string)`
+`func (o *JobNotificationLeepScriptContext) SetCodeSnapshotId(v string)`
 
-SetLeepScriptName sets LeepScriptName field to given value.
+SetCodeSnapshotId sets CodeSnapshotId field to given value.
 
 
-### GetLeepScriptId
+### GetVersionId
 
-`func (o *JobNotificationLeepScriptContext) GetLeepScriptId() string`
+`func (o *JobNotificationLeepScriptContext) GetVersionId() string`
 
-GetLeepScriptId returns the LeepScriptId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetLeepScriptIdOk
+### GetVersionIdOk
 
-`func (o *JobNotificationLeepScriptContext) GetLeepScriptIdOk() (*string, bool)`
+`func (o *JobNotificationLeepScriptContext) GetVersionIdOk() (*string, bool)`
 
-GetLeepScriptIdOk returns a tuple with the LeepScriptId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetLeepScriptId
+### SetVersionId
 
-`func (o *JobNotificationLeepScriptContext) SetLeepScriptId(v string)`
+`func (o *JobNotificationLeepScriptContext) SetVersionId(v string)`
 
-SetLeepScriptId sets LeepScriptId field to given value.
+SetVersionId sets VersionId field to given value.
 
 
-### GetLeepScriptVersion
+### GetVersionName
 
-`func (o *JobNotificationLeepScriptContext) GetLeepScriptVersion() string`
+`func (o *JobNotificationLeepScriptContext) GetVersionName() string`
 
-GetLeepScriptVersion returns the LeepScriptVersion field if non-nil, zero value otherwise.
+GetVersionName returns the VersionName field if non-nil, zero value otherwise.
 
-### GetLeepScriptVersionOk
+### GetVersionNameOk
 
-`func (o *JobNotificationLeepScriptContext) GetLeepScriptVersionOk() (*string, bool)`
+`func (o *JobNotificationLeepScriptContext) GetVersionNameOk() (*string, bool)`
 
-GetLeepScriptVersionOk returns a tuple with the LeepScriptVersion field if it's non-nil, zero value otherwise
+GetVersionNameOk returns a tuple with the VersionName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetLeepScriptVersion
+### SetVersionName
 
-`func (o *JobNotificationLeepScriptContext) SetLeepScriptVersion(v string)`
+`func (o *JobNotificationLeepScriptContext) SetVersionName(v string)`
 
-SetLeepScriptVersion sets LeepScriptVersion field to given value.
+SetVersionName sets VersionName field to given value.
 
-### HasLeepScriptVersion
-
-`func (o *JobNotificationLeepScriptContext) HasLeepScriptVersion() bool`
-
-HasLeepScriptVersion returns a boolean if a field has been set.
-
-### GetLeepScriptVersionId
-
-`func (o *JobNotificationLeepScriptContext) GetLeepScriptVersionId() string`
-
-GetLeepScriptVersionId returns the LeepScriptVersionId field if non-nil, zero value otherwise.
-
-### GetLeepScriptVersionIdOk
-
-`func (o *JobNotificationLeepScriptContext) GetLeepScriptVersionIdOk() (*string, bool)`
-
-GetLeepScriptVersionIdOk returns a tuple with the LeepScriptVersionId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetLeepScriptVersionId
-
-`func (o *JobNotificationLeepScriptContext) SetLeepScriptVersionId(v string)`
-
-SetLeepScriptVersionId sets LeepScriptVersionId field to given value.
-
-### HasLeepScriptVersionId
-
-`func (o *JobNotificationLeepScriptContext) HasLeepScriptVersionId() bool`
-
-HasLeepScriptVersionId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

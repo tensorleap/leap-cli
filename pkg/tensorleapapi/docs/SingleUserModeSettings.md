@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TrialStarted** | **bool** |  | 
-**ExpirationDate** | Pointer to **time.Time** |  | [optional] 
 **FirstName** | **string** |  | 
 **LastName** | **string** |  | 
 **Email** | **string** |  | 
@@ -51,31 +50,6 @@ and a boolean to check if the value has been set.
 
 SetTrialStarted sets TrialStarted field to given value.
 
-
-### GetExpirationDate
-
-`func (o *SingleUserModeSettings) GetExpirationDate() time.Time`
-
-GetExpirationDate returns the ExpirationDate field if non-nil, zero value otherwise.
-
-### GetExpirationDateOk
-
-`func (o *SingleUserModeSettings) GetExpirationDateOk() (*time.Time, bool)`
-
-GetExpirationDateOk returns a tuple with the ExpirationDate field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetExpirationDate
-
-`func (o *SingleUserModeSettings) SetExpirationDate(v time.Time)`
-
-SetExpirationDate sets ExpirationDate field to given value.
-
-### HasExpirationDate
-
-`func (o *SingleUserModeSettings) HasExpirationDate() bool`
-
-HasExpirationDate returns a boolean if a field has been set.
 
 ### GetFirstName
 

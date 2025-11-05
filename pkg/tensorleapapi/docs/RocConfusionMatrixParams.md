@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **HorizontalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
+**ElementInstance** | Pointer to **bool** |  | [optional] 
 **AbsAxis** | Pointer to **bool** |  | [optional] 
 
 ## Methods
@@ -165,6 +166,31 @@ SetFilters sets Filters field to given value.
 `func (o *RocConfusionMatrixParams) HasFilters() bool`
 
 HasFilters returns a boolean if a field has been set.
+
+### GetElementInstance
+
+`func (o *RocConfusionMatrixParams) GetElementInstance() bool`
+
+GetElementInstance returns the ElementInstance field if non-nil, zero value otherwise.
+
+### GetElementInstanceOk
+
+`func (o *RocConfusionMatrixParams) GetElementInstanceOk() (*bool, bool)`
+
+GetElementInstanceOk returns a tuple with the ElementInstance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetElementInstance
+
+`func (o *RocConfusionMatrixParams) SetElementInstance(v bool)`
+
+SetElementInstance sets ElementInstance field to given value.
+
+### HasElementInstance
+
+`func (o *RocConfusionMatrixParams) HasElementInstance() bool`
+
+HasElementInstance returns a boolean if a field has been set.
 
 ### GetAbsAxis
 

@@ -10,8 +10,9 @@ Name | Type | Description | Notes
 **BranchName** | **string** |  | 
 **Tags** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
+**UpdatedAt** | **time.Time** |  | 
 **Notes** | **string** |  | 
-**CodeIntegration** | Pointer to [**CodeIntegrationBinder**](CodeIntegrationBinder.md) |  | [optional] 
+**CodeSnapshotId** | Pointer to **string** |  | [optional] 
 **IsFavourite** | **bool** |  | 
 **Hash** | Pointer to **NullableString** |  | [optional] 
 **Sessions** | [**[]Session**](Session.md) |  | 
@@ -20,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewSlimVersion
 
-`func NewSlimVersion(cid string, createdBy string, projectId string, branchName string, tags string, createdAt time.Time, notes string, isFavourite bool, sessions []Session, ) *SlimVersion`
+`func NewSlimVersion(cid string, createdBy string, projectId string, branchName string, tags string, createdAt time.Time, updatedAt time.Time, notes string, isFavourite bool, sessions []Session, ) *SlimVersion`
 
 NewSlimVersion instantiates a new SlimVersion object
 This constructor will assign default values to properties that have it defined,
@@ -155,6 +156,26 @@ and a boolean to check if the value has been set.
 SetCreatedAt sets CreatedAt field to given value.
 
 
+### GetUpdatedAt
+
+`func (o *SlimVersion) GetUpdatedAt() time.Time`
+
+GetUpdatedAt returns the UpdatedAt field if non-nil, zero value otherwise.
+
+### GetUpdatedAtOk
+
+`func (o *SlimVersion) GetUpdatedAtOk() (*time.Time, bool)`
+
+GetUpdatedAtOk returns a tuple with the UpdatedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUpdatedAt
+
+`func (o *SlimVersion) SetUpdatedAt(v time.Time)`
+
+SetUpdatedAt sets UpdatedAt field to given value.
+
+
 ### GetNotes
 
 `func (o *SlimVersion) GetNotes() string`
@@ -175,30 +196,30 @@ and a boolean to check if the value has been set.
 SetNotes sets Notes field to given value.
 
 
-### GetCodeIntegration
+### GetCodeSnapshotId
 
-`func (o *SlimVersion) GetCodeIntegration() CodeIntegrationBinder`
+`func (o *SlimVersion) GetCodeSnapshotId() string`
 
-GetCodeIntegration returns the CodeIntegration field if non-nil, zero value otherwise.
+GetCodeSnapshotId returns the CodeSnapshotId field if non-nil, zero value otherwise.
 
-### GetCodeIntegrationOk
+### GetCodeSnapshotIdOk
 
-`func (o *SlimVersion) GetCodeIntegrationOk() (*CodeIntegrationBinder, bool)`
+`func (o *SlimVersion) GetCodeSnapshotIdOk() (*string, bool)`
 
-GetCodeIntegrationOk returns a tuple with the CodeIntegration field if it's non-nil, zero value otherwise
+GetCodeSnapshotIdOk returns a tuple with the CodeSnapshotId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCodeIntegration
+### SetCodeSnapshotId
 
-`func (o *SlimVersion) SetCodeIntegration(v CodeIntegrationBinder)`
+`func (o *SlimVersion) SetCodeSnapshotId(v string)`
 
-SetCodeIntegration sets CodeIntegration field to given value.
+SetCodeSnapshotId sets CodeSnapshotId field to given value.
 
-### HasCodeIntegration
+### HasCodeSnapshotId
 
-`func (o *SlimVersion) HasCodeIntegration() bool`
+`func (o *SlimVersion) HasCodeSnapshotId() bool`
 
-HasCodeIntegration returns a boolean if a field has been set.
+HasCodeSnapshotId returns a boolean if a field has been set.
 
 ### GetIsFavourite
 

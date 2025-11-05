@@ -1,177 +1,166 @@
-# \DefaultApi
+# \DefaultAPI
 
 All URIs are relative to */api/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**Activate**](DefaultApi.md#Activate) | **Post** /auth/activate | 
-[**AddDashboard**](DefaultApi.md#AddDashboard) | **Post** /dashboards/addDashboard | 
-[**AddDataset**](DefaultApi.md#AddDataset) | **Post** /datasets/addDataset | 
-[**AddExportModelJob**](DefaultApi.md#AddExportModelJob) | **Post** /exportedsessionruns/addExportModelJob | 
-[**AddIssue**](DefaultApi.md#AddIssue) | **Post** /issues/addIssue | 
-[**AddProject**](DefaultApi.md#AddProject) | **Post** /projects/addProject | 
-[**AddSampleCollection**](DefaultApi.md#AddSampleCollection) | **Post** /sample-collection/addSampleCollection | 
-[**AddSecretManager**](DefaultApi.md#AddSecretManager) | **Post** /secret-manager/addSecretManager | 
-[**AddVersion**](DefaultApi.md#AddVersion) | **Post** /versions/addVersion | 
-[**AnalyzeGraph**](DefaultApi.md#AnalyzeGraph) | **Post** /graph/analyzeGraph | 
-[**ApplyDatasetMapping**](DefaultApi.md#ApplyDatasetMapping) | **Post** /graph/applyDatasetMapping | 
-[**ApproveInsights**](DefaultApi.md#ApproveInsights) | **Post** /insights/approveInsights | 
-[**ArchiveInsight**](DefaultApi.md#ArchiveInsight) | **Post** /insights/archiveInsight | 
-[**ClearUserJobs**](DefaultApi.md#ClearUserJobs) | **Post** /users/clearUserJobs | 
-[**ClearUserNotifications**](DefaultApi.md#ClearUserNotifications) | **Post** /users/clearUserNotifications | 
-[**ContinueEvaluate**](DefaultApi.md#ContinueEvaluate) | **Post** /evaluate/continueEvaluate | 
-[**CreateEquivalentValidation**](DefaultApi.md#CreateEquivalentValidation) | **Post** /graph/createEquivalentValidation | 
-[**CreateSamplesVisualizations**](DefaultApi.md#CreateSamplesVisualizations) | **Post** /visualizations/createSamplesVisualizations | 
-[**CreateSessionTest**](DefaultApi.md#CreateSessionTest) | **Post** /sessions-tests/createSessionTest | 
-[**CreateTeam**](DefaultApi.md#CreateTeam) | **Post** /teams/createTeam | 
-[**DeleteDashboard**](DefaultApi.md#DeleteDashboard) | **Post** /dashboards/deleteDashboard | 
-[**DeleteIssue**](DefaultApi.md#DeleteIssue) | **Post** /issues/deleteIssue | 
-[**DeleteProject**](DefaultApi.md#DeleteProject) | **Post** /projects/deleteProject | 
-[**DeleteSampleAnalysis**](DefaultApi.md#DeleteSampleAnalysis) | **Post** /visualizations/deleteSampleAnalysis | 
-[**DeleteSession**](DefaultApi.md#DeleteSession) | **Post** /sessions/deleteSession | 
-[**DeleteSessionRun**](DefaultApi.md#DeleteSessionRun) | **Post** /sessions/deleteSessionRun | 
-[**DeleteSessionTest**](DefaultApi.md#DeleteSessionTest) | **Post** /sessions-tests/deleteSessionTest | 
-[**DeleteTeam**](DefaultApi.md#DeleteTeam) | **Post** /teams/deleteTeam | 
-[**DeleteUserById**](DefaultApi.md#DeleteUserById) | **Post** /users/deleteUserById | 
-[**DeleteVersion**](DefaultApi.md#DeleteVersion) | **Post** /versions/deleteVersion | 
-[**DeleteVisualizations**](DefaultApi.md#DeleteVisualizations) | **Post** /visualizations/deleteVisualizations | 
-[**DownloadProject**](DefaultApi.md#DownloadProject) | **Get** /projects/downloadProject/{projectId} | 
-[**Evaluate**](DefaultApi.md#Evaluate) | **Post** /evaluate/evaluate | 
-[**ExportProject**](DefaultApi.md#ExportProject) | **Post** /projects/exportProject | 
-[**ExtendTrial**](DefaultApi.md#ExtendTrial) | **Post** /auth/extendTrial | 
-[**FetchSimilar**](DefaultApi.md#FetchSimilar) | **Post** /visualizations/fetchSimilar | 
-[**GetAllProjectSessionTests**](DefaultApi.md#GetAllProjectSessionTests) | **Post** /sessions-tests/getAllProjectSessionTests | 
-[**GetAllSlimUserData**](DefaultApi.md#GetAllSlimUserData) | **Post** /users/getAllSlimUserData | 
-[**GetApiKeyByCode**](DefaultApi.md#GetApiKeyByCode) | **Post** /auth/getApiKeyByCode | 
-[**GetApprovedInsights**](DefaultApi.md#GetApprovedInsights) | **Post** /insights/getApprovedInsights | 
-[**GetArchiveInsights**](DefaultApi.md#GetArchiveInsights) | **Post** /insights/getArchiveInsights | 
-[**GetAuthProvider**](DefaultApi.md#GetAuthProvider) | **Post** /auth/getAuthProvider | 
-[**GetBalancedAccuracy**](DefaultApi.md#GetBalancedAccuracy) | **Post** /sessionmetrics/getBalancedAccuracy | 
-[**GetCodeIntegrationMappingErrorsByVersionId**](DefaultApi.md#GetCodeIntegrationMappingErrorsByVersionId) | **Post** /graph/getCodeIntegrationMappingErrorsByVersionId | 
-[**GetCodeIntegrationVersionFromBinder**](DefaultApi.md#GetCodeIntegrationVersionFromBinder) | **Post** /versions/getCodeIntegrationVersionFromBinder | 
-[**GetConfusionMatrixLabels**](DefaultApi.md#GetConfusionMatrixLabels) | **Post** /sessionmetrics/getConfusionMatrixLabels | 
-[**GetConfusionMatrixResultCombinations**](DefaultApi.md#GetConfusionMatrixResultCombinations) | **Post** /sessionmetrics/getConfusionMatrixResultCombinations | 
-[**GetConfusionMatrixTable**](DefaultApi.md#GetConfusionMatrixTable) | **Post** /sessionmetrics/getConfusionMatrixTable | 
-[**GetConfusionMetricNames**](DefaultApi.md#GetConfusionMetricNames) | **Post** /sessionmetrics/getConfusionMetricNames | 
-[**GetCurrentProjectVersion**](DefaultApi.md#GetCurrentProjectVersion) | **Post** /projects/getCurrentProjectVersion | 
-[**GetDashboard**](DefaultApi.md#GetDashboard) | **Post** /dashboards/getDashboard | 
-[**GetDashletFields**](DefaultApi.md#GetDashletFields) | **Post** /dashboards/getDashletFields | 
-[**GetDatasetVersion**](DefaultApi.md#GetDatasetVersion) | **Post** /datasetVersions/getDatasetVersion | 
-[**GetDatasetVersionUploadUrl**](DefaultApi.md#GetDatasetVersionUploadUrl) | **Post** /datasetVersions/getDatasetVersionUploadUrl | 
-[**GetDatasetVersions**](DefaultApi.md#GetDatasetVersions) | **Post** /datasetVersions/getDatasetVersions | 
-[**GetDatasets**](DefaultApi.md#GetDatasets) | **Post** /datasets/getDatasets | 
-[**GetDownloadSignedUrl**](DefaultApi.md#GetDownloadSignedUrl) | **Post** /versions/getDownloadSignedUrl | 
-[**GetEngineSettings**](DefaultApi.md#GetEngineSettings) | **Post** /settings/getEngineSettings | 
-[**GetEnvironmentInfo**](DefaultApi.md#GetEnvironmentInfo) | **Post** /metadata/getEnvironmentInfo | 
-[**GetExportedSessionJobs**](DefaultApi.md#GetExportedSessionJobs) | **Post** /exportedsessionruns/getExportedSessionJobs | 
-[**GetF1Score**](DefaultApi.md#GetF1Score) | **Post** /sessionmetrics/getF1Score | 
-[**GetFetchSimilarStatus**](DefaultApi.md#GetFetchSimilarStatus) | **Post** /visualizations/getFetchSimilarStatus | 
-[**GetFieldsValues**](DefaultApi.md#GetFieldsValues) | **Post** /sessionmetrics/getFieldsValues | 
-[**GetGeneratedDashlets**](DefaultApi.md#GetGeneratedDashlets) | **Post** /dashletsGenerator/getGeneratedDashlets | 
-[**GetGenericBaseImageTypes**](DefaultApi.md#GetGenericBaseImageTypes) | **Post** /datasetVersions/getGenericBaseImageTypes | 
-[**GetHeatmapChart**](DefaultApi.md#GetHeatmapChart) | **Post** /sessionmetrics/getHeatmapChart | 
-[**GetIssueFileUploadSignedUrl**](DefaultApi.md#GetIssueFileUploadSignedUrl) | **Post** /issues/getIssueFileUploadSignedUrl | 
-[**GetJobLogs**](DefaultApi.md#GetJobLogs) | **Post** /jobs/getJobLogs | 
-[**GetLatestDatasetVersion**](DefaultApi.md#GetLatestDatasetVersion) | **Post** /datasetVersions/getLatestDatasetVersion | 
-[**GetLatestExportedProject**](DefaultApi.md#GetLatestExportedProject) | **Post** /projects/getLatestExportedProject | 
-[**GetMachineTypes**](DefaultApi.md#GetMachineTypes) | **Post** /teams/getMachineTypes | 
-[**GetMaxActiveUsers**](DefaultApi.md#GetMaxActiveUsers) | **Post** /metadata/getMaxActiveUsers | 
-[**GetMeanAveragePrecision**](DefaultApi.md#GetMeanAveragePrecision) | **Post** /sessionmetrics/getMeanAveragePrecision | 
-[**GetNotifications**](DefaultApi.md#GetNotifications) | **Post** /notifications/getNotifications | 
-[**GetPopulationExplorationStatus**](DefaultApi.md#GetPopulationExplorationStatus) | **Post** /visualizations/getPopulationExplorationStatus | 
-[**GetPrCurve**](DefaultApi.md#GetPrCurve) | **Post** /sessionmetrics/getPrCurve | 
-[**GetPrecisionScore**](DefaultApi.md#GetPrecisionScore) | **Post** /sessionmetrics/getPrecisionScore | 
-[**GetProjectDashboards**](DefaultApi.md#GetProjectDashboards) | **Post** /dashboards/getProjectDashboards | 
-[**GetProjectIssues**](DefaultApi.md#GetProjectIssues) | **Post** /issues/getProjectIssues | 
-[**GetProjectSlimVersions**](DefaultApi.md#GetProjectSlimVersions) | **Post** /versions/getProjectSlimVersions | 
-[**GetProjects**](DefaultApi.md#GetProjects) | **Post** /projects/getProjects | 
-[**GetRecallScore**](DefaultApi.md#GetRecallScore) | **Post** /sessionmetrics/getRecallScore | 
-[**GetRecentTeamSessions**](DefaultApi.md#GetRecentTeamSessions) | **Post** /sessions/getRecentTeamSessions | 
-[**GetRoc**](DefaultApi.md#GetRoc) | **Post** /sessionmetrics/getRoc | 
-[**GetSampleCollections**](DefaultApi.md#GetSampleCollections) | **Post** /sample-collection/getSampleCollections | 
-[**GetSampleVisualizationsPath**](DefaultApi.md#GetSampleVisualizationsPath) | **Post** /visualizations/getSampleVisualizationsPath | 
-[**GetScatterSampleVisualizations**](DefaultApi.md#GetScatterSampleVisualizations) | **Post** /visualizations/getScatterSampleVisualizations | 
-[**GetSecretManagerList**](DefaultApi.md#GetSecretManagerList) | **Post** /secret-manager/getSecretManagerList | 
-[**GetSessionRunsVisualizations**](DefaultApi.md#GetSessionRunsVisualizations) | **Post** /visualizations/getSessionRunsVisualizations | 
-[**GetSessionTestResult**](DefaultApi.md#GetSessionTestResult) | **Post** /sessions-tests/getSessionTestResult | 
-[**GetSessionsByHash**](DefaultApi.md#GetSessionsByHash) | **Post** /sessions/getSessionsByHash | 
-[**GetSessionsByVersionId**](DefaultApi.md#GetSessionsByVersionId) | **Post** /sessions/getSessionsByVersionId | 
-[**GetSessionsEpochs**](DefaultApi.md#GetSessionsEpochs) | **Post** /versions/getSessionsEpochs | 
-[**GetSignedUrl**](DefaultApi.md#GetSignedUrl) | **Post** /versions/getSignedUrl | 
-[**GetSingleIssue**](DefaultApi.md#GetSingleIssue) | **Post** /issues/getSingleIssue | 
-[**GetSingleSessionTest**](DefaultApi.md#GetSingleSessionTest) | **Post** /sessions-tests/getSingleSessionTest | 
-[**GetSlimJobs**](DefaultApi.md#GetSlimJobs) | **Post** /jobs/getSlimJobs | 
-[**GetSlimVisualization**](DefaultApi.md#GetSlimVisualization) | **Post** /visualizations/getSlimVisualization | 
-[**GetState**](DefaultApi.md#GetState) | **Post** /projectstate/getState | 
-[**GetStatistics**](DefaultApi.md#GetStatistics) | **Post** /metadata/getStatistics | 
-[**GetTableChart**](DefaultApi.md#GetTableChart) | **Post** /sessionmetrics/getTableChart | 
-[**GetTeamJobs**](DefaultApi.md#GetTeamJobs) | **Post** /jobs/getTeamJobs | 
-[**GetTeamSlimUserData**](DefaultApi.md#GetTeamSlimUserData) | **Post** /users/getTeamSlimUserData | 
-[**GetTeams**](DefaultApi.md#GetTeams) | **Post** /teams/getTeams | 
-[**GetUploadModelSignedUrl**](DefaultApi.md#GetUploadModelSignedUrl) | **Post** /versions/getUploadModelSignedUrl | 
-[**GetUploadSignedUrl**](DefaultApi.md#GetUploadSignedUrl) | **Post** /versions/getUploadSignedUrl | 
-[**GetValidateGraphProcessState**](DefaultApi.md#GetValidateGraphProcessState) | **Post** /graph/getValidateGraphProcessState | 
-[**GetVisualization**](DefaultApi.md#GetVisualization) | **Post** /visualizations/getVisualization | 
-[**GetXYChart**](DefaultApi.md#GetXYChart) | **Post** /sessionmetrics/getXYChart | 
-[**HealthCheck**](DefaultApi.md#HealthCheck) | **Get** /monitor/healthCheck | 
-[**ImportExternalModel**](DefaultApi.md#ImportExternalModel) | **Post** /versions/importExternalModel | 
-[**ImportModel**](DefaultApi.md#ImportModel) | **Post** /versions/importModel | 
-[**ImportProject**](DefaultApi.md#ImportProject) | **Post** /projects/importProject | 
-[**InitExperiment**](DefaultApi.md#InitExperiment) | **Post** /versions/initExperiment | 
-[**KeyGen**](DefaultApi.md#KeyGen) | **Post** /auth/keygen | 
-[**LoadModel**](DefaultApi.md#LoadModel) | **Post** /projects/loadModel | 
-[**LoadVersion**](DefaultApi.md#LoadVersion) | **Post** /versions/loadVersion | 
-[**LocalAuth**](DefaultApi.md#LocalAuth) | **Post** /auth/localAuth | 
-[**LogExternalEpochData**](DefaultApi.md#LogExternalEpochData) | **Post** /externalepochdata/logExternalEpochData | 
-[**Login**](DefaultApi.md#Login) | **Post** /auth/login | 
-[**Logout**](DefaultApi.md#Logout) | **Post** /auth/logout | 
-[**ModifyDatasetVersionNote**](DefaultApi.md#ModifyDatasetVersionNote) | **Post** /datasetVersions/modifyDatasetVersionNote | 
-[**PopulationExploration**](DefaultApi.md#PopulationExploration) | **Post** /visualizations/populationExploration | 
-[**RefreshLocalAuth**](DefaultApi.md#RefreshLocalAuth) | **Post** /auth/refreshLocalAuth | 
-[**RemoveSamplesCollection**](DefaultApi.md#RemoveSamplesCollection) | **Post** /sample-collection/removeSampleCollections | 
-[**ResolveConcurrentUsersConflict**](DefaultApi.md#ResolveConcurrentUsersConflict) | **Post** /auth/resolveConcurrentUsersConflict | 
-[**SampleAnalysis**](DefaultApi.md#SampleAnalysis) | **Post** /visualizations/sampleAnalysis | 
-[**SamplesVisualizationsRefresh**](DefaultApi.md#SamplesVisualizationsRefresh) | **Post** /visualizations/samplesVisualizationsRefresh | 
-[**SaveAnalyzerLayout**](DefaultApi.md#SaveAnalyzerLayout) | **Post** /visualizations/saveAnalyzerLayout | 
-[**SaveDatasetVersion**](DefaultApi.md#SaveDatasetVersion) | **Post** /datasetVersions/saveDatasetVersion | 
-[**SaveDatasetVersionNoParse**](DefaultApi.md#SaveDatasetVersionNoParse) | **Post** /datasetVersions/saveDatasetVersionNoParse | 
-[**SendUserMessage**](DefaultApi.md#SendUserMessage) | **Post** /users/sendUserMessage | 
-[**SetCodeChallenge**](DefaultApi.md#SetCodeChallenge) | **Post** /auth/setCodeChallenge | 
-[**SetDefaultTeam**](DefaultApi.md#SetDefaultTeam) | **Post** /teams/setDefaultTeam | 
-[**SetExperimentProperties**](DefaultApi.md#SetExperimentProperties) | **Post** /versions/setExperimentProperties | 
-[**SetMachineType**](DefaultApi.md#SetMachineType) | **Post** /teams/setMachineType | 
-[**SetUserNotificationsAsRead**](DefaultApi.md#SetUserNotificationsAsRead) | **Post** /notifications/setUserNotificationsAsRead | 
-[**StartTrial**](DefaultApi.md#StartTrial) | **Post** /auth/startTrial | 
-[**StopJob**](DefaultApi.md#StopJob) | **Post** /jobs/stopJob | 
-[**TagModel**](DefaultApi.md#TagModel) | **Post** /versions/tagModel | 
-[**TerminateAllJobs**](DefaultApi.md#TerminateAllJobs) | **Post** /jobs/terminateAllJobs | 
-[**TerminateJob**](DefaultApi.md#TerminateJob) | **Post** /jobs/terminateJob | 
-[**TrashDataset**](DefaultApi.md#TrashDataset) | **Post** /datasets/trashDataset | 
-[**TrashSecretManager**](DefaultApi.md#TrashSecretManager) | **Post** /secret-manager/trashSecretManager | 
-[**UnapproveInsight**](DefaultApi.md#UnapproveInsight) | **Post** /insights/unapproveInsights | 
-[**UnarchiveInsight**](DefaultApi.md#UnarchiveInsight) | **Post** /insights/unarchiveInsight | 
-[**UpdateDashboard**](DefaultApi.md#UpdateDashboard) | **Post** /dashboards/updateDashboard | 
-[**UpdateDataset**](DefaultApi.md#UpdateDataset) | **Post** /datasets/updateDataset | 
-[**UpdateEngineSettings**](DefaultApi.md#UpdateEngineSettings) | **Post** /settings/updateSetting | 
-[**UpdateIssue**](DefaultApi.md#UpdateIssue) | **Post** /issues/updateIssue | 
-[**UpdateProjectMeta**](DefaultApi.md#UpdateProjectMeta) | **Post** /projects/updateProjectMeta | 
-[**UpdateSampleCollection**](DefaultApi.md#UpdateSampleCollection) | **Post** /sample-collection/updateSampleCollection | 
-[**UpdateSecretManager**](DefaultApi.md#UpdateSecretManager) | **Post** /secret-manager/updateSecretManager | 
-[**UpdateSessionName**](DefaultApi.md#UpdateSessionName) | **Post** /sessions/updateSessionName | 
-[**UpdateSessionRun**](DefaultApi.md#UpdateSessionRun) | **Post** /sessionsruns/updateSessionRun | 
-[**UpdateSessionTest**](DefaultApi.md#UpdateSessionTest) | **Post** /sessions-tests/updateSessionTest | 
-[**UpdateTeamPublicName**](DefaultApi.md#UpdateTeamPublicName) | **Post** /teams/updateTeamPublicName | 
-[**UpdateUserName**](DefaultApi.md#UpdateUserName) | **Post** /users/updateUserName | 
-[**UpdateUserRole**](DefaultApi.md#UpdateUserRole) | **Post** /users/updateUserRole | 
-[**UpdateUserStatus**](DefaultApi.md#UpdateUserStatus) | **Post** /users/updateUserStatus | 
-[**UpdateUserTeam**](DefaultApi.md#UpdateUserTeam) | **Post** /users/updateUserTeam | 
-[**UpdateVersion**](DefaultApi.md#UpdateVersion) | **Post** /versions/updateVersion | 
-[**UpdateVersionName**](DefaultApi.md#UpdateVersionName) | **Post** /versions/updateVersionName | 
-[**UploadProject**](DefaultApi.md#UploadProject) | **Put** /projects/uploadProject/{projectName} | 
-[**UpsertState**](DefaultApi.md#UpsertState) | **Post** /projectstate/upsertState | 
-[**ValidateGraph**](DefaultApi.md#ValidateGraph) | **Post** /graph/validateGraph | 
-[**Warmup**](DefaultApi.md#Warmup) | **Post** /jobs/warmup | 
-[**WhoAmI**](DefaultApi.md#WhoAmI) | **Post** /auth/whoAmI | 
+[**Activate**](DefaultAPI.md#Activate) | **Post** /auth/activate | 
+[**AddDashboard**](DefaultAPI.md#AddDashboard) | **Post** /dashboards/addDashboard | 
+[**AddExportModelJob**](DefaultAPI.md#AddExportModelJob) | **Post** /exportedsessionruns/addExportModelJob | 
+[**AddIssue**](DefaultAPI.md#AddIssue) | **Post** /issues/addIssue | 
+[**AddProject**](DefaultAPI.md#AddProject) | **Post** /projects/addProject | 
+[**AddSampleCollection**](DefaultAPI.md#AddSampleCollection) | **Post** /sample-collection/addSampleCollection | 
+[**AddSecretManager**](DefaultAPI.md#AddSecretManager) | **Post** /secret-manager/addSecretManager | 
+[**ApproveInsights**](DefaultAPI.md#ApproveInsights) | **Post** /insights/approveInsights | 
+[**ArchiveInsight**](DefaultAPI.md#ArchiveInsight) | **Post** /insights/archiveInsight | 
+[**CalcPopulationExplorationDigest**](DefaultAPI.md#CalcPopulationExplorationDigest) | **Post** /dashboards/calcPopulationExplorationDigest | 
+[**ClearUserJobs**](DefaultAPI.md#ClearUserJobs) | **Post** /users/clearUserJobs | 
+[**ClearUserNotifications**](DefaultAPI.md#ClearUserNotifications) | **Post** /users/clearUserNotifications | 
+[**ContinueEvaluate**](DefaultAPI.md#ContinueEvaluate) | **Post** /evaluate/continueEvaluate | 
+[**CreateSamplesVisualizations**](DefaultAPI.md#CreateSamplesVisualizations) | **Post** /visualizations/createSamplesVisualizations | 
+[**CreateSessionTest**](DefaultAPI.md#CreateSessionTest) | **Post** /sessions-tests/createSessionTest | 
+[**CreateTeam**](DefaultAPI.md#CreateTeam) | **Post** /teams/createTeam | 
+[**DeleteDashboard**](DefaultAPI.md#DeleteDashboard) | **Post** /dashboards/deleteDashboard | 
+[**DeleteGeneratedLabel**](DefaultAPI.md#DeleteGeneratedLabel) | **Post** /datasetcuration/deleteGeneratedLabel | 
+[**DeleteIssue**](DefaultAPI.md#DeleteIssue) | **Post** /issues/deleteIssue | 
+[**DeleteProject**](DefaultAPI.md#DeleteProject) | **Post** /projects/deleteProject | 
+[**DeleteSampleAnalysis**](DefaultAPI.md#DeleteSampleAnalysis) | **Post** /visualizations/deleteSampleAnalysis | 
+[**DeleteSession**](DefaultAPI.md#DeleteSession) | **Post** /sessions/deleteSession | 
+[**DeleteSessionRun**](DefaultAPI.md#DeleteSessionRun) | **Post** /sessions/deleteSessionRun | 
+[**DeleteSessionTest**](DefaultAPI.md#DeleteSessionTest) | **Post** /sessions-tests/deleteSessionTest | 
+[**DeleteTeam**](DefaultAPI.md#DeleteTeam) | **Post** /teams/deleteTeam | 
+[**DeleteUserById**](DefaultAPI.md#DeleteUserById) | **Post** /users/deleteUserById | 
+[**DeleteVersion**](DefaultAPI.md#DeleteVersion) | **Post** /versions/deleteVersion | 
+[**DeleteVisualizations**](DefaultAPI.md#DeleteVisualizations) | **Post** /visualizations/deleteVisualizations | 
+[**DownloadProject**](DefaultAPI.md#DownloadProject) | **Get** /projects/downloadProject/{projectId} | 
+[**Evaluate**](DefaultAPI.md#Evaluate) | **Post** /evaluate/evaluate | 
+[**ExportProject**](DefaultAPI.md#ExportProject) | **Post** /projects/exportProject | 
+[**ExtendTrial**](DefaultAPI.md#ExtendTrial) | **Post** /auth/extendTrial | 
+[**FetchSimilar**](DefaultAPI.md#FetchSimilar) | **Post** /visualizations/fetchSimilar | 
+[**GenerateLabels**](DefaultAPI.md#GenerateLabels) | **Post** /datasetcuration/generateLabels | 
+[**GetAllProjectSessionTests**](DefaultAPI.md#GetAllProjectSessionTests) | **Post** /sessions-tests/getAllProjectSessionTests | 
+[**GetAllSlimUserData**](DefaultAPI.md#GetAllSlimUserData) | **Post** /users/getAllSlimUserData | 
+[**GetApiKeyByCode**](DefaultAPI.md#GetApiKeyByCode) | **Post** /auth/getApiKeyByCode | 
+[**GetApprovedInsights**](DefaultAPI.md#GetApprovedInsights) | **Post** /insights/getApprovedInsights | 
+[**GetArchiveInsights**](DefaultAPI.md#GetArchiveInsights) | **Post** /insights/getArchiveInsights | 
+[**GetAuthProvider**](DefaultAPI.md#GetAuthProvider) | **Post** /auth/getAuthProvider | 
+[**GetBalancedAccuracy**](DefaultAPI.md#GetBalancedAccuracy) | **Post** /sessionmetrics/getBalancedAccuracy | 
+[**GetCodeSnapshot**](DefaultAPI.md#GetCodeSnapshot) | **Post** /versions/getCodeSnapshot | 
+[**GetCodeSnapshotUploadUrl**](DefaultAPI.md#GetCodeSnapshotUploadUrl) | **Post** /versions/getCodeSnapshotUploadUrl | 
+[**GetConfusionMatrixLabels**](DefaultAPI.md#GetConfusionMatrixLabels) | **Post** /sessionmetrics/getConfusionMatrixLabels | 
+[**GetConfusionMatrixResultCombinations**](DefaultAPI.md#GetConfusionMatrixResultCombinations) | **Post** /sessionmetrics/getConfusionMatrixResultCombinations | 
+[**GetConfusionMatrixTable**](DefaultAPI.md#GetConfusionMatrixTable) | **Post** /sessionmetrics/getConfusionMatrixTable | 
+[**GetConfusionMetricNames**](DefaultAPI.md#GetConfusionMetricNames) | **Post** /sessionmetrics/getConfusionMetricNames | 
+[**GetCurrentProjectVersion**](DefaultAPI.md#GetCurrentProjectVersion) | **Post** /projects/getCurrentProjectVersion | 
+[**GetDashboard**](DefaultAPI.md#GetDashboard) | **Post** /dashboards/getDashboard | 
+[**GetDashletFields**](DefaultAPI.md#GetDashletFields) | **Post** /dashboards/getDashletFields | 
+[**GetDownloadSignedUrl**](DefaultAPI.md#GetDownloadSignedUrl) | **Post** /versions/getDownloadSignedUrl | 
+[**GetEngineSettings**](DefaultAPI.md#GetEngineSettings) | **Post** /settings/getEngineSettings | 
+[**GetEnvironmentInfo**](DefaultAPI.md#GetEnvironmentInfo) | **Post** /metadata/getEnvironmentInfo | 
+[**GetExportedSessionJobs**](DefaultAPI.md#GetExportedSessionJobs) | **Post** /exportedsessionruns/getExportedSessionJobs | 
+[**GetF1Score**](DefaultAPI.md#GetF1Score) | **Post** /sessionmetrics/getF1Score | 
+[**GetFetchSimilarStatus**](DefaultAPI.md#GetFetchSimilarStatus) | **Post** /visualizations/getFetchSimilarStatus | 
+[**GetFieldsValues**](DefaultAPI.md#GetFieldsValues) | **Post** /sessionmetrics/getFieldsValues | 
+[**GetGeneratedDashlets**](DefaultAPI.md#GetGeneratedDashlets) | **Post** /dashletsGenerator/getGeneratedDashlets | 
+[**GetGeneratedLabels**](DefaultAPI.md#GetGeneratedLabels) | **Post** /datasetcuration/getGeneratedLabels | 
+[**GetGenericBaseImageTypes**](DefaultAPI.md#GetGenericBaseImageTypes) | **Post** /versions/getGenericBaseImageTypes | 
+[**GetHeatmapChart**](DefaultAPI.md#GetHeatmapChart) | **Post** /sessionmetrics/getHeatmapChart | 
+[**GetIssueFileUploadSignedUrl**](DefaultAPI.md#GetIssueFileUploadSignedUrl) | **Post** /issues/getIssueFileUploadSignedUrl | 
+[**GetJobLogs**](DefaultAPI.md#GetJobLogs) | **Post** /jobs/getJobLogs | 
+[**GetLatestExportedProject**](DefaultAPI.md#GetLatestExportedProject) | **Post** /projects/getLatestExportedProject | 
+[**GetMachineTypes**](DefaultAPI.md#GetMachineTypes) | **Post** /teams/getMachineTypes | 
+[**GetMaxActiveUsers**](DefaultAPI.md#GetMaxActiveUsers) | **Post** /metadata/getMaxActiveUsers | 
+[**GetMeanAveragePrecision**](DefaultAPI.md#GetMeanAveragePrecision) | **Post** /sessionmetrics/getMeanAveragePrecision | 
+[**GetNotifications**](DefaultAPI.md#GetNotifications) | **Post** /notifications/getNotifications | 
+[**GetPopulationExplorationStatus**](DefaultAPI.md#GetPopulationExplorationStatus) | **Post** /visualizations/getPopulationExplorationStatus | 
+[**GetPrCurve**](DefaultAPI.md#GetPrCurve) | **Post** /sessionmetrics/getPrCurve | 
+[**GetPrecisionScore**](DefaultAPI.md#GetPrecisionScore) | **Post** /sessionmetrics/getPrecisionScore | 
+[**GetProjectDashboards**](DefaultAPI.md#GetProjectDashboards) | **Post** /dashboards/getProjectDashboards | 
+[**GetProjectIssues**](DefaultAPI.md#GetProjectIssues) | **Post** /issues/getProjectIssues | 
+[**GetProjectSlimVersions**](DefaultAPI.md#GetProjectSlimVersions) | **Post** /versions/getProjectSlimVersions | 
+[**GetProjects**](DefaultAPI.md#GetProjects) | **Post** /projects/getProjects | 
+[**GetRecallScore**](DefaultAPI.md#GetRecallScore) | **Post** /sessionmetrics/getRecallScore | 
+[**GetRecentTeamSessions**](DefaultAPI.md#GetRecentTeamSessions) | **Post** /sessions/getRecentTeamSessions | 
+[**GetRoc**](DefaultAPI.md#GetRoc) | **Post** /sessionmetrics/getRoc | 
+[**GetSampleCollections**](DefaultAPI.md#GetSampleCollections) | **Post** /sample-collection/getSampleCollections | 
+[**GetSampleVisualizationsPath**](DefaultAPI.md#GetSampleVisualizationsPath) | **Post** /visualizations/getSampleVisualizationsPath | 
+[**GetScatterSampleVisualizations**](DefaultAPI.md#GetScatterSampleVisualizations) | **Post** /visualizations/getScatterSampleVisualizations | 
+[**GetSecretManagerList**](DefaultAPI.md#GetSecretManagerList) | **Post** /secret-manager/getSecretManagerList | 
+[**GetSessionRunsVisualizations**](DefaultAPI.md#GetSessionRunsVisualizations) | **Post** /visualizations/getSessionRunsVisualizations | 
+[**GetSessionTestResult**](DefaultAPI.md#GetSessionTestResult) | **Post** /sessions-tests/getSessionTestResult | 
+[**GetSessionsByHash**](DefaultAPI.md#GetSessionsByHash) | **Post** /sessions/getSessionsByHash | 
+[**GetSessionsByVersionId**](DefaultAPI.md#GetSessionsByVersionId) | **Post** /sessions/getSessionsByVersionId | 
+[**GetSessionsEpochs**](DefaultAPI.md#GetSessionsEpochs) | **Post** /versions/getSessionsEpochs | 
+[**GetSignedUrl**](DefaultAPI.md#GetSignedUrl) | **Post** /versions/getSignedUrl | 
+[**GetSingleIssue**](DefaultAPI.md#GetSingleIssue) | **Post** /issues/getSingleIssue | 
+[**GetSingleSessionTest**](DefaultAPI.md#GetSingleSessionTest) | **Post** /sessions-tests/getSingleSessionTest | 
+[**GetSlimJobs**](DefaultAPI.md#GetSlimJobs) | **Post** /jobs/getSlimJobs | 
+[**GetSlimVisualization**](DefaultAPI.md#GetSlimVisualization) | **Post** /visualizations/getSlimVisualization | 
+[**GetState**](DefaultAPI.md#GetState) | **Post** /projectstate/getState | 
+[**GetStatistics**](DefaultAPI.md#GetStatistics) | **Post** /metadata/getStatistics | 
+[**GetTableChart**](DefaultAPI.md#GetTableChart) | **Post** /sessionmetrics/getTableChart | 
+[**GetTeamJobs**](DefaultAPI.md#GetTeamJobs) | **Post** /jobs/getTeamJobs | 
+[**GetTeamSlimUserData**](DefaultAPI.md#GetTeamSlimUserData) | **Post** /users/getTeamSlimUserData | 
+[**GetTeams**](DefaultAPI.md#GetTeams) | **Post** /teams/getTeams | 
+[**GetUploadModelSignedUrl**](DefaultAPI.md#GetUploadModelSignedUrl) | **Post** /versions/getUploadModelSignedUrl | 
+[**GetUploadSignedUrl**](DefaultAPI.md#GetUploadSignedUrl) | **Post** /versions/getUploadSignedUrl | 
+[**GetVisualization**](DefaultAPI.md#GetVisualization) | **Post** /visualizations/getVisualization | 
+[**GetXYChart**](DefaultAPI.md#GetXYChart) | **Post** /sessionmetrics/getXYChart | 
+[**HealthCheck**](DefaultAPI.md#HealthCheck) | **Get** /monitor/healthCheck | 
+[**ImportExternalModel**](DefaultAPI.md#ImportExternalModel) | **Post** /versions/importExternalModel | 
+[**ImportModel**](DefaultAPI.md#ImportModel) | **Post** /versions/importModel | 
+[**ImportProject**](DefaultAPI.md#ImportProject) | **Post** /projects/importProject | 
+[**InitExperiment**](DefaultAPI.md#InitExperiment) | **Post** /versions/initExperiment | 
+[**KeyGen**](DefaultAPI.md#KeyGen) | **Post** /auth/keygen | 
+[**LoadModel**](DefaultAPI.md#LoadModel) | **Post** /projects/loadModel | 
+[**LoadVersion**](DefaultAPI.md#LoadVersion) | **Post** /versions/loadVersion | 
+[**LocalAuth**](DefaultAPI.md#LocalAuth) | **Post** /auth/localAuth | 
+[**LogExternalEpochData**](DefaultAPI.md#LogExternalEpochData) | **Post** /externalepochdata/logExternalEpochData | 
+[**Login**](DefaultAPI.md#Login) | **Post** /auth/login | 
+[**Logout**](DefaultAPI.md#Logout) | **Post** /auth/logout | 
+[**OverwriteModel**](DefaultAPI.md#OverwriteModel) | **Post** /versions/overwriteModel | 
+[**PopulationExploration**](DefaultAPI.md#PopulationExploration) | **Post** /visualizations/populationExploration | 
+[**PushCodeSnapshot**](DefaultAPI.md#PushCodeSnapshot) | **Post** /versions/pushCodeSnapshot | 
+[**RefreshLocalAuth**](DefaultAPI.md#RefreshLocalAuth) | **Post** /auth/refreshLocalAuth | 
+[**RemoveSamplesCollection**](DefaultAPI.md#RemoveSamplesCollection) | **Post** /sample-collection/removeSampleCollections | 
+[**ResolveConcurrentUsersConflict**](DefaultAPI.md#ResolveConcurrentUsersConflict) | **Post** /auth/resolveConcurrentUsersConflict | 
+[**SampleAnalysis**](DefaultAPI.md#SampleAnalysis) | **Post** /visualizations/sampleAnalysis | 
+[**SamplesVisualizationsRefresh**](DefaultAPI.md#SamplesVisualizationsRefresh) | **Post** /visualizations/samplesVisualizationsRefresh | 
+[**SaveAnalyzerLayout**](DefaultAPI.md#SaveAnalyzerLayout) | **Post** /visualizations/saveAnalyzerLayout | 
+[**SendUserMessage**](DefaultAPI.md#SendUserMessage) | **Post** /users/sendUserMessage | 
+[**SetCodeChallenge**](DefaultAPI.md#SetCodeChallenge) | **Post** /auth/setCodeChallenge | 
+[**SetDefaultTeam**](DefaultAPI.md#SetDefaultTeam) | **Post** /teams/setDefaultTeam | 
+[**SetExperimentProperties**](DefaultAPI.md#SetExperimentProperties) | **Post** /versions/setExperimentProperties | 
+[**SetMachineType**](DefaultAPI.md#SetMachineType) | **Post** /teams/setMachineType | 
+[**SetUserNotificationsAsRead**](DefaultAPI.md#SetUserNotificationsAsRead) | **Post** /notifications/setUserNotificationsAsRead | 
+[**StartTrial**](DefaultAPI.md#StartTrial) | **Post** /auth/startTrial | 
+[**StopJob**](DefaultAPI.md#StopJob) | **Post** /jobs/stopJob | 
+[**TagModel**](DefaultAPI.md#TagModel) | **Post** /versions/tagModel | 
+[**TerminateAllJobs**](DefaultAPI.md#TerminateAllJobs) | **Post** /jobs/terminateAllJobs | 
+[**TerminateJob**](DefaultAPI.md#TerminateJob) | **Post** /jobs/terminateJob | 
+[**TrashSecretManager**](DefaultAPI.md#TrashSecretManager) | **Post** /secret-manager/trashSecretManager | 
+[**UnapproveInsight**](DefaultAPI.md#UnapproveInsight) | **Post** /insights/unapproveInsights | 
+[**UnarchiveInsight**](DefaultAPI.md#UnarchiveInsight) | **Post** /insights/unarchiveInsight | 
+[**UpdateDashboard**](DefaultAPI.md#UpdateDashboard) | **Post** /dashboards/updateDashboard | 
+[**UpdateEngineSettings**](DefaultAPI.md#UpdateEngineSettings) | **Post** /settings/updateSetting | 
+[**UpdateIssue**](DefaultAPI.md#UpdateIssue) | **Post** /issues/updateIssue | 
+[**UpdateProjectMeta**](DefaultAPI.md#UpdateProjectMeta) | **Post** /projects/updateProjectMeta | 
+[**UpdateSampleCollection**](DefaultAPI.md#UpdateSampleCollection) | **Post** /sample-collection/updateSampleCollection | 
+[**UpdateSecretManager**](DefaultAPI.md#UpdateSecretManager) | **Post** /secret-manager/updateSecretManager | 
+[**UpdateSessionName**](DefaultAPI.md#UpdateSessionName) | **Post** /sessions/updateSessionName | 
+[**UpdateSessionRun**](DefaultAPI.md#UpdateSessionRun) | **Post** /sessionsruns/updateSessionRun | 
+[**UpdateSessionTest**](DefaultAPI.md#UpdateSessionTest) | **Post** /sessions-tests/updateSessionTest | 
+[**UpdateTeamPublicName**](DefaultAPI.md#UpdateTeamPublicName) | **Post** /teams/updateTeamPublicName | 
+[**UpdateUserName**](DefaultAPI.md#UpdateUserName) | **Post** /users/updateUserName | 
+[**UpdateUserRole**](DefaultAPI.md#UpdateUserRole) | **Post** /users/updateUserRole | 
+[**UpdateUserStatus**](DefaultAPI.md#UpdateUserStatus) | **Post** /users/updateUserStatus | 
+[**UpdateUserTeam**](DefaultAPI.md#UpdateUserTeam) | **Post** /users/updateUserTeam | 
+[**UpdateVersion**](DefaultAPI.md#UpdateVersion) | **Post** /versions/updateVersion | 
+[**UpdateVersionName**](DefaultAPI.md#UpdateVersionName) | **Post** /versions/updateVersionName | 
+[**UploadProject**](DefaultAPI.md#UploadProject) | **Put** /projects/uploadProject/{projectName} | 
+[**UpsertState**](DefaultAPI.md#UpsertState) | **Post** /projectstate/upsertState | 
+[**Warmup**](DefaultAPI.md#Warmup) | **Post** /jobs/warmup | 
+[**WhoAmI**](DefaultAPI.md#WhoAmI) | **Post** /auth/whoAmI | 
 
 
 
@@ -187,24 +176,24 @@ Method | HTTP request | Description
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    activationParams := *openapiclient.NewActivationParams("Token_example") // ActivationParams | 
+	activationParams := *openapiclient.NewActivationParams("Token_example") // ActivationParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.Activate(context.Background()).ActivationParams(activationParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.Activate``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `Activate`: UserData
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.Activate`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.Activate(context.Background()).ActivationParams(activationParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.Activate``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `Activate`: UserData
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.Activate`: %v\n", resp)
 }
 ```
 
@@ -251,24 +240,24 @@ No authorization required
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    addDashboardParams := *openapiclient.NewAddDashboardParams("ProjectId_example", "Name_example", []openapiclient.Dashlet{*openapiclient.NewDashlet("Cid_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))), "Type_example", *openapiclient.NewPopulationExplorationDashletData(map[string]interface{}(123), "Type_example", "Name_example"), "Name_example", []string{"CollectionIds_example"})}) // AddDashboardParams | 
+	addDashboardParams := *openapiclient.NewAddDashboardParams("ProjectId_example", "Name_example", []openapiclient.Dashlet{*openapiclient.NewDashlet("Cid_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))), "Type_example", *openapiclient.NewPopulationExplorationDashletData(map[string]interface{}(123), "Name_example", "Type_example"), "Name_example", []string{"CollectionIds_example"})}) // AddDashboardParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.AddDashboard(context.Background()).AddDashboardParams(addDashboardParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.AddDashboard``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `AddDashboard`: AddDashboardResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.AddDashboard`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.AddDashboard(context.Background()).AddDashboardParams(addDashboardParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.AddDashboard``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `AddDashboard`: AddDashboardResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.AddDashboard`: %v\n", resp)
 }
 ```
 
@@ -303,70 +292,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## AddDataset
-
-> AddDatasetResponse AddDataset(ctx).NewDatasetParams(newDatasetParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    newDatasetParams := *openapiclient.NewNewDatasetParams("Name_example") // NewDatasetParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.AddDataset(context.Background()).NewDatasetParams(newDatasetParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.AddDataset``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `AddDataset`: AddDatasetResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.AddDataset`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiAddDatasetRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **newDatasetParams** | [**NewDatasetParams**](NewDatasetParams.md) |  | 
-
-### Return type
-
-[**AddDatasetResponse**](AddDatasetResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## AddExportModelJob
 
 > Job AddExportModelJob(ctx).AddExportModelJobParams(addExportModelJobParams).Execute()
@@ -379,24 +304,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    addExportModelJobParams := *openapiclient.NewAddExportModelJobParams("ProjectId_example", "SessionWeightId_example", openapiclient.ExportModelTypeEnum("JSON_TF2"), "Title_example", false) // AddExportModelJobParams | 
+	addExportModelJobParams := *openapiclient.NewAddExportModelJobParams("ProjectId_example", "SessionWeightId_example", openapiclient.ExportModelTypeEnum("JSON_TF2"), "Title_example", false) // AddExportModelJobParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.AddExportModelJob(context.Background()).AddExportModelJobParams(addExportModelJobParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.AddExportModelJob``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `AddExportModelJob`: Job
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.AddExportModelJob`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.AddExportModelJob(context.Background()).AddExportModelJobParams(addExportModelJobParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.AddExportModelJob``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `AddExportModelJob`: Job
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.AddExportModelJob`: %v\n", resp)
 }
 ```
 
@@ -443,24 +368,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    addIssueParams := *openapiclient.NewAddIssueParams("ProjectId_example", "Title_example", openapiclient.IssueStatus("Open")) // AddIssueParams | 
+	addIssueParams := *openapiclient.NewAddIssueParams("ProjectId_example", "Title_example", openapiclient.IssueStatus("Open")) // AddIssueParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.AddIssue(context.Background()).AddIssueParams(addIssueParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.AddIssue``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `AddIssue`: Issue
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.AddIssue`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.AddIssue(context.Background()).AddIssueParams(addIssueParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.AddIssue``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `AddIssue`: Issue
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.AddIssue`: %v\n", resp)
 }
 ```
 
@@ -507,24 +432,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    projectMeta := *openapiclient.NewProjectMeta("Name_example", "Description_example", []string{"Tags_example"}, openapiclient.HubPublishPolicy("public")) // ProjectMeta | 
+	projectMeta := *openapiclient.NewProjectMeta("Name_example", "Description_example", []string{"Tags_example"}, openapiclient.HubPublishPolicy("public")) // ProjectMeta | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.AddProject(context.Background()).ProjectMeta(projectMeta).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.AddProject``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `AddProject`: AddProjectResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.AddProject`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.AddProject(context.Background()).ProjectMeta(projectMeta).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.AddProject``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `AddProject`: AddProjectResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.AddProject`: %v\n", resp)
 }
 ```
 
@@ -571,24 +496,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    addSampleCollectionParams := *openapiclient.NewAddSampleCollectionParams([]openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType())}, "ProjectId_example", "Name_example") // AddSampleCollectionParams | 
+	addSampleCollectionParams := *openapiclient.NewAddSampleCollectionParams([]openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType())}, "ProjectId_example", "Name_example") // AddSampleCollectionParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.AddSampleCollection(context.Background()).AddSampleCollectionParams(addSampleCollectionParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.AddSampleCollection``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `AddSampleCollection`: AddSampleCollectionResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.AddSampleCollection`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.AddSampleCollection(context.Background()).AddSampleCollectionParams(addSampleCollectionParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.AddSampleCollection``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `AddSampleCollection`: AddSampleCollectionResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.AddSampleCollection`: %v\n", resp)
 }
 ```
 
@@ -635,24 +560,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    addSecretManagerParams := *openapiclient.NewAddSecretManagerParams("Name_example", "AuthData_example") // AddSecretManagerParams | 
+	addSecretManagerParams := *openapiclient.NewAddSecretManagerParams("Name_example", "AuthData_example") // AddSecretManagerParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.AddSecretManager(context.Background()).AddSecretManagerParams(addSecretManagerParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.AddSecretManager``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `AddSecretManager`: AddSecretManagerResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.AddSecretManager`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.AddSecretManager(context.Background()).AddSecretManagerParams(addSecretManagerParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.AddSecretManager``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `AddSecretManager`: AddSecretManagerResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.AddSecretManager`: %v\n", resp)
 }
 ```
 
@@ -687,198 +612,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## AddVersion
-
-> AddVersionResponse AddVersion(ctx).AddVersionParams(addVersionParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    addVersionParams := *openapiclient.NewAddVersionParams("ProjectId_example", *openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "BranchName_example", "Description_example") // AddVersionParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.AddVersion(context.Background()).AddVersionParams(addVersionParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.AddVersion``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `AddVersion`: AddVersionResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.AddVersion`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiAddVersionRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **addVersionParams** | [**AddVersionParams**](AddVersionParams.md) |  | 
-
-### Return type
-
-[**AddVersionResponse**](AddVersionResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## AnalyzeGraph
-
-> AnalyzeGraphResponse AnalyzeGraph(ctx).AnalyzeGraphParams(analyzeGraphParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    analyzeGraphParams := *openapiclient.NewAnalyzeGraphParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "VersionId_example", "ProjectId_example", "Digest_example") // AnalyzeGraphParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.AnalyzeGraph(context.Background()).AnalyzeGraphParams(analyzeGraphParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.AnalyzeGraph``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `AnalyzeGraph`: AnalyzeGraphResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.AnalyzeGraph`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiAnalyzeGraphRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **analyzeGraphParams** | [**AnalyzeGraphParams**](AnalyzeGraphParams.md) |  | 
-
-### Return type
-
-[**AnalyzeGraphResponse**](AnalyzeGraphResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## ApplyDatasetMapping
-
-> ApplyMappingResponse ApplyDatasetMapping(ctx).ApplyDatasetMappingsParams(applyDatasetMappingsParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    applyDatasetMappingsParams := *openapiclient.NewApplyDatasetMappingsParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "Yaml_example") // ApplyDatasetMappingsParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.ApplyDatasetMapping(context.Background()).ApplyDatasetMappingsParams(applyDatasetMappingsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApplyDatasetMapping``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ApplyDatasetMapping`: ApplyMappingResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ApplyDatasetMapping`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiApplyDatasetMappingRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **applyDatasetMappingsParams** | [**ApplyDatasetMappingsParams**](ApplyDatasetMappingsParams.md) |  | 
-
-### Return type
-
-[**ApplyMappingResponse**](ApplyMappingResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## ApproveInsights
 
 > ApproveInsights(ctx).ApproveInsightsParams(approveInsightsParams).Execute()
@@ -891,22 +624,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    approveInsightsParams := *openapiclient.NewApproveInsightsParams("PopExpDigest_example", []float64{float64(123)}, "ProjectId_example") // ApproveInsightsParams | 
+	approveInsightsParams := *openapiclient.NewApproveInsightsParams("PopExpDigest_example", []float64{float64(123)}, "ProjectId_example") // ApproveInsightsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.ApproveInsights(context.Background()).ApproveInsightsParams(approveInsightsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApproveInsights``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.ApproveInsights(context.Background()).ApproveInsightsParams(approveInsightsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApproveInsights``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -953,22 +686,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    archiveInsightsParams := *openapiclient.NewArchiveInsightsParams("PopExpDigest_example", []float64{float64(123)}, "ProjectId_example") // ArchiveInsightsParams | 
+	archiveInsightsParams := *openapiclient.NewArchiveInsightsParams("PopExpDigest_example", []float64{float64(123)}, "ProjectId_example") // ArchiveInsightsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.ArchiveInsight(context.Background()).ArchiveInsightsParams(archiveInsightsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ArchiveInsight``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.ArchiveInsight(context.Background()).ArchiveInsightsParams(archiveInsightsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ArchiveInsight``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -1003,6 +736,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## CalcPopulationExplorationDigest
+
+> CalcPopulationExplorationDigestResponse CalcPopulationExplorationDigest(ctx).CalcPopulationExplorationDigestParams(calcPopulationExplorationDigestParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	calcPopulationExplorationDigestParams := *openapiclient.NewCalcPopulationExplorationDigestParams(*openapiclient.NewPickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrProjectIdOrReRunAfterFail("SessionRunId_example", float64(123), float64(123), float64(123), []string{"BalanceBy_example"}, false, openapiclient.ReductionAlgorithm("TSNE"))) // CalcPopulationExplorationDigestParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.CalcPopulationExplorationDigest(context.Background()).CalcPopulationExplorationDigestParams(calcPopulationExplorationDigestParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.CalcPopulationExplorationDigest``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CalcPopulationExplorationDigest`: CalcPopulationExplorationDigestResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.CalcPopulationExplorationDigest`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCalcPopulationExplorationDigestRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **calcPopulationExplorationDigestParams** | [**CalcPopulationExplorationDigestParams**](CalcPopulationExplorationDigestParams.md) |  | 
+
+### Return type
+
+[**CalcPopulationExplorationDigestResponse**](CalcPopulationExplorationDigestResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ClearUserJobs
 
 > ClearUserJobs(ctx).Execute()
@@ -1015,21 +812,21 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.ClearUserJobs(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ClearUserJobs``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.ClearUserJobs(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ClearUserJobs``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -1072,21 +869,21 @@ Other parameters are passed through a pointer to a apiClearUserJobsRequest struc
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.ClearUserNotifications(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ClearUserNotifications``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.ClearUserNotifications(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ClearUserNotifications``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -1129,24 +926,24 @@ Other parameters are passed through a pointer to a apiClearUserNotificationsRequ
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    continueEvaluateParams := *openapiclient.NewContinueEvaluateParams("JobId_example", "ProjectId_example") // ContinueEvaluateParams | 
+	continueEvaluateParams := *openapiclient.NewContinueEvaluateParams("JobId_example", "ProjectId_example") // ContinueEvaluateParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.ContinueEvaluate(context.Background()).ContinueEvaluateParams(continueEvaluateParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ContinueEvaluate``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ContinueEvaluate`: Job
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ContinueEvaluate`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ContinueEvaluate(context.Background()).ContinueEvaluateParams(continueEvaluateParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ContinueEvaluate``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ContinueEvaluate`: Job
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ContinueEvaluate`: %v\n", resp)
 }
 ```
 
@@ -1181,70 +978,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## CreateEquivalentValidation
-
-> CreateEquivalentValidationResponse CreateEquivalentValidation(ctx).CreateEquivalentValidationParams(createEquivalentValidationParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    createEquivalentValidationParams := *openapiclient.NewCreateEquivalentValidationParams("ProjectId_example", "SourceDigest_example", "TargetDigest_example") // CreateEquivalentValidationParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.CreateEquivalentValidation(context.Background()).CreateEquivalentValidationParams(createEquivalentValidationParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateEquivalentValidation``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `CreateEquivalentValidation`: CreateEquivalentValidationResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateEquivalentValidation`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiCreateEquivalentValidationRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **createEquivalentValidationParams** | [**CreateEquivalentValidationParams**](CreateEquivalentValidationParams.md) |  | 
-
-### Return type
-
-[**CreateEquivalentValidationResponse**](CreateEquivalentValidationResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## CreateSamplesVisualizations
 
 > Job CreateSamplesVisualizations(ctx).CreateSampleVisualizationsParams(createSampleVisualizationsParams).Execute()
@@ -1257,24 +990,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    createSampleVisualizationsParams := *openapiclient.NewCreateSampleVisualizationsParams("ProjectId_example", "SessionRunId_example", float64(123), []openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType())}, "Digest_example") // CreateSampleVisualizationsParams | 
+	createSampleVisualizationsParams := *openapiclient.NewCreateSampleVisualizationsParams("ProjectId_example", "SessionRunId_example", float64(123), "Digest_example") // CreateSampleVisualizationsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.CreateSamplesVisualizations(context.Background()).CreateSampleVisualizationsParams(createSampleVisualizationsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateSamplesVisualizations``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `CreateSamplesVisualizations`: Job
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateSamplesVisualizations`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.CreateSamplesVisualizations(context.Background()).CreateSampleVisualizationsParams(createSampleVisualizationsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.CreateSamplesVisualizations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateSamplesVisualizations`: Job
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.CreateSamplesVisualizations`: %v\n", resp)
 }
 ```
 
@@ -1321,24 +1054,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    createSessionTestRequest := *openapiclient.NewCreateSessionTestRequest("ProjectId_example", "Name_example", *openapiclient.NewClientFilterParams("Field_example", openapiclient.FilterOperatorType("between"), float64(123))) // CreateSessionTestRequest | 
+	createSessionTestRequest := *openapiclient.NewCreateSessionTestRequest("ProjectId_example", "Name_example", *openapiclient.NewClientFilterParams("Field_example", openapiclient.FilterOperatorType("between"), float64(123))) // CreateSessionTestRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.CreateSessionTest(context.Background()).CreateSessionTestRequest(createSessionTestRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateSessionTest``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `CreateSessionTest`: string
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateSessionTest`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.CreateSessionTest(context.Background()).CreateSessionTestRequest(createSessionTestRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.CreateSessionTest``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateSessionTest`: string
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.CreateSessionTest`: %v\n", resp)
 }
 ```
 
@@ -1385,24 +1118,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    createTeamRequest := *openapiclient.NewCreateTeamRequest("Name_example", "PublicName_example") // CreateTeamRequest | 
+	createTeamRequest := *openapiclient.NewCreateTeamRequest("Name_example", "PublicName_example") // CreateTeamRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.CreateTeam(context.Background()).CreateTeamRequest(createTeamRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CreateTeam``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `CreateTeam`: CreateTeamResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CreateTeam`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.CreateTeam(context.Background()).CreateTeamRequest(createTeamRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.CreateTeam``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateTeam`: CreateTeamResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.CreateTeam`: %v\n", resp)
 }
 ```
 
@@ -1449,22 +1182,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteDashboardParams := *openapiclient.NewDeleteDashboardParams("DashboardId_example", "ProjectId_example") // DeleteDashboardParams | 
+	deleteDashboardParams := *openapiclient.NewDeleteDashboardParams("DashboardId_example", "ProjectId_example") // DeleteDashboardParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.DeleteDashboard(context.Background()).DeleteDashboardParams(deleteDashboardParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteDashboard``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteDashboard(context.Background()).DeleteDashboardParams(deleteDashboardParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteDashboard``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -1499,6 +1232,68 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## DeleteGeneratedLabel
+
+> DeleteGeneratedLabel(ctx).DeleteGeneratedLabelParams(deleteGeneratedLabelParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	deleteGeneratedLabelParams := *openapiclient.NewDeleteGeneratedLabelParams("ProjectId_example", "LabelId_example") // DeleteGeneratedLabelParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteGeneratedLabel(context.Background()).DeleteGeneratedLabelParams(deleteGeneratedLabelParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteGeneratedLabel``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteGeneratedLabelRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **deleteGeneratedLabelParams** | [**DeleteGeneratedLabelParams**](DeleteGeneratedLabelParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## DeleteIssue
 
 > DeleteIssue(ctx).DeleteIssueParams(deleteIssueParams).Execute()
@@ -1511,22 +1306,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteIssueParams := *openapiclient.NewDeleteIssueParams("Cid_example", "ProjectId_example") // DeleteIssueParams | 
+	deleteIssueParams := *openapiclient.NewDeleteIssueParams("Cid_example", "ProjectId_example") // DeleteIssueParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.DeleteIssue(context.Background()).DeleteIssueParams(deleteIssueParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteIssue``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteIssue(context.Background()).DeleteIssueParams(deleteIssueParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteIssue``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -1573,22 +1368,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteProjectParams := *openapiclient.NewDeleteProjectParams("ProjectId_example") // DeleteProjectParams | 
+	deleteProjectParams := *openapiclient.NewDeleteProjectParams("ProjectId_example") // DeleteProjectParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.DeleteProject(context.Background()).DeleteProjectParams(deleteProjectParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteProject``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteProject(context.Background()).DeleteProjectParams(deleteProjectParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteProject``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -1635,22 +1430,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteSamplesAnalysisParams := *openapiclient.NewDeleteSamplesAnalysisParams("ProjectId_example", []string{"SessionRunIds_example"}, []openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType())}) // DeleteSamplesAnalysisParams | 
+	deleteSamplesAnalysisParams := *openapiclient.NewDeleteSamplesAnalysisParams("ProjectId_example", []string{"SessionRunIds_example"}, []openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType())}) // DeleteSamplesAnalysisParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.DeleteSampleAnalysis(context.Background()).DeleteSamplesAnalysisParams(deleteSamplesAnalysisParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteSampleAnalysis``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteSampleAnalysis(context.Background()).DeleteSamplesAnalysisParams(deleteSamplesAnalysisParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteSampleAnalysis``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -1697,22 +1492,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteSessionParams := *openapiclient.NewDeleteSessionParams("SessionId_example", "ProjectId_example") // DeleteSessionParams | 
+	deleteSessionParams := *openapiclient.NewDeleteSessionParams("SessionId_example", "ProjectId_example") // DeleteSessionParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.DeleteSession(context.Background()).DeleteSessionParams(deleteSessionParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteSession``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteSession(context.Background()).DeleteSessionParams(deleteSessionParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteSession``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -1759,22 +1554,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteSessionRunParams := *openapiclient.NewDeleteSessionRunParams("SessionRunId_example", "ProjectId_example") // DeleteSessionRunParams | 
+	deleteSessionRunParams := *openapiclient.NewDeleteSessionRunParams("SessionRunId_example", "ProjectId_example") // DeleteSessionRunParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.DeleteSessionRun(context.Background()).DeleteSessionRunParams(deleteSessionRunParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteSessionRun``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteSessionRun(context.Background()).DeleteSessionRunParams(deleteSessionRunParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteSessionRun``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -1821,22 +1616,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteSessionTestRequest := *openapiclient.NewDeleteSessionTestRequest("Cid_example", "ProjectId_example") // DeleteSessionTestRequest | 
+	deleteSessionTestRequest := *openapiclient.NewDeleteSessionTestRequest("Cid_example", "ProjectId_example") // DeleteSessionTestRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.DeleteSessionTest(context.Background()).DeleteSessionTestRequest(deleteSessionTestRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteSessionTest``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteSessionTest(context.Background()).DeleteSessionTestRequest(deleteSessionTestRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteSessionTest``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -1883,22 +1678,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteTeamRequest := *openapiclient.NewDeleteTeamRequest("Cid_example") // DeleteTeamRequest | 
+	deleteTeamRequest := *openapiclient.NewDeleteTeamRequest("Cid_example") // DeleteTeamRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.DeleteTeam(context.Background()).DeleteTeamRequest(deleteTeamRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteTeam``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteTeam(context.Background()).DeleteTeamRequest(deleteTeamRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteTeam``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -1945,22 +1740,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteUserByIdRequest := *openapiclient.NewDeleteUserByIdRequest("UserId_example") // DeleteUserByIdRequest | 
+	deleteUserByIdRequest := *openapiclient.NewDeleteUserByIdRequest("UserId_example") // DeleteUserByIdRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.DeleteUserById(context.Background()).DeleteUserByIdRequest(deleteUserByIdRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteUserById``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteUserById(context.Background()).DeleteUserByIdRequest(deleteUserByIdRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteUserById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -2007,22 +1802,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteVersionParams := *openapiclient.NewDeleteVersionParams("VersionId_example", "ProjectId_example") // DeleteVersionParams | 
+	deleteVersionParams := *openapiclient.NewDeleteVersionParams("VersionId_example", "ProjectId_example") // DeleteVersionParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.DeleteVersion(context.Background()).DeleteVersionParams(deleteVersionParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteVersion``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteVersion(context.Background()).DeleteVersionParams(deleteVersionParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteVersion``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -2069,22 +1864,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    deleteVisualizationsParams := *openapiclient.NewDeleteVisualizationsParams([]string{"VisualizationIdsToDelete_example"}, "ProjectId_example") // DeleteVisualizationsParams | 
+	deleteVisualizationsParams := *openapiclient.NewDeleteVisualizationsParams([]string{"VisualizationIdsToDelete_example"}, "ProjectId_example") // DeleteVisualizationsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.DeleteVisualizations(context.Background()).DeleteVisualizationsParams(deleteVisualizationsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DeleteVisualizations``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteVisualizations(context.Background()).DeleteVisualizationsParams(deleteVisualizationsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteVisualizations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -2131,22 +1926,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    projectId := "projectId_example" // string | 
+	projectId := "projectId_example" // string | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.DownloadProject(context.Background(), projectId).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.DownloadProject``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DownloadProject(context.Background(), projectId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DownloadProject``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -2197,24 +1992,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    evaluateParams := *openapiclient.NewEvaluateParams("VersionId_example", "ProjectId_example", float64(123), []openapiclient.DataStateType{openapiclient.DataStateType("training")}, "Name_example", "Description_example", false, float64(123), "SessionId_example") // EvaluateParams | 
+	evaluateParams := *openapiclient.NewEvaluateParams("VersionId_example", "ProjectId_example", float64(123), []openapiclient.DataStateType{openapiclient.DataStateType("training")}, "Name_example", "Description_example", false, float64(123), "SessionId_example") // EvaluateParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.Evaluate(context.Background()).EvaluateParams(evaluateParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.Evaluate``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `Evaluate`: Job
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.Evaluate`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.Evaluate(context.Background()).EvaluateParams(evaluateParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.Evaluate``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `Evaluate`: Job
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.Evaluate`: %v\n", resp)
 }
 ```
 
@@ -2261,24 +2056,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    exportProjectRequest := *openapiclient.NewExportProjectRequest("ProjectId_example") // ExportProjectRequest | 
+	exportProjectRequest := *openapiclient.NewExportProjectRequest("ProjectId_example") // ExportProjectRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.ExportProject(context.Background()).ExportProjectRequest(exportProjectRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ExportProject``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ExportProject`: ExportProjectResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ExportProject`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ExportProject(context.Background()).ExportProjectRequest(exportProjectRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ExportProject``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ExportProject`: ExportProjectResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ExportProject`: %v\n", resp)
 }
 ```
 
@@ -2325,24 +2120,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    extendTrialParams := *openapiclient.NewExtendTrialParams("Token_example") // ExtendTrialParams | 
+	extendTrialParams := *openapiclient.NewExtendTrialParams("Token_example") // ExtendTrialParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.ExtendTrial(context.Background()).ExtendTrialParams(extendTrialParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ExtendTrial``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ExtendTrial`: ExtendTrialResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ExtendTrial`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ExtendTrial(context.Background()).ExtendTrialParams(extendTrialParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ExtendTrial``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ExtendTrial`: ExtendTrialResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ExtendTrial`: %v\n", resp)
 }
 ```
 
@@ -2365,7 +2160,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[jwt](../README.md#jwt)
+No authorization required
 
 ### HTTP request headers
 
@@ -2389,24 +2184,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    fetchSimilarRequestParams := *openapiclient.NewFetchSimilarRequestParams("SessionRunId_example", "ProjectId_example", float64(123), []openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType())}, float64(123), "Digest_example") // FetchSimilarRequestParams | 
+	fetchSimilarRequestParams := *openapiclient.NewFetchSimilarRequestParams("SessionRunId_example", "ProjectId_example", float64(123), []openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType())}, float64(123), "Digest_example") // FetchSimilarRequestParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.FetchSimilar(context.Background()).FetchSimilarRequestParams(fetchSimilarRequestParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.FetchSimilar``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `FetchSimilar`: FetchSimilarResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.FetchSimilar`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.FetchSimilar(context.Background()).FetchSimilarRequestParams(fetchSimilarRequestParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.FetchSimilar``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `FetchSimilar`: FetchSimilarResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.FetchSimilar`: %v\n", resp)
 }
 ```
 
@@ -2441,6 +2236,68 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GenerateLabels
+
+> GenerateLabels(ctx).GenerateLabelParams(generateLabelParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	generateLabelParams := *openapiclient.NewGenerateLabelParams("ProjectId_example", "SessionRunId_example", float64(123)) // GenerateLabelParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.GenerateLabels(context.Background()).GenerateLabelParams(generateLabelParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GenerateLabels``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGenerateLabelsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **generateLabelParams** | [**GenerateLabelParams**](GenerateLabelParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetAllProjectSessionTests
 
 > []SessionTest GetAllProjectSessionTests(ctx).GetAllProjectSessionTestsRequest(getAllProjectSessionTestsRequest).Execute()
@@ -2453,24 +2310,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getAllProjectSessionTestsRequest := *openapiclient.NewGetAllProjectSessionTestsRequest("ProjectId_example") // GetAllProjectSessionTestsRequest | 
+	getAllProjectSessionTestsRequest := *openapiclient.NewGetAllProjectSessionTestsRequest("ProjectId_example") // GetAllProjectSessionTestsRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetAllProjectSessionTests(context.Background()).GetAllProjectSessionTestsRequest(getAllProjectSessionTestsRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetAllProjectSessionTests``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetAllProjectSessionTests`: []SessionTest
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetAllProjectSessionTests`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetAllProjectSessionTests(context.Background()).GetAllProjectSessionTestsRequest(getAllProjectSessionTestsRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetAllProjectSessionTests``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAllProjectSessionTests`: []SessionTest
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetAllProjectSessionTests`: %v\n", resp)
 }
 ```
 
@@ -2517,23 +2374,23 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetAllSlimUserData(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetAllSlimUserData``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetAllSlimUserData`: GetTeamUsersResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetAllSlimUserData`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetAllSlimUserData(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetAllSlimUserData``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAllSlimUserData`: GetTeamUsersResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetAllSlimUserData`: %v\n", resp)
 }
 ```
 
@@ -2576,24 +2433,24 @@ Other parameters are passed through a pointer to a apiGetAllSlimUserDataRequest 
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getApiKeyByCodeRequest := *openapiclient.NewGetApiKeyByCodeRequest("CodeVerifier_example") // GetApiKeyByCodeRequest | 
+	getApiKeyByCodeRequest := *openapiclient.NewGetApiKeyByCodeRequest("CodeVerifier_example") // GetApiKeyByCodeRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetApiKeyByCode(context.Background()).GetApiKeyByCodeRequest(getApiKeyByCodeRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetApiKeyByCode``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetApiKeyByCode`: RotateApiKeyResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetApiKeyByCode`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetApiKeyByCode(context.Background()).GetApiKeyByCodeRequest(getApiKeyByCodeRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetApiKeyByCode``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetApiKeyByCode`: RotateApiKeyResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetApiKeyByCode`: %v\n", resp)
 }
 ```
 
@@ -2640,24 +2497,24 @@ No authorization required
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getApprovedInsightsParams := *openapiclient.NewGetApprovedInsightsParams([]string{"PopExpDigests_example"}, "ProjectId_example") // GetApprovedInsightsParams | 
+	getApprovedInsightsParams := *openapiclient.NewGetApprovedInsightsParams([]string{"PopExpDigests_example"}, "ProjectId_example") // GetApprovedInsightsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetApprovedInsights(context.Background()).GetApprovedInsightsParams(getApprovedInsightsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetApprovedInsights``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetApprovedInsights`: map[string][]float64
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetApprovedInsights`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetApprovedInsights(context.Background()).GetApprovedInsightsParams(getApprovedInsightsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetApprovedInsights``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetApprovedInsights`: map[string][]float64
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetApprovedInsights`: %v\n", resp)
 }
 ```
 
@@ -2704,24 +2561,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getArchiveInsightsParams := *openapiclient.NewGetArchiveInsightsParams([]string{"PopExpDigests_example"}, "ProjectId_example") // GetArchiveInsightsParams | 
+	getArchiveInsightsParams := *openapiclient.NewGetArchiveInsightsParams([]string{"PopExpDigests_example"}, "ProjectId_example") // GetArchiveInsightsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetArchiveInsights(context.Background()).GetArchiveInsightsParams(getArchiveInsightsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetArchiveInsights``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetArchiveInsights`: map[string][]float64
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetArchiveInsights`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetArchiveInsights(context.Background()).GetArchiveInsightsParams(getArchiveInsightsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetArchiveInsights``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetArchiveInsights`: map[string][]float64
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetArchiveInsights`: %v\n", resp)
 }
 ```
 
@@ -2768,23 +2625,23 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetAuthProvider(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetAuthProvider``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetAuthProvider`: GetAuthProviderResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetAuthProvider`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetAuthProvider(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetAuthProvider``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAuthProvider`: GetAuthProviderResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetAuthProvider`: %v\n", resp)
 }
 ```
 
@@ -2827,24 +2684,24 @@ No authorization required
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    body := ConfusionMatrixParams(987) // ConfusionMatrixParams | 
+	body := ConfusionMatrixParams(987) // ConfusionMatrixParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetBalancedAccuracy(context.Background()).Body(body).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetBalancedAccuracy``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetBalancedAccuracy`: MultiChartsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetBalancedAccuracy`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetBalancedAccuracy(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetBalancedAccuracy``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetBalancedAccuracy`: MultiChartsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetBalancedAccuracy`: %v\n", resp)
 }
 ```
 
@@ -2879,9 +2736,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetCodeIntegrationMappingErrorsByVersionId
+## GetCodeSnapshot
 
-> CodeIntegrationMappingErrorsResponse GetCodeIntegrationMappingErrorsByVersionId(ctx).CodeIntegrationMappingErrorsParams(codeIntegrationMappingErrorsParams).Execute()
+> GetCodeSnapshotResponse GetCodeSnapshot(ctx).GetCodeSnapshotParams(getCodeSnapshotParams).Execute()
 
 
 
@@ -2891,24 +2748,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    codeIntegrationMappingErrorsParams := *openapiclient.NewCodeIntegrationMappingErrorsParams("ProjectId_example", "VersionId_example", "Mapping_example") // CodeIntegrationMappingErrorsParams | 
+	getCodeSnapshotParams := *openapiclient.NewGetCodeSnapshotParams("ProjectId_example", "CodeSnapshotId_example") // GetCodeSnapshotParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetCodeIntegrationMappingErrorsByVersionId(context.Background()).CodeIntegrationMappingErrorsParams(codeIntegrationMappingErrorsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetCodeIntegrationMappingErrorsByVersionId``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetCodeIntegrationMappingErrorsByVersionId`: CodeIntegrationMappingErrorsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetCodeIntegrationMappingErrorsByVersionId`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetCodeSnapshot(context.Background()).GetCodeSnapshotParams(getCodeSnapshotParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetCodeSnapshot``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetCodeSnapshot`: GetCodeSnapshotResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetCodeSnapshot`: %v\n", resp)
 }
 ```
 
@@ -2918,16 +2775,16 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiGetCodeIntegrationMappingErrorsByVersionIdRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetCodeSnapshotRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **codeIntegrationMappingErrorsParams** | [**CodeIntegrationMappingErrorsParams**](CodeIntegrationMappingErrorsParams.md) |  | 
+ **getCodeSnapshotParams** | [**GetCodeSnapshotParams**](GetCodeSnapshotParams.md) |  | 
 
 ### Return type
 
-[**CodeIntegrationMappingErrorsResponse**](CodeIntegrationMappingErrorsResponse.md)
+[**GetCodeSnapshotResponse**](GetCodeSnapshotResponse.md)
 
 ### Authorization
 
@@ -2943,9 +2800,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetCodeIntegrationVersionFromBinder
+## GetCodeSnapshotUploadUrl
 
-> DatasetVersion GetCodeIntegrationVersionFromBinder(ctx).CodeIntegrationBinder(codeIntegrationBinder).Execute()
+> CodeSnapshotUploadUrlResponse GetCodeSnapshotUploadUrl(ctx).GetCodeSnapshotUploadUrlParams(getCodeSnapshotUploadUrlParams).Execute()
 
 
 
@@ -2955,24 +2812,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    codeIntegrationBinder := *openapiclient.NewCodeIntegrationBinder("CodeIntegrationId_example", "Branch_example", "Type_example", "CodeIntegrationVersionId_example") // CodeIntegrationBinder | 
+	getCodeSnapshotUploadUrlParams := *openapiclient.NewGetCodeSnapshotUploadUrlParams("ProjectId_example") // GetCodeSnapshotUploadUrlParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetCodeIntegrationVersionFromBinder(context.Background()).CodeIntegrationBinder(codeIntegrationBinder).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetCodeIntegrationVersionFromBinder``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetCodeIntegrationVersionFromBinder`: DatasetVersion
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetCodeIntegrationVersionFromBinder`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetCodeSnapshotUploadUrl(context.Background()).GetCodeSnapshotUploadUrlParams(getCodeSnapshotUploadUrlParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetCodeSnapshotUploadUrl``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetCodeSnapshotUploadUrl`: CodeSnapshotUploadUrlResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetCodeSnapshotUploadUrl`: %v\n", resp)
 }
 ```
 
@@ -2982,16 +2839,16 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiGetCodeIntegrationVersionFromBinderRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetCodeSnapshotUploadUrlRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **codeIntegrationBinder** | [**CodeIntegrationBinder**](CodeIntegrationBinder.md) |  | 
+ **getCodeSnapshotUploadUrlParams** | [**GetCodeSnapshotUploadUrlParams**](GetCodeSnapshotUploadUrlParams.md) |  | 
 
 ### Return type
 
-[**DatasetVersion**](DatasetVersion.md)
+[**CodeSnapshotUploadUrlResponse**](CodeSnapshotUploadUrlResponse.md)
 
 ### Authorization
 
@@ -3019,24 +2876,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getConfusionMatrixLabels := *openapiclient.NewGetConfusionMatrixLabels("ProjectId_example", []string{"SessionRunIds_example"}) // GetConfusionMatrixLabels | 
+	getConfusionMatrixLabels := *openapiclient.NewGetConfusionMatrixLabels("ProjectId_example", []string{"SessionRunIds_example"}) // GetConfusionMatrixLabels | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetConfusionMatrixLabels(context.Background()).GetConfusionMatrixLabels(getConfusionMatrixLabels).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetConfusionMatrixLabels``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetConfusionMatrixLabels`: ConfusionMatrixLabelsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetConfusionMatrixLabels`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetConfusionMatrixLabels(context.Background()).GetConfusionMatrixLabels(getConfusionMatrixLabels).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetConfusionMatrixLabels``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetConfusionMatrixLabels`: ConfusionMatrixLabelsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetConfusionMatrixLabels`: %v\n", resp)
 }
 ```
 
@@ -3083,24 +2940,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getConfusionMatrixResultCombinationsParams := *openapiclient.NewGetConfusionMatrixResultCombinationsParams("ProjectId_example", []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), "CustomMetricName_example") // GetConfusionMatrixResultCombinationsParams | 
+	getConfusionMatrixResultCombinationsParams := *openapiclient.NewGetConfusionMatrixResultCombinationsParams("ProjectId_example", []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), "CustomMetricName_example") // GetConfusionMatrixResultCombinationsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetConfusionMatrixResultCombinations(context.Background()).GetConfusionMatrixResultCombinationsParams(getConfusionMatrixResultCombinationsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetConfusionMatrixResultCombinations``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetConfusionMatrixResultCombinations`: MultiChartsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetConfusionMatrixResultCombinations`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetConfusionMatrixResultCombinations(context.Background()).GetConfusionMatrixResultCombinationsParams(getConfusionMatrixResultCombinationsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetConfusionMatrixResultCombinations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetConfusionMatrixResultCombinations`: MultiChartsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetConfusionMatrixResultCombinations`: %v\n", resp)
 }
 ```
 
@@ -3147,24 +3004,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    confusionMatrixTableParams := *openapiclient.NewConfusionMatrixTableParams([]openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, "ProjectId_example", "CustomMetricName_example", false) // ConfusionMatrixTableParams | 
+	confusionMatrixTableParams := *openapiclient.NewConfusionMatrixTableParams([]openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, "ProjectId_example", "CustomMetricName_example", false) // ConfusionMatrixTableParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetConfusionMatrixTable(context.Background()).ConfusionMatrixTableParams(confusionMatrixTableParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetConfusionMatrixTable``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetConfusionMatrixTable`: MultiChartsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetConfusionMatrixTable`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetConfusionMatrixTable(context.Background()).ConfusionMatrixTableParams(confusionMatrixTableParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetConfusionMatrixTable``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetConfusionMatrixTable`: MultiChartsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetConfusionMatrixTable`: %v\n", resp)
 }
 ```
 
@@ -3211,24 +3068,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    confusionMetricNamesParams := *openapiclient.NewConfusionMetricNamesParams([]string{"SessionRunIds_example"}, "ProjectId_example") // ConfusionMetricNamesParams | 
+	confusionMetricNamesParams := *openapiclient.NewConfusionMetricNamesParams([]string{"SessionRunIds_example"}, "ProjectId_example") // ConfusionMetricNamesParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetConfusionMetricNames(context.Background()).ConfusionMetricNamesParams(confusionMetricNamesParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetConfusionMetricNames``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetConfusionMetricNames`: ConfusionMetricNamesResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetConfusionMetricNames`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetConfusionMetricNames(context.Background()).ConfusionMetricNamesParams(confusionMetricNamesParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetConfusionMetricNames``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetConfusionMetricNames`: ConfusionMetricNamesResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetConfusionMetricNames`: %v\n", resp)
 }
 ```
 
@@ -3275,24 +3132,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getCurrentProjectVersionParams := *openapiclient.NewGetCurrentProjectVersionParams("ProjectId_example") // GetCurrentProjectVersionParams | 
+	getCurrentProjectVersionParams := *openapiclient.NewGetCurrentProjectVersionParams("ProjectId_example") // GetCurrentProjectVersionParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetCurrentProjectVersion(context.Background()).GetCurrentProjectVersionParams(getCurrentProjectVersionParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetCurrentProjectVersion``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetCurrentProjectVersion`: GetCurrentProjectVersionResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetCurrentProjectVersion`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetCurrentProjectVersion(context.Background()).GetCurrentProjectVersionParams(getCurrentProjectVersionParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetCurrentProjectVersion``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetCurrentProjectVersion`: GetCurrentProjectVersionResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetCurrentProjectVersion`: %v\n", resp)
 }
 ```
 
@@ -3339,24 +3196,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getDashboardParams := *openapiclient.NewGetDashboardParams("DashboardId_example", "ProjectId_example") // GetDashboardParams | 
+	getDashboardParams := *openapiclient.NewGetDashboardParams("DashboardId_example", "ProjectId_example") // GetDashboardParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetDashboard(context.Background()).GetDashboardParams(getDashboardParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetDashboard``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetDashboard`: GetDashboardResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetDashboard`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetDashboard(context.Background()).GetDashboardParams(getDashboardParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetDashboard``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetDashboard`: GetDashboardResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetDashboard`: %v\n", resp)
 }
 ```
 
@@ -3403,24 +3260,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getDashletFieldsParams := *openapiclient.NewGetDashletFieldsParams("ProjectId_example", []string{"SessionRunIds_example"}) // GetDashletFieldsParams | 
+	getDashletFieldsParams := *openapiclient.NewGetDashletFieldsParams("ProjectId_example", []string{"SessionRunIds_example"}) // GetDashletFieldsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetDashletFields(context.Background()).GetDashletFieldsParams(getDashletFieldsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetDashletFields``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetDashletFields`: GetDashletFieldsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetDashletFields`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetDashletFields(context.Background()).GetDashletFieldsParams(getDashletFieldsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetDashletFields``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetDashletFields`: GetDashletFieldsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetDashletFields`: %v\n", resp)
 }
 ```
 
@@ -3455,257 +3312,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetDatasetVersion
-
-> GetDatasetVersionResponse GetDatasetVersion(ctx).GetDatasetVersionParams(getDatasetVersionParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    getDatasetVersionParams := *openapiclient.NewGetDatasetVersionParams("DatasetVersionId_example") // GetDatasetVersionParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetDatasetVersion(context.Background()).GetDatasetVersionParams(getDatasetVersionParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetDatasetVersion``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetDatasetVersion`: GetDatasetVersionResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetDatasetVersion`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetDatasetVersionRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getDatasetVersionParams** | [**GetDatasetVersionParams**](GetDatasetVersionParams.md) |  | 
-
-### Return type
-
-[**GetDatasetVersionResponse**](GetDatasetVersionResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GetDatasetVersionUploadUrl
-
-> DatasetVersionUploadUrlResponse GetDatasetVersionUploadUrl(ctx).GetDatasetVersionUploadUrlParams(getDatasetVersionUploadUrlParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    getDatasetVersionUploadUrlParams := *openapiclient.NewGetDatasetVersionUploadUrlParams("DatasetId_example") // GetDatasetVersionUploadUrlParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetDatasetVersionUploadUrl(context.Background()).GetDatasetVersionUploadUrlParams(getDatasetVersionUploadUrlParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetDatasetVersionUploadUrl``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetDatasetVersionUploadUrl`: DatasetVersionUploadUrlResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetDatasetVersionUploadUrl`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetDatasetVersionUploadUrlRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getDatasetVersionUploadUrlParams** | [**GetDatasetVersionUploadUrlParams**](GetDatasetVersionUploadUrlParams.md) |  | 
-
-### Return type
-
-[**DatasetVersionUploadUrlResponse**](DatasetVersionUploadUrlResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GetDatasetVersions
-
-> GetDatasetVersionsResponse GetDatasetVersions(ctx).GetDatasetVersionsParams(getDatasetVersionsParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    getDatasetVersionsParams := *openapiclient.NewGetDatasetVersionsParams("DatasetId_example") // GetDatasetVersionsParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetDatasetVersions(context.Background()).GetDatasetVersionsParams(getDatasetVersionsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetDatasetVersions``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetDatasetVersions`: GetDatasetVersionsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetDatasetVersions`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetDatasetVersionsRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getDatasetVersionsParams** | [**GetDatasetVersionsParams**](GetDatasetVersionsParams.md) |  | 
-
-### Return type
-
-[**GetDatasetVersionsResponse**](GetDatasetVersionsResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GetDatasets
-
-> GetDatasetsResponse GetDatasets(ctx).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetDatasets(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetDatasets``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetDatasets`: GetDatasetsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetDatasets`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-This endpoint does not need any parameter.
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetDatasetsRequest struct via the builder pattern
-
-
-### Return type
-
-[**GetDatasetsResponse**](GetDatasetsResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## GetDownloadSignedUrl
 
 > GetDownloadSignedUrlResponse GetDownloadSignedUrl(ctx).GetDownloadSignedUrlParams(getDownloadSignedUrlParams).Execute()
@@ -3718,24 +3324,24 @@ Other parameters are passed through a pointer to a apiGetDatasetsRequest struct 
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getDownloadSignedUrlParams := *openapiclient.NewGetDownloadSignedUrlParams("FileName_example") // GetDownloadSignedUrlParams | 
+	getDownloadSignedUrlParams := *openapiclient.NewGetDownloadSignedUrlParams("FileName_example") // GetDownloadSignedUrlParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetDownloadSignedUrl(context.Background()).GetDownloadSignedUrlParams(getDownloadSignedUrlParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetDownloadSignedUrl``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetDownloadSignedUrl`: GetDownloadSignedUrlResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetDownloadSignedUrl`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetDownloadSignedUrl(context.Background()).GetDownloadSignedUrlParams(getDownloadSignedUrlParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetDownloadSignedUrl``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetDownloadSignedUrl`: GetDownloadSignedUrlResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetDownloadSignedUrl`: %v\n", resp)
 }
 ```
 
@@ -3782,23 +3388,23 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetEngineSettings(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetEngineSettings``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetEngineSettings`: SettingsAndValuesWrapper
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetEngineSettings`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetEngineSettings(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetEngineSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetEngineSettings`: SettingsAndValuesWrapper
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetEngineSettings`: %v\n", resp)
 }
 ```
 
@@ -3841,23 +3447,23 @@ Other parameters are passed through a pointer to a apiGetEngineSettingsRequest s
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetEnvironmentInfo(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetEnvironmentInfo``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetEnvironmentInfo`: GetEnvironmentInfoResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetEnvironmentInfo`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetEnvironmentInfo(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetEnvironmentInfo``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetEnvironmentInfo`: GetEnvironmentInfoResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetEnvironmentInfo`: %v\n", resp)
 }
 ```
 
@@ -3900,24 +3506,24 @@ Other parameters are passed through a pointer to a apiGetEnvironmentInfoRequest 
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getExportedSessionRunJobsParams := *openapiclient.NewGetExportedSessionRunJobsParams("SessionId_example", "ProjectId_example") // GetExportedSessionRunJobsParams | 
+	getExportedSessionRunJobsParams := *openapiclient.NewGetExportedSessionRunJobsParams("SessionId_example", "ProjectId_example") // GetExportedSessionRunJobsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetExportedSessionJobs(context.Background()).GetExportedSessionRunJobsParams(getExportedSessionRunJobsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetExportedSessionJobs``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetExportedSessionJobs`: GetExportedSessionRunJobsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetExportedSessionJobs`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetExportedSessionJobs(context.Background()).GetExportedSessionRunJobsParams(getExportedSessionRunJobsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetExportedSessionJobs``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetExportedSessionJobs`: GetExportedSessionRunJobsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetExportedSessionJobs`: %v\n", resp)
 }
 ```
 
@@ -3964,24 +3570,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    body := ConfusionMatrixParams(987) // ConfusionMatrixParams | 
+	body := ConfusionMatrixParams(987) // ConfusionMatrixParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetF1Score(context.Background()).Body(body).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetF1Score``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetF1Score`: MultiChartsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetF1Score`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetF1Score(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetF1Score``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetF1Score`: MultiChartsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetF1Score`: %v\n", resp)
 }
 ```
 
@@ -4028,24 +3634,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    fetchSimilarRequestParams := *openapiclient.NewFetchSimilarRequestParams("SessionRunId_example", "ProjectId_example", float64(123), []openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType())}, float64(123), "Digest_example") // FetchSimilarRequestParams | 
+	fetchSimilarRequestParams := *openapiclient.NewFetchSimilarRequestParams("SessionRunId_example", "ProjectId_example", float64(123), []openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType())}, float64(123), "Digest_example") // FetchSimilarRequestParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetFetchSimilarStatus(context.Background()).FetchSimilarRequestParams(fetchSimilarRequestParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetFetchSimilarStatus``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetFetchSimilarStatus`: FetchSimilarResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetFetchSimilarStatus`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetFetchSimilarStatus(context.Background()).FetchSimilarRequestParams(fetchSimilarRequestParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetFetchSimilarStatus``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetFetchSimilarStatus`: FetchSimilarResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetFetchSimilarStatus`: %v\n", resp)
 }
 ```
 
@@ -4092,24 +3698,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getFieldsValuesRequest := *openapiclient.NewGetFieldsValuesRequest([]openapiclient.ESFilter{*openapiclient.NewESFilter(openapiclient.FilterOperatorType("between"), "Field_example", *openapiclient.NewESFilterValue())}, []string{"SessionRunIds_example"}, []openapiclient.QueryFieldValues{*openapiclient.NewQueryFieldValues("Type_example", "Field_example")}, "ProjectId_example") // GetFieldsValuesRequest | 
+	getFieldsValuesRequest := *openapiclient.NewGetFieldsValuesRequest([]openapiclient.ESFilter{*openapiclient.NewESFilter(openapiclient.FilterOperatorType("between"), "Field_example", *openapiclient.NewESFilterValue())}, []string{"SessionRunIds_example"}, []openapiclient.QueryFieldValues{*openapiclient.NewQueryFieldValues("Type_example", "Field_example")}, "ProjectId_example") // GetFieldsValuesRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetFieldsValues(context.Background()).GetFieldsValuesRequest(getFieldsValuesRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetFieldsValues``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetFieldsValues`: GetFieldsValuesResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetFieldsValues`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetFieldsValues(context.Background()).GetFieldsValuesRequest(getFieldsValuesRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetFieldsValues``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetFieldsValues`: GetFieldsValuesResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetFieldsValues`: %v\n", resp)
 }
 ```
 
@@ -4156,24 +3762,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getGeneratedDashletsParams := *openapiclient.NewGetGeneratedDashletsParams("ProjectId_example", []string{"SessionRunIds_example"}) // GetGeneratedDashletsParams | 
+	getGeneratedDashletsParams := *openapiclient.NewGetGeneratedDashletsParams("ProjectId_example", []string{"SessionRunIds_example"}) // GetGeneratedDashletsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetGeneratedDashlets(context.Background()).GetGeneratedDashletsParams(getGeneratedDashletsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetGeneratedDashlets``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetGeneratedDashlets`: GetGeneratedDashletsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetGeneratedDashlets`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetGeneratedDashlets(context.Background()).GetGeneratedDashletsParams(getGeneratedDashletsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetGeneratedDashlets``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetGeneratedDashlets`: GetGeneratedDashletsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetGeneratedDashlets`: %v\n", resp)
 }
 ```
 
@@ -4208,6 +3814,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetGeneratedLabels
+
+> GeneratedLabelsResponse GetGeneratedLabels(ctx).GetGeneratedLabelsParams(getGeneratedLabelsParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getGeneratedLabelsParams := *openapiclient.NewGetGeneratedLabelsParams("ProjectId_example") // GetGeneratedLabelsParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetGeneratedLabels(context.Background()).GetGeneratedLabelsParams(getGeneratedLabelsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetGeneratedLabels``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetGeneratedLabels`: GeneratedLabelsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetGeneratedLabels`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetGeneratedLabelsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getGeneratedLabelsParams** | [**GetGeneratedLabelsParams**](GetGeneratedLabelsParams.md) |  | 
+
+### Return type
+
+[**GeneratedLabelsResponse**](GeneratedLabelsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetGenericBaseImageTypes
 
 > GetGenericBaseImageTypesResponse GetGenericBaseImageTypes(ctx).Execute()
@@ -4220,23 +3890,23 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetGenericBaseImageTypes(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetGenericBaseImageTypes``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetGenericBaseImageTypes`: GetGenericBaseImageTypesResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetGenericBaseImageTypes`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetGenericBaseImageTypes(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetGenericBaseImageTypes``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetGenericBaseImageTypes`: GetGenericBaseImageTypesResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetGenericBaseImageTypes`: %v\n", resp)
 }
 ```
 
@@ -4279,24 +3949,24 @@ Other parameters are passed through a pointer to a apiGetGenericBaseImageTypesRe
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    heatmapChartsParams := *openapiclient.NewHeatmapChartsParams("ProjectId_example", *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), *openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average")), []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, false) // HeatmapChartsParams | 
+	heatmapChartsParams := *openapiclient.NewHeatmapChartsParams("ProjectId_example", *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), *openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average")), []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, false) // HeatmapChartsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetHeatmapChart(context.Background()).HeatmapChartsParams(heatmapChartsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetHeatmapChart``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetHeatmapChart`: MultiChartsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetHeatmapChart`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetHeatmapChart(context.Background()).HeatmapChartsParams(heatmapChartsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetHeatmapChart``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetHeatmapChart`: MultiChartsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetHeatmapChart`: %v\n", resp)
 }
 ```
 
@@ -4343,24 +4013,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getIssueFileUploadSignedUrl := *openapiclient.NewGetIssueFileUploadSignedUrl("FileName_example", "ProjectId_example", "IssueId_example") // GetIssueFileUploadSignedUrl | 
+	getIssueFileUploadSignedUrl := *openapiclient.NewGetIssueFileUploadSignedUrl("FileName_example", "ProjectId_example", "IssueId_example") // GetIssueFileUploadSignedUrl | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetIssueFileUploadSignedUrl(context.Background()).GetIssueFileUploadSignedUrl(getIssueFileUploadSignedUrl).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetIssueFileUploadSignedUrl``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetIssueFileUploadSignedUrl`: IssueFileUploadSignedUrl
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetIssueFileUploadSignedUrl`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetIssueFileUploadSignedUrl(context.Background()).GetIssueFileUploadSignedUrl(getIssueFileUploadSignedUrl).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetIssueFileUploadSignedUrl``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetIssueFileUploadSignedUrl`: IssueFileUploadSignedUrl
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetIssueFileUploadSignedUrl`: %v\n", resp)
 }
 ```
 
@@ -4407,24 +4077,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getJobLogsParams := *openapiclient.NewGetJobLogsParams("JobId_example") // GetJobLogsParams | 
+	getJobLogsParams := *openapiclient.NewGetJobLogsParams("JobId_example") // GetJobLogsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetJobLogs(context.Background()).GetJobLogsParams(getJobLogsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetJobLogs``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetJobLogs`: GetJobLogsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetJobLogs`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetJobLogs(context.Background()).GetJobLogsParams(getJobLogsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetJobLogs``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetJobLogs`: GetJobLogsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetJobLogs`: %v\n", resp)
 }
 ```
 
@@ -4459,70 +4129,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetLatestDatasetVersion
-
-> GetLatestDatasetVersionResponse GetLatestDatasetVersion(ctx).GetLatestDatasetVersionParams(getLatestDatasetVersionParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    getLatestDatasetVersionParams := *openapiclient.NewGetLatestDatasetVersionParams("DatasetId_example") // GetLatestDatasetVersionParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetLatestDatasetVersion(context.Background()).GetLatestDatasetVersionParams(getLatestDatasetVersionParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetLatestDatasetVersion``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetLatestDatasetVersion`: GetLatestDatasetVersionResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetLatestDatasetVersion`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetLatestDatasetVersionRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getLatestDatasetVersionParams** | [**GetLatestDatasetVersionParams**](GetLatestDatasetVersionParams.md) |  | 
-
-### Return type
-
-[**GetLatestDatasetVersionResponse**](GetLatestDatasetVersionResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## GetLatestExportedProject
 
 > LatestExportedProject GetLatestExportedProject(ctx).GetLatestExportedProjectParams(getLatestExportedProjectParams).Execute()
@@ -4535,24 +4141,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getLatestExportedProjectParams := *openapiclient.NewGetLatestExportedProjectParams("ProjectId_example") // GetLatestExportedProjectParams | 
+	getLatestExportedProjectParams := *openapiclient.NewGetLatestExportedProjectParams("ProjectId_example") // GetLatestExportedProjectParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetLatestExportedProject(context.Background()).GetLatestExportedProjectParams(getLatestExportedProjectParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetLatestExportedProject``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetLatestExportedProject`: LatestExportedProject
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetLatestExportedProject`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetLatestExportedProject(context.Background()).GetLatestExportedProjectParams(getLatestExportedProjectParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetLatestExportedProject``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetLatestExportedProject`: LatestExportedProject
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetLatestExportedProject`: %v\n", resp)
 }
 ```
 
@@ -4599,23 +4205,23 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetMachineTypes(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetMachineTypes``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetMachineTypes`: GetMachineTypesResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetMachineTypes`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetMachineTypes(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetMachineTypes``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetMachineTypes`: GetMachineTypesResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetMachineTypes`: %v\n", resp)
 }
 ```
 
@@ -4658,23 +4264,23 @@ Other parameters are passed through a pointer to a apiGetMachineTypesRequest str
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetMaxActiveUsers(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetMaxActiveUsers``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetMaxActiveUsers`: GetMaxActiveUsersResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetMaxActiveUsers`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetMaxActiveUsers(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetMaxActiveUsers``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetMaxActiveUsers`: GetMaxActiveUsersResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetMaxActiveUsers`: %v\n", resp)
 }
 ```
 
@@ -4717,24 +4323,24 @@ Other parameters are passed through a pointer to a apiGetMaxActiveUsersRequest s
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    confusionMatrixParams := *openapiclient.NewConfusionMatrixParams("ProjectId_example", []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), "CustomMetricName_example") // ConfusionMatrixParams | 
+	confusionMatrixParams := *openapiclient.NewConfusionMatrixParams("ProjectId_example", []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), "CustomMetricName_example") // ConfusionMatrixParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetMeanAveragePrecision(context.Background()).ConfusionMatrixParams(confusionMatrixParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetMeanAveragePrecision``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetMeanAveragePrecision`: MultiChartsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetMeanAveragePrecision`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetMeanAveragePrecision(context.Background()).ConfusionMatrixParams(confusionMatrixParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetMeanAveragePrecision``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetMeanAveragePrecision`: MultiChartsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetMeanAveragePrecision`: %v\n", resp)
 }
 ```
 
@@ -4781,23 +4387,23 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetNotifications(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetNotifications``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetNotifications`: GetNotificationsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetNotifications`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetNotifications(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetNotifications``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetNotifications`: GetNotificationsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetNotifications`: %v\n", resp)
 }
 ```
 
@@ -4840,24 +4446,24 @@ Other parameters are passed through a pointer to a apiGetNotificationsRequest st
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    populationExplorationParams := *openapiclient.NewPopulationExplorationParams("SessionRunId_example", "ProjectId_example", float64(123), float64(123), "Digest_example", *openapiclient.NewPopulationExplorationDisplayParams(float64(123), []string{"BalanceBy_example"}, false, openapiclient.ReductionAlgorithm("TSNE"))) // PopulationExplorationParams | 
+	populationExplorationParams := *openapiclient.NewPopulationExplorationParams("SessionRunId_example", "ProjectId_example", float64(123), float64(123), "Digest_example", float64(123), []string{"BalanceBy_example"}, false, openapiclient.ReductionAlgorithm("TSNE")) // PopulationExplorationParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetPopulationExplorationStatus(context.Background()).PopulationExplorationParams(populationExplorationParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetPopulationExplorationStatus``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetPopulationExplorationStatus`: PopulationExplorationResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetPopulationExplorationStatus`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetPopulationExplorationStatus(context.Background()).PopulationExplorationParams(populationExplorationParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetPopulationExplorationStatus``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetPopulationExplorationStatus`: PopulationExplorationResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetPopulationExplorationStatus`: %v\n", resp)
 }
 ```
 
@@ -4904,24 +4510,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    body := MultiThresholdConfusionMatrixParams(987) // MultiThresholdConfusionMatrixParams | 
+	body := MultiThresholdConfusionMatrixParams(987) // MultiThresholdConfusionMatrixParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetPrCurve(context.Background()).Body(body).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetPrCurve``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetPrCurve`: MultiChartsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetPrCurve`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetPrCurve(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetPrCurve``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetPrCurve`: MultiChartsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetPrCurve`: %v\n", resp)
 }
 ```
 
@@ -4968,24 +4574,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    body := ConfusionMatrixParams(987) // ConfusionMatrixParams | 
+	body := ConfusionMatrixParams(987) // ConfusionMatrixParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetPrecisionScore(context.Background()).Body(body).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetPrecisionScore``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetPrecisionScore`: MultiChartsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetPrecisionScore`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetPrecisionScore(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetPrecisionScore``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetPrecisionScore`: MultiChartsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetPrecisionScore`: %v\n", resp)
 }
 ```
 
@@ -5032,24 +4638,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getProjectDashboardsParams := *openapiclient.NewGetProjectDashboardsParams("ProjectId_example") // GetProjectDashboardsParams | 
+	getProjectDashboardsParams := *openapiclient.NewGetProjectDashboardsParams("ProjectId_example") // GetProjectDashboardsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetProjectDashboards(context.Background()).GetProjectDashboardsParams(getProjectDashboardsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetProjectDashboards``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetProjectDashboards`: GetProjectDashboardsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetProjectDashboards`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetProjectDashboards(context.Background()).GetProjectDashboardsParams(getProjectDashboardsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetProjectDashboards``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetProjectDashboards`: GetProjectDashboardsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetProjectDashboards`: %v\n", resp)
 }
 ```
 
@@ -5096,24 +4702,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getProjectIssuesParams := *openapiclient.NewGetProjectIssuesParams("ProjectId_example") // GetProjectIssuesParams | 
+	getProjectIssuesParams := *openapiclient.NewGetProjectIssuesParams("ProjectId_example") // GetProjectIssuesParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetProjectIssues(context.Background()).GetProjectIssuesParams(getProjectIssuesParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetProjectIssues``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetProjectIssues`: GetProjectIssuesResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetProjectIssues`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetProjectIssues(context.Background()).GetProjectIssuesParams(getProjectIssuesParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetProjectIssues``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetProjectIssues`: GetProjectIssuesResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetProjectIssues`: %v\n", resp)
 }
 ```
 
@@ -5160,24 +4766,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getProjectVersionsParams := *openapiclient.NewGetProjectVersionsParams("ProjectId_example") // GetProjectVersionsParams | 
+	getProjectVersionsParams := *openapiclient.NewGetProjectVersionsParams("ProjectId_example") // GetProjectVersionsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetProjectSlimVersions(context.Background()).GetProjectVersionsParams(getProjectVersionsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetProjectSlimVersions``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetProjectSlimVersions`: GetProjectSlimVersionsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetProjectSlimVersions`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetProjectSlimVersions(context.Background()).GetProjectVersionsParams(getProjectVersionsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetProjectSlimVersions``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetProjectSlimVersions`: GetProjectSlimVersionsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetProjectSlimVersions`: %v\n", resp)
 }
 ```
 
@@ -5224,23 +4830,23 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetProjects(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetProjects``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetProjects`: GetProjectsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetProjects`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetProjects(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetProjects``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetProjects`: GetProjectsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetProjects`: %v\n", resp)
 }
 ```
 
@@ -5283,24 +4889,24 @@ Other parameters are passed through a pointer to a apiGetProjectsRequest struct 
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    body := ConfusionMatrixParams(987) // ConfusionMatrixParams | 
+	body := ConfusionMatrixParams(987) // ConfusionMatrixParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetRecallScore(context.Background()).Body(body).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetRecallScore``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetRecallScore`: MultiChartsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetRecallScore`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetRecallScore(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetRecallScore``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetRecallScore`: MultiChartsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetRecallScore`: %v\n", resp)
 }
 ```
 
@@ -5347,24 +4953,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    recentTeamSessionsRequestParams := *openapiclient.NewRecentTeamSessionsRequestParams(float64(123), "ProjectId_example") // RecentTeamSessionsRequestParams | 
+	recentTeamSessionsRequestParams := *openapiclient.NewRecentTeamSessionsRequestParams(float64(123), "ProjectId_example") // RecentTeamSessionsRequestParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetRecentTeamSessions(context.Background()).RecentTeamSessionsRequestParams(recentTeamSessionsRequestParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetRecentTeamSessions``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetRecentTeamSessions`: RecentSessionsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetRecentTeamSessions`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetRecentTeamSessions(context.Background()).RecentTeamSessionsRequestParams(recentTeamSessionsRequestParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetRecentTeamSessions``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetRecentTeamSessions`: RecentSessionsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetRecentTeamSessions`: %v\n", resp)
 }
 ```
 
@@ -5411,24 +5017,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    body := RocConfusionMatrixParams(987) // RocConfusionMatrixParams | 
+	body := RocConfusionMatrixParams(987) // RocConfusionMatrixParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetRoc(context.Background()).Body(body).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetRoc``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetRoc`: MultiChartsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetRoc`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetRoc(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetRoc``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetRoc`: MultiChartsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetRoc`: %v\n", resp)
 }
 ```
 
@@ -5475,24 +5081,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getSampleCollectionsParams := *openapiclient.NewGetSampleCollectionsParams("ProjectId_example") // GetSampleCollectionsParams | 
+	getSampleCollectionsParams := *openapiclient.NewGetSampleCollectionsParams("ProjectId_example") // GetSampleCollectionsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetSampleCollections(context.Background()).GetSampleCollectionsParams(getSampleCollectionsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSampleCollections``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetSampleCollections`: GetSampleCollectionsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSampleCollections`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetSampleCollections(context.Background()).GetSampleCollectionsParams(getSampleCollectionsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetSampleCollections``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSampleCollections`: GetSampleCollectionsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetSampleCollections`: %v\n", resp)
 }
 ```
 
@@ -5539,24 +5145,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getSampleVisualizationsPathsParams := *openapiclient.NewGetSampleVisualizationsPathsParams("ScatterSampleVisualizationsPrefix_example", "FileNameMatch_example", "SampleId_example") // GetSampleVisualizationsPathsParams | 
+	getSampleVisualizationsPathsParams := *openapiclient.NewGetSampleVisualizationsPathsParams("ScatterSampleVisualizationsPrefix_example", "FileNameMatch_example", "SampleId_example") // GetSampleVisualizationsPathsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetSampleVisualizationsPath(context.Background()).GetSampleVisualizationsPathsParams(getSampleVisualizationsPathsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSampleVisualizationsPath``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetSampleVisualizationsPath`: GetSampleVisualizationsPathsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSampleVisualizationsPath`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetSampleVisualizationsPath(context.Background()).GetSampleVisualizationsPathsParams(getSampleVisualizationsPathsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetSampleVisualizationsPath``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSampleVisualizationsPath`: GetSampleVisualizationsPathsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetSampleVisualizationsPath`: %v\n", resp)
 }
 ```
 
@@ -5603,24 +5209,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getScatterSampleVisualizationsParams := *openapiclient.NewGetScatterSampleVisualizationsParams("SessionRunId_example", "ProjectId_example", float64(123)) // GetScatterSampleVisualizationsParams | 
+	getScatterSampleVisualizationsParams := *openapiclient.NewGetScatterSampleVisualizationsParams("SessionRunId_example", "ProjectId_example", float64(123)) // GetScatterSampleVisualizationsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetScatterSampleVisualizations(context.Background()).GetScatterSampleVisualizationsParams(getScatterSampleVisualizationsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetScatterSampleVisualizations``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetScatterSampleVisualizations`: GetScatterSampleVisualizationsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetScatterSampleVisualizations`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetScatterSampleVisualizations(context.Background()).GetScatterSampleVisualizationsParams(getScatterSampleVisualizationsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetScatterSampleVisualizations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetScatterSampleVisualizations`: GetScatterSampleVisualizationsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetScatterSampleVisualizations`: %v\n", resp)
 }
 ```
 
@@ -5667,23 +5273,23 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetSecretManagerList(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSecretManagerList``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetSecretManagerList`: GetSecretManagerListResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSecretManagerList`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetSecretManagerList(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetSecretManagerList``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSecretManagerList`: GetSecretManagerListResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetSecretManagerList`: %v\n", resp)
 }
 ```
 
@@ -5726,24 +5332,24 @@ Other parameters are passed through a pointer to a apiGetSecretManagerListReques
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getSessionRunsVisualizationsParams := *openapiclient.NewGetSessionRunsVisualizationsParams([]string{"SessionRunIds_example"}, "ProjectId_example") // GetSessionRunsVisualizationsParams | 
+	getSessionRunsVisualizationsParams := *openapiclient.NewGetSessionRunsVisualizationsParams([]string{"SessionRunIds_example"}, "ProjectId_example") // GetSessionRunsVisualizationsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetSessionRunsVisualizations(context.Background()).GetSessionRunsVisualizationsParams(getSessionRunsVisualizationsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSessionRunsVisualizations``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetSessionRunsVisualizations`: GetSessionRunsVisualizationsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSessionRunsVisualizations`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetSessionRunsVisualizations(context.Background()).GetSessionRunsVisualizationsParams(getSessionRunsVisualizationsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetSessionRunsVisualizations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSessionRunsVisualizations`: GetSessionRunsVisualizationsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetSessionRunsVisualizations`: %v\n", resp)
 }
 ```
 
@@ -5790,24 +5396,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getSessionTestResultsRequest := *openapiclient.NewGetSessionTestResultsRequest("ProjectId_example", []openapiclient.SessionTestData{*openapiclient.NewSessionTestData("SessionRunId_example", "ProjectId_example", float64(123))}) // GetSessionTestResultsRequest | 
+	getSessionTestResultsRequest := *openapiclient.NewGetSessionTestResultsRequest("ProjectId_example", []openapiclient.SessionTestData{*openapiclient.NewSessionTestData("SessionRunId_example", "ProjectId_example", float64(123))}) // GetSessionTestResultsRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetSessionTestResult(context.Background()).GetSessionTestResultsRequest(getSessionTestResultsRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSessionTestResult``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetSessionTestResult`: []AllSessionsTestResults
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSessionTestResult`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetSessionTestResult(context.Background()).GetSessionTestResultsRequest(getSessionTestResultsRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetSessionTestResult``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSessionTestResult`: []AllSessionsTestResults
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetSessionTestResult`: %v\n", resp)
 }
 ```
 
@@ -5854,24 +5460,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    sessionHashRequestParams := *openapiclient.NewSessionHashRequestParams("Hash_example", "ProjectId_example") // SessionHashRequestParams | 
+	sessionHashRequestParams := *openapiclient.NewSessionHashRequestParams("Hash_example", "ProjectId_example") // SessionHashRequestParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetSessionsByHash(context.Background()).SessionHashRequestParams(sessionHashRequestParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSessionsByHash``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetSessionsByHash`: SessionsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSessionsByHash`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetSessionsByHash(context.Background()).SessionHashRequestParams(sessionHashRequestParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetSessionsByHash``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSessionsByHash`: SessionsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetSessionsByHash`: %v\n", resp)
 }
 ```
 
@@ -5918,24 +5524,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    sessionVersionIdRequestParams := *openapiclient.NewSessionVersionIdRequestParams("VersionId_example", "ProjectId_example") // SessionVersionIdRequestParams | 
+	sessionVersionIdRequestParams := *openapiclient.NewSessionVersionIdRequestParams("VersionId_example", "ProjectId_example") // SessionVersionIdRequestParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetSessionsByVersionId(context.Background()).SessionVersionIdRequestParams(sessionVersionIdRequestParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSessionsByVersionId``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetSessionsByVersionId`: SessionsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSessionsByVersionId`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetSessionsByVersionId(context.Background()).SessionVersionIdRequestParams(sessionVersionIdRequestParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetSessionsByVersionId``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSessionsByVersionId`: SessionsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetSessionsByVersionId`: %v\n", resp)
 }
 ```
 
@@ -5982,24 +5588,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getSessionsEpochsRequest := *openapiclient.NewGetSessionsEpochsRequest("ProjectId_example", []string{"SessionIds_example"}) // GetSessionsEpochsRequest | 
+	getSessionsEpochsRequest := *openapiclient.NewGetSessionsEpochsRequest("ProjectId_example", []string{"SessionIds_example"}) // GetSessionsEpochsRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetSessionsEpochs(context.Background()).GetSessionsEpochsRequest(getSessionsEpochsRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSessionsEpochs``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetSessionsEpochs`: GetSessionEpochsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSessionsEpochs`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetSessionsEpochs(context.Background()).GetSessionsEpochsRequest(getSessionsEpochsRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetSessionsEpochs``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSessionsEpochs`: GetSessionEpochsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetSessionsEpochs`: %v\n", resp)
 }
 ```
 
@@ -6046,24 +5652,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getSignedUrlParams := *openapiclient.NewGetSignedUrlParams("FileName_example", float64(123), openapiclient.HttpMethods("GET")) // GetSignedUrlParams | 
+	getSignedUrlParams := *openapiclient.NewGetSignedUrlParams("FileName_example", float64(123), openapiclient.HttpMethods("GET")) // GetSignedUrlParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetSignedUrl(context.Background()).GetSignedUrlParams(getSignedUrlParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSignedUrl``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetSignedUrl`: ExternalImportModelStorage
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSignedUrl`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetSignedUrl(context.Background()).GetSignedUrlParams(getSignedUrlParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetSignedUrl``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSignedUrl`: ExternalImportModelStorage
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetSignedUrl`: %v\n", resp)
 }
 ```
 
@@ -6110,24 +5716,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getSingleIssueParams := *openapiclient.NewGetSingleIssueParams("Cid_example", "ProjectId_example") // GetSingleIssueParams | 
+	getSingleIssueParams := *openapiclient.NewGetSingleIssueParams("Cid_example", "ProjectId_example") // GetSingleIssueParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetSingleIssue(context.Background()).GetSingleIssueParams(getSingleIssueParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSingleIssue``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetSingleIssue`: Issue
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSingleIssue`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetSingleIssue(context.Background()).GetSingleIssueParams(getSingleIssueParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetSingleIssue``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSingleIssue`: Issue
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetSingleIssue`: %v\n", resp)
 }
 ```
 
@@ -6174,24 +5780,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getSingleSessionTestRequest := *openapiclient.NewGetSingleSessionTestRequest("Cid_example", "ProjectId_example") // GetSingleSessionTestRequest | 
+	getSingleSessionTestRequest := *openapiclient.NewGetSingleSessionTestRequest("Cid_example", "ProjectId_example") // GetSingleSessionTestRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetSingleSessionTest(context.Background()).GetSingleSessionTestRequest(getSingleSessionTestRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSingleSessionTest``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetSingleSessionTest`: SessionTest
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSingleSessionTest`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetSingleSessionTest(context.Background()).GetSingleSessionTestRequest(getSingleSessionTestRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetSingleSessionTest``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSingleSessionTest`: SessionTest
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetSingleSessionTest`: %v\n", resp)
 }
 ```
 
@@ -6238,24 +5844,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getJobsFilterParams := *openapiclient.NewGetJobsFilterParams() // GetJobsFilterParams | 
+	getJobsFilterParams := *openapiclient.NewGetJobsFilterParams() // GetJobsFilterParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetSlimJobs(context.Background()).GetJobsFilterParams(getJobsFilterParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSlimJobs``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetSlimJobs`: GetSlimJobsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSlimJobs`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetSlimJobs(context.Background()).GetJobsFilterParams(getJobsFilterParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetSlimJobs``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSlimJobs`: GetSlimJobsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetSlimJobs`: %v\n", resp)
 }
 ```
 
@@ -6302,24 +5908,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getSlimVisualizationParams := *openapiclient.NewGetSlimVisualizationParams("VisualizationId_example", "ProjectId_example") // GetSlimVisualizationParams | 
+	getSlimVisualizationParams := *openapiclient.NewGetSlimVisualizationParams("VisualizationId_example", "ProjectId_example") // GetSlimVisualizationParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetSlimVisualization(context.Background()).GetSlimVisualizationParams(getSlimVisualizationParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetSlimVisualization``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetSlimVisualization`: GetSlimVisualizationResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetSlimVisualization`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetSlimVisualization(context.Background()).GetSlimVisualizationParams(getSlimVisualizationParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetSlimVisualization``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSlimVisualization`: GetSlimVisualizationResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetSlimVisualization`: %v\n", resp)
 }
 ```
 
@@ -6366,24 +5972,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getStateParams := *openapiclient.NewGetStateParams("ProjectId_example", "Digest_example") // GetStateParams | 
+	getStateParams := *openapiclient.NewGetStateParams("ProjectId_example", "Digest_example") // GetStateParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetState(context.Background()).GetStateParams(getStateParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetState``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetState`: GetStateResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetState`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetState(context.Background()).GetStateParams(getStateParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetState``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetState`: GetStateResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetState`: %v\n", resp)
 }
 ```
 
@@ -6430,24 +6036,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getStatisticsParams := *openapiclient.NewGetStatisticsParams("ProjectId_example") // GetStatisticsParams | 
+	getStatisticsParams := *openapiclient.NewGetStatisticsParams("ProjectId_example") // GetStatisticsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetStatistics(context.Background()).GetStatisticsParams(getStatisticsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetStatistics``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetStatistics`: GetStatisticsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetStatistics`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetStatistics(context.Background()).GetStatisticsParams(getStatisticsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetStatistics``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetStatistics`: GetStatisticsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetStatistics`: %v\n", resp)
 }
 ```
 
@@ -6494,24 +6100,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    genericDataQueryParams := *openapiclient.NewGenericDataQueryParams("ProjectId_example", []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, false, []openapiclient.Aggregations{*openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average"))}, []openapiclient.SplitAgg{*openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous"))}) // GenericDataQueryParams | 
+	genericDataQueryParams := *openapiclient.NewGenericDataQueryParams("ProjectId_example", []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, false, []openapiclient.Aggregations{*openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average"))}, []openapiclient.SplitAgg{*openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous"))}) // GenericDataQueryParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetTableChart(context.Background()).GenericDataQueryParams(genericDataQueryParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetTableChart``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetTableChart`: MultiChartsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetTableChart`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetTableChart(context.Background()).GenericDataQueryParams(genericDataQueryParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetTableChart``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetTableChart`: MultiChartsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetTableChart`: %v\n", resp)
 }
 ```
 
@@ -6558,24 +6164,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getJobsFilterParams := *openapiclient.NewGetJobsFilterParams() // GetJobsFilterParams | 
+	getJobsFilterParams := *openapiclient.NewGetJobsFilterParams() // GetJobsFilterParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetTeamJobs(context.Background()).GetJobsFilterParams(getJobsFilterParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetTeamJobs``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetTeamJobs`: GetJobsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetTeamJobs`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetTeamJobs(context.Background()).GetJobsFilterParams(getJobsFilterParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetTeamJobs``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetTeamJobs`: GetJobsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetTeamJobs`: %v\n", resp)
 }
 ```
 
@@ -6622,23 +6228,23 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetTeamSlimUserData(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetTeamSlimUserData``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetTeamSlimUserData`: GetTeamUsersResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetTeamSlimUserData`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetTeamSlimUserData(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetTeamSlimUserData``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetTeamSlimUserData`: GetTeamUsersResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetTeamSlimUserData`: %v\n", resp)
 }
 ```
 
@@ -6681,23 +6287,23 @@ Other parameters are passed through a pointer to a apiGetTeamSlimUserDataRequest
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetTeams(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetTeams``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetTeams`: GetTeamsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetTeams`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetTeams(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetTeams``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetTeams`: GetTeamsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetTeams`: %v\n", resp)
 }
 ```
 
@@ -6740,24 +6346,24 @@ Other parameters are passed through a pointer to a apiGetTeamsRequest struct via
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getUploadModelSignedUrlRequest := *openapiclient.NewGetUploadModelSignedUrlRequest(float64(123), "ExperimentId_example", openapiclient.UploadModelFileType("onnx"), "VersionId_example", "ProjectId_example") // GetUploadModelSignedUrlRequest | 
+	getUploadModelSignedUrlRequest := *openapiclient.NewGetUploadModelSignedUrlRequest(float64(123), "ExperimentId_example", openapiclient.UploadModelFileType("onnx"), "VersionId_example", "ProjectId_example") // GetUploadModelSignedUrlRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetUploadModelSignedUrl(context.Background()).GetUploadModelSignedUrlRequest(getUploadModelSignedUrlRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetUploadModelSignedUrl``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetUploadModelSignedUrl`: ExternalImportModelStorage
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetUploadModelSignedUrl`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetUploadModelSignedUrl(context.Background()).GetUploadModelSignedUrlRequest(getUploadModelSignedUrlRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetUploadModelSignedUrl``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetUploadModelSignedUrl`: ExternalImportModelStorage
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetUploadModelSignedUrl`: %v\n", resp)
 }
 ```
 
@@ -6804,24 +6410,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getUploadSignedUrlParams := *openapiclient.NewGetUploadSignedUrlParams("FileName_example") // GetUploadSignedUrlParams | 
+	getUploadSignedUrlParams := *openapiclient.NewGetUploadSignedUrlParams("FileName_example") // GetUploadSignedUrlParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetUploadSignedUrl(context.Background()).GetUploadSignedUrlParams(getUploadSignedUrlParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetUploadSignedUrl``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetUploadSignedUrl`: ExternalImportModelStorage
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetUploadSignedUrl`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetUploadSignedUrl(context.Background()).GetUploadSignedUrlParams(getUploadSignedUrlParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetUploadSignedUrl``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetUploadSignedUrl`: ExternalImportModelStorage
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetUploadSignedUrl`: %v\n", resp)
 }
 ```
 
@@ -6856,70 +6462,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetValidateGraphProcessState
-
-> ValidateGraphResponse GetValidateGraphProcessState(ctx).GetValidateGraphProcessStateParams(getValidateGraphProcessStateParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    getValidateGraphProcessStateParams := *openapiclient.NewGetValidateGraphProcessStateParams("ProjectId_example", "Digest_example") // GetValidateGraphProcessStateParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetValidateGraphProcessState(context.Background()).GetValidateGraphProcessStateParams(getValidateGraphProcessStateParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetValidateGraphProcessState``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetValidateGraphProcessState`: ValidateGraphResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetValidateGraphProcessState`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetValidateGraphProcessStateRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getValidateGraphProcessStateParams** | [**GetValidateGraphProcessStateParams**](GetValidateGraphProcessStateParams.md) |  | 
-
-### Return type
-
-[**ValidateGraphResponse**](ValidateGraphResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## GetVisualization
 
 > Visualization GetVisualization(ctx).GetSlimVisualizationParams(getSlimVisualizationParams).Execute()
@@ -6932,24 +6474,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    getSlimVisualizationParams := *openapiclient.NewGetSlimVisualizationParams("VisualizationId_example", "ProjectId_example") // GetSlimVisualizationParams | 
+	getSlimVisualizationParams := *openapiclient.NewGetSlimVisualizationParams("VisualizationId_example", "ProjectId_example") // GetSlimVisualizationParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetVisualization(context.Background()).GetSlimVisualizationParams(getSlimVisualizationParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetVisualization``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetVisualization`: Visualization
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetVisualization`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetVisualization(context.Background()).GetSlimVisualizationParams(getSlimVisualizationParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetVisualization``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetVisualization`: Visualization
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetVisualization`: %v\n", resp)
 }
 ```
 
@@ -6996,24 +6538,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    multiChartsParams := *openapiclient.NewMultiChartsParams("ProjectId_example", *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), *openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average")), []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, false) // MultiChartsParams | 
+	multiChartsParams := *openapiclient.NewMultiChartsParams("ProjectId_example", *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), *openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average")), []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, false) // MultiChartsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetXYChart(context.Background()).MultiChartsParams(multiChartsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetXYChart``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetXYChart`: MultiChartsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetXYChart`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetXYChart(context.Background()).MultiChartsParams(multiChartsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetXYChart``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetXYChart`: MultiChartsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetXYChart`: %v\n", resp)
 }
 ```
 
@@ -7060,23 +6602,23 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.HealthCheck(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.HealthCheck``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `HealthCheck`: HealthCheckResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.HealthCheck`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.HealthCheck(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.HealthCheck``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `HealthCheck`: HealthCheckResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.HealthCheck`: %v\n", resp)
 }
 ```
 
@@ -7109,7 +6651,7 @@ No authorization required
 
 ## ImportExternalModel
 
-> ExternalImportModelStorageResponse ImportExternalModel(ctx).ImportExternalModelParams(importExternalModelParams).Execute()
+> RunImportModelResponse ImportExternalModel(ctx).ImportExternalModelParams(importExternalModelParams).Execute()
 
 
 
@@ -7119,24 +6661,24 @@ No authorization required
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    importExternalModelParams := *openapiclient.NewImportExternalModelParams("ProjectId_example", "SessionId_example", float64(123)) // ImportExternalModelParams | 
+	importExternalModelParams := *openapiclient.NewImportExternalModelParams("ProjectId_example", "SessionId_example", float64(123)) // ImportExternalModelParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.ImportExternalModel(context.Background()).ImportExternalModelParams(importExternalModelParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ImportExternalModel``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ImportExternalModel`: ExternalImportModelStorageResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ImportExternalModel`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ImportExternalModel(context.Background()).ImportExternalModelParams(importExternalModelParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ImportExternalModel``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ImportExternalModel`: RunImportModelResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ImportExternalModel`: %v\n", resp)
 }
 ```
 
@@ -7155,7 +6697,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ExternalImportModelStorageResponse**](ExternalImportModelStorageResponse.md)
+[**RunImportModelResponse**](RunImportModelResponse.md)
 
 ### Authorization
 
@@ -7173,7 +6715,7 @@ Name | Type | Description  | Notes
 
 ## ImportModel
 
-> ExternalImportModelStorageResponse ImportModel(ctx).ImportNewModelParams(importNewModelParams).Execute()
+> RunImportModelResponse ImportModel(ctx).ImportNewModelParams(importNewModelParams).Execute()
 
 
 
@@ -7183,24 +6725,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    importNewModelParams := *openapiclient.NewImportNewModelParams("ProjectId_example", "FileName_example", "ModelName_example", "VersionName_example", openapiclient.ImportModelType("JSON_TF2")) // ImportNewModelParams | 
+	importNewModelParams := *openapiclient.NewImportNewModelParams("ProjectId_example", "VersionId_example", *openapiclient.NewImportModelInfo("FileName_example", openapiclient.ImportModelType("JSON_TF2"))) // ImportNewModelParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.ImportModel(context.Background()).ImportNewModelParams(importNewModelParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ImportModel``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ImportModel`: ExternalImportModelStorageResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ImportModel`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ImportModel(context.Background()).ImportNewModelParams(importNewModelParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ImportModel``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ImportModel`: RunImportModelResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ImportModel`: %v\n", resp)
 }
 ```
 
@@ -7219,7 +6761,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ExternalImportModelStorageResponse**](ExternalImportModelStorageResponse.md)
+[**RunImportModelResponse**](RunImportModelResponse.md)
 
 ### Authorization
 
@@ -7247,24 +6789,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    importProjectRequest := *openapiclient.NewImportProjectRequest("Name_example", "Description_example", []string{"Tags_example"}, openapiclient.HubPublishPolicy("public"), "ImportUrl_example") // ImportProjectRequest | 
+	importProjectRequest := *openapiclient.NewImportProjectRequest("Name_example", "Description_example", []string{"Tags_example"}, openapiclient.HubPublishPolicy("public"), "ImportUrl_example") // ImportProjectRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.ImportProject(context.Background()).ImportProjectRequest(importProjectRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ImportProject``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ImportProject`: ImportProjectResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ImportProject`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ImportProject(context.Background()).ImportProjectRequest(importProjectRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ImportProject``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ImportProject`: ImportProjectResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ImportProject`: %v\n", resp)
 }
 ```
 
@@ -7311,24 +6853,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    initExperimentRequest := *openapiclient.NewInitExperimentRequest("ExperimentName_example") // InitExperimentRequest | 
+	initExperimentRequest := *openapiclient.NewInitExperimentRequest("ExperimentName_example", "CodeSnapshotId_example") // InitExperimentRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.InitExperiment(context.Background()).InitExperimentRequest(initExperimentRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.InitExperiment``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `InitExperiment`: InitExperimentResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.InitExperiment`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.InitExperiment(context.Background()).InitExperimentRequest(initExperimentRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.InitExperiment``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `InitExperiment`: InitExperimentResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.InitExperiment`: %v\n", resp)
 }
 ```
 
@@ -7375,23 +6917,23 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.KeyGen(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.KeyGen``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `KeyGen`: RotateApiKeyResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.KeyGen`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.KeyGen(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.KeyGen``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `KeyGen`: RotateApiKeyResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.KeyGen`: %v\n", resp)
 }
 ```
 
@@ -7434,24 +6976,24 @@ Other parameters are passed through a pointer to a apiKeyGenRequest struct via t
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    loadSessionParams := *openapiclient.NewLoadSessionParams("SessionId_example", "ProjectId_example") // LoadSessionParams | 
+	loadSessionParams := *openapiclient.NewLoadSessionParams("SessionId_example", "ProjectId_example") // LoadSessionParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.LoadModel(context.Background()).LoadSessionParams(loadSessionParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.LoadModel``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `LoadModel`: LoadSessionResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.LoadModel`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.LoadModel(context.Background()).LoadSessionParams(loadSessionParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.LoadModel``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `LoadModel`: LoadSessionResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.LoadModel`: %v\n", resp)
 }
 ```
 
@@ -7498,24 +7040,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    loadVersionParams := *openapiclient.NewLoadVersionParams("VersionId_example", "ProjectId_example") // LoadVersionParams | 
+	loadVersionParams := *openapiclient.NewLoadVersionParams("VersionId_example", "ProjectId_example") // LoadVersionParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.LoadVersion(context.Background()).LoadVersionParams(loadVersionParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.LoadVersion``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `LoadVersion`: LoadVersionResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.LoadVersion`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.LoadVersion(context.Background()).LoadVersionParams(loadVersionParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.LoadVersion``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `LoadVersion`: LoadVersionResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.LoadVersion`: %v\n", resp)
 }
 ```
 
@@ -7562,24 +7104,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    localLoginParams := *openapiclient.NewLocalLoginParams("Email_example", "Password_example") // LocalLoginParams | 
+	localLoginParams := *openapiclient.NewLocalLoginParams("Email_example", "Password_example") // LocalLoginParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.LocalAuth(context.Background()).LocalLoginParams(localLoginParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.LocalAuth``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `LocalAuth`: LocalLoginResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.LocalAuth`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.LocalAuth(context.Background()).LocalLoginParams(localLoginParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.LocalAuth``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `LocalAuth`: LocalLoginResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.LocalAuth`: %v\n", resp)
 }
 ```
 
@@ -7626,22 +7168,22 @@ No authorization required
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    logExternalEpochDataRequest := *openapiclient.NewLogExternalEpochDataRequest("ProjectId_example", "ExperimentId_example", float64(123), map[string]EpochMetricsValue{"key": *openapiclient.NewEpochMetricsValue("Value_example", "Type_example")}) // LogExternalEpochDataRequest | 
+	logExternalEpochDataRequest := *openapiclient.NewLogExternalEpochDataRequest("ProjectId_example", "ExperimentId_example", float64(123), map[string]EpochMetricsValue{"key": *openapiclient.NewEpochMetricsValue("Value_example", "Type_example")}) // LogExternalEpochDataRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.LogExternalEpochData(context.Background()).LogExternalEpochDataRequest(logExternalEpochDataRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.LogExternalEpochData``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.LogExternalEpochData(context.Background()).LogExternalEpochDataRequest(logExternalEpochDataRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.LogExternalEpochData``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -7688,24 +7230,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    loginParams := *openapiclient.NewLoginParams("Email_example", "UserName_example", "FirstName_example", "LastName_example") // LoginParams | 
+	loginParams := *openapiclient.NewLoginParams("Email_example", "UserName_example", "FirstName_example", "LastName_example") // LoginParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.Login(context.Background()).LoginParams(loginParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.Login``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `Login`: UserData
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.Login`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.Login(context.Background()).LoginParams(loginParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.Login``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `Login`: UserData
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.Login`: %v\n", resp)
 }
 ```
 
@@ -7752,21 +7294,21 @@ No authorization required
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.Logout(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.Logout``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.Logout(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.Logout``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -7797,9 +7339,9 @@ Other parameters are passed through a pointer to a apiLogoutRequest struct via t
 [[Back to README]](../README.md)
 
 
-## ModifyDatasetVersionNote
+## OverwriteModel
 
-> ModifyDatasetVersionNoteResponse ModifyDatasetVersionNote(ctx).ModifyDatasetVersionNoteParams(modifyDatasetVersionNoteParams).Execute()
+> RunImportModelResponse OverwriteModel(ctx).OverwriteModelParams(overwriteModelParams).Execute()
 
 
 
@@ -7809,24 +7351,24 @@ Other parameters are passed through a pointer to a apiLogoutRequest struct via t
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    modifyDatasetVersionNoteParams := *openapiclient.NewModifyDatasetVersionNoteParams("DatasetVersionId_example", "Note_example") // ModifyDatasetVersionNoteParams | 
+	overwriteModelParams := *openapiclient.NewOverwriteModelParams("ProjectId_example", "VersionId_example") // OverwriteModelParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.ModifyDatasetVersionNote(context.Background()).ModifyDatasetVersionNoteParams(modifyDatasetVersionNoteParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ModifyDatasetVersionNote``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ModifyDatasetVersionNote`: ModifyDatasetVersionNoteResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ModifyDatasetVersionNote`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.OverwriteModel(context.Background()).OverwriteModelParams(overwriteModelParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.OverwriteModel``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `OverwriteModel`: RunImportModelResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.OverwriteModel`: %v\n", resp)
 }
 ```
 
@@ -7836,16 +7378,16 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiModifyDatasetVersionNoteRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiOverwriteModelRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **modifyDatasetVersionNoteParams** | [**ModifyDatasetVersionNoteParams**](ModifyDatasetVersionNoteParams.md) |  | 
+ **overwriteModelParams** | [**OverwriteModelParams**](OverwriteModelParams.md) |  | 
 
 ### Return type
 
-[**ModifyDatasetVersionNoteResponse**](ModifyDatasetVersionNoteResponse.md)
+[**RunImportModelResponse**](RunImportModelResponse.md)
 
 ### Authorization
 
@@ -7873,24 +7415,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    populationExplorationParams := *openapiclient.NewPopulationExplorationParams("SessionRunId_example", "ProjectId_example", float64(123), float64(123), "Digest_example", *openapiclient.NewPopulationExplorationDisplayParams(float64(123), []string{"BalanceBy_example"}, false, openapiclient.ReductionAlgorithm("TSNE"))) // PopulationExplorationParams | 
+	populationExplorationParams := *openapiclient.NewPopulationExplorationParams("SessionRunId_example", "ProjectId_example", float64(123), float64(123), "Digest_example", float64(123), []string{"BalanceBy_example"}, false, openapiclient.ReductionAlgorithm("TSNE")) // PopulationExplorationParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.PopulationExploration(context.Background()).PopulationExplorationParams(populationExplorationParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.PopulationExploration``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `PopulationExploration`: PopulationExplorationResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.PopulationExploration`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.PopulationExploration(context.Background()).PopulationExplorationParams(populationExplorationParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.PopulationExploration``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `PopulationExploration`: PopulationExplorationResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.PopulationExploration`: %v\n", resp)
 }
 ```
 
@@ -7925,6 +7467,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## PushCodeSnapshot
+
+> PushCodeSnapshotResponse PushCodeSnapshot(ctx).PushCodeSnapshotParams(pushCodeSnapshotParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	pushCodeSnapshotParams := *openapiclient.NewPushCodeSnapshotParams("ProjectId_example", "CodeUrl_example", "CodeEntryFile_example", "VersionName_example") // PushCodeSnapshotParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.PushCodeSnapshot(context.Background()).PushCodeSnapshotParams(pushCodeSnapshotParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.PushCodeSnapshot``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `PushCodeSnapshot`: PushCodeSnapshotResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.PushCodeSnapshot`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPushCodeSnapshotRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **pushCodeSnapshotParams** | [**PushCodeSnapshotParams**](PushCodeSnapshotParams.md) |  | 
+
+### Return type
+
+[**PushCodeSnapshotResponse**](PushCodeSnapshotResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## RefreshLocalAuth
 
 > LocalLoginResponse RefreshLocalAuth(ctx).Execute()
@@ -7937,23 +7543,23 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.RefreshLocalAuth(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.RefreshLocalAuth``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `RefreshLocalAuth`: LocalLoginResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.RefreshLocalAuth`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.RefreshLocalAuth(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.RefreshLocalAuth``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RefreshLocalAuth`: LocalLoginResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.RefreshLocalAuth`: %v\n", resp)
 }
 ```
 
@@ -7996,22 +7602,22 @@ No authorization required
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    removeSampleCollectionParams := *openapiclient.NewRemoveSampleCollectionParams([]string{"SampleCollectionIds_example"}, "ProjectId_example") // RemoveSampleCollectionParams | 
+	removeSampleCollectionParams := *openapiclient.NewRemoveSampleCollectionParams([]string{"SampleCollectionIds_example"}, "ProjectId_example") // RemoveSampleCollectionParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.RemoveSamplesCollection(context.Background()).RemoveSampleCollectionParams(removeSampleCollectionParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.RemoveSamplesCollection``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.RemoveSamplesCollection(context.Background()).RemoveSampleCollectionParams(removeSampleCollectionParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.RemoveSamplesCollection``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -8058,21 +7664,21 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.ResolveConcurrentUsersConflict(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ResolveConcurrentUsersConflict``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.ResolveConcurrentUsersConflict(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ResolveConcurrentUsersConflict``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -8115,24 +7721,24 @@ Other parameters are passed through a pointer to a apiResolveConcurrentUsersConf
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    sampleAnalysisParams := *openapiclient.NewSampleAnalysisParams("SessionRunId_example", "ProjectId_example", *openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType()), float64(123), openapiclient.SampleAnalysisAlgo("focus_layer_cam")) // SampleAnalysisParams | 
+	sampleAnalysisParams := *openapiclient.NewSampleAnalysisParams("SessionRunId_example", "ProjectId_example", *openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType()), float64(123), openapiclient.SampleAnalysisAlgo("focus_layer_cam")) // SampleAnalysisParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.SampleAnalysis(context.Background()).SampleAnalysisParams(sampleAnalysisParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.SampleAnalysis``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `SampleAnalysis`: Job
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.SampleAnalysis`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.SampleAnalysis(context.Background()).SampleAnalysisParams(sampleAnalysisParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SampleAnalysis``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SampleAnalysis`: Job
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.SampleAnalysis`: %v\n", resp)
 }
 ```
 
@@ -8179,22 +7785,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    samplesVisualizationsRefreshParams := *openapiclient.NewSamplesVisualizationsRefreshParams("ProjectId_example", "SessionRunId_example") // SamplesVisualizationsRefreshParams | 
+	samplesVisualizationsRefreshParams := *openapiclient.NewSamplesVisualizationsRefreshParams("ProjectId_example", "SessionRunId_example") // SamplesVisualizationsRefreshParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.SamplesVisualizationsRefresh(context.Background()).SamplesVisualizationsRefreshParams(samplesVisualizationsRefreshParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.SamplesVisualizationsRefresh``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.SamplesVisualizationsRefresh(context.Background()).SamplesVisualizationsRefreshParams(samplesVisualizationsRefreshParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SamplesVisualizationsRefresh``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -8241,22 +7847,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    saveAnalyzerLayoutParams := *openapiclient.NewSaveAnalyzerLayoutParams([]openapiclient.PanelLayout{*openapiclient.NewPanelLayout("VisualizationId_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))))}, "ProjectId_example") // SaveAnalyzerLayoutParams | 
+	saveAnalyzerLayoutParams := *openapiclient.NewSaveAnalyzerLayoutParams([]openapiclient.PanelLayout{*openapiclient.NewPanelLayout("VisualizationId_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))))}, "ProjectId_example") // SaveAnalyzerLayoutParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.SaveAnalyzerLayout(context.Background()).SaveAnalyzerLayoutParams(saveAnalyzerLayoutParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.SaveAnalyzerLayout``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.SaveAnalyzerLayout(context.Background()).SaveAnalyzerLayoutParams(saveAnalyzerLayoutParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SaveAnalyzerLayout``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -8291,134 +7897,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## SaveDatasetVersion
-
-> SaveDatasetSetupResponse SaveDatasetVersion(ctx).SaveDatasetVersionParams(saveDatasetVersionParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    saveDatasetVersionParams := *openapiclient.NewSaveDatasetVersionParams("DatasetId_example", "CodeUrl_example", "CodeEntryFile_example") // SaveDatasetVersionParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.SaveDatasetVersion(context.Background()).SaveDatasetVersionParams(saveDatasetVersionParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.SaveDatasetVersion``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `SaveDatasetVersion`: SaveDatasetSetupResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.SaveDatasetVersion`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiSaveDatasetVersionRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **saveDatasetVersionParams** | [**SaveDatasetVersionParams**](SaveDatasetVersionParams.md) |  | 
-
-### Return type
-
-[**SaveDatasetSetupResponse**](SaveDatasetSetupResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## SaveDatasetVersionNoParse
-
-> SaveDatasetSetupResponse SaveDatasetVersionNoParse(ctx).SaveDatasetVersionNoParseParams(saveDatasetVersionNoParseParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    saveDatasetVersionNoParseParams := *openapiclient.NewSaveDatasetVersionNoParseParams("FromDatasetVersionId_example", "CodeUrl_example", "CodeEntryFile_example") // SaveDatasetVersionNoParseParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.SaveDatasetVersionNoParse(context.Background()).SaveDatasetVersionNoParseParams(saveDatasetVersionNoParseParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.SaveDatasetVersionNoParse``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `SaveDatasetVersionNoParse`: SaveDatasetSetupResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.SaveDatasetVersionNoParse`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiSaveDatasetVersionNoParseRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **saveDatasetVersionNoParseParams** | [**SaveDatasetVersionNoParseParams**](SaveDatasetVersionNoParseParams.md) |  | 
-
-### Return type
-
-[**SaveDatasetSetupResponse**](SaveDatasetSetupResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## SendUserMessage
 
 > SendUserMessageResponse SendUserMessage(ctx).SendUserMessageParams(sendUserMessageParams).Execute()
@@ -8431,24 +7909,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    sendUserMessageParams := *openapiclient.NewSendUserMessageParams("FirstName_example", "LastName_example", "Email_example", map[string]interface{}(123)) // SendUserMessageParams | 
+	sendUserMessageParams := *openapiclient.NewSendUserMessageParams("FirstName_example", "LastName_example", "Email_example", map[string]interface{}(123)) // SendUserMessageParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.SendUserMessage(context.Background()).SendUserMessageParams(sendUserMessageParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.SendUserMessage``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `SendUserMessage`: SendUserMessageResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.SendUserMessage`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.SendUserMessage(context.Background()).SendUserMessageParams(sendUserMessageParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SendUserMessage``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SendUserMessage`: SendUserMessageResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.SendUserMessage`: %v\n", resp)
 }
 ```
 
@@ -8495,22 +7973,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    setCodeChallengeRequest := *openapiclient.NewSetCodeChallengeRequest("CodeChallenge_example") // SetCodeChallengeRequest | 
+	setCodeChallengeRequest := *openapiclient.NewSetCodeChallengeRequest("CodeChallenge_example") // SetCodeChallengeRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.SetCodeChallenge(context.Background()).SetCodeChallengeRequest(setCodeChallengeRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.SetCodeChallenge``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.SetCodeChallenge(context.Background()).SetCodeChallengeRequest(setCodeChallengeRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SetCodeChallenge``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -8557,22 +8035,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    setDefaultTeamRequest := *openapiclient.NewSetDefaultTeamRequest("Cid_example") // SetDefaultTeamRequest | 
+	setDefaultTeamRequest := *openapiclient.NewSetDefaultTeamRequest("Cid_example") // SetDefaultTeamRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.SetDefaultTeam(context.Background()).SetDefaultTeamRequest(setDefaultTeamRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.SetDefaultTeam``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.SetDefaultTeam(context.Background()).SetDefaultTeamRequest(setDefaultTeamRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SetDefaultTeam``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -8619,22 +8097,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    setExperimentPropertiesRequest := *openapiclient.NewSetExperimentPropertiesRequest("ProjectId_example", "ExperimentId_example", map[string]interface{}(123)) // SetExperimentPropertiesRequest | 
+	setExperimentPropertiesRequest := *openapiclient.NewSetExperimentPropertiesRequest("ProjectId_example", "ExperimentId_example", map[string]interface{}(123)) // SetExperimentPropertiesRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.SetExperimentProperties(context.Background()).SetExperimentPropertiesRequest(setExperimentPropertiesRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.SetExperimentProperties``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.SetExperimentProperties(context.Background()).SetExperimentPropertiesRequest(setExperimentPropertiesRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SetExperimentProperties``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -8681,22 +8159,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    setTeamMachineTypeParams := *openapiclient.NewSetTeamMachineTypeParams("MachineTypeId_example") // SetTeamMachineTypeParams | 
+	setTeamMachineTypeParams := *openapiclient.NewSetTeamMachineTypeParams("MachineTypeId_example") // SetTeamMachineTypeParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.SetMachineType(context.Background()).SetTeamMachineTypeParams(setTeamMachineTypeParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.SetMachineType``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.SetMachineType(context.Background()).SetTeamMachineTypeParams(setTeamMachineTypeParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SetMachineType``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -8743,23 +8221,23 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.SetUserNotificationsAsRead(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.SetUserNotificationsAsRead``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `SetUserNotificationsAsRead`: SetUserNotificationsAsRead200Response
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.SetUserNotificationsAsRead`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.SetUserNotificationsAsRead(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SetUserNotificationsAsRead``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SetUserNotificationsAsRead`: SetUserNotificationsAsRead200Response
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.SetUserNotificationsAsRead`: %v\n", resp)
 }
 ```
 
@@ -8802,24 +8280,24 @@ Other parameters are passed through a pointer to a apiSetUserNotificationsAsRead
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    startTrialParams := *openapiclient.NewStartTrialParams("FirstName_example", "LastName_example", "Email_example") // StartTrialParams | 
+	startTrialParams := *openapiclient.NewStartTrialParams("FirstName_example", "LastName_example", "Email_example") // StartTrialParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.StartTrial(context.Background()).StartTrialParams(startTrialParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.StartTrial``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `StartTrial`: UserData
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.StartTrial`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.StartTrial(context.Background()).StartTrialParams(startTrialParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.StartTrial``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `StartTrial`: UserData
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.StartTrial`: %v\n", resp)
 }
 ```
 
@@ -8866,24 +8344,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    stopJobParams := *openapiclient.NewStopJobParams("JobId_example") // StopJobParams | 
+	stopJobParams := *openapiclient.NewStopJobParams("JobId_example") // StopJobParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.StopJob(context.Background()).StopJobParams(stopJobParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.StopJob``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `StopJob`: StopJobResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.StopJob`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.StopJob(context.Background()).StopJobParams(stopJobParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.StopJob``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `StopJob`: StopJobResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.StopJob`: %v\n", resp)
 }
 ```
 
@@ -8930,22 +8408,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    tagModelRequest := *openapiclient.NewTagModelRequest("ProjectId_example", "ExperimentId_example", []string{"Tags_example"}, float64(123)) // TagModelRequest | 
+	tagModelRequest := *openapiclient.NewTagModelRequest("ProjectId_example", "ExperimentId_example", []string{"Tags_example"}, float64(123)) // TagModelRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.TagModel(context.Background()).TagModelRequest(tagModelRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.TagModel``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.TagModel(context.Background()).TagModelRequest(tagModelRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.TagModel``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -8992,24 +8470,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    terminateAllJobsParams := *openapiclient.NewTerminateAllJobsParams() // TerminateAllJobsParams | 
+	terminateAllJobsParams := *openapiclient.NewTerminateAllJobsParams() // TerminateAllJobsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.TerminateAllJobs(context.Background()).TerminateAllJobsParams(terminateAllJobsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.TerminateAllJobs``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `TerminateAllJobs`: TerminateAllJobsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.TerminateAllJobs`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.TerminateAllJobs(context.Background()).TerminateAllJobsParams(terminateAllJobsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.TerminateAllJobs``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `TerminateAllJobs`: TerminateAllJobsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.TerminateAllJobs`: %v\n", resp)
 }
 ```
 
@@ -9056,24 +8534,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    terminateJobParams := *openapiclient.NewTerminateJobParams("JobId_example") // TerminateJobParams | 
+	terminateJobParams := *openapiclient.NewTerminateJobParams("JobId_example") // TerminateJobParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.TerminateJob(context.Background()).TerminateJobParams(terminateJobParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.TerminateJob``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `TerminateJob`: TerminateJobResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.TerminateJob`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.TerminateJob(context.Background()).TerminateJobParams(terminateJobParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.TerminateJob``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `TerminateJob`: TerminateJobResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.TerminateJob`: %v\n", resp)
 }
 ```
 
@@ -9108,70 +8586,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## TrashDataset
-
-> GetDatasetsResponse TrashDataset(ctx).TrashDatasetParams(trashDatasetParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    trashDatasetParams := *openapiclient.NewTrashDatasetParams("DatasetId_example") // TrashDatasetParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.TrashDataset(context.Background()).TrashDatasetParams(trashDatasetParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.TrashDataset``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `TrashDataset`: GetDatasetsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.TrashDataset`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiTrashDatasetRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **trashDatasetParams** | [**TrashDatasetParams**](TrashDatasetParams.md) |  | 
-
-### Return type
-
-[**GetDatasetsResponse**](GetDatasetsResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## TrashSecretManager
 
 > TrashSecretManagerResponse TrashSecretManager(ctx).TrashSecretManagerParams(trashSecretManagerParams).Execute()
@@ -9184,24 +8598,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    trashSecretManagerParams := *openapiclient.NewTrashSecretManagerParams("SecretManagerId_example") // TrashSecretManagerParams | 
+	trashSecretManagerParams := *openapiclient.NewTrashSecretManagerParams("SecretManagerId_example") // TrashSecretManagerParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.TrashSecretManager(context.Background()).TrashSecretManagerParams(trashSecretManagerParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.TrashSecretManager``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `TrashSecretManager`: TrashSecretManagerResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.TrashSecretManager`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.TrashSecretManager(context.Background()).TrashSecretManagerParams(trashSecretManagerParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.TrashSecretManager``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `TrashSecretManager`: TrashSecretManagerResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.TrashSecretManager`: %v\n", resp)
 }
 ```
 
@@ -9248,22 +8662,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    body := ApproveInsightsParams(987) // ApproveInsightsParams | 
+	body := ApproveInsightsParams(987) // ApproveInsightsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.UnapproveInsight(context.Background()).Body(body).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UnapproveInsight``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.UnapproveInsight(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UnapproveInsight``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -9310,22 +8724,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    body := ArchiveInsightsParams(987) // ArchiveInsightsParams | 
+	body := ArchiveInsightsParams(987) // ArchiveInsightsParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.UnarchiveInsight(context.Background()).Body(body).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UnarchiveInsight``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.UnarchiveInsight(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UnarchiveInsight``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -9372,22 +8786,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateDashboardParams := *openapiclient.NewUpdateDashboardParams("DashboardId_example", "Name_example", []openapiclient.Dashlet{*openapiclient.NewDashlet("Cid_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))), "Type_example", *openapiclient.NewPopulationExplorationDashletData(map[string]interface{}(123), "Type_example", "Name_example"), "Name_example", []string{"CollectionIds_example"})}, "ProjectId_example") // UpdateDashboardParams | 
+	updateDashboardParams := *openapiclient.NewUpdateDashboardParams("DashboardId_example", "Name_example", []openapiclient.Dashlet{*openapiclient.NewDashlet("Cid_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))), "Type_example", *openapiclient.NewPopulationExplorationDashletData(map[string]interface{}(123), "Name_example", "Type_example"), "Name_example", []string{"CollectionIds_example"})}, "ProjectId_example") // UpdateDashboardParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.UpdateDashboard(context.Background()).UpdateDashboardParams(updateDashboardParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateDashboard``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.UpdateDashboard(context.Background()).UpdateDashboardParams(updateDashboardParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateDashboard``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -9422,70 +8836,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## UpdateDataset
-
-> UpdateDatasetResponse UpdateDataset(ctx).UpdateDatasetParams(updateDatasetParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    updateDatasetParams := *openapiclient.NewUpdateDatasetParams("DatasetId_example", "Name_example") // UpdateDatasetParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.UpdateDataset(context.Background()).UpdateDatasetParams(updateDatasetParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateDataset``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `UpdateDataset`: UpdateDatasetResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateDataset`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiUpdateDatasetRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **updateDatasetParams** | [**UpdateDatasetParams**](UpdateDatasetParams.md) |  | 
-
-### Return type
-
-[**UpdateDatasetResponse**](UpdateDatasetResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## UpdateEngineSettings
 
 > UpdateEngineSettings(ctx).SetSettingValueWrapper(setSettingValueWrapper).Execute()
@@ -9498,22 +8848,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    setSettingValueWrapper := *openapiclient.NewSetSettingValueWrapper() // SetSettingValueWrapper | 
+	setSettingValueWrapper := *openapiclient.NewSetSettingValueWrapper() // SetSettingValueWrapper | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.UpdateEngineSettings(context.Background()).SetSettingValueWrapper(setSettingValueWrapper).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateEngineSettings``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.UpdateEngineSettings(context.Background()).SetSettingValueWrapper(setSettingValueWrapper).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateEngineSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -9560,24 +8910,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateIssueParams := *openapiclient.NewUpdateIssueParams("Cid_example", "ProjectId_example") // UpdateIssueParams | 
+	updateIssueParams := *openapiclient.NewUpdateIssueParams("Cid_example", "ProjectId_example") // UpdateIssueParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.UpdateIssue(context.Background()).UpdateIssueParams(updateIssueParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateIssue``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `UpdateIssue`: Issue
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateIssue`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.UpdateIssue(context.Background()).UpdateIssueParams(updateIssueParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateIssue``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateIssue`: Issue
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.UpdateIssue`: %v\n", resp)
 }
 ```
 
@@ -9624,22 +8974,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateProjectMetaRequest := *openapiclient.NewUpdateProjectMetaRequest("Name_example", "Description_example", []string{"Tags_example"}, openapiclient.HubPublishPolicy("public"), "ProjectId_example") // UpdateProjectMetaRequest | 
+	updateProjectMetaRequest := *openapiclient.NewUpdateProjectMetaRequest("Name_example", "Description_example", []string{"Tags_example"}, openapiclient.HubPublishPolicy("public"), "ProjectId_example") // UpdateProjectMetaRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.UpdateProjectMeta(context.Background()).UpdateProjectMetaRequest(updateProjectMetaRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateProjectMeta``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.UpdateProjectMeta(context.Background()).UpdateProjectMetaRequest(updateProjectMetaRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateProjectMeta``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -9686,22 +9036,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateSampleCollectionParams := *openapiclient.NewUpdateSampleCollectionParams("SampleCollectionId_example", "ProjectId_example") // UpdateSampleCollectionParams | 
+	updateSampleCollectionParams := *openapiclient.NewUpdateSampleCollectionParams("SampleCollectionId_example", "ProjectId_example") // UpdateSampleCollectionParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.UpdateSampleCollection(context.Background()).UpdateSampleCollectionParams(updateSampleCollectionParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateSampleCollection``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.UpdateSampleCollection(context.Background()).UpdateSampleCollectionParams(updateSampleCollectionParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateSampleCollection``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -9748,24 +9098,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateSecretManagerParams := *openapiclient.NewUpdateSecretManagerParams("Cid_example", "Name_example") // UpdateSecretManagerParams | 
+	updateSecretManagerParams := *openapiclient.NewUpdateSecretManagerParams("Cid_example", "Name_example") // UpdateSecretManagerParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.UpdateSecretManager(context.Background()).UpdateSecretManagerParams(updateSecretManagerParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateSecretManager``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `UpdateSecretManager`: UpdateSecretManagerResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateSecretManager`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.UpdateSecretManager(context.Background()).UpdateSecretManagerParams(updateSecretManagerParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateSecretManager``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateSecretManager`: UpdateSecretManagerResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.UpdateSecretManager`: %v\n", resp)
 }
 ```
 
@@ -9812,22 +9162,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateSessionNameParams := *openapiclient.NewUpdateSessionNameParams("Cid_example", "ProjectId_example", "Name_example") // UpdateSessionNameParams | 
+	updateSessionNameParams := *openapiclient.NewUpdateSessionNameParams("Cid_example", "ProjectId_example", "Name_example") // UpdateSessionNameParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.UpdateSessionName(context.Background()).UpdateSessionNameParams(updateSessionNameParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateSessionName``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.UpdateSessionName(context.Background()).UpdateSessionNameParams(updateSessionNameParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateSessionName``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -9874,22 +9224,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateSessionRunNameParams := *openapiclient.NewUpdateSessionRunNameParams("Cid_example", "Name_example", "Description_example", "ProjectId_example") // UpdateSessionRunNameParams | 
+	updateSessionRunNameParams := *openapiclient.NewUpdateSessionRunNameParams("Cid_example", "Name_example", "Description_example", "ProjectId_example") // UpdateSessionRunNameParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.UpdateSessionRun(context.Background()).UpdateSessionRunNameParams(updateSessionRunNameParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateSessionRun``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.UpdateSessionRun(context.Background()).UpdateSessionRunNameParams(updateSessionRunNameParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateSessionRun``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -9936,22 +9286,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateSessionTestRequest := *openapiclient.NewUpdateSessionTestRequest("Cid_example", "ProjectId_example") // UpdateSessionTestRequest | 
+	updateSessionTestRequest := *openapiclient.NewUpdateSessionTestRequest("Cid_example", "ProjectId_example") // UpdateSessionTestRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.UpdateSessionTest(context.Background()).UpdateSessionTestRequest(updateSessionTestRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateSessionTest``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.UpdateSessionTest(context.Background()).UpdateSessionTestRequest(updateSessionTestRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateSessionTest``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -9998,22 +9348,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateTeamPublicNameRequest := *openapiclient.NewUpdateTeamPublicNameRequest("Cid_example", "PublicName_example") // UpdateTeamPublicNameRequest | 
+	updateTeamPublicNameRequest := *openapiclient.NewUpdateTeamPublicNameRequest("Cid_example", "PublicName_example") // UpdateTeamPublicNameRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.UpdateTeamPublicName(context.Background()).UpdateTeamPublicNameRequest(updateTeamPublicNameRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateTeamPublicName``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.UpdateTeamPublicName(context.Background()).UpdateTeamPublicNameRequest(updateTeamPublicNameRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateTeamPublicName``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -10060,24 +9410,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateUserNameRequest := *openapiclient.NewUpdateUserNameRequest("UserName_example") // UpdateUserNameRequest | 
+	updateUserNameRequest := *openapiclient.NewUpdateUserNameRequest("UserName_example") // UpdateUserNameRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.UpdateUserName(context.Background()).UpdateUserNameRequest(updateUserNameRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateUserName``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `UpdateUserName`: UserData
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateUserName`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.UpdateUserName(context.Background()).UpdateUserNameRequest(updateUserNameRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateUserName``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateUserName`: UserData
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.UpdateUserName`: %v\n", resp)
 }
 ```
 
@@ -10124,24 +9474,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateUserRoleRequest := *openapiclient.NewUpdateUserRoleRequest("UserId_example", "Role_example") // UpdateUserRoleRequest | 
+	updateUserRoleRequest := *openapiclient.NewUpdateUserRoleRequest("UserId_example", "Role_example") // UpdateUserRoleRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.UpdateUserRole(context.Background()).UpdateUserRoleRequest(updateUserRoleRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateUserRole``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `UpdateUserRole`: SlimUserData
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateUserRole`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.UpdateUserRole(context.Background()).UpdateUserRoleRequest(updateUserRoleRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateUserRole``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateUserRole`: SlimUserData
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.UpdateUserRole`: %v\n", resp)
 }
 ```
 
@@ -10188,24 +9538,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateUserStatusRequest := *openapiclient.NewUpdateUserStatusRequest("UserId_example", false) // UpdateUserStatusRequest | 
+	updateUserStatusRequest := *openapiclient.NewUpdateUserStatusRequest("UserId_example", false) // UpdateUserStatusRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.UpdateUserStatus(context.Background()).UpdateUserStatusRequest(updateUserStatusRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateUserStatus``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `UpdateUserStatus`: SlimUserData
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateUserStatus`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.UpdateUserStatus(context.Background()).UpdateUserStatusRequest(updateUserStatusRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateUserStatus``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateUserStatus`: SlimUserData
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.UpdateUserStatus`: %v\n", resp)
 }
 ```
 
@@ -10252,24 +9602,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateUserTeamRequest := *openapiclient.NewUpdateUserTeamRequest("UserId_example", "TeamId_example") // UpdateUserTeamRequest | 
+	updateUserTeamRequest := *openapiclient.NewUpdateUserTeamRequest("UserId_example", "TeamId_example") // UpdateUserTeamRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.UpdateUserTeam(context.Background()).UpdateUserTeamRequest(updateUserTeamRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateUserTeam``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `UpdateUserTeam`: SlimUserData
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateUserTeam`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.UpdateUserTeam(context.Background()).UpdateUserTeamRequest(updateUserTeamRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateUserTeam``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateUserTeam`: SlimUserData
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.UpdateUserTeam`: %v\n", resp)
 }
 ```
 
@@ -10316,24 +9666,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateVersionParams := *openapiclient.NewUpdateVersionParams("VersionId_example", "ProjectId_example", *openapiclient.NewModelGraph("Id_example", map[string]interface{}(123))) // UpdateVersionParams | 
+	updateVersionParams := *openapiclient.NewUpdateVersionParams("VersionId_example", "ProjectId_example", *openapiclient.NewModelGraph("Id_example", map[string]interface{}(123))) // UpdateVersionParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.UpdateVersion(context.Background()).UpdateVersionParams(updateVersionParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateVersion``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `UpdateVersion`: UpdateVersionResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateVersion`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.UpdateVersion(context.Background()).UpdateVersionParams(updateVersionParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateVersion``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateVersion`: UpdateVersionResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.UpdateVersion`: %v\n", resp)
 }
 ```
 
@@ -10380,22 +9730,22 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    updateVersionNameParams := *openapiclient.NewUpdateVersionNameParams("Cid_example", "ProjectId_example", "Name_example") // UpdateVersionNameParams | 
+	updateVersionNameParams := *openapiclient.NewUpdateVersionNameParams("Cid_example", "ProjectId_example", "Name_example") // UpdateVersionNameParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.UpdateVersionName(context.Background()).UpdateVersionNameParams(updateVersionNameParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateVersionName``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.UpdateVersionName(context.Background()).UpdateVersionNameParams(updateVersionNameParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateVersionName``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -10442,23 +9792,23 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    projectName := "projectName_example" // string | 
-    description := "description_example" // string |  (optional) (default to "")
+	projectName := "projectName_example" // string | 
+	description := "description_example" // string |  (optional) (default to "")
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.UploadProject(context.Background(), projectName).Description(description).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UploadProject``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.UploadProject(context.Background(), projectName).Description(description).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UploadProject``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -10510,24 +9860,24 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
-    upsertStateParams := *openapiclient.NewUpsertStateParams("ProjectId_example", "State_example") // UpsertStateParams | 
+	upsertStateParams := *openapiclient.NewUpsertStateParams("ProjectId_example", "State_example") // UpsertStateParams | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.UpsertState(context.Background()).UpsertStateParams(upsertStateParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpsertState``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `UpsertState`: UpsertStateResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpsertState`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.UpsertState(context.Background()).UpsertStateParams(upsertStateParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpsertState``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpsertState`: UpsertStateResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.UpsertState`: %v\n", resp)
 }
 ```
 
@@ -10562,70 +9912,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ValidateGraph
-
-> ValidateGraphResponse ValidateGraph(ctx).ValidateGraphParams(validateGraphParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    validateGraphParams := *openapiclient.NewValidateGraphParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "DatasetVersionId_example", "VersionId_example", "ProjectId_example", "Digest_example") // ValidateGraphParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.ValidateGraph(context.Background()).ValidateGraphParams(validateGraphParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ValidateGraph``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ValidateGraph`: ValidateGraphResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ValidateGraph`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiValidateGraphRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **validateGraphParams** | [**ValidateGraphParams**](ValidateGraphParams.md) |  | 
-
-### Return type
-
-[**ValidateGraphResponse**](ValidateGraphResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## Warmup
 
 > Warmup(ctx).Execute()
@@ -10638,21 +9924,21 @@ Name | Type | Description  | Notes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.Warmup(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.Warmup``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.Warmup(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.Warmup``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -10695,23 +9981,23 @@ Other parameters are passed through a pointer to a apiWarmupRequest struct via t
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.WhoAmI(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.WhoAmI``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `WhoAmI`: UserData
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.WhoAmI`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.WhoAmI(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.WhoAmI``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `WhoAmI`: UserData
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.WhoAmI`: %v\n", resp)
 }
 ```
 

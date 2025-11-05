@@ -5,21 +5,14 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**FileName** | **string** |  | 
-**DatasetId** | Pointer to **string** |  | [optional] 
-**CodeIntegrationBranch** | Pointer to **string** |  | [optional] 
-**ModelName** | **string** |  | 
-**VersionName** | **string** |  | 
-**BranchName** | Pointer to **string** |  | [optional] 
-**ModelType** | [**ImportModelType**](ImportModelType.md) |  | 
-**TransformInputs** | Pointer to **bool** |  | [optional] 
-**MappingYaml** | Pointer to **string** |  | [optional] 
+**VersionId** | **string** |  | 
+**Model** | [**ImportModelInfo**](ImportModelInfo.md) |  | 
 
 ## Methods
 
 ### NewImportNewModelParams
 
-`func NewImportNewModelParams(projectId string, fileName string, modelName string, versionName string, modelType ImportModelType, ) *ImportNewModelParams`
+`func NewImportNewModelParams(projectId string, versionId string, model ImportModelInfo, ) *ImportNewModelParams`
 
 NewImportNewModelParams instantiates a new ImportNewModelParams object
 This constructor will assign default values to properties that have it defined,
@@ -54,210 +47,45 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetFileName
+### GetVersionId
 
-`func (o *ImportNewModelParams) GetFileName() string`
+`func (o *ImportNewModelParams) GetVersionId() string`
 
-GetFileName returns the FileName field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetFileNameOk
+### GetVersionIdOk
 
-`func (o *ImportNewModelParams) GetFileNameOk() (*string, bool)`
+`func (o *ImportNewModelParams) GetVersionIdOk() (*string, bool)`
 
-GetFileNameOk returns a tuple with the FileName field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFileName
+### SetVersionId
 
-`func (o *ImportNewModelParams) SetFileName(v string)`
+`func (o *ImportNewModelParams) SetVersionId(v string)`
 
-SetFileName sets FileName field to given value.
+SetVersionId sets VersionId field to given value.
 
 
-### GetDatasetId
+### GetModel
 
-`func (o *ImportNewModelParams) GetDatasetId() string`
+`func (o *ImportNewModelParams) GetModel() ImportModelInfo`
 
-GetDatasetId returns the DatasetId field if non-nil, zero value otherwise.
+GetModel returns the Model field if non-nil, zero value otherwise.
 
-### GetDatasetIdOk
+### GetModelOk
 
-`func (o *ImportNewModelParams) GetDatasetIdOk() (*string, bool)`
+`func (o *ImportNewModelParams) GetModelOk() (*ImportModelInfo, bool)`
 
-GetDatasetIdOk returns a tuple with the DatasetId field if it's non-nil, zero value otherwise
+GetModelOk returns a tuple with the Model field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDatasetId
+### SetModel
 
-`func (o *ImportNewModelParams) SetDatasetId(v string)`
+`func (o *ImportNewModelParams) SetModel(v ImportModelInfo)`
 
-SetDatasetId sets DatasetId field to given value.
+SetModel sets Model field to given value.
 
-### HasDatasetId
-
-`func (o *ImportNewModelParams) HasDatasetId() bool`
-
-HasDatasetId returns a boolean if a field has been set.
-
-### GetCodeIntegrationBranch
-
-`func (o *ImportNewModelParams) GetCodeIntegrationBranch() string`
-
-GetCodeIntegrationBranch returns the CodeIntegrationBranch field if non-nil, zero value otherwise.
-
-### GetCodeIntegrationBranchOk
-
-`func (o *ImportNewModelParams) GetCodeIntegrationBranchOk() (*string, bool)`
-
-GetCodeIntegrationBranchOk returns a tuple with the CodeIntegrationBranch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCodeIntegrationBranch
-
-`func (o *ImportNewModelParams) SetCodeIntegrationBranch(v string)`
-
-SetCodeIntegrationBranch sets CodeIntegrationBranch field to given value.
-
-### HasCodeIntegrationBranch
-
-`func (o *ImportNewModelParams) HasCodeIntegrationBranch() bool`
-
-HasCodeIntegrationBranch returns a boolean if a field has been set.
-
-### GetModelName
-
-`func (o *ImportNewModelParams) GetModelName() string`
-
-GetModelName returns the ModelName field if non-nil, zero value otherwise.
-
-### GetModelNameOk
-
-`func (o *ImportNewModelParams) GetModelNameOk() (*string, bool)`
-
-GetModelNameOk returns a tuple with the ModelName field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetModelName
-
-`func (o *ImportNewModelParams) SetModelName(v string)`
-
-SetModelName sets ModelName field to given value.
-
-
-### GetVersionName
-
-`func (o *ImportNewModelParams) GetVersionName() string`
-
-GetVersionName returns the VersionName field if non-nil, zero value otherwise.
-
-### GetVersionNameOk
-
-`func (o *ImportNewModelParams) GetVersionNameOk() (*string, bool)`
-
-GetVersionNameOk returns a tuple with the VersionName field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetVersionName
-
-`func (o *ImportNewModelParams) SetVersionName(v string)`
-
-SetVersionName sets VersionName field to given value.
-
-
-### GetBranchName
-
-`func (o *ImportNewModelParams) GetBranchName() string`
-
-GetBranchName returns the BranchName field if non-nil, zero value otherwise.
-
-### GetBranchNameOk
-
-`func (o *ImportNewModelParams) GetBranchNameOk() (*string, bool)`
-
-GetBranchNameOk returns a tuple with the BranchName field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetBranchName
-
-`func (o *ImportNewModelParams) SetBranchName(v string)`
-
-SetBranchName sets BranchName field to given value.
-
-### HasBranchName
-
-`func (o *ImportNewModelParams) HasBranchName() bool`
-
-HasBranchName returns a boolean if a field has been set.
-
-### GetModelType
-
-`func (o *ImportNewModelParams) GetModelType() ImportModelType`
-
-GetModelType returns the ModelType field if non-nil, zero value otherwise.
-
-### GetModelTypeOk
-
-`func (o *ImportNewModelParams) GetModelTypeOk() (*ImportModelType, bool)`
-
-GetModelTypeOk returns a tuple with the ModelType field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetModelType
-
-`func (o *ImportNewModelParams) SetModelType(v ImportModelType)`
-
-SetModelType sets ModelType field to given value.
-
-
-### GetTransformInputs
-
-`func (o *ImportNewModelParams) GetTransformInputs() bool`
-
-GetTransformInputs returns the TransformInputs field if non-nil, zero value otherwise.
-
-### GetTransformInputsOk
-
-`func (o *ImportNewModelParams) GetTransformInputsOk() (*bool, bool)`
-
-GetTransformInputsOk returns a tuple with the TransformInputs field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTransformInputs
-
-`func (o *ImportNewModelParams) SetTransformInputs(v bool)`
-
-SetTransformInputs sets TransformInputs field to given value.
-
-### HasTransformInputs
-
-`func (o *ImportNewModelParams) HasTransformInputs() bool`
-
-HasTransformInputs returns a boolean if a field has been set.
-
-### GetMappingYaml
-
-`func (o *ImportNewModelParams) GetMappingYaml() string`
-
-GetMappingYaml returns the MappingYaml field if non-nil, zero value otherwise.
-
-### GetMappingYamlOk
-
-`func (o *ImportNewModelParams) GetMappingYamlOk() (*string, bool)`
-
-GetMappingYamlOk returns a tuple with the MappingYaml field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMappingYaml
-
-`func (o *ImportNewModelParams) SetMappingYaml(v string)`
-
-SetMappingYaml sets MappingYaml field to given value.
-
-### HasMappingYaml
-
-`func (o *ImportNewModelParams) HasMappingYaml() bool`
-
-HasMappingYaml returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
