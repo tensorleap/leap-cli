@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/project"
 	"github.com/tensorleap/leap-cli/pkg/secret"
@@ -33,15 +32,6 @@ func NewSelectCmd() *cobra.Command {
 				return fmt.Errorf("failed to select or create project: %w", err)
 			}
 
-			codeIntegrations, err := code.GetCodeIntegrations(ctx)
-			if err != nil {
-				return fmt.Errorf("failed to get code integrations: %w", err)
-			}
-			selectedCodeIntegration, codeWasCreated, err := code.SelectOrCreateCodeIntegration(ctx, codeIntegrations, true)
-			if err != nil {
-				return fmt.Errorf("failed to select or create code integration: %w", err)
-			}
-
 			if workspaceConfig.SecretId != "" {
 				selectedSecret, wasValid, wasCreated, err := secret.CreateOrSelectIfSecretNotFound(ctx, workspaceConfig.SecretId)
 				if err != nil {
@@ -60,7 +50,6 @@ func NewSelectCmd() *cobra.Command {
 			}
 
 			workspaceConfig.ProjectId = selectedProject.GetCid()
-			workspaceConfig.CodeIntegrationId = selectedCodeIntegration.GetCid()
 
 			err = workspace.SetWorkspaceConfig(workspaceConfig, ".")
 			if err != nil {
@@ -71,17 +60,11 @@ func NewSelectCmd() *cobra.Command {
 			if projectWasCreated {
 				projectAction = "created"
 			}
-			codeAction := "selected"
-			if codeWasCreated {
-				codeAction = "created"
-			}
 
-			log.Infof("Successfully %s project '%s' and %s code integration '%s'",
+			log.Infof("Successfully %s project '%s'",
 				projectAction,
 				project.ProjectEntityDesc.GetDisplayName(selectedProject),
-				codeAction,
-				code.CodeIntegrationEntityDesc.GetDisplayName(selectedCodeIntegration))
-
+			)
 			return nil
 		},
 	}
