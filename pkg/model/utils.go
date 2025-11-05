@@ -18,7 +18,12 @@ var MODEL_TYPES = []string{
 	string(tlApi.IMPORTMODELTYPE_H5_TF2),
 }
 
-func InitMessage(msg *string) error {
+func GetDefaultMessageFromModelPath(filePath string) string {
+	fileName := filepath.Base(filePath)
+	return strings.TrimSuffix(fileName, filepath.Ext(fileName))
+}
+
+func InitMessage(msg *string, defaultMsg string) error {
 	if len(*msg) > 0 {
 		return nil
 	}
@@ -36,6 +41,7 @@ func InitMessage(msg *string) error {
 	msgPrompt := &survey.Input{
 		Message: "Enter model version message",
 		Help:    "This message will be displayed in the version control page",
+		Default: defaultMsg,
 	}
 	err := survey.AskOne(msgPrompt, msg, survey.WithValidator(validate))
 	if err != nil {

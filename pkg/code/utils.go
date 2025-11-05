@@ -17,97 +17,15 @@ import (
 	"github.com/bmatcuk/doublestar/v4"
 	"github.com/samber/lo"
 	"github.com/tensorleap/leap-cli/pkg/api"
-	"github.com/tensorleap/leap-cli/pkg/entity"
 	"github.com/tensorleap/leap-cli/pkg/local"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 	"github.com/tensorleap/leap-cli/pkg/workspace"
-	"k8s.io/kubectl/pkg/util/slice"
 )
 
-var ErrEmptyCodeIntegrationVersion = fmt.Errorf("CodeIntegration is empty")
+var ErrEmptyCodeSnapshot = fmt.Errorf("CodeIntegration is empty")
 
 const BindingFilePath = "leap_mapping.yaml"
-
-func CreateCodeIntegration(ctx context.Context, codeIntegrations []CodeIntegration) (*CodeIntegration, error) {
-
-	name, err := AskForCodeIntegrationName(codeIntegrations)
-	if err != nil {
-		return nil, err
-	}
-	return AddCodeIntegration(ctx, name)
-}
-
-func GetCodeIntegrationById(ctx context.Context, codeIntegrationId string) (*CodeIntegration, error) {
-	codeIntegrations, err := GetCodeIntegrations(ctx)
-	if err != nil {
-		return nil, err
-	}
-	selected, err := entity.GetEntityById(codeIntegrationId, codeIntegrations, CodeIntegrationEntityDesc)
-	if err == entity.ErrEntityNotFound {
-		return nil, err
-	}
-
-	if err != nil {
-		return nil, fmt.Errorf("failed to get code integration by id %s: %v", codeIntegrationId, err)
-	}
-
-	return selected, nil
-}
-
-func PrintCodeIntegrationInfo(codeIntegration *CodeIntegration) {
-	fmt.Printf("Code Integration Name: %s\n", codeIntegration.GetName())
-	for _, version := range codeIntegration.LatestVersions {
-		fmt.Printf("Branch: %s\n", version.Branch)
-		fmt.Printf("Latest Version: %s\n", version.Latest.Note)
-		fmt.Printf("Latest Valid Version: %s\n", version.LatestValid.Note)
-	}
-}
-
-func GetCodeIntegrationFromFlag(ctx context.Context, codeIntegrationIdFlag string, askForNewProjectFirst bool) (code *CodeIntegration, wasCreated bool, err error) {
-	codeIntegrations, err := GetCodeIntegrations(ctx)
-	if err != nil {
-		return nil, false, err
-	}
-	var selected *CodeIntegration
-	if len(codeIntegrationIdFlag) > 0 {
-		selected, err = entity.GetEntityById(codeIntegrationIdFlag, codeIntegrations, CodeIntegrationEntityDesc)
-	} else {
-		selected, wasCreated, err = SelectOrCreateCodeIntegration(ctx, codeIntegrations, askForNewProjectFirst)
-	}
-	if err != nil {
-		return nil, false, err
-	}
-	return selected, wasCreated, nil
-}
-
-func SelectOrCreateCodeIntegration(ctx context.Context, codeIntegrations []CodeIntegration, askIsCreateNewFirst bool) (*tensorleapapi.Dataset, bool, error) {
-	createCodeIntegration := func() (*CodeIntegration, error) {
-		return CreateCodeIntegration(ctx, codeIntegrations)
-	}
-	return entity.SelectEntityOrCreateOne(codeIntegrations, createCodeIntegration, askIsCreateNewFirst, true, CodeIntegrationEntityDesc)
-}
-
-func AskForCodeIntegrationName(codeIntegrations []CodeIntegration) (name string, err error) {
-
-	existingNames := entity.GetNames(codeIntegrations, CodeIntegrationEntityDesc)
-
-	name, err = entity.AskForName(existingNames, "", CodeIntegrationEntityDesc)
-	return
-}
-
-func AskForCodeIntegrationNameIfExisted(name string, codeIntegrations []CodeIntegration) (string, error) {
-
-	existingNames := entity.GetNames(codeIntegrations, CodeIntegrationEntityDesc)
-	if len(name) > 0 {
-		if !slice.ContainsString(existingNames, name, nil) {
-			return name, nil
-		}
-		log.Warnf("Code integration name '%s' already exists, Please select new one", name)
-	}
-
-	return entity.AskForName(existingNames, name, CodeIntegrationEntityDesc)
-}
 
 func AskForPythonVersion(defaultVersionId string, baseImageTypes []tensorleapapi.GenericBaseImage) (string, error) {
 	displayNames := []string{}
@@ -217,15 +135,15 @@ func SyncPythonVersionFromFlagAndConfig(ctx context.Context, flag string, worksp
 	return selectedVersionId, nil
 }
 
-func isDatasetVersionEmpty(datasetVersion *tensorleapapi.DatasetVersion) bool {
-	return len(datasetVersion.GetBlobPath()) == 0
+func isCodeSnapshotEmpty(codeSnapshot *tensorleapapi.CodeSnapshot) bool {
+	return len(codeSnapshot.GetBlobName()) == 0
 }
 
-func CloneCodeIntegrationVersion(ctx context.Context, codeIntegrationVersion *tensorleapapi.DatasetVersion, outputDir string, specificFileName string) ([]string, error) {
-	if isDatasetVersionEmpty(codeIntegrationVersion) {
-		return []string{}, ErrEmptyCodeIntegrationVersion
+func CloneCodeSnapshot(ctx context.Context, codeSnapshot *tensorleapapi.CodeSnapshot, outputDir string, specificFileName string) ([]string, error) {
+	if isCodeSnapshotEmpty(codeSnapshot) {
+		return []string{}, ErrEmptyCodeSnapshot
 	}
-	blobPath := codeIntegrationVersion.GetBlobPath()
+	blobPath := codeSnapshot.GetBlobName()
 	log.Infof("Downloading latest code integration version from %s", blobPath)
 	downloadUrl, err := api.GetDownloadSignedUrl(ctx, blobPath)
 	if err != nil {
@@ -401,43 +319,19 @@ func filterOutBySuffix(paths []string, suffix string) []string {
 	return filtered
 }
 
-func GetAndUpdateCodeIntegrationIfNotExists(ctx context.Context, workspaceConfig *workspace.WorkspaceConfig) (code *CodeIntegration, wasCreated bool, err error) {
-	codeIntegrations, err := GetCodeIntegrations(ctx)
+func PrintCodeSnapshotParserErr(civ *CodeSnapshot) {
 
-	if err != nil {
-		return nil, false, fmt.Errorf("failed to get code integration: %v", err)
+	if civ.ParseResult == nil {
+		log.Error("Code parsing failed, but no parse result found")
+		return
 	}
-	for _, codeIntegration := range codeIntegrations {
-		if codeIntegration.Cid == workspaceConfig.CodeIntegrationId {
-			return &codeIntegration, false, nil
-		}
-	}
-
-	log.Infof("Not found code integration id: %s. Select or create new code integration", workspaceConfig.CodeIntegrationId)
-
-	codeIntegration, wasCreated, err := SelectOrCreateCodeIntegration(ctx, codeIntegrations, true)
-	if err != nil {
-		return nil, false, err
-	}
-
-	workspaceConfig.CodeIntegrationId = codeIntegration.GetCid()
-	log.Info("Updating codeIntegrationId")
-	err = workspace.SetWorkspaceConfig(workspaceConfig, "")
-	if err != nil {
-		return nil, false, err
-	}
-	return codeIntegration, wasCreated, nil
-}
-
-func PrintCodeIntegrationVersionParserErr(civ *CodeIntegrationVersion) {
-
 	log.Error("Code parsing failed, see error below:")
-	if civ.Metadata.SetupStatus.GeneralError != nil {
+	if civ.ParseResult.SetupStatus.GeneralError != nil {
 		log.Error("General error:")
-		fmt.Println(*civ.Metadata.SetupStatus.GeneralError)
+		fmt.Println(*civ.ParseResult.SetupStatus.GeneralError)
 	}
 
-	for _, binderStatus := range civ.Metadata.SetupStatus.BindersStatus {
+	for _, binderStatus := range civ.ParseResult.SetupStatus.BindersStatus {
 		if !binderStatus.IsPassed && len(binderStatus.Display) > 0 {
 			log.Errorf("binder error: %s", binderStatus.Name)
 			for key, display := range binderStatus.Display {
@@ -446,58 +340,44 @@ func PrintCodeIntegrationVersionParserErr(civ *CodeIntegrationVersion) {
 		}
 	}
 
-	if civ.Metadata.SetupStatus.PrintLog != nil {
+	if civ.ParseResult.SetupStatus.PrintLog != nil {
 		log.Info("Log:")
-		fmt.Println(*civ.Metadata.SetupStatus.PrintLog)
+		fmt.Println(*civ.ParseResult.SetupStatus.PrintLog)
 		return
 	}
 }
 
-func PushCode(ctx context.Context, force bool, codeIntegrationId string, tarGzFile *os.File, entryFile, secretId, branch, message, pythonVersion string) (pushed bool, current *CodeIntegrationVersion, err error) {
-	if !force {
-		log.Info("Checking if code has changed")
+func PushCode(ctx context.Context, force bool, tarGzFile *os.File, entryFile, secretId, pythonVersion, versionName, projectId, branch string, overwriteVersionId string) (pushed bool, current *tensorleapapi.PushCodeSnapshotResponse, err error) {
 
-		latestVersion, err := GetLatestVersion(ctx, codeIntegrationId, branch)
-
-		if err != nil && !errors.Is(err, ErrEmptyCodeIntegrationVersion) {
-			log.Warnf("Failed to get latest code integration version: %v", err)
-		}
-		if err == nil {
-			change, err := CompareCodeVersion(ctx, latestVersion, tarGzFile, entryFile, secretId, pythonVersion)
-			if err != nil {
-				log.Warnf("Failed to check if code changed: %v", err)
-			}
-			if !change {
-				log.Info("No change in code, skipping push")
-				return false, latestVersion, nil
-			} else {
-				log.Info("Code changed, pushing new version")
-			}
-		}
-	}
 	fileStat, err := tarGzFile.Stat()
 	if err != nil {
 		return false, nil, fmt.Errorf("failed to get file stat: %v", err)
 	}
 
-	codeIntegrationVersion, err := AddCodeIntegrationVersion(ctx, tarGzFile, fileStat.Size(), codeIntegrationId, entryFile, secretId, branch, message, pythonVersion)
+	codeSnapshot, err := PushCodeSnapshot(
+		ctx, tarGzFile, fileStat.Size(),
+		entryFile, secretId, pythonVersion, versionName,
+		projectId,
+		branch,
+		overwriteVersionId,
+	)
 	if err != nil {
 		return false, nil, err
 	}
-	return true, codeIntegrationVersion, nil
+	return true, codeSnapshot, nil
 }
 
-func CompareCodeVersion(ctx context.Context, compareVersion *CodeIntegrationVersion, tarGzFile *os.File, entryFile, secretId, pythonVersion string) (bool, error) {
+func CompareCodeVersion(ctx context.Context, compareVersion *CodeSnapshot, tarGzFile *os.File, entryFile, secretId, pythonVersion string) (bool, error) {
 
-	if isDatasetVersionEmpty(compareVersion) {
+	if isCodeSnapshotEmpty(compareVersion) {
 		return true, nil
 	}
 
-	if compareVersion.Metadata.GetSecretManagerId() != secretId || compareVersion.CodeEntryFile != entryFile || compareVersion.GetGenericBaseImageType() != pythonVersion {
+	if compareVersion.GetSecretManagerId() != secretId || compareVersion.GetCodeEntryFile() != entryFile || compareVersion.GetGenericBaseImageType() != pythonVersion {
 		return true, nil
 	}
 
-	latestVersionBlobPath := compareVersion.GetBlobPath()
+	comperedBlobPath := compareVersion.GetBlobName()
 	tempLatestVersionFile, err := os.CreateTemp("", "tensorleap-*.tar.gz")
 	if err != nil {
 		return true, fmt.Errorf("failed to create temp file: %v", err)
@@ -505,7 +385,7 @@ func CompareCodeVersion(ctx context.Context, compareVersion *CodeIntegrationVers
 	}
 	defer local.CleanupTempFile(tempLatestVersionFile)
 
-	downloadUrl, err := api.GetDownloadSignedUrl(ctx, latestVersionBlobPath)
+	downloadUrl, err := api.GetDownloadSignedUrl(ctx, comperedBlobPath)
 	if err != nil {
 		return true, fmt.Errorf("failed to get download signed url: %v", err)
 	}
@@ -534,38 +414,28 @@ func CompareCodeVersion(ctx context.Context, compareVersion *CodeIntegrationVers
 	return latestChecksum != newChecksum, nil
 }
 
-func IsCodeParseFailed(codeIntegrationVersion *CodeIntegrationVersion) bool {
-	return codeIntegrationVersion.TestStatus == tensorleapapi.TESTSTATUS_TEST_FAIL
+func IsCodeParseFailed(codeSnapshot *CodeSnapshot) bool {
+	if codeSnapshot.ParseResult == nil {
+		return false
+	}
+	return codeSnapshot.ParseResult.TestStatus == tensorleapapi.TESTSTATUS_TEST_FAIL
 }
 
-func IsCodeParsing(codeIntegrationVersion *CodeIntegrationVersion) bool {
-	return codeIntegrationVersion.TestStatus == tensorleapapi.TESTSTATUS_DURING_TEST || codeIntegrationVersion.TestStatus == tensorleapapi.TESTSTATUS_BEFORE_TEST
+func IsCodeEnded(codeSnapshot *CodeSnapshot) bool {
+	if IsCodeParseFailed(codeSnapshot) || IsCodeFinished(codeSnapshot) {
+		return true
+	}
+	return false
 }
 
-func GetDatasetMappingYaml(ctx context.Context, codeIntegrationId, branch string) string {
-	codeIntegrationVersion, err := GetLatestVersion(ctx, codeIntegrationId, branch)
-	if err != nil {
-		return ""
+func IsCodeFinished(codeSnapshot *CodeSnapshot) bool {
+	if codeSnapshot.ParseResult == nil {
+		return false
 	}
-
-	if isDatasetVersionEmpty(codeIntegrationVersion) {
-		return ""
-	}
-
-	blobPath := codeIntegrationVersion.GetBlobPath()
-	downloadUrl, err := api.GetDownloadSignedUrl(ctx, blobPath)
-	if err != nil {
-		return ""
-	}
-	content, err := FetchFileFromTarGz(downloadUrl, BindingFilePath)
-	if err != nil {
-		return ""
-	}
-
-	return string(content)
+	return codeSnapshot.ParseResult.TestStatus == tensorleapapi.TESTSTATUS_TEST_SUCCESS
 }
 
-func SyncBranchFromFlagAndConfig(flagBranch string, workspaceConfig *workspace.WorkspaceConfig, branches []string, defaultBranch string) (string, error) {
+func SyncBranchFromFlagAndConfig(flagBranch string, workspaceConfig *workspace.WorkspaceConfig) (string, error) {
 	var branch string
 	if len(flagBranch) == 0 {
 		branch = workspaceConfig.Branch
@@ -574,14 +444,11 @@ func SyncBranchFromFlagAndConfig(flagBranch string, workspaceConfig *workspace.W
 	}
 
 	if len(branch) > 0 {
-		branch, err := CreateOrSelectBranch(branch, branches, defaultBranch)
-		if err != nil {
-			return "", err
-		}
+
 		if workspaceConfig.Branch != branch {
 			log.Infof("Updating leap.yaml branch to %s", branch)
 			workspaceConfig.Branch = branch
-			err = workspace.SetWorkspaceConfig(workspaceConfig, ".")
+			err := workspace.SetWorkspaceConfig(workspaceConfig, ".")
 			if err != nil {
 				return "", err
 			}
@@ -628,49 +495,4 @@ func SelectBranch(branches []string, defaultBranch string) (selectedBranch strin
 		return "", err
 	}
 	return selectedBranch, nil
-}
-
-func BranchesFromCodeIntegration(codeIntegration *CodeIntegration) []string {
-	var branches []string
-	for _, latest := range codeIntegration.LatestVersions {
-		branches = append(branches, latest.Branch)
-	}
-	return branches
-}
-
-// ValidateOrOptionalSelectingCodeIntegration validates the code integration ID and handles creation if needed
-func ValidateOrOptionalSelectingCodeIntegration(ctx context.Context, codeIntegrationId string, workspaceConfig *workspace.WorkspaceConfig) (string, error) {
-	codeIntegration, err := GetCodeIntegrationById(ctx, codeIntegrationId)
-	if err == entity.ErrEntityNotFound {
-		isSelectOrCreateCodeIntegration := true
-
-		prompt := &survey.Confirm{
-			Message: fmt.Sprintf("Code integration with id %s not found, do you want to select or create a new one?", codeIntegrationId),
-			Default: isSelectOrCreateCodeIntegration,
-		}
-
-		err = survey.AskOne(prompt, &isSelectOrCreateCodeIntegration)
-		if err != nil {
-			return "", err
-		}
-
-		if isSelectOrCreateCodeIntegration {
-			codeIntegrations, err := GetCodeIntegrations(ctx)
-			if err != nil {
-				return "", err
-			}
-			codeIntegration, _, err = SelectOrCreateCodeIntegration(ctx, codeIntegrations, true)
-			if err != nil {
-				return "", err
-			}
-		}
-	} else if err != nil {
-		return "", err
-	}
-
-	if codeIntegration == nil {
-		return "", nil
-	}
-	finalCodeIntegrationId := codeIntegration.Cid
-	return finalCodeIntegrationId, nil
 }
