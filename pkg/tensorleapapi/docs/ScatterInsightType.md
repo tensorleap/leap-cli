@@ -17,6 +17,10 @@
 
 * `OVERFITTING` (value: `"overfitting"`)
 
+* `DOMAIN_GAP` (value: `"domain_gap"`)
+
+* `MISLABELED_SAMPLES` (value: `"mislabeled_samples"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

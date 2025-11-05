@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **HorizontalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
+**ElementInstance** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -227,6 +228,31 @@ SetFilters sets Filters field to given value.
 `func (o *HeatmapChartsParams) HasFilters() bool`
 
 HasFilters returns a boolean if a field has been set.
+
+### GetElementInstance
+
+`func (o *HeatmapChartsParams) GetElementInstance() bool`
+
+GetElementInstance returns the ElementInstance field if non-nil, zero value otherwise.
+
+### GetElementInstanceOk
+
+`func (o *HeatmapChartsParams) GetElementInstanceOk() (*bool, bool)`
+
+GetElementInstanceOk returns a tuple with the ElementInstance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetElementInstance
+
+`func (o *HeatmapChartsParams) SetElementInstance(v bool)`
+
+SetElementInstance sets ElementInstance field to given value.
+
+### HasElementInstance
+
+`func (o *HeatmapChartsParams) HasElementInstance() bool`
+
+HasElementInstance returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

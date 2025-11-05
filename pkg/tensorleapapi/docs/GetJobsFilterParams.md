@@ -12,8 +12,7 @@ Name | Type | Description | Notes
 **Status** | Pointer to [**[]JobStatus**](JobStatus.md) |  | [optional] 
 **ProjectId** | Pointer to **string** |  | [optional] 
 **ShowJobsFromDate** | Pointer to **time.Time** |  | [optional] 
-**CodeIntegrationVersionId** | Pointer to **string** |  | [optional] 
-**CodeIntegrationId** | Pointer to **string** |  | [optional] 
+**CodeSnapshotId** | Pointer to **string** |  | [optional] 
 **Cid** | Pointer to **[]string** |  | [optional] 
 
 ## Methods
@@ -235,55 +234,30 @@ SetShowJobsFromDate sets ShowJobsFromDate field to given value.
 
 HasShowJobsFromDate returns a boolean if a field has been set.
 
-### GetCodeIntegrationVersionId
+### GetCodeSnapshotId
 
-`func (o *GetJobsFilterParams) GetCodeIntegrationVersionId() string`
+`func (o *GetJobsFilterParams) GetCodeSnapshotId() string`
 
-GetCodeIntegrationVersionId returns the CodeIntegrationVersionId field if non-nil, zero value otherwise.
+GetCodeSnapshotId returns the CodeSnapshotId field if non-nil, zero value otherwise.
 
-### GetCodeIntegrationVersionIdOk
+### GetCodeSnapshotIdOk
 
-`func (o *GetJobsFilterParams) GetCodeIntegrationVersionIdOk() (*string, bool)`
+`func (o *GetJobsFilterParams) GetCodeSnapshotIdOk() (*string, bool)`
 
-GetCodeIntegrationVersionIdOk returns a tuple with the CodeIntegrationVersionId field if it's non-nil, zero value otherwise
+GetCodeSnapshotIdOk returns a tuple with the CodeSnapshotId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCodeIntegrationVersionId
+### SetCodeSnapshotId
 
-`func (o *GetJobsFilterParams) SetCodeIntegrationVersionId(v string)`
+`func (o *GetJobsFilterParams) SetCodeSnapshotId(v string)`
 
-SetCodeIntegrationVersionId sets CodeIntegrationVersionId field to given value.
+SetCodeSnapshotId sets CodeSnapshotId field to given value.
 
-### HasCodeIntegrationVersionId
+### HasCodeSnapshotId
 
-`func (o *GetJobsFilterParams) HasCodeIntegrationVersionId() bool`
+`func (o *GetJobsFilterParams) HasCodeSnapshotId() bool`
 
-HasCodeIntegrationVersionId returns a boolean if a field has been set.
-
-### GetCodeIntegrationId
-
-`func (o *GetJobsFilterParams) GetCodeIntegrationId() string`
-
-GetCodeIntegrationId returns the CodeIntegrationId field if non-nil, zero value otherwise.
-
-### GetCodeIntegrationIdOk
-
-`func (o *GetJobsFilterParams) GetCodeIntegrationIdOk() (*string, bool)`
-
-GetCodeIntegrationIdOk returns a tuple with the CodeIntegrationId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCodeIntegrationId
-
-`func (o *GetJobsFilterParams) SetCodeIntegrationId(v string)`
-
-SetCodeIntegrationId sets CodeIntegrationId field to given value.
-
-### HasCodeIntegrationId
-
-`func (o *GetJobsFilterParams) HasCodeIntegrationId() bool`
-
-HasCodeIntegrationId returns a boolean if a field has been set.
+HasCodeSnapshotId returns a boolean if a field has been set.
 
 ### GetCid
 

@@ -26,12 +26,16 @@ Name | Type | Description | Notes
 **Subset** | [**DataStateType**](DataStateType.md) |  | 
 **FirstSubset** | [**DataStateType**](DataStateType.md) |  | 
 **SecondSubset** | [**DataStateType**](DataStateType.md) |  | 
+**MetadataName** | **string** |  | 
+**DomainGapScore** | **float64** |  | 
+**DomainA** | **string** |  | 
+**DomainB** | **string** |  | 
 
 ## Methods
 
 ### NewInsightType
 
-`func NewInsightType(type_ ScatterInsightType, nSamples float64, mutualInfoElements []MutualInformationElement, blobPath string, severity float64, severityMetrics []SeverityMetricElement, metricsInfo []InsightMetricInfo, index float64, minHash []float64, nSamplesValidation float64, nSamplesTraining float64, underRepresentationDataset DataStateType, underRepresentationNSamples float64, overRepresentationDataset DataStateType, overRepresentationNSamples float64, subset DataStateType, firstSubset DataStateType, secondSubset DataStateType, ) *InsightType`
+`func NewInsightType(type_ ScatterInsightType, nSamples float64, mutualInfoElements []MutualInformationElement, blobPath string, severity float64, severityMetrics []SeverityMetricElement, metricsInfo []InsightMetricInfo, index float64, minHash []float64, nSamplesValidation float64, nSamplesTraining float64, underRepresentationDataset DataStateType, underRepresentationNSamples float64, overRepresentationDataset DataStateType, overRepresentationNSamples float64, subset DataStateType, firstSubset DataStateType, secondSubset DataStateType, metadataName string, domainGapScore float64, domainA string, domainB string, ) *InsightType`
 
 NewInsightType instantiates a new InsightType object
 This constructor will assign default values to properties that have it defined,
@@ -504,6 +508,86 @@ and a boolean to check if the value has been set.
 `func (o *InsightType) SetSecondSubset(v DataStateType)`
 
 SetSecondSubset sets SecondSubset field to given value.
+
+
+### GetMetadataName
+
+`func (o *InsightType) GetMetadataName() string`
+
+GetMetadataName returns the MetadataName field if non-nil, zero value otherwise.
+
+### GetMetadataNameOk
+
+`func (o *InsightType) GetMetadataNameOk() (*string, bool)`
+
+GetMetadataNameOk returns a tuple with the MetadataName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMetadataName
+
+`func (o *InsightType) SetMetadataName(v string)`
+
+SetMetadataName sets MetadataName field to given value.
+
+
+### GetDomainGapScore
+
+`func (o *InsightType) GetDomainGapScore() float64`
+
+GetDomainGapScore returns the DomainGapScore field if non-nil, zero value otherwise.
+
+### GetDomainGapScoreOk
+
+`func (o *InsightType) GetDomainGapScoreOk() (*float64, bool)`
+
+GetDomainGapScoreOk returns a tuple with the DomainGapScore field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDomainGapScore
+
+`func (o *InsightType) SetDomainGapScore(v float64)`
+
+SetDomainGapScore sets DomainGapScore field to given value.
+
+
+### GetDomainA
+
+`func (o *InsightType) GetDomainA() string`
+
+GetDomainA returns the DomainA field if non-nil, zero value otherwise.
+
+### GetDomainAOk
+
+`func (o *InsightType) GetDomainAOk() (*string, bool)`
+
+GetDomainAOk returns a tuple with the DomainA field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDomainA
+
+`func (o *InsightType) SetDomainA(v string)`
+
+SetDomainA sets DomainA field to given value.
+
+
+### GetDomainB
+
+`func (o *InsightType) GetDomainB() string`
+
+GetDomainB returns the DomainB field if non-nil, zero value otherwise.
+
+### GetDomainBOk
+
+`func (o *InsightType) GetDomainBOk() (*string, bool)`
+
+GetDomainBOk returns a tuple with the DomainB field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDomainB
+
+`func (o *InsightType) SetDomainB(v string)`
+
+SetDomainB sets DomainB field to given value.
 
 
 

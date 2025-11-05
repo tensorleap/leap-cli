@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Cid** | **string** |  | 
-**ExtId** | **string** |  | 
 **CreatedBy** | **string** |  | 
 **TeamId** | **string** |  | 
 **ProjectId** | **string** |  | 
@@ -13,17 +12,19 @@ Name | Type | Description | Notes
 **Tag** | **string** |  | 
 **Data** | Pointer to [**ModelGraph**](ModelGraph.md) |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
+**UpdatedAt** | **time.Time** |  | 
 **Notes** | **string** |  | 
 **Status** | **string** |  | 
 **IsFavourite** | **bool** |  | 
-**CodeIntegration** | Pointer to [**CodeIntegrationBinder**](CodeIntegrationBinder.md) |  | [optional] 
+**CodeSnapshotId** | Pointer to **string** |  | [optional] 
 **Hash** | Pointer to **string** |  | [optional] 
+**GraphValidationData** | Pointer to [**GraphValidatorData**](GraphValidatorData.md) |  | [optional] 
 
 ## Methods
 
 ### NewVersion
 
-`func NewVersion(cid string, extId string, createdBy string, teamId string, projectId string, branch string, tag string, createdAt time.Time, notes string, status string, isFavourite bool, ) *Version`
+`func NewVersion(cid string, createdBy string, teamId string, projectId string, branch string, tag string, createdAt time.Time, updatedAt time.Time, notes string, status string, isFavourite bool, ) *Version`
 
 NewVersion instantiates a new Version object
 This constructor will assign default values to properties that have it defined,
@@ -56,26 +57,6 @@ and a boolean to check if the value has been set.
 `func (o *Version) SetCid(v string)`
 
 SetCid sets Cid field to given value.
-
-
-### GetExtId
-
-`func (o *Version) GetExtId() string`
-
-GetExtId returns the ExtId field if non-nil, zero value otherwise.
-
-### GetExtIdOk
-
-`func (o *Version) GetExtIdOk() (*string, bool)`
-
-GetExtIdOk returns a tuple with the ExtId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetExtId
-
-`func (o *Version) SetExtId(v string)`
-
-SetExtId sets ExtId field to given value.
 
 
 ### GetCreatedBy
@@ -223,6 +204,26 @@ and a boolean to check if the value has been set.
 SetCreatedAt sets CreatedAt field to given value.
 
 
+### GetUpdatedAt
+
+`func (o *Version) GetUpdatedAt() time.Time`
+
+GetUpdatedAt returns the UpdatedAt field if non-nil, zero value otherwise.
+
+### GetUpdatedAtOk
+
+`func (o *Version) GetUpdatedAtOk() (*time.Time, bool)`
+
+GetUpdatedAtOk returns a tuple with the UpdatedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUpdatedAt
+
+`func (o *Version) SetUpdatedAt(v time.Time)`
+
+SetUpdatedAt sets UpdatedAt field to given value.
+
+
 ### GetNotes
 
 `func (o *Version) GetNotes() string`
@@ -283,30 +284,30 @@ and a boolean to check if the value has been set.
 SetIsFavourite sets IsFavourite field to given value.
 
 
-### GetCodeIntegration
+### GetCodeSnapshotId
 
-`func (o *Version) GetCodeIntegration() CodeIntegrationBinder`
+`func (o *Version) GetCodeSnapshotId() string`
 
-GetCodeIntegration returns the CodeIntegration field if non-nil, zero value otherwise.
+GetCodeSnapshotId returns the CodeSnapshotId field if non-nil, zero value otherwise.
 
-### GetCodeIntegrationOk
+### GetCodeSnapshotIdOk
 
-`func (o *Version) GetCodeIntegrationOk() (*CodeIntegrationBinder, bool)`
+`func (o *Version) GetCodeSnapshotIdOk() (*string, bool)`
 
-GetCodeIntegrationOk returns a tuple with the CodeIntegration field if it's non-nil, zero value otherwise
+GetCodeSnapshotIdOk returns a tuple with the CodeSnapshotId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCodeIntegration
+### SetCodeSnapshotId
 
-`func (o *Version) SetCodeIntegration(v CodeIntegrationBinder)`
+`func (o *Version) SetCodeSnapshotId(v string)`
 
-SetCodeIntegration sets CodeIntegration field to given value.
+SetCodeSnapshotId sets CodeSnapshotId field to given value.
 
-### HasCodeIntegration
+### HasCodeSnapshotId
 
-`func (o *Version) HasCodeIntegration() bool`
+`func (o *Version) HasCodeSnapshotId() bool`
 
-HasCodeIntegration returns a boolean if a field has been set.
+HasCodeSnapshotId returns a boolean if a field has been set.
 
 ### GetHash
 
@@ -332,6 +333,31 @@ SetHash sets Hash field to given value.
 `func (o *Version) HasHash() bool`
 
 HasHash returns a boolean if a field has been set.
+
+### GetGraphValidationData
+
+`func (o *Version) GetGraphValidationData() GraphValidatorData`
+
+GetGraphValidationData returns the GraphValidationData field if non-nil, zero value otherwise.
+
+### GetGraphValidationDataOk
+
+`func (o *Version) GetGraphValidationDataOk() (*GraphValidatorData, bool)`
+
+GetGraphValidationDataOk returns a tuple with the GraphValidationData field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGraphValidationData
+
+`func (o *Version) SetGraphValidationData(v GraphValidatorData)`
+
+SetGraphValidationData sets GraphValidationData field to given value.
+
+### HasGraphValidationData
+
+`func (o *Version) HasGraphValidationData() bool`
+
+HasGraphValidationData returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

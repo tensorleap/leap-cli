@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **TeamId** | **string** |  | 
 **CreatedBy** | **string** |  | 
 **CreatedAt** | **NullableTime** |  | 
+**UpdatedAt** | **NullableTime** |  | 
 **Name** | **string** |  | 
 **LastAccessed** | **time.Time** |  | 
 **Status** | [**ProjectStatus**](ProjectStatus.md) |  | 
@@ -22,7 +23,7 @@ Name | Type | Description | Notes
 
 ### NewProject
 
-`func NewProject(cid string, teamId string, createdBy string, createdAt NullableTime, name string, lastAccessed time.Time, status ProjectStatus, access ProjectAccess, tags []string, hubPublishPolicy HubPublishPolicy, ) *Project`
+`func NewProject(cid string, teamId string, createdBy string, createdAt NullableTime, updatedAt NullableTime, name string, lastAccessed time.Time, status ProjectStatus, access ProjectAccess, tags []string, hubPublishPolicy HubPublishPolicy, ) *Project`
 
 NewProject instantiates a new Project object
 This constructor will assign default values to properties that have it defined,
@@ -127,6 +128,36 @@ SetCreatedAt sets CreatedAt field to given value.
 `func (o *Project) UnsetCreatedAt()`
 
 UnsetCreatedAt ensures that no value is present for CreatedAt, not even an explicit nil
+### GetUpdatedAt
+
+`func (o *Project) GetUpdatedAt() time.Time`
+
+GetUpdatedAt returns the UpdatedAt field if non-nil, zero value otherwise.
+
+### GetUpdatedAtOk
+
+`func (o *Project) GetUpdatedAtOk() (*time.Time, bool)`
+
+GetUpdatedAtOk returns a tuple with the UpdatedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUpdatedAt
+
+`func (o *Project) SetUpdatedAt(v time.Time)`
+
+SetUpdatedAt sets UpdatedAt field to given value.
+
+
+### SetUpdatedAtNil
+
+`func (o *Project) SetUpdatedAtNil(b bool)`
+
+ SetUpdatedAtNil sets the value for UpdatedAt to be an explicit nil
+
+### UnsetUpdatedAt
+`func (o *Project) UnsetUpdatedAt()`
+
+UnsetUpdatedAt ensures that no value is present for UpdatedAt, not even an explicit nil
 ### GetName
 
 `func (o *Project) GetName() string`
