@@ -74,7 +74,6 @@ func InitConfig(cfgFile string) error {
 	if err != nil {
 		return err
 	}
-	log.Infof("Using config file: %s", viper.ConfigFileUsed())
 	return nil
 }
 
