@@ -13,7 +13,7 @@ MECHINE_NAME=$(curl -s -H "Metadata:true" \
 SHARE_MNT="/mnt/batch/tasks/shared/LS_root/mounts/clusters/$MECHINE_NAME/code"
 
 # Path to the image file that will live ON the share
-IMG="$SHARE_MNT/root/tensorleap-volumes/$MECHINE_NAME.ext4"
+IMG="$SHARE_MNT/tensorleap-volumes/$MECHINE_NAME.ext4"
 
 # Local mountpoint for the loop-mounted ext4
 MNT="/mnt/persist"
@@ -96,10 +96,8 @@ for i in {1..10}; do
 done
 
 # --- 5) Verify and set permissions ---
-if mountpoint -q "$MNT"; then
-  sudo chown "$(id -u)":"$(id -g)" "$MNT"
-  sudo chmod 775 "$MNT"
-  sudo chmod 775 "$PARENT_DIR"
+if mountpoint -q "$MNT"; then"
+  mkdir -p "$TLDATA_DIR"
   echo "✅ Ready: $MNT is mounted (backed by $IMG on the CIFS share)."
 
   echo "Installing leap cli..."
