@@ -6,7 +6,6 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**Activate**](DefaultApi.md#Activate) | **Post** /auth/activate | 
 [**AddDashboard**](DefaultApi.md#AddDashboard) | **Post** /dashboards/addDashboard | 
-[**AddDataset**](DefaultApi.md#AddDataset) | **Post** /datasets/addDataset | 
 [**AddExportModelJob**](DefaultApi.md#AddExportModelJob) | **Post** /exportedsessionruns/addExportModelJob | 
 [**AddIssue**](DefaultApi.md#AddIssue) | **Post** /issues/addIssue | 
 [**AddProject**](DefaultApi.md#AddProject) | **Post** /projects/addProject | 
@@ -14,9 +13,9 @@ Method | HTTP request | Description
 [**AddSecretManager**](DefaultApi.md#AddSecretManager) | **Post** /secret-manager/addSecretManager | 
 [**AddVersion**](DefaultApi.md#AddVersion) | **Post** /versions/addVersion | 
 [**AnalyzeGraph**](DefaultApi.md#AnalyzeGraph) | **Post** /graph/analyzeGraph | 
-[**ApplyDatasetMapping**](DefaultApi.md#ApplyDatasetMapping) | **Post** /graph/applyDatasetMapping | 
 [**ApproveInsights**](DefaultApi.md#ApproveInsights) | **Post** /insights/approveInsights | 
 [**ArchiveInsight**](DefaultApi.md#ArchiveInsight) | **Post** /insights/archiveInsight | 
+[**CalcPopulationExplorationDigest**](DefaultApi.md#CalcPopulationExplorationDigest) | **Post** /dashboards/calcPopulationExplorationDigest | 
 [**ClearUserJobs**](DefaultApi.md#ClearUserJobs) | **Post** /users/clearUserJobs | 
 [**ClearUserNotifications**](DefaultApi.md#ClearUserNotifications) | **Post** /users/clearUserNotifications | 
 [**ContinueEvaluate**](DefaultApi.md#ContinueEvaluate) | **Post** /evaluate/continueEvaluate | 
@@ -47,8 +46,8 @@ Method | HTTP request | Description
 [**GetArchiveInsights**](DefaultApi.md#GetArchiveInsights) | **Post** /insights/getArchiveInsights | 
 [**GetAuthProvider**](DefaultApi.md#GetAuthProvider) | **Post** /auth/getAuthProvider | 
 [**GetBalancedAccuracy**](DefaultApi.md#GetBalancedAccuracy) | **Post** /sessionmetrics/getBalancedAccuracy | 
-[**GetCodeIntegrationMappingErrorsByVersionId**](DefaultApi.md#GetCodeIntegrationMappingErrorsByVersionId) | **Post** /graph/getCodeIntegrationMappingErrorsByVersionId | 
-[**GetCodeIntegrationVersionFromBinder**](DefaultApi.md#GetCodeIntegrationVersionFromBinder) | **Post** /versions/getCodeIntegrationVersionFromBinder | 
+[**GetCodeSnapshot**](DefaultApi.md#GetCodeSnapshot) | **Post** /versions/getCodeSnapshot | 
+[**GetCodeSnapshotUploadUrl**](DefaultApi.md#GetCodeSnapshotUploadUrl) | **Post** /versions/getCodeSnapshotUploadUrl | 
 [**GetConfusionMatrixLabels**](DefaultApi.md#GetConfusionMatrixLabels) | **Post** /sessionmetrics/getConfusionMatrixLabels | 
 [**GetConfusionMatrixResultCombinations**](DefaultApi.md#GetConfusionMatrixResultCombinations) | **Post** /sessionmetrics/getConfusionMatrixResultCombinations | 
 [**GetConfusionMatrixTable**](DefaultApi.md#GetConfusionMatrixTable) | **Post** /sessionmetrics/getConfusionMatrixTable | 
@@ -56,10 +55,6 @@ Method | HTTP request | Description
 [**GetCurrentProjectVersion**](DefaultApi.md#GetCurrentProjectVersion) | **Post** /projects/getCurrentProjectVersion | 
 [**GetDashboard**](DefaultApi.md#GetDashboard) | **Post** /dashboards/getDashboard | 
 [**GetDashletFields**](DefaultApi.md#GetDashletFields) | **Post** /dashboards/getDashletFields | 
-[**GetDatasetVersion**](DefaultApi.md#GetDatasetVersion) | **Post** /datasetVersions/getDatasetVersion | 
-[**GetDatasetVersionUploadUrl**](DefaultApi.md#GetDatasetVersionUploadUrl) | **Post** /datasetVersions/getDatasetVersionUploadUrl | 
-[**GetDatasetVersions**](DefaultApi.md#GetDatasetVersions) | **Post** /datasetVersions/getDatasetVersions | 
-[**GetDatasets**](DefaultApi.md#GetDatasets) | **Post** /datasets/getDatasets | 
 [**GetDownloadSignedUrl**](DefaultApi.md#GetDownloadSignedUrl) | **Post** /versions/getDownloadSignedUrl | 
 [**GetEngineSettings**](DefaultApi.md#GetEngineSettings) | **Post** /settings/getEngineSettings | 
 [**GetEnvironmentInfo**](DefaultApi.md#GetEnvironmentInfo) | **Post** /metadata/getEnvironmentInfo | 
@@ -68,11 +63,10 @@ Method | HTTP request | Description
 [**GetFetchSimilarStatus**](DefaultApi.md#GetFetchSimilarStatus) | **Post** /visualizations/getFetchSimilarStatus | 
 [**GetFieldsValues**](DefaultApi.md#GetFieldsValues) | **Post** /sessionmetrics/getFieldsValues | 
 [**GetGeneratedDashlets**](DefaultApi.md#GetGeneratedDashlets) | **Post** /dashletsGenerator/getGeneratedDashlets | 
-[**GetGenericBaseImageTypes**](DefaultApi.md#GetGenericBaseImageTypes) | **Post** /datasetVersions/getGenericBaseImageTypes | 
+[**GetGenericBaseImageTypes**](DefaultApi.md#GetGenericBaseImageTypes) | **Post** /versions/getGenericBaseImageTypes | 
 [**GetHeatmapChart**](DefaultApi.md#GetHeatmapChart) | **Post** /sessionmetrics/getHeatmapChart | 
 [**GetIssueFileUploadSignedUrl**](DefaultApi.md#GetIssueFileUploadSignedUrl) | **Post** /issues/getIssueFileUploadSignedUrl | 
 [**GetJobLogs**](DefaultApi.md#GetJobLogs) | **Post** /jobs/getJobLogs | 
-[**GetLatestDatasetVersion**](DefaultApi.md#GetLatestDatasetVersion) | **Post** /datasetVersions/getLatestDatasetVersion | 
 [**GetLatestExportedProject**](DefaultApi.md#GetLatestExportedProject) | **Post** /projects/getLatestExportedProject | 
 [**GetMachineTypes**](DefaultApi.md#GetMachineTypes) | **Post** /teams/getMachineTypes | 
 [**GetMaxActiveUsers**](DefaultApi.md#GetMaxActiveUsers) | **Post** /metadata/getMaxActiveUsers | 
@@ -125,16 +119,15 @@ Method | HTTP request | Description
 [**LogExternalEpochData**](DefaultApi.md#LogExternalEpochData) | **Post** /externalepochdata/logExternalEpochData | 
 [**Login**](DefaultApi.md#Login) | **Post** /auth/login | 
 [**Logout**](DefaultApi.md#Logout) | **Post** /auth/logout | 
-[**ModifyDatasetVersionNote**](DefaultApi.md#ModifyDatasetVersionNote) | **Post** /datasetVersions/modifyDatasetVersionNote | 
+[**OverwriteModel**](DefaultApi.md#OverwriteModel) | **Post** /versions/overwriteModel | 
 [**PopulationExploration**](DefaultApi.md#PopulationExploration) | **Post** /visualizations/populationExploration | 
+[**PushCodeSnapshot**](DefaultApi.md#PushCodeSnapshot) | **Post** /versions/pushCodeSnapshot | 
 [**RefreshLocalAuth**](DefaultApi.md#RefreshLocalAuth) | **Post** /auth/refreshLocalAuth | 
 [**RemoveSamplesCollection**](DefaultApi.md#RemoveSamplesCollection) | **Post** /sample-collection/removeSampleCollections | 
 [**ResolveConcurrentUsersConflict**](DefaultApi.md#ResolveConcurrentUsersConflict) | **Post** /auth/resolveConcurrentUsersConflict | 
 [**SampleAnalysis**](DefaultApi.md#SampleAnalysis) | **Post** /visualizations/sampleAnalysis | 
 [**SamplesVisualizationsRefresh**](DefaultApi.md#SamplesVisualizationsRefresh) | **Post** /visualizations/samplesVisualizationsRefresh | 
 [**SaveAnalyzerLayout**](DefaultApi.md#SaveAnalyzerLayout) | **Post** /visualizations/saveAnalyzerLayout | 
-[**SaveDatasetVersion**](DefaultApi.md#SaveDatasetVersion) | **Post** /datasetVersions/saveDatasetVersion | 
-[**SaveDatasetVersionNoParse**](DefaultApi.md#SaveDatasetVersionNoParse) | **Post** /datasetVersions/saveDatasetVersionNoParse | 
 [**SendUserMessage**](DefaultApi.md#SendUserMessage) | **Post** /users/sendUserMessage | 
 [**SetCodeChallenge**](DefaultApi.md#SetCodeChallenge) | **Post** /auth/setCodeChallenge | 
 [**SetDefaultTeam**](DefaultApi.md#SetDefaultTeam) | **Post** /teams/setDefaultTeam | 
@@ -146,12 +139,10 @@ Method | HTTP request | Description
 [**TagModel**](DefaultApi.md#TagModel) | **Post** /versions/tagModel | 
 [**TerminateAllJobs**](DefaultApi.md#TerminateAllJobs) | **Post** /jobs/terminateAllJobs | 
 [**TerminateJob**](DefaultApi.md#TerminateJob) | **Post** /jobs/terminateJob | 
-[**TrashDataset**](DefaultApi.md#TrashDataset) | **Post** /datasets/trashDataset | 
 [**TrashSecretManager**](DefaultApi.md#TrashSecretManager) | **Post** /secret-manager/trashSecretManager | 
 [**UnapproveInsight**](DefaultApi.md#UnapproveInsight) | **Post** /insights/unapproveInsights | 
 [**UnarchiveInsight**](DefaultApi.md#UnarchiveInsight) | **Post** /insights/unarchiveInsight | 
 [**UpdateDashboard**](DefaultApi.md#UpdateDashboard) | **Post** /dashboards/updateDashboard | 
-[**UpdateDataset**](DefaultApi.md#UpdateDataset) | **Post** /datasets/updateDataset | 
 [**UpdateEngineSettings**](DefaultApi.md#UpdateEngineSettings) | **Post** /settings/updateSetting | 
 [**UpdateIssue**](DefaultApi.md#UpdateIssue) | **Post** /issues/updateIssue | 
 [**UpdateProjectMeta**](DefaultApi.md#UpdateProjectMeta) | **Post** /projects/updateProjectMeta | 
@@ -258,7 +249,7 @@ import (
 )
 
 func main() {
-    addDashboardParams := *openapiclient.NewAddDashboardParams("ProjectId_example", "Name_example", []openapiclient.Dashlet{*openapiclient.NewDashlet("Cid_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))), "Type_example", *openapiclient.NewPopulationExplorationDashletData(map[string]interface{}(123), "Type_example", "Name_example"), "Name_example", []string{"CollectionIds_example"})}) // AddDashboardParams | 
+    addDashboardParams := *openapiclient.NewAddDashboardParams("ProjectId_example", "Name_example", []openapiclient.Dashlet{*openapiclient.NewDashlet("Cid_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))), "Type_example", *openapiclient.NewPopulationExplorationDashletData(map[string]interface{}(123), "Name_example", "Type_example"), "Name_example", []string{"CollectionIds_example"})}) // AddDashboardParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -288,70 +279,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**AddDashboardResponse**](AddDashboardResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## AddDataset
-
-> AddDatasetResponse AddDataset(ctx).NewDatasetParams(newDatasetParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    newDatasetParams := *openapiclient.NewNewDatasetParams("Name_example") // NewDatasetParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.AddDataset(context.Background()).NewDatasetParams(newDatasetParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.AddDataset``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `AddDataset`: AddDatasetResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.AddDataset`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiAddDatasetRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **newDatasetParams** | [**NewDatasetParams**](NewDatasetParams.md) |  | 
-
-### Return type
-
-[**AddDatasetResponse**](AddDatasetResponse.md)
 
 ### Authorization
 
@@ -706,7 +633,7 @@ import (
 )
 
 func main() {
-    addVersionParams := *openapiclient.NewAddVersionParams("ProjectId_example", *openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "BranchName_example", "Description_example") // AddVersionParams | 
+    addVersionParams := *openapiclient.NewAddVersionParams("ProjectId_example", *openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "BranchName_example", "Description_example", "CodeSnapshotId_example") // AddVersionParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -770,7 +697,7 @@ import (
 )
 
 func main() {
-    analyzeGraphParams := *openapiclient.NewAnalyzeGraphParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "VersionId_example", "ProjectId_example", "Digest_example") // AnalyzeGraphParams | 
+    analyzeGraphParams := *openapiclient.NewAnalyzeGraphParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "CodeSnapshotId_example", "VersionId_example", "ProjectId_example", "Digest_example") // AnalyzeGraphParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -800,70 +727,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**AnalyzeGraphResponse**](AnalyzeGraphResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## ApplyDatasetMapping
-
-> ApplyMappingResponse ApplyDatasetMapping(ctx).ApplyDatasetMappingsParams(applyDatasetMappingsParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    applyDatasetMappingsParams := *openapiclient.NewApplyDatasetMappingsParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "Yaml_example") // ApplyDatasetMappingsParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.ApplyDatasetMapping(context.Background()).ApplyDatasetMappingsParams(applyDatasetMappingsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApplyDatasetMapping``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ApplyDatasetMapping`: ApplyMappingResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ApplyDatasetMapping`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiApplyDatasetMappingRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **applyDatasetMappingsParams** | [**ApplyDatasetMappingsParams**](ApplyDatasetMappingsParams.md) |  | 
-
-### Return type
-
-[**ApplyMappingResponse**](ApplyMappingResponse.md)
 
 ### Authorization
 
@@ -997,6 +860,70 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CalcPopulationExplorationDigest
+
+> CalcPopulationExplorationDigestResponse CalcPopulationExplorationDigest(ctx).CalcPopulationExplorationDigestParams(calcPopulationExplorationDigestParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    calcPopulationExplorationDigestParams := *openapiclient.NewCalcPopulationExplorationDigestParams(*openapiclient.NewPickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrProjectIdOrReRunAfterFail("SessionRunId_example", float64(123), float64(123), float64(123), []string{"BalanceBy_example"}, false, openapiclient.ReductionAlgorithm("TSNE"))) // CalcPopulationExplorationDigestParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.CalcPopulationExplorationDigest(context.Background()).CalcPopulationExplorationDigestParams(calcPopulationExplorationDigestParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.CalcPopulationExplorationDigest``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `CalcPopulationExplorationDigest`: CalcPopulationExplorationDigestResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.CalcPopulationExplorationDigest`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCalcPopulationExplorationDigestRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **calcPopulationExplorationDigestParams** | [**CalcPopulationExplorationDigestParams**](CalcPopulationExplorationDigestParams.md) |  | 
+
+### Return type
+
+[**CalcPopulationExplorationDigestResponse**](CalcPopulationExplorationDigestResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1264,7 +1191,7 @@ import (
 )
 
 func main() {
-    createSampleVisualizationsParams := *openapiclient.NewCreateSampleVisualizationsParams("ProjectId_example", "SessionRunId_example", float64(123), []openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType())}, "Digest_example") // CreateSampleVisualizationsParams | 
+    createSampleVisualizationsParams := *openapiclient.NewCreateSampleVisualizationsParams("ProjectId_example", "SessionRunId_example", float64(123), "Digest_example") // CreateSampleVisualizationsParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -2365,7 +2292,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[jwt](../README.md#jwt)
+No authorization required
 
 ### HTTP request headers
 
@@ -2879,9 +2806,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetCodeIntegrationMappingErrorsByVersionId
+## GetCodeSnapshot
 
-> CodeIntegrationMappingErrorsResponse GetCodeIntegrationMappingErrorsByVersionId(ctx).CodeIntegrationMappingErrorsParams(codeIntegrationMappingErrorsParams).Execute()
+> GetCodeSnapshotResponse GetCodeSnapshot(ctx).GetCodeSnapshotParams(getCodeSnapshotParams).Execute()
 
 
 
@@ -2898,17 +2825,17 @@ import (
 )
 
 func main() {
-    codeIntegrationMappingErrorsParams := *openapiclient.NewCodeIntegrationMappingErrorsParams("ProjectId_example", "VersionId_example", "Mapping_example") // CodeIntegrationMappingErrorsParams | 
+    getCodeSnapshotParams := *openapiclient.NewGetCodeSnapshotParams("ProjectId_example", "CodeSnapshotId_example") // GetCodeSnapshotParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetCodeIntegrationMappingErrorsByVersionId(context.Background()).CodeIntegrationMappingErrorsParams(codeIntegrationMappingErrorsParams).Execute()
+    resp, r, err := apiClient.DefaultApi.GetCodeSnapshot(context.Background()).GetCodeSnapshotParams(getCodeSnapshotParams).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetCodeIntegrationMappingErrorsByVersionId``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetCodeSnapshot``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `GetCodeIntegrationMappingErrorsByVersionId`: CodeIntegrationMappingErrorsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetCodeIntegrationMappingErrorsByVersionId`: %v\n", resp)
+    // response from `GetCodeSnapshot`: GetCodeSnapshotResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetCodeSnapshot`: %v\n", resp)
 }
 ```
 
@@ -2918,16 +2845,16 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiGetCodeIntegrationMappingErrorsByVersionIdRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetCodeSnapshotRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **codeIntegrationMappingErrorsParams** | [**CodeIntegrationMappingErrorsParams**](CodeIntegrationMappingErrorsParams.md) |  | 
+ **getCodeSnapshotParams** | [**GetCodeSnapshotParams**](GetCodeSnapshotParams.md) |  | 
 
 ### Return type
 
-[**CodeIntegrationMappingErrorsResponse**](CodeIntegrationMappingErrorsResponse.md)
+[**GetCodeSnapshotResponse**](GetCodeSnapshotResponse.md)
 
 ### Authorization
 
@@ -2943,9 +2870,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetCodeIntegrationVersionFromBinder
+## GetCodeSnapshotUploadUrl
 
-> DatasetVersion GetCodeIntegrationVersionFromBinder(ctx).CodeIntegrationBinder(codeIntegrationBinder).Execute()
+> CodeSnapshotUploadUrlResponse GetCodeSnapshotUploadUrl(ctx).GetCodeSnapshotUploadUrlParams(getCodeSnapshotUploadUrlParams).Execute()
 
 
 
@@ -2962,17 +2889,17 @@ import (
 )
 
 func main() {
-    codeIntegrationBinder := *openapiclient.NewCodeIntegrationBinder("CodeIntegrationId_example", "Branch_example", "Type_example", "CodeIntegrationVersionId_example") // CodeIntegrationBinder | 
+    getCodeSnapshotUploadUrlParams := *openapiclient.NewGetCodeSnapshotUploadUrlParams("ProjectId_example") // GetCodeSnapshotUploadUrlParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetCodeIntegrationVersionFromBinder(context.Background()).CodeIntegrationBinder(codeIntegrationBinder).Execute()
+    resp, r, err := apiClient.DefaultApi.GetCodeSnapshotUploadUrl(context.Background()).GetCodeSnapshotUploadUrlParams(getCodeSnapshotUploadUrlParams).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetCodeIntegrationVersionFromBinder``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetCodeSnapshotUploadUrl``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `GetCodeIntegrationVersionFromBinder`: DatasetVersion
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetCodeIntegrationVersionFromBinder`: %v\n", resp)
+    // response from `GetCodeSnapshotUploadUrl`: CodeSnapshotUploadUrlResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetCodeSnapshotUploadUrl`: %v\n", resp)
 }
 ```
 
@@ -2982,16 +2909,16 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiGetCodeIntegrationVersionFromBinderRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetCodeSnapshotUploadUrlRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **codeIntegrationBinder** | [**CodeIntegrationBinder**](CodeIntegrationBinder.md) |  | 
+ **getCodeSnapshotUploadUrlParams** | [**GetCodeSnapshotUploadUrlParams**](GetCodeSnapshotUploadUrlParams.md) |  | 
 
 ### Return type
 
-[**DatasetVersion**](DatasetVersion.md)
+[**CodeSnapshotUploadUrlResponse**](CodeSnapshotUploadUrlResponse.md)
 
 ### Authorization
 
@@ -3448,257 +3375,6 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GetDatasetVersion
-
-> GetDatasetVersionResponse GetDatasetVersion(ctx).GetDatasetVersionParams(getDatasetVersionParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    getDatasetVersionParams := *openapiclient.NewGetDatasetVersionParams("DatasetVersionId_example") // GetDatasetVersionParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetDatasetVersion(context.Background()).GetDatasetVersionParams(getDatasetVersionParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetDatasetVersion``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetDatasetVersion`: GetDatasetVersionResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetDatasetVersion`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetDatasetVersionRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getDatasetVersionParams** | [**GetDatasetVersionParams**](GetDatasetVersionParams.md) |  | 
-
-### Return type
-
-[**GetDatasetVersionResponse**](GetDatasetVersionResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GetDatasetVersionUploadUrl
-
-> DatasetVersionUploadUrlResponse GetDatasetVersionUploadUrl(ctx).GetDatasetVersionUploadUrlParams(getDatasetVersionUploadUrlParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    getDatasetVersionUploadUrlParams := *openapiclient.NewGetDatasetVersionUploadUrlParams("DatasetId_example") // GetDatasetVersionUploadUrlParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetDatasetVersionUploadUrl(context.Background()).GetDatasetVersionUploadUrlParams(getDatasetVersionUploadUrlParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetDatasetVersionUploadUrl``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetDatasetVersionUploadUrl`: DatasetVersionUploadUrlResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetDatasetVersionUploadUrl`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetDatasetVersionUploadUrlRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getDatasetVersionUploadUrlParams** | [**GetDatasetVersionUploadUrlParams**](GetDatasetVersionUploadUrlParams.md) |  | 
-
-### Return type
-
-[**DatasetVersionUploadUrlResponse**](DatasetVersionUploadUrlResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GetDatasetVersions
-
-> GetDatasetVersionsResponse GetDatasetVersions(ctx).GetDatasetVersionsParams(getDatasetVersionsParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    getDatasetVersionsParams := *openapiclient.NewGetDatasetVersionsParams("DatasetId_example") // GetDatasetVersionsParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetDatasetVersions(context.Background()).GetDatasetVersionsParams(getDatasetVersionsParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetDatasetVersions``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetDatasetVersions`: GetDatasetVersionsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetDatasetVersions`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetDatasetVersionsRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getDatasetVersionsParams** | [**GetDatasetVersionsParams**](GetDatasetVersionsParams.md) |  | 
-
-### Return type
-
-[**GetDatasetVersionsResponse**](GetDatasetVersionsResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## GetDatasets
-
-> GetDatasetsResponse GetDatasets(ctx).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetDatasets(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetDatasets``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetDatasets`: GetDatasetsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetDatasets`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-This endpoint does not need any parameter.
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetDatasetsRequest struct via the builder pattern
-
-
-### Return type
-
-[**GetDatasetsResponse**](GetDatasetsResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -4459,70 +4135,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetLatestDatasetVersion
-
-> GetLatestDatasetVersionResponse GetLatestDatasetVersion(ctx).GetLatestDatasetVersionParams(getLatestDatasetVersionParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    getLatestDatasetVersionParams := *openapiclient.NewGetLatestDatasetVersionParams("DatasetId_example") // GetLatestDatasetVersionParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.GetLatestDatasetVersion(context.Background()).GetLatestDatasetVersionParams(getLatestDatasetVersionParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetLatestDatasetVersion``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetLatestDatasetVersion`: GetLatestDatasetVersionResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.GetLatestDatasetVersion`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetLatestDatasetVersionRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getLatestDatasetVersionParams** | [**GetLatestDatasetVersionParams**](GetLatestDatasetVersionParams.md) |  | 
-
-### Return type
-
-[**GetLatestDatasetVersionResponse**](GetLatestDatasetVersionResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## GetLatestExportedProject
 
 > LatestExportedProject GetLatestExportedProject(ctx).GetLatestExportedProjectParams(getLatestExportedProjectParams).Execute()
@@ -4847,7 +4459,7 @@ import (
 )
 
 func main() {
-    populationExplorationParams := *openapiclient.NewPopulationExplorationParams("SessionRunId_example", "ProjectId_example", float64(123), float64(123), "Digest_example", *openapiclient.NewPopulationExplorationDisplayParams(float64(123), []string{"BalanceBy_example"}, false, openapiclient.ReductionAlgorithm("TSNE"))) // PopulationExplorationParams | 
+    populationExplorationParams := *openapiclient.NewPopulationExplorationParams("SessionRunId_example", "ProjectId_example", float64(123), float64(123), "Digest_example", float64(123), []string{"BalanceBy_example"}, false, openapiclient.ReductionAlgorithm("TSNE")) // PopulationExplorationParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -7109,7 +6721,7 @@ No authorization required
 
 ## ImportExternalModel
 
-> ExternalImportModelStorageResponse ImportExternalModel(ctx).ImportExternalModelParams(importExternalModelParams).Execute()
+> RunImportModelResponse ImportExternalModel(ctx).ImportExternalModelParams(importExternalModelParams).Execute()
 
 
 
@@ -7135,7 +6747,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ImportExternalModel``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `ImportExternalModel`: ExternalImportModelStorageResponse
+    // response from `ImportExternalModel`: RunImportModelResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ImportExternalModel`: %v\n", resp)
 }
 ```
@@ -7155,7 +6767,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ExternalImportModelStorageResponse**](ExternalImportModelStorageResponse.md)
+[**RunImportModelResponse**](RunImportModelResponse.md)
 
 ### Authorization
 
@@ -7173,7 +6785,7 @@ Name | Type | Description  | Notes
 
 ## ImportModel
 
-> ExternalImportModelStorageResponse ImportModel(ctx).ImportNewModelParams(importNewModelParams).Execute()
+> RunImportModelResponse ImportModel(ctx).ImportNewModelParams(importNewModelParams).Execute()
 
 
 
@@ -7190,7 +6802,7 @@ import (
 )
 
 func main() {
-    importNewModelParams := *openapiclient.NewImportNewModelParams("ProjectId_example", "FileName_example", "ModelName_example", "VersionName_example", openapiclient.ImportModelType("JSON_TF2")) // ImportNewModelParams | 
+    importNewModelParams := *openapiclient.NewImportNewModelParams("ProjectId_example", "VersionId_example", *openapiclient.NewImportModelInfo("FileName_example", openapiclient.ImportModelType("JSON_TF2"))) // ImportNewModelParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -7199,7 +6811,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ImportModel``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `ImportModel`: ExternalImportModelStorageResponse
+    // response from `ImportModel`: RunImportModelResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ImportModel`: %v\n", resp)
 }
 ```
@@ -7219,7 +6831,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ExternalImportModelStorageResponse**](ExternalImportModelStorageResponse.md)
+[**RunImportModelResponse**](RunImportModelResponse.md)
 
 ### Authorization
 
@@ -7318,7 +6930,7 @@ import (
 )
 
 func main() {
-    initExperimentRequest := *openapiclient.NewInitExperimentRequest("ExperimentName_example") // InitExperimentRequest | 
+    initExperimentRequest := *openapiclient.NewInitExperimentRequest("ExperimentName_example", "CodeSnapshotId_example") // InitExperimentRequest | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -7797,9 +7409,9 @@ Other parameters are passed through a pointer to a apiLogoutRequest struct via t
 [[Back to README]](../README.md)
 
 
-## ModifyDatasetVersionNote
+## OverwriteModel
 
-> ModifyDatasetVersionNoteResponse ModifyDatasetVersionNote(ctx).ModifyDatasetVersionNoteParams(modifyDatasetVersionNoteParams).Execute()
+> RunImportModelResponse OverwriteModel(ctx).OverwriteModelParams(overwriteModelParams).Execute()
 
 
 
@@ -7816,17 +7428,17 @@ import (
 )
 
 func main() {
-    modifyDatasetVersionNoteParams := *openapiclient.NewModifyDatasetVersionNoteParams("DatasetVersionId_example", "Note_example") // ModifyDatasetVersionNoteParams | 
+    overwriteModelParams := *openapiclient.NewOverwriteModelParams("ProjectId_example", "VersionId_example") // OverwriteModelParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.ModifyDatasetVersionNote(context.Background()).ModifyDatasetVersionNoteParams(modifyDatasetVersionNoteParams).Execute()
+    resp, r, err := apiClient.DefaultApi.OverwriteModel(context.Background()).OverwriteModelParams(overwriteModelParams).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ModifyDatasetVersionNote``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.OverwriteModel``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `ModifyDatasetVersionNote`: ModifyDatasetVersionNoteResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ModifyDatasetVersionNote`: %v\n", resp)
+    // response from `OverwriteModel`: RunImportModelResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.OverwriteModel`: %v\n", resp)
 }
 ```
 
@@ -7836,16 +7448,16 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiModifyDatasetVersionNoteRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiOverwriteModelRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **modifyDatasetVersionNoteParams** | [**ModifyDatasetVersionNoteParams**](ModifyDatasetVersionNoteParams.md) |  | 
+ **overwriteModelParams** | [**OverwriteModelParams**](OverwriteModelParams.md) |  | 
 
 ### Return type
 
-[**ModifyDatasetVersionNoteResponse**](ModifyDatasetVersionNoteResponse.md)
+[**RunImportModelResponse**](RunImportModelResponse.md)
 
 ### Authorization
 
@@ -7880,7 +7492,7 @@ import (
 )
 
 func main() {
-    populationExplorationParams := *openapiclient.NewPopulationExplorationParams("SessionRunId_example", "ProjectId_example", float64(123), float64(123), "Digest_example", *openapiclient.NewPopulationExplorationDisplayParams(float64(123), []string{"BalanceBy_example"}, false, openapiclient.ReductionAlgorithm("TSNE"))) // PopulationExplorationParams | 
+    populationExplorationParams := *openapiclient.NewPopulationExplorationParams("SessionRunId_example", "ProjectId_example", float64(123), float64(123), "Digest_example", float64(123), []string{"BalanceBy_example"}, false, openapiclient.ReductionAlgorithm("TSNE")) // PopulationExplorationParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -7910,6 +7522,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PopulationExplorationResponse**](PopulationExplorationResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## PushCodeSnapshot
+
+> PushCodeSnapshotResponse PushCodeSnapshot(ctx).PushCodeSnapshotParams(pushCodeSnapshotParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+    pushCodeSnapshotParams := *openapiclient.NewPushCodeSnapshotParams("ProjectId_example", "CodeUrl_example", "CodeEntryFile_example", "VersionName_example") // PushCodeSnapshotParams | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultApi.PushCodeSnapshot(context.Background()).PushCodeSnapshotParams(pushCodeSnapshotParams).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.PushCodeSnapshot``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `PushCodeSnapshot`: PushCodeSnapshotResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.PushCodeSnapshot`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPushCodeSnapshotRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **pushCodeSnapshotParams** | [**PushCodeSnapshotParams**](PushCodeSnapshotParams.md) |  | 
+
+### Return type
+
+[**PushCodeSnapshotResponse**](PushCodeSnapshotResponse.md)
 
 ### Authorization
 
@@ -8285,134 +7961,6 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## SaveDatasetVersion
-
-> SaveDatasetSetupResponse SaveDatasetVersion(ctx).SaveDatasetVersionParams(saveDatasetVersionParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    saveDatasetVersionParams := *openapiclient.NewSaveDatasetVersionParams("DatasetId_example", "CodeUrl_example", "CodeEntryFile_example") // SaveDatasetVersionParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.SaveDatasetVersion(context.Background()).SaveDatasetVersionParams(saveDatasetVersionParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.SaveDatasetVersion``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `SaveDatasetVersion`: SaveDatasetSetupResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.SaveDatasetVersion`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiSaveDatasetVersionRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **saveDatasetVersionParams** | [**SaveDatasetVersionParams**](SaveDatasetVersionParams.md) |  | 
-
-### Return type
-
-[**SaveDatasetSetupResponse**](SaveDatasetSetupResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## SaveDatasetVersionNoParse
-
-> SaveDatasetSetupResponse SaveDatasetVersionNoParse(ctx).SaveDatasetVersionNoParseParams(saveDatasetVersionNoParseParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    saveDatasetVersionNoParseParams := *openapiclient.NewSaveDatasetVersionNoParseParams("FromDatasetVersionId_example", "CodeUrl_example", "CodeEntryFile_example") // SaveDatasetVersionNoParseParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.SaveDatasetVersionNoParse(context.Background()).SaveDatasetVersionNoParseParams(saveDatasetVersionNoParseParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.SaveDatasetVersionNoParse``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `SaveDatasetVersionNoParse`: SaveDatasetSetupResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.SaveDatasetVersionNoParse`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiSaveDatasetVersionNoParseRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **saveDatasetVersionNoParseParams** | [**SaveDatasetVersionNoParseParams**](SaveDatasetVersionNoParseParams.md) |  | 
-
-### Return type
-
-[**SaveDatasetSetupResponse**](SaveDatasetSetupResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -9108,70 +8656,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## TrashDataset
-
-> GetDatasetsResponse TrashDataset(ctx).TrashDatasetParams(trashDatasetParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    trashDatasetParams := *openapiclient.NewTrashDatasetParams("DatasetId_example") // TrashDatasetParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.TrashDataset(context.Background()).TrashDatasetParams(trashDatasetParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.TrashDataset``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `TrashDataset`: GetDatasetsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.TrashDataset`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiTrashDatasetRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **trashDatasetParams** | [**TrashDatasetParams**](TrashDatasetParams.md) |  | 
-
-### Return type
-
-[**GetDatasetsResponse**](GetDatasetsResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## TrashSecretManager
 
 > TrashSecretManagerResponse TrashSecretManager(ctx).TrashSecretManagerParams(trashSecretManagerParams).Execute()
@@ -9379,7 +8863,7 @@ import (
 )
 
 func main() {
-    updateDashboardParams := *openapiclient.NewUpdateDashboardParams("DashboardId_example", "Name_example", []openapiclient.Dashlet{*openapiclient.NewDashlet("Cid_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))), "Type_example", *openapiclient.NewPopulationExplorationDashletData(map[string]interface{}(123), "Type_example", "Name_example"), "Name_example", []string{"CollectionIds_example"})}, "ProjectId_example") // UpdateDashboardParams | 
+    updateDashboardParams := *openapiclient.NewUpdateDashboardParams("DashboardId_example", "Name_example", []openapiclient.Dashlet{*openapiclient.NewDashlet("Cid_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))), "Type_example", *openapiclient.NewPopulationExplorationDashletData(map[string]interface{}(123), "Name_example", "Type_example"), "Name_example", []string{"CollectionIds_example"})}, "ProjectId_example") // UpdateDashboardParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -9416,70 +8900,6 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## UpdateDataset
-
-> UpdateDatasetResponse UpdateDataset(ctx).UpdateDatasetParams(updateDatasetParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-    updateDatasetParams := *openapiclient.NewUpdateDatasetParams("DatasetId_example", "Name_example") // UpdateDatasetParams | 
-
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultApi.UpdateDataset(context.Background()).UpdateDatasetParams(updateDatasetParams).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.UpdateDataset``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `UpdateDataset`: UpdateDatasetResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.UpdateDataset`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiUpdateDatasetRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **updateDatasetParams** | [**UpdateDatasetParams**](UpdateDatasetParams.md) |  | 
-
-### Return type
-
-[**UpdateDatasetResponse**](UpdateDatasetResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -10581,7 +10001,7 @@ import (
 )
 
 func main() {
-    validateGraphParams := *openapiclient.NewValidateGraphParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "DatasetVersionId_example", "VersionId_example", "ProjectId_example", "Digest_example") // ValidateGraphParams | 
+    validateGraphParams := *openapiclient.NewValidateGraphParams(*openapiclient.NewModelGraph("Id_example", map[string]interface{}(123)), "CodeSnapshotId_example", "VersionId_example", "ProjectId_example", "Digest_example") // ValidateGraphParams | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)

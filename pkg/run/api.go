@@ -16,7 +16,7 @@ var RunEntityDesc = entity.NewEntityDescriptor(
 	"run",
 	"runs",
 	func(r *RunEntity) string {
-		createdAt, err := ParseAndFormatDate(r.GetCreatedAt())
+		createdAt, err := api.ParseAndFormatDateToLocalTime(r.GetCreatedAt())
 
 		if err != nil {
 			return fmt.Sprintf("%s \t %s \t %s", r.GetJobType(), r.GetCreatedAt(), r.GetStatus())

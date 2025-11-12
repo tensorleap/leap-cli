@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **Description** | **string** |  | 
 **SkipMetricsEstimation** | **bool** |  | 
 **Monitor** | Pointer to **bool** |  | [optional] 
+**SmartVisualizations** | Pointer to **bool** |  | [optional] 
 **EvaluatedEpoch** | **float64** |  | 
 **SessionId** | **string** |  | 
 
@@ -198,6 +199,31 @@ SetMonitor sets Monitor field to given value.
 `func (o *EvaluateExistingSessionParams) HasMonitor() bool`
 
 HasMonitor returns a boolean if a field has been set.
+
+### GetSmartVisualizations
+
+`func (o *EvaluateExistingSessionParams) GetSmartVisualizations() bool`
+
+GetSmartVisualizations returns the SmartVisualizations field if non-nil, zero value otherwise.
+
+### GetSmartVisualizationsOk
+
+`func (o *EvaluateExistingSessionParams) GetSmartVisualizationsOk() (*bool, bool)`
+
+GetSmartVisualizationsOk returns a tuple with the SmartVisualizations field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSmartVisualizations
+
+`func (o *EvaluateExistingSessionParams) SetSmartVisualizations(v bool)`
+
+SetSmartVisualizations sets SmartVisualizations field to given value.
+
+### HasSmartVisualizations
+
+`func (o *EvaluateExistingSessionParams) HasSmartVisualizations() bool`
+
+HasSmartVisualizations returns a boolean if a field has been set.
 
 ### GetEvaluatedEpoch
 

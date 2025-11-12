@@ -16,8 +16,9 @@ Name | Type | Description | Notes
 **Notes** | **string** |  | 
 **Status** | **string** |  | 
 **IsFavourite** | **bool** |  | 
-**CodeIntegration** | Pointer to [**CodeIntegrationBinder**](CodeIntegrationBinder.md) |  | [optional] 
+**CodeSnapshotId** | Pointer to **string** |  | [optional] 
 **Hash** | Pointer to **string** |  | [optional] 
+**GraphValidationData** | Pointer to [**GraphValidatorData**](GraphValidatorData.md) |  | [optional] 
 
 ## Methods
 
@@ -283,30 +284,30 @@ and a boolean to check if the value has been set.
 SetIsFavourite sets IsFavourite field to given value.
 
 
-### GetCodeIntegration
+### GetCodeSnapshotId
 
-`func (o *Version) GetCodeIntegration() CodeIntegrationBinder`
+`func (o *Version) GetCodeSnapshotId() string`
 
-GetCodeIntegration returns the CodeIntegration field if non-nil, zero value otherwise.
+GetCodeSnapshotId returns the CodeSnapshotId field if non-nil, zero value otherwise.
 
-### GetCodeIntegrationOk
+### GetCodeSnapshotIdOk
 
-`func (o *Version) GetCodeIntegrationOk() (*CodeIntegrationBinder, bool)`
+`func (o *Version) GetCodeSnapshotIdOk() (*string, bool)`
 
-GetCodeIntegrationOk returns a tuple with the CodeIntegration field if it's non-nil, zero value otherwise
+GetCodeSnapshotIdOk returns a tuple with the CodeSnapshotId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCodeIntegration
+### SetCodeSnapshotId
 
-`func (o *Version) SetCodeIntegration(v CodeIntegrationBinder)`
+`func (o *Version) SetCodeSnapshotId(v string)`
 
-SetCodeIntegration sets CodeIntegration field to given value.
+SetCodeSnapshotId sets CodeSnapshotId field to given value.
 
-### HasCodeIntegration
+### HasCodeSnapshotId
 
-`func (o *Version) HasCodeIntegration() bool`
+`func (o *Version) HasCodeSnapshotId() bool`
 
-HasCodeIntegration returns a boolean if a field has been set.
+HasCodeSnapshotId returns a boolean if a field has been set.
 
 ### GetHash
 
@@ -332,6 +333,31 @@ SetHash sets Hash field to given value.
 `func (o *Version) HasHash() bool`
 
 HasHash returns a boolean if a field has been set.
+
+### GetGraphValidationData
+
+`func (o *Version) GetGraphValidationData() GraphValidatorData`
+
+GetGraphValidationData returns the GraphValidationData field if non-nil, zero value otherwise.
+
+### GetGraphValidationDataOk
+
+`func (o *Version) GetGraphValidationDataOk() (*GraphValidatorData, bool)`
+
+GetGraphValidationDataOk returns a tuple with the GraphValidationData field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGraphValidationData
+
+`func (o *Version) SetGraphValidationData(v GraphValidatorData)`
+
+SetGraphValidationData sets GraphValidationData field to given value.
+
+### HasGraphValidationData
+
+`func (o *Version) HasGraphValidationData() bool`
+
+HasGraphValidationData returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

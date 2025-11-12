@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **Params** | Pointer to [**JobParams**](JobParams.md) |  | [optional] 
 **SessionRunId** | Pointer to **string** |  | [optional] 
 **TeamId** | **string** |  | 
-**DatasetVersionInfo** | Pointer to [**DatasetVersionInfo**](DatasetVersionInfo.md) |  | [optional] 
+**CodeSnapshotInfo** | Pointer to [**CodeSnapshotInfo**](CodeSnapshotInfo.md) |  | [optional] 
 **EventsSnapshot** | Pointer to [**EventsSnapshot**](EventsSnapshot.md) |  | [optional] 
 **LogsBlobName** | Pointer to **string** |  | [optional] 
 
@@ -304,30 +304,30 @@ and a boolean to check if the value has been set.
 SetTeamId sets TeamId field to given value.
 
 
-### GetDatasetVersionInfo
+### GetCodeSnapshotInfo
 
-`func (o *Job) GetDatasetVersionInfo() DatasetVersionInfo`
+`func (o *Job) GetCodeSnapshotInfo() CodeSnapshotInfo`
 
-GetDatasetVersionInfo returns the DatasetVersionInfo field if non-nil, zero value otherwise.
+GetCodeSnapshotInfo returns the CodeSnapshotInfo field if non-nil, zero value otherwise.
 
-### GetDatasetVersionInfoOk
+### GetCodeSnapshotInfoOk
 
-`func (o *Job) GetDatasetVersionInfoOk() (*DatasetVersionInfo, bool)`
+`func (o *Job) GetCodeSnapshotInfoOk() (*CodeSnapshotInfo, bool)`
 
-GetDatasetVersionInfoOk returns a tuple with the DatasetVersionInfo field if it's non-nil, zero value otherwise
+GetCodeSnapshotInfoOk returns a tuple with the CodeSnapshotInfo field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDatasetVersionInfo
+### SetCodeSnapshotInfo
 
-`func (o *Job) SetDatasetVersionInfo(v DatasetVersionInfo)`
+`func (o *Job) SetCodeSnapshotInfo(v CodeSnapshotInfo)`
 
-SetDatasetVersionInfo sets DatasetVersionInfo field to given value.
+SetCodeSnapshotInfo sets CodeSnapshotInfo field to given value.
 
-### HasDatasetVersionInfo
+### HasCodeSnapshotInfo
 
-`func (o *Job) HasDatasetVersionInfo() bool`
+`func (o *Job) HasCodeSnapshotInfo() bool`
 
-HasDatasetVersionInfo returns a boolean if a field has been set.
+HasCodeSnapshotInfo returns a boolean if a field has been set.
 
 ### GetEventsSnapshot
 

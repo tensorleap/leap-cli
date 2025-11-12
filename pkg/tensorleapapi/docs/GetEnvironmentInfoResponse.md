@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **IsCloud** | **bool** |  | 
 **GatewayUrl** | **string** |  | 
 **ProxyUrl** | **string** |  | 
+**LicenseMetadata** | Pointer to [**LicenseMetadata**](LicenseMetadata.md) |  | [optional] 
 
 ## Methods
 
@@ -191,6 +192,31 @@ and a boolean to check if the value has been set.
 
 SetProxyUrl sets ProxyUrl field to given value.
 
+
+### GetLicenseMetadata
+
+`func (o *GetEnvironmentInfoResponse) GetLicenseMetadata() LicenseMetadata`
+
+GetLicenseMetadata returns the LicenseMetadata field if non-nil, zero value otherwise.
+
+### GetLicenseMetadataOk
+
+`func (o *GetEnvironmentInfoResponse) GetLicenseMetadataOk() (*LicenseMetadata, bool)`
+
+GetLicenseMetadataOk returns a tuple with the LicenseMetadata field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLicenseMetadata
+
+`func (o *GetEnvironmentInfoResponse) SetLicenseMetadata(v LicenseMetadata)`
+
+SetLicenseMetadata sets LicenseMetadata field to given value.
+
+### HasLicenseMetadata
+
+`func (o *GetEnvironmentInfoResponse) HasLicenseMetadata() bool`
+
+HasLicenseMetadata returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
