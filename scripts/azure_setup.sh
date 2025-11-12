@@ -60,19 +60,21 @@ Wants=network-online.target
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/usr/bin/bash -c 'for i in {1..60}; do \
-  if [ -f "$IMG" ]; then \
+ExecStart=/usr/bin/bash -c 'for i in {1..120}; do \
+  IMG="$IMG"; \
+  MNT="$MNT"; \
+  if [ -f "\$IMG" ]; then \
     echo "[$(date)] Found image, mounting..."; \
-    mount -o loop "$IMG" "$MNT" && \
-    chmod 775 "$MNT" && \
-    chown azureuser:azureuser "$MNT"; \
+    mount -o loop "\$IMG" "\$MNT" && \
+    chmod 775 "\$MNT" && \
+    chown azureuser:azureuser "\$MNT"; \
     echo "[$(date)] Mount and permissions done."; \
     exit 0; \
   fi; \
-  echo "[$(date)] Waiting for Azure Batch share..."; \
+  echo "[$(date)] Waiting for Azure Batch share... (\$i)"; \
   sleep 2; \
 done; \
-echo "[$(date)] ERROR: image not found after 2 minutes."; exit 1'
+echo "[$(date)] ERROR: image not found after 4 minutes."; exit 1'
 ExecStop=/usr/bin/umount "$MNT"
 
 [Install]
