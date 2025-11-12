@@ -1,4 +1,4 @@
-package projects
+package push
 
 import (
 	"fmt"
@@ -19,6 +19,7 @@ func NewPushCmd() *cobra.Command {
 	var modelVersionName string
 	var codeVersionMessage string
 	var modelType string
+	var modelPath string
 	var branch string
 	var transformInput bool
 	var force bool
@@ -27,15 +28,9 @@ func NewPushCmd() *cobra.Command {
 	var leapMappingPath string
 
 	var cmd = &cobra.Command{
-		Use:   "push <modelPath>",
-		Short: "Push new version into a project with its model and code integration",
-		Long:  `Push new version into a project with its model and code integration`,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			if len(args) == 0 {
-				return fmt.Errorf("missing model path argument")
-			}
-			return nil
-		},
+		Use:   "push",
+		Short: "Push new or overwrite model version",
+		Long:  `Push new or overwrite model version into a project with its code integration`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Define base properties for all analytics events
 			properties := map[string]interface{}{
@@ -49,32 +44,11 @@ func NewPushCmd() *cobra.Command {
 				"no_wait":              noWait,
 				"python_version":       pythonVersion,
 				"leap_mapping_path":    leapMappingPath,
+				"model_path":           modelPath,
 			}
 
 			// Track projects push started
 			analytics.SendEvent(analytics.EventCliProjectsPushStarted, properties)
-
-			ctx := cmd.Context()
-			modelPath := args[0]
-			properties["model_path"] = modelPath
-
-			err := model.SelectModelType(&modelType, modelPath)
-			if err != nil {
-				// Track projects push failed
-				properties["error"] = err.Error()
-				properties["stage"] = "select_model_type"
-				analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
-				return err
-			}
-			defaultMessage := model.GetDefaultMessageFromModelPath(modelPath)
-			err = model.InitMessage(&modelVersionName, defaultMessage)
-			if err != nil {
-				// Track projects push failed
-				properties["error"] = err.Error()
-				properties["stage"] = "init_message"
-				analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
-				return err
-			}
 
 			workspaceConfig, err := workspace.GetWorkspaceConfig()
 			if err != nil {
@@ -84,12 +58,49 @@ func NewPushCmd() *cobra.Command {
 				analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
 				return err
 			}
-
+			ctx := cmd.Context()
 			currentProject, err := project.SyncProjectIdToWorkspaceConfig(ctx, workspaceConfig)
 			if err != nil {
 				// Track projects push failed
 				properties["error"] = err.Error()
 				properties["stage"] = "sync_project"
+				analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
+				return err
+			}
+
+			var isOverwrite bool
+			var overwriteVersionId string
+			if len(modelPath) == 0 {
+				isOverwrite, overwriteVersionId, modelPath, err = model.AskUserForModelPathOrOverwrite(ctx, currentProject.GetCid())
+				if err != nil {
+					return err
+				}
+			} else {
+				isOverwrite = false
+				overwriteVersionId = ""
+			}
+
+			properties["is_overwrite"] = isOverwrite
+			properties["version_id"] = overwriteVersionId
+			properties["model_path"] = modelPath
+			if !isOverwrite {
+				properties["model_path"] = modelPath
+				err := model.SelectModelType(&modelType, modelPath)
+				if err != nil {
+					// Track projects push failed
+					properties["error"] = err.Error()
+					properties["stage"] = "select_model_type"
+					analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
+					return err
+				}
+			}
+
+			defaultMessage := model.GetDefaultMessageFromModelPath(modelPath)
+			err = model.InitMessage(&modelVersionName, defaultMessage)
+			if err != nil {
+				// Track projects push failed
+				properties["error"] = err.Error()
+				properties["stage"] = "init_message"
 				analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
 				return err
 			}
@@ -131,7 +142,7 @@ func NewPushCmd() *cobra.Command {
 			}
 			defer close()
 
-			pushed, codeSnapshotResponse, err := code.PushCode(ctx, force, tarGzFile, workspaceConfig.EntryFile, secretId, pythonVersion, modelVersionName, currentProject.GetCid(), branch, "")
+			pushed, codeSnapshotResponse, err := code.PushCode(ctx, force, tarGzFile, workspaceConfig.EntryFile, secretId, pythonVersion, modelVersionName, currentProject.GetCid(), branch, overwriteVersionId)
 			if err != nil {
 				// Track projects push failed
 				properties["error"] = err.Error()
@@ -175,19 +186,31 @@ func NewPushCmd() *cobra.Command {
 				analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
 				return fmt.Errorf("latest code parsing failed, add --force to push anyway")
 			}
-
-			err = model.ImportModel(ctx, modelPath, currentProject.GetCid(),
-				modelType, codeSnapshotResponse.VersionId, transformInput, !noWait)
-			if err != nil {
-				// Track projects push failed
-				properties["error"] = err.Error()
-				properties["stage"] = "import_model"
-				properties["code_snapshot_id"] = codeSnapshotResponse.CodeSnapshot.Cid
-				properties["version_id"] = codeSnapshotResponse.VersionId
-				properties["project_id"] = currentProject.GetCid()
-				analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
-				return err
+			if !isOverwrite {
+				err = model.ImportModel(ctx, modelPath, currentProject.GetCid(),
+					modelType, codeSnapshotResponse.VersionId, transformInput, !noWait)
+				if err != nil {
+					// Track projects push failed
+					properties["error"] = err.Error()
+					properties["stage"] = "import_model"
+					properties["code_snapshot_id"] = codeSnapshotResponse.CodeSnapshot.Cid
+					properties["version_id"] = codeSnapshotResponse.VersionId
+					analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
+					return err
+				}
+			} else {
+				err = model.OverrideModel(ctx, currentProject.GetCid(), codeSnapshotResponse.VersionId, !noWait)
+				if err != nil {
+					// Track projects push failed
+					properties["error"] = err.Error()
+					properties["stage"] = "override_model"
+					properties["code_snapshot_id"] = codeSnapshotResponse.CodeSnapshot.Cid
+					properties["version_id"] = codeSnapshotResponse.VersionId
+					analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
+					return err
+				}
 			}
+
 			// Track projects push success
 			properties["code_snapshot_id"] = codeSnapshotResponse.CodeSnapshot.Cid
 			properties["version_id"] = codeSnapshotResponse.VersionId
@@ -204,7 +227,7 @@ func NewPushCmd() *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&modelVersionName, "model-name", "m", "", "Model version name")
+	cmd.Flags().StringVarP(&modelVersionName, "name", "n", "", "Model version name")
 	cmd.Flags().StringVar(&codeVersionMessage, "code-message", "", "Code version message")
 	cmd.Flags().StringVar(&modelType, "type", "", "Type is the type of the model file [JSON_TF2 / ONNX / PB_TF2 / H5_TF2]")
 	cmd.Flags().StringVar(&branch, "branch", "", "Name of the branch [OPTIONAL]")
@@ -213,10 +236,6 @@ func NewPushCmd() *cobra.Command {
 	cmd.Flags().BoolVar(&transformInput, "transform-input", false, "Transpose the input data to channel-last format")
 	cmd.Flags().BoolVar(&noWait, "no-wait", false, "Do not wait for push to complete")
 	cmd.Flags().StringVar(&leapMappingPath, "leap-mapping", "", "Path to external leap mapping file")
-
+	cmd.Flags().StringVarP(&modelPath, "model-path", "m", "", "Path to the model file")
 	return cmd
-}
-
-func init() {
-	RootCommand.AddCommand(NewPushCmd())
 }

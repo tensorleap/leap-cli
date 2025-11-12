@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/spf13/viper"
-	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
 const TL_CLI_CONFIG_FILE = "TL_CLI_CONFIG_FILE"

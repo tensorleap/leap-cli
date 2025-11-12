@@ -10,7 +10,7 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/run"
-	tlApi "github.com/tensorleap/leap-cli/pkg/tensorleapapi"
+	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
 func ImportModel(ctx context.Context, filePath, projectId, modelType, versionId string, transformInput bool, waitForResults bool) error {
@@ -35,19 +35,19 @@ func ImportModel(ctx context.Context, filePath, projectId, modelType, versionId 
 	}
 
 	uploadFileName := signedUrlData.GetFileName()
-	modelInfo := *tlApi.NewImportModelInfo(uploadFileName, tlApi.ImportModelType(modelType))
+	modelInfo := *tensorleapapi.NewImportModelInfo(uploadFileName, tensorleapapi.ImportModelType(modelType))
 
-	if transformInput && modelType == string(tlApi.IMPORTMODELTYPE_ONNX) {
+	if transformInput && modelType == string(tensorleapapi.IMPORTMODELTYPE_ONNX) {
 		modelInfo.TransformInputs = &transformInput
 	}
-	importModelParams := *tlApi.NewImportNewModelParams(projectId, versionId, modelInfo)
+	importModelParams := *tensorleapapi.NewImportNewModelParams(projectId, versionId, modelInfo)
 
 	importModelData, _, err := api.ApiClient.ImportModel(ctx).ImportNewModelParams(importModelParams).Execute()
 	if err != nil {
 		return fmt.Errorf("failed to import model: %v", err)
 	}
 
-	importModelJobId := importModelData.GetImportModelJobId()
+	importModelJobId := importModelData.GetJobId()
 	if waitForResults {
 		okStatus, _, err := waitForImportModelJob(ctx, projectId, importModelJobId)
 		if err != nil {
@@ -57,15 +57,11 @@ func ImportModel(ctx context.Context, filePath, projectId, modelType, versionId 
 			log.Println("Successfully imported model")
 
 		} else {
-			topLogs, err := run.GetRunLogs(ctx, importModelJobId)
+			topLogs, err := GetTopLogs(ctx, importModelJobId)
 			if err != nil {
 				return err
 			}
-			logs := run.GetTopLogs(topLogs, "import-model", 40)
-			if logs == "" {
-				logs = "-- logs not found --"
-			}
-			fmt.Printf("%s\n", logs)
+			fmt.Printf("%s\n", topLogs)
 			return fmt.Errorf("failed to import model show the logs above for more details run `leap runs logs %s` to view the full logs", importModelJobId)
 		}
 		return nil
@@ -75,13 +71,52 @@ func ImportModel(ctx context.Context, filePath, projectId, modelType, versionId 
 	return nil
 }
 
+func GetTopLogs(ctx context.Context, jobId string) (string, error) {
+	jobLogs, err := run.GetRunLogs(ctx, jobId)
+	if err != nil {
+		return "", err
+	}
+	topLogs := run.GetTopLogs(jobLogs, "import-model", 40)
+	if topLogs == "" {
+		topLogs = "-- logs not found --"
+	}
+	return topLogs, nil
+}
+
+func OverrideModel(ctx context.Context, projectId, versionId string, waitForResults bool) error {
+	params := *tensorleapapi.NewOverwriteModelParams(projectId, versionId)
+	overrideModelData, _, err := api.ApiClient.OverwriteModel(ctx).OverwriteModelParams(params).Execute()
+	if err != nil {
+		return err
+	}
+	if !waitForResults {
+		return nil
+	}
+	overrideModelJobId := overrideModelData.GetJobId()
+	okStatus, _, err := waitForImportModelJob(ctx, projectId, overrideModelJobId)
+	if err != nil {
+		return err
+	}
+	if okStatus {
+		log.Println("Successfully overridden model")
+	} else {
+		topLogs, err := GetTopLogs(ctx, overrideModelJobId)
+		if err != nil {
+			return err
+		}
+		fmt.Printf("%s\n", topLogs)
+		return fmt.Errorf("failed to override model show the logs above for more details run `leap runs logs %s` to view the full logs", overrideModelJobId)
+	}
+	return nil
+}
+
 const TIMEOUT_FOR_IMPORT_MODEL_JOB = 30 * time.Minute
 
-func waitForImportModelJob(ctx context.Context, projectId, importModelJobId string) (ok bool, job *tlApi.Job, err error) {
+func waitForImportModelJob(ctx context.Context, projectId, importModelJobId string) (ok bool, job *tensorleapapi.Job, err error) {
 	fmt.Println("Waiting for import model result...")
 	sleepDuration := 3 * time.Second
 
-	getJobParams := *tlApi.NewGetJobsFilterParams()
+	getJobParams := *tensorleapapi.NewGetJobsFilterParams()
 	getJobParams.SetProjectId(projectId)
 	getJobParams.SetCid([]string{importModelJobId})
 
@@ -120,11 +155,19 @@ func waitForImportModelJob(ctx context.Context, projectId, importModelJobId stri
 	return true, job, nil
 }
 
-func findRunProcessByJobId(runProcesses []tlApi.Job, jobId string) *tlApi.Job {
+func findRunProcessByJobId(runProcesses []tensorleapapi.Job, jobId string) *tensorleapapi.Job {
 	for _, rp := range runProcesses {
 		if rp.GetCid() == jobId {
 			return &rp
 		}
 	}
 	return nil
+}
+
+func GetVersions(ctx context.Context, projectId string) ([]tensorleapapi.SlimVersion, error) {
+	versions, _, err := api.ApiClient.GetProjectSlimVersions(ctx).GetProjectVersionsParams(*tensorleapapi.NewGetProjectVersionsParams(projectId)).Execute()
+	if err != nil {
+		return nil, err
+	}
+	return versions.Versions, nil
 }
