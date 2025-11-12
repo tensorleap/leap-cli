@@ -65,6 +65,7 @@ ExecStart=/usr/bin/bash -c 'for i in {1..120}; do \
   MNT="$MNT"; \
   if [ -f "\$IMG" ]; then \
     echo "[$(date)] Found image, mounting..."; \
+    mkdir -p "\$MNT"; \
     mount -o loop "\$IMG" "\$MNT" && \
     chmod 775 "\$MNT" && \
     chown azureuser:azureuser "\$MNT"; \
