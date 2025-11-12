@@ -48,7 +48,6 @@ fi
 
 # --- 4) Create and enable the systemd service ---
 SERVICE_FILE="/etc/systemd/system/mnt-persist.service"
-
 if [ ! -f "$SERVICE_FILE" ]; then
   echo "Creating systemd service for $MNT ..."
 
@@ -64,9 +63,11 @@ RemainAfterExit=yes
 ExecStart=/usr/bin/bash -c 'for i in {1..60}; do \
   if [ -f "$IMG" ]; then \
     echo "[$(date)] Found image, mounting..."; \
-    mount -o loop "$IMG" "$MNT" && exit 0; \
+    mount -o loop "$IMG" "$MNT" && \
     chmod 775 "$MNT" && \
-    chown azureuser:azureuser "$MNT" && \
+    chown azureuser:azureuser "$MNT"; \
+    echo "[$(date)] Mount and permissions done."; \
+    exit 0; \
   fi; \
   echo "[$(date)] Waiting for Azure Batch share..."; \
   sleep 2; \
