@@ -101,7 +101,6 @@ done
 
 # --- 5) Verify and set permissions ---
 if mountpoint -q "$MNT"; then
-  mkdir -p "$TLDATA_DIR"
   echo "✅ Ready: $MNT is mounted (backed by $IMG on the CIFS share)."
 
   echo "Installing leap cli..."
