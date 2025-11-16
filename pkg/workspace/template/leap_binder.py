@@ -1,64 +1,175 @@
-from typing import List, Union
+"""
+Tensorleap Integration Template
 
+This script serves as a user template for integrating custom datasets,
+models, and functions into the Tensorleap platform. It defines the required
+decorators (preprocess, encoders, loss, metrics, metadata, visualizers, and
+integration test) to ensure compatibility with Tensorleap’s analysis workflow.
+
+For full documentation and examples, visit:
+https://docs.tensorleap.ai/tensorleap-integration
+"""
+
+
+from typing import Union, Dict
 import numpy as np
-from sklearn.model_selection import train_test_split
-from tensorflow.keras.datasets import mnist
-from tensorflow.keras.utils import to_categorical
+from code_loader.visualizers.default_visualizers import default_image_visualizer
+from code_loader.inner_leap_binder.leapbinder_decorators import *
 
-# Tensorleap imports
-from code_loader import leap_binder
-from code_loader.contract.datasetclasses import PreprocessResponse 
-from code_loader.contract.enums import Metric, DatasetMetadataType
-from code_loader.contract.visualizer_classes import LeapHorizontalBar
 
-# Preprocess Function
-def preprocess_func() -> List[PreprocessResponse]:
-    (train_X, train_Y), (val_X, val_Y) = mnist.load_data()
 
-    train_X = np.expand_dims(train_X, axis=-1)  # Reshape :,28,28 -> :,28,28,1
-    train_X = train_X / 255                       # Normalize to [0,1]
-    train_Y = to_categorical(train_Y)           # Hot Vector
-    
-    val_X = np.expand_dims(val_X, axis=-1)  # Reshape :,28,28 -> :,28,28,1
-    val_X = val_X / 255                     # Normalize to [0,1]
-    val_Y = to_categorical(val_Y)           # Hot Vector
 
-    # Generate a PreprocessResponse for each data slice, to later be read by the encoders.
-    # The length of each data slice is provided, along with the data dictionary.
-    # In this example we pass `images` and `labels` that later are encoded into the inputs and outputs 
-    train = PreprocessResponse(length=len(train_X), data={'images': train_X, 'labels': train_Y})
-    val = PreprocessResponse(length=len(val_X), data={'images': val_X, 'labels': val_Y})
-    response = [train, val]
-    return response
+@tensorleap_preprocess()
+def preprocess_func_leap() -> List[PreprocessResponse]:
+    """
+    Prepares dataset splits for Tensorleap integration.
 
-# Input encoder fetches the image with the index `idx` from the `images` array set in
-# the PreprocessResponse data. Returns a numpy array containing the sample's image. 
+    Called once before training or evaluation to create
+    train, validation, test, and unlabeled subsets.
+
+    Example:
+        train = PreprocessResponse(len(train_df), train_df, DataStateType.training)
+        val = PreprocessResponse(len(val_df), val_df, DataStateType.validation)
+        return [train, val]
+
+    Returns:
+        List[PreprocessResponse]: Dataset partitions; must include
+        at least training and validation sets.
+    """
+    pass
+
+
+
+@tensorleap_input_encoder(name="<place input name here>", channel_dim="<place channel_dim here (i.e: -1)> ")
 def input_encoder(idx: int, preprocess: PreprocessResponse) -> np.ndarray:
-    return preprocess.data['images'][idx].astype('float32')
+    """
+    Generates an input sample from the preprocessed dataset.
 
-# Ground truth encoder fetches the label with the index `idx` from the `labels` array set in
-# the PreprocessResponse's data. Returns a numpy array containing a hot vector label correlated with the sample.
-def gt_encoder(idx: int, preprocessing: PreprocessResponse) -> np.ndarray:
-    return preprocessing.data['labels'][idx].astype('float32')
+    Called for each sample index during training or evaluation.
+    Each input encoder corresponds to one network input.
 
-# Metadata functions allow to add extra data for a later use in analysis.
-# This metadata adds the int digit of each sample (not a hot vector).
-def metadata_label(idx: int, preprocess: PreprocessResponse) -> int:
-    one_hot_digit = gt_encoder(idx, preprocess)
-    digit = one_hot_digit.argmax()
-    digit_int = int(digit)
-    return digit_int
+    Example:
+        return preprocess.data.iloc[idx]['samples'].astype('float32')
+
+    Args:
+        idx (int): Sample index.
+        preprocess (PreprocessResponse): Preprocessed dataset slice.
+
+    Returns:
+        np.ndarray: Encoded input sample.
+    """
+    pass
+
+@tensorleap_gt_encoder(name="<place gt name here>")
+def gt_encoder(idx: int, preprocess: Union[PreprocessResponse, list]) -> np.ndarray:
+    """
+    Generates the ground truth for a given sample index.
+
+    Called for each sample to provide the label or target value
+    used by the loss function during training or evaluation.
+
+    Example:
+        return preprocess.data.iloc[idx]['ground_truth'].astype('float32')
+
+    Args:
+        idx (int): Sample index.
+        preprocess (PreprocessResponse | list): Preprocessed dataset slice.
+
+    Returns:
+        np.ndarray: Ground truth value for the sample.
+    """
+    pass
+
+@tensorleap_custom_loss(name="<place loss name here>")
+def custom_loss(y_true: np.ndarray, y_pred: np.ndarray) -> np.ndarray:
+    """
+    Defines a custom loss function for Tensorleap.
+
+    Computes per-sample loss values used during training.
+    Supports multiple input arrays exposed in the CustomLoss UI.
+
+    Example:
+        y_pred = np.clip(y_pred / np.sum(y_pred, axis=-1, keepdims=True), 1e-7, 1 - 1e-7)
+        loss = -np.sum(y_true * np.log(y_pred), axis=-1)
+        return loss
+
+    Args:
+        y_true (np.ndarray): Ground truth labels.
+        y_pred (np.ndarray): Model predictions.
+
+    Returns:
+        np.ndarray: Batch loss values.
+    """
+    pass
 
 
-def bar_visualizer(data: np.ndarray) -> LeapHorizontalBar:
-    return LeapHorizontalBar(data, LABELS)
+
+@tensorleap_metadata(name="<place metadata name here>")
+def custom_metadata(idx: int, preprocess: PreprocessResponse) -> Dict[str, Union[int, bool]]:
+    """
+    Generates sample-level metadata for Tensorleap analysis.
+
+    Called for each sample to provide additional descriptive data
+    such as labels or custom attributes.
+
+    Example:
+        return {
+            'label': int_metadata_creator(preprocess, idx),
+            'is_circle': bool_metadata_creator(preprocess, idx),
+        }
+
+    Args:
+        idx (int): Sample index.
+        preprocess (PreprocessResponse): Preprocessed dataset slice.
+
+    Returns:
+        Dict[str, Union[int, bool]]: Flat dictionary of metadata attributes.
+    """
+    pass
+
+@tensorleap_custom_metric(name="<place metric name here>",
+                          direction="< place MetricDirection.<direction name> here >")
+def custom_metric(y_true: np.ndarray[np.float32],y_pred: np.ndarray[np.float32]) -> dict[str, np.ndarray[np.float32]]:
+    """
+    Defines a custom per-sample metric for Tensorleap analysis.
+
+    Computes user-defined metrics from predictions and ground truth.
+    Metrics are stored per sample for later inspection and insights.
+
+    Example:
+        diff = y_true - y_pred
+        return {
+            "mean_difference": np.mean(diff, axis=(1,)),
+            "mean_absolute_difference": np.mean(np.abs(diff), axis=(1,))
+        }
+
+    Args:
+        y_true (np.ndarray): Ground truth values.
+        y_pred (np.ndarray): Model predictions.
+
+    Returns:
+        dict[str, np.ndarray]: Dictionary of computed metric values.
+    """
+    pass
+
+@tensorleap_custom_visualizer(name="<place metadata name here>", visualizer_type="<place LeapDataType.<datatype> here>")
+def custom_visualizer(data: np.float32):
+    """
+    Defines a custom visualizer for Tensorleap outputs.
+
+    Converts raw tensors into interpretable formats for display
+    in the Tensorleap UI (e.g., text, images, or annotated visuals).
+
+    Example:
+        return default_image_visualizer(data)
+
+    Args:
+        input_ids (np.ndarray): Model tensor to visualize.
+
+    Returns:
+        LeapDataType.<datatype>: Visualized representation of the input tensor.
+    """
+    pass
 
 
-LABELS = ['0','1','2','3','4','5','6','7','8','9']
-# Dataset binding functions to bind the functions above to the `Dataset Instance`.
-leap_binder.set_preprocess(function=preprocess_func)
-leap_binder.set_input(function=input_encoder, name='image')
-leap_binder.set_ground_truth(function=gt_encoder, name='classes')
-leap_binder.set_metadata(function=metadata_label, metadata_type=DatasetMetadataType.int, name='label')
-leap_binder.add_prediction(name='classes', labels=LABELS)
-leap_binder.set_visualizer(name='horizontal_bar_classes', function=bar_visualizer, visualizer_type=LeapHorizontalBar.type)
+
