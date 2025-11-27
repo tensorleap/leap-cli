@@ -25,8 +25,6 @@ import (
 
 var ErrEmptyCodeSnapshot = fmt.Errorf("CodeIntegration is empty")
 
-const BindingFilePath = "leap_mapping.yaml"
-
 func AskForPythonVersion(defaultVersionId string, baseImageTypes []tensorleapapi.GenericBaseImage) (string, error) {
 	displayNames := []string{}
 	versionIds := []string{}
@@ -204,12 +202,12 @@ func isRequirementsFile(path string) bool {
 	})
 }
 
-func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.WorkspaceConfig, externalLeapMappingPath string, isUsePippin bool) (close func(), tarGzFile *os.File, err error) {
+func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.WorkspaceConfig) (close func(), tarGzFile *os.File, err error) {
 	filePaths, err := getDatasetFiles(filesDir, workspaceConfig)
 	if err != nil {
 		return
 	}
-	isCodeIntegrationUsePippinButNoRequirementsTxt := isUsePippin && lo.EveryBy(filePaths, func(path string) bool {
+	isCodeIntegrationUsePippinButNoRequirementsTxt := lo.EveryBy(filePaths, func(path string) bool {
 		return !isRequirementsFile(path)
 	})
 	requirementsFilesStr := strings.Join(RequirementsFiles, ", ")
@@ -237,17 +235,13 @@ func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.Workspac
 		filePaths = append(filePaths, workspaceConfig.EntryFile)
 	}
 
-	if externalLeapMappingPath != "" {
-		filePaths = filterOutBySuffix(filePaths, BindingFilePath)
-	}
-
 	tarGzFile, err = os.CreateTemp("", "tensorleap-*.tar.gz")
 	if err != nil {
 		return
 	}
 	close = func() { local.CleanupTempFile(tarGzFile) }
 
-	if err = local.CreateTarGzFile(filesDir, filePaths, tarGzFile, externalLeapMappingPath, BindingFilePath); err != nil {
+	if err = local.CreateTarGzFile(filesDir, filePaths, tarGzFile); err != nil {
 		close()
 		return
 	}
@@ -263,7 +257,6 @@ func getDatasetFiles(filesDir string, workspaceConfig *workspace.WorkspaceConfig
 	if len(includePatterns) == 0 {
 		includePatterns = []string{"**"}
 	}
-	includePatterns = append(includePatterns, BindingFilePath)
 
 	fileSet := make(map[string]struct{})
 
@@ -347,7 +340,7 @@ func PrintCodeSnapshotParserErr(civ *CodeSnapshot) {
 	}
 }
 
-func PushCode(ctx context.Context, force bool, tarGzFile *os.File, entryFile, secretId, pythonVersion, versionName, projectId, branch string, overwriteVersionId string) (pushed bool, current *tensorleapapi.PushCodeSnapshotResponse, err error) {
+func PushCode(ctx context.Context, tarGzFile *os.File, entryFile, secretId, pythonVersion, versionName, projectId, branch string, overwriteVersionId string) (pushed bool, current *tensorleapapi.PushCodeSnapshotResponse, err error) {
 
 	fileStat, err := tarGzFile.Stat()
 	if err != nil {

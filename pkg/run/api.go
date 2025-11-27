@@ -16,7 +16,7 @@ var RunEntityDesc = entity.NewEntityDescriptor(
 	"run",
 	"runs",
 	func(r *RunEntity) string {
-		createdAt, err := ParseAndFormatDate(r.GetCreatedAt())
+		createdAt, err := api.ParseAndFormatDateToLocalTime(r.GetCreatedAt())
 
 		if err != nil {
 			return fmt.Sprintf("%s \t %s \t %s", r.GetJobType(), r.GetCreatedAt(), r.GetStatus())
@@ -26,11 +26,20 @@ var RunEntityDesc = entity.NewEntityDescriptor(
 	func(r *RunEntity) string { return r.GetJobId() },
 )
 
-func GetRuns(ctx context.Context, subTypes []tensorleapapi.JobSubType, statuses []tensorleapapi.JobStatus) ([]RunEntity, error) {
-	req := api.ApiClient.GetTeamJobs(ctx).GetJobsFilterParams(tlApi.GetJobsFilterParams{
-		SubTypes: subTypes,
-		Status:   statuses,
-	})
+func GetRuns(ctx context.Context, subTypes []tensorleapapi.JobSubType, statuses []tensorleapapi.JobStatus, projectId string) ([]RunEntity, error) {
+
+	params := tlApi.NewGetJobsFilterParams()
+	if projectId != "" {
+		params.SetProjectId(projectId)
+	}
+	if len(subTypes) > 0 {
+		params.SetSubTypes(subTypes)
+	}
+	if len(statuses) > 0 {
+		params.SetStatus(statuses)
+	}
+
+	req := api.ApiClient.GetTeamJobs(ctx).GetJobsFilterParams(*params)
 	resp, _, err := req.Execute()
 	if err != nil {
 		return nil, err
