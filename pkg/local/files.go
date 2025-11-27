@@ -150,7 +150,7 @@ func addFileToTar(tarWriter *tar.Writer, filePath string, fileName string) error
 	return err
 }
 
-func CreateTarGzFile(filesDir string, filePaths []string, file io.Writer, externalFilePath string, externalFileName string) error {
+func CreateTarGzFile(filesDir string, filePaths []string, file io.Writer) error {
 	log.Info("Packing files...")
 
 	gzipWriter := gzip.NewWriter(file)
@@ -162,12 +162,6 @@ func CreateTarGzFile(filesDir string, filePaths []string, file io.Writer, extern
 	for _, relativePath := range filePaths {
 		fullFilePath := filepath.Join(filesDir, relativePath)
 		if err := addFileToTar(tarWriter, fullFilePath, relativePath); err != nil {
-			return err
-		}
-	}
-
-	if externalFilePath != "" {
-		if err := addFileToTar(tarWriter, externalFilePath, externalFileName); err != nil {
 			return err
 		}
 	}

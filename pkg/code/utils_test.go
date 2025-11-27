@@ -133,33 +133,13 @@ func TestBundleCodeIntoTempFile(t *testing.T) {
 	}
 
 	// Test without externalLeapMappingPath
-	closeFunc, tarGzFile, err := BundleCodeIntoTempFile(tempDir, workspaceConfig, "", false)
+	closeFunc, tarGzFile, err := BundleCodeIntoTempFile(tempDir, workspaceConfig)
 	assert.NoError(t, err)
 	defer closeFunc()
 	defer tarGzFile.Close()
 
 	// Verify tar.gz file is created
 	assert.FileExists(t, tarGzFile.Name())
-
-	// Test with externalLeapMappingPath
-	externalLeapMappingPath := filepath.Join(tempDir, "external_leap_mapping.yaml")
-	err = os.WriteFile(externalLeapMappingPath, []byte("mapping content"), 0644)
-	assert.NoError(t, err)
-
-	closeFunc, tarGzFile, err = BundleCodeIntoTempFile(tempDir, workspaceConfig, externalLeapMappingPath, false)
-	assert.NoError(t, err)
-	defer closeFunc()
-	defer tarGzFile.Close()
-
-	// Verify tar.gz file is created
-	assert.FileExists(t, tarGzFile.Name())
-
-	// Assert tar.gz file contains the expected files
-	filePaths, err := extractTarGzInMemory(tarGzFile)
-	assert.NoError(t, err)
-	assert.Contains(t, filePaths, "file1.txt")
-	assert.Contains(t, filePaths, "file2.txt")
-	assert.Contains(t, filePaths, "leap_mapping.yaml")
 }
 
 func extractTarGzInMemory(tarGzReader io.Reader) ([]string, error) {

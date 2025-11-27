@@ -15,7 +15,7 @@ func CreateAuthenticatedContext(parentCtx context.Context, apiKey string, baseUr
 	return ctx
 }
 
-func getApiClient() *DefaultApiService {
+func getApiClient() *DefaultAPIService {
 	cfg := NewConfiguration()
 
 	cfg.HTTPClient = NewDefaultClient()
@@ -28,7 +28,7 @@ func getApiClient() *DefaultApiService {
 			},
 		},
 	}
-	return NewAPIClient(cfg).DefaultApi
+	return NewAPIClient(cfg).DefaultAPI
 }
 
 func GetAuthFromContext(ctx context.Context) (baseUrl string, apiKey string) {
