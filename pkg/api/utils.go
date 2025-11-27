@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
@@ -172,6 +173,34 @@ func IsJobFailed(jobStatus tensorleapapi.JobStatus) bool {
 	return jobStatus == tensorleapapi.JOBSTATUS_FAILED || jobStatus == tensorleapapi.JOBSTATUS_TERMINATED || jobStatus == tensorleapapi.JOBSTATUS_STOPPED
 }
 
+func IsJobRunning(jobStatus tensorleapapi.JobStatus) bool {
+	return jobStatus == tensorleapapi.JOBSTATUS_STARTED || jobStatus == tensorleapapi.JOBSTATUS_PENDING || jobStatus == tensorleapapi.JOBSTATUS_UNSTARTED
+}
+
 func IsJobFinished(jobStatus tensorleapapi.JobStatus) bool {
 	return jobStatus == tensorleapapi.JOBSTATUS_FINISHED
+}
+
+func ParseAndFormatDateToLocalTime(raw string) (string, error) {
+	// Trim the (Coordinated Universal Time) part
+	clean := strings.SplitN(raw, " (", 2)[0]
+
+	// JS-style format: Mon Sep 08 2025 14:46:56 GMT+0000
+	const layoutIn = "Mon Jan 02 2006 15:04:05 GMT-0700"
+
+	t, err := time.Parse(layoutIn, clean)
+	if err != nil {
+		return "", fmt.Errorf("failed to parse time %q: %w", clean, err)
+	}
+
+	return FormatDateToLocalTime(t), nil
+}
+
+func FormatDateToLocalTime(t time.Time) string {
+
+	// Convert to local time zone
+	localTime := t.Local()
+
+	// Desired output: Mon, 08 Sep 2025 14:46 (local)
+	return localTime.Format("Mon, 02 Jan 2006 15:04")
 }

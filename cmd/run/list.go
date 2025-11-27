@@ -32,7 +32,7 @@ func NewListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			runs, err := runPkg.GetRuns(cmd.Context(), types, statuses)
+			runs, err := runPkg.GetRuns(cmd.Context(), types, statuses, "")
 			if err != nil {
 				return err
 			}
