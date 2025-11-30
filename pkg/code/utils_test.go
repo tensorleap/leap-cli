@@ -1,9 +1,6 @@
 package code
 
 import (
-	"archive/tar"
-	"compress/gzip"
-	"io"
 	"os"
 	"path/filepath"
 	"testing"
@@ -12,7 +9,7 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/workspace"
 )
 
-func TestGetDatasetFiles(t *testing.T) {
+func TestGetCodeFiles(t *testing.T) {
 	// Setup temporary directory and files
 	tempDir := t.TempDir()
 	nestedDir := filepath.Join(tempDir, "nested")
@@ -23,7 +20,7 @@ func TestGetDatasetFiles(t *testing.T) {
 	files := []string{
 		"file1.txt",
 		"file2.log",
-		"leap_mapping.yaml",
+		"pyproject.toml",
 		"nested/file3.txt",
 		"nested/file4.log",
 	}
@@ -47,19 +44,19 @@ func TestGetDatasetFiles(t *testing.T) {
 			expectedFiles: []string{
 				"file1.txt",
 				"file2.log",
-				"leap_mapping.yaml",
 				"nested/file3.txt",
+				"pyproject.toml",
 				"nested/file4.log",
 			},
 		},
 		{
 			name:            "Include only *.txt",
-			includePatterns: []string{"**/*.txt"},
+			includePatterns: []string{"**/*.txt", "pyproject.toml"},
 			excludePatterns: nil,
 			expectedFiles: []string{
 				"file1.txt",
 				"nested/file3.txt",
-				"leap_mapping.yaml",
+				"pyproject.toml",
 			},
 		},
 		{
@@ -68,17 +65,17 @@ func TestGetDatasetFiles(t *testing.T) {
 			excludePatterns: []string{"**/*.log"},
 			expectedFiles: []string{
 				"file1.txt",
-				"leap_mapping.yaml",
+				"pyproject.toml",
 				"nested/file3.txt",
 			},
 		},
 		{
 			name:            "Include *.txt and exclude nested/*",
-			includePatterns: []string{"**/*.txt"},
+			includePatterns: []string{"**/*.txt", "pyproject.toml"},
 			excludePatterns: []string{"nested/*"},
 			expectedFiles: []string{
 				"file1.txt",
-				"leap_mapping.yaml",
+				"pyproject.toml",
 			},
 		},
 		{
@@ -87,8 +84,8 @@ func TestGetDatasetFiles(t *testing.T) {
 			excludePatterns: []string{"**/*.log"},
 			expectedFiles: []string{
 				"file1.txt",
-				"leap_mapping.yaml",
 				"nested/file3.txt",
+				"pyproject.toml",
 			},
 		},
 	}
@@ -100,7 +97,7 @@ func TestGetDatasetFiles(t *testing.T) {
 				ExcludePatterns: test.excludePatterns,
 			}
 
-			files, err := getDatasetFiles(tempDir, workspaceConfig)
+			files, err := getCodeFiles(tempDir, workspaceConfig)
 			assert.NoError(t, err)
 
 			// Normalize file paths for comparison
@@ -119,17 +116,16 @@ func TestBundleCodeIntoTempFile(t *testing.T) {
 	tempDir := t.TempDir()
 	file1 := filepath.Join(tempDir, "file1.txt")
 	file2 := filepath.Join(tempDir, "file2.txt")
-	file3 := filepath.Join(tempDir, "leap_mapping.yaml")
+	file3 := filepath.Join(tempDir, "pyproject.toml")
 	err := os.WriteFile(file1, []byte("content1"), 0644)
 	assert.NoError(t, err)
 	err = os.WriteFile(file2, []byte("content2"), 0644)
 	assert.NoError(t, err)
-	err = os.WriteFile(file3, []byte("mapping content"), 0644)
+	err = os.WriteFile(file3, []byte("content3"), 0644)
 	assert.NoError(t, err)
-
 	// Setup workspace config
 	workspaceConfig := &workspace.WorkspaceConfig{
-		IncludePatterns: []string{"*.txt"},
+		IncludePatterns: []string{"*.txt", "pyproject.toml"},
 	}
 
 	// Test without externalLeapMappingPath
@@ -140,34 +136,4 @@ func TestBundleCodeIntoTempFile(t *testing.T) {
 
 	// Verify tar.gz file is created
 	assert.FileExists(t, tarGzFile.Name())
-}
-
-func extractTarGzInMemory(tarGzReader io.Reader) ([]string, error) {
-	var filePaths []string
-
-	// Create a gzip reader
-	gzipReader, err := gzip.NewReader(tarGzReader)
-	if err != nil {
-		return nil, err
-	}
-	defer gzipReader.Close()
-
-	// Create a tar reader
-	tarReader := tar.NewReader(gzipReader)
-
-	// Iterate through the tar archive
-	for {
-		header, err := tarReader.Next()
-		if err == io.EOF {
-			break // End of archive
-		}
-		if err != nil {
-			return nil, err
-		}
-
-		// Collect file paths
-		filePaths = append(filePaths, header.Name)
-	}
-
-	return filePaths, nil
 }

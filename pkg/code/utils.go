@@ -203,7 +203,7 @@ func isRequirementsFile(path string) bool {
 }
 
 func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.WorkspaceConfig) (close func(), tarGzFile *os.File, err error) {
-	filePaths, err := getDatasetFiles(filesDir, workspaceConfig)
+	filePaths, err := getCodeFiles(filesDir, workspaceConfig)
 	if err != nil {
 		return
 	}
@@ -250,7 +250,7 @@ func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.Workspac
 	return
 }
 
-func getDatasetFiles(filesDir string, workspaceConfig *workspace.WorkspaceConfig) ([]string, error) {
+func getCodeFiles(filesDir string, workspaceConfig *workspace.WorkspaceConfig) ([]string, error) {
 	includePatterns := workspaceConfig.IncludePatterns
 	excludePatterns := workspaceConfig.ExcludePatterns
 
