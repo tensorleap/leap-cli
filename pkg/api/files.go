@@ -47,7 +47,7 @@ func DownloadFile(url string, file io.Writer) error {
 }
 
 func UploadFile(url string, file io.Reader, fileSize int64) error {
-	log.Infof("Upload target: %s", url)
+	log.VerboseLogger.Debugf("Upload target: %s", url)
 	s := log.NewSpinner("Uploading...")
 	s.Start()
 	defer s.Stop()

@@ -9,10 +9,9 @@ import (
 	"github.com/spf13/viper"
 	"github.com/tensorleap/leap-cli/cmd/auth"
 	"github.com/tensorleap/leap-cli/cmd/cli"
-	"github.com/tensorleap/leap-cli/cmd/code"
 	"github.com/tensorleap/leap-cli/cmd/hub"
-	"github.com/tensorleap/leap-cli/cmd/models"
 	"github.com/tensorleap/leap-cli/cmd/projects"
+	"github.com/tensorleap/leap-cli/cmd/push"
 	"github.com/tensorleap/leap-cli/cmd/run"
 	"github.com/tensorleap/leap-cli/cmd/secrets"
 	"github.com/tensorleap/leap-cli/cmd/server"
@@ -53,6 +52,7 @@ Complete documentation is available at https://docs.tensorleap.ai`,
 func init() {
 
 	RootCommand.Flags().BoolVar(&showVersionInfo, "version", false, "Show version information")
+	RootCommand.AddCommand(push.NewPushCmd())
 	RootCommand.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/tensorleap/config.yaml)")
 	RootCommand.PersistentFlags().StringVar(&apiKey, "apiKey", "", "Tensorleap Api key")
 	RootCommand.PersistentFlags().StringVar(&apiUrl, "apiUrl", "", "Tensorleap api url")
@@ -64,9 +64,7 @@ func init() {
 	}
 	RootCommand.AddCommand(auth.RootCommand)
 	RootCommand.AddCommand(server.RootCommand)
-	RootCommand.AddCommand(code.RootCommand)
 	RootCommand.AddCommand(secrets.RootCommand)
-	RootCommand.AddCommand(models.RootCommand)
 	RootCommand.AddCommand(cli.RootCommand)
 	RootCommand.AddCommand(projects.RootCommand)
 	RootCommand.AddCommand(run.RootCommand)

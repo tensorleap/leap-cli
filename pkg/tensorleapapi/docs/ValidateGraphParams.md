@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Graph** | [**ModelGraph**](ModelGraph.md) |  | 
-**DatasetVersionId** | **string** |  | 
+**CodeSnapshotId** | **string** |  | 
 **VersionId** | **string** |  | 
 **ProjectId** | **string** |  | 
 **Digest** | **string** |  | 
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewValidateGraphParams
 
-`func NewValidateGraphParams(graph ModelGraph, datasetVersionId string, versionId string, projectId string, digest string, ) *ValidateGraphParams`
+`func NewValidateGraphParams(graph ModelGraph, codeSnapshotId string, versionId string, projectId string, digest string, ) *ValidateGraphParams`
 
 NewValidateGraphParams instantiates a new ValidateGraphParams object
 This constructor will assign default values to properties that have it defined,
@@ -49,24 +49,24 @@ and a boolean to check if the value has been set.
 SetGraph sets Graph field to given value.
 
 
-### GetDatasetVersionId
+### GetCodeSnapshotId
 
-`func (o *ValidateGraphParams) GetDatasetVersionId() string`
+`func (o *ValidateGraphParams) GetCodeSnapshotId() string`
 
-GetDatasetVersionId returns the DatasetVersionId field if non-nil, zero value otherwise.
+GetCodeSnapshotId returns the CodeSnapshotId field if non-nil, zero value otherwise.
 
-### GetDatasetVersionIdOk
+### GetCodeSnapshotIdOk
 
-`func (o *ValidateGraphParams) GetDatasetVersionIdOk() (*string, bool)`
+`func (o *ValidateGraphParams) GetCodeSnapshotIdOk() (*string, bool)`
 
-GetDatasetVersionIdOk returns a tuple with the DatasetVersionId field if it's non-nil, zero value otherwise
+GetCodeSnapshotIdOk returns a tuple with the CodeSnapshotId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDatasetVersionId
+### SetCodeSnapshotId
 
-`func (o *ValidateGraphParams) SetDatasetVersionId(v string)`
+`func (o *ValidateGraphParams) SetCodeSnapshotId(v string)`
 
-SetDatasetVersionId sets DatasetVersionId field to given value.
+SetCodeSnapshotId sets CodeSnapshotId field to given value.
 
 
 ### GetVersionId

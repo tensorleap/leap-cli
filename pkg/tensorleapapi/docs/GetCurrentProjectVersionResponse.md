@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**VersionId** | **string** |  | 
+**VersionId** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewGetCurrentProjectVersionResponse
 
-`func NewGetCurrentProjectVersionResponse(projectId string, versionId string, ) *GetCurrentProjectVersionResponse`
+`func NewGetCurrentProjectVersionResponse(projectId string, ) *GetCurrentProjectVersionResponse`
 
 NewGetCurrentProjectVersionResponse instantiates a new GetCurrentProjectVersionResponse object
 This constructor will assign default values to properties that have it defined,
@@ -65,6 +65,11 @@ and a boolean to check if the value has been set.
 
 SetVersionId sets VersionId field to given value.
 
+### HasVersionId
+
+`func (o *GetCurrentProjectVersionResponse) HasVersionId() bool`
+
+HasVersionId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

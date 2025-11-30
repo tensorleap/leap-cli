@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Graph** | [**ModelGraph**](ModelGraph.md) |  | 
-**DatasetVersionId** | Pointer to **string** |  | [optional] 
+**CodeSnapshotId** | **string** |  | 
 **VersionId** | **string** |  | 
 **ProjectId** | **string** |  | 
 **Digest** | **string** |  | 
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewAnalyzeGraphParams
 
-`func NewAnalyzeGraphParams(graph ModelGraph, versionId string, projectId string, digest string, ) *AnalyzeGraphParams`
+`func NewAnalyzeGraphParams(graph ModelGraph, codeSnapshotId string, versionId string, projectId string, digest string, ) *AnalyzeGraphParams`
 
 NewAnalyzeGraphParams instantiates a new AnalyzeGraphParams object
 This constructor will assign default values to properties that have it defined,
@@ -49,30 +49,25 @@ and a boolean to check if the value has been set.
 SetGraph sets Graph field to given value.
 
 
-### GetDatasetVersionId
+### GetCodeSnapshotId
 
-`func (o *AnalyzeGraphParams) GetDatasetVersionId() string`
+`func (o *AnalyzeGraphParams) GetCodeSnapshotId() string`
 
-GetDatasetVersionId returns the DatasetVersionId field if non-nil, zero value otherwise.
+GetCodeSnapshotId returns the CodeSnapshotId field if non-nil, zero value otherwise.
 
-### GetDatasetVersionIdOk
+### GetCodeSnapshotIdOk
 
-`func (o *AnalyzeGraphParams) GetDatasetVersionIdOk() (*string, bool)`
+`func (o *AnalyzeGraphParams) GetCodeSnapshotIdOk() (*string, bool)`
 
-GetDatasetVersionIdOk returns a tuple with the DatasetVersionId field if it's non-nil, zero value otherwise
+GetCodeSnapshotIdOk returns a tuple with the CodeSnapshotId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDatasetVersionId
+### SetCodeSnapshotId
 
-`func (o *AnalyzeGraphParams) SetDatasetVersionId(v string)`
+`func (o *AnalyzeGraphParams) SetCodeSnapshotId(v string)`
 
-SetDatasetVersionId sets DatasetVersionId field to given value.
+SetCodeSnapshotId sets CodeSnapshotId field to given value.
 
-### HasDatasetVersionId
-
-`func (o *AnalyzeGraphParams) HasDatasetVersionId() bool`
-
-HasDatasetVersionId returns a boolean if a field has been set.
 
 ### GetVersionId
 

@@ -5,102 +5,129 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 	"time"
 
-	"github.com/olekukonko/tablewriter"
 	"github.com/tensorleap/leap-cli/pkg/api"
-	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/run"
-	tlApi "github.com/tensorleap/leap-cli/pkg/tensorleapapi"
+	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
-func ImportModel(ctx context.Context, filePath, projectId, message, modelType, branchName, datasetId, codeBranch string, transformInput bool, waitForResults bool) error {
+func PrepareImportModelFromFilePath(ctx context.Context, filePath string, transformInput bool, modelType string) (*tensorleapapi.ImportModelInfo, error) {
 	fileName := filepath.Base(filePath)
-	versionName := message
-	modelName := strings.TrimSuffix(fileName, filepath.Ext(fileName))
 	signedUrlData, err := api.GetUploadSignedUrl(ctx, fileName)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	file, err := os.Open(filePath)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer file.Close()
 
 	uploadUrl := signedUrlData.GetUrl()
 	fileInfo, err := file.Stat()
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if err := api.UploadFile(uploadUrl, file, fileInfo.Size()); err != nil {
-		return err
+		return nil, err
 	}
 
 	uploadFileName := signedUrlData.GetFileName()
-	importModelParams := *tlApi.NewImportNewModelParams(projectId, uploadFileName, modelName, versionName, tlApi.ImportModelType(modelType))
-	if len(branchName) > 0 {
-		importModelParams.BranchName = &branchName
+	modelInfo := tensorleapapi.NewImportModelInfo(uploadFileName, tensorleapapi.ImportModelType(modelType))
+	if transformInput && modelType == string(tensorleapapi.IMPORTMODELTYPE_ONNX) {
+		modelInfo.TransformInputs = &transformInput
+	}
+	return modelInfo, nil
+}
+
+func ImportModel(ctx context.Context, projectId, versionId string, modelInfo *tensorleapapi.ImportModelInfo, waitForResults bool) error {
+	if modelInfo == nil {
+		return fmt.Errorf("model info is required")
 	}
 
-	var mappingYaml string = ""
-	if len(datasetId) > 0 {
-		importModelParams.DatasetId = &datasetId
-		mappingYaml = code.GetDatasetMappingYaml(ctx, datasetId, codeBranch)
-		importModelParams.MappingYaml = &mappingYaml
-	}
-	if transformInput && modelType == string(tlApi.IMPORTMODELTYPE_ONNX) {
-		importModelParams.TransformInputs = &transformInput
-	}
-	if codeBranch != "" {
-		importModelParams.SetCodeIntegrationBranch(codeBranch)
-	}
+	importModelParams := *tensorleapapi.NewImportNewModelParams(projectId, versionId, *modelInfo)
+
 	importModelData, _, err := api.ApiClient.ImportModel(ctx).ImportNewModelParams(importModelParams).Execute()
 	if err != nil {
 		return fmt.Errorf("failed to import model: %v", err)
 	}
 
-	importModelJobId := importModelData.GetImportModelJobId()
+	importModelJobId := importModelData.GetJobId()
 	if waitForResults {
-		okStatus, job, err := waitForImportModelJob(ctx, projectId, importModelJobId)
-		if err != nil {
-			return err
-		}
-		if okStatus {
-			log.Println("Successfully imported model")
-
-			displayMappingErrorsIfMappingProvided := mappingYaml != ""
-			if displayMappingErrorsIfMappingProvided {
-				printMappingValidationErrors(ctx, job.GetVersion(), projectId, mappingYaml)
-			}
-		} else {
-			topLogs, err := run.GetRunLogs(ctx, importModelJobId)
+		okStatus, _, err := waitForImportModelJob(ctx, projectId, importModelJobId)
+		if err == JobFailedError || !okStatus {
+			topLogs, err := GetTopLogs(ctx, importModelJobId)
 			if err != nil {
 				return err
 			}
-			logs := run.GetTopLogs(topLogs, "import-model", 40)
-			if logs == "" {
-				logs = "-- logs not found --"
-			}
-			fmt.Printf("%s\n", logs)
-			return fmt.Errorf("failed to import model show the logs above for more details run `leap runs logs %s` to view the full logs", importModelJobId)
+			fmt.Printf("%s\n", topLogs)
+			return fmt.Errorf("failed to push model show the logs above for more details run `leap runs logs %s` to view the full logs", importModelJobId)
 		}
+		if err != nil {
+			return fmt.Errorf("error while waiting for import model job: %v", err)
+		}
+		log.Println("Model imported successfully")
 		return nil
+
 	}
 
 	log.Println("Starting import model job. JobId: ", importModelJobId)
 	return nil
 }
 
+func GetTopLogs(ctx context.Context, jobId string) (string, error) {
+	jobLogs, err := run.GetRunLogs(ctx, jobId)
+	if err != nil {
+		return "", err
+	}
+	topLogs := run.GetTopLogs(jobLogs, "import-model", 40)
+	if topLogs == "" {
+		topLogs = "-- logs not found --"
+	}
+	return topLogs, nil
+}
+
+func OverrideModel(ctx context.Context, projectId, versionId string, waitForResults bool, modelInfo *tensorleapapi.ImportModelInfo) error {
+	params := *tensorleapapi.NewOverwriteModelParams(projectId, versionId)
+	if modelInfo != nil {
+		params.Model = modelInfo
+	}
+	overrideModelData, _, err := api.ApiClient.OverwriteModel(ctx).OverwriteModelParams(params).Execute()
+	if err != nil {
+		return err
+	}
+	if !waitForResults {
+		return nil
+	}
+	overrideModelJobId := overrideModelData.GetJobId()
+	okStatus, _, err := waitForImportModelJob(ctx, projectId, overrideModelJobId)
+	if err != nil {
+		return err
+	}
+	if okStatus {
+		log.Println("Successfully overridden model")
+	} else {
+		topLogs, err := GetTopLogs(ctx, overrideModelJobId)
+		if err != nil {
+			return err
+		}
+		fmt.Printf("%s\n", topLogs)
+		return fmt.Errorf("failed to override model show the logs above for more details run `leap runs logs %s` to view the full logs", overrideModelJobId)
+	}
+	return nil
+}
+
 const TIMEOUT_FOR_IMPORT_MODEL_JOB = 30 * time.Minute
 
-func waitForImportModelJob(ctx context.Context, projectId, importModelJobId string) (ok bool, job *tlApi.Job, err error) {
+var JobFailedError = fmt.Errorf("import model job failed")
+
+func waitForImportModelJob(ctx context.Context, projectId, importModelJobId string) (ok bool, job *tensorleapapi.Job, err error) {
 	fmt.Println("Waiting for import model result...")
 	sleepDuration := 3 * time.Second
 
-	getJobParams := *tlApi.NewGetJobsFilterParams()
+	getJobParams := *tensorleapapi.NewGetJobsFilterParams()
 	getJobParams.SetProjectId(projectId)
 	getJobParams.SetCid([]string{importModelJobId})
 
@@ -119,7 +146,7 @@ func waitForImportModelJob(ctx context.Context, projectId, importModelJobId stri
 		steps := api.StepsFromJob(job)
 		switch true {
 		case api.IsJobFailed(job.Status):
-			return false, steps, fmt.Errorf("import model job failed")
+			return false, steps, JobFailedError
 		case api.IsJobFinished(job.Status):
 			return true, steps, nil
 		}
@@ -139,7 +166,7 @@ func waitForImportModelJob(ctx context.Context, projectId, importModelJobId stri
 	return true, job, nil
 }
 
-func findRunProcessByJobId(runProcesses []tlApi.Job, jobId string) *tlApi.Job {
+func findRunProcessByJobId(runProcesses []tensorleapapi.Job, jobId string) *tensorleapapi.Job {
 	for _, rp := range runProcesses {
 		if rp.GetCid() == jobId {
 			return &rp
@@ -148,28 +175,10 @@ func findRunProcessByJobId(runProcesses []tlApi.Job, jobId string) *tlApi.Job {
 	return nil
 }
 
-func printMappingValidationErrors(ctx context.Context, versionId string, projectId string, mapping string) {
-	getValidationErrorsParams := *tlApi.NewCodeIntegrationMappingErrorsParams(projectId, versionId, mapping)
-
-	data, _, err := api.ApiClient.GetCodeIntegrationMappingErrorsByVersionId(ctx).CodeIntegrationMappingErrorsParams(getValidationErrorsParams).Execute()
+func GetVersions(ctx context.Context, projectId string) ([]tensorleapapi.SlimVersion, error) {
+	versions, _, err := api.ApiClient.GetProjectSlimVersions(ctx).GetProjectVersionsParams(*tensorleapapi.NewGetProjectVersionsParams(projectId)).Execute()
 	if err != nil {
-		log.Println("failed getting mapping validation errors:", err)
-		return
+		return nil, err
 	}
-	if data != nil && data.MappingErrors != nil && len(data.MappingErrors) > 0 {
-		log.Println("encountered the following validation errors while applying mapping to graph:")
-
-		table := tablewriter.NewWriter(os.Stdout)
-		table.SetHeader([]string{"Title", "Message"})
-		table.SetBorder(true)
-		table.SetRowLine(true)
-
-		for _, entry := range data.MappingErrors {
-			table.Append([]string{entry.Title, entry.Message})
-		}
-		table.Render()
-
-	} else {
-		log.Println("mapping was applied successfully applied with no validation errors")
-	}
+	return versions.Versions, nil
 }
