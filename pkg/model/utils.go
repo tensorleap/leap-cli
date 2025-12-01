@@ -190,6 +190,9 @@ func AskUserForNewVersionOrSelectExistingVersion(ctx context.Context, projectId 
 	selectedIndex := 0
 	hasOptions := len(options) > 1
 	if hasOptions {
+
+		fmt.Println(text.FgYellow.Sprint("\n\n NOTE: Overriding needs a new evaluation for any change except visualization \n\n"))
+
 		prompt := &survey.Select{
 			Message: "Create new, or overwrite existing model version",
 			Options: options,
