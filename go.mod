@@ -18,7 +18,7 @@ require (
 	github.com/spf13/cobra v1.10.1
 	github.com/spf13/viper v1.18.2
 	github.com/stretchr/testify v1.11.1
-	github.com/tensorleap/helm-charts v0.6.1
+	github.com/tensorleap/helm-charts v0.7.0
 	github.com/tensorleap/leap-cli/pkg/tensorleapapi v0.0.0-00010101000000-000000000000
 	google.golang.org/api v0.256.0
 	gopkg.in/yaml.v3 v3.0.1
