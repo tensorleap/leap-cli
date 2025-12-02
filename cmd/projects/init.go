@@ -2,6 +2,7 @@ package projects
 
 import (
 	"github.com/spf13/cobra"
+	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/project"
 	"github.com/tensorleap/leap-cli/pkg/workspace"
 )
@@ -27,12 +28,17 @@ func NewInitCmd() *cobra.Command {
 				return err
 			}
 
+			pythonVersion, err := code.SyncPythonVersionFromFlagAndConfig(ctx, pythonVersion, nil)
+			if err != nil {
+				return err
+			}
+
 			err = workspace.CreateCodeTemplate(
 				selectedProject.GetCid(),
 				secretId,
-				branch,
 				".",
 				pythonVersion,
+				branch,
 			)
 			if err != nil {
 				return err

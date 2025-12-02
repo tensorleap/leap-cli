@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/project"
 	"github.com/tensorleap/leap-cli/pkg/secret"
@@ -11,7 +12,8 @@ import (
 )
 
 func NewSelectCmd() *cobra.Command {
-	return &cobra.Command{
+
+	cmd := &cobra.Command{
 		Use:   "select",
 		Short: "Select project and code integration",
 		Long:  `Select a project and code integration to work with. This will update the workspace configuration.`,
@@ -51,6 +53,20 @@ func NewSelectCmd() *cobra.Command {
 
 			workspaceConfig.ProjectId = selectedProject.GetCid()
 
+			baseImages, defaultVersionId, err := code.GetPythonVersions(ctx)
+			if err != nil {
+				return fmt.Errorf("failed to get python versions: %w", err)
+			}
+
+			if workspaceConfig.PythonVersion != "" {
+				defaultVersionId = workspaceConfig.PythonVersion
+			}
+
+			workspaceConfig.PythonVersion, err = code.AskForPythonVersion(defaultVersionId, baseImages)
+			if err != nil {
+				return fmt.Errorf("failed to sync python version: %w", err)
+			}
+
 			err = workspace.SetWorkspaceConfig(workspaceConfig, ".")
 			if err != nil {
 				return fmt.Errorf("failed to update workspace configuration: %w", err)
@@ -68,6 +84,7 @@ func NewSelectCmd() *cobra.Command {
 			return nil
 		},
 	}
+	return cmd
 }
 
 func init() {

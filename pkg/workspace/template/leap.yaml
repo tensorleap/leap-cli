@@ -1,8 +1,9 @@
-projectId: { { .ProjectId } }
-secretId: { { .SecretId } }
+projectId: {{ .ProjectId }}
+secretId: {{ .SecretId }}
 entryFile: "leap_binder.py"
-pythonVersion: { { .PythonVersion } }
+pythonVersion: {{ .PythonVersion }}
 include:
   - leap_binder.py
   - leap_test.py
   - leap_custom_test.py
+
