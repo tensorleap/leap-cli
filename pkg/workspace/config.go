@@ -54,9 +54,12 @@ type InitTemplateValues struct {
 
 func CreateCodeTemplate(projectId, secretId, outputDir, pythonVersionId, branch string) error {
 	// Create the directory for the file if it doesn't exist
-	err := os.MkdirAll(outputDir, 0755)
-	if err != nil {
-		return err
+	isCurrentDir := outputDir == "." || outputDir == ""
+	if !isCurrentDir {
+		err := os.MkdirAll(outputDir, 0755)
+		if err != nil {
+			return err
+		}
 	}
 
 	files, _ := templateDir.ReadDir("template")
