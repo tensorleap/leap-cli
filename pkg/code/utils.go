@@ -302,16 +302,6 @@ func isExcluded(path string, excludePatterns []string) bool {
 	return false
 }
 
-func filterOutBySuffix(paths []string, suffix string) []string {
-	var filtered []string
-	for _, path := range paths {
-		if !strings.HasSuffix(path, suffix) {
-			filtered = append(filtered, path)
-		}
-	}
-	return filtered
-}
-
 func PrintCodeSnapshotParserErr(civ *CodeSnapshot) {
 
 	if civ.ParseResult == nil {
