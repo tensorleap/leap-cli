@@ -13,9 +13,7 @@ Name | Type | Description | Notes
 **DataStates** | [**[]DataStateType**](DataStateType.md) |  | 
 **Name** | **string** |  | 
 **Description** | **string** |  | 
-**SkipMetricsEstimation** | **bool** |  | 
 **Monitor** | Pointer to **bool** |  | [optional] 
-**SmartVisualizations** | Pointer to **bool** |  | [optional] 
 **EvaluatedEpoch** | **float64** |  | 
 **SessionId** | **string** |  | 
 **Type** | [**ExportModelTypeEnum**](ExportModelTypeEnum.md) |  | 
@@ -34,7 +32,6 @@ Name | Type | Description | Notes
 **ForceExecute** | Pointer to **bool** |  | [optional] 
 **ElementInstance** | Pointer to **bool** |  | [optional] 
 **UseCustomLatentSpace** | Pointer to **bool** |  | [optional] 
-**TriggerCreateSampleVisualiztions** | Pointer to **bool** |  | [optional] 
 **OptionalAnalysis** | Pointer to [**[]OptionalAnalysis**](OptionalAnalysis.md) |  | [optional] 
 **ReductionAlgorithm** | [**ReductionAlgorithm**](ReductionAlgorithm.md) |  | 
 **ShouldFillRemainingWithUnbalanced** | **bool** |  | 
@@ -56,12 +53,15 @@ Name | Type | Description | Notes
 **CodeUrl** | **string** |  | 
 **CodeEntryFile** | **string** |  | 
 **GenericBaseImageType** | Pointer to **string** |  | [optional] 
+**VersionName** | **string** |  | 
+**BranchName** | Pointer to **string** |  | [optional] 
+**OverwriteVersionId** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewJobParams
 
-`func NewJobParams(epochs float64, batchSize float64, versionId string, projectId string, batchSize float64, dataStates []DataStateType, name string, description string, skipMetricsEstimation bool, evaluatedEpoch float64, sessionId string, type_ ExportModelTypeEnum, fromEpoch float64, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, sessionRunId string, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, labelingAlgorithm LabelingAlgorithm, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, codeUrl string, codeEntryFile string, ) *JobParams`
+`func NewJobParams(epochs float64, batchSize float64, versionId string, projectId string, batchSize float64, dataStates []DataStateType, name string, description string, evaluatedEpoch float64, sessionId string, type_ ExportModelTypeEnum, fromEpoch float64, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, sessionRunId string, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, labelingAlgorithm LabelingAlgorithm, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, codeUrl string, codeEntryFile string, versionName string, ) *JobParams`
 
 NewJobParams instantiates a new JobParams object
 This constructor will assign default values to properties that have it defined,
@@ -261,26 +261,6 @@ and a boolean to check if the value has been set.
 SetDescription sets Description field to given value.
 
 
-### GetSkipMetricsEstimation
-
-`func (o *JobParams) GetSkipMetricsEstimation() bool`
-
-GetSkipMetricsEstimation returns the SkipMetricsEstimation field if non-nil, zero value otherwise.
-
-### GetSkipMetricsEstimationOk
-
-`func (o *JobParams) GetSkipMetricsEstimationOk() (*bool, bool)`
-
-GetSkipMetricsEstimationOk returns a tuple with the SkipMetricsEstimation field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSkipMetricsEstimation
-
-`func (o *JobParams) SetSkipMetricsEstimation(v bool)`
-
-SetSkipMetricsEstimation sets SkipMetricsEstimation field to given value.
-
-
 ### GetMonitor
 
 `func (o *JobParams) GetMonitor() bool`
@@ -305,31 +285,6 @@ SetMonitor sets Monitor field to given value.
 `func (o *JobParams) HasMonitor() bool`
 
 HasMonitor returns a boolean if a field has been set.
-
-### GetSmartVisualizations
-
-`func (o *JobParams) GetSmartVisualizations() bool`
-
-GetSmartVisualizations returns the SmartVisualizations field if non-nil, zero value otherwise.
-
-### GetSmartVisualizationsOk
-
-`func (o *JobParams) GetSmartVisualizationsOk() (*bool, bool)`
-
-GetSmartVisualizationsOk returns a tuple with the SmartVisualizations field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSmartVisualizations
-
-`func (o *JobParams) SetSmartVisualizations(v bool)`
-
-SetSmartVisualizations sets SmartVisualizations field to given value.
-
-### HasSmartVisualizations
-
-`func (o *JobParams) HasSmartVisualizations() bool`
-
-HasSmartVisualizations returns a boolean if a field has been set.
 
 ### GetEvaluatedEpoch
 
@@ -725,31 +680,6 @@ SetUseCustomLatentSpace sets UseCustomLatentSpace field to given value.
 `func (o *JobParams) HasUseCustomLatentSpace() bool`
 
 HasUseCustomLatentSpace returns a boolean if a field has been set.
-
-### GetTriggerCreateSampleVisualiztions
-
-`func (o *JobParams) GetTriggerCreateSampleVisualiztions() bool`
-
-GetTriggerCreateSampleVisualiztions returns the TriggerCreateSampleVisualiztions field if non-nil, zero value otherwise.
-
-### GetTriggerCreateSampleVisualiztionsOk
-
-`func (o *JobParams) GetTriggerCreateSampleVisualiztionsOk() (*bool, bool)`
-
-GetTriggerCreateSampleVisualiztionsOk returns a tuple with the TriggerCreateSampleVisualiztions field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTriggerCreateSampleVisualiztions
-
-`func (o *JobParams) SetTriggerCreateSampleVisualiztions(v bool)`
-
-SetTriggerCreateSampleVisualiztions sets TriggerCreateSampleVisualiztions field to given value.
-
-### HasTriggerCreateSampleVisualiztions
-
-`func (o *JobParams) HasTriggerCreateSampleVisualiztions() bool`
-
-HasTriggerCreateSampleVisualiztions returns a boolean if a field has been set.
 
 ### GetOptionalAnalysis
 
@@ -1205,6 +1135,76 @@ SetGenericBaseImageType sets GenericBaseImageType field to given value.
 `func (o *JobParams) HasGenericBaseImageType() bool`
 
 HasGenericBaseImageType returns a boolean if a field has been set.
+
+### GetVersionName
+
+`func (o *JobParams) GetVersionName() string`
+
+GetVersionName returns the VersionName field if non-nil, zero value otherwise.
+
+### GetVersionNameOk
+
+`func (o *JobParams) GetVersionNameOk() (*string, bool)`
+
+GetVersionNameOk returns a tuple with the VersionName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVersionName
+
+`func (o *JobParams) SetVersionName(v string)`
+
+SetVersionName sets VersionName field to given value.
+
+
+### GetBranchName
+
+`func (o *JobParams) GetBranchName() string`
+
+GetBranchName returns the BranchName field if non-nil, zero value otherwise.
+
+### GetBranchNameOk
+
+`func (o *JobParams) GetBranchNameOk() (*string, bool)`
+
+GetBranchNameOk returns a tuple with the BranchName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBranchName
+
+`func (o *JobParams) SetBranchName(v string)`
+
+SetBranchName sets BranchName field to given value.
+
+### HasBranchName
+
+`func (o *JobParams) HasBranchName() bool`
+
+HasBranchName returns a boolean if a field has been set.
+
+### GetOverwriteVersionId
+
+`func (o *JobParams) GetOverwriteVersionId() string`
+
+GetOverwriteVersionId returns the OverwriteVersionId field if non-nil, zero value otherwise.
+
+### GetOverwriteVersionIdOk
+
+`func (o *JobParams) GetOverwriteVersionIdOk() (*string, bool)`
+
+GetOverwriteVersionIdOk returns a tuple with the OverwriteVersionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOverwriteVersionId
+
+`func (o *JobParams) SetOverwriteVersionId(v string)`
+
+SetOverwriteVersionId sets OverwriteVersionId field to given value.
+
+### HasOverwriteVersionId
+
+`func (o *JobParams) HasOverwriteVersionId() bool`
+
+HasOverwriteVersionId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

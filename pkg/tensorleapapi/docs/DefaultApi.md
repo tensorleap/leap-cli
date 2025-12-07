@@ -1999,7 +1999,7 @@ import (
 )
 
 func main() {
-	evaluateParams := *openapiclient.NewEvaluateParams("VersionId_example", "ProjectId_example", float64(123), []openapiclient.DataStateType{openapiclient.DataStateType("training")}, "Name_example", "Description_example", false, float64(123), "SessionId_example") // EvaluateParams | 
+	evaluateParams := *openapiclient.NewEvaluateParams("VersionId_example", "ProjectId_example", float64(123), []openapiclient.DataStateType{openapiclient.DataStateType("training")}, "Name_example", "Description_example", float64(123), "SessionId_example") // EvaluateParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

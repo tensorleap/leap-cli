@@ -8,7 +8,6 @@ Name | Type | Description | Notes
 **ForceExecute** | Pointer to **bool** |  | [optional] 
 **ElementInstance** | Pointer to **bool** |  | [optional] 
 **UseCustomLatentSpace** | Pointer to **bool** |  | [optional] 
-**TriggerCreateSampleVisualiztions** | Pointer to **bool** |  | [optional] 
 **OptionalAnalysis** | Pointer to [**[]OptionalAnalysis**](OptionalAnalysis.md) |  | [optional] 
 **ReductionAlgorithm** | [**ReductionAlgorithm**](ReductionAlgorithm.md) |  | 
 **ShouldFillRemainingWithUnbalanced** | **bool** |  | 
@@ -141,31 +140,6 @@ SetUseCustomLatentSpace sets UseCustomLatentSpace field to given value.
 `func (o *PopulationExplorationJobParams) HasUseCustomLatentSpace() bool`
 
 HasUseCustomLatentSpace returns a boolean if a field has been set.
-
-### GetTriggerCreateSampleVisualiztions
-
-`func (o *PopulationExplorationJobParams) GetTriggerCreateSampleVisualiztions() bool`
-
-GetTriggerCreateSampleVisualiztions returns the TriggerCreateSampleVisualiztions field if non-nil, zero value otherwise.
-
-### GetTriggerCreateSampleVisualiztionsOk
-
-`func (o *PopulationExplorationJobParams) GetTriggerCreateSampleVisualiztionsOk() (*bool, bool)`
-
-GetTriggerCreateSampleVisualiztionsOk returns a tuple with the TriggerCreateSampleVisualiztions field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTriggerCreateSampleVisualiztions
-
-`func (o *PopulationExplorationJobParams) SetTriggerCreateSampleVisualiztions(v bool)`
-
-SetTriggerCreateSampleVisualiztions sets TriggerCreateSampleVisualiztions field to given value.
-
-### HasTriggerCreateSampleVisualiztions
-
-`func (o *PopulationExplorationJobParams) HasTriggerCreateSampleVisualiztions() bool`
-
-HasTriggerCreateSampleVisualiztions returns a boolean if a field has been set.
 
 ### GetOptionalAnalysis
 

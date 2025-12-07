@@ -10,15 +10,13 @@ Name | Type | Description | Notes
 **DataStates** | [**[]DataStateType**](DataStateType.md) |  | 
 **Name** | **string** |  | 
 **Description** | **string** |  | 
-**SkipMetricsEstimation** | **bool** |  | 
 **Monitor** | Pointer to **bool** |  | [optional] 
-**SmartVisualizations** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
 ### NewEvaluateNewSessionParams
 
-`func NewEvaluateNewSessionParams(versionId string, projectId string, batchSize float64, dataStates []DataStateType, name string, description string, skipMetricsEstimation bool, ) *EvaluateNewSessionParams`
+`func NewEvaluateNewSessionParams(versionId string, projectId string, batchSize float64, dataStates []DataStateType, name string, description string, ) *EvaluateNewSessionParams`
 
 NewEvaluateNewSessionParams instantiates a new EvaluateNewSessionParams object
 This constructor will assign default values to properties that have it defined,
@@ -153,26 +151,6 @@ and a boolean to check if the value has been set.
 SetDescription sets Description field to given value.
 
 
-### GetSkipMetricsEstimation
-
-`func (o *EvaluateNewSessionParams) GetSkipMetricsEstimation() bool`
-
-GetSkipMetricsEstimation returns the SkipMetricsEstimation field if non-nil, zero value otherwise.
-
-### GetSkipMetricsEstimationOk
-
-`func (o *EvaluateNewSessionParams) GetSkipMetricsEstimationOk() (*bool, bool)`
-
-GetSkipMetricsEstimationOk returns a tuple with the SkipMetricsEstimation field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSkipMetricsEstimation
-
-`func (o *EvaluateNewSessionParams) SetSkipMetricsEstimation(v bool)`
-
-SetSkipMetricsEstimation sets SkipMetricsEstimation field to given value.
-
-
 ### GetMonitor
 
 `func (o *EvaluateNewSessionParams) GetMonitor() bool`
@@ -197,31 +175,6 @@ SetMonitor sets Monitor field to given value.
 `func (o *EvaluateNewSessionParams) HasMonitor() bool`
 
 HasMonitor returns a boolean if a field has been set.
-
-### GetSmartVisualizations
-
-`func (o *EvaluateNewSessionParams) GetSmartVisualizations() bool`
-
-GetSmartVisualizations returns the SmartVisualizations field if non-nil, zero value otherwise.
-
-### GetSmartVisualizationsOk
-
-`func (o *EvaluateNewSessionParams) GetSmartVisualizationsOk() (*bool, bool)`
-
-GetSmartVisualizationsOk returns a tuple with the SmartVisualizations field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSmartVisualizations
-
-`func (o *EvaluateNewSessionParams) SetSmartVisualizations(v bool)`
-
-SetSmartVisualizations sets SmartVisualizations field to given value.
-
-### HasSmartVisualizations
-
-`func (o *EvaluateNewSessionParams) HasSmartVisualizations() bool`
-
-HasSmartVisualizations returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -19,7 +19,6 @@ Name | Type | Description | Notes
 **ShouldFillRemainingWithUnbalanced** | **bool** |  | 
 **ReductionAlgorithm** | [**ReductionAlgorithm**](ReductionAlgorithm.md) |  | 
 **OptionalAnalysis** | Pointer to [**[]OptionalAnalysis**](OptionalAnalysis.md) |  | [optional] 
-**TriggerCreateSampleVisualiztions** | Pointer to **bool** |  | [optional] 
 **ReRunAfterFail** | Pointer to **bool** |  | [optional] 
 **UseCustomLatentSpace** | Pointer to **bool** |  | [optional] 
 **ElementInstance** | Pointer to **bool** |  | [optional] 
@@ -374,31 +373,6 @@ SetOptionalAnalysis sets OptionalAnalysis field to given value.
 `func (o *PopulationExplorationParams) HasOptionalAnalysis() bool`
 
 HasOptionalAnalysis returns a boolean if a field has been set.
-
-### GetTriggerCreateSampleVisualiztions
-
-`func (o *PopulationExplorationParams) GetTriggerCreateSampleVisualiztions() bool`
-
-GetTriggerCreateSampleVisualiztions returns the TriggerCreateSampleVisualiztions field if non-nil, zero value otherwise.
-
-### GetTriggerCreateSampleVisualiztionsOk
-
-`func (o *PopulationExplorationParams) GetTriggerCreateSampleVisualiztionsOk() (*bool, bool)`
-
-GetTriggerCreateSampleVisualiztionsOk returns a tuple with the TriggerCreateSampleVisualiztions field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTriggerCreateSampleVisualiztions
-
-`func (o *PopulationExplorationParams) SetTriggerCreateSampleVisualiztions(v bool)`
-
-SetTriggerCreateSampleVisualiztions sets TriggerCreateSampleVisualiztions field to given value.
-
-### HasTriggerCreateSampleVisualiztions
-
-`func (o *PopulationExplorationParams) HasTriggerCreateSampleVisualiztions() bool`
-
-HasTriggerCreateSampleVisualiztions returns a boolean if a field has been set.
 
 ### GetReRunAfterFail
 

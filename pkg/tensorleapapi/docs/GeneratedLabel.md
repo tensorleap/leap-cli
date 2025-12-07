@@ -13,7 +13,8 @@ Name | Type | Description | Notes
 **CreatedAt** | **time.Time** |  | 
 **CreatedBy** | **string** |  | 
 **FilePath** | **string** |  | 
-**FileUrl** | **string** |  | 
+**FileUrl** | Pointer to **string** |  | [optional] 
+**FilterFileUrl** | Pointer to **string** |  | [optional] 
 **Status** | [**JobStatus**](JobStatus.md) |  | 
 **IsDeleted** | **bool** |  | 
 
@@ -21,7 +22,7 @@ Name | Type | Description | Notes
 
 ### NewGeneratedLabel
 
-`func NewGeneratedLabel(id string, jobId string, sessionRunId string, sessionRunName string, epoch float64, createdAt time.Time, createdBy string, filePath string, fileUrl string, status JobStatus, isDeleted bool, ) *GeneratedLabel`
+`func NewGeneratedLabel(id string, jobId string, sessionRunId string, sessionRunName string, epoch float64, createdAt time.Time, createdBy string, filePath string, status JobStatus, isDeleted bool, ) *GeneratedLabel`
 
 NewGeneratedLabel instantiates a new GeneratedLabel object
 This constructor will assign default values to properties that have it defined,
@@ -240,6 +241,36 @@ and a boolean to check if the value has been set.
 
 SetFileUrl sets FileUrl field to given value.
 
+### HasFileUrl
+
+`func (o *GeneratedLabel) HasFileUrl() bool`
+
+HasFileUrl returns a boolean if a field has been set.
+
+### GetFilterFileUrl
+
+`func (o *GeneratedLabel) GetFilterFileUrl() string`
+
+GetFilterFileUrl returns the FilterFileUrl field if non-nil, zero value otherwise.
+
+### GetFilterFileUrlOk
+
+`func (o *GeneratedLabel) GetFilterFileUrlOk() (*string, bool)`
+
+GetFilterFileUrlOk returns a tuple with the FilterFileUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFilterFileUrl
+
+`func (o *GeneratedLabel) SetFilterFileUrl(v string)`
+
+SetFilterFileUrl sets FilterFileUrl field to given value.
+
+### HasFilterFileUrl
+
+`func (o *GeneratedLabel) HasFilterFileUrl() bool`
+
+HasFilterFileUrl returns a boolean if a field has been set.
 
 ### GetStatus
 

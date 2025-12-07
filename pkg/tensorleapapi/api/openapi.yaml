@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.654
+  version: 0.0.659
 servers:
 - url: /api/v2
 paths:
@@ -8929,7 +8929,6 @@ components:
             gt: 5.637376656633329
           operator: between
         useCustomLatentSpace: true
-        triggerCreateSampleVisualiztions: true
         forceExecute: true
         sessionRunId: sessionRunId
         projectionMetric: projectionMetric
@@ -9120,8 +9119,6 @@ components:
           items:
             $ref: "#/components/schemas/OptionalAnalysis"
           type: array
-        triggerCreateSampleVisualiztions:
-          type: boolean
         useCustomLatentSpace:
           type: boolean
         elementInstance:
@@ -9432,7 +9429,6 @@ components:
               gt: 5.637376656633329
             operator: between
           useCustomLatentSpace: true
-          triggerCreateSampleVisualiztions: true
           forceExecute: true
           sessionRunId: sessionRunId
           projectionMetric: projectionMetric
@@ -9979,8 +9975,6 @@ components:
     EvaluateNewSessionParams:
       additionalProperties: true
       example:
-        smartVisualizations: true
-        skipMetricsEstimation: true
         versionId: versionId
         name: name
         dataStates:
@@ -10006,11 +10000,7 @@ components:
           type: string
         description:
           type: string
-        skipMetricsEstimation:
-          type: boolean
         monitor:
-          type: boolean
-        smartVisualizations:
           type: boolean
       required:
       - batchSize
@@ -10018,7 +10008,6 @@ components:
       - description
       - name
       - projectId
-      - skipMetricsEstimation
       - versionId
       type: object
     EvaluateExistingSessionParams:
@@ -10130,8 +10119,6 @@ components:
         elementInstance:
           type: boolean
         useCustomLatentSpace:
-          type: boolean
-        triggerCreateSampleVisualiztions:
           type: boolean
         optionalAnalysis:
           items:
@@ -10352,6 +10339,40 @@ components:
       - codeUrl
       - projectId
       type: object
+    PushCodeSnapshotParams:
+      additionalProperties: true
+      example:
+        codeUrl: codeUrl
+        overwriteVersionId: overwriteVersionId
+        genericBaseImageType: genericBaseImageType
+        secretManagerId: secretManagerId
+        branchName: branchName
+        codeEntryFile: codeEntryFile
+        versionName: versionName
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        secretManagerId:
+          type: string
+        codeUrl:
+          type: string
+        codeEntryFile:
+          type: string
+        genericBaseImageType:
+          type: string
+        versionName:
+          type: string
+        branchName:
+          type: string
+        overwriteVersionId:
+          type: string
+      required:
+      - codeEntryFile
+      - codeUrl
+      - projectId
+      - versionName
+      type: object
     JobParams:
       anyOf:
       - $ref: "#/components/schemas/TrainingParams"
@@ -10364,6 +10385,7 @@ components:
       - $ref: "#/components/schemas/ExportProjectParams"
       - $ref: "#/components/schemas/ImportProjectParams"
       - $ref: "#/components/schemas/ParesCodeSnapshotParams"
+      - $ref: "#/components/schemas/PushCodeSnapshotParams"
     CodeSnapshotInfo:
       additionalProperties: true
       example:
@@ -12063,15 +12085,16 @@ components:
     GeneratedLabel:
       additionalProperties: true
       example:
+        sessionRunName: sessionRunName
+        filePath: filePath
+        filterFileUrl: filterFileUrl
+        epoch: 0.8008281904610115
         jobId: jobId
         createdAt: 2000-01-23T04:56:07.000+00:00
         sessionRunId: sessionRunId
-        sessionRunName: sessionRunName
         isDeleted: true
         createdBy: createdBy
-        filePath: filePath
         numOfSamples: 6.027456183070403
-        epoch: 0.8008281904610115
         fileUrl: fileUrl
         id: id
         status: UNSTARTED
@@ -12099,6 +12122,8 @@ components:
           type: string
         fileUrl:
           type: string
+        filterFileUrl:
+          type: string
         status:
           $ref: "#/components/schemas/JobStatus"
         isDeleted:
@@ -12108,7 +12133,6 @@ components:
       - createdBy
       - epoch
       - filePath
-      - fileUrl
       - id
       - isDeleted
       - jobId
@@ -12120,27 +12144,29 @@ components:
       additionalProperties: true
       example:
         labels:
-        - jobId: jobId
+        - sessionRunName: sessionRunName
+          filePath: filePath
+          filterFileUrl: filterFileUrl
+          epoch: 0.8008281904610115
+          jobId: jobId
           createdAt: 2000-01-23T04:56:07.000+00:00
           sessionRunId: sessionRunId
-          sessionRunName: sessionRunName
           isDeleted: true
           createdBy: createdBy
-          filePath: filePath
           numOfSamples: 6.027456183070403
-          epoch: 0.8008281904610115
           fileUrl: fileUrl
           id: id
           status: UNSTARTED
-        - jobId: jobId
+        - sessionRunName: sessionRunName
+          filePath: filePath
+          filterFileUrl: filterFileUrl
+          epoch: 0.8008281904610115
+          jobId: jobId
           createdAt: 2000-01-23T04:56:07.000+00:00
           sessionRunId: sessionRunId
-          sessionRunName: sessionRunName
           isDeleted: true
           createdBy: createdBy
-          filePath: filePath
           numOfSamples: 6.027456183070403
-          epoch: 0.8008281904610115
           fileUrl: fileUrl
           id: id
           status: UNSTARTED
@@ -24115,40 +24141,6 @@ components:
       - codeSnapshot
       - versionId
       type: object
-    PushCodeSnapshotParams:
-      additionalProperties: true
-      example:
-        codeUrl: codeUrl
-        overwriteVersionId: overwriteVersionId
-        genericBaseImageType: genericBaseImageType
-        secretManagerId: secretManagerId
-        branchName: branchName
-        codeEntryFile: codeEntryFile
-        versionName: versionName
-        projectId: projectId
-      properties:
-        projectId:
-          type: string
-        secretManagerId:
-          type: string
-        codeUrl:
-          type: string
-        codeEntryFile:
-          type: string
-        genericBaseImageType:
-          type: string
-        versionName:
-          type: string
-        branchName:
-          type: string
-        overwriteVersionId:
-          type: string
-      required:
-      - codeEntryFile
-      - codeUrl
-      - projectId
-      - versionName
-      type: object
     GetCodeSnapshotResponse:
       additionalProperties: true
       example:
@@ -26060,7 +26052,6 @@ components:
             gt: 5.637376656633329
           operator: between
         useCustomLatentSpace: true
-        triggerCreateSampleVisualiztions: true
         forceExecute: true
         sessionRunId: sessionRunId
         projectionMetric: projectionMetric
@@ -26258,8 +26249,6 @@ components:
           items:
             $ref: "#/components/schemas/OptionalAnalysis"
           type: array
-        triggerCreateSampleVisualiztions:
-          type: boolean
         reRunAfterFail:
           type: boolean
         useCustomLatentSpace:
