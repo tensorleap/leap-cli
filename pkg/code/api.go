@@ -72,7 +72,7 @@ func PushCodeSnapshot(
 	return result, nil
 }
 
-const TIMEOUT_FOR_CODE_INTEGRATION_STATUS = 30 * time.Minute
+const TIMEOUT_FOR_CODE_INTEGRATION_STATUS = 90 * time.Minute
 
 func WaitForCodeIntegrationStatus(ctx context.Context, projectId, codeSnapshotId string) (bool, *CodeSnapshot, error) {
 	log.Info("Waiting for code parser result...")
