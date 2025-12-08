@@ -1,4 +1,4 @@
-package projects
+package root_cmd
 
 import (
 	"github.com/spf13/cobra"
@@ -54,8 +54,4 @@ func NewInitCmd() *cobra.Command {
 	cmd.Flags().StringVar(&branch, "branch", "", "Branch name")
 
 	return cmd
-}
-
-func init() {
-	RootCommand.AddCommand(NewInitCmd())
 }

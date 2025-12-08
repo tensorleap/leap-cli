@@ -1,4 +1,4 @@
-package push
+package root_cmd
 
 import (
 	"fmt"
