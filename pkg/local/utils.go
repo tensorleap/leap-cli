@@ -1,24 +1,22 @@
 package local
 
 import (
-	"fmt"
-	"os/exec"
-	"runtime"
+	"strings"
 )
 
-func OpenLink(link string) error {
-	var cmd *exec.Cmd
-
-	switch runtime.GOOS {
-	case "darwin":
-		cmd = exec.Command("open", link)
-	case "linux":
-		cmd = exec.Command("xdg-open", link)
-	case "windows":
-		cmd = exec.Command("cmd", "/c", "start", link)
-	default:
-		return fmt.Errorf("Unsupported platform!")
-	}
-
-	return cmd.Start()
+func SanitizeDirectoryName(name string) string {
+	// Replace characters that are not allowed in directory names
+	replacer := strings.NewReplacer(
+		"/", "_",
+		"\\", "_",
+		":", "_",
+		"*", "_",
+		"?", "_",
+		"\"", "_",
+		"<", "_",
+		">", "_",
+		"|", "_",
+		" ", "_",
+	)
+	return replacer.Replace(name)
 }
