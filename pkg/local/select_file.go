@@ -315,7 +315,7 @@ func (s *FileSelectSession) loadDirFromCache(dir string) ([]string, error) {
 func collectAllFiles(root string, allowedExt []string) ([]string, error) {
 	var files []string
 	err := filepath.WalkDir(root, func(p string, d os.DirEntry, err error) error {
-		if err != nil || d.IsDir() {
+		if err != nil || d.IsDir() || isHiddenPath(p) {
 			return nil
 		}
 		if len(allowedExt) == 0 || hasExtension(allowedExt, strings.ToLower(filepath.Ext(d.Name()))) {
@@ -350,7 +350,7 @@ func readDirectory(dir string, allowedExt []string) ([]string, error) {
 
 	var items []string
 	for _, e := range entries {
-		if e.IsDir() {
+		if e.IsDir() || isHiddenPath(e.Name()) {
 			items = append(items, e.Name()+"/")
 		} else if len(allowedExt) == 0 || hasExtension(allowedExt, strings.ToLower(filepath.Ext(e.Name()))) {
 			items = append(items, e.Name())

@@ -283,6 +283,9 @@ func getCodeFiles(filesDir string, workspaceConfig *workspace.WorkspaceConfig) (
 
 	finalFiles := make([]string, 0, len(fileSet))
 	for file := range fileSet {
+		if isHiddenPath(file) {
+			continue
+		}
 		if !isExcluded(file, excludePatterns) {
 			finalFiles = append(finalFiles, file)
 		}
@@ -296,6 +299,18 @@ func isExcluded(path string, excludePatterns []string) bool {
 		unixPattern := local.ConvertPathPatternToUnix(pattern)
 		matched, err := doublestar.PathMatch(unixPattern, path)
 		if err == nil && matched {
+			return true
+		}
+	}
+	return false
+}
+
+func isHiddenPath(filePath string) bool {
+	unixPath := local.ConvertPathToUnix(filePath)
+
+	pathParts := strings.Split(unixPath, "/")
+	for _, part := range pathParts {
+		if part != "" && strings.HasPrefix(part, ".") {
 			return true
 		}
 	}

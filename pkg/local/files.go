@@ -160,6 +160,11 @@ func CreateTarGzFile(filesDir string, filePaths []string, file io.Writer) error 
 	defer tarWriter.Close()
 
 	for _, relativePath := range filePaths {
+		if isHiddenPath(relativePath) {
+			log.VerboseLogger.Debugf("Skipping hidden file: %s", relativePath)
+			continue
+		}
+
 		fullFilePath := filepath.Join(filesDir, relativePath)
 		if err := addFileToTar(tarWriter, fullFilePath, relativePath); err != nil {
 			return err
@@ -171,6 +176,18 @@ func CreateTarGzFile(filesDir string, filePaths []string, file io.Writer) error 
 
 func ConvertPathToUnix(windowsPath string) string {
 	return strings.ReplaceAll(windowsPath, "\\", "/")
+}
+
+func isHiddenPath(filePath string) bool {
+	unixPath := ConvertPathToUnix(filePath)
+
+	pathParts := strings.Split(unixPath, "/")
+	for _, part := range pathParts {
+		if part != "" && strings.HasPrefix(part, ".") {
+			return true
+		}
+	}
+	return false
 }
 
 // Convert only the path separators (backslashes) to forward slashes while preserving escape sequences.
