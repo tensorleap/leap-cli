@@ -131,18 +131,9 @@ func AskUserForNewVersionOrSelectExistingVersion(ctx context.Context, projectId 
 		return nil, err
 	}
 
-	subTypes := []tensorleapapi.JobSubType{
-		tensorleapapi.JOBSUBTYPE_IMPORT_MODEL,
-		tensorleapapi.JOBSUBTYPE_CODE_PARSE,
-	}
-
-	runs, err := runPkg.GetRuns(ctx, subTypes, []tensorleapapi.JobStatus{}, projectId)
+	runsStatusesPerVersionId, err := GetRunsStatusesPerVersionId(ctx, projectId)
 	if err != nil {
 		return nil, err
-	}
-	runsStatusesPerVersionId := make(map[string][]tensorleapapi.RunProcess)
-	for _, run := range runs {
-		runsStatusesPerVersionId[run.GetVersionId()] = append(runsStatusesPerVersionId[run.GetVersionId()], run)
 	}
 
 	maxLengthOfVersionName := 0
@@ -158,25 +149,8 @@ func AskUserForNewVersionOrSelectExistingVersion(ctx context.Context, projectId 
 	}
 
 	for _, version := range versions {
-		status, hasModel := calcVersionStatus(&version, runsStatusesPerVersionId[version.GetCid()])
-
-		updateAt := api.FormatDateToLocalTime(version.GetUpdatedAt())
-		displayName := version.GetNotes()
-
-		if len(displayName) < maxLengthOfVersionName {
-			displayName = displayName + strings.Repeat(" ", maxLengthOfVersionName-len(displayName))
-		}
-		prefixIcon := ""
-
-		switch status {
-		case VersionStatus_FAILED:
-			prefixIcon = text.FgRed.Sprint("✖")
-		case VersionStatus_RUNNING:
-			prefixIcon = text.FgYellow.Sprint("▶")
-		case VersionStatus_FINISHED:
-			prefixIcon = text.FgGreen.Sprint("✔")
-		}
-		displayName = fmt.Sprintf("%s %s %s", prefixIcon, displayName, updateAt)
+		status, hasModel := CalcVersionStatus(&version, runsStatusesPerVersionId[version.GetCid()])
+		displayName := FormatVersionDisplayName(&version, status, maxLengthOfVersionName)
 		options = append(options, displayName)
 
 		versionInfos = append(versionInfos, VersionInfo{
@@ -215,7 +189,47 @@ func AskUserForModelPath(ctx context.Context) (modelPath string, err error) {
 	return local.SelectFile(allowedExt, "Select model file")
 }
 
-func calcVersionStatus(version *tensorleapapi.SlimVersion, jobs []tensorleapapi.RunProcess) (VersionStatus, bool) {
+func FormatVersionDisplayName(version *tensorleapapi.SlimVersion, status VersionStatus, maxLengthOfVersionName int) string {
+	displayName := version.GetNotes()
+	updateAt := api.FormatDateToLocalTime(version.GetUpdatedAt())
+
+	if len(displayName) < maxLengthOfVersionName {
+		displayName = displayName + strings.Repeat(" ", maxLengthOfVersionName-len(displayName))
+	}
+
+	prefixIcon := ""
+	switch status {
+	case VersionStatus_FAILED:
+		prefixIcon = text.FgRed.Sprint("✖")
+	case VersionStatus_RUNNING:
+		prefixIcon = text.FgYellow.Sprint("▶")
+	case VersionStatus_FINISHED:
+		prefixIcon = text.FgGreen.Sprint("✔")
+	}
+
+	return fmt.Sprintf("%s %s %s", prefixIcon, displayName, updateAt)
+}
+
+func GetRunsStatusesPerVersionId(ctx context.Context, projectId string) (map[string][]tensorleapapi.RunProcess, error) {
+	subTypes := []tensorleapapi.JobSubType{
+		tensorleapapi.JOBSUBTYPE_IMPORT_MODEL,
+		tensorleapapi.JOBSUBTYPE_CODE_PARSE,
+	}
+
+	runs, err := runPkg.GetRuns(ctx, subTypes, []tensorleapapi.JobStatus{}, projectId)
+	if err != nil {
+		return nil, err
+	}
+
+	runsStatusesPerVersionId := make(map[string][]tensorleapapi.RunProcess)
+	for _, run := range runs {
+		runsStatusesPerVersionId[run.GetVersionId()] = append(runsStatusesPerVersionId[run.GetVersionId()], run)
+	}
+
+	return runsStatusesPerVersionId, nil
+}
+
+func CalcVersionStatus(version *tensorleapapi.SlimVersion, jobs []tensorleapapi.RunProcess) (VersionStatus, bool) {
 	hasModel := len(version.GetSessions()) > 0
 	if jobs == nil {
 		jobs = []tensorleapapi.RunProcess{}
