@@ -142,8 +142,9 @@ func CloneCodeSnapshot(ctx context.Context, codeSnapshot *tensorleapapi.CodeSnap
 		return []string{}, ErrEmptyCodeSnapshot
 	}
 	blobPath := codeSnapshot.GetBlobName()
+	blobWithProjectId := fmt.Sprintf("projects/%s/%s", codeSnapshot.GetProjectId(), blobPath)
 	log.Infof("Downloading latest code integration version from %s", blobPath)
-	downloadUrl, err := api.GetDownloadSignedUrl(ctx, blobPath)
+	downloadUrl, err := api.GetDownloadSignedUrl(ctx, blobWithProjectId)
 	if err != nil {
 		return nil, err
 	}
@@ -153,6 +154,31 @@ func CloneCodeSnapshot(ctx context.Context, codeSnapshot *tensorleapapi.CodeSnap
 		return nil, err
 	}
 	return files, nil
+}
+
+func DownloadCodeSnapshotArchive(ctx context.Context, codeSnapshot *tensorleapapi.CodeSnapshot, outputPath string) error {
+	if isCodeSnapshotEmpty(codeSnapshot) {
+		return ErrEmptyCodeSnapshot
+	}
+	blobPath := codeSnapshot.GetBlobName()
+	blobWithProjectId := fmt.Sprintf("projects/%s/%s", codeSnapshot.GetProjectId(), blobPath)
+	log.Infof("Downloading code archive from %s", blobPath)
+	downloadUrl, err := api.GetDownloadSignedUrl(ctx, blobWithProjectId)
+	if err != nil {
+		return err
+	}
+
+	file, err := os.Create(outputPath)
+	if err != nil {
+		return fmt.Errorf("failed to create output file: %w", err)
+	}
+	defer file.Close()
+
+	err = api.DownloadFile(downloadUrl, file)
+	if err != nil {
+		return fmt.Errorf("failed to download archive: %w", err)
+	}
+	return nil
 }
 
 func FetchFileFromTarGz(blobURL string, filename string) (string, error) {
