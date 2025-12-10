@@ -18,6 +18,11 @@ const CONFIG_FILE_NAME = "leap.yaml"
 
 const UNDEFINED_WORKSPACE_CONFIG = "undefined"
 
+type EvaluateDefaults struct {
+	BatchSize  float64  `yaml:"batchSize,omitempty"`
+	DataStates []string `yaml:"dataStates,omitempty"`
+}
+
 type WorkspaceConfig struct {
 	ProjectId       string   `yaml:"projectId"`
 	SecretId        string   `yaml:"secretId"`

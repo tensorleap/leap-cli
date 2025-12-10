@@ -81,7 +81,6 @@ func WaitForCodeIntegrationStatus(ctx context.Context, projectId, codeSnapshotId
 	condition := func() (bool, []log.Step, error) {
 		getJobParams := *tensorleapapi.NewGetJobsFilterParams()
 		getJobParams.SetCodeSnapshotId(codeSnapshotId)
-		// getJobParams.SetTypes([]tensorleapapi.JobType{tensorleapapi.JOBTYPE_DATASET_PARSE})
 		codeIntegrationJobs, _, err := ApiClient.GetSlimJobs(ctx).GetJobsFilterParams(
 			getJobParams,
 		).Execute()
