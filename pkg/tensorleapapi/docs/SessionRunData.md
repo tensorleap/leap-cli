@@ -15,6 +15,8 @@ Name | Type | Description | Notes
 **WeightAssets** | [**[]WeightAssetData**](WeightAssetData.md) |  | 
 **Jobs** | [**[]Job**](Job.md) |  | 
 **Description** | **string** |  | 
+**EvaluateParams** | Pointer to [**SessionRunEvaluateParams**](SessionRunEvaluateParams.md) |  | [optional] 
+**CanContinueEvaluate** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -254,6 +256,56 @@ and a boolean to check if the value has been set.
 
 SetDescription sets Description field to given value.
 
+
+### GetEvaluateParams
+
+`func (o *SessionRunData) GetEvaluateParams() SessionRunEvaluateParams`
+
+GetEvaluateParams returns the EvaluateParams field if non-nil, zero value otherwise.
+
+### GetEvaluateParamsOk
+
+`func (o *SessionRunData) GetEvaluateParamsOk() (*SessionRunEvaluateParams, bool)`
+
+GetEvaluateParamsOk returns a tuple with the EvaluateParams field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEvaluateParams
+
+`func (o *SessionRunData) SetEvaluateParams(v SessionRunEvaluateParams)`
+
+SetEvaluateParams sets EvaluateParams field to given value.
+
+### HasEvaluateParams
+
+`func (o *SessionRunData) HasEvaluateParams() bool`
+
+HasEvaluateParams returns a boolean if a field has been set.
+
+### GetCanContinueEvaluate
+
+`func (o *SessionRunData) GetCanContinueEvaluate() bool`
+
+GetCanContinueEvaluate returns the CanContinueEvaluate field if non-nil, zero value otherwise.
+
+### GetCanContinueEvaluateOk
+
+`func (o *SessionRunData) GetCanContinueEvaluateOk() (*bool, bool)`
+
+GetCanContinueEvaluateOk returns a tuple with the CanContinueEvaluate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCanContinueEvaluate
+
+`func (o *SessionRunData) SetCanContinueEvaluate(v bool)`
+
+SetCanContinueEvaluate sets CanContinueEvaluate field to given value.
+
+### HasCanContinueEvaluate
+
+`func (o *SessionRunData) HasCanContinueEvaluate() bool`
+
+HasCanContinueEvaluate returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -22,4 +22,3 @@ func OpenLink(link string) error {
 
 	return cmd.Start()
 }
-
