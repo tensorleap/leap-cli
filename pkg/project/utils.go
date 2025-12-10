@@ -29,7 +29,7 @@ func BuildProjectContext(ctx context.Context, projectEntity *ProjectEntity, sche
 	if err != nil {
 		return nil, fmt.Errorf("failed to download bg image: %v", err)
 	}
-	defer res.Body.Close()
+	defer func() { _ = res.Body.Close() }()
 	bgImageBytes, err := io.ReadAll(res.Body)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read bg image: %v", err)

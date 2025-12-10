@@ -82,7 +82,7 @@ func CreateCodeTemplate(projectId, secretId, outputDir, pythonVersionId, branch 
 			if err != nil {
 				return err
 			}
-			defer targetFile.Close()
+			defer func() { _ = targetFile.Close() }()
 
 			if err := tmpl.Execute(targetFile, &InitTemplateValues{
 				ProjectId:     projectId,

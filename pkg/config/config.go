@@ -61,7 +61,7 @@ func InitConfig(cfgFile string) error {
 		if err != nil {
 			return fmt.Errorf("error creating config the file: %v", err)
 		}
-		file.Close()
+		_ = file.Close()
 	}
 
 	viper.AddConfigPath(configDir)

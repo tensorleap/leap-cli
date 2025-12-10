@@ -56,7 +56,7 @@ func printScript() error {
 	if err != nil {
 		return fmt.Errorf("failed to fetch install script: %v", err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	script, err := io.ReadAll(resp.Body)
 	if err != nil {

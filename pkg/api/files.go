@@ -22,7 +22,7 @@ func DownloadFile(url string, file io.Writer) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("failed to download file. Status code: %d", resp.StatusCode)
@@ -31,7 +31,7 @@ func DownloadFile(url string, file io.Writer) error {
 	// Create a pipe to copy data concurrently
 	reader, writer := io.Pipe()
 	go func() {
-		defer writer.Close()
+		defer func() { _ = writer.Close() }()
 		_, err := io.Copy(writer, resp.Body)
 		if err != nil {
 			writer.CloseWithError(err)
@@ -72,7 +72,7 @@ func UploadFile(url string, file io.Reader, fileSize int64) error {
 	if err := CheckRes(resp, err); err != nil {
 		return fmt.Errorf("failed to upload file: %v", err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 	return nil
 }
 

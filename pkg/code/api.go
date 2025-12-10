@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
-	. "github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
@@ -15,7 +14,7 @@ import (
 type CodeSnapshot = tensorleapapi.CodeSnapshot
 
 func GetCodeSnapshot(ctx context.Context, projectId, id string) (*CodeSnapshot, error) {
-	res, response, err := ApiClient.GetCodeSnapshot(ctx).GetCodeSnapshotParams(*tensorleapapi.NewGetCodeSnapshotParams(projectId, id)).Execute()
+	res, response, err := api.ApiClient.GetCodeSnapshot(ctx).GetCodeSnapshotParams(*tensorleapapi.NewGetCodeSnapshotParams(projectId, id)).Execute()
 	if err = api.CheckRes(response, err); err != nil {
 		return nil, err
 	}
@@ -34,7 +33,7 @@ func PushCodeSnapshot(
 		return nil, err
 	}
 
-	if err := UploadFile(uploadUrl, tarGzFile, fileSize); err != nil {
+	if err := api.UploadFile(uploadUrl, tarGzFile, fileSize); err != nil {
 		return nil, err
 	}
 
@@ -62,7 +61,7 @@ func PushCodeSnapshot(
 	}
 
 	log.Info("Pushing code snapshot...")
-	result, response, err := ApiClient.PushCodeSnapshot(ctx).
+	result, response, err := api.ApiClient.PushCodeSnapshot(ctx).
 		PushCodeSnapshotParams(saveCodeSnapshotParams).
 		Execute()
 	if err = api.CheckRes(response, err); err != nil {
@@ -81,7 +80,7 @@ func WaitForCodeIntegrationStatus(ctx context.Context, projectId, codeSnapshotId
 	condition := func() (bool, []log.Step, error) {
 		getJobParams := *tensorleapapi.NewGetJobsFilterParams()
 		getJobParams.SetCodeSnapshotId(codeSnapshotId)
-		codeIntegrationJobs, _, err := ApiClient.GetSlimJobs(ctx).GetJobsFilterParams(
+		codeIntegrationJobs, _, err := api.ApiClient.GetSlimJobs(ctx).GetJobsFilterParams(
 			getJobParams,
 		).Execute()
 		if err != nil {
@@ -103,7 +102,7 @@ func WaitForCodeIntegrationStatus(ctx context.Context, projectId, codeSnapshotId
 
 	err := api.WaitForConditionWithSteps(ctx, condition, sleepDuration, TIMEOUT_FOR_CODE_INTEGRATION_STATUS)
 
-	if err == ErrorTimeout {
+	if err == api.ErrorTimeout {
 		return false, nil, fmt.Errorf("timeout occurred while waiting for the integration code status")
 	}
 	if err != nil {
@@ -117,10 +116,10 @@ func WaitForCodeIntegrationStatus(ctx context.Context, projectId, codeSnapshotId
 }
 
 func GetCodeSnapshotUploadUrl(ctx context.Context, projectId string) (string, error) {
-	base_url := api.GetBaseUrlFromContext(ctx)
+	baseURL := api.GetBaseUrlFromContext(ctx)
 	params := *tensorleapapi.NewGetCodeSnapshotUploadUrlParams(projectId)
-	params.SetOrigin(base_url)
-	data, _, err := ApiClient.GetCodeSnapshotUploadUrl(ctx).
+	params.SetOrigin(baseURL)
+	data, _, err := api.ApiClient.GetCodeSnapshotUploadUrl(ctx).
 		GetCodeSnapshotUploadUrlParams(params).
 		Execute()
 	if err != nil {

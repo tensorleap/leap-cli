@@ -7,7 +7,6 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/entity"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
-	tlApi "github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
 type RunEntity = tensorleapapi.RunProcess
@@ -28,7 +27,7 @@ var RunEntityDesc = entity.NewEntityDescriptor(
 
 func GetRuns(ctx context.Context, subTypes []tensorleapapi.JobSubType, statuses []tensorleapapi.JobStatus, projectId string) ([]RunEntity, error) {
 
-	params := tlApi.NewGetJobsFilterParams()
+	params := tensorleapapi.NewGetJobsFilterParams()
 	if projectId != "" {
 		params.SetProjectId(projectId)
 	}

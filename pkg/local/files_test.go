@@ -10,9 +10,9 @@ import (
 
 func TestExtractTarGzFile(t *testing.T) {
 	file, _ := os.Open("./test_assets/project.tar.zip")
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 	outputDir := "./exported"
-	defer os.RemoveAll(outputDir)
+	defer func() { _ = os.RemoveAll(outputDir) }()
 	files, err := ExtractTarGzFile(file, outputDir, "")
 	assert.NoError(t, err)
 	assert.FileExists(t, filepath.Join(outputDir, "project.json"))
@@ -21,9 +21,9 @@ func TestExtractTarGzFile(t *testing.T) {
 
 func TestExtractTarGzFileSpecificFile(t *testing.T) {
 	file, _ := os.Open("./test_assets/project.tar.zip")
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 	outputDir := "./exported"
-	defer os.RemoveAll(outputDir)
+	defer func() { _ = os.RemoveAll(outputDir) }()
 	files, err := ExtractTarGzFile(file, outputDir, "project.json")
 	assert.NoError(t, err)
 	assert.FileExists(t, filepath.Join(outputDir, "project.json"))
@@ -32,7 +32,7 @@ func TestExtractTarGzFileSpecificFile(t *testing.T) {
 
 func TestCalculateSHA256(t *testing.T) {
 	file, _ := os.Open("./test_assets/project.tar.zip")
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 
 	hash1, _ := GetFileChecksum(file)
 	_, _ = file.Seek(0, 0)
@@ -45,7 +45,7 @@ func TestDownloadAndExtractTarFile(t *testing.T) {
 	t.Skip("skip test") // fix assets
 	url := "https://hub.tensorleap.ai/demo/projects/MNIST/versions/81/1686477167629-project.tar"
 	outputDir := "./exported"
-	defer os.RemoveAll(outputDir)
+	defer func() { _ = os.RemoveAll(outputDir) }()
 	files, err := DownloadAndExtractTarFile(url, outputDir, "")
 	assert.NoError(t, err)
 	assert.FileExists(t, filepath.Join(outputDir, "project.json"))

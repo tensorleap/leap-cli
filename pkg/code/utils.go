@@ -172,7 +172,7 @@ func DownloadCodeSnapshotArchive(ctx context.Context, codeSnapshot *tensorleapap
 	if err != nil {
 		return fmt.Errorf("failed to create output file: %w", err)
 	}
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 
 	err = api.DownloadFile(downloadUrl, file)
 	if err != nil {
@@ -186,13 +186,13 @@ func FetchFileFromTarGz(blobURL string, filename string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	gz, err := gzip.NewReader(resp.Body)
 	if err != nil {
 		return "", err
 	}
-	defer gz.Close()
+	defer func() { _ = gz.Close() }()
 
 	tarReader := tar.NewReader(gz)
 	for {

@@ -13,15 +13,14 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/log"
 	runPkg "github.com/tensorleap/leap-cli/pkg/run"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
-	tlApi "github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 	"k8s.io/utils/strings/slices"
 )
 
 var MODEL_TYPES = []string{
-	string(tlApi.IMPORTMODELTYPE_JSON_TF2),
-	string(tlApi.IMPORTMODELTYPE_ONNX),
-	string(tlApi.IMPORTMODELTYPE_PB_TF2),
-	string(tlApi.IMPORTMODELTYPE_H5_TF2),
+	string(tensorleapapi.IMPORTMODELTYPE_JSON_TF2),
+	string(tensorleapapi.IMPORTMODELTYPE_ONNX),
+	string(tensorleapapi.IMPORTMODELTYPE_PB_TF2),
+	string(tensorleapapi.IMPORTMODELTYPE_H5_TF2),
 }
 
 func GetDefaultMessageFromModelPath(filePath string) string {
@@ -67,16 +66,16 @@ func SelectModelType(modelType *string, modelPath string) error {
 
 	switch ext {
 	case ".json":
-		*modelType = string(tlApi.IMPORTMODELTYPE_JSON_TF2)
+		*modelType = string(tensorleapapi.IMPORTMODELTYPE_JSON_TF2)
 		return nil
 	case ".h5":
-		*modelType = string(tlApi.IMPORTMODELTYPE_H5_TF2)
+		*modelType = string(tensorleapapi.IMPORTMODELTYPE_H5_TF2)
 		return nil
 	case ".onnx":
-		*modelType = string(tlApi.IMPORTMODELTYPE_ONNX)
+		*modelType = string(tensorleapapi.IMPORTMODELTYPE_ONNX)
 		return nil
 	case ".tar.gz":
-		*modelType = string(tlApi.IMPORTMODELTYPE_PB_TF2)
+		*modelType = string(tensorleapapi.IMPORTMODELTYPE_PB_TF2)
 		return nil
 	}
 

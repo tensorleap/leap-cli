@@ -221,7 +221,7 @@ func loginToKeycloak(clientID, username, password, realm, keycloakURL string) (*
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("failed to login: %s", resp.Status)

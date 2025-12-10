@@ -21,7 +21,7 @@ func ConnectFileToVerboseLogOutput(filePath string) (close func(), err error) {
 
 	close = func() {
 		VerboseLoggerOutputs.Remove(file)
-		file.Close()
+		_ = file.Close()
 	}
 	return
 }

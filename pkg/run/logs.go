@@ -48,7 +48,7 @@ func WrapLogsInTarFile(logs []tlApi.PodLogs, output string, defaultFileName stri
 	if err != nil {
 		return "", err
 	}
-	defer outputFile.Close()
+	defer func() { _ = outputFile.Close() }()
 	tarWriter := tar.NewWriter(outputFile)
 	for index, log := range logs {
 		fileName := log.Name
@@ -67,7 +67,7 @@ func WrapLogsInTarFile(logs []tlApi.PodLogs, output string, defaultFileName stri
 			return "", err
 		}
 	}
-	tarWriter.Close()
+	_ = tarWriter.Close()
 	return output, nil
 }
 
