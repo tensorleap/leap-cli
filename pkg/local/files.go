@@ -20,7 +20,7 @@ func DownloadAndExtractTarFile(url string, outputDir string, specificFileName st
 
 	downloadErrCh := make(chan error, 1)
 	go func() {
-		defer writer.Close()
+		defer func() { _ = writer.Close() }()
 		downloadErrCh <- api.DownloadFile(url, writer)
 	}()
 
@@ -46,7 +46,7 @@ func ExtractTarGzFile(file io.Reader, outputDir string, specificFileName string)
 	if err != nil {
 		return files, err
 	}
-	defer gzipReader.Close()
+	defer func() { _ = gzipReader.Close() }()
 
 	tarReader := tar.NewReader(gzipReader)
 
@@ -108,7 +108,7 @@ func readNextTarFile(tarReader *tar.Reader, header *tar.Header, outputDir string
 	if err != nil {
 		return
 	}
-	defer outFile.Close()
+	defer func() { _ = outFile.Close() }()
 
 	_, err = io.Copy(outFile, tarReader)
 	if err != nil {
@@ -144,7 +144,7 @@ func addFileToTar(tarWriter *tar.Writer, filePath string, fileName string) error
 	if err != nil {
 		return err
 	}
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 
 	_, err = io.Copy(tarWriter, file)
 	return err
@@ -154,10 +154,10 @@ func CreateTarGzFile(filesDir string, filePaths []string, file io.Writer) error 
 	log.Info("Packing files...")
 
 	gzipWriter := gzip.NewWriter(file)
-	defer gzipWriter.Close()
+	defer func() { _ = gzipWriter.Close() }()
 
 	tarWriter := tar.NewWriter(gzipWriter)
-	defer tarWriter.Close()
+	defer func() { _ = tarWriter.Close() }()
 
 	for _, relativePath := range filePaths {
 		fullFilePath := filepath.Join(filesDir, relativePath)
@@ -196,8 +196,8 @@ func ConvertPathPatternToUnix(pattern string) string {
 }
 
 func CleanupTempFile(file *os.File) {
-	file.Close()
-	os.Remove(file.Name())
+	_ = file.Close()
+	_ = os.Remove(file.Name())
 }
 
 func GetFileChecksum(file io.Reader) (string, error) {

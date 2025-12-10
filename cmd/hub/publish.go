@@ -39,7 +39,7 @@ func NewPublishCmd() *cobra.Command {
 			if err != nil {
 				return fmt.Errorf("failed to open tar file: %v", err)
 			}
-			defer tarFile.Close()
+			defer func() { _ = tarFile.Close() }()
 			log.Infof("Extracting project context from: %s", tarPath)
 			projectContext, err := hub.ExtractProjectContextFromTar(tarFile)
 			if err != nil {

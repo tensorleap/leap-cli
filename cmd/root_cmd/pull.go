@@ -184,7 +184,7 @@ Examples:
 
 func generateShortHash() string {
 	bytes := make([]byte, 4)
-	rand.Read(bytes)
+	_, _ = rand.Read(bytes)
 	return hex.EncodeToString(bytes)
 }
 

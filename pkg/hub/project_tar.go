@@ -22,7 +22,7 @@ func ExtractProjectContextFromTar(tarStream io.Reader) (*ProjectContext, error) 
 	if err != nil {
 		return nil, err
 	}
-	defer gz.Close()
+	defer func() { _ = gz.Close() }()
 
 	tarReader := tar.NewReader(gz)
 

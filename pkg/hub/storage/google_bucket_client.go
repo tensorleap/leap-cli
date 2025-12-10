@@ -48,7 +48,7 @@ func (c *GoogleBucketClient) GetFileBuffer(fileName string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer rc.Close()
+	defer func() { _ = rc.Close() }()
 
 	data, err := io.ReadAll(rc)
 	if err != nil {
@@ -60,7 +60,7 @@ func (c *GoogleBucketClient) GetFileBuffer(fileName string) ([]byte, error) {
 func (c *GoogleBucketClient) UploadFile(fileName string, content io.Reader, options *UploadOptions) error {
 	ctx := context.Background()
 	wc := c.bucket.Object(fileName).NewWriter(ctx)
-	defer wc.Close()
+	defer func() { _ = wc.Close() }()
 
 	if options != nil && options.NoCache {
 		wc.CacheControl = "no-store"
@@ -78,7 +78,7 @@ func (c *GoogleBucketClient) UploadFile(fileName string, content io.Reader, opti
 func (c *GoogleBucketClient) UploadFileBuffer(fileName string, content []byte, options *UploadOptions) error {
 	ctx := context.Background()
 	wc := c.bucket.Object(fileName).NewWriter(ctx)
-	defer wc.Close()
+	defer func() { _ = wc.Close() }()
 	if options != nil && options.NoCache {
 		wc.CacheControl = "no-store"
 	}
@@ -95,7 +95,7 @@ func (c *GoogleBucketClient) DownloadFile(fileName string, destFileName string) 
 	if err != nil {
 		return err
 	}
-	defer rc.Close()
+	defer func() { _ = rc.Close() }()
 
 	data, err := io.ReadAll(rc)
 	if err != nil {

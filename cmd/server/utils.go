@@ -10,7 +10,6 @@ import (
 	"github.com/spf13/viper"
 	"github.com/tensorleap/helm-charts/pkg/local"
 	"github.com/tensorleap/helm-charts/pkg/server"
-	serverPkg "github.com/tensorleap/helm-charts/pkg/server"
 	"github.com/tensorleap/helm-charts/pkg/server/manifest"
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/auth"
@@ -126,7 +125,7 @@ func hasInternet() bool {
 	if err != nil {
 		return false
 	}
-	resp.Body.Close()
+	_ = resp.Body.Close()
 	return resp.StatusCode == 204
 }
 
@@ -134,7 +133,7 @@ func handleLicenseAfterInstall(cmd *cobra.Command, licenseFlag *auth.LicenseFlag
 	if !licenseFlag.HasLicense() {
 		return nil
 	}
-	installationParams, err := serverPkg.LoadInstallationParamsFromPrevious()
+	installationParams, err := server.LoadInstallationParamsFromPrevious()
 	if err != nil {
 		return err
 	}

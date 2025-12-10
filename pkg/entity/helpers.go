@@ -48,9 +48,9 @@ func PrintList[TEntity any](entities []TEntity, desc *EntityDescriptor[TEntity])
 	for _, entity := range entities {
 		displayName := desc.GetDisplayName(&entity)
 		id := desc.GetID(&entity)
-		fmt.Fprintf(w, "%s\t%s\n", displayName, id)
+		_, _ = fmt.Fprintf(w, "%s\t%s\n", displayName, id)
 	}
-	w.Flush()
+	_ = w.Flush()
 }
 
 func ConfirmDeletion[TEntity any](entity *TEntity, desc *EntityDescriptor[TEntity]) (confirmed bool, err error) {

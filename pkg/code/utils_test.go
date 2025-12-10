@@ -132,7 +132,7 @@ func TestBundleCodeIntoTempFile(t *testing.T) {
 	closeFunc, tarGzFile, err := BundleCodeIntoTempFile(tempDir, workspaceConfig)
 	assert.NoError(t, err)
 	defer closeFunc()
-	defer tarGzFile.Close()
+	defer func() { _ = tarGzFile.Close() }()
 
 	// Verify tar.gz file is created
 	assert.FileExists(t, tarGzFile.Name())

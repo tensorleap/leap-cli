@@ -95,7 +95,7 @@ func ImportProjectFromFile(ctx context.Context, filePath, projectName string, wa
 	if err != nil {
 		return err
 	}
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 
 	projectCtx, err := hub.ExtractProjectContextFromTar(file)
 	if err != nil {
@@ -166,7 +166,7 @@ func ExportProjectIntoFile(ctx context.Context, project *ProjectEntity, outputDi
 	if err != nil {
 		return err
 	}
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 	log.Infof("Downloading project '%s', into: '%s'", project.Name, filePath)
 	downloadUrl, err := api.GetDownloadSignedUrl(ctx, exportUrl)
 	if err != nil {
@@ -174,7 +174,7 @@ func ExportProjectIntoFile(ctx context.Context, project *ProjectEntity, outputDi
 	}
 	err = api.DownloadFile(downloadUrl, file)
 	if err != nil && err != io.EOF {
-		defer os.Remove(filePath)
+		defer func() { _ = os.Remove(filePath) }()
 		return err
 	}
 	return nil

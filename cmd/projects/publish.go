@@ -112,7 +112,7 @@ func StreamProjectToHub(ctx context.Context, hubApi *hub.HubApi, projectContext 
 	if api.CheckRes(res, err) != nil {
 		return err
 	}
-	defer res.Body.Close()
+	defer func() { _ = res.Body.Close() }()
 
 	return hubApi.PublishProject(res.Body, projectContext)
 }

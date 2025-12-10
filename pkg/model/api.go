@@ -24,7 +24,7 @@ func PrepareImportModelFromFilePath(ctx context.Context, filePath string, transf
 	if err != nil {
 		return nil, err
 	}
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 
 	uploadUrl := signedUrlData.GetUrl()
 	fileInfo, err := file.Stat()
@@ -58,7 +58,7 @@ func ImportModel(ctx context.Context, projectId, versionId string, modelInfo *te
 	importModelJobId := importModelData.GetJobId()
 	if waitForResults {
 		okStatus, _, err := waitForImportModelJob(ctx, projectId, importModelJobId)
-		if err == JobFailedError || !okStatus {
+		if err == ErrJobFailed || !okStatus {
 			topLogs, err := GetTopLogs(ctx, importModelJobId)
 			if err != nil {
 				return err
@@ -122,7 +122,7 @@ func OverrideModel(ctx context.Context, projectId, versionId string, waitForResu
 
 const TIMEOUT_FOR_IMPORT_MODEL_JOB = 30 * time.Minute
 
-var JobFailedError = fmt.Errorf("import model job failed")
+var ErrJobFailed = fmt.Errorf("import model job failed")
 
 func waitForImportModelJob(ctx context.Context, projectId, importModelJobId string) (ok bool, job *tensorleapapi.Job, err error) {
 	fmt.Println("Waiting for import model result...")
@@ -147,7 +147,7 @@ func waitForImportModelJob(ctx context.Context, projectId, importModelJobId stri
 		steps := api.StepsFromJob(job)
 		switch true {
 		case api.IsJobFailed(job.Status):
-			return false, steps, JobFailedError
+			return false, steps, ErrJobFailed
 		case api.IsJobFinished(job.Status):
 			return true, steps, nil
 		}
