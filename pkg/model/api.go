@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"time"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
@@ -181,4 +182,29 @@ func GetVersions(ctx context.Context, projectId string) ([]tensorleapapi.SlimVer
 		return nil, err
 	}
 	return versions.Versions, nil
+}
+
+func GetSessionRunsEvaluate(ctx context.Context, projectId string, sessionIds []string) (*tensorleapapi.GetSessionRunsEvaluateResponse, error) {
+	params := tensorleapapi.GetSessionRunsEvaluateParams{
+		ProjectId: projectId,
+	}
+	result, res, err := api.ApiClient.GetSessionRunsEvaluate(ctx).GetSessionRunsEvaluateParams(params).Execute()
+	if err = api.CheckRes(res, err); err != nil {
+		return nil, err
+	}
+	if len(sessionIds) > 0 {
+		result.EvaluateSessionRuns = filterSessionRunsBySessionId(result.EvaluateSessionRuns, sessionIds)
+	}
+	return result, nil
+}
+
+func filterSessionRunsBySessionId(sessionRuns []tensorleapapi.SessionRunData, sessionIds []string) []tensorleapapi.SessionRunData {
+	var filteredSessionRuns []tensorleapapi.SessionRunData
+	for _, sessionRun := range sessionRuns {
+		if slices.Contains(sessionIds, sessionRun.GetSessionId()) {
+			filteredSessionRuns = append(filteredSessionRuns, sessionRun)
+		}
+	}
+
+	return filteredSessionRuns
 }

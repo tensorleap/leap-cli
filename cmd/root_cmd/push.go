@@ -25,11 +25,20 @@ func NewPushCmd() *cobra.Command {
 	var transformInput bool
 	var noWait bool
 	var pythonVersion string
+	var runEval bool
 
 	var cmd = &cobra.Command{
 		Use:   "push",
 		Short: "Push new or overwrite model version",
-		Long:  `Push new or overwrite model version into a project with its code integration`,
+		Long: `Push new or overwrite model version into a project with its code integration.
+
+Examples:
+  # Push a model
+  leap push
+
+  # Push and run evaluation after
+  leap push -e
+`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Define base properties for all analytics events
 			properties := map[string]interface{}{
@@ -140,6 +149,18 @@ func NewPushCmd() *cobra.Command {
 				return err
 			}
 
+			var evalBatchSize int
+			if runEval {
+				defaultBatchSize, err := model.GetLatestEvaluateBatchSize(ctx, currentProject.GetCid())
+				if err != nil {
+					log.Warnf("failed to get latest evaluate batch size: %v", err)
+				}
+				evalBatchSize, err = model.AskForBatchSize(defaultBatchSize)
+				if err != nil {
+					return fmt.Errorf("failed to get batch size: %w", err)
+				}
+			}
+
 			close, tarGzFile, err := code.BundleCodeIntoTempFile(".", workspaceConfig)
 			if err != nil {
 				// Track projects push failed
@@ -241,6 +262,22 @@ func NewPushCmd() *cobra.Command {
 			properties["code_pushed"] = pushed
 			analytics.SendEvent(analytics.EventCliProjectsPushSuccess, properties)
 
+			if runEval {
+				lastSessionId, versionSessionIds, err := model.WaitForSessionAfterVersionPush(ctx, currentProject.GetCid(), codeSnapshotResponse.VersionId)
+				if err != nil {
+					return fmt.Errorf("failed to get last session id: %w", err)
+				}
+				sessionRuns, err := model.GetSessionRunsEvaluate(ctx, currentProject.GetCid(), versionSessionIds)
+				if err != nil {
+					return fmt.Errorf("failed to get session runs: %w", err)
+				}
+				evalName := model.GenerateEvalName(modelVersionName, sessionRuns.GetEvaluateSessionRuns())
+				err = model.RunEvaluate(ctx, currentProject.GetCid(), codeSnapshotResponse.VersionId, lastSessionId, evalBatchSize, evalName)
+				if err != nil {
+					return fmt.Errorf("failed to run evaluation: %w", err)
+				}
+			}
+
 			return nil
 		},
 	}
@@ -252,5 +289,6 @@ func NewPushCmd() *cobra.Command {
 	cmd.Flags().BoolVar(&transformInput, "transform-input", false, "Transpose the input data to channel-last format")
 	cmd.Flags().BoolVar(&noWait, "no-wait", false, "Do not wait for push to complete")
 	cmd.Flags().StringVarP(&modelPath, "model-path", "m", "", "Path to the model file")
+	cmd.Flags().BoolVarP(&runEval, "eval", "e", false, "Run evaluation on the model after push completes")
 	return cmd
 }
