@@ -6,7 +6,6 @@ import (
 	"runtime"
 )
 
-
 func OpenDirectoryDefault(path string) error {
 	switch runtime.GOOS {
 	case "darwin":

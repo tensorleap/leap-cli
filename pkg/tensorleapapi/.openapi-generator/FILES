@@ -192,6 +192,8 @@ docs/GetScatterSampleVisualizationsParams.md
 docs/GetScatterSampleVisualizationsResponse.md
 docs/GetSecretManagerListResponse.md
 docs/GetSessionEpochsResponse.md
+docs/GetSessionRunsEvaluateParams.md
+docs/GetSessionRunsEvaluateResponse.md
 docs/GetSessionRunsVisualizationsParams.md
 docs/GetSessionRunsVisualizationsResponse.md
 docs/GetSessionTestResultsRequest.md
@@ -273,6 +275,7 @@ docs/Layout.md
 docs/LeapDataType.md
 docs/LicenseMetadata.md
 docs/LicenseType.md
+docs/LinkedProject.md
 docs/LoadSessionParams.md
 docs/LoadSessionResponse.md
 docs/LoadVersionParams.md
@@ -368,6 +371,7 @@ docs/Session.md
 docs/SessionHashRequestParams.md
 docs/SessionPopulatedJob.md
 docs/SessionRunData.md
+docs/SessionRunEvaluateParams.md
 docs/SessionRunToEpoch.md
 docs/SessionTest.md
 docs/SessionTestData.md
@@ -644,6 +648,8 @@ model_get_scatter_sample_visualizations_params.go
 model_get_scatter_sample_visualizations_response.go
 model_get_secret_manager_list_response.go
 model_get_session_epochs_response.go
+model_get_session_runs_evaluate_params.go
+model_get_session_runs_evaluate_response.go
 model_get_session_runs_visualizations_params.go
 model_get_session_runs_visualizations_response.go
 model_get_session_test_results_request.go
@@ -725,6 +731,7 @@ model_layout.go
 model_leap_data_type.go
 model_license_metadata.go
 model_license_type.go
+model_linked_project.go
 model_load_session_params.go
 model_load_session_response.go
 model_load_version_params.go
@@ -820,6 +827,7 @@ model_session.go
 model_session_hash_request_params.go
 model_session_populated_job.go
 model_session_run_data.go
+model_session_run_evaluate_params.go
 model_session_run_to_epoch.go
 model_session_test_.go
 model_session_test_data.go

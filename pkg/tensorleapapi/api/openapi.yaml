@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.659
+  version: 0.0.666
 servers:
 - url: /api/v2
 paths:
@@ -1677,6 +1677,25 @@ paths:
       responses:
         "204":
           description: No content
+      security:
+      - jwt: []
+  /sessions/getSessionRunsEvaluate:
+    post:
+      operationId: GetSessionRunsEvaluate
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetSessionRunsEvaluateParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetSessionRunsEvaluateResponse"
+          description: Ok
       security:
       - jwt: []
   /sessionsruns/updateSessionRun:
@@ -10557,17 +10576,34 @@ components:
       type: object
     ContinueEvaluateParams:
       additionalProperties: true
+      description: |-
+        Params for continuing an evaluate job.
+        If evaluateParams are not stored on the sessionRun (backward compatibility),
+        the user must provide dataStates and batchSize.
       example:
-        jobId: jobId
+        sessionRunId: sessionRunId
+        dataStates:
+        - training
+        - training
+        batchSize: 0.8008281904610115
         projectId: projectId
       properties:
-        jobId:
+        sessionRunId:
           type: string
         projectId:
           type: string
+        dataStates:
+          description: Required if sessionRun doesn't have evaluateParams stored
+          items:
+            $ref: "#/components/schemas/DataStateType"
+          type: array
+        batchSize:
+          description: Required if sessionRun doesn't have evaluateParams stored
+          format: double
+          type: number
       required:
-      - jobId
       - projectId
+      - sessionRunId
       type: object
     ExportedModelData:
       additionalProperties: true
@@ -16531,17 +16567,45 @@ components:
       - esMetricIndex
       - sessionWeightId
       type: object
+    SessionRunEvaluateParams:
+      additionalProperties: true
+      example:
+        dataStates:
+        - training
+        - training
+        batchSize: 0.8008281904610115
+        evaluatedEpoch: 6.027456183070403
+      properties:
+        dataStates:
+          items:
+            $ref: "#/components/schemas/DataStateType"
+          type: array
+        batchSize:
+          format: double
+          type: number
+        evaluatedEpoch:
+          format: double
+          type: number
+      required:
+      - batchSize
+      - dataStates
+      - evaluatedEpoch
+      type: object
     SessionRunData:
       additionalProperties: true
       example:
-        createdAt: 2000-01-23T04:56:07.000+00:00
         weightAssets:
         - esMetricIndex: esMetricIndex
           sessionWeightId: sessionWeightId
         - esMetricIndex: esMetricIndex
           sessionWeightId: sessionWeightId
-        createdBy: createdBy
-        teamId: teamId
+        evaluateParams:
+          dataStates:
+          - training
+          - training
+          batchSize: 0.8008281904610115
+          evaluatedEpoch: 6.027456183070403
+        canContinueEvaluate: true
         jobs:
         - eventsSnapshot:
             events:
@@ -16613,9 +16677,12 @@ components:
             name: name
             codeSnapshotId: codeSnapshotId
           logsBlobName: logsBlobName
-        name: name
         description: description
         sessionId: sessionId
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        createdBy: createdBy
+        teamId: teamId
+        name: name
         projectId: projectId
         cid: cid
         isEvaluate: true
@@ -16647,6 +16714,10 @@ components:
           type: array
         description:
           type: string
+        evaluateParams:
+          $ref: "#/components/schemas/SessionRunEvaluateParams"
+        canContinueEvaluate:
+          type: boolean
       required:
       - cid
       - createdAt
@@ -16663,11 +16734,11 @@ components:
     SessionWeightData:
       additionalProperties: true
       example:
-        globalStep: 6.027456183070403
+        globalStep: 5.962133916683182
         createdAt: 2000-01-23T04:56:07.000+00:00
         createdBy: createdBy
         teamId: teamId
-        epoch: 0.8008281904610115
+        epoch: 1.4658129805029452
         sessionId: sessionId
         cid: cid
         status: UNSTARTED
@@ -16708,14 +16779,18 @@ components:
         createdAt: 2000-01-23T04:56:07.000+00:00
         createdBy: createdBy
         sessionRuns:
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          weightAssets:
+        - weightAssets:
           - esMetricIndex: esMetricIndex
             sessionWeightId: sessionWeightId
           - esMetricIndex: esMetricIndex
             sessionWeightId: sessionWeightId
-          createdBy: createdBy
-          teamId: teamId
+          evaluateParams:
+            dataStates:
+            - training
+            - training
+            batchSize: 0.8008281904610115
+            evaluatedEpoch: 6.027456183070403
+          canContinueEvaluate: true
           jobs:
           - eventsSnapshot:
               events:
@@ -16787,20 +16862,27 @@ components:
               name: name
               codeSnapshotId: codeSnapshotId
             logsBlobName: logsBlobName
-          name: name
           description: description
           sessionId: sessionId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          teamId: teamId
+          name: name
           projectId: projectId
           cid: cid
           isEvaluate: true
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          weightAssets:
+        - weightAssets:
           - esMetricIndex: esMetricIndex
             sessionWeightId: sessionWeightId
           - esMetricIndex: esMetricIndex
             sessionWeightId: sessionWeightId
-          createdBy: createdBy
-          teamId: teamId
+          evaluateParams:
+            dataStates:
+            - training
+            - training
+            batchSize: 0.8008281904610115
+            evaluatedEpoch: 6.027456183070403
+          canContinueEvaluate: true
           jobs:
           - eventsSnapshot:
               events:
@@ -16872,9 +16954,12 @@ components:
               name: name
               codeSnapshotId: codeSnapshotId
             logsBlobName: logsBlobName
-          name: name
           description: description
           sessionId: sessionId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          teamId: teamId
+          name: name
           projectId: projectId
           cid: cid
           isEvaluate: true
@@ -16886,19 +16971,19 @@ components:
             patience: 1.4658129805029452
         extId: extId
         sessionWeights:
-        - globalStep: 6.027456183070403
+        - globalStep: 5.962133916683182
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
           teamId: teamId
-          epoch: 0.8008281904610115
+          epoch: 1.4658129805029452
           sessionId: sessionId
           cid: cid
           status: UNSTARTED
-        - globalStep: 6.027456183070403
+        - globalStep: 5.962133916683182
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
           teamId: teamId
-          epoch: 0.8008281904610115
+          epoch: 1.4658129805029452
           sessionId: sessionId
           cid: cid
           status: UNSTARTED
@@ -16945,14 +17030,18 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
           sessionRuns:
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            weightAssets:
+          - weightAssets:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
-            createdBy: createdBy
-            teamId: teamId
+            evaluateParams:
+              dataStates:
+              - training
+              - training
+              batchSize: 0.8008281904610115
+              evaluatedEpoch: 6.027456183070403
+            canContinueEvaluate: true
             jobs:
             - eventsSnapshot:
                 events:
@@ -17024,20 +17113,27 @@ components:
                 name: name
                 codeSnapshotId: codeSnapshotId
               logsBlobName: logsBlobName
-            name: name
             description: description
             sessionId: sessionId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            name: name
             projectId: projectId
             cid: cid
             isEvaluate: true
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            weightAssets:
+          - weightAssets:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
-            createdBy: createdBy
-            teamId: teamId
+            evaluateParams:
+              dataStates:
+              - training
+              - training
+              batchSize: 0.8008281904610115
+              evaluatedEpoch: 6.027456183070403
+            canContinueEvaluate: true
             jobs:
             - eventsSnapshot:
                 events:
@@ -17109,9 +17205,12 @@ components:
                 name: name
                 codeSnapshotId: codeSnapshotId
               logsBlobName: logsBlobName
-            name: name
             description: description
             sessionId: sessionId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            name: name
             projectId: projectId
             cid: cid
             isEvaluate: true
@@ -17123,19 +17222,19 @@ components:
               patience: 1.4658129805029452
           extId: extId
           sessionWeights:
-          - globalStep: 6.027456183070403
+          - globalStep: 5.962133916683182
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             teamId: teamId
-            epoch: 0.8008281904610115
+            epoch: 1.4658129805029452
             sessionId: sessionId
             cid: cid
             status: UNSTARTED
-          - globalStep: 6.027456183070403
+          - globalStep: 5.962133916683182
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             teamId: teamId
-            epoch: 0.8008281904610115
+            epoch: 1.4658129805029452
             sessionId: sessionId
             cid: cid
             status: UNSTARTED
@@ -17497,10 +17596,29 @@ components:
       required:
       - secretManagerId
       type: object
+    LinkedProject:
+      additionalProperties: true
+      example:
+        projectName: projectName
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        projectName:
+          type: string
+      required:
+      - projectId
+      - projectName
+      type: object
     SecretManager:
       additionalProperties: true
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
+        linkedProjects:
+        - projectName: projectName
+          projectId: projectId
+        - projectName: projectName
+          projectId: projectId
         name: name
         cid: cid
       properties:
@@ -17511,9 +17629,14 @@ components:
         createdAt:
           format: date-time
           type: string
+        linkedProjects:
+          items:
+            $ref: "#/components/schemas/LinkedProject"
+          type: array
       required:
       - cid
       - createdAt
+      - linkedProjects
       - name
       type: object
     GetSecretManagerListResponse:
@@ -17521,9 +17644,19 @@ components:
       example:
         results:
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          linkedProjects:
+          - projectName: projectName
+            projectId: projectId
+          - projectName: projectName
+            projectId: projectId
           name: name
           cid: cid
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          linkedProjects:
+          - projectName: projectName
+            projectId: projectId
+          - projectName: projectName
+            projectId: projectId
           name: name
           cid: cid
       properties:
@@ -17578,14 +17711,18 @@ components:
         createdAt: 2000-01-23T04:56:07.000+00:00
         createdBy: createdBy
         sessionRuns:
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          weightAssets:
+        - weightAssets:
           - esMetricIndex: esMetricIndex
             sessionWeightId: sessionWeightId
           - esMetricIndex: esMetricIndex
             sessionWeightId: sessionWeightId
-          createdBy: createdBy
-          teamId: teamId
+          evaluateParams:
+            dataStates:
+            - training
+            - training
+            batchSize: 0.8008281904610115
+            evaluatedEpoch: 6.027456183070403
+          canContinueEvaluate: true
           jobs:
           - eventsSnapshot:
               events:
@@ -17657,20 +17794,27 @@ components:
               name: name
               codeSnapshotId: codeSnapshotId
             logsBlobName: logsBlobName
-          name: name
           description: description
           sessionId: sessionId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          teamId: teamId
+          name: name
           projectId: projectId
           cid: cid
           isEvaluate: true
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          weightAssets:
+        - weightAssets:
           - esMetricIndex: esMetricIndex
             sessionWeightId: sessionWeightId
           - esMetricIndex: esMetricIndex
             sessionWeightId: sessionWeightId
-          createdBy: createdBy
-          teamId: teamId
+          evaluateParams:
+            dataStates:
+            - training
+            - training
+            batchSize: 0.8008281904610115
+            evaluatedEpoch: 6.027456183070403
+          canContinueEvaluate: true
           jobs:
           - eventsSnapshot:
               events:
@@ -17742,28 +17886,31 @@ components:
               name: name
               codeSnapshotId: codeSnapshotId
             logsBlobName: logsBlobName
-          name: name
           description: description
           sessionId: sessionId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          teamId: teamId
+          name: name
           projectId: projectId
           cid: cid
           isEvaluate: true
         teamId: teamId
         extId: extId
         sessionWeights:
-        - globalStep: 6.027456183070403
+        - globalStep: 5.962133916683182
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
           teamId: teamId
-          epoch: 0.8008281904610115
+          epoch: 1.4658129805029452
           sessionId: sessionId
           cid: cid
           status: UNSTARTED
-        - globalStep: 6.027456183070403
+        - globalStep: 5.962133916683182
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
           teamId: teamId
-          epoch: 0.8008281904610115
+          epoch: 1.4658129805029452
           sessionId: sessionId
           cid: cid
           status: UNSTARTED
@@ -17828,14 +17975,18 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
           sessionRuns:
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            weightAssets:
+          - weightAssets:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
-            createdBy: createdBy
-            teamId: teamId
+            evaluateParams:
+              dataStates:
+              - training
+              - training
+              batchSize: 0.8008281904610115
+              evaluatedEpoch: 6.027456183070403
+            canContinueEvaluate: true
             jobs:
             - eventsSnapshot:
                 events:
@@ -17907,20 +18058,27 @@ components:
                 name: name
                 codeSnapshotId: codeSnapshotId
               logsBlobName: logsBlobName
-            name: name
             description: description
             sessionId: sessionId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            name: name
             projectId: projectId
             cid: cid
             isEvaluate: true
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            weightAssets:
+          - weightAssets:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
-            createdBy: createdBy
-            teamId: teamId
+            evaluateParams:
+              dataStates:
+              - training
+              - training
+              batchSize: 0.8008281904610115
+              evaluatedEpoch: 6.027456183070403
+            canContinueEvaluate: true
             jobs:
             - eventsSnapshot:
                 events:
@@ -17992,28 +18150,31 @@ components:
                 name: name
                 codeSnapshotId: codeSnapshotId
               logsBlobName: logsBlobName
-            name: name
             description: description
             sessionId: sessionId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            name: name
             projectId: projectId
             cid: cid
             isEvaluate: true
           teamId: teamId
           extId: extId
           sessionWeights:
-          - globalStep: 6.027456183070403
+          - globalStep: 5.962133916683182
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             teamId: teamId
-            epoch: 0.8008281904610115
+            epoch: 1.4658129805029452
             sessionId: sessionId
             cid: cid
             status: UNSTARTED
-          - globalStep: 6.027456183070403
+          - globalStep: 5.962133916683182
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             teamId: teamId
-            epoch: 0.8008281904610115
+            epoch: 1.4658129805029452
             sessionId: sessionId
             cid: cid
             status: UNSTARTED
@@ -18031,14 +18192,18 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
           sessionRuns:
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            weightAssets:
+          - weightAssets:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
-            createdBy: createdBy
-            teamId: teamId
+            evaluateParams:
+              dataStates:
+              - training
+              - training
+              batchSize: 0.8008281904610115
+              evaluatedEpoch: 6.027456183070403
+            canContinueEvaluate: true
             jobs:
             - eventsSnapshot:
                 events:
@@ -18110,20 +18275,27 @@ components:
                 name: name
                 codeSnapshotId: codeSnapshotId
               logsBlobName: logsBlobName
-            name: name
             description: description
             sessionId: sessionId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            name: name
             projectId: projectId
             cid: cid
             isEvaluate: true
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            weightAssets:
+          - weightAssets:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
-            createdBy: createdBy
-            teamId: teamId
+            evaluateParams:
+              dataStates:
+              - training
+              - training
+              batchSize: 0.8008281904610115
+              evaluatedEpoch: 6.027456183070403
+            canContinueEvaluate: true
             jobs:
             - eventsSnapshot:
                 events:
@@ -18195,28 +18367,31 @@ components:
                 name: name
                 codeSnapshotId: codeSnapshotId
               logsBlobName: logsBlobName
-            name: name
             description: description
             sessionId: sessionId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            name: name
             projectId: projectId
             cid: cid
             isEvaluate: true
           teamId: teamId
           extId: extId
           sessionWeights:
-          - globalStep: 6.027456183070403
+          - globalStep: 5.962133916683182
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             teamId: teamId
-            epoch: 0.8008281904610115
+            epoch: 1.4658129805029452
             sessionId: sessionId
             cid: cid
             status: UNSTARTED
-          - globalStep: 6.027456183070403
+          - globalStep: 5.962133916683182
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             teamId: teamId
-            epoch: 0.8008281904610115
+            epoch: 1.4658129805029452
             sessionId: sessionId
             cid: cid
             status: UNSTARTED
@@ -18269,14 +18444,18 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
           sessionRuns:
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            weightAssets:
+          - weightAssets:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
-            createdBy: createdBy
-            teamId: teamId
+            evaluateParams:
+              dataStates:
+              - training
+              - training
+              batchSize: 0.8008281904610115
+              evaluatedEpoch: 6.027456183070403
+            canContinueEvaluate: true
             jobs:
             - eventsSnapshot:
                 events:
@@ -18348,20 +18527,27 @@ components:
                 name: name
                 codeSnapshotId: codeSnapshotId
               logsBlobName: logsBlobName
-            name: name
             description: description
             sessionId: sessionId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            name: name
             projectId: projectId
             cid: cid
             isEvaluate: true
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            weightAssets:
+          - weightAssets:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
-            createdBy: createdBy
-            teamId: teamId
+            evaluateParams:
+              dataStates:
+              - training
+              - training
+              batchSize: 0.8008281904610115
+              evaluatedEpoch: 6.027456183070403
+            canContinueEvaluate: true
             jobs:
             - eventsSnapshot:
                 events:
@@ -18433,9 +18619,12 @@ components:
                 name: name
                 codeSnapshotId: codeSnapshotId
               logsBlobName: logsBlobName
-            name: name
             description: description
             sessionId: sessionId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            name: name
             projectId: projectId
             cid: cid
             isEvaluate: true
@@ -18447,19 +18636,19 @@ components:
               patience: 1.4658129805029452
           extId: extId
           sessionWeights:
-          - globalStep: 6.027456183070403
+          - globalStep: 5.962133916683182
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             teamId: teamId
-            epoch: 0.8008281904610115
+            epoch: 1.4658129805029452
             sessionId: sessionId
             cid: cid
             status: UNSTARTED
-          - globalStep: 6.027456183070403
+          - globalStep: 5.962133916683182
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             teamId: teamId
-            epoch: 0.8008281904610115
+            epoch: 1.4658129805029452
             sessionId: sessionId
             cid: cid
             status: UNSTARTED
@@ -18469,14 +18658,18 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
           sessionRuns:
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            weightAssets:
+          - weightAssets:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
-            createdBy: createdBy
-            teamId: teamId
+            evaluateParams:
+              dataStates:
+              - training
+              - training
+              batchSize: 0.8008281904610115
+              evaluatedEpoch: 6.027456183070403
+            canContinueEvaluate: true
             jobs:
             - eventsSnapshot:
                 events:
@@ -18548,20 +18741,27 @@ components:
                 name: name
                 codeSnapshotId: codeSnapshotId
               logsBlobName: logsBlobName
-            name: name
             description: description
             sessionId: sessionId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            name: name
             projectId: projectId
             cid: cid
             isEvaluate: true
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            weightAssets:
+          - weightAssets:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
-            createdBy: createdBy
-            teamId: teamId
+            evaluateParams:
+              dataStates:
+              - training
+              - training
+              batchSize: 0.8008281904610115
+              evaluatedEpoch: 6.027456183070403
+            canContinueEvaluate: true
             jobs:
             - eventsSnapshot:
                 events:
@@ -18633,9 +18833,12 @@ components:
                 name: name
                 codeSnapshotId: codeSnapshotId
               logsBlobName: logsBlobName
-            name: name
             description: description
             sessionId: sessionId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            name: name
             projectId: projectId
             cid: cid
             isEvaluate: true
@@ -18647,19 +18850,19 @@ components:
               patience: 1.4658129805029452
           extId: extId
           sessionWeights:
-          - globalStep: 6.027456183070403
+          - globalStep: 5.962133916683182
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             teamId: teamId
-            epoch: 0.8008281904610115
+            epoch: 1.4658129805029452
             sessionId: sessionId
             cid: cid
             status: UNSTARTED
-          - globalStep: 6.027456183070403
+          - globalStep: 5.962133916683182
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             teamId: teamId
-            epoch: 0.8008281904610115
+            epoch: 1.4658129805029452
             sessionId: sessionId
             cid: cid
             status: UNSTARTED
@@ -18732,6 +18935,212 @@ components:
       required:
       - cid
       - name
+      - projectId
+      type: object
+    GetSessionRunsEvaluateResponse:
+      additionalProperties: true
+      example:
+        evaluateSessionRuns:
+        - weightAssets:
+          - esMetricIndex: esMetricIndex
+            sessionWeightId: sessionWeightId
+          - esMetricIndex: esMetricIndex
+            sessionWeightId: sessionWeightId
+          evaluateParams:
+            dataStates:
+            - training
+            - training
+            batchSize: 0.8008281904610115
+            evaluatedEpoch: 6.027456183070403
+          canContinueEvaluate: true
+          jobs:
+          - eventsSnapshot:
+              events:
+              - name: name
+                progress:
+                  total: 5.962133916683182
+                  current: 5.637376656633329
+                id: id
+                status: UNSTARTED
+              - name: name
+                progress:
+                  total: 5.962133916683182
+                  current: 5.637376656633329
+                id: id
+                status: UNSTARTED
+              snapshotIndex: 2.3021358869347655
+            type: TRAINING
+            params:
+              batch_size: 6.027456183070403
+              epochs: 0.8008281904610115
+              early_stop_params:
+                patience: 1.4658129805029452
+            version: version
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            sessionRunId: sessionRunId
+            createdBy: createdBy
+            teamId: teamId
+            subType: Evaluate
+            projectId: projectId
+            cid: cid
+            status: UNSTARTED
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            codeSnapshotInfo:
+              name: name
+              codeSnapshotId: codeSnapshotId
+            logsBlobName: logsBlobName
+          - eventsSnapshot:
+              events:
+              - name: name
+                progress:
+                  total: 5.962133916683182
+                  current: 5.637376656633329
+                id: id
+                status: UNSTARTED
+              - name: name
+                progress:
+                  total: 5.962133916683182
+                  current: 5.637376656633329
+                id: id
+                status: UNSTARTED
+              snapshotIndex: 2.3021358869347655
+            type: TRAINING
+            params:
+              batch_size: 6.027456183070403
+              epochs: 0.8008281904610115
+              early_stop_params:
+                patience: 1.4658129805029452
+            version: version
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            sessionRunId: sessionRunId
+            createdBy: createdBy
+            teamId: teamId
+            subType: Evaluate
+            projectId: projectId
+            cid: cid
+            status: UNSTARTED
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            codeSnapshotInfo:
+              name: name
+              codeSnapshotId: codeSnapshotId
+            logsBlobName: logsBlobName
+          description: description
+          sessionId: sessionId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          teamId: teamId
+          name: name
+          projectId: projectId
+          cid: cid
+          isEvaluate: true
+        - weightAssets:
+          - esMetricIndex: esMetricIndex
+            sessionWeightId: sessionWeightId
+          - esMetricIndex: esMetricIndex
+            sessionWeightId: sessionWeightId
+          evaluateParams:
+            dataStates:
+            - training
+            - training
+            batchSize: 0.8008281904610115
+            evaluatedEpoch: 6.027456183070403
+          canContinueEvaluate: true
+          jobs:
+          - eventsSnapshot:
+              events:
+              - name: name
+                progress:
+                  total: 5.962133916683182
+                  current: 5.637376656633329
+                id: id
+                status: UNSTARTED
+              - name: name
+                progress:
+                  total: 5.962133916683182
+                  current: 5.637376656633329
+                id: id
+                status: UNSTARTED
+              snapshotIndex: 2.3021358869347655
+            type: TRAINING
+            params:
+              batch_size: 6.027456183070403
+              epochs: 0.8008281904610115
+              early_stop_params:
+                patience: 1.4658129805029452
+            version: version
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            sessionRunId: sessionRunId
+            createdBy: createdBy
+            teamId: teamId
+            subType: Evaluate
+            projectId: projectId
+            cid: cid
+            status: UNSTARTED
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            codeSnapshotInfo:
+              name: name
+              codeSnapshotId: codeSnapshotId
+            logsBlobName: logsBlobName
+          - eventsSnapshot:
+              events:
+              - name: name
+                progress:
+                  total: 5.962133916683182
+                  current: 5.637376656633329
+                id: id
+                status: UNSTARTED
+              - name: name
+                progress:
+                  total: 5.962133916683182
+                  current: 5.637376656633329
+                id: id
+                status: UNSTARTED
+              snapshotIndex: 2.3021358869347655
+            type: TRAINING
+            params:
+              batch_size: 6.027456183070403
+              epochs: 0.8008281904610115
+              early_stop_params:
+                patience: 1.4658129805029452
+            version: version
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            sessionRunId: sessionRunId
+            createdBy: createdBy
+            teamId: teamId
+            subType: Evaluate
+            projectId: projectId
+            cid: cid
+            status: UNSTARTED
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            codeSnapshotInfo:
+              name: name
+              codeSnapshotId: codeSnapshotId
+            logsBlobName: logsBlobName
+          description: description
+          sessionId: sessionId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          teamId: teamId
+          name: name
+          projectId: projectId
+          cid: cid
+          isEvaluate: true
+      properties:
+        evaluateSessionRuns:
+          items:
+            $ref: "#/components/schemas/SessionRunData"
+          type: array
+      required:
+      - evaluateSessionRuns
+      type: object
+    GetSessionRunsEvaluateParams:
+      additionalProperties: true
+      example:
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+      required:
       - projectId
       type: object
     UpdateSessionRunNameParams:
@@ -21132,14 +21541,18 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
           sessionRuns:
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            weightAssets:
+          - weightAssets:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
-            createdBy: createdBy
-            teamId: teamId
+            evaluateParams:
+              dataStates:
+              - training
+              - training
+              batchSize: 0.8008281904610115
+              evaluatedEpoch: 6.027456183070403
+            canContinueEvaluate: true
             jobs:
             - eventsSnapshot:
                 events:
@@ -21211,20 +21624,27 @@ components:
                 name: name
                 codeSnapshotId: codeSnapshotId
               logsBlobName: logsBlobName
-            name: name
             description: description
             sessionId: sessionId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            name: name
             projectId: projectId
             cid: cid
             isEvaluate: true
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            weightAssets:
+          - weightAssets:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
-            createdBy: createdBy
-            teamId: teamId
+            evaluateParams:
+              dataStates:
+              - training
+              - training
+              batchSize: 0.8008281904610115
+              evaluatedEpoch: 6.027456183070403
+            canContinueEvaluate: true
             jobs:
             - eventsSnapshot:
                 events:
@@ -21296,28 +21716,31 @@ components:
                 name: name
                 codeSnapshotId: codeSnapshotId
               logsBlobName: logsBlobName
-            name: name
             description: description
             sessionId: sessionId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            name: name
             projectId: projectId
             cid: cid
             isEvaluate: true
           teamId: teamId
           extId: extId
           sessionWeights:
-          - globalStep: 6.027456183070403
+          - globalStep: 5.962133916683182
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             teamId: teamId
-            epoch: 0.8008281904610115
+            epoch: 1.4658129805029452
             sessionId: sessionId
             cid: cid
             status: UNSTARTED
-          - globalStep: 6.027456183070403
+          - globalStep: 5.962133916683182
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             teamId: teamId
-            epoch: 0.8008281904610115
+            epoch: 1.4658129805029452
             sessionId: sessionId
             cid: cid
             status: UNSTARTED
@@ -21335,14 +21758,18 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
           sessionRuns:
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            weightAssets:
+          - weightAssets:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
-            createdBy: createdBy
-            teamId: teamId
+            evaluateParams:
+              dataStates:
+              - training
+              - training
+              batchSize: 0.8008281904610115
+              evaluatedEpoch: 6.027456183070403
+            canContinueEvaluate: true
             jobs:
             - eventsSnapshot:
                 events:
@@ -21414,20 +21841,27 @@ components:
                 name: name
                 codeSnapshotId: codeSnapshotId
               logsBlobName: logsBlobName
-            name: name
             description: description
             sessionId: sessionId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            name: name
             projectId: projectId
             cid: cid
             isEvaluate: true
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            weightAssets:
+          - weightAssets:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
-            createdBy: createdBy
-            teamId: teamId
+            evaluateParams:
+              dataStates:
+              - training
+              - training
+              batchSize: 0.8008281904610115
+              evaluatedEpoch: 6.027456183070403
+            canContinueEvaluate: true
             jobs:
             - eventsSnapshot:
                 events:
@@ -21499,28 +21933,31 @@ components:
                 name: name
                 codeSnapshotId: codeSnapshotId
               logsBlobName: logsBlobName
-            name: name
             description: description
             sessionId: sessionId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            name: name
             projectId: projectId
             cid: cid
             isEvaluate: true
           teamId: teamId
           extId: extId
           sessionWeights:
-          - globalStep: 6.027456183070403
+          - globalStep: 5.962133916683182
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             teamId: teamId
-            epoch: 0.8008281904610115
+            epoch: 1.4658129805029452
             sessionId: sessionId
             cid: cid
             status: UNSTARTED
-          - globalStep: 6.027456183070403
+          - globalStep: 5.962133916683182
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             teamId: teamId
-            epoch: 0.8008281904610115
+            epoch: 1.4658129805029452
             sessionId: sessionId
             cid: cid
             status: UNSTARTED
@@ -21596,14 +22033,18 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             sessionRuns:
-            - createdAt: 2000-01-23T04:56:07.000+00:00
-              weightAssets:
+            - weightAssets:
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
-              createdBy: createdBy
-              teamId: teamId
+              evaluateParams:
+                dataStates:
+                - training
+                - training
+                batchSize: 0.8008281904610115
+                evaluatedEpoch: 6.027456183070403
+              canContinueEvaluate: true
               jobs:
               - eventsSnapshot:
                   events:
@@ -21675,20 +22116,27 @@ components:
                   name: name
                   codeSnapshotId: codeSnapshotId
                 logsBlobName: logsBlobName
-              name: name
               description: description
               sessionId: sessionId
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              createdBy: createdBy
+              teamId: teamId
+              name: name
               projectId: projectId
               cid: cid
               isEvaluate: true
-            - createdAt: 2000-01-23T04:56:07.000+00:00
-              weightAssets:
+            - weightAssets:
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
-              createdBy: createdBy
-              teamId: teamId
+              evaluateParams:
+                dataStates:
+                - training
+                - training
+                batchSize: 0.8008281904610115
+                evaluatedEpoch: 6.027456183070403
+              canContinueEvaluate: true
               jobs:
               - eventsSnapshot:
                   events:
@@ -21760,28 +22208,31 @@ components:
                   name: name
                   codeSnapshotId: codeSnapshotId
                 logsBlobName: logsBlobName
-              name: name
               description: description
               sessionId: sessionId
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              createdBy: createdBy
+              teamId: teamId
+              name: name
               projectId: projectId
               cid: cid
               isEvaluate: true
             teamId: teamId
             extId: extId
             sessionWeights:
-            - globalStep: 6.027456183070403
+            - globalStep: 5.962133916683182
               createdAt: 2000-01-23T04:56:07.000+00:00
               createdBy: createdBy
               teamId: teamId
-              epoch: 0.8008281904610115
+              epoch: 1.4658129805029452
               sessionId: sessionId
               cid: cid
               status: UNSTARTED
-            - globalStep: 6.027456183070403
+            - globalStep: 5.962133916683182
               createdAt: 2000-01-23T04:56:07.000+00:00
               createdBy: createdBy
               teamId: teamId
-              epoch: 0.8008281904610115
+              epoch: 1.4658129805029452
               sessionId: sessionId
               cid: cid
               status: UNSTARTED
@@ -21799,14 +22250,18 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             sessionRuns:
-            - createdAt: 2000-01-23T04:56:07.000+00:00
-              weightAssets:
+            - weightAssets:
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
-              createdBy: createdBy
-              teamId: teamId
+              evaluateParams:
+                dataStates:
+                - training
+                - training
+                batchSize: 0.8008281904610115
+                evaluatedEpoch: 6.027456183070403
+              canContinueEvaluate: true
               jobs:
               - eventsSnapshot:
                   events:
@@ -21878,20 +22333,27 @@ components:
                   name: name
                   codeSnapshotId: codeSnapshotId
                 logsBlobName: logsBlobName
-              name: name
               description: description
               sessionId: sessionId
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              createdBy: createdBy
+              teamId: teamId
+              name: name
               projectId: projectId
               cid: cid
               isEvaluate: true
-            - createdAt: 2000-01-23T04:56:07.000+00:00
-              weightAssets:
+            - weightAssets:
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
-              createdBy: createdBy
-              teamId: teamId
+              evaluateParams:
+                dataStates:
+                - training
+                - training
+                batchSize: 0.8008281904610115
+                evaluatedEpoch: 6.027456183070403
+              canContinueEvaluate: true
               jobs:
               - eventsSnapshot:
                   events:
@@ -21963,28 +22425,31 @@ components:
                   name: name
                   codeSnapshotId: codeSnapshotId
                 logsBlobName: logsBlobName
-              name: name
               description: description
               sessionId: sessionId
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              createdBy: createdBy
+              teamId: teamId
+              name: name
               projectId: projectId
               cid: cid
               isEvaluate: true
             teamId: teamId
             extId: extId
             sessionWeights:
-            - globalStep: 6.027456183070403
+            - globalStep: 5.962133916683182
               createdAt: 2000-01-23T04:56:07.000+00:00
               createdBy: createdBy
               teamId: teamId
-              epoch: 0.8008281904610115
+              epoch: 1.4658129805029452
               sessionId: sessionId
               cid: cid
               status: UNSTARTED
-            - globalStep: 6.027456183070403
+            - globalStep: 5.962133916683182
               createdAt: 2000-01-23T04:56:07.000+00:00
               createdBy: createdBy
               teamId: teamId
-              epoch: 0.8008281904610115
+              epoch: 1.4658129805029452
               sessionId: sessionId
               cid: cid
               status: UNSTARTED
@@ -22014,14 +22479,18 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             sessionRuns:
-            - createdAt: 2000-01-23T04:56:07.000+00:00
-              weightAssets:
+            - weightAssets:
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
-              createdBy: createdBy
-              teamId: teamId
+              evaluateParams:
+                dataStates:
+                - training
+                - training
+                batchSize: 0.8008281904610115
+                evaluatedEpoch: 6.027456183070403
+              canContinueEvaluate: true
               jobs:
               - eventsSnapshot:
                   events:
@@ -22093,20 +22562,27 @@ components:
                   name: name
                   codeSnapshotId: codeSnapshotId
                 logsBlobName: logsBlobName
-              name: name
               description: description
               sessionId: sessionId
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              createdBy: createdBy
+              teamId: teamId
+              name: name
               projectId: projectId
               cid: cid
               isEvaluate: true
-            - createdAt: 2000-01-23T04:56:07.000+00:00
-              weightAssets:
+            - weightAssets:
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
-              createdBy: createdBy
-              teamId: teamId
+              evaluateParams:
+                dataStates:
+                - training
+                - training
+                batchSize: 0.8008281904610115
+                evaluatedEpoch: 6.027456183070403
+              canContinueEvaluate: true
               jobs:
               - eventsSnapshot:
                   events:
@@ -22178,28 +22654,31 @@ components:
                   name: name
                   codeSnapshotId: codeSnapshotId
                 logsBlobName: logsBlobName
-              name: name
               description: description
               sessionId: sessionId
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              createdBy: createdBy
+              teamId: teamId
+              name: name
               projectId: projectId
               cid: cid
               isEvaluate: true
             teamId: teamId
             extId: extId
             sessionWeights:
-            - globalStep: 6.027456183070403
+            - globalStep: 5.962133916683182
               createdAt: 2000-01-23T04:56:07.000+00:00
               createdBy: createdBy
               teamId: teamId
-              epoch: 0.8008281904610115
+              epoch: 1.4658129805029452
               sessionId: sessionId
               cid: cid
               status: UNSTARTED
-            - globalStep: 6.027456183070403
+            - globalStep: 5.962133916683182
               createdAt: 2000-01-23T04:56:07.000+00:00
               createdBy: createdBy
               teamId: teamId
-              epoch: 0.8008281904610115
+              epoch: 1.4658129805029452
               sessionId: sessionId
               cid: cid
               status: UNSTARTED
@@ -22217,14 +22696,18 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             sessionRuns:
-            - createdAt: 2000-01-23T04:56:07.000+00:00
-              weightAssets:
+            - weightAssets:
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
-              createdBy: createdBy
-              teamId: teamId
+              evaluateParams:
+                dataStates:
+                - training
+                - training
+                batchSize: 0.8008281904610115
+                evaluatedEpoch: 6.027456183070403
+              canContinueEvaluate: true
               jobs:
               - eventsSnapshot:
                   events:
@@ -22296,20 +22779,27 @@ components:
                   name: name
                   codeSnapshotId: codeSnapshotId
                 logsBlobName: logsBlobName
-              name: name
               description: description
               sessionId: sessionId
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              createdBy: createdBy
+              teamId: teamId
+              name: name
               projectId: projectId
               cid: cid
               isEvaluate: true
-            - createdAt: 2000-01-23T04:56:07.000+00:00
-              weightAssets:
+            - weightAssets:
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
               - esMetricIndex: esMetricIndex
                 sessionWeightId: sessionWeightId
-              createdBy: createdBy
-              teamId: teamId
+              evaluateParams:
+                dataStates:
+                - training
+                - training
+                batchSize: 0.8008281904610115
+                evaluatedEpoch: 6.027456183070403
+              canContinueEvaluate: true
               jobs:
               - eventsSnapshot:
                   events:
@@ -22381,28 +22871,31 @@ components:
                   name: name
                   codeSnapshotId: codeSnapshotId
                 logsBlobName: logsBlobName
-              name: name
               description: description
               sessionId: sessionId
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              createdBy: createdBy
+              teamId: teamId
+              name: name
               projectId: projectId
               cid: cid
               isEvaluate: true
             teamId: teamId
             extId: extId
             sessionWeights:
-            - globalStep: 6.027456183070403
+            - globalStep: 5.962133916683182
               createdAt: 2000-01-23T04:56:07.000+00:00
               createdBy: createdBy
               teamId: teamId
-              epoch: 0.8008281904610115
+              epoch: 1.4658129805029452
               sessionId: sessionId
               cid: cid
               status: UNSTARTED
-            - globalStep: 6.027456183070403
+            - globalStep: 5.962133916683182
               createdAt: 2000-01-23T04:56:07.000+00:00
               createdBy: createdBy
               teamId: teamId
-              epoch: 0.8008281904610115
+              epoch: 1.4658129805029452
               sessionId: sessionId
               cid: cid
               status: UNSTARTED
@@ -22605,11 +23098,11 @@ components:
       additionalProperties: true
       example:
         weightsData:
-          globalStep: 6.027456183070403
+          globalStep: 5.962133916683182
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
           teamId: teamId
-          epoch: 0.8008281904610115
+          epoch: 1.4658129805029452
           sessionId: sessionId
           cid: cid
           status: UNSTARTED
@@ -22622,14 +23115,18 @@ components:
         epoch: 0.8008281904610115
         sessionId: sessionId
         runs:
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          weightAssets:
+        - weightAssets:
           - esMetricIndex: esMetricIndex
             sessionWeightId: sessionWeightId
           - esMetricIndex: esMetricIndex
             sessionWeightId: sessionWeightId
-          createdBy: createdBy
-          teamId: teamId
+          evaluateParams:
+            dataStates:
+            - training
+            - training
+            batchSize: 0.8008281904610115
+            evaluatedEpoch: 6.027456183070403
+          canContinueEvaluate: true
           jobs:
           - eventsSnapshot:
               events:
@@ -22701,20 +23198,27 @@ components:
               name: name
               codeSnapshotId: codeSnapshotId
             logsBlobName: logsBlobName
-          name: name
           description: description
           sessionId: sessionId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          teamId: teamId
+          name: name
           projectId: projectId
           cid: cid
           isEvaluate: true
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          weightAssets:
+        - weightAssets:
           - esMetricIndex: esMetricIndex
             sessionWeightId: sessionWeightId
           - esMetricIndex: esMetricIndex
             sessionWeightId: sessionWeightId
-          createdBy: createdBy
-          teamId: teamId
+          evaluateParams:
+            dataStates:
+            - training
+            - training
+            batchSize: 0.8008281904610115
+            evaluatedEpoch: 6.027456183070403
+          canContinueEvaluate: true
           jobs:
           - eventsSnapshot:
               events:
@@ -22786,9 +23290,12 @@ components:
               name: name
               codeSnapshotId: codeSnapshotId
             logsBlobName: logsBlobName
-          name: name
           description: description
           sessionId: sessionId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          teamId: teamId
+          name: name
           projectId: projectId
           cid: cid
           isEvaluate: true
@@ -22826,11 +23333,11 @@ components:
       example:
         epochs:
         - weightsData:
-            globalStep: 6.027456183070403
+            globalStep: 5.962133916683182
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             teamId: teamId
-            epoch: 0.8008281904610115
+            epoch: 1.4658129805029452
             sessionId: sessionId
             cid: cid
             status: UNSTARTED
@@ -22843,14 +23350,18 @@ components:
           epoch: 0.8008281904610115
           sessionId: sessionId
           runs:
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            weightAssets:
+          - weightAssets:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
-            createdBy: createdBy
-            teamId: teamId
+            evaluateParams:
+              dataStates:
+              - training
+              - training
+              batchSize: 0.8008281904610115
+              evaluatedEpoch: 6.027456183070403
+            canContinueEvaluate: true
             jobs:
             - eventsSnapshot:
                 events:
@@ -22922,20 +23433,27 @@ components:
                 name: name
                 codeSnapshotId: codeSnapshotId
               logsBlobName: logsBlobName
-            name: name
             description: description
             sessionId: sessionId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            name: name
             projectId: projectId
             cid: cid
             isEvaluate: true
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            weightAssets:
+          - weightAssets:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
-            createdBy: createdBy
-            teamId: teamId
+            evaluateParams:
+              dataStates:
+              - training
+              - training
+              batchSize: 0.8008281904610115
+              evaluatedEpoch: 6.027456183070403
+            canContinueEvaluate: true
             jobs:
             - eventsSnapshot:
                 events:
@@ -23007,9 +23525,12 @@ components:
                 name: name
                 codeSnapshotId: codeSnapshotId
               logsBlobName: logsBlobName
-            name: name
             description: description
             sessionId: sessionId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            name: name
             projectId: projectId
             cid: cid
             isEvaluate: true
@@ -23017,11 +23538,11 @@ components:
           - tags
           - tags
         - weightsData:
-            globalStep: 6.027456183070403
+            globalStep: 5.962133916683182
             createdAt: 2000-01-23T04:56:07.000+00:00
             createdBy: createdBy
             teamId: teamId
-            epoch: 0.8008281904610115
+            epoch: 1.4658129805029452
             sessionId: sessionId
             cid: cid
             status: UNSTARTED
@@ -23034,14 +23555,18 @@ components:
           epoch: 0.8008281904610115
           sessionId: sessionId
           runs:
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            weightAssets:
+          - weightAssets:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
-            createdBy: createdBy
-            teamId: teamId
+            evaluateParams:
+              dataStates:
+              - training
+              - training
+              batchSize: 0.8008281904610115
+              evaluatedEpoch: 6.027456183070403
+            canContinueEvaluate: true
             jobs:
             - eventsSnapshot:
                 events:
@@ -23113,20 +23638,27 @@ components:
                 name: name
                 codeSnapshotId: codeSnapshotId
               logsBlobName: logsBlobName
-            name: name
             description: description
             sessionId: sessionId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            name: name
             projectId: projectId
             cid: cid
             isEvaluate: true
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            weightAssets:
+          - weightAssets:
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
             - esMetricIndex: esMetricIndex
               sessionWeightId: sessionWeightId
-            createdBy: createdBy
-            teamId: teamId
+            evaluateParams:
+              dataStates:
+              - training
+              - training
+              batchSize: 0.8008281904610115
+              evaluatedEpoch: 6.027456183070403
+            canContinueEvaluate: true
             jobs:
             - eventsSnapshot:
                 events:
@@ -23198,9 +23730,12 @@ components:
                 name: name
                 codeSnapshotId: codeSnapshotId
               logsBlobName: logsBlobName
-            name: name
             description: description
             sessionId: sessionId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            teamId: teamId
+            name: name
             projectId: projectId
             cid: cid
             isEvaluate: true

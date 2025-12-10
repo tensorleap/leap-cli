@@ -86,6 +86,7 @@ Method | HTTP request | Description
 [**GetSampleVisualizationsPath**](DefaultAPI.md#GetSampleVisualizationsPath) | **Post** /visualizations/getSampleVisualizationsPath | 
 [**GetScatterSampleVisualizations**](DefaultAPI.md#GetScatterSampleVisualizations) | **Post** /visualizations/getScatterSampleVisualizations | 
 [**GetSecretManagerList**](DefaultAPI.md#GetSecretManagerList) | **Post** /secret-manager/getSecretManagerList | 
+[**GetSessionRunsEvaluate**](DefaultAPI.md#GetSessionRunsEvaluate) | **Post** /sessions/getSessionRunsEvaluate | 
 [**GetSessionRunsVisualizations**](DefaultAPI.md#GetSessionRunsVisualizations) | **Post** /visualizations/getSessionRunsVisualizations | 
 [**GetSessionTestResult**](DefaultAPI.md#GetSessionTestResult) | **Post** /sessions-tests/getSessionTestResult | 
 [**GetSessionsByHash**](DefaultAPI.md#GetSessionsByHash) | **Post** /sessions/getSessionsByHash | 
@@ -933,7 +934,7 @@ import (
 )
 
 func main() {
-	continueEvaluateParams := *openapiclient.NewContinueEvaluateParams("JobId_example", "ProjectId_example") // ContinueEvaluateParams | 
+	continueEvaluateParams := *openapiclient.NewContinueEvaluateParams("SessionRunId_example", "ProjectId_example") // ContinueEvaluateParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -5313,6 +5314,70 @@ Other parameters are passed through a pointer to a apiGetSecretManagerListReques
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetSessionRunsEvaluate
+
+> GetSessionRunsEvaluateResponse GetSessionRunsEvaluate(ctx).GetSessionRunsEvaluateParams(getSessionRunsEvaluateParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getSessionRunsEvaluateParams := *openapiclient.NewGetSessionRunsEvaluateParams("ProjectId_example") // GetSessionRunsEvaluateParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetSessionRunsEvaluate(context.Background()).GetSessionRunsEvaluateParams(getSessionRunsEvaluateParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetSessionRunsEvaluate``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSessionRunsEvaluate`: GetSessionRunsEvaluateResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetSessionRunsEvaluate`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetSessionRunsEvaluateRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getSessionRunsEvaluateParams** | [**GetSessionRunsEvaluateParams**](GetSessionRunsEvaluateParams.md) |  | 
+
+### Return type
+
+[**GetSessionRunsEvaluateResponse**](GetSessionRunsEvaluateResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

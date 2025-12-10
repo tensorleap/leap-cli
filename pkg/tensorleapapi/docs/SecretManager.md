@@ -7,12 +7,13 @@ Name | Type | Description | Notes
 **Cid** | **string** |  | 
 **Name** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
+**LinkedProjects** | [**[]LinkedProject**](LinkedProject.md) |  | 
 
 ## Methods
 
 ### NewSecretManager
 
-`func NewSecretManager(cid string, name string, createdAt time.Time, ) *SecretManager`
+`func NewSecretManager(cid string, name string, createdAt time.Time, linkedProjects []LinkedProject, ) *SecretManager`
 
 NewSecretManager instantiates a new SecretManager object
 This constructor will assign default values to properties that have it defined,
@@ -85,6 +86,26 @@ and a boolean to check if the value has been set.
 `func (o *SecretManager) SetCreatedAt(v time.Time)`
 
 SetCreatedAt sets CreatedAt field to given value.
+
+
+### GetLinkedProjects
+
+`func (o *SecretManager) GetLinkedProjects() []LinkedProject`
+
+GetLinkedProjects returns the LinkedProjects field if non-nil, zero value otherwise.
+
+### GetLinkedProjectsOk
+
+`func (o *SecretManager) GetLinkedProjectsOk() (*[]LinkedProject, bool)`
+
+GetLinkedProjectsOk returns a tuple with the LinkedProjects field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLinkedProjects
+
+`func (o *SecretManager) SetLinkedProjects(v []LinkedProject)`
+
+SetLinkedProjects sets LinkedProjects field to given value.
 
 
 

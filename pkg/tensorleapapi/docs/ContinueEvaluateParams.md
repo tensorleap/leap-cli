@@ -4,14 +4,16 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**JobId** | **string** |  | 
+**SessionRunId** | **string** |  | 
 **ProjectId** | **string** |  | 
+**DataStates** | Pointer to [**[]DataStateType**](DataStateType.md) | Required if sessionRun doesn&#39;t have evaluateParams stored | [optional] 
+**BatchSize** | Pointer to **float64** | Required if sessionRun doesn&#39;t have evaluateParams stored | [optional] 
 
 ## Methods
 
 ### NewContinueEvaluateParams
 
-`func NewContinueEvaluateParams(jobId string, projectId string, ) *ContinueEvaluateParams`
+`func NewContinueEvaluateParams(sessionRunId string, projectId string, ) *ContinueEvaluateParams`
 
 NewContinueEvaluateParams instantiates a new ContinueEvaluateParams object
 This constructor will assign default values to properties that have it defined,
@@ -26,24 +28,24 @@ NewContinueEvaluateParamsWithDefaults instantiates a new ContinueEvaluateParams 
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetJobId
+### GetSessionRunId
 
-`func (o *ContinueEvaluateParams) GetJobId() string`
+`func (o *ContinueEvaluateParams) GetSessionRunId() string`
 
-GetJobId returns the JobId field if non-nil, zero value otherwise.
+GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
 
-### GetJobIdOk
+### GetSessionRunIdOk
 
-`func (o *ContinueEvaluateParams) GetJobIdOk() (*string, bool)`
+`func (o *ContinueEvaluateParams) GetSessionRunIdOk() (*string, bool)`
 
-GetJobIdOk returns a tuple with the JobId field if it's non-nil, zero value otherwise
+GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetJobId
+### SetSessionRunId
 
-`func (o *ContinueEvaluateParams) SetJobId(v string)`
+`func (o *ContinueEvaluateParams) SetSessionRunId(v string)`
 
-SetJobId sets JobId field to given value.
+SetSessionRunId sets SessionRunId field to given value.
 
 
 ### GetProjectId
@@ -65,6 +67,56 @@ and a boolean to check if the value has been set.
 
 SetProjectId sets ProjectId field to given value.
 
+
+### GetDataStates
+
+`func (o *ContinueEvaluateParams) GetDataStates() []DataStateType`
+
+GetDataStates returns the DataStates field if non-nil, zero value otherwise.
+
+### GetDataStatesOk
+
+`func (o *ContinueEvaluateParams) GetDataStatesOk() (*[]DataStateType, bool)`
+
+GetDataStatesOk returns a tuple with the DataStates field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDataStates
+
+`func (o *ContinueEvaluateParams) SetDataStates(v []DataStateType)`
+
+SetDataStates sets DataStates field to given value.
+
+### HasDataStates
+
+`func (o *ContinueEvaluateParams) HasDataStates() bool`
+
+HasDataStates returns a boolean if a field has been set.
+
+### GetBatchSize
+
+`func (o *ContinueEvaluateParams) GetBatchSize() float64`
+
+GetBatchSize returns the BatchSize field if non-nil, zero value otherwise.
+
+### GetBatchSizeOk
+
+`func (o *ContinueEvaluateParams) GetBatchSizeOk() (*float64, bool)`
+
+GetBatchSizeOk returns a tuple with the BatchSize field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBatchSize
+
+`func (o *ContinueEvaluateParams) SetBatchSize(v float64)`
+
+SetBatchSize sets BatchSize field to given value.
+
+### HasBatchSize
+
+`func (o *ContinueEvaluateParams) HasBatchSize() bool`
+
+HasBatchSize returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
