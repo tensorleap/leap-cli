@@ -228,6 +228,115 @@ func isRequirementsFile(path string) bool {
 	})
 }
 
+// LargeFileExtensions contains extensions for files that are typically large
+// and may indicate model weights, media files, datasets, or other binary data
+var LargeFileExtensions = []string{
+	// Model weights and checkpoints
+	".onnx",
+	".pth", ".pt", ".ckpt", ".bin",
+	".safetensors",
+	".pb", ".tflite",
+	".h5", ".hdf5", ".keras",
+	".pkl", ".pickle", ".joblib",
+	".npz", ".npy",
+	".mlx", ".gguf", ".ggml",
+	".trt", ".engine",
+
+	// Archives
+	".tar", ".tar.gz", ".tgz",
+
+	// Images
+	".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".webp", ".ico",
+	".psd", ".ai", ".sketch",
+
+	// Video/Audio
+	".mp4", ".mov", ".avi", ".mkv", ".webm",
+	".mp3", ".wav", ".flac", ".ogg", ".m4a",
+
+	// 3D models
+	".stl", ".obj", ".fbx", ".glb", ".gltf",
+
+	// Data files
+	".jsonl", ".parquet", ".arrow", ".orc", ".feather",
+	".db", ".sqlite", ".sqlite3",
+	".zip", ".7z", ".rar",
+	".dump", ".bak",
+}
+
+// LargeFileDirPatterns contains directory patterns for typically large/state directories
+var LargeFileDirPatterns = []string{
+	".git",
+}
+
+// LargeFilesResult holds the result of scanning for large files
+type LargeFilesResult struct {
+	TotalSize       int64               // Total size of all large files in bytes
+	SizePerPattern  map[string]int64    // Size sum per glob pattern (e.g., "*.png" -> 1024)
+	MatchedPatterns map[string][]string // Map of glob pattern (e.g., "*.png", ".git/**") -> list of matching file paths
+	RemainingFiles  []string            // Files that don't match any large file pattern
+}
+
+// SumLargeFilesSize calculates the total size of files that match large file extensions
+// or are inside state directories like .git
+// Returns:
+// - LargeFilesResult containing total size, matched patterns with their files, and remaining files
+// - error if any
+func SumLargeFilesSize(filesDir string, filePaths []string) (*LargeFilesResult, error) {
+	result := &LargeFilesResult{
+		TotalSize:       0,
+		SizePerPattern:  make(map[string]int64),
+		MatchedPatterns: make(map[string][]string),
+		RemainingFiles:  []string{},
+	}
+
+	for _, filePath := range filePaths {
+		fullPath := filepath.Join(filesDir, filePath)
+		matched := false
+		var matchedPattern string
+
+		// Check if file is in a state directory (e.g., .git)
+		for _, dirPattern := range LargeFileDirPatterns {
+			if strings.HasPrefix(filePath, dirPattern+string(filepath.Separator)) || strings.Contains(filePath, string(filepath.Separator)+dirPattern+string(filepath.Separator)) {
+				matched = true
+				matchedPattern = dirPattern + "/**"
+				break
+			}
+		}
+
+		// Check if file has a large file extension
+		if !matched {
+			lowerPath := strings.ToLower(filePath)
+			for _, ext := range LargeFileExtensions {
+				if strings.HasSuffix(lowerPath, ext) {
+					matched = true
+					matchedPattern = "*" + ext
+					break
+				}
+			}
+		}
+
+		if matched {
+			// Add file to matched patterns
+			result.MatchedPatterns[matchedPattern] = append(result.MatchedPatterns[matchedPattern], filePath)
+
+			// Add file size to total and per pattern
+			info, err := os.Stat(fullPath)
+			if err != nil {
+				// Skip files that can't be accessed for size calculation
+				continue
+			}
+			fileSize := info.Size()
+			result.TotalSize += fileSize
+			result.SizePerPattern[matchedPattern] += fileSize
+		} else {
+			// File doesn't match any large file pattern
+			result.RemainingFiles = append(result.RemainingFiles, filePath)
+		}
+	}
+
+	return result, nil
+}
+
 func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.WorkspaceConfig) (close func(), tarGzFile *os.File, err error) {
 	filePaths, err := getCodeFiles(filesDir, workspaceConfig)
 	if err != nil {
