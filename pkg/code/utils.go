@@ -228,11 +228,216 @@ func isRequirementsFile(path string) bool {
 	})
 }
 
+// LargeFileExtensions contains extensions for files that are typically large
+// and may indicate model weights, media files, datasets, or other binary data
+var LargeFileExtensions = []string{
+	// Model weights and checkpoints
+	".onnx",
+	".pth", ".pt", ".ckpt", ".bin",
+	".safetensors",
+	".pb", ".tflite",
+	".h5", ".hdf5", ".keras",
+	".pkl", ".pickle", ".joblib",
+	".npz", ".npy",
+	".mlx", ".gguf", ".ggml",
+	".trt", ".engine",
+
+	// Archives
+	".tar", ".tar.gz", ".tgz",
+
+	// Images
+	".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".webp", ".ico",
+	".psd", ".ai", ".sketch",
+
+	// Video/Audio
+	".mp4", ".mov", ".avi", ".mkv", ".webm",
+	".mp3", ".wav", ".flac", ".ogg", ".m4a",
+
+	// 3D models
+	".stl", ".obj", ".fbx", ".glb", ".gltf",
+
+	// Data files
+	".jsonl", ".parquet", ".arrow", ".orc", ".feather",
+	".db", ".sqlite", ".sqlite3",
+	".zip", ".7z", ".rar",
+	".dump", ".bak",
+}
+
+// LargeFileDirPatterns contains directory patterns for typically large/state directories
+var LargeFileDirPatterns = []string{
+	".git",
+}
+
+// LargeFilesResult holds the result of scanning for large files
+type LargeFilesResult struct {
+	TotalSize       int64               // Total size of all large files in bytes
+	SizePerPattern  map[string]int64    // Size sum per glob pattern (e.g., "*.png" -> 1024)
+	MatchedPatterns map[string][]string // Map of glob pattern (e.g., "*.png", ".git/**") -> list of matching file paths
+	RemainingFiles  []string            // Files that don't match any large file pattern
+}
+
+// SumLargeFilesSize calculates the total size of files that match large file extensions
+// or are inside state directories like .git
+// Returns:
+// - LargeFilesResult containing total size, matched patterns with their files, and remaining files
+// - error if any
+func SumLargeFilesSize(filesDir string, filePaths []string) (*LargeFilesResult, error) {
+	result := &LargeFilesResult{
+		TotalSize:       0,
+		SizePerPattern:  make(map[string]int64),
+		MatchedPatterns: make(map[string][]string),
+		RemainingFiles:  []string{},
+	}
+
+	for _, filePath := range filePaths {
+		fullPath := filepath.Join(filesDir, filePath)
+		matched := false
+		var matchedPattern string
+
+		// Check if file is in a state directory (e.g., .git)
+		for _, dirPattern := range LargeFileDirPatterns {
+			if strings.HasPrefix(filePath, dirPattern+string(filepath.Separator)) || strings.Contains(filePath, string(filepath.Separator)+dirPattern+string(filepath.Separator)) {
+				matched = true
+				matchedPattern = dirPattern + "/**"
+				break
+			}
+		}
+
+		// Check if file has a large file extension
+		if !matched {
+			lowerPath := strings.ToLower(filePath)
+			for _, ext := range LargeFileExtensions {
+				if strings.HasSuffix(lowerPath, ext) {
+					matched = true
+					matchedPattern = "*" + ext
+					break
+				}
+			}
+		}
+
+		if matched {
+			// Add file to matched patterns
+			result.MatchedPatterns[matchedPattern] = append(result.MatchedPatterns[matchedPattern], filePath)
+
+			// Add file size to total and per pattern
+			info, err := os.Stat(fullPath)
+			if err != nil {
+				// Skip files that can't be accessed for size calculation
+				continue
+			}
+			fileSize := info.Size()
+			result.TotalSize += fileSize
+			result.SizePerPattern[matchedPattern] += fileSize
+		} else {
+			// File doesn't match any large file pattern
+			result.RemainingFiles = append(result.RemainingFiles, filePath)
+		}
+	}
+
+	return result, nil
+}
+
+const largeFileSizeThreshold = 200 * 1024 * 1024 // 200MB
+
+// checkAndPromptLargeFiles checks if the total size of large files exceeds the threshold
+// and prompts the user to exclude them. Returns the filtered file list.
+func checkAndPromptLargeFiles(filesDir string, filePaths []string, workspaceConfig *workspace.WorkspaceConfig) ([]string, error) {
+	result, err := SumLargeFilesSize(filesDir, filePaths)
+	if err != nil {
+		return nil, err
+	}
+
+	isTotalSizeUnderThreshold := result.TotalSize < largeFileSizeThreshold
+	if isTotalSizeUnderThreshold {
+		return filePaths, nil
+	}
+
+	// Build the pattern list sorted by size (descending)
+	type patternInfo struct {
+		pattern string
+		size    int64
+		count   int
+	}
+	patterns := make([]patternInfo, 0, len(result.SizePerPattern))
+	for pattern, size := range result.SizePerPattern {
+		patterns = append(patterns, patternInfo{
+			pattern: pattern,
+			size:    size,
+			count:   len(result.MatchedPatterns[pattern]),
+		})
+	}
+	// Sort by size descending
+	for i := 0; i < len(patterns)-1; i++ {
+		for j := i + 1; j < len(patterns); j++ {
+			if patterns[j].size > patterns[i].size {
+				patterns[i], patterns[j] = patterns[j], patterns[i]
+			}
+		}
+	}
+
+	// Build the message with pattern details
+	totalMB := float64(result.TotalSize) / (1024 * 1024)
+	var patternDetails strings.Builder
+	for _, p := range patterns {
+		sizeMB := float64(p.size) / (1024 * 1024)
+		patternDetails.WriteString(fmt.Sprintf("\n  • %s: %.2f MB (%d files)", p.pattern, sizeMB, p.count))
+	}
+
+	message := fmt.Sprintf(
+		"We detected large files in your upload (total: %.2f MB). To speed things up, we recommend excluding the file types below and placing any required large assets in the mounting folder instead.%s\n\nAdd these to Exclude?",
+		totalMB,
+		patternDetails.String(),
+	)
+
+	addToExclude := true
+	prompt := &survey.Confirm{
+		Message: message,
+		Default: addToExclude,
+	}
+	err = survey.AskOne(prompt, &addToExclude)
+	if err != nil {
+		return nil, err
+	}
+
+	if !addToExclude {
+		// User declined, return original file list
+		return filePaths, nil
+	}
+
+	// Add patterns to exclude in workspace config
+	for _, p := range patterns {
+		// Check if pattern already exists in exclude patterns
+		alreadyExcluded := lo.SomeBy(workspaceConfig.ExcludePatterns, func(existing string) bool {
+			return existing == p.pattern
+		})
+		if !alreadyExcluded {
+			workspaceConfig.ExcludePatterns = append(workspaceConfig.ExcludePatterns, p.pattern)
+		}
+	}
+
+	// Save updated config
+	err = workspace.SetWorkspaceConfig(workspaceConfig, ".")
+	if err != nil {
+		return nil, fmt.Errorf("failed to update leap.yaml with exclude patterns: %w", err)
+	}
+
+	log.Infof("Updated leap.yaml with %d exclude patterns", len(patterns))
+
+	// Return remaining files (without large files)
+	return result.RemainingFiles, nil
+}
+
 func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.WorkspaceConfig) (close func(), tarGzFile *os.File, err error) {
 	filePaths, err := getCodeFiles(filesDir, workspaceConfig)
 	if err != nil {
 		return
 	}
+
+	filePaths, err = checkAndPromptLargeFiles(filesDir, filePaths, workspaceConfig)
+	if err != nil {
+		return nil, nil, err
+	}
+
 	isCodeIntegrationUsePippinButNoRequirementsTxt := lo.EveryBy(filePaths, func(path string) bool {
 		return !isRequirementsFile(path)
 	})
