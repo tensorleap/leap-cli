@@ -590,8 +590,8 @@ github.com/stretchr/testify v1.11.1 h1:7s2iGBzp5EwR7/aIZr8ao5+dra3wiQyKjjFuvgVKu
 github.com/stretchr/testify v1.11.1/go.mod h1:wZwfW3scLgRK+23gO65QZefKpKQRnfz6sD981Nm4B6U=
 github.com/subosito/gotenv v1.6.0 h1:9NlTDc1FTs4qu0DDq7AEtTPNw6SVm7uBMsUCUjABIf8=
 github.com/subosito/gotenv v1.6.0/go.mod h1:Dk4QP5c2W3ibzajGcXpNraDfq2IrhjMIvMSWPKKo0FU=
-github.com/tensorleap/helm-charts v0.7.2 h1:pBNY/8nHfgMUFZh8quzG6dlhX5q641hzYr68jMBpFZc=
-github.com/tensorleap/helm-charts v0.7.2/go.mod h1:gUz5AG/W1918pmRV/Vc7gv9qvoBGVi0/DDlRfFto5YI=
+github.com/tensorleap/helm-charts v0.7.3 h1:B6/IupnL6rg67cLkRqGIkk0CU0S1uwsch+gDUvVb91E=
+github.com/tensorleap/helm-charts v0.7.3/go.mod h1:gUz5AG/W1918pmRV/Vc7gv9qvoBGVi0/DDlRfFto5YI=
 github.com/theupdateframework/notary v0.7.0 h1:QyagRZ7wlSpjT5N2qQAh/pN+DVqgekv4DzbAiAiEL3c=
 github.com/theupdateframework/notary v0.7.0/go.mod h1:c9DRxcmhHmVLDay4/2fUYdISnHqbFDGRSlXPO0AhYWw=
 github.com/vbatts/tar-split v0.11.5 h1:3bHCTIheBm1qFTcgh9oPu+nNBtX+XJIupG/vacinCts=
