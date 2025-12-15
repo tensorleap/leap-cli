@@ -5,6 +5,7 @@ import (
 	"github.com/tensorleap/helm-charts/cmd/server"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/auth"
+	"github.com/tensorleap/leap-cli/pkg/version"
 )
 
 func NewInstallCmd() *cobra.Command {
@@ -18,7 +19,19 @@ func NewInstallCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Track installation started
 			startProperties := map[string]interface{}{
-				"data_dir": flags.DataDir,
+				"cli_version":     version.CliVersion,
+				"data_dir":        flags.DataDir,
+				"tag":             flags.Tag,
+				"port":            flags.Port,
+				"registry_port":   flags.RegistryPort,
+				"domain":          flags.Domain,
+				"cpu_limit":       flags.CpuLimit,
+				"gpus":            flags.Gpus,
+				"gpu_devices":     flags.GpuDevices,
+				"disable_metrics": flags.DisableMetrics,
+				"proxy_url":       flags.ProxyUrl,
+				"local":           flags.Local,
+				"airgap_install":  len(flags.AirGapInstallationFilePath) > 0,
 			}
 			isInternetAvailable := checkInternetAvailability(len(flags.AirGapInstallationFilePath) > 0)
 
@@ -28,9 +41,10 @@ func NewInstallCmd() *cobra.Command {
 			if err != nil {
 				// Track installation failed
 				failProperties := map[string]interface{}{
-					"data_dir": flags.DataDir,
-					"error":    err.Error(),
-					"stage":    "init_data_dir",
+					"cli_version": version.CliVersion,
+					"data_dir":    flags.DataDir,
+					"error":       err.Error(),
+					"stage":       "init_data_dir",
 				}
 				analytics.SendEvent(analytics.EventServerInstallFailed, failProperties)
 				return err
@@ -40,9 +54,10 @@ func NewInstallCmd() *cobra.Command {
 			if err != nil {
 				// Track installation failed
 				failProperties := map[string]interface{}{
-					"data_dir": flags.DataDir,
-					"error":    err.Error(),
-					"stage":    "run_install_cmd",
+					"cli_version": version.CliVersion,
+					"data_dir":    flags.DataDir,
+					"error":       err.Error(),
+					"stage":       "run_install_cmd",
 				}
 				analytics.SendEvent(analytics.EventServerInstallFailed, failProperties)
 				return mapInstallationErr(err)
@@ -51,18 +66,30 @@ func NewInstallCmd() *cobra.Command {
 			if err := localLogin(flags.Port); err != nil {
 				// Track installation failed
 				failProperties := map[string]interface{}{
-					"data_dir": flags.DataDir,
-					"port":     flags.Port,
-					"error":    err.Error(),
-					"stage":    "local_login",
+					"cli_version": version.CliVersion,
+					"data_dir":    flags.DataDir,
+					"port":        flags.Port,
+					"error":       err.Error(),
+					"stage":       "local_login",
 				}
 				analytics.SendEvent(analytics.EventServerInstallFailed, failProperties)
 				return err
 			}
 
 			successProperties := map[string]interface{}{
-				"data_dir": flags.DataDir,
-				"port":     flags.Port,
+				"cli_version":     version.CliVersion,
+				"data_dir":        flags.DataDir,
+				"tag":             flags.Tag,
+				"port":            flags.Port,
+				"registry_port":   flags.RegistryPort,
+				"domain":          flags.Domain,
+				"cpu_limit":       flags.CpuLimit,
+				"gpus":            flags.Gpus,
+				"gpu_devices":     flags.GpuDevices,
+				"disable_metrics": flags.DisableMetrics,
+				"proxy_url":       flags.ProxyUrl,
+				"local":           flags.Local,
+				"airgap_install":  len(flags.AirGapInstallationFilePath) > 0,
 			}
 
 			analytics.SendEvent(analytics.EventServerInstallSuccess, successProperties)

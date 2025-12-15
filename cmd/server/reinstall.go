@@ -5,6 +5,7 @@ import (
 	"github.com/tensorleap/helm-charts/cmd/server"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/auth"
+	"github.com/tensorleap/leap-cli/pkg/version"
 )
 
 func NewReinstallCmd() *cobra.Command {
@@ -17,7 +18,19 @@ func NewReinstallCmd() *cobra.Command {
 		Long:  "Reinstall tensorleap",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			startProperties := map[string]interface{}{
-				"data_dir": flags.DataDir,
+				"cli_version":     version.CliVersion,
+				"data_dir":        flags.DataDir,
+				"tag":             flags.Tag,
+				"port":            flags.Port,
+				"registry_port":   flags.RegistryPort,
+				"domain":          flags.Domain,
+				"cpu_limit":       flags.CpuLimit,
+				"gpus":            flags.Gpus,
+				"gpu_devices":     flags.GpuDevices,
+				"disable_metrics": flags.DisableMetrics,
+				"proxy_url":       flags.ProxyUrl,
+				"local":           flags.Local,
+				"airgap_install":  len(flags.AirGapInstallationFilePath) > 0,
 			}
 			isInternetAvailable := checkInternetAvailability(len(flags.AirGapInstallationFilePath) > 0)
 
@@ -26,9 +39,10 @@ func NewReinstallCmd() *cobra.Command {
 			isReinstalled, err := initDataDir(cmd.Context(), "")
 			if err != nil {
 				failProperties := map[string]interface{}{
-					"data_dir": flags.DataDir,
-					"error":    err.Error(),
-					"stage":    "init_data_dir",
+					"cli_version": version.CliVersion,
+					"data_dir":    flags.DataDir,
+					"error":       err.Error(),
+					"stage":       "init_data_dir",
 				}
 				analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties)
 				return err
@@ -36,27 +50,40 @@ func NewReinstallCmd() *cobra.Command {
 			err = server.RunReinstallCmd(cmd, flags, isReinstalled)
 			if err != nil {
 				failProperties := map[string]interface{}{
-					"data_dir": flags.DataDir,
-					"error":    err.Error(),
-					"stage":    "run_reinstall_cmd",
+					"cli_version": version.CliVersion,
+					"data_dir":    flags.DataDir,
+					"error":       err.Error(),
+					"stage":       "run_reinstall_cmd",
 				}
 				analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties)
 				return mapInstallationErr(err)
 			}
 			if err := localLogin(flags.Port); err != nil {
 				failProperties := map[string]interface{}{
-					"data_dir": flags.DataDir,
-					"port":     flags.Port,
-					"error":    err.Error(),
-					"stage":    "local_login",
+					"cli_version": version.CliVersion,
+					"data_dir":    flags.DataDir,
+					"port":        flags.Port,
+					"error":       err.Error(),
+					"stage":       "local_login",
 				}
 				analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties)
 				return err
 			}
 
 			successProperties := map[string]interface{}{
-				"data_dir": flags.DataDir,
-				"port":     flags.Port,
+				"cli_version":     version.CliVersion,
+				"data_dir":        flags.DataDir,
+				"tag":             flags.Tag,
+				"port":            flags.Port,
+				"registry_port":   flags.RegistryPort,
+				"domain":          flags.Domain,
+				"cpu_limit":       flags.CpuLimit,
+				"gpus":            flags.Gpus,
+				"gpu_devices":     flags.GpuDevices,
+				"disable_metrics": flags.DisableMetrics,
+				"proxy_url":       flags.ProxyUrl,
+				"local":           flags.Local,
+				"airgap_install":  len(flags.AirGapInstallationFilePath) > 0,
 			}
 
 			analytics.SendEvent(analytics.EventServerReinstallSuccess, successProperties)
