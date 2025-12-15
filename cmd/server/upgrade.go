@@ -4,6 +4,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/helm-charts/cmd/server"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
+	"github.com/tensorleap/leap-cli/pkg/version"
 )
 
 func NewUpgradeCmd() *cobra.Command {
@@ -15,7 +16,10 @@ func NewUpgradeCmd() *cobra.Command {
 		Long:  server.UpgradeCmdDescription,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			startProperties := map[string]interface{}{
-				"tag": flags.Tag,
+				"cli_version":    version.CliVersion,
+				"tag":            flags.Tag,
+				"local":          flags.Local,
+				"airgap_install": len(flags.AirGapInstallationFilePath) > 0,
 			}
 			isInternetAvailable := checkInternetAvailability(len(flags.AirGapInstallationFilePath) > 0)
 
@@ -24,9 +28,10 @@ func NewUpgradeCmd() *cobra.Command {
 			_, err := initDataDir(cmd.Context(), "")
 			if err != nil {
 				failProperties := map[string]interface{}{
-					"tag":   flags.Tag,
-					"error": err.Error(),
-					"stage": "init_data_dir",
+					"cli_version": version.CliVersion,
+					"tag":         flags.Tag,
+					"error":       err.Error(),
+					"stage":       "init_data_dir",
 				}
 				analytics.SendEvent(analytics.EventServerUpgradeFailed, failProperties)
 				return err
@@ -35,16 +40,20 @@ func NewUpgradeCmd() *cobra.Command {
 			if err != nil {
 				// Track upgrade failed
 				failProperties := map[string]interface{}{
-					"tag":   flags.Tag,
-					"error": err.Error(),
-					"stage": "run_upgrade_cmd",
+					"cli_version": version.CliVersion,
+					"tag":         flags.Tag,
+					"error":       err.Error(),
+					"stage":       "run_upgrade_cmd",
 				}
 				analytics.SendEvent(analytics.EventServerUpgradeFailed, failProperties)
 				return mapInstallationErr(err)
 			}
 
 			successProperties := map[string]interface{}{
-				"tag": flags.Tag,
+				"cli_version":    version.CliVersion,
+				"tag":            flags.Tag,
+				"local":          flags.Local,
+				"airgap_install": len(flags.AirGapInstallationFilePath) > 0,
 			}
 
 			analytics.SendEvent(analytics.EventServerUpgradeSuccess, successProperties)
