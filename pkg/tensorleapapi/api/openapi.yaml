@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.666
+  version: 0.0.668
 servers:
 - url: /api/v2
 paths:
@@ -1191,6 +1191,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SetUserNotificationsAsRead_200_response"
+          description: Ok
+      security:
+      - jwt: []
+  /notifications/getNotificationsByFilter:
+    post:
+      operationId: GetNotificationsByFilter
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetNotificationsByFilterParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetNotificationsByFilterResponse"
           description: Ok
       security:
       - jwt: []
@@ -16268,6 +16287,70 @@ components:
       required:
       - notifications
       type: object
+    GetNotificationsByFilterResponse:
+      additionalProperties: true
+      example:
+        notifications:
+        - identifier: identifier
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          teamId: teamId
+          context:
+            jobId: jobId
+            jobType: TRAINING
+          isRead: true
+          title: title
+          projectId: projectId
+          user: user
+          cid: cid
+          messageData:
+            level: Error
+            params:
+              message_code: message_code
+              module: General
+              message: message
+        - identifier: identifier
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          teamId: teamId
+          context:
+            jobId: jobId
+            jobType: TRAINING
+          isRead: true
+          title: title
+          projectId: projectId
+          user: user
+          cid: cid
+          messageData:
+            level: Error
+            params:
+              message_code: message_code
+              module: General
+              message: message
+      properties:
+        notifications:
+          items:
+            $ref: "#/components/schemas/Notification"
+          type: array
+      required:
+      - notifications
+      type: object
+    GetNotificationsByFilterParams:
+      additionalProperties: true
+      example:
+        fromDate: fromDate
+        jobId: jobId
+        notificationTypes:
+        - Error
+        - Error
+      properties:
+        jobId:
+          type: string
+        fromDate:
+          type: string
+        notificationTypes:
+          items:
+            $ref: "#/components/schemas/MessageLevel"
+          type: array
+      type: object
     UpsertStateResponse:
       additionalProperties: true
       example:
@@ -21530,7 +21613,6 @@ components:
     SlimVersion:
       additionalProperties: true
       example:
-        createdAt: 2000-01-23T04:56:07.000+00:00
         sessions:
         - trainingParams:
             batch_size: 6.027456183070403
@@ -21967,14 +22049,91 @@ components:
           cid: cid
           hasExternalEpoch: true
         notes: notes
-        createdBy: createdBy
         branchName: branchName
+        codeSnapshotId: codeSnapshotId
+        tags: tags
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        createdBy: createdBy
+        graphValidationData:
+          metadata:
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          inputs:
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          custom_layers:
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          general_error: general_error
+          ground_truths:
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          prediction_types:
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          metrics:
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          visualizers:
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          - connection_name: connection_name
+            name: name
+            error: error
+            node_id: node_id
+          losses:
+          - connection_name: connection_name
+            is_custom_loss: true
+            name: name
+            error: error
+            node_id: node_id
+          - connection_name: connection_name
+            is_custom_loss: true
+            name: name
+            error: error
+            node_id: node_id
         projectId: projectId
         isFavourite: true
-        codeSnapshotId: codeSnapshotId
         hash: hash
         cid: cid
-        tags: tags
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         cid:
@@ -22006,6 +22165,8 @@ components:
           items:
             $ref: "#/components/schemas/Session"
           type: array
+        graphValidationData:
+          $ref: "#/components/schemas/GraphValidatorData"
       required:
       - branchName
       - cid
@@ -22022,8 +22183,7 @@ components:
       additionalProperties: true
       example:
         versions:
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          sessions:
+        - sessions:
           - trainingParams:
               batch_size: 6.027456183070403
               epochs: 0.8008281904610115
@@ -22459,17 +22619,93 @@ components:
             cid: cid
             hasExternalEpoch: true
           notes: notes
-          createdBy: createdBy
           branchName: branchName
+          codeSnapshotId: codeSnapshotId
+          tags: tags
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          graphValidationData:
+            metadata:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            inputs:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            custom_layers:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            general_error: general_error
+            ground_truths:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            prediction_types:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            metrics:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            visualizers:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            losses:
+            - connection_name: connection_name
+              is_custom_loss: true
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              is_custom_loss: true
+              name: name
+              error: error
+              node_id: node_id
           projectId: projectId
           isFavourite: true
-          codeSnapshotId: codeSnapshotId
           hash: hash
           cid: cid
-          tags: tags
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          sessions:
+        - sessions:
           - trainingParams:
               batch_size: 6.027456183070403
               epochs: 0.8008281904610115
@@ -22905,14 +23141,91 @@ components:
             cid: cid
             hasExternalEpoch: true
           notes: notes
-          createdBy: createdBy
           branchName: branchName
+          codeSnapshotId: codeSnapshotId
+          tags: tags
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
+          graphValidationData:
+            metadata:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            inputs:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            custom_layers:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            general_error: general_error
+            ground_truths:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            prediction_types:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            metrics:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            visualizers:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            losses:
+            - connection_name: connection_name
+              is_custom_loss: true
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              is_custom_loss: true
+              name: name
+              error: error
+              node_id: node_id
           projectId: projectId
           isFavourite: true
-          codeSnapshotId: codeSnapshotId
           hash: hash
           cid: cid
-          tags: tags
           updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         versions:

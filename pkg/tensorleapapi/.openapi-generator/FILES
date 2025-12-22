@@ -176,6 +176,8 @@ docs/GetJobsResponse.md
 docs/GetLatestExportedProjectParams.md
 docs/GetMachineTypesResponse.md
 docs/GetMaxActiveUsersResponse.md
+docs/GetNotificationsByFilterParams.md
+docs/GetNotificationsByFilterResponse.md
 docs/GetNotificationsResponse.md
 docs/GetProjectDashboardsParams.md
 docs/GetProjectDashboardsResponse.md
@@ -632,6 +634,8 @@ model_get_jobs_response.go
 model_get_latest_exported_project_params.go
 model_get_machine_types_response.go
 model_get_max_active_users_response.go
+model_get_notifications_by_filter_params.go
+model_get_notifications_by_filter_response.go
 model_get_notifications_response.go
 model_get_project_dashboards_params.go
 model_get_project_dashboards_response.go

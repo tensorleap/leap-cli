@@ -72,6 +72,7 @@ Method | HTTP request | Description
 [**GetMaxActiveUsers**](DefaultAPI.md#GetMaxActiveUsers) | **Post** /metadata/getMaxActiveUsers | 
 [**GetMeanAveragePrecision**](DefaultAPI.md#GetMeanAveragePrecision) | **Post** /sessionmetrics/getMeanAveragePrecision | 
 [**GetNotifications**](DefaultAPI.md#GetNotifications) | **Post** /notifications/getNotifications | 
+[**GetNotificationsByFilter**](DefaultAPI.md#GetNotificationsByFilter) | **Post** /notifications/getNotificationsByFilter | 
 [**GetPopulationExplorationStatus**](DefaultAPI.md#GetPopulationExplorationStatus) | **Post** /visualizations/getPopulationExplorationStatus | 
 [**GetPrCurve**](DefaultAPI.md#GetPrCurve) | **Post** /sessionmetrics/getPrCurve | 
 [**GetPrecisionScore**](DefaultAPI.md#GetPrecisionScore) | **Post** /sessionmetrics/getPrecisionScore | 
@@ -4428,6 +4429,70 @@ Other parameters are passed through a pointer to a apiGetNotificationsRequest st
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetNotificationsByFilter
+
+> GetNotificationsByFilterResponse GetNotificationsByFilter(ctx).GetNotificationsByFilterParams(getNotificationsByFilterParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getNotificationsByFilterParams := *openapiclient.NewGetNotificationsByFilterParams() // GetNotificationsByFilterParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetNotificationsByFilter(context.Background()).GetNotificationsByFilterParams(getNotificationsByFilterParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetNotificationsByFilter``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetNotificationsByFilter`: GetNotificationsByFilterResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetNotificationsByFilter`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetNotificationsByFilterRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getNotificationsByFilterParams** | [**GetNotificationsByFilterParams**](GetNotificationsByFilterParams.md) |  | 
+
+### Return type
+
+[**GetNotificationsByFilterResponse**](GetNotificationsByFilterResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
