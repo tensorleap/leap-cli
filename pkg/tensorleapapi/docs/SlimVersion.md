@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **IsFavourite** | **bool** |  | 
 **Hash** | Pointer to **NullableString** |  | [optional] 
 **Sessions** | [**[]Session**](Session.md) |  | 
+**GraphValidationData** | Pointer to [**GraphValidatorData**](GraphValidatorData.md) |  | [optional] 
 
 ## Methods
 
@@ -295,6 +296,31 @@ and a boolean to check if the value has been set.
 
 SetSessions sets Sessions field to given value.
 
+
+### GetGraphValidationData
+
+`func (o *SlimVersion) GetGraphValidationData() GraphValidatorData`
+
+GetGraphValidationData returns the GraphValidationData field if non-nil, zero value otherwise.
+
+### GetGraphValidationDataOk
+
+`func (o *SlimVersion) GetGraphValidationDataOk() (*GraphValidatorData, bool)`
+
+GetGraphValidationDataOk returns a tuple with the GraphValidationData field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGraphValidationData
+
+`func (o *SlimVersion) SetGraphValidationData(v GraphValidatorData)`
+
+SetGraphValidationData sets GraphValidationData field to given value.
+
+### HasGraphValidationData
+
+`func (o *SlimVersion) HasGraphValidationData() bool`
+
+HasGraphValidationData returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
