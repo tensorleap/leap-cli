@@ -2,9 +2,8 @@ package notification
 
 import "fmt"
 
-
 type JobFailureNotificationReport struct {
-	JobId string
+	JobId         string
 	Notifications []NotificationReport
 }
 
@@ -15,6 +14,7 @@ func (r *JobFailureNotificationReport) View() string {
 	}
 	return view
 }
+
 type NotificationReport struct {
 	Level        MessageLevel
 	Title        string
