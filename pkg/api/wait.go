@@ -65,11 +65,14 @@ func WaitForConditionWithSteps(ctx context.Context, condition func() (bool, []lo
 					{Name: "Pending...", Status: status},
 				}
 			}
-			renderer.Update(steps)
 			if err != nil {
+				markLastStepAsFailed(steps)
+				renderer.Update(steps)
 				time.Sleep(log.FrameDuration)
 				return err
 			}
+			renderer.Update(steps)
+
 			if done {
 				isAllStepsDone := isAllStepsEnded(steps)
 				if isAllStepsDone {
@@ -91,6 +94,15 @@ func WaitForConditionWithSteps(ctx context.Context, condition func() (bool, []lo
 	}
 
 	return ErrorTimeout
+}
+
+func markLastStepAsFailed(steps []log.Step) {
+	for _, step := range steps {
+		if step.Status != log.StepStatusDone {
+			step.Status = log.StepStatusFailed
+			break
+		}
+	}
 }
 
 func isAllStepsEnded(steps []log.Step) bool {

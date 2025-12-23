@@ -544,34 +544,6 @@ func isExcluded(path string, excludePatterns []string) bool {
 	return false
 }
 
-func PrintCodeSnapshotParserErr(civ *CodeSnapshot) {
-
-	if civ.ParseResult == nil {
-		log.Error("Code parsing failed, but no parse result found")
-		return
-	}
-	log.Error("Code parsing failed, see error below:")
-	if civ.ParseResult.SetupStatus.GeneralError != nil {
-		log.Error("General error:")
-		fmt.Println(*civ.ParseResult.SetupStatus.GeneralError)
-	}
-
-	for _, binderStatus := range civ.ParseResult.SetupStatus.BindersStatus {
-		if !binderStatus.IsPassed && len(binderStatus.Display) > 0 {
-			log.Errorf("binder error: %s", binderStatus.Name)
-			for key, display := range binderStatus.Display {
-				fmt.Printf("%s: %s\n", key, display)
-			}
-		}
-	}
-
-	if civ.ParseResult.SetupStatus.PrintLog != nil {
-		log.Info("Log:")
-		fmt.Println(*civ.ParseResult.SetupStatus.PrintLog)
-		return
-	}
-}
-
 func PushCode(ctx context.Context, tarGzFile *os.File, entryFile, secretId, pythonVersion, versionName, projectId, branch string, overwriteVersionId string) (pushed bool, current *tensorleapapi.PushCodeSnapshotResponse, err error) {
 
 	fileStat, err := tarGzFile.Stat()
