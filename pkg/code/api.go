@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
+	"github.com/tensorleap/leap-cli/pkg/interactive_pages"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
@@ -73,9 +74,14 @@ func PushCodeSnapshot(
 
 const TIMEOUT_FOR_CODE_INTEGRATION_STATUS = 90 * time.Minute
 
-func WaitForCodeIntegrationStatus(ctx context.Context, projectId, codeSnapshotId string) (bool, *CodeSnapshot, error) {
+var ErrCodeIntegrationTimeout = fmt.Errorf("timeout occurred while waiting for the integration code status")
+
+func WaitForCodeIntegrationStatus(ctx context.Context, projectId, codeSnapshotId string) (bool, error) {
 	log.Info("Waiting for code parser result...")
 	sleepDuration := 3 * time.Second
+	commandStartTime := time.Now()
+
+	var jobId string
 
 	condition := func() (bool, []log.Step, error) {
 		getJobParams := *tensorleapapi.NewGetJobsFilterParams()
@@ -90,6 +96,7 @@ func WaitForCodeIntegrationStatus(ctx context.Context, projectId, codeSnapshotId
 			return false, nil, fmt.Errorf("failed to get the code integration job")
 		}
 		codeIntegrationJob := codeIntegrationJobs.Jobs[0]
+		jobId = codeIntegrationJob.Cid
 		steps := api.StepsFromJob(&codeIntegrationJob)
 		switch true {
 		case api.IsJobFinished(codeIntegrationJob.Status):
@@ -103,16 +110,27 @@ func WaitForCodeIntegrationStatus(ctx context.Context, projectId, codeSnapshotId
 	err := api.WaitForConditionWithSteps(ctx, condition, sleepDuration, TIMEOUT_FOR_CODE_INTEGRATION_STATUS)
 
 	if err == api.ErrorTimeout {
-		return false, nil, fmt.Errorf("timeout occurred while waiting for the integration code status")
+		return false, ErrCodeIntegrationTimeout
 	}
 	if err != nil {
-		return false, nil, fmt.Errorf("failed to wait for the integration code status: %v", err)
+		log.Errorf("failed to wait for the integration code status: %v", err)
+
+		codeSnapshot, getErr := GetCodeSnapshot(ctx, projectId, codeSnapshotId)
+		if getErr != nil {
+			return false, fmt.Errorf("failed to get the code integration version: %v", getErr)
+		}
+		report, collectErr := CollectErrorsOnCodeParseFailed(ctx, jobId, codeSnapshot, commandStartTime)
+		if collectErr != nil {
+			return false, fmt.Errorf("failed to collect errors on code parse failed: %v", collectErr)
+		}
+		asPages := report.ToReportPages()
+		runErr := interactive_pages.RunInteractivePages(asPages)
+		if runErr != nil {
+			return false, fmt.Errorf("failed to run interactive pages: %v", runErr)
+		}
+		return false, fmt.Errorf("code parsing failed see errors above, for more logs run: leap run logs %s", jobId)
 	}
-	codeSnapshot, err := GetCodeSnapshot(ctx, projectId, codeSnapshotId)
-	if err != nil {
-		return false, nil, fmt.Errorf("failed to get the code integration version: %v", err)
-	}
-	return true, codeSnapshot, nil
+	return true, nil
 }
 
 func GetCodeSnapshotUploadUrl(ctx context.Context, projectId string) (string, error) {

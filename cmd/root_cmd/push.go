@@ -40,6 +40,7 @@ Examples:
   leap push -e
 `,
 		RunE: func(cmd *cobra.Command, args []string) error {
+
 			// Define base properties for all analytics events
 			properties := map[string]interface{}{
 				"secret_id":            secretId,
@@ -183,7 +184,7 @@ Examples:
 			}
 			if pushed || !code.IsCodeEnded(&codeSnapshotResponse.CodeSnapshot) {
 
-				ok, codeSnapshot, err := code.WaitForCodeIntegrationStatus(ctx, currentProject.GetCid(), codeSnapshotResponse.CodeSnapshot.Cid)
+				ok, err := code.WaitForCodeIntegrationStatus(ctx, currentProject.GetCid(), codeSnapshotResponse.CodeSnapshot.Cid)
 				if err != nil {
 					// Track projects push failed
 					properties["error"] = err.Error()
@@ -196,7 +197,6 @@ Examples:
 				if ok {
 					log.Info("Code parsed successfully")
 				} else {
-					code.PrintCodeSnapshotParserErr(codeSnapshot)
 					// Track projects push failed due to code parsing failure
 					properties["error"] = "code parsing failed"
 					properties["stage"] = "code_parsing"
@@ -206,7 +206,6 @@ Examples:
 					return fmt.Errorf("code parsing failed")
 				}
 			} else if code.IsCodeParseFailed(&codeSnapshotResponse.CodeSnapshot) {
-				code.PrintCodeSnapshotParserErr(&codeSnapshotResponse.CodeSnapshot)
 				// Track projects push failed due to previous code parsing failure
 				properties["error"] = "latest code parsing failed"
 				properties["stage"] = "previous_code_parsing_failed"
@@ -220,7 +219,7 @@ Examples:
 				if err != nil {
 					return err
 				}
-				err = model.ImportModel(ctx, currentProject.GetCid(), codeSnapshotResponse.VersionId, importModelInfo, !noWait)
+				_, err = model.ImportModel(ctx, currentProject.GetCid(), codeSnapshotResponse.VersionId, importModelInfo, !noWait)
 				if err != nil {
 					// Track projects push failed
 					properties["error"] = err.Error()
@@ -238,7 +237,7 @@ Examples:
 						return err
 					}
 				}
-				err = model.OverrideModel(ctx, currentProject.GetCid(), codeSnapshotResponse.VersionId, !noWait, importModelInfo)
+				_, err := model.OverrideModel(ctx, currentProject.GetCid(), codeSnapshotResponse.VersionId, !noWait, importModelInfo)
 				if err != nil {
 					// Track projects push failed
 					properties["error"] = err.Error()
@@ -246,6 +245,7 @@ Examples:
 					properties["code_snapshot_id"] = codeSnapshotResponse.CodeSnapshot.Cid
 					properties["version_id"] = codeSnapshotResponse.VersionId
 					analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
+
 					return err
 				}
 			}

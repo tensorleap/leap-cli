@@ -4,8 +4,8 @@ import (
 	"archive/tar"
 	"context"
 	"fmt"
-	"math"
 	"os"
+	"regexp"
 	"strings"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
@@ -22,17 +22,40 @@ func GetRunLogs(ctx context.Context, jobId string) ([]tlApi.PodLogs, error) {
 	return job.PodsLogs, nil
 }
 
-func GetTopLogs(logs []tlApi.PodLogs, prefix string, count int) string {
-	logsStr := ""
-	for _, log := range logs {
-		if strings.HasPrefix(log.Name, prefix) {
-			s := strings.Split(log.Logs, "\n")
-			fromIndex := int(math.Max(0, float64(len(s)-count)))
-			logsStr = strings.Join(s[fromIndex:], "\n")
-			break
+func GetTopLogs(logs []tlApi.PodLogs, pat *regexp.Regexp, count int) []string {
+	var result []string
+	seen := make(map[string]bool)
+
+	for _, podLog := range logs {
+		lines := strings.Split(podLog.Logs, "\n")
+
+		var matchingLines []string
+		for _, line := range lines {
+			if strings.TrimSpace(line) == "" {
+				continue
+			}
+			if pat.MatchString(line) {
+				matchingLines = append(matchingLines, line)
+			}
+		}
+
+		// Take the last `count` lines from this pod (end of file = most recent)
+		startIdx := len(matchingLines) - count
+		if startIdx < 0 {
+			startIdx = 0
+		}
+		topFromPod := matchingLines[startIdx:]
+
+		// Add unique lines to result
+		for _, line := range topFromPod {
+			if !seen[line] {
+				seen[line] = true
+				result = append(result, line)
+			}
 		}
 	}
-	return logsStr
+
+	return result
 }
 
 func WrapLogsInTarFile(logs []tlApi.PodLogs, output string, defaultFileName string) (string, error) {
