@@ -128,7 +128,7 @@ func getImportModelLogs(ctx context.Context, importModelJobId string) ([]string,
 		return nil, nil
 	}
 
-	errorPattern := regexp.MustCompile(`(?i)"level_name":\s*"Error"|"level":\s*"error"|ERROR|Error:`)
+	errorPattern := regexp.MustCompile(`(?i)"levelname":\s*"ERROR"`)
 	topLogs := run.GetTopLogs(runLogs, errorPattern, 5)
 
 	return topLogs, nil
@@ -284,15 +284,6 @@ func GetImportModelJob(ctx context.Context, jobId string, projectId string) (*te
 		return nil, fmt.Errorf("failed to get job")
 	}
 	return &data.Jobs[0], nil
-}
-
-func findRunProcessByJobId(runProcesses []tensorleapapi.Job, jobId string) *tensorleapapi.Job {
-	for _, rp := range runProcesses {
-		if rp.GetCid() == jobId {
-			return &rp
-		}
-	}
-	return nil
 }
 
 func GetVersions(ctx context.Context, projectId string) ([]tensorleapapi.SlimVersion, error) {

@@ -46,7 +46,7 @@ func GetLastEngineErrors(ctx context.Context, jobId string, count int) ([]string
 	if len(logs) == 0 {
 		return nil, nil
 	}
-	errorPattern := regexp.MustCompile(`(?i)"level_name":\s*"Error"|"level":\s*"error"|ERROR|Error:`)
+	errorPattern := regexp.MustCompile(`(?i)"levelname":\s*"ERROR"`)
 	topLogs := run.GetTopLogs(logs, errorPattern, count)
 	return topLogs, nil
 }
@@ -165,25 +165,12 @@ var (
 			Foreground(lipgloss.Color("#FF5555")).
 			Bold(true)
 
-	pageWarningStyle = lipgloss.NewStyle().
-				Foreground(lipgloss.Color("#FFAA00"))
-
 	pageInfoStyle = lipgloss.NewStyle().
 			Foreground(lipgloss.Color("#88C0D0"))
-
-	pageLabelStyle = lipgloss.NewStyle().
-			Foreground(lipgloss.Color("#A3BE8C")).
-			Bold(true)
 
 	pageValueStyle = lipgloss.NewStyle().
 			Foreground(lipgloss.Color("#D8DEE9"))
 
-	// Style for main notification message - more prominent
-	pageMessageStyle = lipgloss.NewStyle().
-				Foreground(lipgloss.Color("#ECEFF4")).
-				Bold(true)
-
-	// Style for extra/secondary message - less prominent
 	pageDimStyle = lipgloss.NewStyle().
 			Foreground(lipgloss.Color("#6C6C6C")).
 			Italic(true)
