@@ -70,11 +70,6 @@ var (
 	pageDimStyle = lipgloss.NewStyle().
 			Foreground(lipgloss.Color("#6C6C6C")).
 			Italic(true)
-
-	pageSectionStyle = lipgloss.NewStyle().
-				Foreground(lipgloss.Color("#81A1C1")).
-				Bold(true).
-				Underline(true)
 )
 
 // ---------------------------
