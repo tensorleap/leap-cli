@@ -117,15 +117,19 @@ func TestBundleCodeIntoTempFile(t *testing.T) {
 	file1 := filepath.Join(tempDir, "file1.txt")
 	file2 := filepath.Join(tempDir, "file2.txt")
 	file3 := filepath.Join(tempDir, "pyproject.toml")
+	entryFile := filepath.Join(tempDir, "entry.py")
 	err := os.WriteFile(file1, []byte("content1"), 0644)
 	assert.NoError(t, err)
 	err = os.WriteFile(file2, []byte("content2"), 0644)
 	assert.NoError(t, err)
 	err = os.WriteFile(file3, []byte("content3"), 0644)
 	assert.NoError(t, err)
+	err = os.WriteFile(entryFile, []byte("# entry file"), 0644)
+	assert.NoError(t, err)
 	// Setup workspace config
 	workspaceConfig := &workspace.WorkspaceConfig{
-		IncludePatterns: []string{"*.txt", "pyproject.toml"},
+		EntryFile:       "entry.py",
+		IncludePatterns: []string{"*.txt", "*.py", "pyproject.toml"},
 	}
 
 	// Test without externalLeapMappingPath
