@@ -9,6 +9,8 @@
 
 * `LARGER_THAN` (value: `"larger_than"`)
 
+* `IN` (value: `"_in"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

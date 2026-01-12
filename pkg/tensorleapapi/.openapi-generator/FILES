@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 .travis.yml
 README.md
 api/openapi.yaml
@@ -241,6 +240,7 @@ docs/ImportProjectRequest.md
 docs/ImportProjectResponse.md
 docs/InitExperimentRequest.md
 docs/InitExperimentResponse.md
+docs/InsightAutomaticTest.md
 docs/InsightFilterDisplayData.md
 docs/InsightFilterDisplayDataInsightsInner.md
 docs/InsightMetricInfo.md
@@ -414,6 +414,7 @@ docs/TerminateAllJobsParams.md
 docs/TerminateAllJobsResponse.md
 docs/TerminateJobParams.md
 docs/TerminateJobResponse.md
+docs/TestFilterOperatorType.md
 docs/TestStatus.md
 docs/TextData.md
 docs/TextViz.md
@@ -699,6 +700,7 @@ model_import_project_request.go
 model_import_project_response.go
 model_init_experiment_request.go
 model_init_experiment_response.go
+model_insight_automatic_test_.go
 model_insight_filter_display_data.go
 model_insight_filter_display_data_insights_inner.go
 model_insight_metric_info.go
@@ -872,6 +874,7 @@ model_terminate_all_jobs_params.go
 model_terminate_all_jobs_response.go
 model_terminate_job_params.go
 model_terminate_job_response.go
+model_test_filter_operator_type.go
 model_test_status.go
 model_text_data.go
 model_text_viz.go
@@ -921,5 +924,4 @@ model_viz_type.go
 model_weight_asset_data.go
 model_xy_chart.go
 response.go
-test/api_default_test.go
 utils.go
