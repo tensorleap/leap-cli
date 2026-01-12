@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 .travis.yml
 README.md
 api/openapi.yaml
@@ -19,7 +18,6 @@ docs/AddSampleCollectionParams.md
 docs/AddSampleCollectionResponse.md
 docs/AddSecretManagerParams.md
 docs/AddSecretManagerResponse.md
-docs/AggFunc.md
 docs/AggregationMethod.md
 docs/Aggregations.md
 docs/AllSessionsTestResults.md
@@ -33,6 +31,7 @@ docs/ArchiveInsightsParams.md
 docs/AuthProviderEnum.md
 docs/BBoxImageData.md
 docs/BBoxImageViz.md
+docs/BaseSplitAgg.md
 docs/BasicVisualizationInfo.md
 docs/BoolSchema.md
 docs/BoundingBox.md
@@ -91,7 +90,8 @@ docs/DeleteVersionParams.md
 docs/DeleteVisualizationsParams.md
 docs/Direction.md
 docs/DistinctAgg.md
-docs/DistributionType.md
+docs/DistributionTypeContinuous.md
+docs/DistributionTypeDistinct.md
 docs/DomainGapInsight.md
 docs/DuplicationInsight.md
 docs/ESFilter.md
@@ -130,9 +130,6 @@ docs/FilterOperatorType.md
 docs/FilterSessionRun.md
 docs/GeneralMessageParams.md
 docs/GenerateLabelParams.md
-docs/GeneratedChartData.md
-docs/GeneratedDashlet.md
-docs/GeneratedDashletType.md
 docs/GeneratedLabel.md
 docs/GeneratedLabelsResponse.md
 docs/GenericBaseImage.md
@@ -163,9 +160,6 @@ docs/GetExportedSessionRunJobsResponse.md
 docs/GetFieldsValuesRequest.md
 docs/GetFieldsValuesResponse.md
 docs/GetFieldsValuesResponseResultsInner.md
-docs/GetGeneratedDashletsBySessionRun.md
-docs/GetGeneratedDashletsParams.md
-docs/GetGeneratedDashletsResponse.md
 docs/GetGeneratedLabelsParams.md
 docs/GetGenericBaseImageTypesResponse.md
 docs/GetIssueFileUploadSignedUrl.md
@@ -222,7 +216,6 @@ docs/GraphViz.md
 docs/HealthCheckResponse.md
 docs/HealthStatus.md
 docs/Heatmap.md
-docs/HeatmapChart.md
 docs/HeatmapChartsParams.md
 docs/HeatmapType.md
 docs/HorizontalBarData.md
@@ -241,6 +234,7 @@ docs/ImportProjectRequest.md
 docs/ImportProjectResponse.md
 docs/InitExperimentRequest.md
 docs/InitExperimentResponse.md
+docs/InsightAutomaticTest.md
 docs/InsightFilterDisplayData.md
 docs/InsightFilterDisplayDataInsightsInner.md
 docs/InsightMetricInfo.md
@@ -414,6 +408,7 @@ docs/TerminateAllJobsParams.md
 docs/TerminateAllJobsResponse.md
 docs/TerminateJobParams.md
 docs/TerminateJobResponse.md
+docs/TestFilterOperatorType.md
 docs/TestStatus.md
 docs/TextData.md
 docs/TextViz.md
@@ -461,7 +456,6 @@ docs/VisualizerMessageParams.md
 docs/VizInfoType.md
 docs/VizType.md
 docs/WeightAssetData.md
-docs/XYChart.md
 git_push.sh
 go.mod
 go.sum
@@ -478,7 +472,6 @@ model_add_sample_collection_params.go
 model_add_sample_collection_response.go
 model_add_secret_manager_params.go
 model_add_secret_manager_response.go
-model_agg_func.go
 model_aggregation_method.go
 model_aggregations.go
 model_all_sessions_test_results.go
@@ -492,6 +485,7 @@ model_archive_insights_params.go
 model_auth_provider_enum.go
 model_b_box_image_data.go
 model_b_box_image_viz.go
+model_base_split_agg.go
 model_basic_visualization_info.go
 model_bool_schema.go
 model_bounding_box.go
@@ -549,7 +543,8 @@ model_delete_version_params.go
 model_delete_visualizations_params.go
 model_direction.go
 model_distinct_agg.go
-model_distribution_type.go
+model_distribution_type_continuous.go
+model_distribution_type_distinct.go
 model_domain_gap_insight.go
 model_duplication_insight.go
 model_early_stop_params.go
@@ -588,9 +583,6 @@ model_filter_operator_type.go
 model_filter_session_run.go
 model_general_message_params.go
 model_generate_label_params.go
-model_generated_chart_data.go
-model_generated_dashlet.go
-model_generated_dashlet_type.go
 model_generated_label.go
 model_generated_labels_response.go
 model_generic_base_image.go
@@ -621,9 +613,6 @@ model_get_exported_session_run_jobs_response.go
 model_get_fields_values_request.go
 model_get_fields_values_response.go
 model_get_fields_values_response_results_inner.go
-model_get_generated_dashlets_by_session_run.go
-model_get_generated_dashlets_params.go
-model_get_generated_dashlets_response.go
 model_get_generated_labels_params.go
 model_get_generic_base_image_types_response.go
 model_get_issue_file_upload_signed_url.go
@@ -680,7 +669,6 @@ model_graph_viz.go
 model_health_check_response.go
 model_health_status.go
 model_heatmap.go
-model_heatmap_chart.go
 model_heatmap_charts_params.go
 model_heatmap_type.go
 model_horizontal_bar_data.go
@@ -699,6 +687,7 @@ model_import_project_request.go
 model_import_project_response.go
 model_init_experiment_request.go
 model_init_experiment_response.go
+model_insight_automatic_test_.go
 model_insight_filter_display_data.go
 model_insight_filter_display_data_insights_inner.go
 model_insight_metric_info.go
@@ -872,6 +861,7 @@ model_terminate_all_jobs_params.go
 model_terminate_all_jobs_response.go
 model_terminate_job_params.go
 model_terminate_job_response.go
+model_test_filter_operator_type.go
 model_test_status.go
 model_text_data.go
 model_text_viz.go
@@ -919,7 +909,5 @@ model_visualizer_message_params.go
 model_viz_info_type.go
 model_viz_type.go
 model_weight_asset_data.go
-model_xy_chart.go
 response.go
-test/api_default_test.go
 utils.go

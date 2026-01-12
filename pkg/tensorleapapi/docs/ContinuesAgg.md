@@ -4,18 +4,18 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Field** | **string** |  | 
+**OrderField** | Pointer to **string** |  | [optional] 
+**Limit** | **NullableFloat64** |  | 
 **Order** | [**OrderType**](OrderType.md) |  | 
-**Limit** | Pointer to **float64** |  | [optional] 
-**OrderField** | **string** |  | 
+**Field** | **string** |  | 
 **Interval** | **float64** |  | 
-**Distribution** | [**DistributionType**](DistributionType.md) |  | 
+**Distribution** | [**DistributionTypeContinuous**](DistributionTypeContinuous.md) |  | 
 
 ## Methods
 
 ### NewContinuesAgg
 
-`func NewContinuesAgg(field string, order OrderType, orderField string, interval float64, distribution DistributionType, ) *ContinuesAgg`
+`func NewContinuesAgg(limit NullableFloat64, order OrderType, field string, interval float64, distribution DistributionTypeContinuous, ) *ContinuesAgg`
 
 NewContinuesAgg instantiates a new ContinuesAgg object
 This constructor will assign default values to properties that have it defined,
@@ -30,45 +30,30 @@ NewContinuesAggWithDefaults instantiates a new ContinuesAgg object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetField
+### GetOrderField
 
-`func (o *ContinuesAgg) GetField() string`
+`func (o *ContinuesAgg) GetOrderField() string`
 
-GetField returns the Field field if non-nil, zero value otherwise.
+GetOrderField returns the OrderField field if non-nil, zero value otherwise.
 
-### GetFieldOk
+### GetOrderFieldOk
 
-`func (o *ContinuesAgg) GetFieldOk() (*string, bool)`
+`func (o *ContinuesAgg) GetOrderFieldOk() (*string, bool)`
 
-GetFieldOk returns a tuple with the Field field if it's non-nil, zero value otherwise
+GetOrderFieldOk returns a tuple with the OrderField field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetField
+### SetOrderField
 
-`func (o *ContinuesAgg) SetField(v string)`
+`func (o *ContinuesAgg) SetOrderField(v string)`
 
-SetField sets Field field to given value.
+SetOrderField sets OrderField field to given value.
 
+### HasOrderField
 
-### GetOrder
+`func (o *ContinuesAgg) HasOrderField() bool`
 
-`func (o *ContinuesAgg) GetOrder() OrderType`
-
-GetOrder returns the Order field if non-nil, zero value otherwise.
-
-### GetOrderOk
-
-`func (o *ContinuesAgg) GetOrderOk() (*OrderType, bool)`
-
-GetOrderOk returns a tuple with the Order field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetOrder
-
-`func (o *ContinuesAgg) SetOrder(v OrderType)`
-
-SetOrder sets Order field to given value.
-
+HasOrderField returns a boolean if a field has been set.
 
 ### GetLimit
 
@@ -89,30 +74,55 @@ and a boolean to check if the value has been set.
 
 SetLimit sets Limit field to given value.
 
-### HasLimit
 
-`func (o *ContinuesAgg) HasLimit() bool`
+### SetLimitNil
 
-HasLimit returns a boolean if a field has been set.
+`func (o *ContinuesAgg) SetLimitNil(b bool)`
 
-### GetOrderField
+ SetLimitNil sets the value for Limit to be an explicit nil
 
-`func (o *ContinuesAgg) GetOrderField() string`
+### UnsetLimit
+`func (o *ContinuesAgg) UnsetLimit()`
 
-GetOrderField returns the OrderField field if non-nil, zero value otherwise.
+UnsetLimit ensures that no value is present for Limit, not even an explicit nil
+### GetOrder
 
-### GetOrderFieldOk
+`func (o *ContinuesAgg) GetOrder() OrderType`
 
-`func (o *ContinuesAgg) GetOrderFieldOk() (*string, bool)`
+GetOrder returns the Order field if non-nil, zero value otherwise.
 
-GetOrderFieldOk returns a tuple with the OrderField field if it's non-nil, zero value otherwise
+### GetOrderOk
+
+`func (o *ContinuesAgg) GetOrderOk() (*OrderType, bool)`
+
+GetOrderOk returns a tuple with the Order field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrderField
+### SetOrder
 
-`func (o *ContinuesAgg) SetOrderField(v string)`
+`func (o *ContinuesAgg) SetOrder(v OrderType)`
 
-SetOrderField sets OrderField field to given value.
+SetOrder sets Order field to given value.
+
+
+### GetField
+
+`func (o *ContinuesAgg) GetField() string`
+
+GetField returns the Field field if non-nil, zero value otherwise.
+
+### GetFieldOk
+
+`func (o *ContinuesAgg) GetFieldOk() (*string, bool)`
+
+GetFieldOk returns a tuple with the Field field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetField
+
+`func (o *ContinuesAgg) SetField(v string)`
+
+SetField sets Field field to given value.
 
 
 ### GetInterval
@@ -137,20 +147,20 @@ SetInterval sets Interval field to given value.
 
 ### GetDistribution
 
-`func (o *ContinuesAgg) GetDistribution() DistributionType`
+`func (o *ContinuesAgg) GetDistribution() DistributionTypeContinuous`
 
 GetDistribution returns the Distribution field if non-nil, zero value otherwise.
 
 ### GetDistributionOk
 
-`func (o *ContinuesAgg) GetDistributionOk() (*DistributionType, bool)`
+`func (o *ContinuesAgg) GetDistributionOk() (*DistributionTypeContinuous, bool)`
 
 GetDistributionOk returns a tuple with the Distribution field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDistribution
 
-`func (o *ContinuesAgg) SetDistribution(v DistributionType)`
+`func (o *ContinuesAgg) SetDistribution(v DistributionTypeContinuous)`
 
 SetDistribution sets Distribution field to given value.
 

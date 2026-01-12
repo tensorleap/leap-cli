@@ -61,7 +61,6 @@ Method | HTTP request | Description
 [**GetF1Score**](DefaultAPI.md#GetF1Score) | **Post** /sessionmetrics/getF1Score | 
 [**GetFetchSimilarStatus**](DefaultAPI.md#GetFetchSimilarStatus) | **Post** /visualizations/getFetchSimilarStatus | 
 [**GetFieldsValues**](DefaultAPI.md#GetFieldsValues) | **Post** /sessionmetrics/getFieldsValues | 
-[**GetGeneratedDashlets**](DefaultAPI.md#GetGeneratedDashlets) | **Post** /dashletsGenerator/getGeneratedDashlets | 
 [**GetGeneratedLabels**](DefaultAPI.md#GetGeneratedLabels) | **Post** /datasetcuration/getGeneratedLabels | 
 [**GetGenericBaseImageTypes**](DefaultAPI.md#GetGenericBaseImageTypes) | **Post** /versions/getGenericBaseImageTypes | 
 [**GetHeatmapChart**](DefaultAPI.md#GetHeatmapChart) | **Post** /sessionmetrics/getHeatmapChart | 
@@ -2949,7 +2948,7 @@ import (
 )
 
 func main() {
-	getConfusionMatrixResultCombinationsParams := *openapiclient.NewGetConfusionMatrixResultCombinationsParams("ProjectId_example", []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), "CustomMetricName_example") // GetConfusionMatrixResultCombinationsParams | 
+	getConfusionMatrixResultCombinationsParams := *openapiclient.NewGetConfusionMatrixResultCombinationsParams("ProjectId_example", []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, *openapiclient.NewSplitAgg(NullableFloat64(123), openapiclient.OrderType("desc"), "Field_example", float64(123), openapiclient.DistributionType.Distinct("distinct")), "CustomMetricName_example") // GetConfusionMatrixResultCombinationsParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -3752,70 +3751,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetGeneratedDashlets
-
-> GetGeneratedDashletsResponse GetGeneratedDashlets(ctx).GetGeneratedDashletsParams(getGeneratedDashletsParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-	getGeneratedDashletsParams := *openapiclient.NewGetGeneratedDashletsParams("ProjectId_example", []string{"SessionRunIds_example"}) // GetGeneratedDashletsParams | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DefaultAPI.GetGeneratedDashlets(context.Background()).GetGeneratedDashletsParams(getGeneratedDashletsParams).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetGeneratedDashlets``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `GetGeneratedDashlets`: GetGeneratedDashletsResponse
-	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetGeneratedDashlets`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetGeneratedDashletsRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getGeneratedDashletsParams** | [**GetGeneratedDashletsParams**](GetGeneratedDashletsParams.md) |  | 
-
-### Return type
-
-[**GetGeneratedDashletsResponse**](GetGeneratedDashletsResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## GetGeneratedLabels
 
 > GeneratedLabelsResponse GetGeneratedLabels(ctx).GetGeneratedLabelsParams(getGeneratedLabelsParams).Execute()
@@ -3958,7 +3893,7 @@ import (
 )
 
 func main() {
-	heatmapChartsParams := *openapiclient.NewHeatmapChartsParams("ProjectId_example", *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), *openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average")), []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, false) // HeatmapChartsParams | 
+	heatmapChartsParams := *openapiclient.NewHeatmapChartsParams("ProjectId_example", *openapiclient.NewSplitAgg(NullableFloat64(123), openapiclient.OrderType("desc"), "Field_example", float64(123), openapiclient.DistributionType.Distinct("distinct")), *openapiclient.NewSplitAgg(NullableFloat64(123), openapiclient.OrderType("desc"), "Field_example", float64(123), openapiclient.DistributionType.Distinct("distinct")), *openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average")), []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, false) // HeatmapChartsParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -4332,7 +4267,7 @@ import (
 )
 
 func main() {
-	confusionMatrixParams := *openapiclient.NewConfusionMatrixParams("ProjectId_example", []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), "CustomMetricName_example") // ConfusionMatrixParams | 
+	confusionMatrixParams := *openapiclient.NewConfusionMatrixParams("ProjectId_example", []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, *openapiclient.NewSplitAgg(NullableFloat64(123), openapiclient.OrderType("desc"), "Field_example", float64(123), openapiclient.DistributionType.Distinct("distinct")), "CustomMetricName_example") // ConfusionMatrixParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -6237,7 +6172,7 @@ import (
 )
 
 func main() {
-	genericDataQueryParams := *openapiclient.NewGenericDataQueryParams("ProjectId_example", []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, false, []openapiclient.Aggregations{*openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average"))}, []openapiclient.SplitAgg{*openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous"))}) // GenericDataQueryParams | 
+	genericDataQueryParams := *openapiclient.NewGenericDataQueryParams("ProjectId_example", []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, false, []openapiclient.Aggregations{*openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average"))}, []openapiclient.SplitAgg{*openapiclient.NewSplitAgg(NullableFloat64(123), openapiclient.OrderType("desc"), "Field_example", float64(123), openapiclient.DistributionType.Distinct("distinct"))}) // GenericDataQueryParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -6675,7 +6610,7 @@ import (
 )
 
 func main() {
-	multiChartsParams := *openapiclient.NewMultiChartsParams("ProjectId_example", *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), *openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average")), []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, false) // MultiChartsParams | 
+	multiChartsParams := *openapiclient.NewMultiChartsParams("ProjectId_example", *openapiclient.NewSplitAgg(NullableFloat64(123), openapiclient.OrderType("desc"), "Field_example", float64(123), openapiclient.DistributionType.Distinct("distinct")), *openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average")), []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, false) // MultiChartsParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

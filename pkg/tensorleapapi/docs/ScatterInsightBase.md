@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **Index** | **float64** |  | 
 **MinHash** | **[]float64** |  | 
 **CsvPath** | Pointer to **string** |  | [optional] 
+**AutomaticTests** | Pointer to [**[]InsightAutomaticTest**](InsightAutomaticTest.md) |  | [optional] 
 
 ## Methods
 
@@ -316,6 +317,31 @@ SetCsvPath sets CsvPath field to given value.
 `func (o *ScatterInsightBase) HasCsvPath() bool`
 
 HasCsvPath returns a boolean if a field has been set.
+
+### GetAutomaticTests
+
+`func (o *ScatterInsightBase) GetAutomaticTests() []InsightAutomaticTest`
+
+GetAutomaticTests returns the AutomaticTests field if non-nil, zero value otherwise.
+
+### GetAutomaticTestsOk
+
+`func (o *ScatterInsightBase) GetAutomaticTestsOk() (*[]InsightAutomaticTest, bool)`
+
+GetAutomaticTestsOk returns a tuple with the AutomaticTests field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAutomaticTests
+
+`func (o *ScatterInsightBase) SetAutomaticTests(v []InsightAutomaticTest)`
+
+SetAutomaticTests sets AutomaticTests field to given value.
+
+### HasAutomaticTests
+
+`func (o *ScatterInsightBase) HasAutomaticTests() bool`
+
+HasAutomaticTests returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

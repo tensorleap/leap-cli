@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **Index** | **float64** |  | 
 **MinHash** | **[]float64** |  | 
 **CsvPath** | Pointer to **string** |  | [optional] 
+**AutomaticTests** | Pointer to [**[]InsightAutomaticTest**](InsightAutomaticTest.md) |  | [optional] 
 **Subset** | [**DataStateType**](DataStateType.md) |  | 
 
 ## Methods
@@ -317,6 +318,31 @@ SetCsvPath sets CsvPath field to given value.
 `func (o *DuplicationInsight) HasCsvPath() bool`
 
 HasCsvPath returns a boolean if a field has been set.
+
+### GetAutomaticTests
+
+`func (o *DuplicationInsight) GetAutomaticTests() []InsightAutomaticTest`
+
+GetAutomaticTests returns the AutomaticTests field if non-nil, zero value otherwise.
+
+### GetAutomaticTestsOk
+
+`func (o *DuplicationInsight) GetAutomaticTestsOk() (*[]InsightAutomaticTest, bool)`
+
+GetAutomaticTestsOk returns a tuple with the AutomaticTests field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAutomaticTests
+
+`func (o *DuplicationInsight) SetAutomaticTests(v []InsightAutomaticTest)`
+
+SetAutomaticTests sets AutomaticTests field to given value.
+
+### HasAutomaticTests
+
+`func (o *DuplicationInsight) HasAutomaticTests() bool`
+
+HasAutomaticTests returns a boolean if a field has been set.
 
 ### GetSubset
 
