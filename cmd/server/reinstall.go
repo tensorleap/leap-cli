@@ -1,6 +1,8 @@
 package server
 
 import (
+	"os"
+
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/helm-charts/cmd/server"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
@@ -11,12 +13,19 @@ import (
 func NewReinstallCmd() *cobra.Command {
 	flags := &server.ReinstallFlags{}
 	licenseFlag := auth.NewLicenseFlag()
+	var nonInteractive bool
 
 	cmd := &cobra.Command{
 		Use:   "reinstall",
 		Short: "Reinstall tensorleap",
 		Long:  "Reinstall tensorleap",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			// Set non-interactive mode via environment variable
+			// This signals to helm-charts to use defaults and skip prompts
+			if nonInteractive {
+				os.Setenv("TL_USE_DEFAULT_OPTION", "true")
+			}
+
 			startProperties := map[string]interface{}{
 				"cli_version":     version.CliVersion,
 				"data_dir":        flags.DataDir,
@@ -102,6 +111,7 @@ func NewReinstallCmd() *cobra.Command {
 
 	flags.SetFlags(cmd)
 	licenseFlag.AddFlags(cmd)
+	cmd.Flags().BoolVarP(&nonInteractive, "yes", "y", false, "Run in non-interactive mode (skip prompts)")
 
 	return cmd
 }
