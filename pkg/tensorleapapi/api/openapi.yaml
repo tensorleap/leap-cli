@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.670
+  version: 0.0.672
 servers:
 - url: /api/v2
 paths:
@@ -324,6 +324,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CalcPopulationExplorationDigestResponse"
+          description: Ok
+      security:
+      - jwt: []
+  /dashletsGenerator/getGeneratedDashlets:
+    post:
+      operationId: GetGeneratedDashlets
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetGeneratedDashletsParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetGeneratedDashletsResponse"
           description: Ok
       security:
       - jwt: []
@@ -3745,6 +3764,7 @@ components:
       - validation
       - test
       - unlabeled
+      - additional
       type: string
     UnderRepresentationInsight:
       additionalProperties: true
@@ -4841,6 +4861,9 @@ components:
       additionalProperties: true
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
+        ignoreSuggestedDashletsHashes:
+        - ignoreSuggestedDashletsHashes
+        - ignoreSuggestedDashletsHashes
         createdBy: createdBy
         name: name
         description: description
@@ -5573,10 +5596,15 @@ components:
           type: array
         description:
           type: string
+        ignoreSuggestedDashletsHashes:
+          items:
+            type: string
+          type: array
       required:
       - cid
       - createdAt
       - createdBy
+      - ignoreSuggestedDashletsHashes
       - items
       - name
       - projectId
@@ -5587,6 +5615,9 @@ components:
       example:
         dashboards:
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          ignoreSuggestedDashletsHashes:
+          - ignoreSuggestedDashletsHashes
+          - ignoreSuggestedDashletsHashes
           createdBy: createdBy
           name: name
           description: description
@@ -6299,6 +6330,9 @@ components:
           cid: cid
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          ignoreSuggestedDashletsHashes:
+          - ignoreSuggestedDashletsHashes
+          - ignoreSuggestedDashletsHashes
           createdBy: createdBy
           name: name
           description: description
@@ -7033,6 +7067,9 @@ components:
       example:
         dashboard:
           createdAt: 2000-01-23T04:56:07.000+00:00
+          ignoreSuggestedDashletsHashes:
+          - ignoreSuggestedDashletsHashes
+          - ignoreSuggestedDashletsHashes
           createdBy: createdBy
           name: name
           description: description
@@ -8518,6 +8555,9 @@ components:
     UpdateDashboardParams:
       additionalProperties: true
       example:
+        ignoreSuggestedDashletsHashes:
+        - ignoreSuggestedDashletsHashes
+        - ignoreSuggestedDashletsHashes
         dashboardId: dashboardId
         name: name
         description: description
@@ -9238,6 +9278,10 @@ components:
           type: array
         description:
           type: string
+        ignoreSuggestedDashletsHashes:
+          items:
+            type: string
+          type: array
         projectId:
           type: string
       required:
@@ -10405,6 +10449,325 @@ components:
       required:
       - populationParams
       type: object
+    GeneratedDashletType:
+      enum:
+      - heatmap
+      - bar
+      - line
+      type: string
+    DistributionType:
+      enum:
+      - continuous
+      - distinct
+      type: string
+    OrderType:
+      enum:
+      - asc
+      - desc
+      type: string
+    ContinuesAgg:
+      additionalProperties: true
+      example:
+        field: field
+        limit: 6.027456183070403
+        order_field: order_field
+        interval: 1.4658129805029452
+        distribution: continuous
+        order: asc
+      properties:
+        field:
+          type: string
+        order:
+          $ref: "#/components/schemas/OrderType"
+        limit:
+          format: double
+          type: number
+        order_field:
+          type: string
+        interval:
+          format: double
+          type: number
+        distribution:
+          $ref: "#/components/schemas/DistributionType"
+      required:
+      - distribution
+      - field
+      - interval
+      - order
+      - order_field
+      type: object
+    DistinctAgg:
+      additionalProperties: true
+      properties:
+        field:
+          type: string
+        order:
+          $ref: "#/components/schemas/OrderType"
+        limit:
+          format: double
+          type: number
+        order_field:
+          type: string
+        distribution:
+          $ref: "#/components/schemas/DistributionType"
+      required:
+      - distribution
+      - field
+      - order
+      - order_field
+      type: object
+    SplitAgg:
+      anyOf:
+      - $ref: "#/components/schemas/ContinuesAgg"
+      - $ref: "#/components/schemas/DistinctAgg"
+    AggregationMethod:
+      enum:
+      - Average
+      - Count
+      - Min
+      - Max
+      - Median
+      type: string
+    AggFunc:
+      additionalProperties: true
+      example:
+        field: field
+        aggregation: Average
+      properties:
+        field:
+          type: string
+        aggregation:
+          $ref: "#/components/schemas/AggregationMethod"
+      required:
+      - aggregation
+      - field
+      type: object
+    XYChart:
+      additionalProperties: true
+      example:
+        x:
+          field: field
+          limit: 6.027456183070403
+          order_field: order_field
+          interval: 1.4658129805029452
+          distribution: continuous
+          order: asc
+        "y":
+          field: field
+          aggregation: Average
+      properties:
+        x:
+          $ref: "#/components/schemas/SplitAgg"
+        "y":
+          $ref: "#/components/schemas/AggFunc"
+      required:
+      - x
+      - "y"
+      type: object
+    HeatmapChart:
+      additionalProperties: true
+      properties:
+        x:
+          $ref: "#/components/schemas/SplitAgg"
+        "y":
+          $ref: "#/components/schemas/SplitAgg"
+      required:
+      - x
+      - "y"
+      type: object
+    GeneratedChartData:
+      anyOf:
+      - $ref: "#/components/schemas/XYChart"
+      - $ref: "#/components/schemas/HeatmapChart"
+    GeneratedDashlet:
+      additionalProperties: true
+      example:
+        data:
+          x:
+            field: field
+            limit: 6.027456183070403
+            order_field: order_field
+            interval: 1.4658129805029452
+            distribution: continuous
+            order: asc
+          "y":
+            field: field
+            aggregation: Average
+        name: name
+        priority: 0.8008281904610115
+        type: heatmap
+      properties:
+        priority:
+          format: double
+          type: number
+        type:
+          $ref: "#/components/schemas/GeneratedDashletType"
+        data:
+          $ref: "#/components/schemas/GeneratedChartData"
+        name:
+          type: string
+      required:
+      - data
+      - priority
+      - type
+      type: object
+    JobStatus:
+      enum:
+      - UNSTARTED
+      - STARTED
+      - PENDING
+      - STOPPED
+      - TERMINATED
+      - FINISHED
+      - FAILED
+      type: string
+    GetGeneratedDashletsBySessionRun:
+      additionalProperties: true
+      example:
+        dashlets:
+        - data:
+            x:
+              field: field
+              limit: 6.027456183070403
+              order_field: order_field
+              interval: 1.4658129805029452
+              distribution: continuous
+              order: asc
+            "y":
+              field: field
+              aggregation: Average
+          name: name
+          priority: 0.8008281904610115
+          type: heatmap
+        - data:
+            x:
+              field: field
+              limit: 6.027456183070403
+              order_field: order_field
+              interval: 1.4658129805029452
+              distribution: continuous
+              order: asc
+            "y":
+              field: field
+              aggregation: Average
+          name: name
+          priority: 0.8008281904610115
+          type: heatmap
+        sessionRunId: sessionRunId
+        status: UNSTARTED
+      properties:
+        dashlets:
+          items:
+            $ref: "#/components/schemas/GeneratedDashlet"
+          type: array
+        sessionRunId:
+          type: string
+        status:
+          $ref: "#/components/schemas/JobStatus"
+      required:
+      - dashlets
+      - sessionRunId
+      - status
+      type: object
+    GetGeneratedDashletsResponse:
+      additionalProperties: true
+      example:
+        data:
+        - dashlets:
+          - data:
+              x:
+                field: field
+                limit: 6.027456183070403
+                order_field: order_field
+                interval: 1.4658129805029452
+                distribution: continuous
+                order: asc
+              "y":
+                field: field
+                aggregation: Average
+            name: name
+            priority: 0.8008281904610115
+            type: heatmap
+          - data:
+              x:
+                field: field
+                limit: 6.027456183070403
+                order_field: order_field
+                interval: 1.4658129805029452
+                distribution: continuous
+                order: asc
+              "y":
+                field: field
+                aggregation: Average
+            name: name
+            priority: 0.8008281904610115
+            type: heatmap
+          sessionRunId: sessionRunId
+          status: UNSTARTED
+        - dashlets:
+          - data:
+              x:
+                field: field
+                limit: 6.027456183070403
+                order_field: order_field
+                interval: 1.4658129805029452
+                distribution: continuous
+                order: asc
+              "y":
+                field: field
+                aggregation: Average
+            name: name
+            priority: 0.8008281904610115
+            type: heatmap
+          - data:
+              x:
+                field: field
+                limit: 6.027456183070403
+                order_field: order_field
+                interval: 1.4658129805029452
+                distribution: continuous
+                order: asc
+              "y":
+                field: field
+                aggregation: Average
+            name: name
+            priority: 0.8008281904610115
+            type: heatmap
+          sessionRunId: sessionRunId
+          status: UNSTARTED
+      properties:
+        data:
+          items:
+            $ref: "#/components/schemas/GetGeneratedDashletsBySessionRun"
+          type: array
+      required:
+      - data
+      type: object
+    GetGeneratedDashletsParams:
+      additionalProperties: true
+      example:
+        resetPrevious: true
+        threshold: 0.8008281904610115
+        projectId: projectId
+        sessionRunIds:
+        - sessionRunIds
+        - sessionRunIds
+      properties:
+        projectId:
+          type: string
+        sessionRunIds:
+          items:
+            type: string
+          type: array
+        threshold:
+          format: double
+          type: number
+        resetPrevious:
+          type: boolean
+      required:
+      - projectId
+      - sessionRunIds
+      type: object
     JobType:
       enum:
       - TRAINING
@@ -10419,6 +10782,7 @@ components:
       - DRY_RUN_GRAPH
       - SLIM_LS
       - STREAMING_HANDLER
+      - DASHLETS_GENERATOR
       - EXPORT_PROJECT
       - IMPORT_PROJECT
       type: string
@@ -10436,16 +10800,6 @@ components:
       - Import Project
       - Code Parse
       - Import Model
-      type: string
-    JobStatus:
-      enum:
-      - UNSTARTED
-      - STARTED
-      - PENDING
-      - STOPPED
-      - TERMINATED
-      - FINISHED
-      - FAILED
       type: string
     EarlyStopParams:
       additionalProperties: true
@@ -12997,79 +13351,6 @@ components:
       required:
       - charts
       type: object
-    OrderType:
-      enum:
-      - desc
-      - asc
-      type: string
-    BaseSplitAgg:
-      properties:
-        orderField:
-          type: string
-        limit:
-          format: double
-          nullable: true
-          type: number
-        order:
-          $ref: "#/components/schemas/OrderType"
-        field:
-          type: string
-      required:
-      - field
-      - limit
-      - order
-      type: object
-    DistributionType.Continuous:
-      enum:
-      - continuous
-      type: string
-    ContinuesAgg:
-      allOf:
-      - $ref: "#/components/schemas/BaseSplitAgg"
-      - properties:
-          interval:
-            format: double
-            type: number
-          distribution:
-            $ref: "#/components/schemas/DistributionType.Continuous"
-        required:
-        - distribution
-        - interval
-        type: object
-      example:
-        field: field
-        limit: 0.8008281904610115
-        interval: 6.027456183070403
-        orderField: orderField
-        distribution: continuous
-        order: desc
-    DistributionType.Distinct:
-      enum:
-      - distinct
-      type: string
-    DistinctAgg:
-      allOf:
-      - $ref: "#/components/schemas/BaseSplitAgg"
-      - properties:
-          orderField:
-            type: string
-          distribution:
-            $ref: "#/components/schemas/DistributionType.Distinct"
-        required:
-        - distribution
-        type: object
-    SplitAgg:
-      anyOf:
-      - $ref: "#/components/schemas/ContinuesAgg"
-      - $ref: "#/components/schemas/DistinctAgg"
-    AggregationMethod:
-      enum:
-      - Average
-      - Count
-      - Min
-      - Max
-      - Median
-      type: string
     Aggregations:
       additionalProperties: true
       example:
@@ -13088,7 +13369,7 @@ components:
       additionalProperties: true
       example:
         sessionRunId: sessionRunId
-        epoch: 1.4658129805029452
+        epoch: 0.8008281904610115
       properties:
         sessionRunId:
           type: string
@@ -13106,11 +13387,11 @@ components:
         elementInstance: true
         x:
           field: field
-          limit: 0.8008281904610115
-          interval: 6.027456183070403
-          orderField: orderField
+          limit: 6.027456183070403
+          order_field: order_field
+          interval: 1.4658129805029452
           distribution: continuous
-          order: desc
+          order: asc
         innerSplit: null
         "y":
           field: field
@@ -13443,9 +13724,9 @@ components:
           operator: between
         sessionRunsToEpochs:
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         projectId: projectId
         showAllEpochs: true
       properties:
@@ -13490,11 +13771,11 @@ components:
           aggregation: Average
         x:
           field: field
-          limit: 0.8008281904610115
-          interval: 6.027456183070403
-          orderField: orderField
+          limit: 6.027456183070403
+          order_field: order_field
+          interval: 1.4658129805029452
           distribution: continuous
-          order: desc
+          order: asc
         "y": null
         verticalSplit: null
         filters:
@@ -13824,9 +14105,9 @@ components:
           operator: between
         sessionRunsToEpochs:
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         projectId: projectId
         showAllEpochs: true
       properties:
@@ -13873,11 +14154,11 @@ components:
         innerSplit: null
         verticalSplit:
           field: field
-          limit: 0.8008281904610115
-          interval: 6.027456183070403
-          orderField: orderField
+          limit: 6.027456183070403
+          order_field: order_field
+          interval: 1.4658129805029452
           distribution: continuous
-          order: desc
+          order: asc
         filters:
         - field: field
           disable: true
@@ -14205,9 +14486,9 @@ components:
           operator: between
         sessionRunsToEpochs:
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         projectId: projectId
         aggregations:
         - field: field
@@ -14287,11 +14568,11 @@ components:
         horizontalSplit: null
         x:
           field: field
-          limit: 0.8008281904610115
-          interval: 6.027456183070403
-          orderField: orderField
+          limit: 6.027456183070403
+          order_field: order_field
+          interval: 1.4658129805029452
           distribution: continuous
-          order: desc
+          order: asc
         innerSplit: null
         verticalSplit: null
         threshold: 0.8008281904610115
@@ -14622,9 +14903,9 @@ components:
           operator: between
         sessionRunsToEpochs:
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         projectId: projectId
         customMetricName: customMetricName
       properties:
@@ -14672,11 +14953,11 @@ components:
         elementInstance: true
         verticalSplit:
           field: field
-          limit: 0.8008281904610115
-          interval: 6.027456183070403
-          orderField: orderField
+          limit: 6.027456183070403
+          order_field: order_field
+          interval: 1.4658129805029452
           distribution: continuous
-          order: desc
+          order: asc
         filters:
         - field: field
           disable: true
@@ -15004,9 +15285,9 @@ components:
           operator: between
         sessionRunsToEpochs:
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         projectId: projectId
         customMetricName: customMetricName
       properties:
@@ -15043,11 +15324,11 @@ components:
         absAxis: true
         verticalSplit:
           field: field
-          limit: 0.8008281904610115
-          interval: 6.027456183070403
-          orderField: orderField
+          limit: 6.027456183070403
+          order_field: order_field
+          interval: 1.4658129805029452
           distribution: continuous
-          order: desc
+          order: asc
         filters:
         - field: field
           disable: true
@@ -15375,9 +15656,9 @@ components:
           operator: between
         sessionRunsToEpochs:
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         projectId: projectId
         customMetricName: customMetricName
       properties:
@@ -15429,18 +15710,18 @@ components:
       example:
         horizontalSplit: null
         splitByLabel: true
-        splitByLabelOrder: desc
+        splitByLabelOrder: asc
         elementInstance: true
         filterLabels:
         - filterLabels
         - filterLabels
         verticalSplit:
           field: field
-          limit: 0.8008281904610115
-          interval: 6.027456183070403
-          orderField: orderField
+          limit: 6.027456183070403
+          order_field: order_field
+          interval: 1.4658129805029452
           distribution: continuous
-          order: desc
+          order: asc
         threshold: 0.8008281904610115
         filters:
         - field: field
@@ -15769,9 +16050,9 @@ components:
           operator: between
         sessionRunsToEpochs:
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         projectId: projectId
         customMetricName: customMetricName
     GetConfusionMatrixResultCombinationsParams:
@@ -15790,11 +16071,11 @@ components:
         - filterLabels
         x:
           field: field
-          limit: 0.8008281904610115
-          interval: 6.027456183070403
-          orderField: orderField
+          limit: 6.027456183070403
+          order_field: order_field
+          interval: 1.4658129805029452
           distribution: continuous
-          order: desc
+          order: asc
         innerSplit: null
         verticalSplit: null
         threshold: 0.8008281904610115
@@ -16125,9 +16406,9 @@ components:
           operator: between
         sessionRunsToEpochs:
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         - sessionRunId: sessionRunId
-          epoch: 1.4658129805029452
+          epoch: 0.8008281904610115
         projectId: projectId
         customMetricName: customMetricName
     PredictionLabels:
@@ -25277,6 +25558,7 @@ components:
       example:
         validation_length: 1.4658129805029452
         unlabeled_length: 5.637376656633329
+        additional_length: 2.3021358869347655
         test_length: 5.962133916683182
         training_length: 6.027456183070403
       properties:
@@ -25292,6 +25574,9 @@ components:
         unlabeled_length:
           format: double
           type: number
+        additional_length:
+          format: double
+          type: number
       required:
       - training_length
       - validation_length
@@ -25300,9 +25585,9 @@ components:
       additionalProperties: true
       example:
         shape:
-        - 2.3021358869347655
-        - 2.3021358869347655
-        channel_dim: 7.061401241503109
+        - 7.061401241503109
+        - 7.061401241503109
+        channel_dim: 9.301444243932576
         name: name
       properties:
         name:
@@ -25344,8 +25629,8 @@ components:
       additionalProperties: true
       example:
         shape:
-        - 9.301444243932576
-        - 9.301444243932576
+        - 3.616076749251911
+        - 3.616076749251911
         name: name
       properties:
         name:
@@ -25396,7 +25681,7 @@ components:
     PredictionTypeInstance:
       additionalProperties: true
       example:
-        channel_dim: 3.616076749251911
+        channel_dim: 2.027123023002322
         name: name
         labels:
         - labels
@@ -25456,16 +25741,17 @@ components:
       example:
         outputs:
         - shape:
-          - 9.301444243932576
-          - 9.301444243932576
+          - 3.616076749251911
+          - 3.616076749251911
           name: name
         - shape:
-          - 9.301444243932576
-          - 9.301444243932576
+          - 3.616076749251911
+          - 3.616076749251911
           name: name
         preprocess:
           validation_length: 1.4658129805029452
           unlabeled_length: 5.637376656633329
+          additional_length: 2.3021358869347655
           test_length: 5.962133916683182
           training_length: 6.027456183070403
         metadata:
@@ -25475,14 +25761,14 @@ components:
           type: float
         inputs:
         - shape:
-          - 2.3021358869347655
-          - 2.3021358869347655
-          channel_dim: 7.061401241503109
+          - 7.061401241503109
+          - 7.061401241503109
+          channel_dim: 9.301444243932576
           name: name
         - shape:
-          - 2.3021358869347655
-          - 2.3021358869347655
-          channel_dim: 7.061401241503109
+          - 7.061401241503109
+          - 7.061401241503109
+          channel_dim: 9.301444243932576
           name: name
         custom_losses:
         - arg_names:
@@ -25494,12 +25780,12 @@ components:
           - arg_names
           name: name
         prediction_types:
-        - channel_dim: 3.616076749251911
+        - channel_dim: 2.027123023002322
           name: name
           labels:
           - labels
           - labels
-        - channel_dim: 3.616076749251911
+        - channel_dim: 2.027123023002322
           name: name
           labels:
           - labels
@@ -25716,16 +26002,17 @@ components:
         setup:
           outputs:
           - shape:
-            - 9.301444243932576
-            - 9.301444243932576
+            - 3.616076749251911
+            - 3.616076749251911
             name: name
           - shape:
-            - 9.301444243932576
-            - 9.301444243932576
+            - 3.616076749251911
+            - 3.616076749251911
             name: name
           preprocess:
             validation_length: 1.4658129805029452
             unlabeled_length: 5.637376656633329
+            additional_length: 2.3021358869347655
             test_length: 5.962133916683182
             training_length: 6.027456183070403
           metadata:
@@ -25735,14 +26022,14 @@ components:
             type: float
           inputs:
           - shape:
-            - 2.3021358869347655
-            - 2.3021358869347655
-            channel_dim: 7.061401241503109
+            - 7.061401241503109
+            - 7.061401241503109
+            channel_dim: 9.301444243932576
             name: name
           - shape:
-            - 2.3021358869347655
-            - 2.3021358869347655
-            channel_dim: 7.061401241503109
+            - 7.061401241503109
+            - 7.061401241503109
+            channel_dim: 9.301444243932576
             name: name
           custom_losses:
           - arg_names:
@@ -25754,12 +26041,12 @@ components:
             - arg_names
             name: name
           prediction_types:
-          - channel_dim: 3.616076749251911
+          - channel_dim: 2.027123023002322
             name: name
             labels:
             - labels
             - labels
-          - channel_dim: 3.616076749251911
+          - channel_dim: 2.027123023002322
             name: name
             labels:
             - labels
@@ -25851,16 +26138,17 @@ components:
           setup:
             outputs:
             - shape:
-              - 9.301444243932576
-              - 9.301444243932576
+              - 3.616076749251911
+              - 3.616076749251911
               name: name
             - shape:
-              - 9.301444243932576
-              - 9.301444243932576
+              - 3.616076749251911
+              - 3.616076749251911
               name: name
             preprocess:
               validation_length: 1.4658129805029452
               unlabeled_length: 5.637376656633329
+              additional_length: 2.3021358869347655
               test_length: 5.962133916683182
               training_length: 6.027456183070403
             metadata:
@@ -25870,14 +26158,14 @@ components:
               type: float
             inputs:
             - shape:
-              - 2.3021358869347655
-              - 2.3021358869347655
-              channel_dim: 7.061401241503109
+              - 7.061401241503109
+              - 7.061401241503109
+              channel_dim: 9.301444243932576
               name: name
             - shape:
-              - 2.3021358869347655
-              - 2.3021358869347655
-              channel_dim: 7.061401241503109
+              - 7.061401241503109
+              - 7.061401241503109
+              channel_dim: 9.301444243932576
               name: name
             custom_losses:
             - arg_names:
@@ -25889,12 +26177,12 @@ components:
               - arg_names
               name: name
             prediction_types:
-            - channel_dim: 3.616076749251911
+            - channel_dim: 2.027123023002322
               name: name
               labels:
               - labels
               - labels
-            - channel_dim: 3.616076749251911
+            - channel_dim: 2.027123023002322
               name: name
               labels:
               - labels
@@ -26006,16 +26294,17 @@ components:
             setup:
               outputs:
               - shape:
-                - 9.301444243932576
-                - 9.301444243932576
+                - 3.616076749251911
+                - 3.616076749251911
                 name: name
               - shape:
-                - 9.301444243932576
-                - 9.301444243932576
+                - 3.616076749251911
+                - 3.616076749251911
                 name: name
               preprocess:
                 validation_length: 1.4658129805029452
                 unlabeled_length: 5.637376656633329
+                additional_length: 2.3021358869347655
                 test_length: 5.962133916683182
                 training_length: 6.027456183070403
               metadata:
@@ -26025,14 +26314,14 @@ components:
                 type: float
               inputs:
               - shape:
-                - 2.3021358869347655
-                - 2.3021358869347655
-                channel_dim: 7.061401241503109
+                - 7.061401241503109
+                - 7.061401241503109
+                channel_dim: 9.301444243932576
                 name: name
               - shape:
-                - 2.3021358869347655
-                - 2.3021358869347655
-                channel_dim: 7.061401241503109
+                - 7.061401241503109
+                - 7.061401241503109
+                channel_dim: 9.301444243932576
                 name: name
               custom_losses:
               - arg_names:
@@ -26044,12 +26333,12 @@ components:
                 - arg_names
                 name: name
               prediction_types:
-              - channel_dim: 3.616076749251911
+              - channel_dim: 2.027123023002322
                 name: name
                 labels:
                 - labels
                 - labels
-              - channel_dim: 3.616076749251911
+              - channel_dim: 2.027123023002322
                 name: name
                 labels:
                 - labels
@@ -26141,16 +26430,17 @@ components:
             setup:
               outputs:
               - shape:
-                - 9.301444243932576
-                - 9.301444243932576
+                - 3.616076749251911
+                - 3.616076749251911
                 name: name
               - shape:
-                - 9.301444243932576
-                - 9.301444243932576
+                - 3.616076749251911
+                - 3.616076749251911
                 name: name
               preprocess:
                 validation_length: 1.4658129805029452
                 unlabeled_length: 5.637376656633329
+                additional_length: 2.3021358869347655
                 test_length: 5.962133916683182
                 training_length: 6.027456183070403
               metadata:
@@ -26160,14 +26450,14 @@ components:
                 type: float
               inputs:
               - shape:
-                - 2.3021358869347655
-                - 2.3021358869347655
-                channel_dim: 7.061401241503109
+                - 7.061401241503109
+                - 7.061401241503109
+                channel_dim: 9.301444243932576
                 name: name
               - shape:
-                - 2.3021358869347655
-                - 2.3021358869347655
-                channel_dim: 7.061401241503109
+                - 7.061401241503109
+                - 7.061401241503109
+                channel_dim: 9.301444243932576
                 name: name
               custom_losses:
               - arg_names:
@@ -26179,12 +26469,12 @@ components:
                 - arg_names
                 name: name
               prediction_types:
-              - channel_dim: 3.616076749251911
+              - channel_dim: 2.027123023002322
                 name: name
                 labels:
                 - labels
                 - labels
-              - channel_dim: 3.616076749251911
+              - channel_dim: 2.027123023002322
                 name: name
                 labels:
                 - labels
@@ -26997,6 +27287,7 @@ components:
       - DRY_RUN_GRAPH
       - SLIM_LS
       - STREAMING_HANDLER
+      - DASHLETS_GENERATOR
       type: string
     BasicVisualizationInfo:
       additionalProperties: true

@@ -13,8 +13,8 @@ import (
 	"context"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
 	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+	"testing"
 )
 
 func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
@@ -24,7 +24,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService Activate", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.Activate(context.Background()).Execute()
 
@@ -36,7 +36,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService AddDashboard", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.AddDashboard(context.Background()).Execute()
 
@@ -48,7 +48,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService AddExportModelJob", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.AddExportModelJob(context.Background()).Execute()
 
@@ -60,7 +60,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService AddIssue", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.AddIssue(context.Background()).Execute()
 
@@ -72,7 +72,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService AddProject", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.AddProject(context.Background()).Execute()
 
@@ -84,7 +84,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService AddSampleCollection", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.AddSampleCollection(context.Background()).Execute()
 
@@ -96,7 +96,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService AddSecretManager", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.AddSecretManager(context.Background()).Execute()
 
@@ -108,7 +108,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService ApproveInsights", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.ApproveInsights(context.Background()).Execute()
 
@@ -119,7 +119,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService ArchiveInsight", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.ArchiveInsight(context.Background()).Execute()
 
@@ -130,7 +130,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService CalcPopulationExplorationDigest", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.CalcPopulationExplorationDigest(context.Background()).Execute()
 
@@ -142,7 +142,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService ClearUserJobs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.ClearUserJobs(context.Background()).Execute()
 
@@ -153,7 +153,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService ClearUserNotifications", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.ClearUserNotifications(context.Background()).Execute()
 
@@ -164,7 +164,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService ContinueEvaluate", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.ContinueEvaluate(context.Background()).Execute()
 
@@ -176,7 +176,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService CreateSamplesVisualizations", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.CreateSamplesVisualizations(context.Background()).Execute()
 
@@ -188,7 +188,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService CreateSessionTest", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.CreateSessionTest(context.Background()).Execute()
 
@@ -200,7 +200,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService CreateTeam", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.CreateTeam(context.Background()).Execute()
 
@@ -212,7 +212,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService DeleteDashboard", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.DeleteDashboard(context.Background()).Execute()
 
@@ -223,7 +223,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService DeleteGeneratedLabel", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.DeleteGeneratedLabel(context.Background()).Execute()
 
@@ -234,7 +234,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService DeleteIssue", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.DeleteIssue(context.Background()).Execute()
 
@@ -245,7 +245,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService DeleteProject", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.DeleteProject(context.Background()).Execute()
 
@@ -256,7 +256,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService DeleteSampleAnalysis", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.DeleteSampleAnalysis(context.Background()).Execute()
 
@@ -267,7 +267,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService DeleteSession", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.DeleteSession(context.Background()).Execute()
 
@@ -278,7 +278,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService DeleteSessionRun", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.DeleteSessionRun(context.Background()).Execute()
 
@@ -289,7 +289,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService DeleteSessionTest", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.DeleteSessionTest(context.Background()).Execute()
 
@@ -300,7 +300,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService DeleteTeam", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.DeleteTeam(context.Background()).Execute()
 
@@ -311,7 +311,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService DeleteUserById", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.DeleteUserById(context.Background()).Execute()
 
@@ -322,7 +322,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService DeleteVersion", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.DeleteVersion(context.Background()).Execute()
 
@@ -333,7 +333,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService DeleteVisualizations", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.DeleteVisualizations(context.Background()).Execute()
 
@@ -344,7 +344,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService DownloadProject", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var projectId string
 
@@ -357,7 +357,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService Evaluate", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.Evaluate(context.Background()).Execute()
 
@@ -369,7 +369,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService ExportProject", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.ExportProject(context.Background()).Execute()
 
@@ -381,7 +381,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService ExtendTrial", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.ExtendTrial(context.Background()).Execute()
 
@@ -393,7 +393,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService FetchSimilar", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.FetchSimilar(context.Background()).Execute()
 
@@ -405,7 +405,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GenerateLabels", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.GenerateLabels(context.Background()).Execute()
 
@@ -416,7 +416,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetAllProjectSessionTests", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetAllProjectSessionTests(context.Background()).Execute()
 
@@ -428,7 +428,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetAllSlimUserData", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetAllSlimUserData(context.Background()).Execute()
 
@@ -440,7 +440,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetApiKeyByCode", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetApiKeyByCode(context.Background()).Execute()
 
@@ -452,7 +452,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetApprovedInsights", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetApprovedInsights(context.Background()).Execute()
 
@@ -464,7 +464,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetArchiveInsights", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetArchiveInsights(context.Background()).Execute()
 
@@ -476,7 +476,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetAuthProvider", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetAuthProvider(context.Background()).Execute()
 
@@ -488,7 +488,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetBalancedAccuracy", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetBalancedAccuracy(context.Background()).Execute()
 
@@ -500,7 +500,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetCodeSnapshot", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetCodeSnapshot(context.Background()).Execute()
 
@@ -512,7 +512,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetCodeSnapshotUploadUrl", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetCodeSnapshotUploadUrl(context.Background()).Execute()
 
@@ -524,7 +524,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetConfusionMatrixLabels", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetConfusionMatrixLabels(context.Background()).Execute()
 
@@ -536,7 +536,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetConfusionMatrixResultCombinations", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetConfusionMatrixResultCombinations(context.Background()).Execute()
 
@@ -548,7 +548,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetConfusionMatrixTable", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetConfusionMatrixTable(context.Background()).Execute()
 
@@ -560,7 +560,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetConfusionMetricNames", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetConfusionMetricNames(context.Background()).Execute()
 
@@ -572,7 +572,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetCurrentProjectVersion", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetCurrentProjectVersion(context.Background()).Execute()
 
@@ -584,7 +584,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetDashboard", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetDashboard(context.Background()).Execute()
 
@@ -596,7 +596,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetDashletFields", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetDashletFields(context.Background()).Execute()
 
@@ -608,7 +608,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetDownloadSignedUrl", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetDownloadSignedUrl(context.Background()).Execute()
 
@@ -620,7 +620,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetEngineSettings", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetEngineSettings(context.Background()).Execute()
 
@@ -632,7 +632,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetEnvironmentInfo", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetEnvironmentInfo(context.Background()).Execute()
 
@@ -644,7 +644,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetExportedSessionJobs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetExportedSessionJobs(context.Background()).Execute()
 
@@ -656,7 +656,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetF1Score", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetF1Score(context.Background()).Execute()
 
@@ -668,7 +668,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetFetchSimilarStatus", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetFetchSimilarStatus(context.Background()).Execute()
 
@@ -680,7 +680,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetFieldsValues", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetFieldsValues(context.Background()).Execute()
 
@@ -690,9 +690,21 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService GetGeneratedDashlets", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.GetGeneratedDashlets(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService GetGeneratedLabels", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetGeneratedLabels(context.Background()).Execute()
 
@@ -704,7 +716,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetGenericBaseImageTypes", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetGenericBaseImageTypes(context.Background()).Execute()
 
@@ -716,7 +728,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetHeatmapChart", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetHeatmapChart(context.Background()).Execute()
 
@@ -728,7 +740,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetIssueFileUploadSignedUrl", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetIssueFileUploadSignedUrl(context.Background()).Execute()
 
@@ -740,7 +752,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetJobLogs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetJobLogs(context.Background()).Execute()
 
@@ -752,7 +764,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetLatestExportedProject", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetLatestExportedProject(context.Background()).Execute()
 
@@ -764,7 +776,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetMachineTypes", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetMachineTypes(context.Background()).Execute()
 
@@ -776,7 +788,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetMaxActiveUsers", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetMaxActiveUsers(context.Background()).Execute()
 
@@ -788,7 +800,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetMeanAveragePrecision", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetMeanAveragePrecision(context.Background()).Execute()
 
@@ -800,7 +812,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetNotifications", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetNotifications(context.Background()).Execute()
 
@@ -812,7 +824,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetNotificationsByFilter", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetNotificationsByFilter(context.Background()).Execute()
 
@@ -824,7 +836,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetPopulationExplorationStatus", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetPopulationExplorationStatus(context.Background()).Execute()
 
@@ -836,7 +848,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetPrCurve", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetPrCurve(context.Background()).Execute()
 
@@ -848,7 +860,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetPrecisionScore", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetPrecisionScore(context.Background()).Execute()
 
@@ -860,7 +872,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetProjectDashboards", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetProjectDashboards(context.Background()).Execute()
 
@@ -872,7 +884,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetProjectIssues", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetProjectIssues(context.Background()).Execute()
 
@@ -884,7 +896,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetProjectSlimVersions", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetProjectSlimVersions(context.Background()).Execute()
 
@@ -896,7 +908,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetProjects", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetProjects(context.Background()).Execute()
 
@@ -908,7 +920,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetRecallScore", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetRecallScore(context.Background()).Execute()
 
@@ -920,7 +932,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetRecentTeamSessions", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetRecentTeamSessions(context.Background()).Execute()
 
@@ -932,7 +944,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetRoc", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetRoc(context.Background()).Execute()
 
@@ -944,7 +956,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetSampleCollections", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetSampleCollections(context.Background()).Execute()
 
@@ -956,7 +968,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetSampleVisualizationsPath", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetSampleVisualizationsPath(context.Background()).Execute()
 
@@ -968,7 +980,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetScatterSampleVisualizations", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetScatterSampleVisualizations(context.Background()).Execute()
 
@@ -980,7 +992,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetSecretManagerList", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetSecretManagerList(context.Background()).Execute()
 
@@ -992,7 +1004,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetSessionRunsEvaluate", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetSessionRunsEvaluate(context.Background()).Execute()
 
@@ -1004,7 +1016,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetSessionRunsVisualizations", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetSessionRunsVisualizations(context.Background()).Execute()
 
@@ -1016,7 +1028,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetSessionTestResult", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetSessionTestResult(context.Background()).Execute()
 
@@ -1028,7 +1040,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetSessionsByHash", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetSessionsByHash(context.Background()).Execute()
 
@@ -1040,7 +1052,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetSessionsByVersionId", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetSessionsByVersionId(context.Background()).Execute()
 
@@ -1052,7 +1064,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetSessionsEpochs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetSessionsEpochs(context.Background()).Execute()
 
@@ -1064,7 +1076,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetSignedUrl", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetSignedUrl(context.Background()).Execute()
 
@@ -1076,7 +1088,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetSingleIssue", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetSingleIssue(context.Background()).Execute()
 
@@ -1088,7 +1100,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetSingleSessionTest", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetSingleSessionTest(context.Background()).Execute()
 
@@ -1100,7 +1112,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetSlimJobs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetSlimJobs(context.Background()).Execute()
 
@@ -1112,7 +1124,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetSlimVisualization", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetSlimVisualization(context.Background()).Execute()
 
@@ -1124,7 +1136,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetState", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetState(context.Background()).Execute()
 
@@ -1136,7 +1148,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetStatistics", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetStatistics(context.Background()).Execute()
 
@@ -1148,7 +1160,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetTableChart", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetTableChart(context.Background()).Execute()
 
@@ -1160,7 +1172,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetTeamJobs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetTeamJobs(context.Background()).Execute()
 
@@ -1172,7 +1184,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetTeamSlimUserData", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetTeamSlimUserData(context.Background()).Execute()
 
@@ -1184,7 +1196,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetTeams", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetTeams(context.Background()).Execute()
 
@@ -1196,7 +1208,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetUploadModelSignedUrl", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetUploadModelSignedUrl(context.Background()).Execute()
 
@@ -1208,7 +1220,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetUploadSignedUrl", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetUploadSignedUrl(context.Background()).Execute()
 
@@ -1220,7 +1232,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetVisualization", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetVisualization(context.Background()).Execute()
 
@@ -1232,7 +1244,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService GetXYChart", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetXYChart(context.Background()).Execute()
 
@@ -1244,7 +1256,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService HealthCheck", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.HealthCheck(context.Background()).Execute()
 
@@ -1256,7 +1268,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService ImportExternalModel", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.ImportExternalModel(context.Background()).Execute()
 
@@ -1268,7 +1280,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService ImportModel", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.ImportModel(context.Background()).Execute()
 
@@ -1280,7 +1292,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService ImportProject", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.ImportProject(context.Background()).Execute()
 
@@ -1292,7 +1304,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService InitExperiment", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.InitExperiment(context.Background()).Execute()
 
@@ -1304,7 +1316,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService KeyGen", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.KeyGen(context.Background()).Execute()
 
@@ -1316,7 +1328,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService LoadModel", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.LoadModel(context.Background()).Execute()
 
@@ -1328,7 +1340,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService LoadVersion", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.LoadVersion(context.Background()).Execute()
 
@@ -1340,7 +1352,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService LocalAuth", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.LocalAuth(context.Background()).Execute()
 
@@ -1352,7 +1364,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService LogExternalEpochData", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.LogExternalEpochData(context.Background()).Execute()
 
@@ -1363,7 +1375,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService Login", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.Login(context.Background()).Execute()
 
@@ -1375,7 +1387,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService Logout", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.Logout(context.Background()).Execute()
 
@@ -1386,7 +1398,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService OverwriteModel", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.OverwriteModel(context.Background()).Execute()
 
@@ -1398,7 +1410,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService PopulationExploration", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.PopulationExploration(context.Background()).Execute()
 
@@ -1410,7 +1422,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService PushCodeSnapshot", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.PushCodeSnapshot(context.Background()).Execute()
 
@@ -1422,7 +1434,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService RefreshLocalAuth", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.RefreshLocalAuth(context.Background()).Execute()
 
@@ -1434,7 +1446,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService RemoveSamplesCollection", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.RemoveSamplesCollection(context.Background()).Execute()
 
@@ -1445,7 +1457,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService ResolveConcurrentUsersConflict", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.ResolveConcurrentUsersConflict(context.Background()).Execute()
 
@@ -1456,7 +1468,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService SampleAnalysis", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.SampleAnalysis(context.Background()).Execute()
 
@@ -1468,7 +1480,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService SamplesVisualizationsRefresh", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.SamplesVisualizationsRefresh(context.Background()).Execute()
 
@@ -1479,7 +1491,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService SaveAnalyzerLayout", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.SaveAnalyzerLayout(context.Background()).Execute()
 
@@ -1490,7 +1502,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService SendUserMessage", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.SendUserMessage(context.Background()).Execute()
 
@@ -1502,7 +1514,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService SetCodeChallenge", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.SetCodeChallenge(context.Background()).Execute()
 
@@ -1513,7 +1525,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService SetDefaultTeam", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.SetDefaultTeam(context.Background()).Execute()
 
@@ -1524,7 +1536,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService SetExperimentProperties", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.SetExperimentProperties(context.Background()).Execute()
 
@@ -1535,7 +1547,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService SetMachineType", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.SetMachineType(context.Background()).Execute()
 
@@ -1546,7 +1558,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService SetUserNotificationsAsRead", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.SetUserNotificationsAsRead(context.Background()).Execute()
 
@@ -1558,7 +1570,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService StartTrial", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.StartTrial(context.Background()).Execute()
 
@@ -1570,7 +1582,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService StopJob", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.StopJob(context.Background()).Execute()
 
@@ -1582,7 +1594,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService TagModel", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.TagModel(context.Background()).Execute()
 
@@ -1593,7 +1605,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService TerminateAllJobs", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.TerminateAllJobs(context.Background()).Execute()
 
@@ -1605,7 +1617,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService TerminateJob", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.TerminateJob(context.Background()).Execute()
 
@@ -1617,7 +1629,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService TrashSecretManager", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.TrashSecretManager(context.Background()).Execute()
 
@@ -1629,7 +1641,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UnapproveInsight", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.UnapproveInsight(context.Background()).Execute()
 
@@ -1640,7 +1652,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UnarchiveInsight", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.UnarchiveInsight(context.Background()).Execute()
 
@@ -1651,7 +1663,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UpdateDashboard", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.UpdateDashboard(context.Background()).Execute()
 
@@ -1662,7 +1674,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UpdateEngineSettings", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.UpdateEngineSettings(context.Background()).Execute()
 
@@ -1673,7 +1685,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UpdateIssue", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.UpdateIssue(context.Background()).Execute()
 
@@ -1685,7 +1697,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UpdateProjectMeta", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.UpdateProjectMeta(context.Background()).Execute()
 
@@ -1696,7 +1708,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UpdateSampleCollection", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.UpdateSampleCollection(context.Background()).Execute()
 
@@ -1707,7 +1719,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UpdateSecretManager", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.UpdateSecretManager(context.Background()).Execute()
 
@@ -1719,7 +1731,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UpdateSessionName", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.UpdateSessionName(context.Background()).Execute()
 
@@ -1730,7 +1742,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UpdateSessionRun", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.UpdateSessionRun(context.Background()).Execute()
 
@@ -1741,7 +1753,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UpdateSessionTest", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.UpdateSessionTest(context.Background()).Execute()
 
@@ -1752,7 +1764,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UpdateTeamPublicName", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.UpdateTeamPublicName(context.Background()).Execute()
 
@@ -1763,7 +1775,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UpdateUserName", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.UpdateUserName(context.Background()).Execute()
 
@@ -1775,7 +1787,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UpdateUserRole", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.UpdateUserRole(context.Background()).Execute()
 
@@ -1787,7 +1799,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UpdateUserStatus", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.UpdateUserStatus(context.Background()).Execute()
 
@@ -1799,7 +1811,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UpdateUserTeam", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.UpdateUserTeam(context.Background()).Execute()
 
@@ -1811,7 +1823,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UpdateVersion", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.UpdateVersion(context.Background()).Execute()
 
@@ -1823,7 +1835,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UpdateVersionName", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.UpdateVersionName(context.Background()).Execute()
 
@@ -1834,7 +1846,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UploadProject", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var projectName string
 
@@ -1847,7 +1859,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService UpsertState", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.UpsertState(context.Background()).Execute()
 
@@ -1859,7 +1871,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService Warmup", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.Warmup(context.Background()).Execute()
 
@@ -1870,7 +1882,7 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService WhoAmI", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.WhoAmI(context.Background()).Execute()
 

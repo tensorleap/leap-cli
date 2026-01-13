@@ -20,10 +20,10 @@ var _ MappedNullable = &BaseSplitAgg{}
 
 // BaseSplitAgg struct for BaseSplitAgg
 type BaseSplitAgg struct {
-	OrderField *string `json:"orderField,omitempty"`
-	Limit NullableFloat64 `json:"limit"`
-	Order OrderType `json:"order"`
-	Field string `json:"field"`
+	OrderField           *string         `json:"orderField,omitempty"`
+	Limit                NullableFloat64 `json:"limit"`
+	Order                OrderType       `json:"order"`
+	Field                string          `json:"field"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -156,7 +156,7 @@ func (o *BaseSplitAgg) SetField(v string) {
 }
 
 func (o BaseSplitAgg) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -194,10 +194,10 @@ func (o *BaseSplitAgg) UnmarshalJSON(data []byte) (err error) {
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err;
+		return err
 	}
 
-	for _, requiredProperty := range(requiredProperties) {
+	for _, requiredProperty := range requiredProperties {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -261,5 +261,3 @@ func (v *NullableBaseSplitAgg) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-
