@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **Index** | **float64** |  | 
 **MinHash** | **[]float64** |  | 
 **CsvPath** | Pointer to **string** |  | [optional] 
+**AutomaticTests** | Pointer to [**[]InsightAutomaticTest**](InsightAutomaticTest.md) |  | [optional] 
 **NSamplesValidation** | **float64** |  | 
 **NSamplesTraining** | **float64** |  | 
 **UnderRepresentationDataset** | [**DataStateType**](DataStateType.md) |  | 
@@ -329,6 +330,31 @@ SetCsvPath sets CsvPath field to given value.
 `func (o *InsightType) HasCsvPath() bool`
 
 HasCsvPath returns a boolean if a field has been set.
+
+### GetAutomaticTests
+
+`func (o *InsightType) GetAutomaticTests() []InsightAutomaticTest`
+
+GetAutomaticTests returns the AutomaticTests field if non-nil, zero value otherwise.
+
+### GetAutomaticTestsOk
+
+`func (o *InsightType) GetAutomaticTestsOk() (*[]InsightAutomaticTest, bool)`
+
+GetAutomaticTestsOk returns a tuple with the AutomaticTests field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAutomaticTests
+
+`func (o *InsightType) SetAutomaticTests(v []InsightAutomaticTest)`
+
+SetAutomaticTests sets AutomaticTests field to given value.
+
+### HasAutomaticTests
+
+`func (o *InsightType) HasAutomaticTests() bool`
+
+HasAutomaticTests returns a boolean if a field has been set.
 
 ### GetNSamplesValidation
 

@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **Index** | **float64** |  | 
 **MinHash** | **[]float64** |  | 
 **CsvPath** | Pointer to **string** |  | [optional] 
+**AutomaticTests** | Pointer to [**[]InsightAutomaticTest**](InsightAutomaticTest.md) |  | [optional] 
 **FirstSubset** | [**DataStateType**](DataStateType.md) |  | 
 **SecondSubset** | [**DataStateType**](DataStateType.md) |  | 
 
@@ -318,6 +319,31 @@ SetCsvPath sets CsvPath field to given value.
 `func (o *DataLeakageInsight) HasCsvPath() bool`
 
 HasCsvPath returns a boolean if a field has been set.
+
+### GetAutomaticTests
+
+`func (o *DataLeakageInsight) GetAutomaticTests() []InsightAutomaticTest`
+
+GetAutomaticTests returns the AutomaticTests field if non-nil, zero value otherwise.
+
+### GetAutomaticTestsOk
+
+`func (o *DataLeakageInsight) GetAutomaticTestsOk() (*[]InsightAutomaticTest, bool)`
+
+GetAutomaticTestsOk returns a tuple with the AutomaticTests field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAutomaticTests
+
+`func (o *DataLeakageInsight) SetAutomaticTests(v []InsightAutomaticTest)`
+
+SetAutomaticTests sets AutomaticTests field to given value.
+
+### HasAutomaticTests
+
+`func (o *DataLeakageInsight) HasAutomaticTests() bool`
+
+HasAutomaticTests returns a boolean if a field has been set.
 
 ### GetFirstSubset
 

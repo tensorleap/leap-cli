@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.668
+  version: 0.0.672
 servers:
 - url: /api/v2
 paths:
@@ -3251,7 +3251,7 @@ components:
       additionalProperties: true
       example:
         name: name
-        epoch: 1.1730742509559433
+        epoch: 4.965218492984954
         id: id
         sessionId: sessionId
       properties:
@@ -3287,6 +3287,7 @@ components:
       - smaller_than
       - equal_to
       - larger_than
+      - _in
       type: string
     ScatterFilter:
       additionalProperties: true
@@ -3410,11 +3411,236 @@ components:
       - metric_name
       - metric_statistics
       type: object
+    ESFilter:
+      additionalProperties: true
+      example:
+        field: field
+        disable: true
+        displayData:
+          insights:
+          - sessionRun:
+              name: name
+              epoch: 4.965218492984954
+              id: id
+              sessionId: sessionId
+            insightType:
+              severity: 2.027123023002322
+              automatic_tests:
+              - filter: null
+                metric_name: metric_name
+                metric_value: 6.84685269835264
+                test_name: test_name
+                operator: equal
+              - filter: null
+                metric_name: metric_name
+                metric_value: 6.84685269835264
+                test_name: test_name
+                operator: equal
+              n_samples_training: 1.1730742509559433
+              n_samples: 2.3021358869347655
+              metrics_info:
+              - metric_name: metric_name
+                metric_statistics:
+                - name: name
+                  value: 1.2315135367772556
+                - name: name
+                  value: 1.2315135367772556
+              - metric_name: metric_name
+                metric_statistics:
+                - name: name
+                  value: 1.2315135367772556
+                - name: name
+                  value: 1.2315135367772556
+              blob_path: blob_path
+              index: 1.0246457001441578
+              mutual_info_elements:
+              - score: 3.616076749251911
+                feature_name: feature_name
+                value_in_cluster: 7.061401241503109
+                value_outside_cluster: 9.301444243932576
+                is_categorical: true
+                feature_value: feature_value
+                direction: up
+              - score: 3.616076749251911
+                feature_name: feature_name
+                value_in_cluster: 7.061401241503109
+                value_outside_cluster: 9.301444243932576
+                is_categorical: true
+                feature_value: feature_value
+                direction: up
+              insight_category_performance: low_performance
+              filters:
+              - metric: metric
+                value: ScatterFilter_value
+                operator: smaller_than
+              - metric: metric
+                value: ScatterFilter_value
+                operator: smaller_than
+              type: low_performance
+              insight_sub_category_ds_curation: under_representation
+              severity_metrics:
+              - metric_name: metric_name
+                value: 4.145608029883936
+                normalized_value: 7.386281948385884
+              - metric_name: metric_name
+                value: 4.145608029883936
+                normalized_value: 7.386281948385884
+              min_hash:
+              - 1.4894159098541704
+              - 1.4894159098541704
+              csv_path: csv_path
+              n_samples_validation: 7.457744773683766
+          - sessionRun:
+              name: name
+              epoch: 4.965218492984954
+              id: id
+              sessionId: sessionId
+            insightType:
+              severity: 2.027123023002322
+              automatic_tests:
+              - filter: null
+                metric_name: metric_name
+                metric_value: 6.84685269835264
+                test_name: test_name
+                operator: equal
+              - filter: null
+                metric_name: metric_name
+                metric_value: 6.84685269835264
+                test_name: test_name
+                operator: equal
+              n_samples_training: 1.1730742509559433
+              n_samples: 2.3021358869347655
+              metrics_info:
+              - metric_name: metric_name
+                metric_statistics:
+                - name: name
+                  value: 1.2315135367772556
+                - name: name
+                  value: 1.2315135367772556
+              - metric_name: metric_name
+                metric_statistics:
+                - name: name
+                  value: 1.2315135367772556
+                - name: name
+                  value: 1.2315135367772556
+              blob_path: blob_path
+              index: 1.0246457001441578
+              mutual_info_elements:
+              - score: 3.616076749251911
+                feature_name: feature_name
+                value_in_cluster: 7.061401241503109
+                value_outside_cluster: 9.301444243932576
+                is_categorical: true
+                feature_value: feature_value
+                direction: up
+              - score: 3.616076749251911
+                feature_name: feature_name
+                value_in_cluster: 7.061401241503109
+                value_outside_cluster: 9.301444243932576
+                is_categorical: true
+                feature_value: feature_value
+                direction: up
+              insight_category_performance: low_performance
+              filters:
+              - metric: metric
+                value: ScatterFilter_value
+                operator: smaller_than
+              - metric: metric
+                value: ScatterFilter_value
+                operator: smaller_than
+              type: low_performance
+              insight_sub_category_ds_curation: under_representation
+              severity_metrics:
+              - metric_name: metric_name
+                value: 4.145608029883936
+                normalized_value: 7.386281948385884
+              - metric_name: metric_name
+                value: 4.145608029883936
+                normalized_value: 7.386281948385884
+              min_hash:
+              - 1.4894159098541704
+              - 1.4894159098541704
+              csv_path: csv_path
+              n_samples_validation: 7.457744773683766
+          type: insight
+        value:
+          lt: null
+          gte: null
+          blob_paths:
+          - blob_paths
+          - blob_paths
+          lte: null
+          eq: null
+          lst:
+          - null
+          - null
+          gt: 5.637376656633329
+        operator: between
+      properties:
+        operator:
+          $ref: "#/components/schemas/FilterOperatorType"
+        field:
+          type: string
+        disable:
+          type: boolean
+        value:
+          $ref: "#/components/schemas/ESFilterValue"
+        displayData:
+          $ref: "#/components/schemas/FilterDisplayData"
+      required:
+      - field
+      - operator
+      - value
+      type: object
+    TestFilterOperatorType:
+      enum:
+      - equal
+      - greater_than
+      - less_than
+      type: string
+    InsightAutomaticTest:
+      additionalProperties: true
+      example:
+        filter: null
+        metric_name: metric_name
+        metric_value: 6.84685269835264
+        test_name: test_name
+        operator: equal
+      properties:
+        test_name:
+          type: string
+        filter:
+          $ref: "#/components/schemas/ESFilter"
+        metric_name:
+          type: string
+        metric_value:
+          format: double
+          type: number
+        operator:
+          $ref: "#/components/schemas/TestFilterOperatorType"
+      required:
+      - filter
+      - metric_name
+      - metric_value
+      - operator
+      - test_name
+      type: object
     OverfittingInsight:
       additionalProperties: true
       example:
         severity: 2.027123023002322
-        n_samples_training: 7.457744773683766
+        automatic_tests:
+        - filter: null
+          metric_name: metric_name
+          metric_value: 6.84685269835264
+          test_name: test_name
+          operator: equal
+        - filter: null
+          metric_name: metric_name
+          metric_value: 6.84685269835264
+          test_name: test_name
+          operator: equal
+        n_samples_training: 1.1730742509559433
         n_samples: 2.3021358869347655
         metrics_info:
         - metric_name: metric_name
@@ -3467,7 +3693,7 @@ components:
         - 1.4894159098541704
         - 1.4894159098541704
         csv_path: csv_path
-        n_samples_validation: 6.84685269835264
+        n_samples_validation: 7.457744773683766
       properties:
         type:
           $ref: "#/components/schemas/ScatterInsightType"
@@ -3509,6 +3735,10 @@ components:
           type: array
         csv_path:
           type: string
+        automatic_tests:
+          items:
+            $ref: "#/components/schemas/InsightAutomaticTest"
+          type: array
         n_samples_validation:
           format: double
           type: number
@@ -3534,6 +3764,7 @@ components:
       - validation
       - test
       - unlabeled
+      - additional
       type: string
     UnderRepresentationInsight:
       additionalProperties: true
@@ -3578,6 +3809,10 @@ components:
           type: array
         csv_path:
           type: string
+        automatic_tests:
+          items:
+            $ref: "#/components/schemas/InsightAutomaticTest"
+          type: array
         under_representation_dataset:
           $ref: "#/components/schemas/DataStateType"
         under_representation_n_samples:
@@ -3646,6 +3881,10 @@ components:
           type: array
         csv_path:
           type: string
+        automatic_tests:
+          items:
+            $ref: "#/components/schemas/InsightAutomaticTest"
+          type: array
       required:
       - blob_path
       - index
@@ -3700,6 +3939,10 @@ components:
           type: array
         csv_path:
           type: string
+        automatic_tests:
+          items:
+            $ref: "#/components/schemas/InsightAutomaticTest"
+          type: array
         subset:
           $ref: "#/components/schemas/DataStateType"
       required:
@@ -3757,6 +4000,10 @@ components:
           type: array
         csv_path:
           type: string
+        automatic_tests:
+          items:
+            $ref: "#/components/schemas/InsightAutomaticTest"
+          type: array
         first_subset:
           $ref: "#/components/schemas/DataStateType"
         second_subset:
@@ -3817,6 +4064,10 @@ components:
           type: array
         csv_path:
           type: string
+        automatic_tests:
+          items:
+            $ref: "#/components/schemas/InsightAutomaticTest"
+          type: array
         metadata_name:
           type: string
         domain_gap_score:
@@ -3884,6 +4135,10 @@ components:
           type: array
         csv_path:
           type: string
+        automatic_tests:
+          items:
+            $ref: "#/components/schemas/InsightAutomaticTest"
+          type: array
         subset:
           $ref: "#/components/schemas/DataStateType"
       required:
@@ -3913,12 +4168,23 @@ components:
         insights:
         - sessionRun:
             name: name
-            epoch: 1.1730742509559433
+            epoch: 4.965218492984954
             id: id
             sessionId: sessionId
           insightType:
             severity: 2.027123023002322
-            n_samples_training: 7.457744773683766
+            automatic_tests:
+            - filter: null
+              metric_name: metric_name
+              metric_value: 6.84685269835264
+              test_name: test_name
+              operator: equal
+            - filter: null
+              metric_name: metric_name
+              metric_value: 6.84685269835264
+              test_name: test_name
+              operator: equal
+            n_samples_training: 1.1730742509559433
             n_samples: 2.3021358869347655
             metrics_info:
             - metric_name: metric_name
@@ -3971,15 +4237,26 @@ components:
             - 1.4894159098541704
             - 1.4894159098541704
             csv_path: csv_path
-            n_samples_validation: 6.84685269835264
+            n_samples_validation: 7.457744773683766
         - sessionRun:
             name: name
-            epoch: 1.1730742509559433
+            epoch: 4.965218492984954
             id: id
             sessionId: sessionId
           insightType:
             severity: 2.027123023002322
-            n_samples_training: 7.457744773683766
+            automatic_tests:
+            - filter: null
+              metric_name: metric_name
+              metric_value: 6.84685269835264
+              test_name: test_name
+              operator: equal
+            - filter: null
+              metric_name: metric_name
+              metric_value: 6.84685269835264
+              test_name: test_name
+              operator: equal
+            n_samples_training: 1.1730742509559433
             n_samples: 2.3021358869347655
             metrics_info:
             - metric_name: metric_name
@@ -4032,7 +4309,7 @@ components:
             - 1.4894159098541704
             - 1.4894159098541704
             csv_path: csv_path
-            n_samples_validation: 6.84685269835264
+            n_samples_validation: 7.457744773683766
         type: insight
       properties:
         type:
@@ -4106,165 +4383,6 @@ components:
       anyOf:
       - $ref: "#/components/schemas/InsightFilterDisplayData"
       - $ref: "#/components/schemas/FetchSimilarFilterDisplayData"
-    ESFilter:
-      additionalProperties: true
-      example:
-        field: field
-        disable: true
-        displayData:
-          insights:
-          - sessionRun:
-              name: name
-              epoch: 1.1730742509559433
-              id: id
-              sessionId: sessionId
-            insightType:
-              severity: 2.027123023002322
-              n_samples_training: 7.457744773683766
-              n_samples: 2.3021358869347655
-              metrics_info:
-              - metric_name: metric_name
-                metric_statistics:
-                - name: name
-                  value: 1.2315135367772556
-                - name: name
-                  value: 1.2315135367772556
-              - metric_name: metric_name
-                metric_statistics:
-                - name: name
-                  value: 1.2315135367772556
-                - name: name
-                  value: 1.2315135367772556
-              blob_path: blob_path
-              index: 1.0246457001441578
-              mutual_info_elements:
-              - score: 3.616076749251911
-                feature_name: feature_name
-                value_in_cluster: 7.061401241503109
-                value_outside_cluster: 9.301444243932576
-                is_categorical: true
-                feature_value: feature_value
-                direction: up
-              - score: 3.616076749251911
-                feature_name: feature_name
-                value_in_cluster: 7.061401241503109
-                value_outside_cluster: 9.301444243932576
-                is_categorical: true
-                feature_value: feature_value
-                direction: up
-              insight_category_performance: low_performance
-              filters:
-              - metric: metric
-                value: ScatterFilter_value
-                operator: smaller_than
-              - metric: metric
-                value: ScatterFilter_value
-                operator: smaller_than
-              type: low_performance
-              insight_sub_category_ds_curation: under_representation
-              severity_metrics:
-              - metric_name: metric_name
-                value: 4.145608029883936
-                normalized_value: 7.386281948385884
-              - metric_name: metric_name
-                value: 4.145608029883936
-                normalized_value: 7.386281948385884
-              min_hash:
-              - 1.4894159098541704
-              - 1.4894159098541704
-              csv_path: csv_path
-              n_samples_validation: 6.84685269835264
-          - sessionRun:
-              name: name
-              epoch: 1.1730742509559433
-              id: id
-              sessionId: sessionId
-            insightType:
-              severity: 2.027123023002322
-              n_samples_training: 7.457744773683766
-              n_samples: 2.3021358869347655
-              metrics_info:
-              - metric_name: metric_name
-                metric_statistics:
-                - name: name
-                  value: 1.2315135367772556
-                - name: name
-                  value: 1.2315135367772556
-              - metric_name: metric_name
-                metric_statistics:
-                - name: name
-                  value: 1.2315135367772556
-                - name: name
-                  value: 1.2315135367772556
-              blob_path: blob_path
-              index: 1.0246457001441578
-              mutual_info_elements:
-              - score: 3.616076749251911
-                feature_name: feature_name
-                value_in_cluster: 7.061401241503109
-                value_outside_cluster: 9.301444243932576
-                is_categorical: true
-                feature_value: feature_value
-                direction: up
-              - score: 3.616076749251911
-                feature_name: feature_name
-                value_in_cluster: 7.061401241503109
-                value_outside_cluster: 9.301444243932576
-                is_categorical: true
-                feature_value: feature_value
-                direction: up
-              insight_category_performance: low_performance
-              filters:
-              - metric: metric
-                value: ScatterFilter_value
-                operator: smaller_than
-              - metric: metric
-                value: ScatterFilter_value
-                operator: smaller_than
-              type: low_performance
-              insight_sub_category_ds_curation: under_representation
-              severity_metrics:
-              - metric_name: metric_name
-                value: 4.145608029883936
-                normalized_value: 7.386281948385884
-              - metric_name: metric_name
-                value: 4.145608029883936
-                normalized_value: 7.386281948385884
-              min_hash:
-              - 1.4894159098541704
-              - 1.4894159098541704
-              csv_path: csv_path
-              n_samples_validation: 6.84685269835264
-          type: insight
-        value:
-          lt: null
-          gte: null
-          blob_paths:
-          - blob_paths
-          - blob_paths
-          lte: null
-          eq: null
-          lst:
-          - null
-          - null
-          gt: 5.637376656633329
-        operator: between
-      properties:
-        operator:
-          $ref: "#/components/schemas/FilterOperatorType"
-        field:
-          type: string
-        disable:
-          type: boolean
-        value:
-          $ref: "#/components/schemas/ESFilterValue"
-        displayData:
-          $ref: "#/components/schemas/FilterDisplayData"
-      required:
-      - field
-      - operator
-      - value
-      type: object
     AnalyticsDashlet:
       additionalProperties: true
       example:
@@ -4300,12 +4418,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -4358,15 +4487,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -4419,7 +4559,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -4440,12 +4580,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -4498,15 +4649,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -4559,7 +4721,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -4739,12 +4901,23 @@ components:
               insights:
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -4797,15 +4970,26 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -4858,7 +5042,7 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               type: insight
             value:
               lt: null
@@ -4879,12 +5063,23 @@ components:
               insights:
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -4937,15 +5132,26 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -4998,7 +5204,7 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               type: insight
             value:
               lt: null
@@ -5047,12 +5253,23 @@ components:
               insights:
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -5105,15 +5322,26 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -5166,7 +5394,7 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               type: insight
             value:
               lt: null
@@ -5187,12 +5415,23 @@ components:
               insights:
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -5245,15 +5484,26 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -5306,7 +5556,7 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               type: insight
             value:
               lt: null
@@ -5405,12 +5655,23 @@ components:
                 insights:
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -5463,15 +5724,26 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -5524,7 +5796,7 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 type: insight
               value:
                 lt: null
@@ -5545,12 +5817,23 @@ components:
                 insights:
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -5603,15 +5886,26 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -5664,7 +5958,7 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 type: insight
               value:
                 lt: null
@@ -5713,12 +6007,23 @@ components:
                 insights:
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -5771,15 +6076,26 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -5832,7 +6148,7 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 type: insight
               value:
                 lt: null
@@ -5853,12 +6169,23 @@ components:
                 insights:
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -5911,15 +6238,26 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -5972,7 +6310,7 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 type: insight
               value:
                 lt: null
@@ -6032,12 +6370,23 @@ components:
                 insights:
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -6090,15 +6439,26 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -6151,7 +6511,7 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 type: insight
               value:
                 lt: null
@@ -6172,12 +6532,23 @@ components:
                 insights:
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -6230,15 +6601,26 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -6291,7 +6673,7 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 type: insight
               value:
                 lt: null
@@ -6340,12 +6722,23 @@ components:
                 insights:
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -6398,15 +6791,26 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -6459,7 +6863,7 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 type: insight
               value:
                 lt: null
@@ -6480,12 +6884,23 @@ components:
                 insights:
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -6538,15 +6953,26 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -6599,7 +7025,7 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 type: insight
               value:
                 lt: null
@@ -6681,12 +7107,23 @@ components:
                 insights:
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -6739,15 +7176,26 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -6800,7 +7248,7 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 type: insight
               value:
                 lt: null
@@ -6821,12 +7269,23 @@ components:
                 insights:
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -6879,15 +7338,26 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -6940,7 +7410,7 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 type: insight
               value:
                 lt: null
@@ -6989,12 +7459,23 @@ components:
                 insights:
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -7047,15 +7528,26 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -7108,7 +7600,7 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 type: insight
               value:
                 lt: null
@@ -7129,12 +7621,23 @@ components:
                 insights:
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -7187,15 +7690,26 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 - sessionRun:
                     name: name
-                    epoch: 1.1730742509559433
+                    epoch: 4.965218492984954
                     id: id
                     sessionId: sessionId
                   insightType:
                     severity: 2.027123023002322
-                    n_samples_training: 7.457744773683766
+                    automatic_tests:
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    - filter: null
+                      metric_name: metric_name
+                      metric_value: 6.84685269835264
+                      test_name: test_name
+                      operator: equal
+                    n_samples_training: 1.1730742509559433
                     n_samples: 2.3021358869347655
                     metrics_info:
                     - metric_name: metric_name
@@ -7248,7 +7762,7 @@ components:
                     - 1.4894159098541704
                     - 1.4894159098541704
                     csv_path: csv_path
-                    n_samples_validation: 6.84685269835264
+                    n_samples_validation: 7.457744773683766
                 type: insight
               value:
                 lt: null
@@ -7336,12 +7850,23 @@ components:
               insights:
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -7394,15 +7919,26 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -7455,7 +7991,7 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               type: insight
             value:
               lt: null
@@ -7476,12 +8012,23 @@ components:
               insights:
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -7534,15 +8081,26 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -7595,7 +8153,7 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               type: insight
             value:
               lt: null
@@ -7644,12 +8202,23 @@ components:
               insights:
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -7702,15 +8271,26 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -7763,7 +8343,7 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               type: insight
             value:
               lt: null
@@ -7784,12 +8364,23 @@ components:
               insights:
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -7842,15 +8433,26 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -7903,7 +8505,7 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               type: insight
             value:
               lt: null
@@ -7992,12 +8594,23 @@ components:
               insights:
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -8050,15 +8663,26 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -8111,7 +8735,7 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               type: insight
             value:
               lt: null
@@ -8132,12 +8756,23 @@ components:
               insights:
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -8190,15 +8825,26 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -8251,7 +8897,7 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               type: insight
             value:
               lt: null
@@ -8300,12 +8946,23 @@ components:
               insights:
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -8358,15 +9015,26 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -8419,7 +9087,7 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               type: insight
             value:
               lt: null
@@ -8440,12 +9108,23 @@ components:
               insights:
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -8498,15 +9177,26 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -8559,7 +9249,7 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               type: insight
             value:
               lt: null
@@ -8692,12 +9382,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -8750,15 +9451,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -8811,7 +9523,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -8832,12 +9544,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -8890,15 +9613,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -8951,7 +9685,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -8984,12 +9718,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -9042,15 +9787,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -9103,7 +9859,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -9192,12 +9948,23 @@ components:
               insights:
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -9250,15 +10017,26 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -9311,7 +10089,7 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               type: insight
             value:
               lt: null
@@ -9332,12 +10110,23 @@ components:
               insights:
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -9390,15 +10179,26 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -9451,7 +10251,7 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               type: insight
             value:
               lt: null
@@ -9484,12 +10284,23 @@ components:
               insights:
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -9542,15 +10353,26 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               - sessionRun:
                   name: name
-                  epoch: 1.1730742509559433
+                  epoch: 4.965218492984954
                   id: id
                   sessionId: sessionId
                 insightType:
                   severity: 2.027123023002322
-                  n_samples_training: 7.457744773683766
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  n_samples_training: 1.1730742509559433
                   n_samples: 2.3021358869347655
                   metrics_info:
                   - metric_name: metric_name
@@ -9603,7 +10425,7 @@ components:
                   - 1.4894159098541704
                   - 1.4894159098541704
                   csv_path: csv_path
-                  n_samples_validation: 6.84685269835264
+                  n_samples_validation: 7.457744773683766
               type: insight
             value:
               lt: null
@@ -11842,12 +12664,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -11900,15 +12733,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -11961,7 +12805,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -11982,12 +12826,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -12040,15 +12895,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -12101,7 +12967,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -12538,12 +13404,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -12596,15 +13473,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -12657,7 +13545,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -12678,12 +13566,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -12736,15 +13635,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -12797,7 +13707,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -12875,12 +13785,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -12933,15 +13854,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -12994,7 +13926,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -13015,12 +13947,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -13073,15 +14016,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -13134,7 +14088,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -13212,12 +14166,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -13270,15 +14235,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -13331,7 +14307,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -13352,12 +14328,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -13410,15 +14397,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -13471,7 +14469,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -13585,12 +14583,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -13643,15 +14652,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -13704,7 +14724,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -13725,12 +14745,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -13783,15 +14814,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -13844,7 +14886,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -13923,12 +14965,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -13981,15 +15034,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -14042,7 +15106,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -14063,12 +15127,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -14121,15 +15196,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -14182,7 +15268,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -14250,12 +15336,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -14308,15 +15405,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -14369,7 +15477,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -14390,12 +15498,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -14448,15 +15567,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -14509,7 +15639,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -14600,12 +15730,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -14658,15 +15799,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -14719,7 +15871,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -14740,12 +15892,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -14798,15 +15961,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -14859,7 +16033,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -14912,12 +16086,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -14970,15 +16155,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -15031,7 +16227,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -15052,12 +16248,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -15110,15 +16317,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -15171,7 +16389,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -15304,12 +16522,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -15362,15 +16591,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -15423,7 +16663,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -15444,12 +16684,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -15502,15 +16753,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -15563,7 +16825,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -15976,12 +17238,15 @@ components:
       - N_GENERIC_PROCESS_PROCESSES
       - N_VISUALIZERS_PROCESSES
       - KEEP_VISUALIZATION_RESOLUTION
+      - PRIORITIZE_AUTO_SETTINGS
       - DYNAMIC_MEMORY
       - GENERIC_CPU_REQUEST
       - GENERIC_CPU_LIMIT
       - GENERIC_MEMORY_REQUEST
       - GENERIC_MEMORY_LIMIT
       - WARMUP
+      - WARMUP_TIMEOUT_MINUTES
+      - WARMUP_MAX_JOBS
       - SLIM_JOB_CPU_REQUEST
       - SLIM_JOB_CPU_LIMIT
       - SLIM_JOB_REQUIRED_MEMORY
@@ -19286,12 +20551,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -19344,15 +20620,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -19405,7 +20692,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -19426,12 +20713,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -19484,15 +20782,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -19545,7 +20854,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -19593,12 +20902,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -19651,15 +20971,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -19712,7 +21043,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -19733,12 +21064,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -19791,15 +21133,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -19852,7 +21205,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -19905,12 +21258,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -19963,15 +21327,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -20024,7 +21399,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -20045,12 +21420,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -20103,15 +21489,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -20164,7 +21561,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -24161,6 +25558,7 @@ components:
       example:
         validation_length: 1.4658129805029452
         unlabeled_length: 5.637376656633329
+        additional_length: 2.3021358869347655
         test_length: 5.962133916683182
         training_length: 6.027456183070403
       properties:
@@ -24176,6 +25574,9 @@ components:
         unlabeled_length:
           format: double
           type: number
+        additional_length:
+          format: double
+          type: number
       required:
       - training_length
       - validation_length
@@ -24184,9 +25585,9 @@ components:
       additionalProperties: true
       example:
         shape:
-        - 2.3021358869347655
-        - 2.3021358869347655
-        channel_dim: 7.061401241503109
+        - 7.061401241503109
+        - 7.061401241503109
+        channel_dim: 9.301444243932576
         name: name
       properties:
         name:
@@ -24228,8 +25629,8 @@ components:
       additionalProperties: true
       example:
         shape:
-        - 9.301444243932576
-        - 9.301444243932576
+        - 3.616076749251911
+        - 3.616076749251911
         name: name
       properties:
         name:
@@ -24280,7 +25681,7 @@ components:
     PredictionTypeInstance:
       additionalProperties: true
       example:
-        channel_dim: 3.616076749251911
+        channel_dim: 2.027123023002322
         name: name
         labels:
         - labels
@@ -24340,16 +25741,17 @@ components:
       example:
         outputs:
         - shape:
-          - 9.301444243932576
-          - 9.301444243932576
+          - 3.616076749251911
+          - 3.616076749251911
           name: name
         - shape:
-          - 9.301444243932576
-          - 9.301444243932576
+          - 3.616076749251911
+          - 3.616076749251911
           name: name
         preprocess:
           validation_length: 1.4658129805029452
           unlabeled_length: 5.637376656633329
+          additional_length: 2.3021358869347655
           test_length: 5.962133916683182
           training_length: 6.027456183070403
         metadata:
@@ -24359,14 +25761,14 @@ components:
           type: float
         inputs:
         - shape:
-          - 2.3021358869347655
-          - 2.3021358869347655
-          channel_dim: 7.061401241503109
+          - 7.061401241503109
+          - 7.061401241503109
+          channel_dim: 9.301444243932576
           name: name
         - shape:
-          - 2.3021358869347655
-          - 2.3021358869347655
-          channel_dim: 7.061401241503109
+          - 7.061401241503109
+          - 7.061401241503109
+          channel_dim: 9.301444243932576
           name: name
         custom_losses:
         - arg_names:
@@ -24378,12 +25780,12 @@ components:
           - arg_names
           name: name
         prediction_types:
-        - channel_dim: 3.616076749251911
+        - channel_dim: 2.027123023002322
           name: name
           labels:
           - labels
           - labels
-        - channel_dim: 3.616076749251911
+        - channel_dim: 2.027123023002322
           name: name
           labels:
           - labels
@@ -24600,16 +26002,17 @@ components:
         setup:
           outputs:
           - shape:
-            - 9.301444243932576
-            - 9.301444243932576
+            - 3.616076749251911
+            - 3.616076749251911
             name: name
           - shape:
-            - 9.301444243932576
-            - 9.301444243932576
+            - 3.616076749251911
+            - 3.616076749251911
             name: name
           preprocess:
             validation_length: 1.4658129805029452
             unlabeled_length: 5.637376656633329
+            additional_length: 2.3021358869347655
             test_length: 5.962133916683182
             training_length: 6.027456183070403
           metadata:
@@ -24619,14 +26022,14 @@ components:
             type: float
           inputs:
           - shape:
-            - 2.3021358869347655
-            - 2.3021358869347655
-            channel_dim: 7.061401241503109
+            - 7.061401241503109
+            - 7.061401241503109
+            channel_dim: 9.301444243932576
             name: name
           - shape:
-            - 2.3021358869347655
-            - 2.3021358869347655
-            channel_dim: 7.061401241503109
+            - 7.061401241503109
+            - 7.061401241503109
+            channel_dim: 9.301444243932576
             name: name
           custom_losses:
           - arg_names:
@@ -24638,12 +26041,12 @@ components:
             - arg_names
             name: name
           prediction_types:
-          - channel_dim: 3.616076749251911
+          - channel_dim: 2.027123023002322
             name: name
             labels:
             - labels
             - labels
-          - channel_dim: 3.616076749251911
+          - channel_dim: 2.027123023002322
             name: name
             labels:
             - labels
@@ -24735,16 +26138,17 @@ components:
           setup:
             outputs:
             - shape:
-              - 9.301444243932576
-              - 9.301444243932576
+              - 3.616076749251911
+              - 3.616076749251911
               name: name
             - shape:
-              - 9.301444243932576
-              - 9.301444243932576
+              - 3.616076749251911
+              - 3.616076749251911
               name: name
             preprocess:
               validation_length: 1.4658129805029452
               unlabeled_length: 5.637376656633329
+              additional_length: 2.3021358869347655
               test_length: 5.962133916683182
               training_length: 6.027456183070403
             metadata:
@@ -24754,14 +26158,14 @@ components:
               type: float
             inputs:
             - shape:
-              - 2.3021358869347655
-              - 2.3021358869347655
-              channel_dim: 7.061401241503109
+              - 7.061401241503109
+              - 7.061401241503109
+              channel_dim: 9.301444243932576
               name: name
             - shape:
-              - 2.3021358869347655
-              - 2.3021358869347655
-              channel_dim: 7.061401241503109
+              - 7.061401241503109
+              - 7.061401241503109
+              channel_dim: 9.301444243932576
               name: name
             custom_losses:
             - arg_names:
@@ -24773,12 +26177,12 @@ components:
               - arg_names
               name: name
             prediction_types:
-            - channel_dim: 3.616076749251911
+            - channel_dim: 2.027123023002322
               name: name
               labels:
               - labels
               - labels
-            - channel_dim: 3.616076749251911
+            - channel_dim: 2.027123023002322
               name: name
               labels:
               - labels
@@ -24890,16 +26294,17 @@ components:
             setup:
               outputs:
               - shape:
-                - 9.301444243932576
-                - 9.301444243932576
+                - 3.616076749251911
+                - 3.616076749251911
                 name: name
               - shape:
-                - 9.301444243932576
-                - 9.301444243932576
+                - 3.616076749251911
+                - 3.616076749251911
                 name: name
               preprocess:
                 validation_length: 1.4658129805029452
                 unlabeled_length: 5.637376656633329
+                additional_length: 2.3021358869347655
                 test_length: 5.962133916683182
                 training_length: 6.027456183070403
               metadata:
@@ -24909,14 +26314,14 @@ components:
                 type: float
               inputs:
               - shape:
-                - 2.3021358869347655
-                - 2.3021358869347655
-                channel_dim: 7.061401241503109
+                - 7.061401241503109
+                - 7.061401241503109
+                channel_dim: 9.301444243932576
                 name: name
               - shape:
-                - 2.3021358869347655
-                - 2.3021358869347655
-                channel_dim: 7.061401241503109
+                - 7.061401241503109
+                - 7.061401241503109
+                channel_dim: 9.301444243932576
                 name: name
               custom_losses:
               - arg_names:
@@ -24928,12 +26333,12 @@ components:
                 - arg_names
                 name: name
               prediction_types:
-              - channel_dim: 3.616076749251911
+              - channel_dim: 2.027123023002322
                 name: name
                 labels:
                 - labels
                 - labels
-              - channel_dim: 3.616076749251911
+              - channel_dim: 2.027123023002322
                 name: name
                 labels:
                 - labels
@@ -25025,16 +26430,17 @@ components:
             setup:
               outputs:
               - shape:
-                - 9.301444243932576
-                - 9.301444243932576
+                - 3.616076749251911
+                - 3.616076749251911
                 name: name
               - shape:
-                - 9.301444243932576
-                - 9.301444243932576
+                - 3.616076749251911
+                - 3.616076749251911
                 name: name
               preprocess:
                 validation_length: 1.4658129805029452
                 unlabeled_length: 5.637376656633329
+                additional_length: 2.3021358869347655
                 test_length: 5.962133916683182
                 training_length: 6.027456183070403
               metadata:
@@ -25044,14 +26450,14 @@ components:
                 type: float
               inputs:
               - shape:
-                - 2.3021358869347655
-                - 2.3021358869347655
-                channel_dim: 7.061401241503109
+                - 7.061401241503109
+                - 7.061401241503109
+                channel_dim: 9.301444243932576
                 name: name
               - shape:
-                - 2.3021358869347655
-                - 2.3021358869347655
-                channel_dim: 7.061401241503109
+                - 7.061401241503109
+                - 7.061401241503109
+                channel_dim: 9.301444243932576
                 name: name
               custom_losses:
               - arg_names:
@@ -25063,12 +26469,12 @@ components:
                 - arg_names
                 name: name
               prediction_types:
-              - channel_dim: 3.616076749251911
+              - channel_dim: 2.027123023002322
                 name: name
                 labels:
                 - labels
                 - labels
-              - channel_dim: 3.616076749251911
+              - channel_dim: 2.027123023002322
                 name: name
                 labels:
                 - labels
@@ -26625,12 +28031,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -26683,15 +28100,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -26744,7 +28172,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -26765,12 +28193,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -26823,15 +28262,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -26884,7 +28334,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -26919,12 +28369,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -26977,15 +28438,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -27038,7 +28510,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -27157,12 +28629,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -27215,15 +28698,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -27276,7 +28770,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -27297,12 +28791,23 @@ components:
             insights:
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -27355,15 +28860,26 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             - sessionRun:
                 name: name
-                epoch: 1.1730742509559433
+                epoch: 4.965218492984954
                 id: id
                 sessionId: sessionId
               insightType:
                 severity: 2.027123023002322
-                n_samples_training: 7.457744773683766
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                n_samples_training: 1.1730742509559433
                 n_samples: 2.3021358869347655
                 metrics_info:
                 - metric_name: metric_name
@@ -27416,7 +28932,7 @@ components:
                 - 1.4894159098541704
                 - 1.4894159098541704
                 csv_path: csv_path
-                n_samples_validation: 6.84685269835264
+                n_samples_validation: 7.457744773683766
             type: insight
           value:
             lt: null
@@ -27563,6 +29079,10 @@ components:
       - items:
           type: string
         type: array
+      - items:
+          format: double
+          type: number
+        type: array
     MetricStatisticElement_value:
       anyOf:
       - format: double
@@ -27572,12 +29092,23 @@ components:
       example:
         sessionRun:
           name: name
-          epoch: 1.1730742509559433
+          epoch: 4.965218492984954
           id: id
           sessionId: sessionId
         insightType:
           severity: 2.027123023002322
-          n_samples_training: 7.457744773683766
+          automatic_tests:
+          - filter: null
+            metric_name: metric_name
+            metric_value: 6.84685269835264
+            test_name: test_name
+            operator: equal
+          - filter: null
+            metric_name: metric_name
+            metric_value: 6.84685269835264
+            test_name: test_name
+            operator: equal
+          n_samples_training: 1.1730742509559433
           n_samples: 2.3021358869347655
           metrics_info:
           - metric_name: metric_name
@@ -27630,7 +29161,7 @@ components:
           - 1.4894159098541704
           - 1.4894159098541704
           csv_path: csv_path
-          n_samples_validation: 6.84685269835264
+          n_samples_validation: 7.457744773683766
       properties:
         insightType:
           $ref: "#/components/schemas/InsightType"
