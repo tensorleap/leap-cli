@@ -17,13 +17,6 @@ import (
 
 const DEFAULT_BATCH_SIZE = 1
 
-var AllDataStates = []tensorleapapi.DataStateType{
-	tensorleapapi.DATASTATETYPE_TRAINING,
-	tensorleapapi.DATASTATETYPE_VALIDATION,
-	tensorleapapi.DATASTATETYPE_TEST,
-	tensorleapapi.DATASTATETYPE_UNLABELED,
-}
-
 func GetLatestEvaluateBatchSize(ctx context.Context, projectId string) (int, error) {
 	sessionRuns, err := GetSessionRunsEvaluate(ctx, projectId, []string{})
 	if err != nil {
@@ -161,7 +154,6 @@ func RunEvaluate(ctx context.Context, projectId, versionId string, sessionId str
 		versionId,
 		projectId,
 		float64(batchSize),
-		AllDataStates,
 		evalName,
 		"Evaluation triggered from CLI",
 		0,

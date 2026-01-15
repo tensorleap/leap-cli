@@ -5,12 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **PopulationParams** | [**PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrProjectIdOrReRunAfterFail**](PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrProjectIdOrReRunAfterFail.md) |  | 
+**ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewCalcPopulationExplorationDigestParams
 
-`func NewCalcPopulationExplorationDigestParams(populationParams PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrProjectIdOrReRunAfterFail, ) *CalcPopulationExplorationDigestParams`
+`func NewCalcPopulationExplorationDigestParams(populationParams PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrProjectIdOrReRunAfterFail, projectId string, ) *CalcPopulationExplorationDigestParams`
 
 NewCalcPopulationExplorationDigestParams instantiates a new CalcPopulationExplorationDigestParams object
 This constructor will assign default values to properties that have it defined,
@@ -43,6 +44,26 @@ and a boolean to check if the value has been set.
 `func (o *CalcPopulationExplorationDigestParams) SetPopulationParams(v PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrProjectIdOrReRunAfterFail)`
 
 SetPopulationParams sets PopulationParams field to given value.
+
+
+### GetProjectId
+
+`func (o *CalcPopulationExplorationDigestParams) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *CalcPopulationExplorationDigestParams) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *CalcPopulationExplorationDigestParams) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
 
 
 

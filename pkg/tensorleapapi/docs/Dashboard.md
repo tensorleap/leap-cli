@@ -12,13 +12,12 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **Items** | [**[]Dashlet**](Dashlet.md) |  | 
 **Description** | Pointer to **string** |  | [optional] 
-**IgnoreSuggestedDashletsHashes** | **[]string** |  | 
 
 ## Methods
 
 ### NewDashboard
 
-`func NewDashboard(cid string, projectId string, createdAt time.Time, updatedAt time.Time, createdBy string, name string, items []Dashlet, ignoreSuggestedDashletsHashes []string, ) *Dashboard`
+`func NewDashboard(cid string, projectId string, createdAt time.Time, updatedAt time.Time, createdBy string, name string, items []Dashlet, ) *Dashboard`
 
 NewDashboard instantiates a new Dashboard object
 This constructor will assign default values to properties that have it defined,
@@ -197,26 +196,6 @@ SetDescription sets Description field to given value.
 `func (o *Dashboard) HasDescription() bool`
 
 HasDescription returns a boolean if a field has been set.
-
-### GetIgnoreSuggestedDashletsHashes
-
-`func (o *Dashboard) GetIgnoreSuggestedDashletsHashes() []string`
-
-GetIgnoreSuggestedDashletsHashes returns the IgnoreSuggestedDashletsHashes field if non-nil, zero value otherwise.
-
-### GetIgnoreSuggestedDashletsHashesOk
-
-`func (o *Dashboard) GetIgnoreSuggestedDashletsHashesOk() (*[]string, bool)`
-
-GetIgnoreSuggestedDashletsHashesOk returns a tuple with the IgnoreSuggestedDashletsHashes field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetIgnoreSuggestedDashletsHashes
-
-`func (o *Dashboard) SetIgnoreSuggestedDashletsHashes(v []string)`
-
-SetIgnoreSuggestedDashletsHashes sets IgnoreSuggestedDashletsHashes field to given value.
-
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

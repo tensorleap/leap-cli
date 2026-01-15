@@ -6,8 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SessionRunId** | **string** |  | 
 **ProjectId** | **string** |  | 
-**DataStates** | Pointer to [**[]DataStateType**](DataStateType.md) | Required if sessionRun doesn&#39;t have evaluateParams stored | [optional] 
-**BatchSize** | Pointer to **float64** | Required if sessionRun doesn&#39;t have evaluateParams stored | [optional] 
+**BatchSize** | Pointer to **float64** |  | [optional] 
 
 ## Methods
 
@@ -67,31 +66,6 @@ and a boolean to check if the value has been set.
 
 SetProjectId sets ProjectId field to given value.
 
-
-### GetDataStates
-
-`func (o *ContinueEvaluateParams) GetDataStates() []DataStateType`
-
-GetDataStates returns the DataStates field if non-nil, zero value otherwise.
-
-### GetDataStatesOk
-
-`func (o *ContinueEvaluateParams) GetDataStatesOk() (*[]DataStateType, bool)`
-
-GetDataStatesOk returns a tuple with the DataStates field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDataStates
-
-`func (o *ContinueEvaluateParams) SetDataStates(v []DataStateType)`
-
-SetDataStates sets DataStates field to given value.
-
-### HasDataStates
-
-`func (o *ContinueEvaluateParams) HasDataStates() bool`
-
-HasDataStates returns a boolean if a field has been set.
 
 ### GetBatchSize
 

@@ -10,7 +10,6 @@ Name | Type | Description | Notes
 **VersionId** | **string** |  | 
 **ProjectId** | **string** |  | 
 **BatchSize** | **float64** |  | 
-**DataStates** | [**[]DataStateType**](DataStateType.md) |  | 
 **Name** | **string** |  | 
 **Description** | **string** |  | 
 **Monitor** | Pointer to **bool** |  | [optional] 
@@ -41,6 +40,8 @@ Name | Type | Description | Notes
 **ProjectionMetric** | Pointer to **string** |  | [optional] 
 **LabelingAlgorithm** | [**LabelingAlgorithm**](LabelingAlgorithm.md) |  | 
 **NumOfSamplesToLabel** | Pointer to **float64** |  | [optional] 
+**TargetFilters** | [**[]ESFilter**](ESFilter.md) |  | 
+**Sources** | [**[]GenerateSyntheticDataParamsSourcesInner**](GenerateSyntheticDataParamsSourcesInner.md) |  | 
 **ExportUrl** | **string** |  | 
 **ProjectVersion** | **float64** |  | 
 **ExportOptions** | [**ExportOptions**](ExportOptions.md) |  | 
@@ -61,7 +62,7 @@ Name | Type | Description | Notes
 
 ### NewJobParams
 
-`func NewJobParams(epochs float64, batchSize float64, versionId string, projectId string, batchSize float64, dataStates []DataStateType, name string, description string, evaluatedEpoch float64, sessionId string, type_ ExportModelTypeEnum, fromEpoch float64, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, sessionRunId string, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, labelingAlgorithm LabelingAlgorithm, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, codeUrl string, codeEntryFile string, versionName string, ) *JobParams`
+`func NewJobParams(epochs float64, batchSize float64, versionId string, projectId string, batchSize float64, name string, description string, evaluatedEpoch float64, sessionId string, type_ ExportModelTypeEnum, fromEpoch float64, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, sessionRunId string, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, labelingAlgorithm LabelingAlgorithm, targetFilters []ESFilter, sources []GenerateSyntheticDataParamsSourcesInner, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, codeUrl string, codeEntryFile string, versionName string, ) *JobParams`
 
 NewJobParams instantiates a new JobParams object
 This constructor will assign default values to properties that have it defined,
@@ -199,26 +200,6 @@ and a boolean to check if the value has been set.
 `func (o *JobParams) SetBatchSize(v float64)`
 
 SetBatchSize sets BatchSize field to given value.
-
-
-### GetDataStates
-
-`func (o *JobParams) GetDataStates() []DataStateType`
-
-GetDataStates returns the DataStates field if non-nil, zero value otherwise.
-
-### GetDataStatesOk
-
-`func (o *JobParams) GetDataStatesOk() (*[]DataStateType, bool)`
-
-GetDataStatesOk returns a tuple with the DataStates field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDataStates
-
-`func (o *JobParams) SetDataStates(v []DataStateType)`
-
-SetDataStates sets DataStates field to given value.
 
 
 ### GetName
@@ -880,6 +861,46 @@ SetNumOfSamplesToLabel sets NumOfSamplesToLabel field to given value.
 `func (o *JobParams) HasNumOfSamplesToLabel() bool`
 
 HasNumOfSamplesToLabel returns a boolean if a field has been set.
+
+### GetTargetFilters
+
+`func (o *JobParams) GetTargetFilters() []ESFilter`
+
+GetTargetFilters returns the TargetFilters field if non-nil, zero value otherwise.
+
+### GetTargetFiltersOk
+
+`func (o *JobParams) GetTargetFiltersOk() (*[]ESFilter, bool)`
+
+GetTargetFiltersOk returns a tuple with the TargetFilters field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTargetFilters
+
+`func (o *JobParams) SetTargetFilters(v []ESFilter)`
+
+SetTargetFilters sets TargetFilters field to given value.
+
+
+### GetSources
+
+`func (o *JobParams) GetSources() []GenerateSyntheticDataParamsSourcesInner`
+
+GetSources returns the Sources field if non-nil, zero value otherwise.
+
+### GetSourcesOk
+
+`func (o *JobParams) GetSourcesOk() (*[]GenerateSyntheticDataParamsSourcesInner, bool)`
+
+GetSourcesOk returns a tuple with the Sources field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSources
+
+`func (o *JobParams) SetSources(v []GenerateSyntheticDataParamsSourcesInner)`
+
+SetSources sets Sources field to given value.
+
 
 ### GetExportUrl
 
