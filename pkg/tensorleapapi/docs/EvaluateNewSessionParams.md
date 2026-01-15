@@ -7,7 +7,6 @@ Name | Type | Description | Notes
 **VersionId** | **string** |  | 
 **ProjectId** | **string** |  | 
 **BatchSize** | **float64** |  | 
-**DataStates** | [**[]DataStateType**](DataStateType.md) |  | 
 **Name** | **string** |  | 
 **Description** | **string** |  | 
 **Monitor** | Pointer to **bool** |  | [optional] 
@@ -16,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewEvaluateNewSessionParams
 
-`func NewEvaluateNewSessionParams(versionId string, projectId string, batchSize float64, dataStates []DataStateType, name string, description string, ) *EvaluateNewSessionParams`
+`func NewEvaluateNewSessionParams(versionId string, projectId string, batchSize float64, name string, description string, ) *EvaluateNewSessionParams`
 
 NewEvaluateNewSessionParams instantiates a new EvaluateNewSessionParams object
 This constructor will assign default values to properties that have it defined,
@@ -89,26 +88,6 @@ and a boolean to check if the value has been set.
 `func (o *EvaluateNewSessionParams) SetBatchSize(v float64)`
 
 SetBatchSize sets BatchSize field to given value.
-
-
-### GetDataStates
-
-`func (o *EvaluateNewSessionParams) GetDataStates() []DataStateType`
-
-GetDataStates returns the DataStates field if non-nil, zero value otherwise.
-
-### GetDataStatesOk
-
-`func (o *EvaluateNewSessionParams) GetDataStatesOk() (*[]DataStateType, bool)`
-
-GetDataStatesOk returns a tuple with the DataStates field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDataStates
-
-`func (o *EvaluateNewSessionParams) SetDataStates(v []DataStateType)`
-
-SetDataStates sets DataStates field to given value.
 
 
 ### GetName

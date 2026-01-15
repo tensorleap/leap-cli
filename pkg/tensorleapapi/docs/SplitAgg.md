@@ -4,18 +4,18 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Field** | **string** |  | 
+**OrderField** | Pointer to **string** |  | [optional] 
+**Limit** | **NullableFloat64** |  | 
 **Order** | [**OrderType**](OrderType.md) |  | 
-**Limit** | Pointer to **float64** |  | [optional] 
-**OrderField** | **string** |  | 
+**Field** | **string** |  | 
 **Interval** | **float64** |  | 
-**Distribution** | [**DistributionType**](DistributionType.md) |  | 
+**Distribution** | **string** |  | 
 
 ## Methods
 
 ### NewSplitAgg
 
-`func NewSplitAgg(field string, order OrderType, orderField string, interval float64, distribution DistributionType, ) *SplitAgg`
+`func NewSplitAgg(limit NullableFloat64, order OrderType, field string, interval float64, distribution string, ) *SplitAgg`
 
 NewSplitAgg instantiates a new SplitAgg object
 This constructor will assign default values to properties that have it defined,
@@ -30,45 +30,30 @@ NewSplitAggWithDefaults instantiates a new SplitAgg object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetField
+### GetOrderField
 
-`func (o *SplitAgg) GetField() string`
+`func (o *SplitAgg) GetOrderField() string`
 
-GetField returns the Field field if non-nil, zero value otherwise.
+GetOrderField returns the OrderField field if non-nil, zero value otherwise.
 
-### GetFieldOk
+### GetOrderFieldOk
 
-`func (o *SplitAgg) GetFieldOk() (*string, bool)`
+`func (o *SplitAgg) GetOrderFieldOk() (*string, bool)`
 
-GetFieldOk returns a tuple with the Field field if it's non-nil, zero value otherwise
+GetOrderFieldOk returns a tuple with the OrderField field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetField
+### SetOrderField
 
-`func (o *SplitAgg) SetField(v string)`
+`func (o *SplitAgg) SetOrderField(v string)`
 
-SetField sets Field field to given value.
+SetOrderField sets OrderField field to given value.
 
+### HasOrderField
 
-### GetOrder
+`func (o *SplitAgg) HasOrderField() bool`
 
-`func (o *SplitAgg) GetOrder() OrderType`
-
-GetOrder returns the Order field if non-nil, zero value otherwise.
-
-### GetOrderOk
-
-`func (o *SplitAgg) GetOrderOk() (*OrderType, bool)`
-
-GetOrderOk returns a tuple with the Order field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetOrder
-
-`func (o *SplitAgg) SetOrder(v OrderType)`
-
-SetOrder sets Order field to given value.
-
+HasOrderField returns a boolean if a field has been set.
 
 ### GetLimit
 
@@ -89,30 +74,55 @@ and a boolean to check if the value has been set.
 
 SetLimit sets Limit field to given value.
 
-### HasLimit
 
-`func (o *SplitAgg) HasLimit() bool`
+### SetLimitNil
 
-HasLimit returns a boolean if a field has been set.
+`func (o *SplitAgg) SetLimitNil(b bool)`
 
-### GetOrderField
+ SetLimitNil sets the value for Limit to be an explicit nil
 
-`func (o *SplitAgg) GetOrderField() string`
+### UnsetLimit
+`func (o *SplitAgg) UnsetLimit()`
 
-GetOrderField returns the OrderField field if non-nil, zero value otherwise.
+UnsetLimit ensures that no value is present for Limit, not even an explicit nil
+### GetOrder
 
-### GetOrderFieldOk
+`func (o *SplitAgg) GetOrder() OrderType`
 
-`func (o *SplitAgg) GetOrderFieldOk() (*string, bool)`
+GetOrder returns the Order field if non-nil, zero value otherwise.
 
-GetOrderFieldOk returns a tuple with the OrderField field if it's non-nil, zero value otherwise
+### GetOrderOk
+
+`func (o *SplitAgg) GetOrderOk() (*OrderType, bool)`
+
+GetOrderOk returns a tuple with the Order field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetOrderField
+### SetOrder
 
-`func (o *SplitAgg) SetOrderField(v string)`
+`func (o *SplitAgg) SetOrder(v OrderType)`
 
-SetOrderField sets OrderField field to given value.
+SetOrder sets Order field to given value.
+
+
+### GetField
+
+`func (o *SplitAgg) GetField() string`
+
+GetField returns the Field field if non-nil, zero value otherwise.
+
+### GetFieldOk
+
+`func (o *SplitAgg) GetFieldOk() (*string, bool)`
+
+GetFieldOk returns a tuple with the Field field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetField
+
+`func (o *SplitAgg) SetField(v string)`
+
+SetField sets Field field to given value.
 
 
 ### GetInterval
@@ -137,20 +147,20 @@ SetInterval sets Interval field to given value.
 
 ### GetDistribution
 
-`func (o *SplitAgg) GetDistribution() DistributionType`
+`func (o *SplitAgg) GetDistribution() string`
 
 GetDistribution returns the Distribution field if non-nil, zero value otherwise.
 
 ### GetDistributionOk
 
-`func (o *SplitAgg) GetDistributionOk() (*DistributionType, bool)`
+`func (o *SplitAgg) GetDistributionOk() (*string, bool)`
 
 GetDistributionOk returns a tuple with the Distribution field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDistribution
 
-`func (o *SplitAgg) SetDistribution(v DistributionType)`
+`func (o *SplitAgg) SetDistribution(v string)`
 
 SetDistribution sets Distribution field to given value.
 

@@ -8,7 +8,6 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **Items** | [**[]Dashlet**](Dashlet.md) |  | 
 **Description** | Pointer to **string** |  | [optional] 
-**IgnoreSuggestedDashletsHashes** | Pointer to **[]string** |  | [optional] 
 **ProjectId** | **string** |  | 
 
 ## Methods
@@ -114,31 +113,6 @@ SetDescription sets Description field to given value.
 `func (o *UpdateDashboardParams) HasDescription() bool`
 
 HasDescription returns a boolean if a field has been set.
-
-### GetIgnoreSuggestedDashletsHashes
-
-`func (o *UpdateDashboardParams) GetIgnoreSuggestedDashletsHashes() []string`
-
-GetIgnoreSuggestedDashletsHashes returns the IgnoreSuggestedDashletsHashes field if non-nil, zero value otherwise.
-
-### GetIgnoreSuggestedDashletsHashesOk
-
-`func (o *UpdateDashboardParams) GetIgnoreSuggestedDashletsHashesOk() (*[]string, bool)`
-
-GetIgnoreSuggestedDashletsHashesOk returns a tuple with the IgnoreSuggestedDashletsHashes field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetIgnoreSuggestedDashletsHashes
-
-`func (o *UpdateDashboardParams) SetIgnoreSuggestedDashletsHashes(v []string)`
-
-SetIgnoreSuggestedDashletsHashes sets IgnoreSuggestedDashletsHashes field to given value.
-
-### HasIgnoreSuggestedDashletsHashes
-
-`func (o *UpdateDashboardParams) HasIgnoreSuggestedDashletsHashes() bool`
-
-HasIgnoreSuggestedDashletsHashes returns a boolean if a field has been set.
 
 ### GetProjectId
 

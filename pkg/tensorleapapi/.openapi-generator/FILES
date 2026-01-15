@@ -19,7 +19,6 @@ docs/AddSampleCollectionParams.md
 docs/AddSampleCollectionResponse.md
 docs/AddSecretManagerParams.md
 docs/AddSecretManagerResponse.md
-docs/AggFunc.md
 docs/AggregationMethod.md
 docs/Aggregations.md
 docs/AllSessionsTestResults.md
@@ -33,6 +32,7 @@ docs/ArchiveInsightsParams.md
 docs/AuthProviderEnum.md
 docs/BBoxImageData.md
 docs/BBoxImageViz.md
+docs/BaseSplitAgg.md
 docs/BasicVisualizationInfo.md
 docs/BoolSchema.md
 docs/BoundingBox.md
@@ -85,13 +85,13 @@ docs/DeleteSamplesAnalysisParams.md
 docs/DeleteSessionParams.md
 docs/DeleteSessionRunParams.md
 docs/DeleteSessionTestRequest.md
+docs/DeleteSyntheticDataParams.md
 docs/DeleteTeamRequest.md
 docs/DeleteUserByIdRequest.md
 docs/DeleteVersionParams.md
 docs/DeleteVisualizationsParams.md
 docs/Direction.md
 docs/DistinctAgg.md
-docs/DistributionType.md
 docs/DomainGapInsight.md
 docs/DuplicationInsight.md
 docs/ESFilter.md
@@ -130,9 +130,8 @@ docs/FilterOperatorType.md
 docs/FilterSessionRun.md
 docs/GeneralMessageParams.md
 docs/GenerateLabelParams.md
-docs/GeneratedChartData.md
-docs/GeneratedDashlet.md
-docs/GeneratedDashletType.md
+docs/GenerateSyntheticDataParams.md
+docs/GenerateSyntheticDataParamsSourcesInner.md
 docs/GeneratedLabel.md
 docs/GeneratedLabelsResponse.md
 docs/GenericBaseImage.md
@@ -163,9 +162,6 @@ docs/GetExportedSessionRunJobsResponse.md
 docs/GetFieldsValuesRequest.md
 docs/GetFieldsValuesResponse.md
 docs/GetFieldsValuesResponseResultsInner.md
-docs/GetGeneratedDashletsBySessionRun.md
-docs/GetGeneratedDashletsParams.md
-docs/GetGeneratedDashletsResponse.md
 docs/GetGeneratedLabelsParams.md
 docs/GetGenericBaseImageTypesResponse.md
 docs/GetIssueFileUploadSignedUrl.md
@@ -210,6 +206,7 @@ docs/GetStateParams.md
 docs/GetStateResponse.md
 docs/GetStatisticsParams.md
 docs/GetStatisticsResponse.md
+docs/GetSyntheticDataParams.md
 docs/GetTeamUsersResponse.md
 docs/GetTeamsResponse.md
 docs/GetUploadModelSignedUrlRequest.md
@@ -222,7 +219,6 @@ docs/GraphViz.md
 docs/HealthCheckResponse.md
 docs/HealthStatus.md
 docs/Heatmap.md
-docs/HeatmapChart.md
 docs/HeatmapChartsParams.md
 docs/HeatmapType.md
 docs/HorizontalBarData.md
@@ -410,6 +406,9 @@ docs/StatusEnum.md
 docs/StopJobParams.md
 docs/StopJobResponse.md
 docs/StringSchema.md
+docs/SyntheticData.md
+docs/SyntheticDataJobParams.md
+docs/SyntheticDataResponse.md
 docs/TagModelRequest.md
 docs/TerminateAllJobsParams.md
 docs/TerminateAllJobsResponse.md
@@ -463,7 +462,6 @@ docs/VisualizerMessageParams.md
 docs/VizInfoType.md
 docs/VizType.md
 docs/WeightAssetData.md
-docs/XYChart.md
 git_push.sh
 go.mod
 go.sum
@@ -480,7 +478,6 @@ model_add_sample_collection_params.go
 model_add_sample_collection_response.go
 model_add_secret_manager_params.go
 model_add_secret_manager_response.go
-model_agg_func.go
 model_aggregation_method.go
 model_aggregations.go
 model_all_sessions_test_results.go
@@ -494,6 +491,7 @@ model_archive_insights_params.go
 model_auth_provider_enum.go
 model_b_box_image_data.go
 model_b_box_image_viz.go
+model_base_split_agg.go
 model_basic_visualization_info.go
 model_bool_schema.go
 model_bounding_box.go
@@ -545,13 +543,13 @@ model_delete_samples_analysis_params.go
 model_delete_session_params.go
 model_delete_session_run_params.go
 model_delete_session_test_request.go
+model_delete_synthetic_data_params.go
 model_delete_team_request.go
 model_delete_user_by_id_request.go
 model_delete_version_params.go
 model_delete_visualizations_params.go
 model_direction.go
 model_distinct_agg.go
-model_distribution_type.go
 model_domain_gap_insight.go
 model_duplication_insight.go
 model_early_stop_params.go
@@ -590,9 +588,8 @@ model_filter_operator_type.go
 model_filter_session_run.go
 model_general_message_params.go
 model_generate_label_params.go
-model_generated_chart_data.go
-model_generated_dashlet.go
-model_generated_dashlet_type.go
+model_generate_synthetic_data_params.go
+model_generate_synthetic_data_params_sources_inner.go
 model_generated_label.go
 model_generated_labels_response.go
 model_generic_base_image.go
@@ -623,9 +620,6 @@ model_get_exported_session_run_jobs_response.go
 model_get_fields_values_request.go
 model_get_fields_values_response.go
 model_get_fields_values_response_results_inner.go
-model_get_generated_dashlets_by_session_run.go
-model_get_generated_dashlets_params.go
-model_get_generated_dashlets_response.go
 model_get_generated_labels_params.go
 model_get_generic_base_image_types_response.go
 model_get_issue_file_upload_signed_url.go
@@ -670,6 +664,7 @@ model_get_state_params.go
 model_get_state_response.go
 model_get_statistics_params.go
 model_get_statistics_response.go
+model_get_synthetic_data_params.go
 model_get_team_users_response.go
 model_get_teams_response.go
 model_get_upload_model_signed_url_request.go
@@ -682,7 +677,6 @@ model_graph_viz.go
 model_health_check_response.go
 model_health_status.go
 model_heatmap.go
-model_heatmap_chart.go
 model_heatmap_charts_params.go
 model_heatmap_type.go
 model_horizontal_bar_data.go
@@ -870,6 +864,9 @@ model_status_enum.go
 model_stop_job_params.go
 model_stop_job_response.go
 model_string_schema.go
+model_synthetic_data.go
+model_synthetic_data_job_params.go
+model_synthetic_data_response.go
 model_tag_model_request.go
 model_terminate_all_jobs_params.go
 model_terminate_all_jobs_response.go
@@ -923,7 +920,6 @@ model_visualizer_message_params.go
 model_viz_info_type.go
 model_viz_type.go
 model_weight_asset_data.go
-model_xy_chart.go
 response.go
 test/api_default_test.go
 utils.go

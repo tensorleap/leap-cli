@@ -9,6 +9,8 @@
 
 * `LABELING_RECOMMENDATION` (value: `"Labeling Recommendation"`)
 
+* `SYNTHETIC_DATA_GENERATION` (value: `"Synthetic Data Generation"`)
+
 * `VISUALIZERS_CALCULATION` (value: `"Visualizers Calculation"`)
 
 * `SAMPLE_ANALYSIS` (value: `"Sample Analysis"`)

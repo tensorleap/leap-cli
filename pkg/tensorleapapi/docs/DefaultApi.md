@@ -28,6 +28,7 @@ Method | HTTP request | Description
 [**DeleteSession**](DefaultAPI.md#DeleteSession) | **Post** /sessions/deleteSession | 
 [**DeleteSessionRun**](DefaultAPI.md#DeleteSessionRun) | **Post** /sessions/deleteSessionRun | 
 [**DeleteSessionTest**](DefaultAPI.md#DeleteSessionTest) | **Post** /sessions-tests/deleteSessionTest | 
+[**DeleteSyntheticData**](DefaultAPI.md#DeleteSyntheticData) | **Post** /datasetcuration/deleteSyntheticData | 
 [**DeleteTeam**](DefaultAPI.md#DeleteTeam) | **Post** /teams/deleteTeam | 
 [**DeleteUserById**](DefaultAPI.md#DeleteUserById) | **Post** /users/deleteUserById | 
 [**DeleteVersion**](DefaultAPI.md#DeleteVersion) | **Post** /versions/deleteVersion | 
@@ -38,6 +39,7 @@ Method | HTTP request | Description
 [**ExtendTrial**](DefaultAPI.md#ExtendTrial) | **Post** /auth/extendTrial | 
 [**FetchSimilar**](DefaultAPI.md#FetchSimilar) | **Post** /visualizations/fetchSimilar | 
 [**GenerateLabels**](DefaultAPI.md#GenerateLabels) | **Post** /datasetcuration/generateLabels | 
+[**GenerateSyntheticData**](DefaultAPI.md#GenerateSyntheticData) | **Post** /datasetcuration/generateSyntheticData | 
 [**GetAllProjectSessionTests**](DefaultAPI.md#GetAllProjectSessionTests) | **Post** /sessions-tests/getAllProjectSessionTests | 
 [**GetAllSlimUserData**](DefaultAPI.md#GetAllSlimUserData) | **Post** /users/getAllSlimUserData | 
 [**GetApiKeyByCode**](DefaultAPI.md#GetApiKeyByCode) | **Post** /auth/getApiKeyByCode | 
@@ -61,7 +63,6 @@ Method | HTTP request | Description
 [**GetF1Score**](DefaultAPI.md#GetF1Score) | **Post** /sessionmetrics/getF1Score | 
 [**GetFetchSimilarStatus**](DefaultAPI.md#GetFetchSimilarStatus) | **Post** /visualizations/getFetchSimilarStatus | 
 [**GetFieldsValues**](DefaultAPI.md#GetFieldsValues) | **Post** /sessionmetrics/getFieldsValues | 
-[**GetGeneratedDashlets**](DefaultAPI.md#GetGeneratedDashlets) | **Post** /dashletsGenerator/getGeneratedDashlets | 
 [**GetGeneratedLabels**](DefaultAPI.md#GetGeneratedLabels) | **Post** /datasetcuration/getGeneratedLabels | 
 [**GetGenericBaseImageTypes**](DefaultAPI.md#GetGenericBaseImageTypes) | **Post** /versions/getGenericBaseImageTypes | 
 [**GetHeatmapChart**](DefaultAPI.md#GetHeatmapChart) | **Post** /sessionmetrics/getHeatmapChart | 
@@ -100,6 +101,7 @@ Method | HTTP request | Description
 [**GetSlimVisualization**](DefaultAPI.md#GetSlimVisualization) | **Post** /visualizations/getSlimVisualization | 
 [**GetState**](DefaultAPI.md#GetState) | **Post** /projectstate/getState | 
 [**GetStatistics**](DefaultAPI.md#GetStatistics) | **Post** /metadata/getStatistics | 
+[**GetSyntheticData**](DefaultAPI.md#GetSyntheticData) | **Post** /datasetcuration/getSyntheticData | 
 [**GetTableChart**](DefaultAPI.md#GetTableChart) | **Post** /sessionmetrics/getTableChart | 
 [**GetTeamJobs**](DefaultAPI.md#GetTeamJobs) | **Post** /jobs/getTeamJobs | 
 [**GetTeamSlimUserData**](DefaultAPI.md#GetTeamSlimUserData) | **Post** /users/getTeamSlimUserData | 
@@ -757,7 +759,7 @@ import (
 )
 
 func main() {
-	calcPopulationExplorationDigestParams := *openapiclient.NewCalcPopulationExplorationDigestParams(*openapiclient.NewPickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrProjectIdOrReRunAfterFail("SessionRunId_example", float64(123), float64(123), float64(123), []string{"BalanceBy_example"}, false, openapiclient.ReductionAlgorithm("TSNE"))) // CalcPopulationExplorationDigestParams | 
+	calcPopulationExplorationDigestParams := *openapiclient.NewCalcPopulationExplorationDigestParams(*openapiclient.NewPickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrProjectIdOrReRunAfterFail("SessionRunId_example", float64(123), float64(123), float64(123), []string{"BalanceBy_example"}, false, openapiclient.ReductionAlgorithm("TSNE")), "ProjectId_example") // CalcPopulationExplorationDigestParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -1668,6 +1670,68 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## DeleteSyntheticData
+
+> DeleteSyntheticData(ctx).DeleteSyntheticDataParams(deleteSyntheticDataParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	deleteSyntheticDataParams := *openapiclient.NewDeleteSyntheticDataParams("ProjectId_example", "SyntheticDataId_example") // DeleteSyntheticDataParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteSyntheticData(context.Background()).DeleteSyntheticDataParams(deleteSyntheticDataParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteSyntheticData``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteSyntheticDataRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **deleteSyntheticDataParams** | [**DeleteSyntheticDataParams**](DeleteSyntheticDataParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## DeleteTeam
 
 > DeleteTeam(ctx).DeleteTeamRequest(deleteTeamRequest).Execute()
@@ -2001,7 +2065,7 @@ import (
 )
 
 func main() {
-	evaluateParams := *openapiclient.NewEvaluateParams("VersionId_example", "ProjectId_example", float64(123), []openapiclient.DataStateType{openapiclient.DataStateType("training")}, "Name_example", "Description_example", float64(123), "SessionId_example") // EvaluateParams | 
+	evaluateParams := *openapiclient.NewEvaluateParams("VersionId_example", "ProjectId_example", float64(123), "Name_example", "Description_example", float64(123), "SessionId_example") // EvaluateParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -2281,6 +2345,68 @@ Other parameters are passed through a pointer to a apiGenerateLabelsRequest stru
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **generateLabelParams** | [**GenerateLabelParams**](GenerateLabelParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GenerateSyntheticData
+
+> GenerateSyntheticData(ctx).GenerateSyntheticDataParams(generateSyntheticDataParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	generateSyntheticDataParams := *openapiclient.NewGenerateSyntheticDataParams("ProjectId_example", "SessionRunId_example", float64(123), []openapiclient.GenerateSyntheticDataParamsSourcesInner{*openapiclient.NewGenerateSyntheticDataParamsSourcesInner([]string{"MetadataKeys_example"}, []openapiclient.ESFilter{*openapiclient.NewESFilter(openapiclient.FilterOperatorType("between"), "Field_example", *openapiclient.NewESFilterValue())})}, []openapiclient.ESFilter{*openapiclient.NewESFilter(openapiclient.FilterOperatorType("between"), "Field_example", *openapiclient.NewESFilterValue())}) // GenerateSyntheticDataParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.GenerateSyntheticData(context.Background()).GenerateSyntheticDataParams(generateSyntheticDataParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GenerateSyntheticData``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGenerateSyntheticDataRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **generateSyntheticDataParams** | [**GenerateSyntheticDataParams**](GenerateSyntheticDataParams.md) |  | 
 
 ### Return type
 
@@ -2949,7 +3075,7 @@ import (
 )
 
 func main() {
-	getConfusionMatrixResultCombinationsParams := *openapiclient.NewGetConfusionMatrixResultCombinationsParams("ProjectId_example", []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), "CustomMetricName_example") // GetConfusionMatrixResultCombinationsParams | 
+	getConfusionMatrixResultCombinationsParams := *openapiclient.NewGetConfusionMatrixResultCombinationsParams("ProjectId_example", []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, *openapiclient.NewSplitAgg(NullableFloat64(123), openapiclient.OrderType("desc"), "Field_example", float64(123), "Distribution_example"), "CustomMetricName_example") // GetConfusionMatrixResultCombinationsParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -3752,70 +3878,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetGeneratedDashlets
-
-> GetGeneratedDashletsResponse GetGeneratedDashlets(ctx).GetGeneratedDashletsParams(getGeneratedDashletsParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-	getGeneratedDashletsParams := *openapiclient.NewGetGeneratedDashletsParams("ProjectId_example", []string{"SessionRunIds_example"}) // GetGeneratedDashletsParams | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DefaultAPI.GetGeneratedDashlets(context.Background()).GetGeneratedDashletsParams(getGeneratedDashletsParams).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetGeneratedDashlets``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `GetGeneratedDashlets`: GetGeneratedDashletsResponse
-	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetGeneratedDashlets`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetGeneratedDashletsRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getGeneratedDashletsParams** | [**GetGeneratedDashletsParams**](GetGeneratedDashletsParams.md) |  | 
-
-### Return type
-
-[**GetGeneratedDashletsResponse**](GetGeneratedDashletsResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## GetGeneratedLabels
 
 > GeneratedLabelsResponse GetGeneratedLabels(ctx).GetGeneratedLabelsParams(getGeneratedLabelsParams).Execute()
@@ -3958,7 +4020,7 @@ import (
 )
 
 func main() {
-	heatmapChartsParams := *openapiclient.NewHeatmapChartsParams("ProjectId_example", *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), *openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average")), []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, false) // HeatmapChartsParams | 
+	heatmapChartsParams := *openapiclient.NewHeatmapChartsParams("ProjectId_example", *openapiclient.NewSplitAgg(NullableFloat64(123), openapiclient.OrderType("desc"), "Field_example", float64(123), "Distribution_example"), *openapiclient.NewSplitAgg(NullableFloat64(123), openapiclient.OrderType("desc"), "Field_example", float64(123), "Distribution_example"), *openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average")), []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, false) // HeatmapChartsParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -4332,7 +4394,7 @@ import (
 )
 
 func main() {
-	confusionMatrixParams := *openapiclient.NewConfusionMatrixParams("ProjectId_example", []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), "CustomMetricName_example") // ConfusionMatrixParams | 
+	confusionMatrixParams := *openapiclient.NewConfusionMatrixParams("ProjectId_example", []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, *openapiclient.NewSplitAgg(NullableFloat64(123), openapiclient.OrderType("desc"), "Field_example", float64(123), "Distribution_example"), "CustomMetricName_example") // ConfusionMatrixParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -6218,6 +6280,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetSyntheticData
+
+> SyntheticDataResponse GetSyntheticData(ctx).GetSyntheticDataParams(getSyntheticDataParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getSyntheticDataParams := *openapiclient.NewGetSyntheticDataParams("ProjectId_example") // GetSyntheticDataParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetSyntheticData(context.Background()).GetSyntheticDataParams(getSyntheticDataParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetSyntheticData``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSyntheticData`: SyntheticDataResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetSyntheticData`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetSyntheticDataRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getSyntheticDataParams** | [**GetSyntheticDataParams**](GetSyntheticDataParams.md) |  | 
+
+### Return type
+
+[**SyntheticDataResponse**](SyntheticDataResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetTableChart
 
 > MultiChartsResponse GetTableChart(ctx).GenericDataQueryParams(genericDataQueryParams).Execute()
@@ -6237,7 +6363,7 @@ import (
 )
 
 func main() {
-	genericDataQueryParams := *openapiclient.NewGenericDataQueryParams("ProjectId_example", []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, false, []openapiclient.Aggregations{*openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average"))}, []openapiclient.SplitAgg{*openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous"))}) // GenericDataQueryParams | 
+	genericDataQueryParams := *openapiclient.NewGenericDataQueryParams("ProjectId_example", []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, false, []openapiclient.Aggregations{*openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average"))}, []openapiclient.SplitAgg{*openapiclient.NewSplitAgg(NullableFloat64(123), openapiclient.OrderType("desc"), "Field_example", float64(123), "Distribution_example")}) // GenericDataQueryParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -6675,7 +6801,7 @@ import (
 )
 
 func main() {
-	multiChartsParams := *openapiclient.NewMultiChartsParams("ProjectId_example", *openapiclient.NewSplitAgg("Field_example", openapiclient.OrderType("asc"), "OrderField_example", float64(123), openapiclient.DistributionType("continuous")), *openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average")), []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, false) // MultiChartsParams | 
+	multiChartsParams := *openapiclient.NewMultiChartsParams("ProjectId_example", *openapiclient.NewSplitAgg(NullableFloat64(123), openapiclient.OrderType("desc"), "Field_example", float64(123), "Distribution_example"), *openapiclient.NewAggregations("Field_example", openapiclient.AggregationMethod("Average")), []openapiclient.SessionRunToEpoch{*openapiclient.NewSessionRunToEpoch("SessionRunId_example", float64(123))}, false) // MultiChartsParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
