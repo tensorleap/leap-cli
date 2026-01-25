@@ -2,14 +2,14 @@ package server
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/tensorleap/helm-charts/cmd/server"
+	servercmd "github.com/tensorleap/helm-charts/cmd/server"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/version"
 )
 
 func NewReinstallCmd() *cobra.Command {
-	flags := &server.ReinstallFlags{}
+	flags := &servercmd.ReinstallFlags{}
 	licenseFlag := auth.NewLicenseFlag()
 
 	cmd := &cobra.Command{
@@ -47,7 +47,7 @@ func NewReinstallCmd() *cobra.Command {
 				analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties)
 				return err
 			}
-			err = server.RunReinstallCmd(cmd, flags, isReinstalled)
+			result, err := servercmd.RunReinstallCmd(cmd, flags, isReinstalled)
 			if err != nil {
 				failProperties := map[string]interface{}{
 					"cli_version": version.CliVersion,
@@ -58,7 +58,7 @@ func NewReinstallCmd() *cobra.Command {
 				analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties)
 				return mapInstallationErr(err)
 			}
-			if err := localLogin(flags.Port); err != nil {
+			if err := localLogin(result.ServerURL, flags.Port); err != nil {
 				failProperties := map[string]interface{}{
 					"cli_version": version.CliVersion,
 					"data_dir":    flags.DataDir,

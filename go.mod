@@ -260,7 +260,7 @@ require (
 replace github.com/tensorleap/leap-cli/pkg/tensorleapapi => ./pkg/tensorleapapi
 
 // for local defelopment only
-// replace github.com/tensorleap/helm-charts => ./../helm-charts
+replace github.com/tensorleap/helm-charts => ./../helm-charts
 
 // We have comptablity issues with oras-go (used indirectly by helm) v1.2.3 with docker v24.0.5+incompatible, so we fork it and create a new release 1.2.5
 replace oras.land/oras-go => github.com/tensorleap/oras-go v1.2.5

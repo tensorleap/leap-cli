@@ -2,20 +2,20 @@ package server
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/tensorleap/helm-charts/cmd/server"
+	servercmd "github.com/tensorleap/helm-charts/cmd/server"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/version"
 )
 
 func NewInstallCmd() *cobra.Command {
-	flags := &server.InstallFlags{}
+	flags := &servercmd.InstallFlags{}
 	licenseFlag := auth.NewLicenseFlag()
 
 	cmd := &cobra.Command{
 		Use:   "install",
-		Short: server.InstallCmdDescription,
-		Long:  server.InstallCmdDescription,
+		Short: servercmd.InstallCmdDescription,
+		Long:  servercmd.InstallCmdDescription,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Track installation started
 			startProperties := map[string]interface{}{
@@ -50,7 +50,7 @@ func NewInstallCmd() *cobra.Command {
 				return err
 			}
 
-			err = server.RunInstallCmd(cmd, flags)
+			installResult, err := servercmd.RunInstallCmd(cmd, flags)
 			if err != nil {
 				// Track installation failed
 				failProperties := map[string]interface{}{
@@ -63,7 +63,7 @@ func NewInstallCmd() *cobra.Command {
 				return mapInstallationErr(err)
 			}
 
-			if err := localLogin(flags.Port); err != nil {
+			if err := localLogin(installResult.ServerURL, flags.Port); err != nil {
 				// Track installation failed
 				failProperties := map[string]interface{}{
 					"cli_version": version.CliVersion,
