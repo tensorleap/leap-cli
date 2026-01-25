@@ -15,6 +15,12 @@ func CreateAuthenticatedContext(parentCtx context.Context, apiKey string, baseUr
 	return ctx
 }
 
+func CreateContextWithBaseURL(parentCtx context.Context, baseUrl string) context.Context {
+	return context.WithValue(parentCtx, tensorleapapi.ContextServerVariables, map[string]string{
+		"baseUrl": baseUrl,
+	})
+}
+
 func getApiClient() *tensorleapapi.DefaultAPIService {
 	cfg := tensorleapapi.NewConfiguration()
 
