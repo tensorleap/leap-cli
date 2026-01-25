@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **CreatedAt** | **time.Time** |  | 
 **CreatedBy** | **string** |  | 
 **NextTrialsFileUrl** | Pointer to **string** |  | [optional] 
-**SuggestionsFileUrl** | Pointer to **string** |  | [optional] 
+**BestTrialsFileUrl** | Pointer to **string** |  | [optional] 
 **Status** | [**JobStatus**](JobStatus.md) |  | 
 **Sources** | [**[]GenerateSyntheticDataParamsSourcesInner**](GenerateSyntheticDataParamsSourcesInner.md) |  | 
 **TargetFilters** | [**[]ESFilter**](ESFilter.md) |  | 
@@ -201,30 +201,30 @@ SetNextTrialsFileUrl sets NextTrialsFileUrl field to given value.
 
 HasNextTrialsFileUrl returns a boolean if a field has been set.
 
-### GetSuggestionsFileUrl
+### GetBestTrialsFileUrl
 
-`func (o *SyntheticData) GetSuggestionsFileUrl() string`
+`func (o *SyntheticData) GetBestTrialsFileUrl() string`
 
-GetSuggestionsFileUrl returns the SuggestionsFileUrl field if non-nil, zero value otherwise.
+GetBestTrialsFileUrl returns the BestTrialsFileUrl field if non-nil, zero value otherwise.
 
-### GetSuggestionsFileUrlOk
+### GetBestTrialsFileUrlOk
 
-`func (o *SyntheticData) GetSuggestionsFileUrlOk() (*string, bool)`
+`func (o *SyntheticData) GetBestTrialsFileUrlOk() (*string, bool)`
 
-GetSuggestionsFileUrlOk returns a tuple with the SuggestionsFileUrl field if it's non-nil, zero value otherwise
+GetBestTrialsFileUrlOk returns a tuple with the BestTrialsFileUrl field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSuggestionsFileUrl
+### SetBestTrialsFileUrl
 
-`func (o *SyntheticData) SetSuggestionsFileUrl(v string)`
+`func (o *SyntheticData) SetBestTrialsFileUrl(v string)`
 
-SetSuggestionsFileUrl sets SuggestionsFileUrl field to given value.
+SetBestTrialsFileUrl sets BestTrialsFileUrl field to given value.
 
-### HasSuggestionsFileUrl
+### HasBestTrialsFileUrl
 
-`func (o *SyntheticData) HasSuggestionsFileUrl() bool`
+`func (o *SyntheticData) HasBestTrialsFileUrl() bool`
 
-HasSuggestionsFileUrl returns a boolean if a field has been set.
+HasBestTrialsFileUrl returns a boolean if a field has been set.
 
 ### GetStatus
 

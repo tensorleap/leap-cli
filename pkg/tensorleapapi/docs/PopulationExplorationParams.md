@@ -12,13 +12,10 @@ Name | Type | Description | Notes
 **TimeFilter** | Pointer to [**ESFilter**](ESFilter.md) |  | [optional] 
 **NotApplyTimeFilterOnUnlabeledOnly** | Pointer to **bool** |  | [optional] 
 **Digest** | **string** |  | 
-**ProjectionMetric** | Pointer to **string** |  | [optional] 
-**DomainGapMetadata** | Pointer to **string** |  | [optional] 
 **NumOfSamples** | **float64** |  | 
 **BalanceBy** | **[]string** |  | 
 **ShouldFillRemainingWithUnbalanced** | **bool** |  | 
 **ReductionAlgorithm** | [**ReductionAlgorithm**](ReductionAlgorithm.md) |  | 
-**OptionalAnalysis** | Pointer to [**[]OptionalAnalysis**](OptionalAnalysis.md) |  | [optional] 
 **ReRunAfterFail** | Pointer to **bool** |  | [optional] 
 **UseCustomLatentSpace** | Pointer to **bool** |  | [optional] 
 **ElementInstance** | Pointer to **bool** |  | [optional] 
@@ -219,56 +216,6 @@ and a boolean to check if the value has been set.
 SetDigest sets Digest field to given value.
 
 
-### GetProjectionMetric
-
-`func (o *PopulationExplorationParams) GetProjectionMetric() string`
-
-GetProjectionMetric returns the ProjectionMetric field if non-nil, zero value otherwise.
-
-### GetProjectionMetricOk
-
-`func (o *PopulationExplorationParams) GetProjectionMetricOk() (*string, bool)`
-
-GetProjectionMetricOk returns a tuple with the ProjectionMetric field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetProjectionMetric
-
-`func (o *PopulationExplorationParams) SetProjectionMetric(v string)`
-
-SetProjectionMetric sets ProjectionMetric field to given value.
-
-### HasProjectionMetric
-
-`func (o *PopulationExplorationParams) HasProjectionMetric() bool`
-
-HasProjectionMetric returns a boolean if a field has been set.
-
-### GetDomainGapMetadata
-
-`func (o *PopulationExplorationParams) GetDomainGapMetadata() string`
-
-GetDomainGapMetadata returns the DomainGapMetadata field if non-nil, zero value otherwise.
-
-### GetDomainGapMetadataOk
-
-`func (o *PopulationExplorationParams) GetDomainGapMetadataOk() (*string, bool)`
-
-GetDomainGapMetadataOk returns a tuple with the DomainGapMetadata field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDomainGapMetadata
-
-`func (o *PopulationExplorationParams) SetDomainGapMetadata(v string)`
-
-SetDomainGapMetadata sets DomainGapMetadata field to given value.
-
-### HasDomainGapMetadata
-
-`func (o *PopulationExplorationParams) HasDomainGapMetadata() bool`
-
-HasDomainGapMetadata returns a boolean if a field has been set.
-
 ### GetNumOfSamples
 
 `func (o *PopulationExplorationParams) GetNumOfSamples() float64`
@@ -348,31 +295,6 @@ and a boolean to check if the value has been set.
 
 SetReductionAlgorithm sets ReductionAlgorithm field to given value.
 
-
-### GetOptionalAnalysis
-
-`func (o *PopulationExplorationParams) GetOptionalAnalysis() []OptionalAnalysis`
-
-GetOptionalAnalysis returns the OptionalAnalysis field if non-nil, zero value otherwise.
-
-### GetOptionalAnalysisOk
-
-`func (o *PopulationExplorationParams) GetOptionalAnalysisOk() (*[]OptionalAnalysis, bool)`
-
-GetOptionalAnalysisOk returns a tuple with the OptionalAnalysis field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetOptionalAnalysis
-
-`func (o *PopulationExplorationParams) SetOptionalAnalysis(v []OptionalAnalysis)`
-
-SetOptionalAnalysis sets OptionalAnalysis field to given value.
-
-### HasOptionalAnalysis
-
-`func (o *PopulationExplorationParams) HasOptionalAnalysis() bool`
-
-HasOptionalAnalysis returns a boolean if a field has been set.
 
 ### GetReRunAfterFail
 
