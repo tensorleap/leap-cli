@@ -72,7 +72,7 @@ func fetchAuthStatus(ctx context.Context) (postInstallUserState, error) {
 	}
 }
 
-func localLogin(baseUrl string, fallbackPort uint) error {
+func localLogin(baseUrl string, fallbackPort uint, skipLogin bool) error {
 	apiLink := ""
 	uiBaseUrl := ""
 
@@ -122,6 +122,10 @@ func localLogin(baseUrl string, fallbackPort uint) error {
 	case userState.IsLoggedIn:
 		log.Infof("User already logged in, opening Tensorleap at %s", uiBaseUrl)
 		return local.OpenLink(uiBaseUrl)
+	case skipLogin:
+		log.Infof("Skipping automatic login. You can access Tensorleap at %s", uiBaseUrl)
+		log.Infof("To login manually, run: leap auth login %s", uiBaseUrl)
+		return nil
 	default:
 		ctx := context.Background()
 		apiKey, err := auth.LoginAndGetAuthTokenWithBrowser(ctx, apiLink)

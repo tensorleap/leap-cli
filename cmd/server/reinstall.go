@@ -11,6 +11,7 @@ import (
 func NewReinstallCmd() *cobra.Command {
 	flags := &servercmd.ReinstallFlags{}
 	licenseFlag := auth.NewLicenseFlag()
+	var skipLogin bool
 
 	cmd := &cobra.Command{
 		Use:   "reinstall",
@@ -58,7 +59,7 @@ func NewReinstallCmd() *cobra.Command {
 				analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties)
 				return mapInstallationErr(err)
 			}
-			if err := localLogin(result.ServerURL, flags.Port); err != nil {
+			if err := localLogin(result.ServerURL, flags.Port, skipLogin); err != nil {
 				failProperties := map[string]interface{}{
 					"cli_version": version.CliVersion,
 					"data_dir":    flags.DataDir,
@@ -102,6 +103,7 @@ func NewReinstallCmd() *cobra.Command {
 
 	flags.SetFlags(cmd)
 	licenseFlag.AddFlags(cmd)
+	cmd.Flags().BoolVar(&skipLogin, "skip-login", false, "Skip automatic browser login after reinstallation")
 
 	return cmd
 }
