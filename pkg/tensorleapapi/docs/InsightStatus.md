@@ -1,13 +1,13 @@
-# InsightSubCategoryPerformance
+# InsightStatus
 
 ## Enum
 
 
-* `LOW_PERFORMANCE` (value: `"low_performance"`)
+* `IN_REVIEW` (value: `"InReview"`)
 
-* `OVER_FIT` (value: `"over_fit"`)
+* `APPROVED` (value: `"Approved"`)
 
-* `DOMAIN_GAP` (value: `"domain_gap"`)
+* `ARCHIVED` (value: `"Archived"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

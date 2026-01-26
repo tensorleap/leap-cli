@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **Description** | **string** |  | 
 **EvaluateParams** | Pointer to [**SessionRunEvaluateParams**](SessionRunEvaluateParams.md) |  | [optional] 
 **CanContinueEvaluate** | Pointer to **bool** |  | [optional] 
+**CsvBlobPath** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -306,6 +307,31 @@ SetCanContinueEvaluate sets CanContinueEvaluate field to given value.
 `func (o *SessionRunData) HasCanContinueEvaluate() bool`
 
 HasCanContinueEvaluate returns a boolean if a field has been set.
+
+### GetCsvBlobPath
+
+`func (o *SessionRunData) GetCsvBlobPath() string`
+
+GetCsvBlobPath returns the CsvBlobPath field if non-nil, zero value otherwise.
+
+### GetCsvBlobPathOk
+
+`func (o *SessionRunData) GetCsvBlobPathOk() (*string, bool)`
+
+GetCsvBlobPathOk returns a tuple with the CsvBlobPath field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCsvBlobPath
+
+`func (o *SessionRunData) SetCsvBlobPath(v string)`
+
+SetCsvBlobPath sets CsvBlobPath field to given value.
+
+### HasCsvBlobPath
+
+`func (o *SessionRunData) HasCsvBlobPath() bool`
+
+HasCsvBlobPath returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
