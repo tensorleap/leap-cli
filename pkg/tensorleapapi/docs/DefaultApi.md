@@ -44,6 +44,7 @@ Method | HTTP request | Description
 [**GetAllSlimUserData**](DefaultAPI.md#GetAllSlimUserData) | **Post** /users/getAllSlimUserData | 
 [**GetApiKeyByCode**](DefaultAPI.md#GetApiKeyByCode) | **Post** /auth/getApiKeyByCode | 
 [**GetAuthProvider**](DefaultAPI.md#GetAuthProvider) | **Post** /auth/getAuthProvider | 
+[**GetAuthStatus**](DefaultAPI.md#GetAuthStatus) | **Post** /auth/getAuthStatus | 
 [**GetBalancedAccuracy**](DefaultAPI.md#GetBalancedAccuracy) | **Post** /sessionmetrics/getBalancedAccuracy | 
 [**GetCodeSnapshot**](DefaultAPI.md#GetCodeSnapshot) | **Post** /versions/getCodeSnapshot | 
 [**GetCodeSnapshotUploadUrl**](DefaultAPI.md#GetCodeSnapshotUploadUrl) | **Post** /versions/getCodeSnapshotUploadUrl | 
@@ -2654,6 +2655,65 @@ Other parameters are passed through a pointer to a apiGetAuthProviderRequest str
 ### Return type
 
 [**GetAuthProviderResponse**](GetAuthProviderResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetAuthStatus
+
+> GetAuthStatusResponse GetAuthStatus(ctx).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetAuthStatus(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetAuthStatus``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAuthStatus`: GetAuthStatusResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetAuthStatus`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAuthStatusRequest struct via the builder pattern
+
+
+### Return type
+
+[**GetAuthStatusResponse**](GetAuthStatusResponse.md)
 
 ### Authorization
 

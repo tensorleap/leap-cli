@@ -29,6 +29,7 @@ docs/AnalyzeParams.md
 docs/AnalyzeTypeEnum.md
 docs/ApplyInsightsStatusParams.md
 docs/AuthProviderEnum.md
+docs/AuthStatus.md
 docs/BBoxImageData.md
 docs/BBoxImageViz.md
 docs/BaseSplitAgg.md
@@ -141,6 +142,7 @@ docs/GenericDataResponse.md
 docs/GetAllProjectSessionTestsRequest.md
 docs/GetApiKeyByCodeRequest.md
 docs/GetAuthProviderResponse.md
+docs/GetAuthStatusResponse.md
 docs/GetCodeSnapshotParams.md
 docs/GetCodeSnapshotResponse.md
 docs/GetCodeSnapshotUploadUrlParams.md
@@ -488,6 +490,7 @@ model_analyze_params.go
 model_analyze_type_enum.go
 model_apply_insights_status_params.go
 model_auth_provider_enum.go
+model_auth_status.go
 model_b_box_image_data.go
 model_b_box_image_viz.go
 model_base_split_agg.go
@@ -599,6 +602,7 @@ model_generic_data_response.go
 model_get_all_project_session_tests_request.go
 model_get_api_key_by_code_request.go
 model_get_auth_provider_response.go
+model_get_auth_status_response.go
 model_get_code_snapshot_params.go
 model_get_code_snapshot_response.go
 model_get_code_snapshot_upload_url_params.go

@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.682
+  version: 0.0.683
 servers:
 - url: /api/v2
 paths:
@@ -48,6 +48,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetAuthProviderResponse"
+          description: Ok
+      security: []
+  /auth/getAuthStatus:
+    post:
+      operationId: GetAuthStatus
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetAuthStatusResponse"
           description: Ok
       security: []
   /auth/login:
@@ -2969,6 +2981,22 @@ components:
           $ref: "#/components/schemas/AuthProviderEnum"
       required:
       - authProvider
+      type: object
+    AuthStatus:
+      enum:
+      - logged-in
+      - not-logged-in
+      - no-users
+      type: string
+    GetAuthStatusResponse:
+      additionalProperties: true
+      example:
+        status: logged-in
+      properties:
+        status:
+          $ref: "#/components/schemas/AuthStatus"
+      required:
+      - status
       type: object
     LoginParams:
       additionalProperties: true
