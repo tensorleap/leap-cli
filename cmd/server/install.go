@@ -11,6 +11,7 @@ import (
 func NewInstallCmd() *cobra.Command {
 	flags := &servercmd.InstallFlags{}
 	licenseFlag := auth.NewLicenseFlag()
+	var skipLogin bool
 
 	cmd := &cobra.Command{
 		Use:   "install",
@@ -63,7 +64,7 @@ func NewInstallCmd() *cobra.Command {
 				return mapInstallationErr(err)
 			}
 
-			if err := localLogin(installResult.ServerURL, flags.Port); err != nil {
+			if err := localLogin(installResult.ServerURL, flags.Port, skipLogin); err != nil {
 				// Track installation failed
 				failProperties := map[string]interface{}{
 					"cli_version": version.CliVersion,
@@ -109,6 +110,7 @@ func NewInstallCmd() *cobra.Command {
 
 	flags.SetFlags(cmd)
 	licenseFlag.AddFlags(cmd)
+	cmd.Flags().BoolVar(&skipLogin, "skip-login", false, "Skip automatic browser login after installation")
 
 	return cmd
 }
