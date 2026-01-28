@@ -6,6 +6,7 @@ toolchain go1.24.10
 
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.7
+	github.com/atotto/clipboard v0.1.4
 	github.com/bmatcuk/doublestar/v4 v4.8.1
 	github.com/briandowns/spinner v1.23.0
 	github.com/charmbracelet/bubbles v0.21.0
@@ -18,7 +19,7 @@ require (
 	github.com/spf13/cobra v1.10.1
 	github.com/spf13/viper v1.18.2
 	github.com/stretchr/testify v1.11.1
-	github.com/tensorleap/helm-charts v0.9.0
+	github.com/tensorleap/helm-charts v0.9.3
 	github.com/tensorleap/leap-cli/pkg/tensorleapapi v0.0.0-00010101000000-000000000000
 	google.golang.org/api v0.256.0
 	gopkg.in/yaml.v3 v3.0.1
@@ -38,7 +39,6 @@ require (
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/detectors/gcp v1.29.0 // indirect
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric v0.50.0 // indirect
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping v0.50.0 // indirect
-	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
@@ -260,7 +260,7 @@ require (
 replace github.com/tensorleap/leap-cli/pkg/tensorleapapi => ./pkg/tensorleapapi
 
 // for local defelopment only
-replace github.com/tensorleap/helm-charts => ./../helm-charts
+// replace github.com/tensorleap/helm-charts => ./../helm-charts
 
 // We have comptablity issues with oras-go (used indirectly by helm) v1.2.3 with docker v24.0.5+incompatible, so we fork it and create a new release 1.2.5
 replace oras.land/oras-go => github.com/tensorleap/oras-go v1.2.5
