@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **ValidationLength** | **float64** |  | 
 **TestLength** | Pointer to **float64** |  | [optional] 
 **UnlabeledLength** | Pointer to **float64** |  | [optional] 
+**AdditionalLength** | Pointer to **float64** |  | [optional] 
 
 ## Methods
 
@@ -117,6 +118,31 @@ SetUnlabeledLength sets UnlabeledLength field to given value.
 `func (o *DatasetPreprocess) HasUnlabeledLength() bool`
 
 HasUnlabeledLength returns a boolean if a field has been set.
+
+### GetAdditionalLength
+
+`func (o *DatasetPreprocess) GetAdditionalLength() float64`
+
+GetAdditionalLength returns the AdditionalLength field if non-nil, zero value otherwise.
+
+### GetAdditionalLengthOk
+
+`func (o *DatasetPreprocess) GetAdditionalLengthOk() (*float64, bool)`
+
+GetAdditionalLengthOk returns a tuple with the AdditionalLength field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAdditionalLength
+
+`func (o *DatasetPreprocess) SetAdditionalLength(v float64)`
+
+SetAdditionalLength sets AdditionalLength field to given value.
+
+### HasAdditionalLength
+
+`func (o *DatasetPreprocess) HasAdditionalLength() bool`
+
+HasAdditionalLength returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

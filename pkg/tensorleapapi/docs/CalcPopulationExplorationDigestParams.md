@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**PopulationParams** | [**PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrProjectIdOrReRunAfterFail**](PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrProjectIdOrReRunAfterFail.md) |  | 
+**PopulationParams** | [**PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail**](PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail.md) |  | 
 
 ## Methods
 
 ### NewCalcPopulationExplorationDigestParams
 
-`func NewCalcPopulationExplorationDigestParams(populationParams PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrProjectIdOrReRunAfterFail, ) *CalcPopulationExplorationDigestParams`
+`func NewCalcPopulationExplorationDigestParams(populationParams PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail, ) *CalcPopulationExplorationDigestParams`
 
 NewCalcPopulationExplorationDigestParams instantiates a new CalcPopulationExplorationDigestParams object
 This constructor will assign default values to properties that have it defined,
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetPopulationParams
 
-`func (o *CalcPopulationExplorationDigestParams) GetPopulationParams() PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrProjectIdOrReRunAfterFail`
+`func (o *CalcPopulationExplorationDigestParams) GetPopulationParams() PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail`
 
 GetPopulationParams returns the PopulationParams field if non-nil, zero value otherwise.
 
 ### GetPopulationParamsOk
 
-`func (o *CalcPopulationExplorationDigestParams) GetPopulationParamsOk() (*PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrProjectIdOrReRunAfterFail, bool)`
+`func (o *CalcPopulationExplorationDigestParams) GetPopulationParamsOk() (*PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail, bool)`
 
 GetPopulationParamsOk returns a tuple with the PopulationParams field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPopulationParams
 
-`func (o *CalcPopulationExplorationDigestParams) SetPopulationParams(v PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrProjectIdOrReRunAfterFail)`
+`func (o *CalcPopulationExplorationDigestParams) SetPopulationParams(v PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail)`
 
 SetPopulationParams sets PopulationParams field to given value.
 

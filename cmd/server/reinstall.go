@@ -4,16 +4,17 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/tensorleap/helm-charts/cmd/server"
+	servercmd "github.com/tensorleap/helm-charts/cmd/server"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/version"
 )
 
 func NewReinstallCmd() *cobra.Command {
-	flags := &server.ReinstallFlags{}
+	flags := &servercmd.ReinstallFlags{}
 	licenseFlag := auth.NewLicenseFlag()
 	var nonInteractive bool
+	var skipLogin bool
 
 	cmd := &cobra.Command{
 		Use:   "reinstall",
@@ -56,7 +57,7 @@ func NewReinstallCmd() *cobra.Command {
 				analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties)
 				return err
 			}
-			err = server.RunReinstallCmd(cmd, flags, isReinstalled)
+			result, err := servercmd.RunReinstallCmd(cmd, flags, isReinstalled)
 			if err != nil {
 				failProperties := map[string]interface{}{
 					"cli_version": version.CliVersion,
@@ -67,7 +68,7 @@ func NewReinstallCmd() *cobra.Command {
 				analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties)
 				return mapInstallationErr(err)
 			}
-			if err := localLogin(flags.Port); err != nil {
+			if err := localLogin(result.ServerURL, flags.Port, skipLogin); err != nil {
 				failProperties := map[string]interface{}{
 					"cli_version": version.CliVersion,
 					"data_dir":    flags.DataDir,
@@ -112,6 +113,7 @@ func NewReinstallCmd() *cobra.Command {
 	flags.SetFlags(cmd)
 	licenseFlag.AddFlags(cmd)
 	cmd.Flags().BoolVarP(&nonInteractive, "yes", "y", false, "Run in non-interactive mode (skip prompts)")
+	cmd.Flags().BoolVar(&skipLogin, "skip-login", false, "Skip automatic browser login after reinstallation")
 
 	return cmd
 }

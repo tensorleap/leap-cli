@@ -4,7 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Insights** | Pointer to **string** |  | [optional] 
 **Scatter** | Pointer to **string** |  | [optional] 
 **ScatterClusters** | Pointer to **string** |  | [optional] 
 **Analysis** | Pointer to **string** |  | [optional] 
@@ -27,31 +26,6 @@ will change when the set of required properties is changed
 NewPartialPopulationExplorationArtifactsWithDefaults instantiates a new PartialPopulationExplorationArtifacts object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetInsights
-
-`func (o *PartialPopulationExplorationArtifacts) GetInsights() string`
-
-GetInsights returns the Insights field if non-nil, zero value otherwise.
-
-### GetInsightsOk
-
-`func (o *PartialPopulationExplorationArtifacts) GetInsightsOk() (*string, bool)`
-
-GetInsightsOk returns a tuple with the Insights field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetInsights
-
-`func (o *PartialPopulationExplorationArtifacts) SetInsights(v string)`
-
-SetInsights sets Insights field to given value.
-
-### HasInsights
-
-`func (o *PartialPopulationExplorationArtifacts) HasInsights() bool`
-
-HasInsights returns a boolean if a field has been set.
 
 ### GetScatter
 

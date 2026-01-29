@@ -45,7 +45,7 @@ func NewUpgradeCmd() *cobra.Command {
 				analytics.SendEvent(analytics.EventServerUpgradeFailed, failProperties)
 				return err
 			}
-			err = server.RunUpgradeCmd(cmd, flags)
+			_, err = server.RunUpgradeCmd(cmd, flags)
 			if err != nil {
 				// Track upgrade failed
 				failProperties := map[string]interface{}{

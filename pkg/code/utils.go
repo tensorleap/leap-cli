@@ -16,6 +16,7 @@ import (
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/bmatcuk/doublestar/v4"
 	"github.com/samber/lo"
+	helmLocal "github.com/tensorleap/helm-charts/pkg/local"
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/local"
 	"github.com/tensorleap/leap-cli/pkg/log"
@@ -439,6 +440,14 @@ func checkAndPromptLargeFiles(filesDir string, filePaths []string, workspaceConf
 }
 
 func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.WorkspaceConfig) (close func(), tarGzFile *os.File, err error) {
+	if workspaceConfig.EntryFile == "" {
+		return nil, nil, fmt.Errorf("entry file is not specified in leap.yaml")
+	}
+	entryFilePath := filepath.Join(filesDir, workspaceConfig.EntryFile)
+	if exists, _ := helmLocal.FileExists(entryFilePath); !exists {
+		return nil, nil, fmt.Errorf("entry file '%s' in leap.yaml is not found", workspaceConfig.EntryFile)
+	}
+
 	filePaths, err := getCodeFiles(filesDir, workspaceConfig)
 	if err != nil {
 		return

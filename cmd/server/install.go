@@ -4,21 +4,22 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/tensorleap/helm-charts/cmd/server"
+	servercmd "github.com/tensorleap/helm-charts/cmd/server"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/version"
 )
 
 func NewInstallCmd() *cobra.Command {
-	flags := &server.InstallFlags{}
+	flags := &servercmd.InstallFlags{}
 	licenseFlag := auth.NewLicenseFlag()
 	var nonInteractive bool
+	var skipLogin bool
 
 	cmd := &cobra.Command{
 		Use:   "install",
-		Short: server.InstallCmdDescription,
-		Long:  server.InstallCmdDescription,
+		Short: servercmd.InstallCmdDescription,
+		Long:  servercmd.InstallCmdDescription,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Set non-interactive mode via environment variable
 			// This signals to helm-charts to use defaults and skip prompts
@@ -59,7 +60,7 @@ func NewInstallCmd() *cobra.Command {
 				return err
 			}
 
-			err = server.RunInstallCmd(cmd, flags)
+			installResult, err := servercmd.RunInstallCmd(cmd, flags)
 			if err != nil {
 				// Track installation failed
 				failProperties := map[string]interface{}{
@@ -72,7 +73,7 @@ func NewInstallCmd() *cobra.Command {
 				return mapInstallationErr(err)
 			}
 
-			if err := localLogin(flags.Port); err != nil {
+			if err := localLogin(installResult.ServerURL, flags.Port, skipLogin); err != nil {
 				// Track installation failed
 				failProperties := map[string]interface{}{
 					"cli_version": version.CliVersion,
@@ -119,6 +120,7 @@ func NewInstallCmd() *cobra.Command {
 	flags.SetFlags(cmd)
 	licenseFlag.AddFlags(cmd)
 	cmd.Flags().BoolVarP(&nonInteractive, "yes", "y", false, "Run in non-interactive mode (skip prompts)")
+	cmd.Flags().BoolVar(&skipLogin, "skip-login", false, "Skip automatic browser login after installation")
 
 	return cmd
 }

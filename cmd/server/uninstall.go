@@ -7,8 +7,7 @@ import (
 )
 
 func NewUninstallCmd() *cobra.Command {
-	var purge bool
-	var cleanup bool
+	flags := &server.UninstallFlags{}
 	cmd := &cobra.Command{
 		Use:   "uninstall",
 		Short: "Remove local Tensorleap installation",
@@ -20,12 +19,11 @@ func NewUninstallCmd() *cobra.Command {
 				return err
 			}
 
-			return server.RunUninstallCmd(cmd, purge, cleanup)
+			return server.RunUninstallCmd(cmd, flags)
 		},
 	}
 
-	cmd.Flags().BoolVar(&purge, "purge", false, "Remove all data and cached files")
-	cmd.Flags().BoolVar(&cleanup, "cleanup", false, "Remove cached data")
+	flags.AddToCommand(cmd)
 
 	return cmd
 }

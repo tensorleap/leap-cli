@@ -16,6 +16,7 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/cli"
 	"github.com/tensorleap/leap-cli/pkg/config"
 	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 	"github.com/tensorleap/leap-cli/pkg/version"
 )
 
@@ -48,18 +49,95 @@ func mapInstallationErr(err error) error {
 	return err
 }
 
-func localLogin(port uint) error {
+type postInstallUserState struct {
+	HasAnyUsers bool
+	IsLoggedIn  bool
+}
 
-	// TODO: Skip login
-	return nil
-	// baseLink := fmt.Sprintf("http://127.0.0.1:%v", port)
-	// apiLink := fmt.Sprintf("%s/api/v2", baseLink)
-	// envName := auth.EnvNameFromUrl(apiLink)
-	// authData := auth.NewEnv(envName, apiLink, "")
-	// if err := auth.Login(authData); err != nil {
-	// 	return err
-	// }
-	// return nil
+func fetchAuthStatus(ctx context.Context) (postInstallUserState, error) {
+	res, _, err := api.ApiClient.GetAuthStatus(ctx).Execute()
+	if err != nil {
+		return postInstallUserState{}, err
+	}
+
+	switch res.Status {
+	case tensorleapapi.AUTHSTATUS_LOGGED_IN:
+		return postInstallUserState{HasAnyUsers: true, IsLoggedIn: true}, nil
+	case tensorleapapi.AUTHSTATUS_NO_USERS:
+		return postInstallUserState{HasAnyUsers: false, IsLoggedIn: false}, nil
+	case tensorleapapi.AUTHSTATUS_NOT_LOGGED_IN:
+		return postInstallUserState{HasAnyUsers: true, IsLoggedIn: false}, nil
+	default:
+		return postInstallUserState{}, fmt.Errorf("unknown auth status: %s", res.Status)
+	}
+}
+
+func localLogin(baseUrl string, fallbackPort uint, skipLogin bool) error {
+	apiLink := ""
+	uiBaseUrl := ""
+
+	if baseUrl != "" {
+		normalizedApi, err := api.NormalizeAPIUrl(baseUrl)
+		if err != nil {
+			log.Warnf("Failed to normalize installation URL %q: %v", baseUrl, err)
+		} else {
+			apiLink = normalizedApi
+			uiBaseUrl = api.ChangeToUIUrl(apiLink)
+		}
+	}
+
+	if apiLink == "" {
+		baseLink := fmt.Sprintf("http://127.0.0.1:%v", fallbackPort)
+		apiLink = fmt.Sprintf("%s/api/v2", baseLink)
+		uiBaseUrl = api.ChangeToUIUrl(apiLink)
+	}
+
+	// Check if we already have a stored token for this URL
+	existingApiKey := ""
+	currentEnv := auth.GetCurrentEnv()
+	if currentEnv != nil && currentEnv.ApiKey != "" && currentEnv.ApiUrl == apiLink {
+		existingApiKey = currentEnv.ApiKey
+	} else {
+		// Try to find token by env name (e.g. "local")
+		envName := auth.EnvNameFromUrl(apiLink)
+		if envAuth, err := auth.GetEnvAuth(envName); err == nil && envAuth.ApiKey != "" {
+			existingApiKey = envAuth.ApiKey
+		}
+	}
+
+	var ctx context.Context
+	if existingApiKey != "" {
+		ctx = api.CreateAuthenticatedContext(context.Background(), existingApiKey, apiLink)
+	} else {
+		ctx = api.CreateContextWithBaseURL(context.Background(), apiLink)
+	}
+
+	userState, err := fetchAuthStatus(ctx)
+	if err != nil {
+		log.Warnf("Failed to get auth status, falling back to login: %v", err)
+		userState = postInstallUserState{HasAnyUsers: true, IsLoggedIn: false}
+	}
+
+	switch {
+	case userState.IsLoggedIn:
+		log.Infof("User already logged in, opening Tensorleap at %s", uiBaseUrl)
+		return local.OpenLink(uiBaseUrl)
+	case skipLogin:
+		log.Infof("Skipping automatic login. You can access Tensorleap at %s", uiBaseUrl)
+		log.Infof("To login manually, run: leap auth login %s", uiBaseUrl)
+		return nil
+	default:
+		ctx := context.Background()
+		apiKey, err := auth.LoginAndGetAuthTokenWithBrowser(ctx, apiLink)
+		if err != nil {
+			return fmt.Errorf("automatic login failed: %w", err)
+		}
+		env := auth.NewEnv(auth.EnvNameFromUrl(apiLink), apiLink, apiKey)
+		if err := env.PrintWhoami(ctx); err != nil {
+			return fmt.Errorf("failed whoami after login: %w", err)
+		}
+		return auth.Login(env)
+	}
 }
 
 func getConfigureDataDir() string {
