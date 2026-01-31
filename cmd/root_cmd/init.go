@@ -2,6 +2,7 @@ package root_cmd
 
 import (
 	"github.com/spf13/cobra"
+	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/project"
 	"github.com/tensorleap/leap-cli/pkg/workspace"
@@ -22,6 +23,9 @@ func NewInitCmd() *cobra.Command {
 			return nil
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := auth.RequireAuthSimple(cmd.Context()); err != nil {
+				return err
+			}
 			ctx := cmd.Context()
 			selectedProject, _, err := project.GetProjectFromProjectId(ctx, projectId, true)
 			if err != nil {
