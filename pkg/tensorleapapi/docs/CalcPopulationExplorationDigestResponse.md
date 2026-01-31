@@ -5,13 +5,12 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Digest** | **string** |  | 
-**NextDigest** | **string** |  | 
 
 ## Methods
 
 ### NewCalcPopulationExplorationDigestResponse
 
-`func NewCalcPopulationExplorationDigestResponse(digest string, nextDigest string, ) *CalcPopulationExplorationDigestResponse`
+`func NewCalcPopulationExplorationDigestResponse(digest string, ) *CalcPopulationExplorationDigestResponse`
 
 NewCalcPopulationExplorationDigestResponse instantiates a new CalcPopulationExplorationDigestResponse object
 This constructor will assign default values to properties that have it defined,
@@ -44,26 +43,6 @@ and a boolean to check if the value has been set.
 `func (o *CalcPopulationExplorationDigestResponse) SetDigest(v string)`
 
 SetDigest sets Digest field to given value.
-
-
-### GetNextDigest
-
-`func (o *CalcPopulationExplorationDigestResponse) GetNextDigest() string`
-
-GetNextDigest returns the NextDigest field if non-nil, zero value otherwise.
-
-### GetNextDigestOk
-
-`func (o *CalcPopulationExplorationDigestResponse) GetNextDigestOk() (*string, bool)`
-
-GetNextDigestOk returns a tuple with the NextDigest field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNextDigest
-
-`func (o *CalcPopulationExplorationDigestResponse) SetNextDigest(v string)`
-
-SetNextDigest sets NextDigest field to given value.
 
 
 

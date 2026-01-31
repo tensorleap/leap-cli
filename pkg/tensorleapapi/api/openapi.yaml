@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 0.0.683
+  version: 0.0.688
 servers:
 - url: /api/v2
 paths:
@@ -9617,15 +9617,11 @@ components:
       additionalProperties: true
       example:
         digest: digest
-        nextDigest: nextDigest
       properties:
         digest:
           type: string
-        nextDigest:
-          type: string
       required:
       - digest
-      - nextDigest
       type: object
     ReductionAlgorithm:
       enum:
@@ -33398,14 +33394,8 @@ components:
       description: Make all properties in T optional
       example:
         scatter: scatter
-        scatterClusters: scatterClusters
-        analysis: analysis
       properties:
         scatter:
-          type: string
-        scatterClusters:
-          type: string
-        analysis:
           type: string
       type: object
     PopulationExplorationResponse:
@@ -33414,8 +33404,6 @@ components:
         jobId: jobId
         readyArtifacts:
           scatter: scatter
-          scatterClusters: scatterClusters
-          analysis: analysis
         status: UNSTARTED
       properties:
         status:
