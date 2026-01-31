@@ -11,6 +11,7 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/spf13/cobra"
+	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/local"
 	"github.com/tensorleap/leap-cli/pkg/log"
@@ -53,6 +54,9 @@ Examples:
   leap pull -a
 `,
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := auth.RequireAuthSimple(cmd.Context()); err != nil {
+				return err
+			}
 			ctx := cmd.Context()
 
 			var projectId string

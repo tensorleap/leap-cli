@@ -5,6 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
+	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/model"
@@ -40,6 +41,9 @@ Examples:
   leap push -e
 `,
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := auth.RequireAuthSimple(cmd.Context()); err != nil {
+				return err
+			}
 
 			// Define base properties for all analytics events
 			properties := map[string]interface{}{
