@@ -12,6 +12,7 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/config"
 	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
 var ErrNotLoggedIn = fmt.Errorf("not logged in")
@@ -142,6 +143,50 @@ func PrintWhoami(ctx context.Context) error {
 	fmt.Println("User email: " + userData.Local.Email)
 	fmt.Println("Team name: " + userData.TeamName)
 	return nil
+}
+
+// ErrAuthRequired is returned when the user needs to authenticate
+var ErrAuthRequired = fmt.Errorf("authentication required. Please run: leap auth login")
+
+// ErrAuthInvalid is returned when the stored credentials are invalid
+var ErrAuthInvalid = fmt.Errorf("authentication invalid or expired. Please run: leap auth login")
+
+// RequireAuth checks if the user is authenticated and validates the credentials.
+// It first checks if URL and API key are configured, then validates them by calling the API.
+// Returns the authenticated context and user data if successful, or an error with a helpful message.
+func RequireAuth(ctx context.Context) (context.Context, *tensorleapapi.UserData, error) {
+	env := GetCurrentEnv()
+
+	// Check if URL is configured
+	if env.ApiUrl == "" {
+		log.Warn("No API URL configured")
+		return ctx, nil, ErrAuthRequired
+	}
+
+	// Check if API key is configured
+	if env.ApiKey == "" {
+		log.Warn("No API key configured")
+		return ctx, nil, ErrAuthRequired
+	}
+
+	// Create authenticated context
+	authCtx := env.AuthContext(ctx)
+
+	// Validate credentials by calling WhoAmI
+	userData, err := GetWhoami(authCtx)
+	if err != nil {
+		log.Warnf("Failed to validate authentication: %v", err)
+		return ctx, nil, ErrAuthInvalid
+	}
+
+	return authCtx, userData, nil
+}
+
+// RequireAuthSimple is a simpler version of RequireAuth that only returns an error.
+// Use this when you don't need the user data and the context is already set up.
+func RequireAuthSimple(ctx context.Context) error {
+	_, _, err := RequireAuth(ctx)
+	return err
 }
 
 func InitMaybeUnauthedContext(ctx context.Context, defaultUrl string) (context.Context, error) {
