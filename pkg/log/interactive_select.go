@@ -1,272 +1,573 @@
 package log
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	"unicode/utf8"
 
-	"github.com/charmbracelet/bubbles/list"
-	"github.com/charmbracelet/bubbles/textinput"
-	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"golang.org/x/term"
+)
+
+// getTerminalHeight returns the terminal height, or a default if it can't be determined
+func getTerminalHeight() int {
+	_, height, err := term.GetSize(int(os.Stdout.Fd()))
+	if err != nil || height <= 0 {
+		return 24 // Default fallback
+	}
+	return height
+}
+
+// ---------------------------
+// Constants
+// ---------------------------
+
+const (
+	maxVisibleItems = 10 // Maximum options to show at once (when terminal is large enough)
+	minVisibleItems = 1  // Minimum options to show (even on tiny screens)
+	fixedLinesCount = 4  // Header + input line + scroll indicators margin
+	promptWidth     = 2  // Width of "❯ " prompt in characters
+)
+
+// Key codes
+const (
+	keyEscape    = 0x1b
+	keyCtrlC     = 0x03
+	keyEnter     = 0x0d
+	keyLineFeed  = 0x0a
+	keyTab       = 0x09
+	keyBackspace = 0x7f
+	keyDelete    = 0x08
+)
+
+// Arrow key codes (third byte of escape sequence)
+const (
+	arrowUp    = 'A'
+	arrowDown  = 'B'
+	arrowRight = 'C'
+	arrowLeft  = 'D'
+)
+
+// UTF-8 byte markers
+const (
+	utf8MaxSingleByte  = 127
+	utf8TwoByteStart   = 0xC0
+	utf8ThreeByteStart = 0xE0
+	utf8FourByteStart  = 0xF0
+)
+
+// ANSI escape sequences
+const (
+	ansiHideCursor    = "\x1b[?25l"
+	ansiShowCursor    = "\x1b[?25h"
+	ansiSaveCursor    = "\x1b[s"
+	ansiRestoreCursor = "\x1b[u"
+	ansiClearToEnd    = "\x1b[J"
+	ansiClearLine     = "\x1b[2K"
+	ansiMoveUp        = "\x1b[A"
 )
 
 // ---------------------------
-// Callback interface (same)
+// Callback Types
 // ---------------------------
+
 type OnInputChange func(cursor int, filter string) (title string, options []string, newCursor int, inputErr string, hint string)
 type OnEnter func(options []string, cursor int, filter string) (selectedOption *string, newFilter string, inputErr string, hint string)
 type OnTabKey func(options []string, cursor int, filter string) (newFilter string)
 
 // ---------------------------
-// Model
-// ---------------------------
-type interactiveModel struct {
-	list          list.Model
-	input         textinput.Model
-	filter        string
-	title         string
-	options       []string
-	cursor        int
-	onInputChange OnInputChange
-	onEnter       OnEnter
-	onTabKey      OnTabKey
-	selected      *string
-	width, height int
-	quitting      bool
-	err           error
-	inputErr      string
-	hint          string
-}
-
-// Item
-type listItem string
-
-func (i listItem) Title() string       { return string(i) }
-func (i listItem) Description() string { return "" }
-func (i listItem) FilterValue() string { return string(i) }
-
-// ---------------------------
 // Styles
 // ---------------------------
+
 var (
-	colorBlue     = lipgloss.Color("#00BFFF") // survey-like blue
-	colorGray     = lipgloss.Color("#A0A0A0")
-	styleTitle    = lipgloss.NewStyle().Bold(true).Foreground(colorBlue).Transform(func(s string) string { return fmt.Sprintf("? %s", s) })
-	styleError    = lipgloss.NewStyle().Foreground(lipgloss.Color("#FF0000")).Bold(true)
-	subtitleStyle = lipgloss.NewStyle().Foreground(colorGray).Bold(true)
+	colorBlue  = lipgloss.Color("#00BFFF")
+	colorGray  = lipgloss.Color("#A0A0A0")
+	colorRed   = lipgloss.Color("#FF0000")
+	colorWhite = lipgloss.Color("#FFFFFF")
+
+	styleTitle = lipgloss.NewStyle().
+			Bold(true).
+			Foreground(colorBlue).
+			Transform(func(s string) string { return "? " + s })
+
+	styleError      = lipgloss.NewStyle().Foreground(colorRed).Bold(true)
+	styleHint       = lipgloss.NewStyle().Foreground(colorGray).Bold(true)
+	styleSelected   = lipgloss.NewStyle().Foreground(colorBlue).Bold(true)
+	styleUnselected = lipgloss.NewStyle().Foreground(colorWhite)
+	stylePrompt     = lipgloss.NewStyle().Foreground(colorBlue).Bold(true)
 )
 
 // ---------------------------
-// Init
+// Interactive Select State
 // ---------------------------
-func newInteractiveModel(onInputChange OnInputChange, onEnter OnEnter, onTabKey OnTabKey) interactiveModel {
-	title, options, cursor, inputErr, hint := onInputChange(0, "")
-	items := make([]list.Item, len(options))
-	for i, opt := range options {
-		items[i] = listItem(opt)
-	}
 
-	delegate := list.NewDefaultDelegate()
-	delegate.ShowDescription = false // no double-spacing
-	delegate.SetSpacing(0)           // remove spacing between items
-	delegate.Styles.SelectedTitle.Foreground(colorBlue)
-	delegate.Styles.SelectedTitle = lipgloss.NewStyle().
-		Foreground(colorBlue). // survey blue
-		Bold(true).
-		Transform(func(title string) string { return fmt.Sprintf("> %s", title) })
-
-	l := list.New(items, delegate, 0, 0)
-	l.SetShowHelp(false)
-	l.SetFilteringEnabled(false)
-	l.Title = title
-	l.Styles.Title = styleTitle
-	l.SetShowPagination(false)
-	l.SetShowStatusBar(false)
-	l.SetShowHelp(false)
-	l.SetShowTitle(false)
-
-	ti := textinput.New()
-	ti.Placeholder = ""
-	ti.Prompt = lipgloss.NewStyle().
-		Foreground(colorBlue).
-		Bold(true).
-		Render("❯ ") // survey-style prompt
-	ti.Focus()
-	ti.CharLimit = 256
-
-	return interactiveModel{
-		list:          l,
-		title:         title,
-		options:       options,
-		input:         ti,
-		cursor:        cursor,
-		onInputChange: onInputChange,
-		onEnter:       onEnter,
-		onTabKey:      onTabKey,
-		inputErr:      inputErr,
-		hint:          hint,
-	}
+type selectState struct {
+	title        string
+	options      []string
+	cursor       int // Selected option index
+	scrollOffset int
+	filter       string
+	textCursor   int // Cursor position within filter text (in bytes)
+	inputErr     string
+	hint         string
+	maxVisible   int // Maximum visible items based on terminal size
 }
 
 // ---------------------------
-// Bubble Tea
+// Terminal Output
 // ---------------------------
-func (m interactiveModel) Init() tea.Cmd { return nil }
 
-func (m interactiveModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	var cmd tea.Cmd
+var termOut = os.Stdout
 
-	updateFilter := func(newFilter string) {
-		if newFilter != m.filter {
-			m.filter = newFilter
-			m.input.SetValue(m.filter)
-			m.input.CursorEnd()
-			m.refreshOptions()
-		}
-	}
+func showCursor()    { _, _ = fmt.Fprint(termOut, ansiShowCursor) }
+func saveCursor()    { _, _ = fmt.Fprint(termOut, ansiSaveCursor) }
+func restoreCursor() { _, _ = fmt.Fprint(termOut, ansiRestoreCursor) }
+func clearToEnd()    { _, _ = fmt.Fprint(termOut, ansiClearToEnd) }
 
-	updateErrorAndHint := func(inputErr string, hint string) {
-		m.inputErr = inputErr
-		m.hint = hint
-	}
-
-	switch msg := msg.(type) {
-
-	case tea.WindowSizeMsg:
-		m.width, m.height = msg.Width, msg.Height
-		m.list.SetSize(m.width, m.height-6)
-		return m, nil
-
-	case tea.KeyMsg:
-		switch msg.String() {
-		case "ctrl+c", "esc":
-			m.quitting = true
-			return m, tea.Quit
-
-		case "enter":
-			// ENTER only applies when list is active
-			selIdx := -1
-			if len(m.options) > 0 {
-				selIdx = m.list.Index()
-			}
-			opt, newFilter, err, hint := m.onEnter(m.options, selIdx, m.filter)
-			if opt != nil {
-				m.selected = opt
-				m.quitting = true
-				return m, tea.Quit
-			}
-			updateFilter(newFilter)
-			updateErrorAndHint(err, hint)
-		case "tab":
-			selIdx := -1
-			if len(m.options) > 0 {
-				selIdx = m.list.Index()
-			}
-			newFilter := m.onTabKey(m.options, selIdx, m.filter)
-			updateFilter(newFilter)
-
-		case "up", "down":
-			m.list, cmd = m.list.Update(msg)
-			return m, cmd
-
-		case "left", "right":
-			m.input, cmd = m.input.Update(msg)
-			return m, cmd
-
-		case "backspace":
-			if m.input.Focused() && len(m.filter) > 0 {
-				m.filter = m.filter[:len(m.filter)-1]
-				m.input.SetValue(m.filter)
-				m.refreshOptions()
-			}
-
-		default:
-			// typing always focuses input
-			if len(msg.Runes) > 0 && msg.Runes[0] >= 32 && msg.Runes[0] <= 126 {
-				if !m.input.Focused() {
-					m.input.Focus()
-				}
-				m.input, _ = m.input.Update(msg)
-				m.filter = m.input.Value()
-				m.refreshOptions()
-				return m, nil
-			}
-		}
-	}
-
-	// update input always (so it re-renders properly)
-	// var inputCmd tea.Cmd
-	// m.input, inputCmd = m.input.Update(msg)
-
-	return m, cmd
+func printLine(s string) {
+	_, _ = fmt.Fprint(termOut, "\r"+ansiClearLine+s+"\r\n")
 }
 
-func (m *interactiveModel) refreshOptions() {
-	title, options, cursor, inputErr, hint := m.onInputChange(m.cursor, m.filter)
-	m.title = title
-	m.options = options
-	m.cursor = cursor
-	m.inputErr = inputErr
-	m.hint = hint
+func moveUpLines(n int) {
+	_, _ = fmt.Fprintf(termOut, "\x1b[%dA", n)
+}
 
-	items := make([]list.Item, len(options))
-	for i, opt := range options {
-		items[i] = listItem(opt)
+func moveToColumn(col int) {
+	_, _ = fmt.Fprintf(termOut, "\x1b[%dG", col)
+}
+
+// ---------------------------
+// Rendering
+// ---------------------------
+
+func (s *selectState) render() {
+	restoreCursor()
+	clearToEnd()
+
+	s.renderHeader()
+	s.renderInput()
+	linesAfterInput := s.renderOptions()
+
+	s.positionTextCursor(linesAfterInput)
+}
+
+func (s *selectState) renderHeader() {
+	statusLine := "↑↓ move | ENTER select"
+	var subtitle string
+
+	if s.inputErr != "" {
+		subtitle = styleError.Render(s.inputErr)
+	} else if s.hint != "" {
+		subtitle = styleHint.Render(statusLine + " | " + s.hint)
+	} else {
+		subtitle = styleHint.Render(statusLine)
 	}
-	m.list.SetItems(items)
-	m.list.Title = styleTitle.Render(m.title)
-	if cursor >= 0 && cursor < len(items) {
-		m.list.Select(cursor)
+
+	title := styleTitle.Render(s.title + ":")
+	printLine(fmt.Sprintf("%s %s", title, subtitle))
+}
+
+func (s *selectState) renderInput() {
+	prompt := stylePrompt.Render("❯ ")
+	printLine(prompt + s.filter)
+}
+
+func (s *selectState) renderOptions() int {
+	// Start at 1 because after printing input line, cursor is already 1 line below
+	linesAfterInput := 1
+
+	if len(s.options) == 0 {
+		printLine(styleHint.Render("  (no matches)"))
+		return linesAfterInput + 1
+	}
+
+	visibleCount := min(len(s.options), s.maxVisible)
+	endIdx := min(s.scrollOffset+visibleCount, len(s.options))
+
+	// Scroll indicator: items above
+	if s.scrollOffset > 0 {
+		printLine(styleHint.Render(fmt.Sprintf("  ↑ %d more above", s.scrollOffset)))
+		linesAfterInput++
+	}
+
+	// Visible options
+	for i := s.scrollOffset; i < endIdx; i++ {
+		if i == s.cursor {
+			printLine(styleSelected.Render("> " + s.options[i]))
+		} else {
+			printLine(styleUnselected.Render("  " + s.options[i]))
+		}
+		linesAfterInput++
+	}
+
+	// Scroll indicator: items below
+	remaining := len(s.options) - endIdx
+	if remaining > 0 {
+		printLine(styleHint.Render(fmt.Sprintf("  ↓ %d more below", remaining)))
+		linesAfterInput++
+	}
+
+	return linesAfterInput
+}
+
+func (s *selectState) positionTextCursor(linesAfterInput int) {
+	moveUpLines(linesAfterInput)
+	runeCount := utf8.RuneCountInString(s.filter[:s.textCursor])
+	col := promptWidth + runeCount + 1 // +1 for 1-based column indexing
+	moveToColumn(col)
+}
+
+// ---------------------------
+// Scroll Management
+// ---------------------------
+
+func (s *selectState) ensureCursorVisible() {
+	if len(s.options) == 0 {
+		s.scrollOffset = 0
+		return
+	}
+
+	visibleCount := min(len(s.options), s.maxVisible)
+
+	// Scroll up if cursor is above visible area
+	if s.cursor < s.scrollOffset {
+		s.scrollOffset = s.cursor
+	}
+
+	// Scroll down if cursor is below visible area
+	if s.cursor >= s.scrollOffset+visibleCount {
+		s.scrollOffset = s.cursor - visibleCount + 1
+	}
+
+	// Clamp scroll offset
+	maxOffset := max(0, len(s.options)-visibleCount)
+	s.scrollOffset = clamp(s.scrollOffset, 0, maxOffset)
+}
+
+// ---------------------------
+// Text Cursor Movement
+// ---------------------------
+
+func (s *selectState) moveTextCursorLeft() {
+	if s.textCursor > 0 {
+		_, size := utf8.DecodeLastRuneInString(s.filter[:s.textCursor])
+		s.textCursor -= size
 	}
 }
 
-func (m interactiveModel) View() string {
-	if m.quitting {
-		if m.err != nil {
-			return fmt.Sprintf("Error: %v\n", m.err)
-		}
-		if m.selected != nil {
-			return ""
-		}
+func (s *selectState) moveTextCursorRight() {
+	if s.textCursor < len(s.filter) {
+		_, size := utf8.DecodeRuneInString(s.filter[s.textCursor:])
+		s.textCursor += size
+	}
+}
+
+func (s *selectState) moveTextCursorToEnd() {
+	s.textCursor = len(s.filter)
+}
+
+// ---------------------------
+// Text Editing
+// ---------------------------
+
+func (s *selectState) deleteCharBefore() bool {
+	if s.textCursor <= 0 {
+		return false
+	}
+
+	_, size := utf8.DecodeLastRuneInString(s.filter[:s.textCursor])
+	s.filter = s.filter[:s.textCursor-size] + s.filter[s.textCursor:]
+	s.textCursor -= size
+	return true
+}
+
+func (s *selectState) insertText(text string) {
+	s.filter = s.filter[:s.textCursor] + text + s.filter[s.textCursor:]
+	s.textCursor += len(text)
+}
+
+func (s *selectState) setFilter(newFilter string) {
+	s.filter = newFilter
+	s.moveTextCursorToEnd()
+}
+
+// ---------------------------
+// Input Handling
+// ---------------------------
+
+func readUTF8Char(reader *bufio.Reader, firstByte byte) string {
+	if firstByte < utf8MaxSingleByte {
+		return string(firstByte)
+	}
+
+	if firstByte < utf8TwoByteStart {
+		// Continuation byte without start - invalid
 		return ""
 	}
 
-	// footer with filter and navigation hint
-	statusLine := "↑↓ move | ENTER select"
-	errorOrHint := ""
-	if m.inputErr != "" {
-		errorOrHint = styleError.Render(m.inputErr)
-	} else {
-		if m.hint != "" {
-			errorOrHint = fmt.Sprintf("%s | %s", statusLine, m.hint)
-		}
-		errorOrHint = subtitleStyle.Render(errorOrHint)
+	// Determine continuation bytes count
+	var numContinuation int
+	switch {
+	case firstByte >= utf8FourByteStart:
+		numContinuation = 3
+	case firstByte >= utf8ThreeByteStart:
+		numContinuation = 2
+	default:
+		numContinuation = 1
 	}
 
-	title := styleTitle.Render(m.title + ":")
+	bytes := []byte{firstByte}
+	for i := 0; i < numContinuation; i++ {
+		cb, err := reader.ReadByte()
+		if err != nil {
+			break
+		}
+		bytes = append(bytes, cb)
+	}
 
-	header := fmt.Sprintf("%s %s\n%s",
-		title,
-		errorOrHint,
-		m.input.View(),
-	)
+	return string(bytes)
+}
 
-	return fmt.Sprintf("%s\n%s", header, m.list.View())
+// ---------------------------
+// State Updates
+// ---------------------------
+
+func (s *selectState) updateFromCallback(onInputChange OnInputChange) {
+	title, options, _, inputErr, hint := onInputChange(s.cursor, s.filter)
+	s.title = title
+	s.options = options
+	s.inputErr = inputErr
+	s.hint = hint
+	s.scrollOffset = 0
+	// Always reset cursor to 0 when filter changes (options list changed)
+	if len(options) > 0 {
+		s.cursor = 0
+	} else {
+		s.cursor = -1
+	}
+	s.ensureCursorVisible()
+}
+
+// ---------------------------
+// Helper Functions
+// ---------------------------
+
+func clamp(value, minVal, maxVal int) int {
+	if value < minVal {
+		return minVal
+	}
+	if value > maxVal {
+		return maxVal
+	}
+	return value
 }
 
 // ---------------------------
 // Public API
 // ---------------------------
-func InteractiveSelectTea(onInputChange OnInputChange, onEnter OnEnter, onTabKey OnTabKey) (string, error) {
-	p := tea.NewProgram(newInteractiveModel(onInputChange, onEnter, onTabKey))
 
-	m, err := p.Run()
+func InteractiveSelectTea(onInputChange OnInputChange, onEnter OnEnter, onTabKey OnTabKey) (string, error) {
+	state := initState(onInputChange)
+
+	cleanup, err := setupTerminal()
 	if err != nil {
 		return "", err
 	}
+	defer cleanup()
 
-	fm := m.(interactiveModel)
-	if fm.selected != nil {
-		return *fm.selected, nil
+	reserveSpace(state.maxVisible)
+	saveCursor()
+	state.ensureCursorVisible()
+	state.render()
+
+	return runInputLoop(state, onInputChange, onEnter, onTabKey)
+}
+
+func calculateMaxVisible() int {
+	termHeight := getTerminalHeight()
+	// Available lines = terminal height - fixed lines (header, input, margin)
+	available := termHeight - fixedLinesCount
+	// Clamp between min and max
+	return clamp(available, minVisibleItems, maxVisibleItems)
+}
+
+func initState(onInputChange OnInputChange) *selectState {
+	title, options, cursor, inputErr, hint := onInputChange(0, "")
+
+	// Ensure cursor is valid
+	if cursor < 0 || cursor >= len(options) {
+		if len(options) > 0 {
+			cursor = 0
+		} else {
+			cursor = -1
+		}
 	}
-	return "", fmt.Errorf("cancelled")
+
+	return &selectState{
+		title:      title,
+		options:    options,
+		cursor:     cursor,
+		filter:     "",
+		inputErr:   inputErr,
+		hint:       hint,
+		maxVisible: calculateMaxVisible(),
+	}
+}
+
+func setupTerminal() (func(), error) {
+	oldState, err := term.MakeRaw(int(os.Stdin.Fd()))
+	if err != nil {
+		return nil, fmt.Errorf("failed to set terminal raw mode: %w", err)
+	}
+
+	showCursor()
+
+	return func() {
+		_ = term.Restore(int(os.Stdin.Fd()), oldState)
+	}, nil
+}
+
+func reserveSpace(maxVisible int) {
+	termHeight := getTerminalHeight()
+	// Calculate lines we'll actually use
+	linesToReserve := maxVisible + 4 // header + input + options + scroll indicators
+
+	// On small screens, don't reserve more than available
+	maxReserve := termHeight - 1
+	if linesToReserve > maxReserve {
+		linesToReserve = maxReserve
+	}
+	if linesToReserve < 1 {
+		return // Screen too small, skip reservation
+	}
+
+	// Reserve space by printing blank lines, then move back up
+	for i := 0; i < linesToReserve; i++ {
+		_, _ = fmt.Fprint(termOut, "\r\n")
+	}
+	for i := 0; i < linesToReserve; i++ {
+		_, _ = fmt.Fprint(termOut, ansiMoveUp)
+	}
+}
+
+func cleanupAndExit() {
+	restoreCursor()
+	clearToEnd()
+}
+
+func runInputLoop(state *selectState, onInputChange OnInputChange, onEnter OnEnter, onTabKey OnTabKey) (string, error) {
+	reader := bufio.NewReader(os.Stdin)
+
+	for {
+		b, err := reader.ReadByte()
+		if err != nil {
+			return "", err
+		}
+
+		switch {
+		case b == keyEscape:
+			handleEscapeSequence(state, reader)
+
+		case b == keyCtrlC:
+			cleanupAndExit()
+			return "", fmt.Errorf("cancelled")
+
+		case b == keyEnter || b == keyLineFeed:
+			if result, done := handleEnter(state, onInputChange, onEnter); done {
+				return result, nil
+			}
+
+		case b == keyTab:
+			handleTab(state, onInputChange, onTabKey)
+
+		case b == keyBackspace || b == keyDelete:
+			handleBackspace(state, onInputChange)
+
+		case b >= 32: // Printable character
+			handleCharInput(state, reader, onInputChange, b)
+
+		default:
+			continue
+		}
+
+		state.render()
+	}
+}
+
+func handleEscapeSequence(state *selectState, reader *bufio.Reader) {
+	b2, _ := reader.ReadByte()
+	if b2 != '[' {
+		return
+	}
+
+	b3, _ := reader.ReadByte()
+	switch b3 {
+	case arrowUp:
+		if len(state.options) > 0 && state.cursor > 0 {
+			state.cursor--
+			state.ensureCursorVisible()
+		}
+	case arrowDown:
+		if len(state.options) > 0 && state.cursor < len(state.options)-1 {
+			state.cursor++
+			state.ensureCursorVisible()
+		}
+	case arrowRight:
+		state.moveTextCursorRight()
+	case arrowLeft:
+		state.moveTextCursorLeft()
+	}
+}
+
+func handleEnter(state *selectState, onInputChange OnInputChange, onEnter OnEnter) (string, bool) {
+	selIdx := -1
+	if len(state.options) > 0 {
+		selIdx = state.cursor
+	}
+
+	opt, newFilter, errMsg, hint := onEnter(state.options, selIdx, state.filter)
+
+	if opt != nil {
+		cleanupAndExit()
+		return *opt, true
+	}
+
+	if newFilter != state.filter {
+		state.setFilter(newFilter)
+		state.updateFromCallback(onInputChange)
+	}
+
+	state.inputErr = errMsg
+	state.hint = hint
+	return "", false
+}
+
+func handleTab(state *selectState, onInputChange OnInputChange, onTabKey OnTabKey) {
+	selIdx := -1
+	if len(state.options) > 0 {
+		selIdx = state.cursor
+	}
+
+	newFilter := onTabKey(state.options, selIdx, state.filter)
+	if newFilter != state.filter {
+		state.setFilter(newFilter)
+		state.updateFromCallback(onInputChange)
+	}
+}
+
+func handleBackspace(state *selectState, onInputChange OnInputChange) {
+	if state.deleteCharBefore() {
+		state.updateFromCallback(onInputChange)
+	}
+}
+
+func handleCharInput(state *selectState, reader *bufio.Reader, onInputChange OnInputChange, firstByte byte) {
+	char := readUTF8Char(reader, firstByte)
+	if char == "" {
+		return
+	}
+
+	state.insertText(char)
+	state.updateFromCallback(onInputChange)
 }
