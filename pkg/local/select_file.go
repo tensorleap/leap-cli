@@ -126,7 +126,7 @@ func (s *FileSelectSession) UpdateOnFilter() {
 		dir = expanded
 	}
 
-	s.Hint = fmt.Sprintf("file: %s, directory: %s, expanded: %s", fileName, dir, expanded)
+	s.Hint = fmt.Sprintf("dir: %s", dir)
 
 	dirEntries, err := s.loadDirFromCache(dir)
 	if err != nil || len(dirEntries) == 0 {
@@ -190,8 +190,14 @@ func (s *FileSelectSession) HandleTabKey() string {
 	}
 
 	if s.IsExternal {
+		selected := s.Options[s.Cursor]
 		dir := filepath.Dir(s.Filter)
-		return fmt.Sprintf("%s/", path.Join(dir, s.Options[s.Cursor]))
+		result := path.Join(dir, selected)
+		// Only add trailing slash if it's a directory (directories already have / suffix in options)
+		if strings.HasSuffix(selected, "/") {
+			return result + "/"
+		}
+		return result
 	}
 	return s.Options[s.Cursor]
 }
