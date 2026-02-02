@@ -24,7 +24,7 @@ func NewInstallCmd() *cobra.Command {
 			// Set non-interactive mode via environment variable
 			// This signals to helm-charts to use defaults and skip prompts
 			if nonInteractive {
-				os.Setenv("TL_USE_DEFAULT_OPTION", "true")
+				_ = os.Setenv("TL_USE_DEFAULT_OPTION", "true")
 			}
 
 			// Track installation started
