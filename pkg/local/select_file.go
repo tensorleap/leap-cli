@@ -5,6 +5,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"slices"
 	"strings"
 
 	"github.com/jedib0t/go-pretty/v6/text"
@@ -24,6 +25,7 @@ type FileSelectSession struct {
 	Title        string
 	CurrentDir   string
 	AllowedExt   []string
+	IgnoredDirs  []string
 	AllFiles     []string
 	CachedDirs   map[string][]string
 	Options      []string
@@ -42,20 +44,21 @@ type FileSelectSession struct {
 //
 
 // SelectFile lets the user browse and select a file interactively.
-func SelectFile(allowedExt []string, title string) (string, error) {
+func SelectFile(allowedExt []string, title string, ignoredDirs []string) (string, error) {
 	cwd, _ := filepath.Abs(".")
-	allFiles, err := collectAllFiles(cwd, allowedExt)
+	allFiles, err := collectAllFiles(cwd, allowedExt, ignoredDirs)
 	if err != nil {
 		return "", err
 	}
 
 	session := &FileSelectSession{
-		Title:      title,
-		CurrentDir: cwd,
-		AllowedExt: allowedExt,
-		AllFiles:   allFiles,
-		CachedDirs: make(map[string][]string),
-		Hint:       "type to filter or enter path",
+		Title:       title,
+		CurrentDir:  cwd,
+		AllowedExt:  allowedExt,
+		IgnoredDirs: ignoredDirs,
+		AllFiles:    allFiles,
+		CachedDirs:  make(map[string][]string),
+		Hint:        "type to filter or enter path",
 	}
 
 	// Wrap UI callbacks around our struct methods
@@ -303,7 +306,7 @@ func (s *FileSelectSession) loadDirFromCache(dir string) ([]string, error) {
 	if cached, ok := s.CachedDirs[dir]; ok {
 		return cached, nil
 	}
-	files, err := readDirectory(dir, s.AllowedExt)
+	files, err := readDirectory(dir, s.AllowedExt, s.IgnoredDirs)
 	if err != nil {
 		return nil, err
 	}
@@ -318,10 +321,17 @@ func (s *FileSelectSession) loadDirFromCache(dir string) ([]string, error) {
 //
 
 // collectAllFiles recursively collects all files under root.
-func collectAllFiles(root string, allowedExt []string) ([]string, error) {
+func collectAllFiles(root string, allowedExt []string, ignoredDirs []string) ([]string, error) {
 	var files []string
 	err := filepath.WalkDir(root, func(p string, d os.DirEntry, err error) error {
-		if err != nil || d.IsDir() {
+		if err != nil {
+			return nil
+		}
+		// Skip ignored directories
+		if d.IsDir() {
+			if slices.Contains(ignoredDirs, d.Name()) {
+				return filepath.SkipDir
+			}
 			return nil
 		}
 		if len(allowedExt) == 0 || hasExtension(allowedExt, strings.ToLower(filepath.Ext(d.Name()))) {
@@ -345,7 +355,7 @@ func collectAllFiles(root string, allowedExt []string) ([]string, error) {
 }
 
 // readDirectory lists immediate files and subdirectories.
-func readDirectory(dir string, allowedExt []string) ([]string, error) {
+func readDirectory(dir string, allowedExt []string, ignoredDirs []string) ([]string, error) {
 	entries, err := os.ReadDir(dir)
 	if os.IsNotExist(err) {
 		return []string{}, nil
@@ -356,7 +366,12 @@ func readDirectory(dir string, allowedExt []string) ([]string, error) {
 
 	var items []string
 	for _, e := range entries {
+		// Skip ignored directories
 		if e.IsDir() {
+			shouldSkip := slices.Contains(ignoredDirs, e.Name())
+			if shouldSkip {
+				continue
+			}
 			items = append(items, e.Name()+"/")
 		} else if len(allowedExt) == 0 || hasExtension(allowedExt, strings.ToLower(filepath.Ext(e.Name()))) {
 			items = append(items, e.Name())
