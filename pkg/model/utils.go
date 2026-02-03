@@ -185,7 +185,8 @@ func AskUserForNewVersionOrSelectExistingVersion(ctx context.Context, projectId 
 
 func AskUserForModelPath(ctx context.Context) (modelPath string, err error) {
 	allowedExt := []string{".h5", ".onnx"}
-	return local.SelectFile(allowedExt, "Select model file")
+	ignoredDirs := []string{".venv"}
+	return local.SelectFile(allowedExt, "Select model file", ignoredDirs)
 }
 
 func FormatVersionDisplayName(version *tensorleapapi.SlimVersion, status VersionStatus, maxLengthOfVersionName int) string {
