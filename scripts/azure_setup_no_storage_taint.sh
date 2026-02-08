@@ -155,11 +155,6 @@ if mountpoint -q "$MNT"; then
   echo "Leap cli installed."
 
   echo "The data directory is now available at $TLDATA_DIR. On first installation add --data-dir $TLDATA_DIR to your leap server install command."
-  echo ""
-  echo "If you use k3d and see node.kubernetes.io/disk-pressure taint (e.g. 'invalid capacity 0 on image filesystem'), remove it with:"
-  echo "  kubectl taint nodes --all node.kubernetes.io/disk-pressure:NoSchedule-"
-  echo "When creating a new k3d cluster, use only nodefs in eviction-hard so broken imagefs (0 capacity in k3d) does not trigger disk pressure:"
-  echo "  k3d cluster create <name> --k3s-arg '--kubelet-arg=eviction-hard=nodefs.available<50G'"
 else
   echo "⚠️  Warning: $MNT not mounted yet. It will mount automatically once the CIFS share is available."
 fi
