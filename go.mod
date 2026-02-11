@@ -9,7 +9,6 @@ require (
 	github.com/atotto/clipboard v0.1.4
 	github.com/bmatcuk/doublestar/v4 v4.8.1
 	github.com/briandowns/spinner v1.23.0
-	github.com/charmbracelet/bubbles v0.21.0
 	github.com/charmbracelet/bubbletea v1.3.10
 	github.com/charmbracelet/lipgloss v1.1.0
 	github.com/jedib0t/go-pretty/v6 v6.6.8
@@ -19,7 +18,7 @@ require (
 	github.com/spf13/cobra v1.10.1
 	github.com/spf13/viper v1.18.2
 	github.com/stretchr/testify v1.11.1
-	github.com/tensorleap/helm-charts v0.9.3
+	github.com/tensorleap/helm-charts v0.9.5
 	github.com/tensorleap/leap-cli/pkg/tensorleapapi v0.0.0-00010101000000-000000000000
 	google.golang.org/api v0.256.0
 	gopkg.in/yaml.v3 v3.0.1
