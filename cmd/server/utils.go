@@ -11,6 +11,7 @@ import (
 	"github.com/tensorleap/helm-charts/pkg/local"
 	"github.com/tensorleap/helm-charts/pkg/server"
 	"github.com/tensorleap/helm-charts/pkg/server/manifest"
+	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/cli"
@@ -205,6 +206,24 @@ func hasInternet() bool {
 	}
 	_ = resp.Body.Close()
 	return resp.StatusCode == 204
+}
+
+// getServerVersionSafe attempts to get the current installed Helm chart version.
+// Returns an empty string if the version cannot be determined (e.g. no cluster running).
+func getServerVersionSafe(ctx context.Context) string {
+	v, err := server.GetCurrentInsalledHelmChartVersion(ctx)
+	if err != nil {
+		return ""
+	}
+	return v
+}
+
+// initServerVersionForAnalytics fetches the server version and sets it on
+// the analytics package so it is included in all subsequent Mixpanel events.
+func initServerVersionForAnalytics(ctx context.Context) {
+	if v := getServerVersionSafe(ctx); v != "" {
+		analytics.ServerVersion = v
+	}
 }
 
 func handleLicenseAfterInstall(cmd *cobra.Command, licenseFlag *auth.LicenseFlag) error {
