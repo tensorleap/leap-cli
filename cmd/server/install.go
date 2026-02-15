@@ -27,6 +27,9 @@ func NewInstallCmd() *cobra.Command {
 				_ = os.Setenv("TL_USE_DEFAULT_OPTION", "true")
 			}
 
+			// Best-effort: capture the current server version for analytics
+			initServerVersionForAnalytics(cmd.Context())
+
 			// Track installation started
 			startProperties := map[string]interface{}{
 				"cli_version":     version.CliVersion,
@@ -85,6 +88,9 @@ func NewInstallCmd() *cobra.Command {
 				analytics.SendEvent(analytics.EventServerInstallFailed, failProperties)
 				return err
 			}
+
+			// Refresh server version after successful install
+			initServerVersionForAnalytics(cmd.Context())
 
 			successProperties := map[string]interface{}{
 				"cli_version":     version.CliVersion,

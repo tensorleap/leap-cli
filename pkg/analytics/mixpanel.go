@@ -165,6 +165,10 @@ func getCurrentUsername() string {
 	return "unknown"
 }
 
+// ServerVersion holds the current server version (e.g. the installed Helm chart version).
+// It is set by server commands and automatically included in all Mixpanel events when non-empty.
+var ServerVersion string
+
 // SendEvent sends an event to Mixpanel with the given event type and properties
 func SendEvent(eventType EventType, properties map[string]interface{}) {
 	if properties == nil {
@@ -179,6 +183,10 @@ func SendEvent(eventType EventType, properties map[string]interface{}) {
 	properties["arch"] = runtime.GOARCH
 	properties["$device_id"] = getDeviceID()
 	properties["whoami"] = getCurrentUsername()
+
+	if ServerVersion != "" {
+		properties["installed_server_version"] = ServerVersion
+	}
 
 	// Check if user_id is provided in properties
 	if userID, exists := properties["user_id"]; exists {

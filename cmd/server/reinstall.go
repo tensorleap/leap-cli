@@ -27,6 +27,9 @@ func NewReinstallCmd() *cobra.Command {
 				_ = os.Setenv("TL_USE_DEFAULT_OPTION", "true")
 			}
 
+			// Best-effort: capture the current server version for analytics
+			initServerVersionForAnalytics(cmd.Context())
+
 			startProperties := map[string]interface{}{
 				"cli_version":     version.CliVersion,
 				"data_dir":        flags.DataDir,
@@ -79,6 +82,9 @@ func NewReinstallCmd() *cobra.Command {
 				analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties)
 				return err
 			}
+
+			// Refresh server version after successful reinstall
+			initServerVersionForAnalytics(cmd.Context())
 
 			successProperties := map[string]interface{}{
 				"cli_version":     version.CliVersion,
