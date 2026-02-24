@@ -1,4 +1,5 @@
 .gitignore
+.openapi-generator-ignore
 .travis.yml
 README.md
 api/openapi.yaml
@@ -185,6 +186,9 @@ docs/GetProjectVersionsParams.md
 docs/GetProjectsResponse.md
 docs/GetSampleCollectionsParams.md
 docs/GetSampleCollectionsResponse.md
+docs/GetSampleEnrichmentParams.md
+docs/GetSampleEnrichmentResponse.md
+docs/GetSampleEnrichmentResponseSamplesInner.md
 docs/GetSampleVisualizationsPathsParams.md
 docs/GetSampleVisualizationsPathsResponse.md
 docs/GetScatterSampleVisualizationsParams.md
@@ -306,6 +310,7 @@ docs/MultiChartsParams.md
 docs/MultiChartsResponse.md
 docs/MultiThresholdConfusionMatrixParams.md
 docs/MutualInformationElement.md
+docs/MutualInformationFeature.md
 docs/NodeMessageParams.md
 docs/NodeType.md
 docs/Notification.md
@@ -452,6 +457,7 @@ docs/ValidatedNode.md
 docs/ValueWithKey.md
 docs/Version.md
 docs/VideoData.md
+docs/VideoHeatmapData.md
 docs/VisData.md
 docs/Visualization.md
 docs/VisualizationData.md
@@ -645,6 +651,9 @@ model_get_project_versions_params.go
 model_get_projects_response.go
 model_get_sample_collections_params.go
 model_get_sample_collections_response.go
+model_get_sample_enrichment_params.go
+model_get_sample_enrichment_response.go
+model_get_sample_enrichment_response_samples_inner.go
 model_get_sample_visualizations_paths_params.go
 model_get_sample_visualizations_paths_response.go
 model_get_scatter_sample_visualizations_params.go
@@ -766,6 +775,7 @@ model_multi_charts_params.go
 model_multi_charts_response.go
 model_multi_threshold_confusion_matrix_params.go
 model_mutual_information_element.go
+model_mutual_information_feature.go
 model_node_message_params.go
 model_node_type.go
 model_notification.go
@@ -912,6 +922,7 @@ model_validated_node.go
 model_value_with_key.go
 model_version.go
 model_video_data.go
+model_video_heatmap_data.go
 model_vis_data.go
 model_visualization.go
 model_visualization_data.go
@@ -924,4 +935,5 @@ model_viz_info_type.go
 model_viz_type.go
 model_weight_asset_data.go
 response.go
+test/api_default_test.go
 utils.go
