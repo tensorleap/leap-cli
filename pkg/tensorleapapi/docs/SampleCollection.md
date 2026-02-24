@@ -4,7 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Samples** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
+**SamplesCount** | Pointer to **float64** |  | [optional] 
+**SamplesBlobName** | Pointer to **string** |  | [optional] 
 **CreatedBy** | Pointer to **string** |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **Description** | Pointer to **string** |  | [optional] 
@@ -17,7 +18,7 @@ Name | Type | Description | Notes
 
 ### NewSampleCollection
 
-`func NewSampleCollection(samples []SampleIdentity, createdAt time.Time, name string, cid string, projectId string, teamId string, ) *SampleCollection`
+`func NewSampleCollection(createdAt time.Time, name string, cid string, projectId string, teamId string, ) *SampleCollection`
 
 NewSampleCollection instantiates a new SampleCollection object
 This constructor will assign default values to properties that have it defined,
@@ -32,25 +33,55 @@ NewSampleCollectionWithDefaults instantiates a new SampleCollection object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetSamples
+### GetSamplesCount
 
-`func (o *SampleCollection) GetSamples() []SampleIdentity`
+`func (o *SampleCollection) GetSamplesCount() float64`
 
-GetSamples returns the Samples field if non-nil, zero value otherwise.
+GetSamplesCount returns the SamplesCount field if non-nil, zero value otherwise.
 
-### GetSamplesOk
+### GetSamplesCountOk
 
-`func (o *SampleCollection) GetSamplesOk() (*[]SampleIdentity, bool)`
+`func (o *SampleCollection) GetSamplesCountOk() (*float64, bool)`
 
-GetSamplesOk returns a tuple with the Samples field if it's non-nil, zero value otherwise
+GetSamplesCountOk returns a tuple with the SamplesCount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSamples
+### SetSamplesCount
 
-`func (o *SampleCollection) SetSamples(v []SampleIdentity)`
+`func (o *SampleCollection) SetSamplesCount(v float64)`
 
-SetSamples sets Samples field to given value.
+SetSamplesCount sets SamplesCount field to given value.
 
+### HasSamplesCount
+
+`func (o *SampleCollection) HasSamplesCount() bool`
+
+HasSamplesCount returns a boolean if a field has been set.
+
+### GetSamplesBlobName
+
+`func (o *SampleCollection) GetSamplesBlobName() string`
+
+GetSamplesBlobName returns the SamplesBlobName field if non-nil, zero value otherwise.
+
+### GetSamplesBlobNameOk
+
+`func (o *SampleCollection) GetSamplesBlobNameOk() (*string, bool)`
+
+GetSamplesBlobNameOk returns a tuple with the SamplesBlobName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSamplesBlobName
+
+`func (o *SampleCollection) SetSamplesBlobName(v string)`
+
+SetSamplesBlobName sets SamplesBlobName field to given value.
+
+### HasSamplesBlobName
+
+`func (o *SampleCollection) HasSamplesBlobName() bool`
+
+HasSamplesBlobName returns a boolean if a field has been set.
 
 ### GetCreatedBy
 

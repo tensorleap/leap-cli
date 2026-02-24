@@ -85,6 +85,7 @@ Method | HTTP request | Description
 [**GetRecentTeamSessions**](DefaultAPI.md#GetRecentTeamSessions) | **Post** /sessions/getRecentTeamSessions | 
 [**GetRoc**](DefaultAPI.md#GetRoc) | **Post** /sessionmetrics/getRoc | 
 [**GetSampleCollections**](DefaultAPI.md#GetSampleCollections) | **Post** /sample-collection/getSampleCollections | 
+[**GetSampleEnrichment**](DefaultAPI.md#GetSampleEnrichment) | **Post** /sessionmetrics/getSampleEnrichment | 
 [**GetSampleVisualizationsPath**](DefaultAPI.md#GetSampleVisualizationsPath) | **Post** /visualizations/getSampleVisualizationsPath | 
 [**GetScatterSampleVisualizations**](DefaultAPI.md#GetScatterSampleVisualizations) | **Post** /visualizations/getScatterSampleVisualizations | 
 [**GetSecretManagerList**](DefaultAPI.md#GetSecretManagerList) | **Post** /secret-manager/getSecretManagerList | 
@@ -505,7 +506,7 @@ import (
 )
 
 func main() {
-	addSampleCollectionParams := *openapiclient.NewAddSampleCollectionParams([]openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType())}, "ProjectId_example", "Name_example") // AddSampleCollectionParams | 
+	addSampleCollectionParams := *openapiclient.NewAddSampleCollectionParams("ProjectId_example", "Name_example") // AddSampleCollectionParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -5239,6 +5240,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetSampleCollectionsResponse**](GetSampleCollectionsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetSampleEnrichment
+
+> GetSampleEnrichmentResponse GetSampleEnrichment(ctx).GetSampleEnrichmentParams(getSampleEnrichmentParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getSampleEnrichmentParams := *openapiclient.NewGetSampleEnrichmentParams([]openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType())}, float64(123), []string{"SessionRunIds_example"}, "ProjectId_example") // GetSampleEnrichmentParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetSampleEnrichment(context.Background()).GetSampleEnrichmentParams(getSampleEnrichmentParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetSampleEnrichment``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSampleEnrichment`: GetSampleEnrichmentResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetSampleEnrichment`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetSampleEnrichmentRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getSampleEnrichmentParams** | [**GetSampleEnrichmentParams**](GetSampleEnrichmentParams.md) |  | 
+
+### Return type
+
+[**GetSampleEnrichmentResponse**](GetSampleEnrichmentResponse.md)
 
 ### Authorization
 

@@ -23,6 +23,8 @@
 
 * `IMAGE_HEATMAP` (value: `"image_heatmap"`)
 
+* `VIDEO_HEATMAP` (value: `"video_heatmap"`)
+
 * `GRAD_ANALYSIS` (value: `"grad_analysis"`)
 
 * `COMPOSITE_VISUALIZATION` (value: `"composite_visualization"`)

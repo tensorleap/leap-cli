@@ -4,19 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FeatureName** | **string** |  | 
-**FeatureValue** | Pointer to **string** |  | [optional] 
-**Direction** | [**Direction**](Direction.md) |  | 
-**IsCategorical** | **bool** |  | 
+**Features** | [**[]MutualInformationFeature**](MutualInformationFeature.md) |  | 
 **ValueInCluster** | Pointer to **float64** |  | [optional] 
 **ValueOutsideCluster** | Pointer to **float64** |  | [optional] 
 **Score** | Pointer to **float64** |  | [optional] 
+**IsUnique** | **bool** |  | 
 
 ## Methods
 
 ### NewMutualInformationElement
 
-`func NewMutualInformationElement(featureName string, direction Direction, isCategorical bool, ) *MutualInformationElement`
+`func NewMutualInformationElement(features []MutualInformationFeature, isUnique bool, ) *MutualInformationElement`
 
 NewMutualInformationElement instantiates a new MutualInformationElement object
 This constructor will assign default values to properties that have it defined,
@@ -31,89 +29,24 @@ NewMutualInformationElementWithDefaults instantiates a new MutualInformationElem
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetFeatureName
+### GetFeatures
 
-`func (o *MutualInformationElement) GetFeatureName() string`
+`func (o *MutualInformationElement) GetFeatures() []MutualInformationFeature`
 
-GetFeatureName returns the FeatureName field if non-nil, zero value otherwise.
+GetFeatures returns the Features field if non-nil, zero value otherwise.
 
-### GetFeatureNameOk
+### GetFeaturesOk
 
-`func (o *MutualInformationElement) GetFeatureNameOk() (*string, bool)`
+`func (o *MutualInformationElement) GetFeaturesOk() (*[]MutualInformationFeature, bool)`
 
-GetFeatureNameOk returns a tuple with the FeatureName field if it's non-nil, zero value otherwise
+GetFeaturesOk returns a tuple with the Features field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFeatureName
+### SetFeatures
 
-`func (o *MutualInformationElement) SetFeatureName(v string)`
+`func (o *MutualInformationElement) SetFeatures(v []MutualInformationFeature)`
 
-SetFeatureName sets FeatureName field to given value.
-
-
-### GetFeatureValue
-
-`func (o *MutualInformationElement) GetFeatureValue() string`
-
-GetFeatureValue returns the FeatureValue field if non-nil, zero value otherwise.
-
-### GetFeatureValueOk
-
-`func (o *MutualInformationElement) GetFeatureValueOk() (*string, bool)`
-
-GetFeatureValueOk returns a tuple with the FeatureValue field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFeatureValue
-
-`func (o *MutualInformationElement) SetFeatureValue(v string)`
-
-SetFeatureValue sets FeatureValue field to given value.
-
-### HasFeatureValue
-
-`func (o *MutualInformationElement) HasFeatureValue() bool`
-
-HasFeatureValue returns a boolean if a field has been set.
-
-### GetDirection
-
-`func (o *MutualInformationElement) GetDirection() Direction`
-
-GetDirection returns the Direction field if non-nil, zero value otherwise.
-
-### GetDirectionOk
-
-`func (o *MutualInformationElement) GetDirectionOk() (*Direction, bool)`
-
-GetDirectionOk returns a tuple with the Direction field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDirection
-
-`func (o *MutualInformationElement) SetDirection(v Direction)`
-
-SetDirection sets Direction field to given value.
-
-
-### GetIsCategorical
-
-`func (o *MutualInformationElement) GetIsCategorical() bool`
-
-GetIsCategorical returns the IsCategorical field if non-nil, zero value otherwise.
-
-### GetIsCategoricalOk
-
-`func (o *MutualInformationElement) GetIsCategoricalOk() (*bool, bool)`
-
-GetIsCategoricalOk returns a tuple with the IsCategorical field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetIsCategorical
-
-`func (o *MutualInformationElement) SetIsCategorical(v bool)`
-
-SetIsCategorical sets IsCategorical field to given value.
+SetFeatures sets Features field to given value.
 
 
 ### GetValueInCluster
@@ -190,6 +123,26 @@ SetScore sets Score field to given value.
 `func (o *MutualInformationElement) HasScore() bool`
 
 HasScore returns a boolean if a field has been set.
+
+### GetIsUnique
+
+`func (o *MutualInformationElement) GetIsUnique() bool`
+
+GetIsUnique returns the IsUnique field if non-nil, zero value otherwise.
+
+### GetIsUniqueOk
+
+`func (o *MutualInformationElement) GetIsUniqueOk() (*bool, bool)`
+
+GetIsUniqueOk returns a tuple with the IsUnique field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsUnique
+
+`func (o *MutualInformationElement) SetIsUnique(v bool)`
+
+SetIsUnique sets IsUnique field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

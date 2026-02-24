@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Samples** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
+**Samples** | Pointer to [**[]SampleIdentity**](SampleIdentity.md) |  | [optional] 
 **ProjectId** | **string** |  | 
 **Description** | Pointer to **string** |  | [optional] 
 **Name** | **string** |  | 
@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewAddSampleCollectionParams
 
-`func NewAddSampleCollectionParams(samples []SampleIdentity, projectId string, name string, ) *AddSampleCollectionParams`
+`func NewAddSampleCollectionParams(projectId string, name string, ) *AddSampleCollectionParams`
 
 NewAddSampleCollectionParams instantiates a new AddSampleCollectionParams object
 This constructor will assign default values to properties that have it defined,
@@ -47,6 +47,11 @@ and a boolean to check if the value has been set.
 
 SetSamples sets Samples field to given value.
 
+### HasSamples
+
+`func (o *AddSampleCollectionParams) HasSamples() bool`
+
+HasSamples returns a boolean if a field has been set.
 
 ### GetProjectId
 
