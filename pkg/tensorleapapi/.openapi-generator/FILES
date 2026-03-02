@@ -57,6 +57,8 @@ docs/ContinueEvaluateParams.md
 docs/ContinuesAgg.md
 docs/CreateSampleVisualizationsParams.md
 docs/CreateSessionTestRequest.md
+docs/CreateStreamingSamplesVisJobParams.md
+docs/CreateStreamingSamplesVisJobResponse.md
 docs/CreateTeamRequest.md
 docs/CreateTeamResponse.md
 docs/CustomLayerInstance.md
@@ -68,6 +70,9 @@ docs/Dashlet.md
 docs/DataLeakageInsight.md
 docs/DataStateType.md
 docs/DataTypeEnum.md
+docs/DatasetBalancing.md
+docs/DatasetBalancingJobParams.md
+docs/DatasetBalancingResponse.md
 docs/DatasetInputInstance.md
 docs/DatasetMessageParams.md
 docs/DatasetMetadataInstance.md
@@ -78,6 +83,7 @@ docs/DatasetSetup.md
 docs/DatasetTestResultPayload.md
 docs/DefaultAPI.md
 docs/DeleteDashboardParams.md
+docs/DeleteDatasetBalancingParams.md
 docs/DeleteGeneratedLabelParams.md
 docs/DeleteIssueParams.md
 docs/DeleteProjectParams.md
@@ -129,8 +135,10 @@ docs/FilterDisplayData.md
 docs/FilterOperatorType.md
 docs/FilterSessionRun.md
 docs/GeneralMessageParams.md
+docs/GenerateDatasetBalancingParams.md
 docs/GenerateInsightsParams.md
 docs/GenerateLabelParams.md
+docs/GenerateStreamingSamplesVisParams.md
 docs/GenerateSyntheticDataParams.md
 docs/GenerateSyntheticDataParamsSourcesInner.md
 docs/GeneratedLabel.md
@@ -154,6 +162,7 @@ docs/GetDashboardParams.md
 docs/GetDashboardResponse.md
 docs/GetDashletFieldsParams.md
 docs/GetDashletFieldsResponse.md
+docs/GetDatasetBalancingParams.md
 docs/GetDownloadSignedUrlParams.md
 docs/GetDownloadSignedUrlResponse.md
 docs/GetEnvironmentInfoResponse.md
@@ -523,6 +532,8 @@ model_continue_evaluate_params.go
 model_continues_agg.go
 model_create_sample_visualizations_params.go
 model_create_session_test_request.go
+model_create_streaming_samples_vis_job_params.go
+model_create_streaming_samples_vis_job_response.go
 model_create_team_request.go
 model_create_team_response.go
 model_custom_layer_instance.go
@@ -534,6 +545,9 @@ model_dashlet.go
 model_data_leakage_insight.go
 model_data_state_type.go
 model_data_type_enum.go
+model_dataset_balancing.go
+model_dataset_balancing_job_params.go
+model_dataset_balancing_response.go
 model_dataset_input_instance.go
 model_dataset_message_params.go
 model_dataset_metadata_instance.go
@@ -543,6 +557,7 @@ model_dataset_preprocess.go
 model_dataset_setup.go
 model_dataset_test_result_payload.go
 model_delete_dashboard_params.go
+model_delete_dataset_balancing_params.go
 model_delete_generated_label_params.go
 model_delete_issue_params.go
 model_delete_project_params.go
@@ -594,8 +609,10 @@ model_filter_display_data.go
 model_filter_operator_type.go
 model_filter_session_run.go
 model_general_message_params.go
+model_generate_dataset_balancing_params.go
 model_generate_insights_params.go
 model_generate_label_params.go
+model_generate_streaming_samples_vis_params.go
 model_generate_synthetic_data_params.go
 model_generate_synthetic_data_params_sources_inner.go
 model_generated_label.go
@@ -619,6 +636,7 @@ model_get_dashboard_params.go
 model_get_dashboard_response.go
 model_get_dashlet_fields_params.go
 model_get_dashlet_fields_response.go
+model_get_dataset_balancing_params.go
 model_get_download_signed_url_params.go
 model_get_download_signed_url_response.go
 model_get_environment_info_response.go

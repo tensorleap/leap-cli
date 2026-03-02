@@ -18,8 +18,10 @@ Method | HTTP request | Description
 [**ContinueEvaluate**](DefaultAPI.md#ContinueEvaluate) | **Post** /evaluate/continueEvaluate | 
 [**CreateSamplesVisualizations**](DefaultAPI.md#CreateSamplesVisualizations) | **Post** /visualizations/createSamplesVisualizations | 
 [**CreateSessionTest**](DefaultAPI.md#CreateSessionTest) | **Post** /sessions-tests/createSessionTest | 
+[**CreateStreamingSamplesVisJob**](DefaultAPI.md#CreateStreamingSamplesVisJob) | **Post** /sample-collection/createStreamingSamplesVisJob | 
 [**CreateTeam**](DefaultAPI.md#CreateTeam) | **Post** /teams/createTeam | 
 [**DeleteDashboard**](DefaultAPI.md#DeleteDashboard) | **Post** /dashboards/deleteDashboard | 
+[**DeleteDatasetBalancing**](DefaultAPI.md#DeleteDatasetBalancing) | **Post** /datasetcuration/deleteDatasetBalancing | 
 [**DeleteGeneratedLabel**](DefaultAPI.md#DeleteGeneratedLabel) | **Post** /datasetcuration/deleteGeneratedLabel | 
 [**DeleteIssue**](DefaultAPI.md#DeleteIssue) | **Post** /issues/deleteIssue | 
 [**DeleteProject**](DefaultAPI.md#DeleteProject) | **Post** /projects/deleteProject | 
@@ -37,8 +39,10 @@ Method | HTTP request | Description
 [**ExportProject**](DefaultAPI.md#ExportProject) | **Post** /projects/exportProject | 
 [**ExtendTrial**](DefaultAPI.md#ExtendTrial) | **Post** /auth/extendTrial | 
 [**FetchSimilar**](DefaultAPI.md#FetchSimilar) | **Post** /visualizations/fetchSimilar | 
+[**GenerateDatasetBalancing**](DefaultAPI.md#GenerateDatasetBalancing) | **Post** /datasetcuration/generateDatasetBalancing | 
 [**GenerateInsights**](DefaultAPI.md#GenerateInsights) | **Post** /insights/generateInsights | 
 [**GenerateLabels**](DefaultAPI.md#GenerateLabels) | **Post** /datasetcuration/generateLabels | 
+[**GenerateStreamingSamplesVis**](DefaultAPI.md#GenerateStreamingSamplesVis) | **Post** /sample-collection/generateStreamingSamplesVis | 
 [**GenerateSyntheticData**](DefaultAPI.md#GenerateSyntheticData) | **Post** /datasetcuration/generateSyntheticData | 
 [**GetAllProjectSessionTests**](DefaultAPI.md#GetAllProjectSessionTests) | **Post** /sessions-tests/getAllProjectSessionTests | 
 [**GetAllSlimUserData**](DefaultAPI.md#GetAllSlimUserData) | **Post** /users/getAllSlimUserData | 
@@ -55,6 +59,7 @@ Method | HTTP request | Description
 [**GetCurrentProjectVersion**](DefaultAPI.md#GetCurrentProjectVersion) | **Post** /projects/getCurrentProjectVersion | 
 [**GetDashboard**](DefaultAPI.md#GetDashboard) | **Post** /dashboards/getDashboard | 
 [**GetDashletFields**](DefaultAPI.md#GetDashletFields) | **Post** /dashboards/getDashletFields | 
+[**GetDatasetBalancing**](DefaultAPI.md#GetDatasetBalancing) | **Post** /datasetcuration/getDatasetBalancing | 
 [**GetDownloadSignedUrl**](DefaultAPI.md#GetDownloadSignedUrl) | **Post** /versions/getDownloadSignedUrl | 
 [**GetEngineSettings**](DefaultAPI.md#GetEngineSettings) | **Post** /settings/getEngineSettings | 
 [**GetEnvironmentInfo**](DefaultAPI.md#GetEnvironmentInfo) | **Post** /metadata/getEnvironmentInfo | 
@@ -1047,6 +1052,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## CreateStreamingSamplesVisJob
+
+> CreateStreamingSamplesVisJobResponse CreateStreamingSamplesVisJob(ctx).CreateStreamingSamplesVisJobParams(createStreamingSamplesVisJobParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	createStreamingSamplesVisJobParams := *openapiclient.NewCreateStreamingSamplesVisJobParams("SessionRunId_example", "ProjectId_example") // CreateStreamingSamplesVisJobParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.CreateStreamingSamplesVisJob(context.Background()).CreateStreamingSamplesVisJobParams(createStreamingSamplesVisJobParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.CreateStreamingSamplesVisJob``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateStreamingSamplesVisJob`: CreateStreamingSamplesVisJobResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.CreateStreamingSamplesVisJob`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateStreamingSamplesVisJobRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createStreamingSamplesVisJobParams** | [**CreateStreamingSamplesVisJobParams**](CreateStreamingSamplesVisJobParams.md) |  | 
+
+### Return type
+
+[**CreateStreamingSamplesVisJobResponse**](CreateStreamingSamplesVisJobResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## CreateTeam
 
 > CreateTeamResponse CreateTeam(ctx).CreateTeamRequest(createTeamRequest).Execute()
@@ -1154,6 +1223,68 @@ Other parameters are passed through a pointer to a apiDeleteDashboardRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **deleteDashboardParams** | [**DeleteDashboardParams**](DeleteDashboardParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteDatasetBalancing
+
+> DeleteDatasetBalancing(ctx).DeleteDatasetBalancingParams(deleteDatasetBalancingParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	deleteDatasetBalancingParams := *openapiclient.NewDeleteDatasetBalancingParams("ProjectId_example", "DatasetBalancingId_example") // DeleteDatasetBalancingParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteDatasetBalancing(context.Background()).DeleteDatasetBalancingParams(deleteDatasetBalancingParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteDatasetBalancing``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteDatasetBalancingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **deleteDatasetBalancingParams** | [**DeleteDatasetBalancingParams**](DeleteDatasetBalancingParams.md) |  | 
 
 ### Return type
 
@@ -2239,6 +2370,68 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GenerateDatasetBalancing
+
+> GenerateDatasetBalancing(ctx).GenerateDatasetBalancingParams(generateDatasetBalancingParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	generateDatasetBalancingParams := *openapiclient.NewGenerateDatasetBalancingParams("ProjectId_example", "SessionRunId_example", float64(123), []string{"MetadataTags_example"}) // GenerateDatasetBalancingParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.GenerateDatasetBalancing(context.Background()).GenerateDatasetBalancingParams(generateDatasetBalancingParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GenerateDatasetBalancing``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGenerateDatasetBalancingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **generateDatasetBalancingParams** | [**GenerateDatasetBalancingParams**](GenerateDatasetBalancingParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GenerateInsights
 
 > GenerateInsights(ctx).GenerateInsightsParams(generateInsightsParams).Execute()
@@ -2344,6 +2537,68 @@ Other parameters are passed through a pointer to a apiGenerateLabelsRequest stru
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **generateLabelParams** | [**GenerateLabelParams**](GenerateLabelParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GenerateStreamingSamplesVis
+
+> GenerateStreamingSamplesVis(ctx).GenerateStreamingSamplesVisParams(generateStreamingSamplesVisParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	generateStreamingSamplesVisParams := *openapiclient.NewGenerateStreamingSamplesVisParams("VisualizationType_example", []openapiclient.SampleIdentity{*openapiclient.NewSampleIdentity(openapiclient.DataStateType("training"), *openapiclient.NewSampleIdType())}, "SessionRunId_example", "ProjectId_example") // GenerateStreamingSamplesVisParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.GenerateStreamingSamplesVis(context.Background()).GenerateStreamingSamplesVisParams(generateStreamingSamplesVisParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GenerateStreamingSamplesVis``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGenerateStreamingSamplesVisRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **generateStreamingSamplesVisParams** | [**GenerateStreamingSamplesVisParams**](GenerateStreamingSamplesVisParams.md) |  | 
 
 ### Return type
 
@@ -3355,6 +3610,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetDashletFieldsResponse**](GetDashletFieldsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetDatasetBalancing
+
+> DatasetBalancingResponse GetDatasetBalancing(ctx).GetDatasetBalancingParams(getDatasetBalancingParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getDatasetBalancingParams := *openapiclient.NewGetDatasetBalancingParams("ProjectId_example") // GetDatasetBalancingParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetDatasetBalancing(context.Background()).GetDatasetBalancingParams(getDatasetBalancingParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetDatasetBalancing``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetDatasetBalancing`: DatasetBalancingResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetDatasetBalancing`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetDatasetBalancingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getDatasetBalancingParams** | [**GetDatasetBalancingParams**](GetDatasetBalancingParams.md) |  | 
+
+### Return type
+
+[**DatasetBalancingResponse**](DatasetBalancingResponse.md)
 
 ### Authorization
 

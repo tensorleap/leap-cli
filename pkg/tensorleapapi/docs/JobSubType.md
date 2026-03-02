@@ -11,6 +11,8 @@
 
 * `SYNTHETIC_DATA_GENERATION` (value: `"Synthetic Data Generation"`)
 
+* `DATASET_BALANCING` (value: `"Dataset Balancing"`)
+
 * `VISUALIZERS_CALCULATION` (value: `"Visualizers Calculation"`)
 
 * `SAMPLE_ANALYSIS` (value: `"Sample Analysis"`)
@@ -30,6 +32,8 @@
 * `IMPORT_MODEL` (value: `"Import Model"`)
 
 * `GENERATE_INSIGHTS` (value: `"Generate Insights"`)
+
+* `STREAMING_SAMPLES_VIS` (value: `"Streaming Samples Vis"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

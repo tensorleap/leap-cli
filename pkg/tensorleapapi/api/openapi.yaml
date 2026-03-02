@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.3
+  version: 11.0.7
 servers:
 - url: /api/v2
 paths:
@@ -431,6 +431,55 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/DeleteSyntheticDataParams"
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
+  /datasetcuration/generateDatasetBalancing:
+    post:
+      operationId: GenerateDatasetBalancing
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateDatasetBalancingParams"
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
+  /datasetcuration/getDatasetBalancing:
+    post:
+      operationId: GetDatasetBalancing
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetDatasetBalancingParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatasetBalancingResponse"
+          description: Ok
+      security:
+      - jwt: []
+  /datasetcuration/deleteDatasetBalancing:
+    post:
+      operationId: DeleteDatasetBalancing
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteDatasetBalancingParams"
         required: true
       responses:
         "204":
@@ -1528,6 +1577,42 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/UpdateSampleCollectionParams"
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt:
+        - not-demo
+  /sample-collection/createStreamingSamplesVisJob:
+    post:
+      operationId: CreateStreamingSamplesVisJob
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateStreamingSamplesVisJobParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateStreamingSamplesVisJobResponse"
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /sample-collection/generateStreamingSamplesVis:
+    post:
+      operationId: GenerateStreamingSamplesVis
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateStreamingSamplesVisParams"
         required: true
       responses:
         "204":
@@ -12082,6 +12167,403 @@ components:
         filePath: filePath
         filterFileUrl: filterFileUrl
         epoch: 0.8008281904610115
+        filters:
+        - field: field
+          disable: true
+          displayData:
+            insights:
+            - sessionRun:
+                name: name
+                epoch: 4.965218492984954
+                id: id
+                sessionId: sessionId
+              index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                under_representation_n_samples: 7.457744773683766
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                auto_generated: true
+                over_representation_n_samples: 1.1730742509559433
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                over_representation_dataset: null
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                under_representation_dataset: training
+            - sessionRun:
+                name: name
+                epoch: 4.965218492984954
+                id: id
+                sessionId: sessionId
+              index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                under_representation_n_samples: 7.457744773683766
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                auto_generated: true
+                over_representation_n_samples: 1.1730742509559433
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                over_representation_dataset: null
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                under_representation_dataset: training
+            type: insight
+          value:
+            lt: null
+            gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
+            lte: null
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 5.637376656633329
+          operator: between
+        - field: field
+          disable: true
+          displayData:
+            insights:
+            - sessionRun:
+                name: name
+                epoch: 4.965218492984954
+                id: id
+                sessionId: sessionId
+              index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                under_representation_n_samples: 7.457744773683766
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                auto_generated: true
+                over_representation_n_samples: 1.1730742509559433
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                over_representation_dataset: null
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                under_representation_dataset: training
+            - sessionRun:
+                name: name
+                epoch: 4.965218492984954
+                id: id
+                sessionId: sessionId
+              index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                under_representation_n_samples: 7.457744773683766
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                auto_generated: true
+                over_representation_n_samples: 1.1730742509559433
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                over_representation_dataset: null
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                under_representation_dataset: training
+            type: insight
+          value:
+            lt: null
+            gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
+            lte: null
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 5.637376656633329
+          operator: between
         jobId: jobId
         createdAt: 2000-01-23T04:56:07.000+00:00
         sessionRunId: sessionRunId
@@ -12121,6 +12603,10 @@ components:
           $ref: "#/components/schemas/JobStatus"
         isDeleted:
           type: boolean
+        filters:
+          items:
+            $ref: "#/components/schemas/ESFilter"
+          type: array
       required:
       - createdAt
       - createdBy
@@ -12141,6 +12627,403 @@ components:
           filePath: filePath
           filterFileUrl: filterFileUrl
           epoch: 0.8008281904610115
+          filters:
+          - field: field
+            disable: true
+            displayData:
+              insights:
+              - sessionRun:
+                  name: name
+                  epoch: 4.965218492984954
+                  id: id
+                  sessionId: sessionId
+                index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  under_representation_n_samples: 7.457744773683766
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  auto_generated: true
+                  over_representation_n_samples: 1.1730742509559433
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  over_representation_dataset: null
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  under_representation_dataset: training
+              - sessionRun:
+                  name: name
+                  epoch: 4.965218492984954
+                  id: id
+                  sessionId: sessionId
+                index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  under_representation_n_samples: 7.457744773683766
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  auto_generated: true
+                  over_representation_n_samples: 1.1730742509559433
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  over_representation_dataset: null
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  under_representation_dataset: training
+              type: insight
+            value:
+              lt: null
+              gte: null
+              blob_paths:
+              - blob_paths
+              - blob_paths
+              lte: null
+              eq: null
+              lst:
+              - null
+              - null
+              gt: 5.637376656633329
+            operator: between
+          - field: field
+            disable: true
+            displayData:
+              insights:
+              - sessionRun:
+                  name: name
+                  epoch: 4.965218492984954
+                  id: id
+                  sessionId: sessionId
+                index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  under_representation_n_samples: 7.457744773683766
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  auto_generated: true
+                  over_representation_n_samples: 1.1730742509559433
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  over_representation_dataset: null
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  under_representation_dataset: training
+              - sessionRun:
+                  name: name
+                  epoch: 4.965218492984954
+                  id: id
+                  sessionId: sessionId
+                index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  under_representation_n_samples: 7.457744773683766
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  auto_generated: true
+                  over_representation_n_samples: 1.1730742509559433
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  over_representation_dataset: null
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  under_representation_dataset: training
+              type: insight
+            value:
+              lt: null
+              gte: null
+              blob_paths:
+              - blob_paths
+              - blob_paths
+              lte: null
+              eq: null
+              lst:
+              - null
+              - null
+              gt: 5.637376656633329
+            operator: between
           jobId: jobId
           createdAt: 2000-01-23T04:56:07.000+00:00
           sessionRunId: sessionRunId
@@ -12154,6 +13037,403 @@ components:
           filePath: filePath
           filterFileUrl: filterFileUrl
           epoch: 0.8008281904610115
+          filters:
+          - field: field
+            disable: true
+            displayData:
+              insights:
+              - sessionRun:
+                  name: name
+                  epoch: 4.965218492984954
+                  id: id
+                  sessionId: sessionId
+                index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  under_representation_n_samples: 7.457744773683766
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  auto_generated: true
+                  over_representation_n_samples: 1.1730742509559433
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  over_representation_dataset: null
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  under_representation_dataset: training
+              - sessionRun:
+                  name: name
+                  epoch: 4.965218492984954
+                  id: id
+                  sessionId: sessionId
+                index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  under_representation_n_samples: 7.457744773683766
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  auto_generated: true
+                  over_representation_n_samples: 1.1730742509559433
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  over_representation_dataset: null
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  under_representation_dataset: training
+              type: insight
+            value:
+              lt: null
+              gte: null
+              blob_paths:
+              - blob_paths
+              - blob_paths
+              lte: null
+              eq: null
+              lst:
+              - null
+              - null
+              gt: 5.637376656633329
+            operator: between
+          - field: field
+            disable: true
+            displayData:
+              insights:
+              - sessionRun:
+                  name: name
+                  epoch: 4.965218492984954
+                  id: id
+                  sessionId: sessionId
+                index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  under_representation_n_samples: 7.457744773683766
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  auto_generated: true
+                  over_representation_n_samples: 1.1730742509559433
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  over_representation_dataset: null
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  under_representation_dataset: training
+              - sessionRun:
+                  name: name
+                  epoch: 4.965218492984954
+                  id: id
+                  sessionId: sessionId
+                index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  under_representation_n_samples: 7.457744773683766
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  auto_generated: true
+                  over_representation_n_samples: 1.1730742509559433
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  over_representation_dataset: null
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  under_representation_dataset: training
+              type: insight
+            value:
+              lt: null
+              gte: null
+              blob_paths:
+              - blob_paths
+              - blob_paths
+              lte: null
+              eq: null
+              lst:
+              - null
+              - null
+              gt: 5.637376656633329
+            operator: between
           jobId: jobId
           createdAt: 2000-01-23T04:56:07.000+00:00
           sessionRunId: sessionRunId
@@ -17128,6 +18408,1781 @@ components:
       - projectId
       - syntheticDataId
       type: object
+    GenerateDatasetBalancingParams:
+      additionalProperties: true
+      example:
+        sessionRunId: sessionRunId
+        prioritizedMetadataTags:
+        - prioritizedMetadataTags
+        - prioritizedMetadataTags
+        epoch: 0.8008281904610115
+        percentageOfSamplesToPrune: 6.027456183070403
+        filters:
+        - field: field
+          disable: true
+          displayData:
+            insights:
+            - sessionRun:
+                name: name
+                epoch: 4.965218492984954
+                id: id
+                sessionId: sessionId
+              index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                under_representation_n_samples: 7.457744773683766
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                auto_generated: true
+                over_representation_n_samples: 1.1730742509559433
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                over_representation_dataset: null
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                under_representation_dataset: training
+            - sessionRun:
+                name: name
+                epoch: 4.965218492984954
+                id: id
+                sessionId: sessionId
+              index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                under_representation_n_samples: 7.457744773683766
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                auto_generated: true
+                over_representation_n_samples: 1.1730742509559433
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                over_representation_dataset: null
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                under_representation_dataset: training
+            type: insight
+          value:
+            lt: null
+            gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
+            lte: null
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 5.637376656633329
+          operator: between
+        - field: field
+          disable: true
+          displayData:
+            insights:
+            - sessionRun:
+                name: name
+                epoch: 4.965218492984954
+                id: id
+                sessionId: sessionId
+              index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                under_representation_n_samples: 7.457744773683766
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                auto_generated: true
+                over_representation_n_samples: 1.1730742509559433
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                over_representation_dataset: null
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                under_representation_dataset: training
+            - sessionRun:
+                name: name
+                epoch: 4.965218492984954
+                id: id
+                sessionId: sessionId
+              index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                under_representation_n_samples: 7.457744773683766
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                auto_generated: true
+                over_representation_n_samples: 1.1730742509559433
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                over_representation_dataset: null
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                under_representation_dataset: training
+            type: insight
+          value:
+            lt: null
+            gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
+            lte: null
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 5.637376656633329
+          operator: between
+        projectId: projectId
+        metadataTags:
+        - metadataTags
+        - metadataTags
+      properties:
+        projectId:
+          type: string
+        sessionRunId:
+          type: string
+        epoch:
+          format: double
+          type: number
+        filters:
+          items:
+            $ref: "#/components/schemas/ESFilter"
+          type: array
+        metadataTags:
+          items:
+            type: string
+          type: array
+        prioritizedMetadataTags:
+          items:
+            type: string
+          type: array
+        percentageOfSamplesToPrune:
+          format: double
+          type: number
+      required:
+      - epoch
+      - metadataTags
+      - projectId
+      - sessionRunId
+      type: object
+    DatasetBalancing:
+      additionalProperties: true
+      example:
+        sessionRunName: sessionRunName
+        prioritizedMetadataTags:
+        - prioritizedMetadataTags
+        - prioritizedMetadataTags
+        filterFileUrl: filterFileUrl
+        epoch: 0.8008281904610115
+        percentageOfSamplesToPrune: 6.027456183070403
+        filters:
+        - field: field
+          disable: true
+          displayData:
+            insights:
+            - sessionRun:
+                name: name
+                epoch: 4.965218492984954
+                id: id
+                sessionId: sessionId
+              index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                under_representation_n_samples: 7.457744773683766
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                auto_generated: true
+                over_representation_n_samples: 1.1730742509559433
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                over_representation_dataset: null
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                under_representation_dataset: training
+            - sessionRun:
+                name: name
+                epoch: 4.965218492984954
+                id: id
+                sessionId: sessionId
+              index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                under_representation_n_samples: 7.457744773683766
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                auto_generated: true
+                over_representation_n_samples: 1.1730742509559433
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                over_representation_dataset: null
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                under_representation_dataset: training
+            type: insight
+          value:
+            lt: null
+            gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
+            lte: null
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 5.637376656633329
+          operator: between
+        - field: field
+          disable: true
+          displayData:
+            insights:
+            - sessionRun:
+                name: name
+                epoch: 4.965218492984954
+                id: id
+                sessionId: sessionId
+              index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                under_representation_n_samples: 7.457744773683766
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                auto_generated: true
+                over_representation_n_samples: 1.1730742509559433
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                over_representation_dataset: null
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                under_representation_dataset: training
+            - sessionRun:
+                name: name
+                epoch: 4.965218492984954
+                id: id
+                sessionId: sessionId
+              index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                under_representation_n_samples: 7.457744773683766
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                auto_generated: true
+                over_representation_n_samples: 1.1730742509559433
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                over_representation_dataset: null
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                under_representation_dataset: training
+            type: insight
+          value:
+            lt: null
+            gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
+            lte: null
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 5.637376656633329
+          operator: between
+        jobId: jobId
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        sessionRunId: sessionRunId
+        isDeleted: true
+        createdBy: createdBy
+        fileUrl: fileUrl
+        id: id
+        metadataTags:
+        - metadataTags
+        - metadataTags
+        status: UNSTARTED
+      properties:
+        id:
+          type: string
+        jobId:
+          type: string
+        sessionRunId:
+          type: string
+        sessionRunName:
+          type: string
+        epoch:
+          format: double
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+        createdBy:
+          type: string
+        fileUrl:
+          type: string
+        filterFileUrl:
+          type: string
+        status:
+          $ref: "#/components/schemas/JobStatus"
+        isDeleted:
+          type: boolean
+        filters:
+          items:
+            $ref: "#/components/schemas/ESFilter"
+          type: array
+        metadataTags:
+          items:
+            type: string
+          type: array
+        prioritizedMetadataTags:
+          items:
+            type: string
+          type: array
+        percentageOfSamplesToPrune:
+          format: double
+          type: number
+      required:
+      - createdAt
+      - createdBy
+      - epoch
+      - id
+      - isDeleted
+      - jobId
+      - metadataTags
+      - sessionRunId
+      - sessionRunName
+      - status
+      type: object
+    DatasetBalancingResponse:
+      additionalProperties: true
+      example:
+        datasetBalancingList:
+        - sessionRunName: sessionRunName
+          prioritizedMetadataTags:
+          - prioritizedMetadataTags
+          - prioritizedMetadataTags
+          filterFileUrl: filterFileUrl
+          epoch: 0.8008281904610115
+          percentageOfSamplesToPrune: 6.027456183070403
+          filters:
+          - field: field
+            disable: true
+            displayData:
+              insights:
+              - sessionRun:
+                  name: name
+                  epoch: 4.965218492984954
+                  id: id
+                  sessionId: sessionId
+                index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  under_representation_n_samples: 7.457744773683766
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  auto_generated: true
+                  over_representation_n_samples: 1.1730742509559433
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  over_representation_dataset: null
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  under_representation_dataset: training
+              - sessionRun:
+                  name: name
+                  epoch: 4.965218492984954
+                  id: id
+                  sessionId: sessionId
+                index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  under_representation_n_samples: 7.457744773683766
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  auto_generated: true
+                  over_representation_n_samples: 1.1730742509559433
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  over_representation_dataset: null
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  under_representation_dataset: training
+              type: insight
+            value:
+              lt: null
+              gte: null
+              blob_paths:
+              - blob_paths
+              - blob_paths
+              lte: null
+              eq: null
+              lst:
+              - null
+              - null
+              gt: 5.637376656633329
+            operator: between
+          - field: field
+            disable: true
+            displayData:
+              insights:
+              - sessionRun:
+                  name: name
+                  epoch: 4.965218492984954
+                  id: id
+                  sessionId: sessionId
+                index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  under_representation_n_samples: 7.457744773683766
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  auto_generated: true
+                  over_representation_n_samples: 1.1730742509559433
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  over_representation_dataset: null
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  under_representation_dataset: training
+              - sessionRun:
+                  name: name
+                  epoch: 4.965218492984954
+                  id: id
+                  sessionId: sessionId
+                index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  under_representation_n_samples: 7.457744773683766
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  auto_generated: true
+                  over_representation_n_samples: 1.1730742509559433
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  over_representation_dataset: null
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  under_representation_dataset: training
+              type: insight
+            value:
+              lt: null
+              gte: null
+              blob_paths:
+              - blob_paths
+              - blob_paths
+              lte: null
+              eq: null
+              lst:
+              - null
+              - null
+              gt: 5.637376656633329
+            operator: between
+          jobId: jobId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          sessionRunId: sessionRunId
+          isDeleted: true
+          createdBy: createdBy
+          fileUrl: fileUrl
+          id: id
+          metadataTags:
+          - metadataTags
+          - metadataTags
+          status: UNSTARTED
+        - sessionRunName: sessionRunName
+          prioritizedMetadataTags:
+          - prioritizedMetadataTags
+          - prioritizedMetadataTags
+          filterFileUrl: filterFileUrl
+          epoch: 0.8008281904610115
+          percentageOfSamplesToPrune: 6.027456183070403
+          filters:
+          - field: field
+            disable: true
+            displayData:
+              insights:
+              - sessionRun:
+                  name: name
+                  epoch: 4.965218492984954
+                  id: id
+                  sessionId: sessionId
+                index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  under_representation_n_samples: 7.457744773683766
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  auto_generated: true
+                  over_representation_n_samples: 1.1730742509559433
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  over_representation_dataset: null
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  under_representation_dataset: training
+              - sessionRun:
+                  name: name
+                  epoch: 4.965218492984954
+                  id: id
+                  sessionId: sessionId
+                index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  under_representation_n_samples: 7.457744773683766
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  auto_generated: true
+                  over_representation_n_samples: 1.1730742509559433
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  over_representation_dataset: null
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  under_representation_dataset: training
+              type: insight
+            value:
+              lt: null
+              gte: null
+              blob_paths:
+              - blob_paths
+              - blob_paths
+              lte: null
+              eq: null
+              lst:
+              - null
+              - null
+              gt: 5.637376656633329
+            operator: between
+          - field: field
+            disable: true
+            displayData:
+              insights:
+              - sessionRun:
+                  name: name
+                  epoch: 4.965218492984954
+                  id: id
+                  sessionId: sessionId
+                index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  under_representation_n_samples: 7.457744773683766
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  auto_generated: true
+                  over_representation_n_samples: 1.1730742509559433
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  over_representation_dataset: null
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  under_representation_dataset: training
+              - sessionRun:
+                  name: name
+                  epoch: 4.965218492984954
+                  id: id
+                  sessionId: sessionId
+                index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  under_representation_n_samples: 7.457744773683766
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  auto_generated: true
+                  over_representation_n_samples: 1.1730742509559433
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  over_representation_dataset: null
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  under_representation_dataset: training
+              type: insight
+            value:
+              lt: null
+              gte: null
+              blob_paths:
+              - blob_paths
+              - blob_paths
+              lte: null
+              eq: null
+              lst:
+              - null
+              - null
+              gt: 5.637376656633329
+            operator: between
+          jobId: jobId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          sessionRunId: sessionRunId
+          isDeleted: true
+          createdBy: createdBy
+          fileUrl: fileUrl
+          id: id
+          metadataTags:
+          - metadataTags
+          - metadataTags
+          status: UNSTARTED
+      properties:
+        datasetBalancingList:
+          items:
+            $ref: "#/components/schemas/DatasetBalancing"
+          type: array
+      required:
+      - datasetBalancingList
+      type: object
+    GetDatasetBalancingParams:
+      additionalProperties: true
+      example:
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+      required:
+      - projectId
+      type: object
+    DeleteDatasetBalancingParams:
+      additionalProperties: true
+      example:
+        datasetBalancingId: datasetBalancingId
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        datasetBalancingId:
+          type: string
+      required:
+      - datasetBalancingId
+      - projectId
+      type: object
     JobType:
       enum:
       - TRAINING
@@ -17142,6 +20197,7 @@ components:
       - DRY_RUN_GRAPH
       - SLIM_LS
       - STREAMING_HANDLER
+      - STREAMING_SAMPLES_VIS
       - EXPORT_PROJECT
       - IMPORT_PROJECT
       type: string
@@ -17151,6 +20207,7 @@ components:
       - Population Exploration
       - Labeling Recommendation
       - Synthetic Data Generation
+      - Dataset Balancing
       - Visualizers Calculation
       - Sample Analysis
       - Graph Validate
@@ -17161,6 +20218,7 @@ components:
       - Code Parse
       - Import Model
       - Generate Insights
+      - Streaming Samples Vis
       type: string
     EarlyStopParams:
       additionalProperties: true
@@ -17454,6 +20512,42 @@ components:
       - targetFilters
       - type
       type: object
+    DatasetBalancingJobParams:
+      properties:
+        digest:
+          type: string
+        percentageOfSamplesToPrune:
+          format: double
+          type: number
+        prioritizedMetadataTags:
+          items:
+            type: string
+          type: array
+        metadataTags:
+          items:
+            type: string
+          type: array
+        filters:
+          items:
+            $ref: "#/components/schemas/ESFilter"
+          type: array
+        fromEpoch:
+          format: double
+          type: number
+        sessionRunId:
+          type: string
+        type:
+          enum:
+          - dataset_balancing
+          nullable: false
+          type: string
+      required:
+      - digest
+      - fromEpoch
+      - metadataTags
+      - sessionRunId
+      - type
+      type: object
     InsightsJobParams:
       properties:
         filters:
@@ -17648,6 +20742,7 @@ components:
       - $ref: "#/components/schemas/PopulationExplorationJobParams"
       - $ref: "#/components/schemas/LabelingJobParams"
       - $ref: "#/components/schemas/SyntheticDataJobParams"
+      - $ref: "#/components/schemas/DatasetBalancingJobParams"
       - $ref: "#/components/schemas/InsightsJobParams"
       - $ref: "#/components/schemas/ExportProjectParams"
       - $ref: "#/components/schemas/ImportProjectParams"
@@ -26247,6 +29342,61 @@ components:
       required:
       - projectId
       - sampleCollectionId
+      type: object
+    CreateStreamingSamplesVisJobResponse:
+      example:
+        jobId: jobId
+        alreadyExists: true
+      properties:
+        alreadyExists:
+          type: boolean
+        jobId:
+          type: string
+      required:
+      - alreadyExists
+      - jobId
+      type: object
+    CreateStreamingSamplesVisJobParams:
+      example:
+        sessionRunId: sessionRunId
+        projectId: projectId
+      properties:
+        sessionRunId:
+          type: string
+        projectId:
+          type: string
+      required:
+      - projectId
+      - sessionRunId
+      type: object
+    GenerateStreamingSamplesVisParams:
+      example:
+        sessionRunId: sessionRunId
+        visualizationType: visualizationType
+        projectId: projectId
+        sampleIdentities:
+        - index: 0.8008281904610115
+          state: training
+          hashed_index: hashed_index
+        - index: 0.8008281904610115
+          state: training
+          hashed_index: hashed_index
+      properties:
+        visualizationType:
+          type: string
+        sampleIdentities:
+          items:
+            $ref: "#/components/schemas/SampleIdentity"
+          type: array
+        sessionRunId:
+          type: string
+        projectId:
+          type: string
+      required:
+      - projectId
+      - sampleIdentities
+      - sessionRunId
+      - visualizationType
       type: object
     AddSecretManagerResponse:
       additionalProperties: true
@@ -34907,6 +38057,7 @@ components:
       - DRY_RUN_GRAPH
       - SLIM_LS
       - STREAMING_HANDLER
+      - STREAMING_SAMPLES_VIS
       type: string
     BasicVisualizationInfo:
       additionalProperties: true
