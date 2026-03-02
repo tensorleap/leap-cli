@@ -42,6 +42,9 @@ Name | Type | Description | Notes
 **NumOfSamplesToLabel** | Pointer to **float64** |  | [optional] 
 **TargetFilters** | [**[]ESFilter**](ESFilter.md) |  | 
 **Sources** | [**[]GenerateSyntheticDataParamsSourcesInner**](GenerateSyntheticDataParamsSourcesInner.md) |  | 
+**PercentageOfSamplesToPrune** | Pointer to **float64** |  | [optional] 
+**PrioritizedMetadataTags** | Pointer to **[]string** |  | [optional] 
+**MetadataTags** | **[]string** |  | 
 **ExportUrl** | **string** |  | 
 **ProjectVersion** | **float64** |  | 
 **ExportOptions** | [**ExportOptions**](ExportOptions.md) |  | 
@@ -62,7 +65,7 @@ Name | Type | Description | Notes
 
 ### NewJobParams
 
-`func NewJobParams(epochs float64, batchSize float64, versionId string, projectId string, batchSize float64, name string, description string, evaluatedEpoch float64, sessionId string, type_ ExportModelTypeEnum, fromEpoch float64, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, sessionRunId string, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, labelingAlgorithm LabelingAlgorithm, targetFilters []ESFilter, sources []GenerateSyntheticDataParamsSourcesInner, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, codeUrl string, codeEntryFile string, versionName string, ) *JobParams`
+`func NewJobParams(epochs float64, batchSize float64, versionId string, projectId string, batchSize float64, name string, description string, evaluatedEpoch float64, sessionId string, type_ ExportModelTypeEnum, fromEpoch float64, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, sessionRunId string, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, labelingAlgorithm LabelingAlgorithm, targetFilters []ESFilter, sources []GenerateSyntheticDataParamsSourcesInner, metadataTags []string, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, codeUrl string, codeEntryFile string, versionName string, ) *JobParams`
 
 NewJobParams instantiates a new JobParams object
 This constructor will assign default values to properties that have it defined,
@@ -900,6 +903,76 @@ and a boolean to check if the value has been set.
 `func (o *JobParams) SetSources(v []GenerateSyntheticDataParamsSourcesInner)`
 
 SetSources sets Sources field to given value.
+
+
+### GetPercentageOfSamplesToPrune
+
+`func (o *JobParams) GetPercentageOfSamplesToPrune() float64`
+
+GetPercentageOfSamplesToPrune returns the PercentageOfSamplesToPrune field if non-nil, zero value otherwise.
+
+### GetPercentageOfSamplesToPruneOk
+
+`func (o *JobParams) GetPercentageOfSamplesToPruneOk() (*float64, bool)`
+
+GetPercentageOfSamplesToPruneOk returns a tuple with the PercentageOfSamplesToPrune field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPercentageOfSamplesToPrune
+
+`func (o *JobParams) SetPercentageOfSamplesToPrune(v float64)`
+
+SetPercentageOfSamplesToPrune sets PercentageOfSamplesToPrune field to given value.
+
+### HasPercentageOfSamplesToPrune
+
+`func (o *JobParams) HasPercentageOfSamplesToPrune() bool`
+
+HasPercentageOfSamplesToPrune returns a boolean if a field has been set.
+
+### GetPrioritizedMetadataTags
+
+`func (o *JobParams) GetPrioritizedMetadataTags() []string`
+
+GetPrioritizedMetadataTags returns the PrioritizedMetadataTags field if non-nil, zero value otherwise.
+
+### GetPrioritizedMetadataTagsOk
+
+`func (o *JobParams) GetPrioritizedMetadataTagsOk() (*[]string, bool)`
+
+GetPrioritizedMetadataTagsOk returns a tuple with the PrioritizedMetadataTags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPrioritizedMetadataTags
+
+`func (o *JobParams) SetPrioritizedMetadataTags(v []string)`
+
+SetPrioritizedMetadataTags sets PrioritizedMetadataTags field to given value.
+
+### HasPrioritizedMetadataTags
+
+`func (o *JobParams) HasPrioritizedMetadataTags() bool`
+
+HasPrioritizedMetadataTags returns a boolean if a field has been set.
+
+### GetMetadataTags
+
+`func (o *JobParams) GetMetadataTags() []string`
+
+GetMetadataTags returns the MetadataTags field if non-nil, zero value otherwise.
+
+### GetMetadataTagsOk
+
+`func (o *JobParams) GetMetadataTagsOk() (*[]string, bool)`
+
+GetMetadataTagsOk returns a tuple with the MetadataTags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMetadataTags
+
+`func (o *JobParams) SetMetadataTags(v []string)`
+
+SetMetadataTags sets MetadataTags field to given value.
 
 
 ### GetExportUrl

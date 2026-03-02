@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **FilterFileUrl** | Pointer to **string** |  | [optional] 
 **Status** | [**JobStatus**](JobStatus.md) |  | 
 **IsDeleted** | **bool** |  | 
+**Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 
 ## Methods
 
@@ -311,6 +312,31 @@ and a boolean to check if the value has been set.
 
 SetIsDeleted sets IsDeleted field to given value.
 
+
+### GetFilters
+
+`func (o *GeneratedLabel) GetFilters() []ESFilter`
+
+GetFilters returns the Filters field if non-nil, zero value otherwise.
+
+### GetFiltersOk
+
+`func (o *GeneratedLabel) GetFiltersOk() (*[]ESFilter, bool)`
+
+GetFiltersOk returns a tuple with the Filters field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFilters
+
+`func (o *GeneratedLabel) SetFilters(v []ESFilter)`
+
+SetFilters sets Filters field to given value.
+
+### HasFilters
+
+`func (o *GeneratedLabel) HasFilters() bool`
+
+HasFilters returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
