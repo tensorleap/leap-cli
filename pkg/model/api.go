@@ -63,6 +63,9 @@ func ImportModel(ctx context.Context, projectId, versionId string, modelInfo *te
 	importModelJobId := importModelData.GetJobId()
 	if waitForResults {
 		okStatus, _, err := waitForImportModelJob(ctx, projectId, importModelJobId)
+		if err == ErrImportModelTimeout {
+			return importModelJobId, fmt.Errorf("timeout: import model job did not complete within the allowed time (job may still be running on the server), job id: %s", importModelJobId)
+		}
 		if err == ErrJobFailed || !okStatus {
 			report, collectErr := CollectImportModelJobErrors(ctx, projectId, importModelJobId, versionId, commandStartTime)
 			if collectErr != nil {
