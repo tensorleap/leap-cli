@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/tensorleap/leap-cli/pkg/log"
@@ -39,8 +40,17 @@ func WaitForCondition(ctx context.Context, message string, condition func() (boo
 
 var DELAY_NOT_ENDED_STEP_DURATION = 4 * time.Second
 
+func stepsFingerprint(steps []log.Step) string {
+	var result string
+	for _, s := range steps {
+		result += fmt.Sprintf("%s:%s:%.0f:%.0f|", s.Name, s.Status, s.Current, s.Total)
+	}
+	return result
+}
+
 func WaitForConditionWithSteps(ctx context.Context, condition func() (bool, []log.Step, error), sleepDuration time.Duration, timeoutDuration time.Duration) error {
-	startTime := time.Now()
+	lastProgressTime := time.Now()
+	lastFingerprint := ""
 
 	renderer := log.NewRenderer()
 	renderer.Start()
@@ -48,7 +58,7 @@ func WaitForConditionWithSteps(ctx context.Context, condition func() (bool, []lo
 
 	var doneTime *time.Time
 
-	for time.Since(startTime) < timeoutDuration {
+	for time.Since(lastProgressTime) < timeoutDuration {
 		select {
 		case <-ctx.Done():
 			return ErrorTimeout
@@ -65,6 +75,13 @@ func WaitForConditionWithSteps(ctx context.Context, condition func() (bool, []lo
 					{Name: "Pending...", Status: status},
 				}
 			}
+
+			fp := stepsFingerprint(steps)
+			if fp != lastFingerprint {
+				lastProgressTime = time.Now()
+				lastFingerprint = fp
+			}
+
 			if err != nil {
 				markLastStepAsFailed(steps)
 				renderer.Update(steps)
