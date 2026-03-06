@@ -78,3 +78,9 @@ jobs:
           files: ./LeapCLIInstaller_${{ env.VERSION }}_windows_amd64.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Validation: run install workflow from helm-charts repo after release, to
+  validate-install:
+    needs: [build, build-windows-installer]
+    uses: tensorleap/helm-charts/.github/workflows/_install_server.yml@master
+    secrets: inherit
