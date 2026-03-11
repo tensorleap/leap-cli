@@ -15,14 +15,26 @@ Name | Type | Description | Notes
 **CodeSnapshotId** | Pointer to **string** |  | [optional] 
 **IsFavourite** | **bool** |  | 
 **Hash** | Pointer to **NullableString** |  | [optional] 
-**Sessions** | [**[]Session**](Session.md) |  | 
 **GraphValidationData** | Pointer to [**GraphValidatorData**](GraphValidatorData.md) |  | [optional] 
+**TeamId** | **string** |  | 
+**Properties** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
+**HasExternalEpoch** | **bool** |  | 
+**IsEvaluate** | **bool** |  | 
+**EvaluateParams** | Pointer to [**VersionEvaluateParams**](VersionEvaluateParams.md) |  | [optional] 
+**CanContinueEvaluate** | Pointer to **bool** |  | [optional] 
+**CsvBlobPath** | Pointer to **string** |  | [optional] 
+**Jobs** | [**[]Job**](Job.md) |  | 
+**ModelId** | Pointer to **string** |  | [optional] 
+**VisArtifactId** | Pointer to **string** |  | [optional] 
+**InferenceArtifactId** | Pointer to **string** |  | [optional] 
+**EsMetricIndex** | Pointer to **string** |  | [optional] 
+**EpochTags** | Pointer to **map[string]float64** |  | [optional] 
 
 ## Methods
 
 ### NewSlimVersion
 
-`func NewSlimVersion(cid string, createdBy string, projectId string, branchName string, tags string, createdAt time.Time, updatedAt time.Time, notes string, isFavourite bool, sessions []Session, ) *SlimVersion`
+`func NewSlimVersion(cid string, createdBy string, projectId string, branchName string, tags string, createdAt time.Time, updatedAt time.Time, notes string, isFavourite bool, teamId string, hasExternalEpoch bool, isEvaluate bool, jobs []Job, ) *SlimVersion`
 
 NewSlimVersion instantiates a new SlimVersion object
 This constructor will assign default values to properties that have it defined,
@@ -277,26 +289,6 @@ HasHash returns a boolean if a field has been set.
 `func (o *SlimVersion) UnsetHash()`
 
 UnsetHash ensures that no value is present for Hash, not even an explicit nil
-### GetSessions
-
-`func (o *SlimVersion) GetSessions() []Session`
-
-GetSessions returns the Sessions field if non-nil, zero value otherwise.
-
-### GetSessionsOk
-
-`func (o *SlimVersion) GetSessionsOk() (*[]Session, bool)`
-
-GetSessionsOk returns a tuple with the Sessions field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSessions
-
-`func (o *SlimVersion) SetSessions(v []Session)`
-
-SetSessions sets Sessions field to given value.
-
-
 ### GetGraphValidationData
 
 `func (o *SlimVersion) GetGraphValidationData() GraphValidatorData`
@@ -321,6 +313,311 @@ SetGraphValidationData sets GraphValidationData field to given value.
 `func (o *SlimVersion) HasGraphValidationData() bool`
 
 HasGraphValidationData returns a boolean if a field has been set.
+
+### GetTeamId
+
+`func (o *SlimVersion) GetTeamId() string`
+
+GetTeamId returns the TeamId field if non-nil, zero value otherwise.
+
+### GetTeamIdOk
+
+`func (o *SlimVersion) GetTeamIdOk() (*string, bool)`
+
+GetTeamIdOk returns a tuple with the TeamId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTeamId
+
+`func (o *SlimVersion) SetTeamId(v string)`
+
+SetTeamId sets TeamId field to given value.
+
+
+### GetProperties
+
+`func (o *SlimVersion) GetProperties() map[string]interface{}`
+
+GetProperties returns the Properties field if non-nil, zero value otherwise.
+
+### GetPropertiesOk
+
+`func (o *SlimVersion) GetPropertiesOk() (*map[string]interface{}, bool)`
+
+GetPropertiesOk returns a tuple with the Properties field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProperties
+
+`func (o *SlimVersion) SetProperties(v map[string]interface{})`
+
+SetProperties sets Properties field to given value.
+
+### HasProperties
+
+`func (o *SlimVersion) HasProperties() bool`
+
+HasProperties returns a boolean if a field has been set.
+
+### GetHasExternalEpoch
+
+`func (o *SlimVersion) GetHasExternalEpoch() bool`
+
+GetHasExternalEpoch returns the HasExternalEpoch field if non-nil, zero value otherwise.
+
+### GetHasExternalEpochOk
+
+`func (o *SlimVersion) GetHasExternalEpochOk() (*bool, bool)`
+
+GetHasExternalEpochOk returns a tuple with the HasExternalEpoch field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHasExternalEpoch
+
+`func (o *SlimVersion) SetHasExternalEpoch(v bool)`
+
+SetHasExternalEpoch sets HasExternalEpoch field to given value.
+
+
+### GetIsEvaluate
+
+`func (o *SlimVersion) GetIsEvaluate() bool`
+
+GetIsEvaluate returns the IsEvaluate field if non-nil, zero value otherwise.
+
+### GetIsEvaluateOk
+
+`func (o *SlimVersion) GetIsEvaluateOk() (*bool, bool)`
+
+GetIsEvaluateOk returns a tuple with the IsEvaluate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsEvaluate
+
+`func (o *SlimVersion) SetIsEvaluate(v bool)`
+
+SetIsEvaluate sets IsEvaluate field to given value.
+
+
+### GetEvaluateParams
+
+`func (o *SlimVersion) GetEvaluateParams() VersionEvaluateParams`
+
+GetEvaluateParams returns the EvaluateParams field if non-nil, zero value otherwise.
+
+### GetEvaluateParamsOk
+
+`func (o *SlimVersion) GetEvaluateParamsOk() (*VersionEvaluateParams, bool)`
+
+GetEvaluateParamsOk returns a tuple with the EvaluateParams field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEvaluateParams
+
+`func (o *SlimVersion) SetEvaluateParams(v VersionEvaluateParams)`
+
+SetEvaluateParams sets EvaluateParams field to given value.
+
+### HasEvaluateParams
+
+`func (o *SlimVersion) HasEvaluateParams() bool`
+
+HasEvaluateParams returns a boolean if a field has been set.
+
+### GetCanContinueEvaluate
+
+`func (o *SlimVersion) GetCanContinueEvaluate() bool`
+
+GetCanContinueEvaluate returns the CanContinueEvaluate field if non-nil, zero value otherwise.
+
+### GetCanContinueEvaluateOk
+
+`func (o *SlimVersion) GetCanContinueEvaluateOk() (*bool, bool)`
+
+GetCanContinueEvaluateOk returns a tuple with the CanContinueEvaluate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCanContinueEvaluate
+
+`func (o *SlimVersion) SetCanContinueEvaluate(v bool)`
+
+SetCanContinueEvaluate sets CanContinueEvaluate field to given value.
+
+### HasCanContinueEvaluate
+
+`func (o *SlimVersion) HasCanContinueEvaluate() bool`
+
+HasCanContinueEvaluate returns a boolean if a field has been set.
+
+### GetCsvBlobPath
+
+`func (o *SlimVersion) GetCsvBlobPath() string`
+
+GetCsvBlobPath returns the CsvBlobPath field if non-nil, zero value otherwise.
+
+### GetCsvBlobPathOk
+
+`func (o *SlimVersion) GetCsvBlobPathOk() (*string, bool)`
+
+GetCsvBlobPathOk returns a tuple with the CsvBlobPath field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCsvBlobPath
+
+`func (o *SlimVersion) SetCsvBlobPath(v string)`
+
+SetCsvBlobPath sets CsvBlobPath field to given value.
+
+### HasCsvBlobPath
+
+`func (o *SlimVersion) HasCsvBlobPath() bool`
+
+HasCsvBlobPath returns a boolean if a field has been set.
+
+### GetJobs
+
+`func (o *SlimVersion) GetJobs() []Job`
+
+GetJobs returns the Jobs field if non-nil, zero value otherwise.
+
+### GetJobsOk
+
+`func (o *SlimVersion) GetJobsOk() (*[]Job, bool)`
+
+GetJobsOk returns a tuple with the Jobs field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetJobs
+
+`func (o *SlimVersion) SetJobs(v []Job)`
+
+SetJobs sets Jobs field to given value.
+
+
+### GetModelId
+
+`func (o *SlimVersion) GetModelId() string`
+
+GetModelId returns the ModelId field if non-nil, zero value otherwise.
+
+### GetModelIdOk
+
+`func (o *SlimVersion) GetModelIdOk() (*string, bool)`
+
+GetModelIdOk returns a tuple with the ModelId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetModelId
+
+`func (o *SlimVersion) SetModelId(v string)`
+
+SetModelId sets ModelId field to given value.
+
+### HasModelId
+
+`func (o *SlimVersion) HasModelId() bool`
+
+HasModelId returns a boolean if a field has been set.
+
+### GetVisArtifactId
+
+`func (o *SlimVersion) GetVisArtifactId() string`
+
+GetVisArtifactId returns the VisArtifactId field if non-nil, zero value otherwise.
+
+### GetVisArtifactIdOk
+
+`func (o *SlimVersion) GetVisArtifactIdOk() (*string, bool)`
+
+GetVisArtifactIdOk returns a tuple with the VisArtifactId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVisArtifactId
+
+`func (o *SlimVersion) SetVisArtifactId(v string)`
+
+SetVisArtifactId sets VisArtifactId field to given value.
+
+### HasVisArtifactId
+
+`func (o *SlimVersion) HasVisArtifactId() bool`
+
+HasVisArtifactId returns a boolean if a field has been set.
+
+### GetInferenceArtifactId
+
+`func (o *SlimVersion) GetInferenceArtifactId() string`
+
+GetInferenceArtifactId returns the InferenceArtifactId field if non-nil, zero value otherwise.
+
+### GetInferenceArtifactIdOk
+
+`func (o *SlimVersion) GetInferenceArtifactIdOk() (*string, bool)`
+
+GetInferenceArtifactIdOk returns a tuple with the InferenceArtifactId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInferenceArtifactId
+
+`func (o *SlimVersion) SetInferenceArtifactId(v string)`
+
+SetInferenceArtifactId sets InferenceArtifactId field to given value.
+
+### HasInferenceArtifactId
+
+`func (o *SlimVersion) HasInferenceArtifactId() bool`
+
+HasInferenceArtifactId returns a boolean if a field has been set.
+
+### GetEsMetricIndex
+
+`func (o *SlimVersion) GetEsMetricIndex() string`
+
+GetEsMetricIndex returns the EsMetricIndex field if non-nil, zero value otherwise.
+
+### GetEsMetricIndexOk
+
+`func (o *SlimVersion) GetEsMetricIndexOk() (*string, bool)`
+
+GetEsMetricIndexOk returns a tuple with the EsMetricIndex field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEsMetricIndex
+
+`func (o *SlimVersion) SetEsMetricIndex(v string)`
+
+SetEsMetricIndex sets EsMetricIndex field to given value.
+
+### HasEsMetricIndex
+
+`func (o *SlimVersion) HasEsMetricIndex() bool`
+
+HasEsMetricIndex returns a boolean if a field has been set.
+
+### GetEpochTags
+
+`func (o *SlimVersion) GetEpochTags() map[string]float64`
+
+GetEpochTags returns the EpochTags field if non-nil, zero value otherwise.
+
+### GetEpochTagsOk
+
+`func (o *SlimVersion) GetEpochTagsOk() (*map[string]float64, bool)`
+
+GetEpochTagsOk returns a tuple with the EpochTags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEpochTags
+
+`func (o *SlimVersion) SetEpochTags(v map[string]float64)`
+
+SetEpochTags sets EpochTags field to given value.
+
+### HasEpochTags
+
+`func (o *SlimVersion) HasEpochTags() bool`
+
+HasEpochTags returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

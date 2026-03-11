@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SessionRunIds** | **[]string** |  | 
+**InferenceArtifactIds** | **[]string** |  | 
 **ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewConfusionMetricNamesParams
 
-`func NewConfusionMetricNamesParams(sessionRunIds []string, projectId string, ) *ConfusionMetricNamesParams`
+`func NewConfusionMetricNamesParams(inferenceArtifactIds []string, projectId string, ) *ConfusionMetricNamesParams`
 
 NewConfusionMetricNamesParams instantiates a new ConfusionMetricNamesParams object
 This constructor will assign default values to properties that have it defined,
@@ -26,24 +26,24 @@ NewConfusionMetricNamesParamsWithDefaults instantiates a new ConfusionMetricName
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetSessionRunIds
+### GetInferenceArtifactIds
 
-`func (o *ConfusionMetricNamesParams) GetSessionRunIds() []string`
+`func (o *ConfusionMetricNamesParams) GetInferenceArtifactIds() []string`
 
-GetSessionRunIds returns the SessionRunIds field if non-nil, zero value otherwise.
+GetInferenceArtifactIds returns the InferenceArtifactIds field if non-nil, zero value otherwise.
 
-### GetSessionRunIdsOk
+### GetInferenceArtifactIdsOk
 
-`func (o *ConfusionMetricNamesParams) GetSessionRunIdsOk() (*[]string, bool)`
+`func (o *ConfusionMetricNamesParams) GetInferenceArtifactIdsOk() (*[]string, bool)`
 
-GetSessionRunIdsOk returns a tuple with the SessionRunIds field if it's non-nil, zero value otherwise
+GetInferenceArtifactIdsOk returns a tuple with the InferenceArtifactIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunIds
+### SetInferenceArtifactIds
 
-`func (o *ConfusionMetricNamesParams) SetSessionRunIds(v []string)`
+`func (o *ConfusionMetricNamesParams) SetInferenceArtifactIds(v []string)`
 
-SetSessionRunIds sets SessionRunIds field to given value.
+SetInferenceArtifactIds sets InferenceArtifactIds field to given value.
 
 
 ### GetProjectId

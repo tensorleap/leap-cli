@@ -5,14 +5,14 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**SessionRunIds** | **[]string** |  | 
+**VersionIds** | **[]string** |  | 
 **SamplesIdentities** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
 
 ## Methods
 
 ### NewDeleteSamplesAnalysisParams
 
-`func NewDeleteSamplesAnalysisParams(projectId string, sessionRunIds []string, samplesIdentities []SampleIdentity, ) *DeleteSamplesAnalysisParams`
+`func NewDeleteSamplesAnalysisParams(projectId string, versionIds []string, samplesIdentities []SampleIdentity, ) *DeleteSamplesAnalysisParams`
 
 NewDeleteSamplesAnalysisParams instantiates a new DeleteSamplesAnalysisParams object
 This constructor will assign default values to properties that have it defined,
@@ -47,24 +47,24 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetSessionRunIds
+### GetVersionIds
 
-`func (o *DeleteSamplesAnalysisParams) GetSessionRunIds() []string`
+`func (o *DeleteSamplesAnalysisParams) GetVersionIds() []string`
 
-GetSessionRunIds returns the SessionRunIds field if non-nil, zero value otherwise.
+GetVersionIds returns the VersionIds field if non-nil, zero value otherwise.
 
-### GetSessionRunIdsOk
+### GetVersionIdsOk
 
-`func (o *DeleteSamplesAnalysisParams) GetSessionRunIdsOk() (*[]string, bool)`
+`func (o *DeleteSamplesAnalysisParams) GetVersionIdsOk() (*[]string, bool)`
 
-GetSessionRunIdsOk returns a tuple with the SessionRunIds field if it's non-nil, zero value otherwise
+GetVersionIdsOk returns a tuple with the VersionIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunIds
+### SetVersionIds
 
-`func (o *DeleteSamplesAnalysisParams) SetSessionRunIds(v []string)`
+`func (o *DeleteSamplesAnalysisParams) SetVersionIds(v []string)`
 
-SetSessionRunIds sets SessionRunIds field to given value.
+SetVersionIds sets VersionIds field to given value.
 
 
 ### GetSamplesIdentities

@@ -5,16 +5,15 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**SessionRunId** | **string** |  | 
-**Epoch** | **float64** |  | 
-**Sources** | [**[]GenerateSyntheticDataParamsSourcesInner**](GenerateSyntheticDataParamsSourcesInner.md) |  | 
+**VersionId** | **string** |  | 
+**Sources** | [**[]SyntheticDataJobParamsSourcesInner**](SyntheticDataJobParamsSourcesInner.md) |  | 
 **TargetFilters** | [**[]ESFilter**](ESFilter.md) |  | 
 
 ## Methods
 
 ### NewGenerateSyntheticDataParams
 
-`func NewGenerateSyntheticDataParams(projectId string, sessionRunId string, epoch float64, sources []GenerateSyntheticDataParamsSourcesInner, targetFilters []ESFilter, ) *GenerateSyntheticDataParams`
+`func NewGenerateSyntheticDataParams(projectId string, versionId string, sources []SyntheticDataJobParamsSourcesInner, targetFilters []ESFilter, ) *GenerateSyntheticDataParams`
 
 NewGenerateSyntheticDataParams instantiates a new GenerateSyntheticDataParams object
 This constructor will assign default values to properties that have it defined,
@@ -49,62 +48,42 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *GenerateSyntheticDataParams) GetSessionRunId() string`
+`func (o *GenerateSyntheticDataParams) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *GenerateSyntheticDataParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *GenerateSyntheticDataParams) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *GenerateSyntheticDataParams) SetSessionRunId(v string)`
+`func (o *GenerateSyntheticDataParams) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
-
-
-### GetEpoch
-
-`func (o *GenerateSyntheticDataParams) GetEpoch() float64`
-
-GetEpoch returns the Epoch field if non-nil, zero value otherwise.
-
-### GetEpochOk
-
-`func (o *GenerateSyntheticDataParams) GetEpochOk() (*float64, bool)`
-
-GetEpochOk returns a tuple with the Epoch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEpoch
-
-`func (o *GenerateSyntheticDataParams) SetEpoch(v float64)`
-
-SetEpoch sets Epoch field to given value.
+SetVersionId sets VersionId field to given value.
 
 
 ### GetSources
 
-`func (o *GenerateSyntheticDataParams) GetSources() []GenerateSyntheticDataParamsSourcesInner`
+`func (o *GenerateSyntheticDataParams) GetSources() []SyntheticDataJobParamsSourcesInner`
 
 GetSources returns the Sources field if non-nil, zero value otherwise.
 
 ### GetSourcesOk
 
-`func (o *GenerateSyntheticDataParams) GetSourcesOk() (*[]GenerateSyntheticDataParamsSourcesInner, bool)`
+`func (o *GenerateSyntheticDataParams) GetSourcesOk() (*[]SyntheticDataJobParamsSourcesInner, bool)`
 
 GetSourcesOk returns a tuple with the Sources field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSources
 
-`func (o *GenerateSyntheticDataParams) SetSources(v []GenerateSyntheticDataParamsSourcesInner)`
+`func (o *GenerateSyntheticDataParams) SetSources(v []SyntheticDataJobParamsSourcesInner)`
 
 SetSources sets Sources field to given value.
 

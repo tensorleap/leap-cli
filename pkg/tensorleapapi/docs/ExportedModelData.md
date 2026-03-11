@@ -6,10 +6,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Cid** | **string** |  | 
 **JobId** | **string** |  | 
-**SessionWeightId** | **string** |  | 
+**ModelId** | **string** |  | 
 **Blob** | **string** |  | 
 **Status** | **string** |  | 
-**SessionId** | **string** |  | 
+**VersionId** | **string** |  | 
 **Title** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 
 ### NewExportedModelData
 
-`func NewExportedModelData(cid string, jobId string, sessionWeightId string, blob string, status string, sessionId string, title string, createdAt time.Time, updatedAt time.Time, createdBy string, fileType string, ) *ExportedModelData`
+`func NewExportedModelData(cid string, jobId string, modelId string, blob string, status string, versionId string, title string, createdAt time.Time, updatedAt time.Time, createdBy string, fileType string, ) *ExportedModelData`
 
 NewExportedModelData instantiates a new ExportedModelData object
 This constructor will assign default values to properties that have it defined,
@@ -75,24 +75,24 @@ and a boolean to check if the value has been set.
 SetJobId sets JobId field to given value.
 
 
-### GetSessionWeightId
+### GetModelId
 
-`func (o *ExportedModelData) GetSessionWeightId() string`
+`func (o *ExportedModelData) GetModelId() string`
 
-GetSessionWeightId returns the SessionWeightId field if non-nil, zero value otherwise.
+GetModelId returns the ModelId field if non-nil, zero value otherwise.
 
-### GetSessionWeightIdOk
+### GetModelIdOk
 
-`func (o *ExportedModelData) GetSessionWeightIdOk() (*string, bool)`
+`func (o *ExportedModelData) GetModelIdOk() (*string, bool)`
 
-GetSessionWeightIdOk returns a tuple with the SessionWeightId field if it's non-nil, zero value otherwise
+GetModelIdOk returns a tuple with the ModelId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionWeightId
+### SetModelId
 
-`func (o *ExportedModelData) SetSessionWeightId(v string)`
+`func (o *ExportedModelData) SetModelId(v string)`
 
-SetSessionWeightId sets SessionWeightId field to given value.
+SetModelId sets ModelId field to given value.
 
 
 ### GetBlob
@@ -135,24 +135,24 @@ and a boolean to check if the value has been set.
 SetStatus sets Status field to given value.
 
 
-### GetSessionId
+### GetVersionId
 
-`func (o *ExportedModelData) GetSessionId() string`
+`func (o *ExportedModelData) GetVersionId() string`
 
-GetSessionId returns the SessionId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionIdOk
+### GetVersionIdOk
 
-`func (o *ExportedModelData) GetSessionIdOk() (*string, bool)`
+`func (o *ExportedModelData) GetVersionIdOk() (*string, bool)`
 
-GetSessionIdOk returns a tuple with the SessionId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionId
+### SetVersionId
 
-`func (o *ExportedModelData) SetSessionId(v string)`
+`func (o *ExportedModelData) SetVersionId(v string)`
 
-SetSessionId sets SessionId field to given value.
+SetVersionId sets VersionId field to given value.
 
 
 ### GetTitle

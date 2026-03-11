@@ -7,17 +7,14 @@ Name | Type | Description | Notes
 **VersionId** | **string** |  | 
 **ProjectId** | **string** |  | 
 **BatchSize** | **float64** |  | 
-**Name** | **string** |  | 
-**Description** | **string** |  | 
 **Monitor** | Pointer to **bool** |  | [optional] 
 **EvaluatedEpoch** | **float64** |  | 
-**SessionId** | **string** |  | 
 
 ## Methods
 
 ### NewEvaluateParams
 
-`func NewEvaluateParams(versionId string, projectId string, batchSize float64, name string, description string, evaluatedEpoch float64, sessionId string, ) *EvaluateParams`
+`func NewEvaluateParams(versionId string, projectId string, batchSize float64, evaluatedEpoch float64, ) *EvaluateParams`
 
 NewEvaluateParams instantiates a new EvaluateParams object
 This constructor will assign default values to properties that have it defined,
@@ -92,46 +89,6 @@ and a boolean to check if the value has been set.
 SetBatchSize sets BatchSize field to given value.
 
 
-### GetName
-
-`func (o *EvaluateParams) GetName() string`
-
-GetName returns the Name field if non-nil, zero value otherwise.
-
-### GetNameOk
-
-`func (o *EvaluateParams) GetNameOk() (*string, bool)`
-
-GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetName
-
-`func (o *EvaluateParams) SetName(v string)`
-
-SetName sets Name field to given value.
-
-
-### GetDescription
-
-`func (o *EvaluateParams) GetDescription() string`
-
-GetDescription returns the Description field if non-nil, zero value otherwise.
-
-### GetDescriptionOk
-
-`func (o *EvaluateParams) GetDescriptionOk() (*string, bool)`
-
-GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDescription
-
-`func (o *EvaluateParams) SetDescription(v string)`
-
-SetDescription sets Description field to given value.
-
-
 ### GetMonitor
 
 `func (o *EvaluateParams) GetMonitor() bool`
@@ -175,26 +132,6 @@ and a boolean to check if the value has been set.
 `func (o *EvaluateParams) SetEvaluatedEpoch(v float64)`
 
 SetEvaluatedEpoch sets EvaluatedEpoch field to given value.
-
-
-### GetSessionId
-
-`func (o *EvaluateParams) GetSessionId() string`
-
-GetSessionId returns the SessionId field if non-nil, zero value otherwise.
-
-### GetSessionIdOk
-
-`func (o *EvaluateParams) GetSessionIdOk() (*string, bool)`
-
-GetSessionIdOk returns a tuple with the SessionId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSessionId
-
-`func (o *EvaluateParams) SetSessionId(v string)`
-
-SetSessionId sets SessionId field to given value.
 
 
 

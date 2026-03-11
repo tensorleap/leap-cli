@@ -6,9 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** |  | 
 **JobId** | **string** |  | 
-**SessionRunId** | **string** |  | 
-**SessionRunName** | **string** |  | 
-**Epoch** | **float64** |  | 
+**VersionId** | **string** |  | 
+**VersionName** | **string** |  | 
 **NumOfSamples** | Pointer to **float64** |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **CreatedBy** | **string** |  | 
@@ -18,12 +17,13 @@ Name | Type | Description | Notes
 **Status** | [**JobStatus**](JobStatus.md) |  | 
 **IsDeleted** | **bool** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
+**RunProcess** | Pointer to [**RunProcess**](RunProcess.md) |  | [optional] 
 
 ## Methods
 
 ### NewGeneratedLabel
 
-`func NewGeneratedLabel(id string, jobId string, sessionRunId string, sessionRunName string, epoch float64, createdAt time.Time, createdBy string, filePath string, status JobStatus, isDeleted bool, ) *GeneratedLabel`
+`func NewGeneratedLabel(id string, jobId string, versionId string, versionName string, createdAt time.Time, createdBy string, filePath string, status JobStatus, isDeleted bool, ) *GeneratedLabel`
 
 NewGeneratedLabel instantiates a new GeneratedLabel object
 This constructor will assign default values to properties that have it defined,
@@ -78,64 +78,44 @@ and a boolean to check if the value has been set.
 SetJobId sets JobId field to given value.
 
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *GeneratedLabel) GetSessionRunId() string`
+`func (o *GeneratedLabel) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *GeneratedLabel) GetSessionRunIdOk() (*string, bool)`
+`func (o *GeneratedLabel) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *GeneratedLabel) SetSessionRunId(v string)`
+`func (o *GeneratedLabel) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
 
 
-### GetSessionRunName
+### GetVersionName
 
-`func (o *GeneratedLabel) GetSessionRunName() string`
+`func (o *GeneratedLabel) GetVersionName() string`
 
-GetSessionRunName returns the SessionRunName field if non-nil, zero value otherwise.
+GetVersionName returns the VersionName field if non-nil, zero value otherwise.
 
-### GetSessionRunNameOk
+### GetVersionNameOk
 
-`func (o *GeneratedLabel) GetSessionRunNameOk() (*string, bool)`
+`func (o *GeneratedLabel) GetVersionNameOk() (*string, bool)`
 
-GetSessionRunNameOk returns a tuple with the SessionRunName field if it's non-nil, zero value otherwise
+GetVersionNameOk returns a tuple with the VersionName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunName
+### SetVersionName
 
-`func (o *GeneratedLabel) SetSessionRunName(v string)`
+`func (o *GeneratedLabel) SetVersionName(v string)`
 
-SetSessionRunName sets SessionRunName field to given value.
-
-
-### GetEpoch
-
-`func (o *GeneratedLabel) GetEpoch() float64`
-
-GetEpoch returns the Epoch field if non-nil, zero value otherwise.
-
-### GetEpochOk
-
-`func (o *GeneratedLabel) GetEpochOk() (*float64, bool)`
-
-GetEpochOk returns a tuple with the Epoch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEpoch
-
-`func (o *GeneratedLabel) SetEpoch(v float64)`
-
-SetEpoch sets Epoch field to given value.
+SetVersionName sets VersionName field to given value.
 
 
 ### GetNumOfSamples
@@ -337,6 +317,31 @@ SetFilters sets Filters field to given value.
 `func (o *GeneratedLabel) HasFilters() bool`
 
 HasFilters returns a boolean if a field has been set.
+
+### GetRunProcess
+
+`func (o *GeneratedLabel) GetRunProcess() RunProcess`
+
+GetRunProcess returns the RunProcess field if non-nil, zero value otherwise.
+
+### GetRunProcessOk
+
+`func (o *GeneratedLabel) GetRunProcessOk() (*RunProcess, bool)`
+
+GetRunProcessOk returns a tuple with the RunProcess field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRunProcess
+
+`func (o *GeneratedLabel) SetRunProcess(v RunProcess)`
+
+SetRunProcess sets RunProcess field to given value.
+
+### HasRunProcess
+
+`func (o *GeneratedLabel) HasRunProcess() bool`
+
+HasRunProcess returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

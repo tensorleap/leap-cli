@@ -17,16 +17,16 @@ Name | Type | Description | Notes
 **ProjectionMetric** | Pointer to **string** |  | [optional] 
 **Digest** | **string** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
-**FromEpoch** | **float64** |  | 
 **BatchSize** | **float64** |  | 
-**SessionRunId** | **string** |  | 
+**InferenceArtifactId** | **string** |  | 
+**VersionId** | **string** |  | 
 **Type** | **string** |  | 
 
 ## Methods
 
 ### NewPopulationExplorationJobParams
 
-`func NewPopulationExplorationJobParams(reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, digest string, fromEpoch float64, batchSize float64, sessionRunId string, type_ string, ) *PopulationExplorationJobParams`
+`func NewPopulationExplorationJobParams(reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, digest string, batchSize float64, inferenceArtifactId string, versionId string, type_ string, ) *PopulationExplorationJobParams`
 
 NewPopulationExplorationJobParams instantiates a new PopulationExplorationJobParams object
 This constructor will assign default values to properties that have it defined,
@@ -341,26 +341,6 @@ SetFilters sets Filters field to given value.
 
 HasFilters returns a boolean if a field has been set.
 
-### GetFromEpoch
-
-`func (o *PopulationExplorationJobParams) GetFromEpoch() float64`
-
-GetFromEpoch returns the FromEpoch field if non-nil, zero value otherwise.
-
-### GetFromEpochOk
-
-`func (o *PopulationExplorationJobParams) GetFromEpochOk() (*float64, bool)`
-
-GetFromEpochOk returns a tuple with the FromEpoch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFromEpoch
-
-`func (o *PopulationExplorationJobParams) SetFromEpoch(v float64)`
-
-SetFromEpoch sets FromEpoch field to given value.
-
-
 ### GetBatchSize
 
 `func (o *PopulationExplorationJobParams) GetBatchSize() float64`
@@ -381,24 +361,44 @@ and a boolean to check if the value has been set.
 SetBatchSize sets BatchSize field to given value.
 
 
-### GetSessionRunId
+### GetInferenceArtifactId
 
-`func (o *PopulationExplorationJobParams) GetSessionRunId() string`
+`func (o *PopulationExplorationJobParams) GetInferenceArtifactId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetInferenceArtifactId returns the InferenceArtifactId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetInferenceArtifactIdOk
 
-`func (o *PopulationExplorationJobParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *PopulationExplorationJobParams) GetInferenceArtifactIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetInferenceArtifactIdOk returns a tuple with the InferenceArtifactId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetInferenceArtifactId
 
-`func (o *PopulationExplorationJobParams) SetSessionRunId(v string)`
+`func (o *PopulationExplorationJobParams) SetInferenceArtifactId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetInferenceArtifactId sets InferenceArtifactId field to given value.
+
+
+### GetVersionId
+
+`func (o *PopulationExplorationJobParams) GetVersionId() string`
+
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
+
+### GetVersionIdOk
+
+`func (o *PopulationExplorationJobParams) GetVersionIdOk() (*string, bool)`
+
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVersionId
+
+`func (o *PopulationExplorationJobParams) SetVersionId(v string)`
+
+SetVersionId sets VersionId field to given value.
 
 
 ### GetType

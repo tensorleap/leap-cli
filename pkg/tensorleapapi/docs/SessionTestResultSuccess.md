@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TestSucceeded** | **bool** |  | 
-**SessionRunId** | **string** |  | 
+**VersionId** | **string** |  | 
 **Aggregation** | **float64** |  | 
 **SuccefullSamples** | **float64** |  | 
 **AllSamples** | **float64** |  | 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewSessionTestResultSuccess
 
-`func NewSessionTestResultSuccess(testSucceeded bool, sessionRunId string, aggregation float64, succefullSamples float64, allSamples float64, epoch float64, queryStatus string, ) *SessionTestResultSuccess`
+`func NewSessionTestResultSuccess(testSucceeded bool, versionId string, aggregation float64, succefullSamples float64, allSamples float64, epoch float64, queryStatus string, ) *SessionTestResultSuccess`
 
 NewSessionTestResultSuccess instantiates a new SessionTestResultSuccess object
 This constructor will assign default values to properties that have it defined,
@@ -51,24 +51,24 @@ and a boolean to check if the value has been set.
 SetTestSucceeded sets TestSucceeded field to given value.
 
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *SessionTestResultSuccess) GetSessionRunId() string`
+`func (o *SessionTestResultSuccess) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *SessionTestResultSuccess) GetSessionRunIdOk() (*string, bool)`
+`func (o *SessionTestResultSuccess) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *SessionTestResultSuccess) SetSessionRunId(v string)`
+`func (o *SessionTestResultSuccess) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
 
 
 ### GetAggregation

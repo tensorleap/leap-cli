@@ -15,15 +15,13 @@ Name | Type | Description | Notes
 **Status** | [**JobStatus**](JobStatus.md) |  | 
 **CreatedAt** | **string** |  | 
 **UpdatedAt** | **string** |  | 
-**SessionName** | Pointer to **string** |  | [optional] 
-**SessionRunName** | Pointer to **string** |  | [optional] 
-**SessionRunId** | Pointer to **string** |  | [optional] 
 **Events** | [**[]JobEvent**](JobEvent.md) |  | 
 **Params** | Pointer to [**JobParams**](JobParams.md) |  | [optional] 
 **MachineType** | Pointer to **string** |  | [optional] 
 **BatchSize** | Pointer to **float64** |  | [optional] 
 **CodeSnapshotInfo** | Pointer to [**CodeSnapshotInfo**](CodeSnapshotInfo.md) |  | [optional] 
 **LogsBlobName** | Pointer to **string** |  | [optional] 
+**Notifications** | Pointer to [**[]Notification**](Notification.md) |  | [optional] 
 
 ## Methods
 
@@ -289,81 +287,6 @@ and a boolean to check if the value has been set.
 SetUpdatedAt sets UpdatedAt field to given value.
 
 
-### GetSessionName
-
-`func (o *RunProcess) GetSessionName() string`
-
-GetSessionName returns the SessionName field if non-nil, zero value otherwise.
-
-### GetSessionNameOk
-
-`func (o *RunProcess) GetSessionNameOk() (*string, bool)`
-
-GetSessionNameOk returns a tuple with the SessionName field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSessionName
-
-`func (o *RunProcess) SetSessionName(v string)`
-
-SetSessionName sets SessionName field to given value.
-
-### HasSessionName
-
-`func (o *RunProcess) HasSessionName() bool`
-
-HasSessionName returns a boolean if a field has been set.
-
-### GetSessionRunName
-
-`func (o *RunProcess) GetSessionRunName() string`
-
-GetSessionRunName returns the SessionRunName field if non-nil, zero value otherwise.
-
-### GetSessionRunNameOk
-
-`func (o *RunProcess) GetSessionRunNameOk() (*string, bool)`
-
-GetSessionRunNameOk returns a tuple with the SessionRunName field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSessionRunName
-
-`func (o *RunProcess) SetSessionRunName(v string)`
-
-SetSessionRunName sets SessionRunName field to given value.
-
-### HasSessionRunName
-
-`func (o *RunProcess) HasSessionRunName() bool`
-
-HasSessionRunName returns a boolean if a field has been set.
-
-### GetSessionRunId
-
-`func (o *RunProcess) GetSessionRunId() string`
-
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
-
-### GetSessionRunIdOk
-
-`func (o *RunProcess) GetSessionRunIdOk() (*string, bool)`
-
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSessionRunId
-
-`func (o *RunProcess) SetSessionRunId(v string)`
-
-SetSessionRunId sets SessionRunId field to given value.
-
-### HasSessionRunId
-
-`func (o *RunProcess) HasSessionRunId() bool`
-
-HasSessionRunId returns a boolean if a field has been set.
-
 ### GetEvents
 
 `func (o *RunProcess) GetEvents() []JobEvent`
@@ -508,6 +431,31 @@ SetLogsBlobName sets LogsBlobName field to given value.
 `func (o *RunProcess) HasLogsBlobName() bool`
 
 HasLogsBlobName returns a boolean if a field has been set.
+
+### GetNotifications
+
+`func (o *RunProcess) GetNotifications() []Notification`
+
+GetNotifications returns the Notifications field if non-nil, zero value otherwise.
+
+### GetNotificationsOk
+
+`func (o *RunProcess) GetNotificationsOk() (*[]Notification, bool)`
+
+GetNotificationsOk returns a tuple with the Notifications field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNotifications
+
+`func (o *RunProcess) SetNotifications(v []Notification)`
+
+SetNotifications sets Notifications field to given value.
+
+### HasNotifications
+
+`func (o *RunProcess) HasNotifications() bool`
+
+HasNotifications returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -4,19 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Epochs** | **float64** |  | 
-**BatchSize** | **float64** |  | 
-**EarlyStopParams** | Pointer to [**EarlyStopParams**](EarlyStopParams.md) |  | [optional] 
 **VersionId** | **string** |  | 
 **ProjectId** | **string** |  | 
 **BatchSize** | **float64** |  | 
-**Name** | **string** |  | 
-**Description** | **string** |  | 
 **Monitor** | Pointer to **bool** |  | [optional] 
 **EvaluatedEpoch** | **float64** |  | 
-**SessionId** | **string** |  | 
 **Type** | [**ExportModelTypeEnum**](ExportModelTypeEnum.md) |  | 
-**FromEpoch** | **float64** |  | 
 **SampleIdentity** | Pointer to [**SampleIdentity**](SampleIdentity.md) |  | [optional] 
 **FromDatasetSlice** | Pointer to [**DataStateType**](DataStateType.md) |  | [optional] 
 **ExtId** | **string** |  | 
@@ -26,7 +19,6 @@ Name | Type | Description | Notes
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **SampleIds** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
 **Limit** | **float64** |  | 
-**SessionRunId** | **string** |  | 
 **LatentSpaceType** | Pointer to **string** |  | [optional] 
 **ForceExecute** | Pointer to **bool** |  | [optional] 
 **ElementInstance** | Pointer to **bool** |  | [optional] 
@@ -38,10 +30,11 @@ Name | Type | Description | Notes
 **NumOfSamples** | **float64** |  | 
 **DomainGapMetadata** | Pointer to **string** |  | [optional] 
 **ProjectionMetric** | Pointer to **string** |  | [optional] 
+**InferenceArtifactId** | **string** |  | 
 **LabelingAlgorithm** | [**LabelingAlgorithm**](LabelingAlgorithm.md) |  | 
 **NumOfSamplesToLabel** | Pointer to **float64** |  | [optional] 
 **TargetFilters** | [**[]ESFilter**](ESFilter.md) |  | 
-**Sources** | [**[]GenerateSyntheticDataParamsSourcesInner**](GenerateSyntheticDataParamsSourcesInner.md) |  | 
+**Sources** | [**[]SyntheticDataJobParamsSourcesInner**](SyntheticDataJobParamsSourcesInner.md) |  | 
 **PercentageOfSamplesToPrune** | Pointer to **float64** |  | [optional] 
 **PrioritizedMetadataTags** | Pointer to **[]string** |  | [optional] 
 **MetadataTags** | **[]string** |  | 
@@ -65,7 +58,7 @@ Name | Type | Description | Notes
 
 ### NewJobParams
 
-`func NewJobParams(epochs float64, batchSize float64, versionId string, projectId string, batchSize float64, name string, description string, evaluatedEpoch float64, sessionId string, type_ ExportModelTypeEnum, fromEpoch float64, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, sessionRunId string, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, labelingAlgorithm LabelingAlgorithm, targetFilters []ESFilter, sources []GenerateSyntheticDataParamsSourcesInner, metadataTags []string, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, codeUrl string, codeEntryFile string, versionName string, ) *JobParams`
+`func NewJobParams(versionId string, projectId string, batchSize float64, evaluatedEpoch float64, type_ ExportModelTypeEnum, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, inferenceArtifactId string, labelingAlgorithm LabelingAlgorithm, targetFilters []ESFilter, sources []SyntheticDataJobParamsSourcesInner, metadataTags []string, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, codeUrl string, codeEntryFile string, versionName string, ) *JobParams`
 
 NewJobParams instantiates a new JobParams object
 This constructor will assign default values to properties that have it defined,
@@ -79,71 +72,6 @@ will change when the set of required properties is changed
 NewJobParamsWithDefaults instantiates a new JobParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetEpochs
-
-`func (o *JobParams) GetEpochs() float64`
-
-GetEpochs returns the Epochs field if non-nil, zero value otherwise.
-
-### GetEpochsOk
-
-`func (o *JobParams) GetEpochsOk() (*float64, bool)`
-
-GetEpochsOk returns a tuple with the Epochs field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEpochs
-
-`func (o *JobParams) SetEpochs(v float64)`
-
-SetEpochs sets Epochs field to given value.
-
-
-### GetBatchSize
-
-`func (o *JobParams) GetBatchSize() float64`
-
-GetBatchSize returns the BatchSize field if non-nil, zero value otherwise.
-
-### GetBatchSizeOk
-
-`func (o *JobParams) GetBatchSizeOk() (*float64, bool)`
-
-GetBatchSizeOk returns a tuple with the BatchSize field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetBatchSize
-
-`func (o *JobParams) SetBatchSize(v float64)`
-
-SetBatchSize sets BatchSize field to given value.
-
-
-### GetEarlyStopParams
-
-`func (o *JobParams) GetEarlyStopParams() EarlyStopParams`
-
-GetEarlyStopParams returns the EarlyStopParams field if non-nil, zero value otherwise.
-
-### GetEarlyStopParamsOk
-
-`func (o *JobParams) GetEarlyStopParamsOk() (*EarlyStopParams, bool)`
-
-GetEarlyStopParamsOk returns a tuple with the EarlyStopParams field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEarlyStopParams
-
-`func (o *JobParams) SetEarlyStopParams(v EarlyStopParams)`
-
-SetEarlyStopParams sets EarlyStopParams field to given value.
-
-### HasEarlyStopParams
-
-`func (o *JobParams) HasEarlyStopParams() bool`
-
-HasEarlyStopParams returns a boolean if a field has been set.
 
 ### GetVersionId
 
@@ -205,46 +133,6 @@ and a boolean to check if the value has been set.
 SetBatchSize sets BatchSize field to given value.
 
 
-### GetName
-
-`func (o *JobParams) GetName() string`
-
-GetName returns the Name field if non-nil, zero value otherwise.
-
-### GetNameOk
-
-`func (o *JobParams) GetNameOk() (*string, bool)`
-
-GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetName
-
-`func (o *JobParams) SetName(v string)`
-
-SetName sets Name field to given value.
-
-
-### GetDescription
-
-`func (o *JobParams) GetDescription() string`
-
-GetDescription returns the Description field if non-nil, zero value otherwise.
-
-### GetDescriptionOk
-
-`func (o *JobParams) GetDescriptionOk() (*string, bool)`
-
-GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDescription
-
-`func (o *JobParams) SetDescription(v string)`
-
-SetDescription sets Description field to given value.
-
-
 ### GetMonitor
 
 `func (o *JobParams) GetMonitor() bool`
@@ -290,26 +178,6 @@ and a boolean to check if the value has been set.
 SetEvaluatedEpoch sets EvaluatedEpoch field to given value.
 
 
-### GetSessionId
-
-`func (o *JobParams) GetSessionId() string`
-
-GetSessionId returns the SessionId field if non-nil, zero value otherwise.
-
-### GetSessionIdOk
-
-`func (o *JobParams) GetSessionIdOk() (*string, bool)`
-
-GetSessionIdOk returns a tuple with the SessionId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSessionId
-
-`func (o *JobParams) SetSessionId(v string)`
-
-SetSessionId sets SessionId field to given value.
-
-
 ### GetType
 
 `func (o *JobParams) GetType() ExportModelTypeEnum`
@@ -328,26 +196,6 @@ and a boolean to check if the value has been set.
 `func (o *JobParams) SetType(v ExportModelTypeEnum)`
 
 SetType sets Type field to given value.
-
-
-### GetFromEpoch
-
-`func (o *JobParams) GetFromEpoch() float64`
-
-GetFromEpoch returns the FromEpoch field if non-nil, zero value otherwise.
-
-### GetFromEpochOk
-
-`func (o *JobParams) GetFromEpochOk() (*float64, bool)`
-
-GetFromEpochOk returns a tuple with the FromEpoch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFromEpoch
-
-`func (o *JobParams) SetFromEpoch(v float64)`
-
-SetFromEpoch sets FromEpoch field to given value.
 
 
 ### GetSampleIdentity
@@ -543,26 +391,6 @@ and a boolean to check if the value has been set.
 `func (o *JobParams) SetLimit(v float64)`
 
 SetLimit sets Limit field to given value.
-
-
-### GetSessionRunId
-
-`func (o *JobParams) GetSessionRunId() string`
-
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
-
-### GetSessionRunIdOk
-
-`func (o *JobParams) GetSessionRunIdOk() (*string, bool)`
-
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSessionRunId
-
-`func (o *JobParams) SetSessionRunId(v string)`
-
-SetSessionRunId sets SessionRunId field to given value.
 
 
 ### GetLatentSpaceType
@@ -820,6 +648,26 @@ SetProjectionMetric sets ProjectionMetric field to given value.
 
 HasProjectionMetric returns a boolean if a field has been set.
 
+### GetInferenceArtifactId
+
+`func (o *JobParams) GetInferenceArtifactId() string`
+
+GetInferenceArtifactId returns the InferenceArtifactId field if non-nil, zero value otherwise.
+
+### GetInferenceArtifactIdOk
+
+`func (o *JobParams) GetInferenceArtifactIdOk() (*string, bool)`
+
+GetInferenceArtifactIdOk returns a tuple with the InferenceArtifactId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInferenceArtifactId
+
+`func (o *JobParams) SetInferenceArtifactId(v string)`
+
+SetInferenceArtifactId sets InferenceArtifactId field to given value.
+
+
 ### GetLabelingAlgorithm
 
 `func (o *JobParams) GetLabelingAlgorithm() LabelingAlgorithm`
@@ -887,20 +735,20 @@ SetTargetFilters sets TargetFilters field to given value.
 
 ### GetSources
 
-`func (o *JobParams) GetSources() []GenerateSyntheticDataParamsSourcesInner`
+`func (o *JobParams) GetSources() []SyntheticDataJobParamsSourcesInner`
 
 GetSources returns the Sources field if non-nil, zero value otherwise.
 
 ### GetSourcesOk
 
-`func (o *JobParams) GetSourcesOk() (*[]GenerateSyntheticDataParamsSourcesInner, bool)`
+`func (o *JobParams) GetSourcesOk() (*[]SyntheticDataJobParamsSourcesInner, bool)`
 
 GetSourcesOk returns a tuple with the Sources field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSources
 
-`func (o *JobParams) SetSources(v []GenerateSyntheticDataParamsSourcesInner)`
+`func (o *JobParams) SetSources(v []SyntheticDataJobParamsSourcesInner)`
 
 SetSources sets Sources field to given value.
 

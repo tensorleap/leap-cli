@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SessionRunId** | **string** |  | 
+**VersionId** | Pointer to **string** |  | [optional] 
 **ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewGetInsightsParams
 
-`func NewGetInsightsParams(sessionRunId string, projectId string, ) *GetInsightsParams`
+`func NewGetInsightsParams(projectId string, ) *GetInsightsParams`
 
 NewGetInsightsParams instantiates a new GetInsightsParams object
 This constructor will assign default values to properties that have it defined,
@@ -26,25 +26,30 @@ NewGetInsightsParamsWithDefaults instantiates a new GetInsightsParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *GetInsightsParams) GetSessionRunId() string`
+`func (o *GetInsightsParams) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *GetInsightsParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *GetInsightsParams) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *GetInsightsParams) SetSessionRunId(v string)`
+`func (o *GetInsightsParams) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
 
+### HasVersionId
+
+`func (o *GetInsightsParams) HasVersionId() bool`
+
+HasVersionId returns a boolean if a field has been set.
 
 ### GetProjectId
 

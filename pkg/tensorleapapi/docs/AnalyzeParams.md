@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | [**AnalyzeTypeEnum**](AnalyzeTypeEnum.md) |  | 
-**FromEpoch** | **float64** |  | 
 **BatchSize** | Pointer to **float64** |  | [optional] 
 **SampleIdentity** | Pointer to [**SampleIdentity**](SampleIdentity.md) |  | [optional] 
 **FromDatasetSlice** | Pointer to [**DataStateType**](DataStateType.md) |  | [optional] 
@@ -15,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewAnalyzeParams
 
-`func NewAnalyzeParams(type_ AnalyzeTypeEnum, fromEpoch float64, extId string, ) *AnalyzeParams`
+`func NewAnalyzeParams(type_ AnalyzeTypeEnum, extId string, ) *AnalyzeParams`
 
 NewAnalyzeParams instantiates a new AnalyzeParams object
 This constructor will assign default values to properties that have it defined,
@@ -48,26 +47,6 @@ and a boolean to check if the value has been set.
 `func (o *AnalyzeParams) SetType(v AnalyzeTypeEnum)`
 
 SetType sets Type field to given value.
-
-
-### GetFromEpoch
-
-`func (o *AnalyzeParams) GetFromEpoch() float64`
-
-GetFromEpoch returns the FromEpoch field if non-nil, zero value otherwise.
-
-### GetFromEpochOk
-
-`func (o *AnalyzeParams) GetFromEpochOk() (*float64, bool)`
-
-GetFromEpochOk returns a tuple with the FromEpoch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFromEpoch
-
-`func (o *AnalyzeParams) SetFromEpoch(v float64)`
-
-SetFromEpoch sets FromEpoch field to given value.
 
 
 ### GetBatchSize

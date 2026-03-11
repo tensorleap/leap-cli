@@ -7,15 +7,14 @@ Name | Type | Description | Notes
 **Type** | **string** |  | 
 **Limit** | **float64** |  | 
 **SampleIds** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
-**Epoch** | **float64** |  | 
 **FiltersUsed** | **[]string** |  | 
-**SessionRun** | [**FilterSessionRun**](FilterSessionRun.md) |  | 
+**Version** | [**FilterVersion**](FilterVersion.md) |  | 
 
 ## Methods
 
 ### NewFetchSimilarFilterDisplayData
 
-`func NewFetchSimilarFilterDisplayData(type_ string, limit float64, sampleIds []SampleIdentity, epoch float64, filtersUsed []string, sessionRun FilterSessionRun, ) *FetchSimilarFilterDisplayData`
+`func NewFetchSimilarFilterDisplayData(type_ string, limit float64, sampleIds []SampleIdentity, filtersUsed []string, version FilterVersion, ) *FetchSimilarFilterDisplayData`
 
 NewFetchSimilarFilterDisplayData instantiates a new FetchSimilarFilterDisplayData object
 This constructor will assign default values to properties that have it defined,
@@ -90,26 +89,6 @@ and a boolean to check if the value has been set.
 SetSampleIds sets SampleIds field to given value.
 
 
-### GetEpoch
-
-`func (o *FetchSimilarFilterDisplayData) GetEpoch() float64`
-
-GetEpoch returns the Epoch field if non-nil, zero value otherwise.
-
-### GetEpochOk
-
-`func (o *FetchSimilarFilterDisplayData) GetEpochOk() (*float64, bool)`
-
-GetEpochOk returns a tuple with the Epoch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEpoch
-
-`func (o *FetchSimilarFilterDisplayData) SetEpoch(v float64)`
-
-SetEpoch sets Epoch field to given value.
-
-
 ### GetFiltersUsed
 
 `func (o *FetchSimilarFilterDisplayData) GetFiltersUsed() []string`
@@ -130,24 +109,24 @@ and a boolean to check if the value has been set.
 SetFiltersUsed sets FiltersUsed field to given value.
 
 
-### GetSessionRun
+### GetVersion
 
-`func (o *FetchSimilarFilterDisplayData) GetSessionRun() FilterSessionRun`
+`func (o *FetchSimilarFilterDisplayData) GetVersion() FilterVersion`
 
-GetSessionRun returns the SessionRun field if non-nil, zero value otherwise.
+GetVersion returns the Version field if non-nil, zero value otherwise.
 
-### GetSessionRunOk
+### GetVersionOk
 
-`func (o *FetchSimilarFilterDisplayData) GetSessionRunOk() (*FilterSessionRun, bool)`
+`func (o *FetchSimilarFilterDisplayData) GetVersionOk() (*FilterVersion, bool)`
 
-GetSessionRunOk returns a tuple with the SessionRun field if it's non-nil, zero value otherwise
+GetVersionOk returns a tuple with the Version field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRun
+### SetVersion
 
-`func (o *FetchSimilarFilterDisplayData) SetSessionRun(v FilterSessionRun)`
+`func (o *FetchSimilarFilterDisplayData) SetVersion(v FilterVersion)`
 
-SetSessionRun sets SessionRun field to given value.
+SetVersion sets Version field to given value.
 
 
 
