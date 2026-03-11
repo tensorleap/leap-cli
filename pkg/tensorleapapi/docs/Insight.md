@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Cid** | **string** |  | 
-**SessionRunId** | **string** |  | 
+**InferenceArtifactId** | Pointer to **string** |  | [optional] 
 **InsightType** | [**InsightType**](InsightType.md) |  | 
 **Index** | **float64** |  | 
 **Status** | [**InsightStatus**](InsightStatus.md) |  | 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewInsight
 
-`func NewInsight(cid string, sessionRunId string, insightType InsightType, index float64, status InsightStatus, createdAt time.Time, updatedAt time.Time, ) *Insight`
+`func NewInsight(cid string, insightType InsightType, index float64, status InsightStatus, createdAt time.Time, updatedAt time.Time, ) *Insight`
 
 NewInsight instantiates a new Insight object
 This constructor will assign default values to properties that have it defined,
@@ -51,25 +51,30 @@ and a boolean to check if the value has been set.
 SetCid sets Cid field to given value.
 
 
-### GetSessionRunId
+### GetInferenceArtifactId
 
-`func (o *Insight) GetSessionRunId() string`
+`func (o *Insight) GetInferenceArtifactId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetInferenceArtifactId returns the InferenceArtifactId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetInferenceArtifactIdOk
 
-`func (o *Insight) GetSessionRunIdOk() (*string, bool)`
+`func (o *Insight) GetInferenceArtifactIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetInferenceArtifactIdOk returns a tuple with the InferenceArtifactId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetInferenceArtifactId
 
-`func (o *Insight) SetSessionRunId(v string)`
+`func (o *Insight) SetInferenceArtifactId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetInferenceArtifactId sets InferenceArtifactId field to given value.
 
+### HasInferenceArtifactId
+
+`func (o *Insight) HasInferenceArtifactId() bool`
+
+HasInferenceArtifactId returns a boolean if a field has been set.
 
 ### GetInsightType
 

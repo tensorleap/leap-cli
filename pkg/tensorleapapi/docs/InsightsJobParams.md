@@ -5,14 +5,15 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
-**SessionRunId** | **string** |  | 
+**InferenceArtifactId** | Pointer to **string** |  | [optional] 
+**VersionId** | Pointer to **string** |  | [optional] 
 **Type** | **string** |  | 
 
 ## Methods
 
 ### NewInsightsJobParams
 
-`func NewInsightsJobParams(sessionRunId string, type_ string, ) *InsightsJobParams`
+`func NewInsightsJobParams(type_ string, ) *InsightsJobParams`
 
 NewInsightsJobParams instantiates a new InsightsJobParams object
 This constructor will assign default values to properties that have it defined,
@@ -52,25 +53,55 @@ SetFilters sets Filters field to given value.
 
 HasFilters returns a boolean if a field has been set.
 
-### GetSessionRunId
+### GetInferenceArtifactId
 
-`func (o *InsightsJobParams) GetSessionRunId() string`
+`func (o *InsightsJobParams) GetInferenceArtifactId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetInferenceArtifactId returns the InferenceArtifactId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetInferenceArtifactIdOk
 
-`func (o *InsightsJobParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *InsightsJobParams) GetInferenceArtifactIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetInferenceArtifactIdOk returns a tuple with the InferenceArtifactId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetInferenceArtifactId
 
-`func (o *InsightsJobParams) SetSessionRunId(v string)`
+`func (o *InsightsJobParams) SetInferenceArtifactId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetInferenceArtifactId sets InferenceArtifactId field to given value.
 
+### HasInferenceArtifactId
+
+`func (o *InsightsJobParams) HasInferenceArtifactId() bool`
+
+HasInferenceArtifactId returns a boolean if a field has been set.
+
+### GetVersionId
+
+`func (o *InsightsJobParams) GetVersionId() string`
+
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
+
+### GetVersionIdOk
+
+`func (o *InsightsJobParams) GetVersionIdOk() (*string, bool)`
+
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVersionId
+
+`func (o *InsightsJobParams) SetVersionId(v string)`
+
+SetVersionId sets VersionId field to given value.
+
+### HasVersionId
+
+`func (o *InsightsJobParams) HasVersionId() bool`
+
+HasVersionId returns a boolean if a field has been set.
 
 ### GetType
 

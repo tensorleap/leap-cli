@@ -4,17 +4,16 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SessionRunId** | **string** |  | 
+**VersionId** | **string** |  | 
 **ProjectId** | **string** |  | 
 **SampleIdentity** | [**SampleIdentity**](SampleIdentity.md) |  | 
-**FromEpoch** | **float64** |  | 
 **Algo** | [**SampleAnalysisAlgo**](SampleAnalysisAlgo.md) |  | 
 
 ## Methods
 
 ### NewSampleAnalysisParams
 
-`func NewSampleAnalysisParams(sessionRunId string, projectId string, sampleIdentity SampleIdentity, fromEpoch float64, algo SampleAnalysisAlgo, ) *SampleAnalysisParams`
+`func NewSampleAnalysisParams(versionId string, projectId string, sampleIdentity SampleIdentity, algo SampleAnalysisAlgo, ) *SampleAnalysisParams`
 
 NewSampleAnalysisParams instantiates a new SampleAnalysisParams object
 This constructor will assign default values to properties that have it defined,
@@ -29,24 +28,24 @@ NewSampleAnalysisParamsWithDefaults instantiates a new SampleAnalysisParams obje
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *SampleAnalysisParams) GetSessionRunId() string`
+`func (o *SampleAnalysisParams) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *SampleAnalysisParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *SampleAnalysisParams) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *SampleAnalysisParams) SetSessionRunId(v string)`
+`func (o *SampleAnalysisParams) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
 
 
 ### GetProjectId
@@ -87,26 +86,6 @@ and a boolean to check if the value has been set.
 `func (o *SampleAnalysisParams) SetSampleIdentity(v SampleIdentity)`
 
 SetSampleIdentity sets SampleIdentity field to given value.
-
-
-### GetFromEpoch
-
-`func (o *SampleAnalysisParams) GetFromEpoch() float64`
-
-GetFromEpoch returns the FromEpoch field if non-nil, zero value otherwise.
-
-### GetFromEpochOk
-
-`func (o *SampleAnalysisParams) GetFromEpochOk() (*float64, bool)`
-
-GetFromEpochOk returns a tuple with the FromEpoch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFromEpoch
-
-`func (o *SampleAnalysisParams) SetFromEpoch(v float64)`
-
-SetFromEpoch sets FromEpoch field to given value.
 
 
 ### GetAlgo

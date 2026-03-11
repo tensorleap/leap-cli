@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 **Params** | Pointer to [**JobParams**](JobParams.md) |  | [optional] 
-**SessionRunId** | Pointer to **string** |  | [optional] 
+**VersionId** | Pointer to **string** |  | [optional] 
 **TeamId** | **string** |  | 
 **CodeSnapshotInfo** | Pointer to [**CodeSnapshotInfo**](CodeSnapshotInfo.md) |  | [optional] 
 **EventsSnapshot** | Pointer to [**EventsSnapshot**](EventsSnapshot.md) |  | [optional] 
@@ -259,30 +259,30 @@ SetParams sets Params field to given value.
 
 HasParams returns a boolean if a field has been set.
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *Job) GetSessionRunId() string`
+`func (o *Job) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *Job) GetSessionRunIdOk() (*string, bool)`
+`func (o *Job) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *Job) SetSessionRunId(v string)`
+`func (o *Job) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
 
-### HasSessionRunId
+### HasVersionId
 
-`func (o *Job) HasSessionRunId() bool`
+`func (o *Job) HasVersionId() bool`
 
-HasSessionRunId returns a boolean if a field has been set.
+HasVersionId returns a boolean if a field has been set.
 
 ### GetTeamId
 

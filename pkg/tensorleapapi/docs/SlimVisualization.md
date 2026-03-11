@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **ProjectId** | **string** |  | 
 **Cid** | **string** |  | 
 **JobId** | **string** |  | 
-**SessionRunId** | **string** |  | 
+**InferenceArtifactId** | **string** |  | 
 **JobParms** | Pointer to [**JobParams**](JobParams.md) |  | [optional] 
 **Type** | [**AnalyzeTypeEnum**](AnalyzeTypeEnum.md) |  | 
 **CreatedAt** | **time.Time** |  | 
@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 
 ### NewSlimVisualization
 
-`func NewSlimVisualization(projectId string, cid string, jobId string, sessionRunId string, type_ AnalyzeTypeEnum, createdAt time.Time, epoch float64, visualizationUuid string, blob string, csvBlob string, ) *SlimVisualization`
+`func NewSlimVisualization(projectId string, cid string, jobId string, inferenceArtifactId string, type_ AnalyzeTypeEnum, createdAt time.Time, epoch float64, visualizationUuid string, blob string, csvBlob string, ) *SlimVisualization`
 
 NewSlimVisualization instantiates a new SlimVisualization object
 This constructor will assign default values to properties that have it defined,
@@ -97,24 +97,24 @@ and a boolean to check if the value has been set.
 SetJobId sets JobId field to given value.
 
 
-### GetSessionRunId
+### GetInferenceArtifactId
 
-`func (o *SlimVisualization) GetSessionRunId() string`
+`func (o *SlimVisualization) GetInferenceArtifactId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetInferenceArtifactId returns the InferenceArtifactId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetInferenceArtifactIdOk
 
-`func (o *SlimVisualization) GetSessionRunIdOk() (*string, bool)`
+`func (o *SlimVisualization) GetInferenceArtifactIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetInferenceArtifactIdOk returns a tuple with the InferenceArtifactId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetInferenceArtifactId
 
-`func (o *SlimVisualization) SetSessionRunId(v string)`
+`func (o *SlimVisualization) SetInferenceArtifactId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetInferenceArtifactId sets InferenceArtifactId field to given value.
 
 
 ### GetJobParms

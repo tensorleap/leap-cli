@@ -14,17 +14,23 @@ Name | Type | Description | Notes
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 **Notes** | **string** |  | 
-**Status** | **string** |  | 
+**Status** | [**VersionStatus**](VersionStatus.md) |  | 
 **IsFavourite** | **bool** |  | 
 **CodeSnapshotId** | Pointer to **string** |  | [optional] 
 **Hash** | Pointer to **string** |  | [optional] 
 **GraphValidationData** | Pointer to [**GraphValidatorData**](GraphValidatorData.md) |  | [optional] 
+**ModelId** | Pointer to **string** |  | [optional] 
+**EpochTags** | Pointer to **map[string]float64** |  | [optional] 
+**VisArtifactId** | Pointer to **string** |  | [optional] 
+**InferenceArtifactId** | Pointer to **string** |  | [optional] 
+**EsMetricIndex** | Pointer to **string** |  | [optional] 
+**EsInspectionIndex** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewVersion
 
-`func NewVersion(cid string, createdBy string, teamId string, projectId string, branch string, tag string, createdAt time.Time, updatedAt time.Time, notes string, status string, isFavourite bool, ) *Version`
+`func NewVersion(cid string, createdBy string, teamId string, projectId string, branch string, tag string, createdAt time.Time, updatedAt time.Time, notes string, status VersionStatus, isFavourite bool, ) *Version`
 
 NewVersion instantiates a new Version object
 This constructor will assign default values to properties that have it defined,
@@ -246,20 +252,20 @@ SetNotes sets Notes field to given value.
 
 ### GetStatus
 
-`func (o *Version) GetStatus() string`
+`func (o *Version) GetStatus() VersionStatus`
 
 GetStatus returns the Status field if non-nil, zero value otherwise.
 
 ### GetStatusOk
 
-`func (o *Version) GetStatusOk() (*string, bool)`
+`func (o *Version) GetStatusOk() (*VersionStatus, bool)`
 
 GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStatus
 
-`func (o *Version) SetStatus(v string)`
+`func (o *Version) SetStatus(v VersionStatus)`
 
 SetStatus sets Status field to given value.
 
@@ -358,6 +364,156 @@ SetGraphValidationData sets GraphValidationData field to given value.
 `func (o *Version) HasGraphValidationData() bool`
 
 HasGraphValidationData returns a boolean if a field has been set.
+
+### GetModelId
+
+`func (o *Version) GetModelId() string`
+
+GetModelId returns the ModelId field if non-nil, zero value otherwise.
+
+### GetModelIdOk
+
+`func (o *Version) GetModelIdOk() (*string, bool)`
+
+GetModelIdOk returns a tuple with the ModelId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetModelId
+
+`func (o *Version) SetModelId(v string)`
+
+SetModelId sets ModelId field to given value.
+
+### HasModelId
+
+`func (o *Version) HasModelId() bool`
+
+HasModelId returns a boolean if a field has been set.
+
+### GetEpochTags
+
+`func (o *Version) GetEpochTags() map[string]float64`
+
+GetEpochTags returns the EpochTags field if non-nil, zero value otherwise.
+
+### GetEpochTagsOk
+
+`func (o *Version) GetEpochTagsOk() (*map[string]float64, bool)`
+
+GetEpochTagsOk returns a tuple with the EpochTags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEpochTags
+
+`func (o *Version) SetEpochTags(v map[string]float64)`
+
+SetEpochTags sets EpochTags field to given value.
+
+### HasEpochTags
+
+`func (o *Version) HasEpochTags() bool`
+
+HasEpochTags returns a boolean if a field has been set.
+
+### GetVisArtifactId
+
+`func (o *Version) GetVisArtifactId() string`
+
+GetVisArtifactId returns the VisArtifactId field if non-nil, zero value otherwise.
+
+### GetVisArtifactIdOk
+
+`func (o *Version) GetVisArtifactIdOk() (*string, bool)`
+
+GetVisArtifactIdOk returns a tuple with the VisArtifactId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVisArtifactId
+
+`func (o *Version) SetVisArtifactId(v string)`
+
+SetVisArtifactId sets VisArtifactId field to given value.
+
+### HasVisArtifactId
+
+`func (o *Version) HasVisArtifactId() bool`
+
+HasVisArtifactId returns a boolean if a field has been set.
+
+### GetInferenceArtifactId
+
+`func (o *Version) GetInferenceArtifactId() string`
+
+GetInferenceArtifactId returns the InferenceArtifactId field if non-nil, zero value otherwise.
+
+### GetInferenceArtifactIdOk
+
+`func (o *Version) GetInferenceArtifactIdOk() (*string, bool)`
+
+GetInferenceArtifactIdOk returns a tuple with the InferenceArtifactId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInferenceArtifactId
+
+`func (o *Version) SetInferenceArtifactId(v string)`
+
+SetInferenceArtifactId sets InferenceArtifactId field to given value.
+
+### HasInferenceArtifactId
+
+`func (o *Version) HasInferenceArtifactId() bool`
+
+HasInferenceArtifactId returns a boolean if a field has been set.
+
+### GetEsMetricIndex
+
+`func (o *Version) GetEsMetricIndex() string`
+
+GetEsMetricIndex returns the EsMetricIndex field if non-nil, zero value otherwise.
+
+### GetEsMetricIndexOk
+
+`func (o *Version) GetEsMetricIndexOk() (*string, bool)`
+
+GetEsMetricIndexOk returns a tuple with the EsMetricIndex field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEsMetricIndex
+
+`func (o *Version) SetEsMetricIndex(v string)`
+
+SetEsMetricIndex sets EsMetricIndex field to given value.
+
+### HasEsMetricIndex
+
+`func (o *Version) HasEsMetricIndex() bool`
+
+HasEsMetricIndex returns a boolean if a field has been set.
+
+### GetEsInspectionIndex
+
+`func (o *Version) GetEsInspectionIndex() string`
+
+GetEsInspectionIndex returns the EsInspectionIndex field if non-nil, zero value otherwise.
+
+### GetEsInspectionIndexOk
+
+`func (o *Version) GetEsInspectionIndexOk() (*string, bool)`
+
+GetEsInspectionIndexOk returns a tuple with the EsInspectionIndex field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEsInspectionIndex
+
+`func (o *Version) SetEsInspectionIndex(v string)`
+
+SetEsInspectionIndex sets EsInspectionIndex field to given value.
+
+### HasEsInspectionIndex
+
+`func (o *Version) HasEsInspectionIndex() bool`
+
+HasEsInspectionIndex returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

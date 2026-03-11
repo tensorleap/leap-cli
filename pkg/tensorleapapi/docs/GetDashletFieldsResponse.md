@@ -7,13 +7,14 @@ Name | Type | Description | Notes
 **AggregatableFields** | **[]string** |  | 
 **NumericFields** | **[]string** |  | 
 **StringFields** | **[]string** |  | 
+**BooleanFields** | **[]string** |  | 
 **DateFields** | **[]string** |  | 
 
 ## Methods
 
 ### NewGetDashletFieldsResponse
 
-`func NewGetDashletFieldsResponse(aggregatableFields []string, numericFields []string, stringFields []string, dateFields []string, ) *GetDashletFieldsResponse`
+`func NewGetDashletFieldsResponse(aggregatableFields []string, numericFields []string, stringFields []string, booleanFields []string, dateFields []string, ) *GetDashletFieldsResponse`
 
 NewGetDashletFieldsResponse instantiates a new GetDashletFieldsResponse object
 This constructor will assign default values to properties that have it defined,
@@ -86,6 +87,26 @@ and a boolean to check if the value has been set.
 `func (o *GetDashletFieldsResponse) SetStringFields(v []string)`
 
 SetStringFields sets StringFields field to given value.
+
+
+### GetBooleanFields
+
+`func (o *GetDashletFieldsResponse) GetBooleanFields() []string`
+
+GetBooleanFields returns the BooleanFields field if non-nil, zero value otherwise.
+
+### GetBooleanFieldsOk
+
+`func (o *GetDashletFieldsResponse) GetBooleanFieldsOk() (*[]string, bool)`
+
+GetBooleanFieldsOk returns a tuple with the BooleanFields field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBooleanFields
+
+`func (o *GetDashletFieldsResponse) SetBooleanFields(v []string)`
+
+SetBooleanFields sets BooleanFields field to given value.
 
 
 ### GetDateFields

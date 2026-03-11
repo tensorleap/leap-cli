@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**SessionRunId** | **string** |  | 
+**VersionId** | **string** |  | 
 
 ## Methods
 
 ### NewSamplesVisualizationsRefreshParams
 
-`func NewSamplesVisualizationsRefreshParams(projectId string, sessionRunId string, ) *SamplesVisualizationsRefreshParams`
+`func NewSamplesVisualizationsRefreshParams(projectId string, versionId string, ) *SamplesVisualizationsRefreshParams`
 
 NewSamplesVisualizationsRefreshParams instantiates a new SamplesVisualizationsRefreshParams object
 This constructor will assign default values to properties that have it defined,
@@ -46,24 +46,24 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *SamplesVisualizationsRefreshParams) GetSessionRunId() string`
+`func (o *SamplesVisualizationsRefreshParams) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *SamplesVisualizationsRefreshParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *SamplesVisualizationsRefreshParams) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *SamplesVisualizationsRefreshParams) SetSessionRunId(v string)`
+`func (o *SamplesVisualizationsRefreshParams) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
 
 
 

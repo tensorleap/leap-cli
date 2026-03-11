@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TestSucceeded** | **bool** |  | 
-**SessionRunId** | **string** |  | 
+**VersionId** | **string** |  | 
 **Aggregation** | **float64** |  | 
 **SuccefullSamples** | **float64** |  | 
 **AllSamples** | **float64** |  | 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewSessionTestResult
 
-`func NewSessionTestResult(testSucceeded bool, sessionRunId string, aggregation float64, succefullSamples float64, allSamples float64, epoch float64, queryStatus string, ) *SessionTestResult`
+`func NewSessionTestResult(testSucceeded bool, versionId string, aggregation float64, succefullSamples float64, allSamples float64, epoch float64, queryStatus string, ) *SessionTestResult`
 
 NewSessionTestResult instantiates a new SessionTestResult object
 This constructor will assign default values to properties that have it defined,
@@ -51,24 +51,24 @@ and a boolean to check if the value has been set.
 SetTestSucceeded sets TestSucceeded field to given value.
 
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *SessionTestResult) GetSessionRunId() string`
+`func (o *SessionTestResult) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *SessionTestResult) GetSessionRunIdOk() (*string, bool)`
+`func (o *SessionTestResult) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *SessionTestResult) SetSessionRunId(v string)`
+`func (o *SessionTestResult) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
 
 
 ### GetAggregation

@@ -6,17 +6,17 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Digest** | **string** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
-**Epoch** | **float64** |  | 
 **SampleIds** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
 **Limit** | **float64** |  | 
-**SessionRunId** | **string** |  | 
+**InferenceArtifactId** | **string** |  | 
+**VersionId** | **string** |  | 
 **Type** | **string** |  | 
 
 ## Methods
 
 ### NewFetchSimilarJobParams
 
-`func NewFetchSimilarJobParams(digest string, epoch float64, sampleIds []SampleIdentity, limit float64, sessionRunId string, type_ string, ) *FetchSimilarJobParams`
+`func NewFetchSimilarJobParams(digest string, sampleIds []SampleIdentity, limit float64, inferenceArtifactId string, versionId string, type_ string, ) *FetchSimilarJobParams`
 
 NewFetchSimilarJobParams instantiates a new FetchSimilarJobParams object
 This constructor will assign default values to properties that have it defined,
@@ -76,26 +76,6 @@ SetFilters sets Filters field to given value.
 
 HasFilters returns a boolean if a field has been set.
 
-### GetEpoch
-
-`func (o *FetchSimilarJobParams) GetEpoch() float64`
-
-GetEpoch returns the Epoch field if non-nil, zero value otherwise.
-
-### GetEpochOk
-
-`func (o *FetchSimilarJobParams) GetEpochOk() (*float64, bool)`
-
-GetEpochOk returns a tuple with the Epoch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEpoch
-
-`func (o *FetchSimilarJobParams) SetEpoch(v float64)`
-
-SetEpoch sets Epoch field to given value.
-
-
 ### GetSampleIds
 
 `func (o *FetchSimilarJobParams) GetSampleIds() []SampleIdentity`
@@ -136,24 +116,44 @@ and a boolean to check if the value has been set.
 SetLimit sets Limit field to given value.
 
 
-### GetSessionRunId
+### GetInferenceArtifactId
 
-`func (o *FetchSimilarJobParams) GetSessionRunId() string`
+`func (o *FetchSimilarJobParams) GetInferenceArtifactId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetInferenceArtifactId returns the InferenceArtifactId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetInferenceArtifactIdOk
 
-`func (o *FetchSimilarJobParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *FetchSimilarJobParams) GetInferenceArtifactIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetInferenceArtifactIdOk returns a tuple with the InferenceArtifactId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetInferenceArtifactId
 
-`func (o *FetchSimilarJobParams) SetSessionRunId(v string)`
+`func (o *FetchSimilarJobParams) SetInferenceArtifactId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetInferenceArtifactId sets InferenceArtifactId field to given value.
+
+
+### GetVersionId
+
+`func (o *FetchSimilarJobParams) GetVersionId() string`
+
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
+
+### GetVersionIdOk
+
+`func (o *FetchSimilarJobParams) GetVersionIdOk() (*string, bool)`
+
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVersionId
+
+`func (o *FetchSimilarJobParams) SetVersionId(v string)`
+
+SetVersionId sets VersionId field to given value.
 
 
 ### GetType

@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **ClustersBlobPath** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
 **DomainGapDist** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
 **HiddenMetadataKeys** | Pointer to **[]string** |  | [optional] 
+**AvailableLatentSpaces** | Pointer to **[]string** |  | [optional] 
 
 ## Methods
 
@@ -216,6 +217,31 @@ SetHiddenMetadataKeys sets HiddenMetadataKeys field to given value.
 `func (o *ScatterVizDataState) HasHiddenMetadataKeys() bool`
 
 HasHiddenMetadataKeys returns a boolean if a field has been set.
+
+### GetAvailableLatentSpaces
+
+`func (o *ScatterVizDataState) GetAvailableLatentSpaces() []string`
+
+GetAvailableLatentSpaces returns the AvailableLatentSpaces field if non-nil, zero value otherwise.
+
+### GetAvailableLatentSpacesOk
+
+`func (o *ScatterVizDataState) GetAvailableLatentSpacesOk() (*[]string, bool)`
+
+GetAvailableLatentSpacesOk returns a tuple with the AvailableLatentSpaces field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAvailableLatentSpaces
+
+`func (o *ScatterVizDataState) SetAvailableLatentSpaces(v []string)`
+
+SetAvailableLatentSpaces sets AvailableLatentSpaces field to given value.
+
+### HasAvailableLatentSpaces
+
+`func (o *ScatterVizDataState) HasAvailableLatentSpaces() bool`
+
+HasAvailableLatentSpaces returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

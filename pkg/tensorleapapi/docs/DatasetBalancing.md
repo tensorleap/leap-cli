@@ -6,9 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** |  | 
 **JobId** | **string** |  | 
-**SessionRunId** | **string** |  | 
-**SessionRunName** | **string** |  | 
-**Epoch** | **float64** |  | 
+**VersionId** | **string** |  | 
+**VersionName** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
 **CreatedBy** | **string** |  | 
 **FileUrl** | Pointer to **string** |  | [optional] 
@@ -19,12 +18,13 @@ Name | Type | Description | Notes
 **MetadataTags** | **[]string** |  | 
 **PrioritizedMetadataTags** | Pointer to **[]string** |  | [optional] 
 **PercentageOfSamplesToPrune** | Pointer to **float64** |  | [optional] 
+**RunProcess** | Pointer to [**RunProcess**](RunProcess.md) |  | [optional] 
 
 ## Methods
 
 ### NewDatasetBalancing
 
-`func NewDatasetBalancing(id string, jobId string, sessionRunId string, sessionRunName string, epoch float64, createdAt time.Time, createdBy string, status JobStatus, isDeleted bool, metadataTags []string, ) *DatasetBalancing`
+`func NewDatasetBalancing(id string, jobId string, versionId string, versionName string, createdAt time.Time, createdBy string, status JobStatus, isDeleted bool, metadataTags []string, ) *DatasetBalancing`
 
 NewDatasetBalancing instantiates a new DatasetBalancing object
 This constructor will assign default values to properties that have it defined,
@@ -79,64 +79,44 @@ and a boolean to check if the value has been set.
 SetJobId sets JobId field to given value.
 
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *DatasetBalancing) GetSessionRunId() string`
+`func (o *DatasetBalancing) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *DatasetBalancing) GetSessionRunIdOk() (*string, bool)`
+`func (o *DatasetBalancing) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *DatasetBalancing) SetSessionRunId(v string)`
+`func (o *DatasetBalancing) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
 
 
-### GetSessionRunName
+### GetVersionName
 
-`func (o *DatasetBalancing) GetSessionRunName() string`
+`func (o *DatasetBalancing) GetVersionName() string`
 
-GetSessionRunName returns the SessionRunName field if non-nil, zero value otherwise.
+GetVersionName returns the VersionName field if non-nil, zero value otherwise.
 
-### GetSessionRunNameOk
+### GetVersionNameOk
 
-`func (o *DatasetBalancing) GetSessionRunNameOk() (*string, bool)`
+`func (o *DatasetBalancing) GetVersionNameOk() (*string, bool)`
 
-GetSessionRunNameOk returns a tuple with the SessionRunName field if it's non-nil, zero value otherwise
+GetVersionNameOk returns a tuple with the VersionName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunName
+### SetVersionName
 
-`func (o *DatasetBalancing) SetSessionRunName(v string)`
+`func (o *DatasetBalancing) SetVersionName(v string)`
 
-SetSessionRunName sets SessionRunName field to given value.
-
-
-### GetEpoch
-
-`func (o *DatasetBalancing) GetEpoch() float64`
-
-GetEpoch returns the Epoch field if non-nil, zero value otherwise.
-
-### GetEpochOk
-
-`func (o *DatasetBalancing) GetEpochOk() (*float64, bool)`
-
-GetEpochOk returns a tuple with the Epoch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEpoch
-
-`func (o *DatasetBalancing) SetEpoch(v float64)`
-
-SetEpoch sets Epoch field to given value.
+SetVersionName sets VersionName field to given value.
 
 
 ### GetCreatedAt
@@ -363,6 +343,31 @@ SetPercentageOfSamplesToPrune sets PercentageOfSamplesToPrune field to given val
 `func (o *DatasetBalancing) HasPercentageOfSamplesToPrune() bool`
 
 HasPercentageOfSamplesToPrune returns a boolean if a field has been set.
+
+### GetRunProcess
+
+`func (o *DatasetBalancing) GetRunProcess() RunProcess`
+
+GetRunProcess returns the RunProcess field if non-nil, zero value otherwise.
+
+### GetRunProcessOk
+
+`func (o *DatasetBalancing) GetRunProcessOk() (*RunProcess, bool)`
+
+GetRunProcessOk returns a tuple with the RunProcess field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRunProcess
+
+`func (o *DatasetBalancing) SetRunProcess(v RunProcess)`
+
+SetRunProcess sets RunProcess field to given value.
+
+### HasRunProcess
+
+`func (o *DatasetBalancing) HasRunProcess() bool`
+
+HasRunProcess returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
