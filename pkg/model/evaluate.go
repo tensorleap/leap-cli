@@ -2,12 +2,8 @@ package model
 
 import (
 	"context"
-	"crypto/rand"
-	"encoding/hex"
 	"fmt"
-	"regexp"
 	"strconv"
-	"time"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/tensorleap/leap-cli/pkg/api"
@@ -18,21 +14,21 @@ import (
 const DEFAULT_BATCH_SIZE = 1
 
 func GetLatestEvaluateBatchSize(ctx context.Context, projectId string) (int, error) {
-	sessionRuns, err := GetSessionRunsEvaluate(ctx, projectId, []string{})
+	versions, err := GetVersions(ctx, projectId)
 	if err != nil {
 		return 0, err
 	}
 
-	var latestSessionRun *tensorleapapi.SessionRunData
-	for _, sessionRun := range sessionRuns.GetEvaluateSessionRuns() {
-		if sessionRun.HasEvaluateParams() && (latestSessionRun == nil || latestSessionRun.GetCreatedAt().Before(sessionRun.GetCreatedAt())) {
-			latestSessionRun = &sessionRun
+	var latest *tensorleapapi.SlimVersion
+	for _, v := range versions {
+		if v.HasEvaluateParams() && (latest == nil || latest.GetCreatedAt().Before(v.GetCreatedAt())) {
+			latest = &v
 		}
 	}
-	if latestSessionRun == nil {
+	if latest == nil {
 		return 0, nil
 	}
-	return int(latestSessionRun.EvaluateParams.GetBatchSize()), nil
+	return int(latest.EvaluateParams.GetBatchSize()), nil
 }
 
 func AskForBatchSize(defaultBatchSize int) (int, error) {
@@ -69,99 +65,16 @@ func AskForBatchSize(defaultBatchSize int) (int, error) {
 	return batchSize, nil
 }
 
-func GenerateShortHash() string {
-	bytes := make([]byte, 2)
-	_, _ = rand.Read(bytes)
-	return hex.EncodeToString(bytes)
-}
-
-var evalNameSuffixRegex = regexp.MustCompile(`-(\d+)$`)
-
-// extractNumberSuffix extracts the trailing number suffix from a name like "eval_3".
-// Returns -1 if no suffix is found.
-func extractNumberSuffix(name string) int {
-	matches := evalNameSuffixRegex.FindStringSubmatch(name)
-	if len(matches) < 2 {
-		return -1
-	}
-	number, err := strconv.Atoi(matches[1])
-	if err != nil {
-		return -1
-	}
-	return number
-}
-
-func GenerateEvalName(versionName string, sessionRuns []tensorleapapi.SessionRunData) string {
-	if len(sessionRuns) == 0 {
-		return versionName
-	}
-
-	lastNumber := 1
-	for _, sessionRun := range sessionRuns {
-		number := extractNumberSuffix(sessionRun.GetName())
-		if number > lastNumber {
-			lastNumber = number
-		}
-	}
-	return fmt.Sprintf("%s-%v", versionName, lastNumber+1)
-}
-
-func WaitForSessionAfterVersionPush(ctx context.Context, projectId, versionId string) (string, []string, error) {
-
-	sessionIds := []string{}
-	params := tensorleapapi.SessionVersionIdRequestParams{
-		ProjectId: projectId,
-		VersionId: versionId,
-	}
-
-	lastSessionId := ""
-
-	waitInterval := 10 * time.Second
-	waitTimeout := 10 * time.Minute
-
-	err := api.WaitForCondition(ctx, "Waiting for version to be ready...", func() (bool, error) {
-
-		result, res, err := api.ApiClient.GetSessionsByVersionId(ctx).SessionVersionIdRequestParams(params).Execute()
-		if err = api.CheckRes(res, err); err != nil {
-			return false, fmt.Errorf("failed to get last session id: %w", err)
-		}
-		var lastSession *tensorleapapi.Session
-		for _, session := range result.GetSessions() {
-			if lastSession == nil || lastSession.GetCreatedAt().Before(session.GetCreatedAt()) {
-				lastSession = &session
-			}
-		}
-		if lastSession == nil {
-			return false, nil
-		}
-		for _, session := range result.GetSessions() {
-			sessionIds = append(sessionIds, session.GetCid())
-		}
-		lastSessionId = lastSession.GetCid()
-
-		return true, nil
-	}, waitInterval, waitTimeout)
-
-	if err != nil {
-		return "", nil, fmt.Errorf("failed to wait for session after version push: %w", err)
-	}
-
-	return lastSessionId, sessionIds, nil
-}
-
-func RunEvaluate(ctx context.Context, projectId, versionId string, sessionId string, batchSize int, evalName string) error {
-	existingSessionParams := tensorleapapi.NewEvaluateExistingSessionParams(
+func RunEvaluate(ctx context.Context, projectId, versionId string, batchSize int) error {
+	existingVersionParams := tensorleapapi.NewEvaluateExistingVersionParams(
 		versionId,
 		projectId,
 		float64(batchSize),
-		evalName,
-		"Evaluation triggered from CLI",
 		0,
-		sessionId,
 	)
 
 	evaluateParams := tensorleapapi.EvaluateParams{
-		EvaluateExistingSessionParams: existingSessionParams,
+		EvaluateExistingVersionParams: existingVersionParams,
 	}
 
 	log.Info("Starting evaluation...")
