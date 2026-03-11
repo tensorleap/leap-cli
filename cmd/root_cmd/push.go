@@ -267,16 +267,7 @@ Examples:
 			analytics.SendEvent(analytics.EventCliProjectsPushSuccess, properties)
 
 			if runEval {
-				lastSessionId, versionSessionIds, err := model.WaitForSessionAfterVersionPush(ctx, currentProject.GetCid(), codeSnapshotResponse.VersionId)
-				if err != nil {
-					return fmt.Errorf("failed to get last session id: %w", err)
-				}
-				sessionRuns, err := model.GetSessionRunsEvaluate(ctx, currentProject.GetCid(), versionSessionIds)
-				if err != nil {
-					return fmt.Errorf("failed to get session runs: %w", err)
-				}
-				evalName := model.GenerateEvalName(modelVersionName, sessionRuns.GetEvaluateSessionRuns())
-				err = model.RunEvaluate(ctx, currentProject.GetCid(), codeSnapshotResponse.VersionId, lastSessionId, evalBatchSize, evalName)
+				err = model.RunEvaluate(ctx, currentProject.GetCid(), codeSnapshotResponse.VersionId, evalBatchSize)
 				if err != nil {
 					return fmt.Errorf("failed to run evaluation: %w", err)
 				}

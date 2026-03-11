@@ -230,7 +230,7 @@ func GetRunsStatusesPerVersionId(ctx context.Context, projectId string) (map[str
 }
 
 func CalcVersionStatus(version *tensorleapapi.SlimVersion, jobs []tensorleapapi.RunProcess) (VersionStatus, bool) {
-	hasModel := len(version.GetSessions()) > 0
+	hasModel := version.HasModelId()
 	if jobs == nil {
 		jobs = []tensorleapapi.RunProcess{}
 	}
