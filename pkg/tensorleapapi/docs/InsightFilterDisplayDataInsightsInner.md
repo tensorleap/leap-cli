@@ -6,13 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Index** | **float64** |  | 
 **InsightType** | [**InsightType**](InsightType.md) |  | 
-**SessionRun** | [**FilterSessionRun**](FilterSessionRun.md) |  | 
+**Version** | [**FilterVersion**](FilterVersion.md) |  | 
 
 ## Methods
 
 ### NewInsightFilterDisplayDataInsightsInner
 
-`func NewInsightFilterDisplayDataInsightsInner(index float64, insightType InsightType, sessionRun FilterSessionRun, ) *InsightFilterDisplayDataInsightsInner`
+`func NewInsightFilterDisplayDataInsightsInner(index float64, insightType InsightType, version FilterVersion, ) *InsightFilterDisplayDataInsightsInner`
 
 NewInsightFilterDisplayDataInsightsInner instantiates a new InsightFilterDisplayDataInsightsInner object
 This constructor will assign default values to properties that have it defined,
@@ -67,24 +67,24 @@ and a boolean to check if the value has been set.
 SetInsightType sets InsightType field to given value.
 
 
-### GetSessionRun
+### GetVersion
 
-`func (o *InsightFilterDisplayDataInsightsInner) GetSessionRun() FilterSessionRun`
+`func (o *InsightFilterDisplayDataInsightsInner) GetVersion() FilterVersion`
 
-GetSessionRun returns the SessionRun field if non-nil, zero value otherwise.
+GetVersion returns the Version field if non-nil, zero value otherwise.
 
-### GetSessionRunOk
+### GetVersionOk
 
-`func (o *InsightFilterDisplayDataInsightsInner) GetSessionRunOk() (*FilterSessionRun, bool)`
+`func (o *InsightFilterDisplayDataInsightsInner) GetVersionOk() (*FilterVersion, bool)`
 
-GetSessionRunOk returns a tuple with the SessionRun field if it's non-nil, zero value otherwise
+GetVersionOk returns a tuple with the Version field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRun
+### SetVersion
 
-`func (o *InsightFilterDisplayDataInsightsInner) SetSessionRun(v FilterSessionRun)`
+`func (o *InsightFilterDisplayDataInsightsInner) SetVersion(v FilterVersion)`
 
-SetSessionRun sets SessionRun field to given value.
+SetVersion sets Version field to given value.
 
 
 

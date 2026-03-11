@@ -8,15 +8,16 @@ Name | Type | Description | Notes
 **Insights** | [**[]InsightFilterDisplayDataInsightsInner**](InsightFilterDisplayDataInsightsInner.md) |  | 
 **Limit** | **float64** |  | 
 **SampleIds** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
-**Epoch** | **float64** |  | 
 **FiltersUsed** | **[]string** |  | 
-**SessionRun** | [**FilterSessionRun**](FilterSessionRun.md) |  | 
+**Version** | [**FilterVersion**](FilterVersion.md) |  | 
+**CollectionId** | **string** |  | 
+**ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewFilterDisplayData
 
-`func NewFilterDisplayData(type_ string, insights []InsightFilterDisplayDataInsightsInner, limit float64, sampleIds []SampleIdentity, epoch float64, filtersUsed []string, sessionRun FilterSessionRun, ) *FilterDisplayData`
+`func NewFilterDisplayData(type_ string, insights []InsightFilterDisplayDataInsightsInner, limit float64, sampleIds []SampleIdentity, filtersUsed []string, version FilterVersion, collectionId string, projectId string, ) *FilterDisplayData`
 
 NewFilterDisplayData instantiates a new FilterDisplayData object
 This constructor will assign default values to properties that have it defined,
@@ -111,26 +112,6 @@ and a boolean to check if the value has been set.
 SetSampleIds sets SampleIds field to given value.
 
 
-### GetEpoch
-
-`func (o *FilterDisplayData) GetEpoch() float64`
-
-GetEpoch returns the Epoch field if non-nil, zero value otherwise.
-
-### GetEpochOk
-
-`func (o *FilterDisplayData) GetEpochOk() (*float64, bool)`
-
-GetEpochOk returns a tuple with the Epoch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEpoch
-
-`func (o *FilterDisplayData) SetEpoch(v float64)`
-
-SetEpoch sets Epoch field to given value.
-
-
 ### GetFiltersUsed
 
 `func (o *FilterDisplayData) GetFiltersUsed() []string`
@@ -151,24 +132,64 @@ and a boolean to check if the value has been set.
 SetFiltersUsed sets FiltersUsed field to given value.
 
 
-### GetSessionRun
+### GetVersion
 
-`func (o *FilterDisplayData) GetSessionRun() FilterSessionRun`
+`func (o *FilterDisplayData) GetVersion() FilterVersion`
 
-GetSessionRun returns the SessionRun field if non-nil, zero value otherwise.
+GetVersion returns the Version field if non-nil, zero value otherwise.
 
-### GetSessionRunOk
+### GetVersionOk
 
-`func (o *FilterDisplayData) GetSessionRunOk() (*FilterSessionRun, bool)`
+`func (o *FilterDisplayData) GetVersionOk() (*FilterVersion, bool)`
 
-GetSessionRunOk returns a tuple with the SessionRun field if it's non-nil, zero value otherwise
+GetVersionOk returns a tuple with the Version field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRun
+### SetVersion
 
-`func (o *FilterDisplayData) SetSessionRun(v FilterSessionRun)`
+`func (o *FilterDisplayData) SetVersion(v FilterVersion)`
 
-SetSessionRun sets SessionRun field to given value.
+SetVersion sets Version field to given value.
+
+
+### GetCollectionId
+
+`func (o *FilterDisplayData) GetCollectionId() string`
+
+GetCollectionId returns the CollectionId field if non-nil, zero value otherwise.
+
+### GetCollectionIdOk
+
+`func (o *FilterDisplayData) GetCollectionIdOk() (*string, bool)`
+
+GetCollectionIdOk returns a tuple with the CollectionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCollectionId
+
+`func (o *FilterDisplayData) SetCollectionId(v string)`
+
+SetCollectionId sets CollectionId field to given value.
+
+
+### GetProjectId
+
+`func (o *FilterDisplayData) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *FilterDisplayData) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *FilterDisplayData) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
 
 
 

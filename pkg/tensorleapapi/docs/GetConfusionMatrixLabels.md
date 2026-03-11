@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**SessionRunIds** | **[]string** |  | 
+**InferenceArtifactIds** | **[]string** |  | 
 
 ## Methods
 
 ### NewGetConfusionMatrixLabels
 
-`func NewGetConfusionMatrixLabels(projectId string, sessionRunIds []string, ) *GetConfusionMatrixLabels`
+`func NewGetConfusionMatrixLabels(projectId string, inferenceArtifactIds []string, ) *GetConfusionMatrixLabels`
 
 NewGetConfusionMatrixLabels instantiates a new GetConfusionMatrixLabels object
 This constructor will assign default values to properties that have it defined,
@@ -46,24 +46,24 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetSessionRunIds
+### GetInferenceArtifactIds
 
-`func (o *GetConfusionMatrixLabels) GetSessionRunIds() []string`
+`func (o *GetConfusionMatrixLabels) GetInferenceArtifactIds() []string`
 
-GetSessionRunIds returns the SessionRunIds field if non-nil, zero value otherwise.
+GetInferenceArtifactIds returns the InferenceArtifactIds field if non-nil, zero value otherwise.
 
-### GetSessionRunIdsOk
+### GetInferenceArtifactIdsOk
 
-`func (o *GetConfusionMatrixLabels) GetSessionRunIdsOk() (*[]string, bool)`
+`func (o *GetConfusionMatrixLabels) GetInferenceArtifactIdsOk() (*[]string, bool)`
 
-GetSessionRunIdsOk returns a tuple with the SessionRunIds field if it's non-nil, zero value otherwise
+GetInferenceArtifactIdsOk returns a tuple with the InferenceArtifactIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunIds
+### SetInferenceArtifactIds
 
-`func (o *GetConfusionMatrixLabels) SetSessionRunIds(v []string)`
+`func (o *GetConfusionMatrixLabels) SetInferenceArtifactIds(v []string)`
 
-SetSessionRunIds sets SessionRunIds field to given value.
+SetInferenceArtifactIds sets InferenceArtifactIds field to given value.
 
 
 

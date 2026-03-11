@@ -4,11 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SessionRunId** | **string** |  | 
+**VersionId** | **string** |  | 
 **ProjectId** | **string** |  | 
 **Limit** | **float64** |  | 
 **SampleIds** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
-**Epoch** | **float64** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **Digest** | **string** |  | 
 
@@ -16,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewFetchSimilarRequestParams
 
-`func NewFetchSimilarRequestParams(sessionRunId string, projectId string, limit float64, sampleIds []SampleIdentity, epoch float64, digest string, ) *FetchSimilarRequestParams`
+`func NewFetchSimilarRequestParams(versionId string, projectId string, limit float64, sampleIds []SampleIdentity, digest string, ) *FetchSimilarRequestParams`
 
 NewFetchSimilarRequestParams instantiates a new FetchSimilarRequestParams object
 This constructor will assign default values to properties that have it defined,
@@ -31,24 +30,24 @@ NewFetchSimilarRequestParamsWithDefaults instantiates a new FetchSimilarRequestP
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *FetchSimilarRequestParams) GetSessionRunId() string`
+`func (o *FetchSimilarRequestParams) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *FetchSimilarRequestParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *FetchSimilarRequestParams) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *FetchSimilarRequestParams) SetSessionRunId(v string)`
+`func (o *FetchSimilarRequestParams) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
 
 
 ### GetProjectId
@@ -109,26 +108,6 @@ and a boolean to check if the value has been set.
 `func (o *FetchSimilarRequestParams) SetSampleIds(v []SampleIdentity)`
 
 SetSampleIds sets SampleIds field to given value.
-
-
-### GetEpoch
-
-`func (o *FetchSimilarRequestParams) GetEpoch() float64`
-
-GetEpoch returns the Epoch field if non-nil, zero value otherwise.
-
-### GetEpochOk
-
-`func (o *FetchSimilarRequestParams) GetEpochOk() (*float64, bool)`
-
-GetEpochOk returns a tuple with the Epoch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEpoch
-
-`func (o *FetchSimilarRequestParams) SetEpoch(v float64)`
-
-SetEpoch sets Epoch field to given value.
 
 
 ### GetFilters

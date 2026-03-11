@@ -3,13 +3,13 @@
 ## Enum
 
 
+* `WARMUP` (value: `"WARMUP"`)
+
 * `TRAINING` (value: `"TRAINING"`)
 
 * `IMPORT_MODEL` (value: `"IMPORT_MODEL"`)
 
 * `ANALYZE` (value: `"ANALYZE"`)
-
-* `WARMUP` (value: `"WARMUP"`)
 
 * `TEST_STUB_FUNCTION` (value: `"TEST_STUB_FUNCTION"`)
 

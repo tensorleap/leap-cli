@@ -4,7 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SessionRunId** | **string** |  | 
+**VersionId** | **string** |  | 
+**InferenceArtifactId** | Pointer to **string** |  | [optional] 
 **ProjectId** | **string** |  | 
 **BatchSize** | Pointer to **float64** |  | [optional] 
 
@@ -12,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewContinueEvaluateParams
 
-`func NewContinueEvaluateParams(sessionRunId string, projectId string, ) *ContinueEvaluateParams`
+`func NewContinueEvaluateParams(versionId string, projectId string, ) *ContinueEvaluateParams`
 
 NewContinueEvaluateParams instantiates a new ContinueEvaluateParams object
 This constructor will assign default values to properties that have it defined,
@@ -27,25 +28,50 @@ NewContinueEvaluateParamsWithDefaults instantiates a new ContinueEvaluateParams 
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *ContinueEvaluateParams) GetSessionRunId() string`
+`func (o *ContinueEvaluateParams) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *ContinueEvaluateParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *ContinueEvaluateParams) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *ContinueEvaluateParams) SetSessionRunId(v string)`
+`func (o *ContinueEvaluateParams) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
 
+
+### GetInferenceArtifactId
+
+`func (o *ContinueEvaluateParams) GetInferenceArtifactId() string`
+
+GetInferenceArtifactId returns the InferenceArtifactId field if non-nil, zero value otherwise.
+
+### GetInferenceArtifactIdOk
+
+`func (o *ContinueEvaluateParams) GetInferenceArtifactIdOk() (*string, bool)`
+
+GetInferenceArtifactIdOk returns a tuple with the InferenceArtifactId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInferenceArtifactId
+
+`func (o *ContinueEvaluateParams) SetInferenceArtifactId(v string)`
+
+SetInferenceArtifactId sets InferenceArtifactId field to given value.
+
+### HasInferenceArtifactId
+
+`func (o *ContinueEvaluateParams) HasInferenceArtifactId() bool`
+
+HasInferenceArtifactId returns a boolean if a field has been set.
 
 ### GetProjectId
 

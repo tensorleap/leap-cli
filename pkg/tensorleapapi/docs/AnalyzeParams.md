@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | [**AnalyzeTypeEnum**](AnalyzeTypeEnum.md) |  | 
-**FromEpoch** | **float64** |  | 
+**InferenceArtifactId** | Pointer to **string** |  | [optional] 
 **BatchSize** | Pointer to **float64** |  | [optional] 
 **SampleIdentity** | Pointer to [**SampleIdentity**](SampleIdentity.md) |  | [optional] 
 **FromDatasetSlice** | Pointer to [**DataStateType**](DataStateType.md) |  | [optional] 
@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewAnalyzeParams
 
-`func NewAnalyzeParams(type_ AnalyzeTypeEnum, fromEpoch float64, extId string, ) *AnalyzeParams`
+`func NewAnalyzeParams(type_ AnalyzeTypeEnum, extId string, ) *AnalyzeParams`
 
 NewAnalyzeParams instantiates a new AnalyzeParams object
 This constructor will assign default values to properties that have it defined,
@@ -50,25 +50,30 @@ and a boolean to check if the value has been set.
 SetType sets Type field to given value.
 
 
-### GetFromEpoch
+### GetInferenceArtifactId
 
-`func (o *AnalyzeParams) GetFromEpoch() float64`
+`func (o *AnalyzeParams) GetInferenceArtifactId() string`
 
-GetFromEpoch returns the FromEpoch field if non-nil, zero value otherwise.
+GetInferenceArtifactId returns the InferenceArtifactId field if non-nil, zero value otherwise.
 
-### GetFromEpochOk
+### GetInferenceArtifactIdOk
 
-`func (o *AnalyzeParams) GetFromEpochOk() (*float64, bool)`
+`func (o *AnalyzeParams) GetInferenceArtifactIdOk() (*string, bool)`
 
-GetFromEpochOk returns a tuple with the FromEpoch field if it's non-nil, zero value otherwise
+GetInferenceArtifactIdOk returns a tuple with the InferenceArtifactId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFromEpoch
+### SetInferenceArtifactId
 
-`func (o *AnalyzeParams) SetFromEpoch(v float64)`
+`func (o *AnalyzeParams) SetInferenceArtifactId(v string)`
 
-SetFromEpoch sets FromEpoch field to given value.
+SetInferenceArtifactId sets InferenceArtifactId field to given value.
 
+### HasInferenceArtifactId
+
+`func (o *AnalyzeParams) HasInferenceArtifactId() bool`
+
+HasInferenceArtifactId returns a boolean if a field has been set.
 
 ### GetBatchSize
 

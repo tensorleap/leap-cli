@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SessionRunId** | **string** |  | 
+**VersionId** | **string** |  | 
+**InferenceArtifactId** | **string** |  | 
 **ProjectId** | **string** |  | 
 **BatchSize** | **float64** |  | 
-**FromEpoch** | **float64** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **TimeFilter** | Pointer to [**ESFilter**](ESFilter.md) |  | [optional] 
 **NotApplyTimeFilterOnUnlabeledOnly** | Pointer to **bool** |  | [optional] 
@@ -24,7 +24,7 @@ Name | Type | Description | Notes
 
 ### NewPickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail
 
-`func NewPickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail(sessionRunId string, projectId string, batchSize float64, fromEpoch float64, numOfSamples float64, balanceBy []string, shouldFillRemainingWithUnbalanced bool, reductionAlgorithm ReductionAlgorithm, ) *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail`
+`func NewPickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail(versionId string, inferenceArtifactId string, projectId string, batchSize float64, numOfSamples float64, balanceBy []string, shouldFillRemainingWithUnbalanced bool, reductionAlgorithm ReductionAlgorithm, ) *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail`
 
 NewPickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail instantiates a new PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail object
 This constructor will assign default values to properties that have it defined,
@@ -39,24 +39,44 @@ NewPickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestO
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail) GetSessionRunId() string`
+`func (o *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail) GetSessionRunIdOk() (*string, bool)`
+`func (o *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail) SetSessionRunId(v string)`
+`func (o *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
+
+
+### GetInferenceArtifactId
+
+`func (o *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail) GetInferenceArtifactId() string`
+
+GetInferenceArtifactId returns the InferenceArtifactId field if non-nil, zero value otherwise.
+
+### GetInferenceArtifactIdOk
+
+`func (o *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail) GetInferenceArtifactIdOk() (*string, bool)`
+
+GetInferenceArtifactIdOk returns a tuple with the InferenceArtifactId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInferenceArtifactId
+
+`func (o *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail) SetInferenceArtifactId(v string)`
+
+SetInferenceArtifactId sets InferenceArtifactId field to given value.
 
 
 ### GetProjectId
@@ -97,26 +117,6 @@ and a boolean to check if the value has been set.
 `func (o *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail) SetBatchSize(v float64)`
 
 SetBatchSize sets BatchSize field to given value.
-
-
-### GetFromEpoch
-
-`func (o *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail) GetFromEpoch() float64`
-
-GetFromEpoch returns the FromEpoch field if non-nil, zero value otherwise.
-
-### GetFromEpochOk
-
-`func (o *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail) GetFromEpochOk() (*float64, bool)`
-
-GetFromEpochOk returns a tuple with the FromEpoch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFromEpoch
-
-`func (o *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail) SetFromEpoch(v float64)`
-
-SetFromEpoch sets FromEpoch field to given value.
 
 
 ### GetFilters

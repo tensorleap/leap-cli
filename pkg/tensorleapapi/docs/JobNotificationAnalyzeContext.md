@@ -14,13 +14,12 @@ Name | Type | Description | Notes
 **VersionId** | **string** |  | 
 **SessionId** | Pointer to **string** |  | [optional] 
 **Epoch** | Pointer to **float64** |  | [optional] 
-**SessionRunId** | **string** |  | 
 
 ## Methods
 
 ### NewJobNotificationAnalyzeContext
 
-`func NewJobNotificationAnalyzeContext(jobId string, jobType JobType, projectName string, projectId string, modelName string, modelExtId string, isOverwrite bool, versionId string, sessionRunId string, ) *JobNotificationAnalyzeContext`
+`func NewJobNotificationAnalyzeContext(jobId string, jobType JobType, projectName string, projectId string, modelName string, modelExtId string, isOverwrite bool, versionId string, ) *JobNotificationAnalyzeContext`
 
 NewJobNotificationAnalyzeContext instantiates a new JobNotificationAnalyzeContext object
 This constructor will assign default values to properties that have it defined,
@@ -244,26 +243,6 @@ SetEpoch sets Epoch field to given value.
 `func (o *JobNotificationAnalyzeContext) HasEpoch() bool`
 
 HasEpoch returns a boolean if a field has been set.
-
-### GetSessionRunId
-
-`func (o *JobNotificationAnalyzeContext) GetSessionRunId() string`
-
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
-
-### GetSessionRunIdOk
-
-`func (o *JobNotificationAnalyzeContext) GetSessionRunIdOk() (*string, bool)`
-
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSessionRunId
-
-`func (o *JobNotificationAnalyzeContext) SetSessionRunId(v string)`
-
-SetSessionRunId sets SessionRunId field to given value.
-
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
