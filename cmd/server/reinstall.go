@@ -69,6 +69,7 @@ func NewReinstallCmd() *cobra.Command {
 				analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties)
 				return mapInstallationErr(err)
 			}
+
 			// Refresh server version after successful reinstall
 			initServerVersionForAnalytics(cmd.Context())
 
