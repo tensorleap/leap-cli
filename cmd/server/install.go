@@ -14,8 +14,6 @@ func NewInstallCmd() *cobra.Command {
 	flags := &servercmd.InstallFlags{}
 	licenseFlag := auth.NewLicenseFlag()
 	var nonInteractive bool
-	var skipLogin bool
-
 	cmd := &cobra.Command{
 		Use:   "install",
 		Short: servercmd.InstallCmdDescription,
@@ -63,7 +61,7 @@ func NewInstallCmd() *cobra.Command {
 				return err
 			}
 
-			installResult, err := servercmd.RunInstallCmd(cmd, flags)
+			_, err = servercmd.RunInstallCmd(cmd, flags)
 			if err != nil {
 				// Track installation failed
 				failProperties := map[string]interface{}{
@@ -74,19 +72,6 @@ func NewInstallCmd() *cobra.Command {
 				}
 				analytics.SendEvent(analytics.EventServerInstallFailed, failProperties)
 				return mapInstallationErr(err)
-			}
-
-			if err := localLogin(installResult.ServerURL, flags.Port, skipLogin); err != nil {
-				// Track installation failed
-				failProperties := map[string]interface{}{
-					"cli_version": version.CliVersion,
-					"data_dir":    flags.DataDir,
-					"port":        flags.Port,
-					"error":       err.Error(),
-					"stage":       "local_login",
-				}
-				analytics.SendEvent(analytics.EventServerInstallFailed, failProperties)
-				return err
 			}
 
 			// Refresh server version after successful install
@@ -126,7 +111,5 @@ func NewInstallCmd() *cobra.Command {
 	flags.SetFlags(cmd)
 	licenseFlag.AddFlags(cmd)
 	cmd.Flags().BoolVarP(&nonInteractive, "yes", "y", false, "Run in non-interactive mode (skip prompts)")
-	cmd.Flags().BoolVar(&skipLogin, "skip-login", false, "Skip automatic browser login after installation")
-
 	return cmd
 }

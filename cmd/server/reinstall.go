@@ -14,8 +14,6 @@ func NewReinstallCmd() *cobra.Command {
 	flags := &servercmd.ReinstallFlags{}
 	licenseFlag := auth.NewLicenseFlag()
 	var nonInteractive bool
-	var skipLogin bool
-
 	cmd := &cobra.Command{
 		Use:   "reinstall",
 		Short: "Reinstall tensorleap",
@@ -60,7 +58,7 @@ func NewReinstallCmd() *cobra.Command {
 				analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties)
 				return err
 			}
-			result, err := servercmd.RunReinstallCmd(cmd, flags, isReinstalled)
+			_, err = servercmd.RunReinstallCmd(cmd, flags, isReinstalled)
 			if err != nil {
 				failProperties := map[string]interface{}{
 					"cli_version": version.CliVersion,
@@ -71,18 +69,6 @@ func NewReinstallCmd() *cobra.Command {
 				analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties)
 				return mapInstallationErr(err)
 			}
-			if err := localLogin(result.ServerURL, flags.Port, skipLogin); err != nil {
-				failProperties := map[string]interface{}{
-					"cli_version": version.CliVersion,
-					"data_dir":    flags.DataDir,
-					"port":        flags.Port,
-					"error":       err.Error(),
-					"stage":       "local_login",
-				}
-				analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties)
-				return err
-			}
-
 			// Refresh server version after successful reinstall
 			initServerVersionForAnalytics(cmd.Context())
 
@@ -119,7 +105,5 @@ func NewReinstallCmd() *cobra.Command {
 	flags.SetFlags(cmd)
 	licenseFlag.AddFlags(cmd)
 	cmd.Flags().BoolVarP(&nonInteractive, "yes", "y", false, "Run in non-interactive mode (skip prompts)")
-	cmd.Flags().BoolVar(&skipLogin, "skip-login", false, "Skip automatic browser login after reinstallation")
-
 	return cmd
 }
