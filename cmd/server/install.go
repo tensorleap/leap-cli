@@ -126,7 +126,7 @@ func NewInstallCmd() *cobra.Command {
 	flags.SetFlags(cmd)
 	licenseFlag.AddFlags(cmd)
 	cmd.Flags().BoolVarP(&nonInteractive, "yes", "y", false, "Run in non-interactive mode (skip prompts)")
-	cmd.Flags().BoolVar(&skipLogin, "skip-login", false, "Skip automatic browser login after installation")
+	cmd.Flags().BoolVar(&skipLogin, "skip-login", true, "Skip automatic browser login after installation")
 
 	return cmd
 }
