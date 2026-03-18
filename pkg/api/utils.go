@@ -2,6 +2,7 @@ package api
 
 import (
 	"crypto/tls"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -29,7 +30,29 @@ func (e *HTTPError) Error() string {
 	if e.StatusCode == 401 {
 		return ErrAuth.Error()
 	}
+	if e.StatusCode == 403 {
+		return extractServerMessage(e.Body)
+	}
 	return fmt.Sprintf("Error: HTTP status code %d\nURL: %s\nResponse body:\n%s", e.StatusCode, e.URL, e.Body)
+}
+
+func extractServerMessage(body string) string {
+	var parsed struct {
+		Error   string `json:"error"`
+		Message string `json:"message"`
+	}
+	if err := json.Unmarshal([]byte(body), &parsed); err == nil {
+		if parsed.Error != "" {
+			return parsed.Error
+		}
+		if parsed.Message != "" {
+			return parsed.Message
+		}
+	}
+	if body != "" {
+		return body
+	}
+	return "Forbidden"
 }
 
 type CustomRoundTripper struct {
@@ -70,6 +93,14 @@ func NewDefaultClient() *http.Client {
 
 func CheckRes(response *http.Response, err error) error {
 	if err != nil {
+		if response != nil && response.StatusCode == 403 {
+			body := extractBodyFromError(err)
+			return &HTTPError{
+				URL:        response.Request.URL.String(),
+				StatusCode: 403,
+				Body:       body,
+			}
+		}
 		return err
 	}
 	if IsValidStatus(response) {
@@ -93,6 +124,19 @@ func CheckRes(response *http.Response, err error) error {
 		StatusCode: response.StatusCode,
 		Body:       string(body),
 	}
+}
+
+func extractBodyFromError(err error) string {
+	type bodyProvider interface {
+		Body() []byte
+	}
+	var bp bodyProvider
+	if errors.As(err, &bp) {
+		if b := bp.Body(); len(b) > 0 {
+			return string(b)
+		}
+	}
+	return err.Error()
 }
 
 func IsValidStatus(response *http.Response) bool {
