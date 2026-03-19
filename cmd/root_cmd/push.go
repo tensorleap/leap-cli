@@ -178,11 +178,12 @@ Examples:
 
 			pushed, codeSnapshotResponse, err := code.PushCode(ctx, tarGzFile, workspaceConfig.EntryFile, secretId, pythonVersion, modelVersionName, currentProject.GetCid(), branch, overwriteVersionId)
 			if err != nil {
-				// Track projects push failed
 				properties["error"] = err.Error()
 				properties["stage"] = "push_code"
-				properties["code_snapshot_id"] = codeSnapshotResponse.CodeSnapshot.Cid
-				properties["version_id"] = codeSnapshotResponse.VersionId
+				if codeSnapshotResponse != nil {
+					properties["code_snapshot_id"] = codeSnapshotResponse.CodeSnapshot.Cid
+					properties["version_id"] = codeSnapshotResponse.VersionId
+				}
 				analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
 				return err
 			}
