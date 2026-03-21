@@ -18,7 +18,7 @@ require (
 	github.com/spf13/cobra v1.10.1
 	github.com/spf13/viper v1.18.2
 	github.com/stretchr/testify v1.11.1
-	github.com/tensorleap/concierge v0.0.0-00010101000000-000000000000
+	github.com/tensorleap/concierge v0.0.0-20260321074608-eea85c4fd40a
 	github.com/tensorleap/helm-charts v0.9.9
 	github.com/tensorleap/leap-cli/pkg/tensorleapapi v0.0.0-00010101000000-000000000000
 	google.golang.org/api v0.256.0
@@ -259,7 +259,8 @@ require (
 
 replace github.com/tensorleap/leap-cli/pkg/tensorleapapi => ./pkg/tensorleapapi
 
-replace github.com/tensorleap/concierge => ../concierge
+// for local development only
+// replace github.com/tensorleap/concierge => ../concierge
 
 // for local defelopment only
 // replace github.com/tensorleap/helm-charts => ./../helm-charts
