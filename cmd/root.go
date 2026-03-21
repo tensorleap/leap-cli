@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/viper"
 	"github.com/tensorleap/leap-cli/cmd/auth"
 	"github.com/tensorleap/leap-cli/cmd/cli"
+	"github.com/tensorleap/leap-cli/cmd/concierge"
 	"github.com/tensorleap/leap-cli/cmd/hub"
 	"github.com/tensorleap/leap-cli/cmd/projects"
 	"github.com/tensorleap/leap-cli/cmd/root_cmd"
@@ -70,6 +71,7 @@ func init() {
 	RootCommand.AddCommand(cli.RootCommand)
 	RootCommand.AddCommand(projects.RootCommand)
 	RootCommand.AddCommand(run.RootCommand)
+	RootCommand.AddCommand(concierge.RootCommand)
 	if hubPkg.IsHubEnabled() {
 		RootCommand.AddCommand(hub.RootCommand)
 	}
