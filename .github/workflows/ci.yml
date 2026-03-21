@@ -7,6 +7,10 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      GONOSUMCHECK: github.com/tensorleap/concierge
+      GONOSUMDB: github.com/tensorleap/concierge
+      GOPRIVATE: github.com/tensorleap/concierge
     steps:
       - uses: actions/checkout@v4
 
