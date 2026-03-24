@@ -11,11 +11,12 @@ func init() {
 		Short: "Get information about the authenticated user",
 		Long:  `Get information about the authenticated user`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := auth.CheckLoggedIn(); err != nil {
+			ctx, _, err := auth.RequireAuth(cmd.Context())
+			if err != nil {
 				return err
 			}
 
-			return auth.PrintWhoami(cmd.Context())
+			return auth.PrintWhoami(ctx)
 		},
 	}
 	RootCommand.AddCommand(cmd)
