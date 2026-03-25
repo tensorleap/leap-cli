@@ -27,6 +27,7 @@ func NewPushCmd() *cobra.Command {
 	var noWait bool
 	var pythonVersion string
 	var runEval bool
+	var batchSize int
 
 	var cmd = &cobra.Command{
 		Use:   "push",
@@ -41,6 +42,10 @@ Examples:
   leap push -e
 `,
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if batchSize > 0 && !runEval {
+				return fmt.Errorf("--batch requires --eval")
+			}
+
 			if err := auth.RequireAuthSimple(cmd.Context()); err != nil {
 				return err
 			}
@@ -156,13 +161,17 @@ Examples:
 
 			var evalBatchSize int
 			if runEval {
-				defaultBatchSize, err := model.GetLatestEvaluateBatchSize(ctx, currentProject.GetCid())
-				if err != nil {
-					log.Warnf("failed to get latest evaluate batch size: %v", err)
-				}
-				evalBatchSize, err = model.AskForBatchSize(defaultBatchSize)
-				if err != nil {
-					return fmt.Errorf("failed to get batch size: %w", err)
+				if batchSize > 0 {
+					evalBatchSize = batchSize
+				} else {
+					defaultBatchSize, err := model.GetLatestEvaluateBatchSize(ctx, currentProject.GetCid())
+					if err != nil {
+						log.Warnf("failed to get latest evaluate batch size: %v", err)
+					}
+					evalBatchSize, err = model.AskForBatchSize(defaultBatchSize)
+					if err != nil {
+						return fmt.Errorf("failed to get batch size: %w", err)
+					}
 				}
 			}
 
@@ -295,5 +304,6 @@ Examples:
 	cmd.Flags().BoolVar(&noWait, "no-wait", false, "Do not wait for push to complete")
 	cmd.Flags().StringVarP(&modelPath, "model-path", "m", "", "Path to the model file")
 	cmd.Flags().BoolVarP(&runEval, "eval", "e", false, "Run evaluation on the model after push completes")
+	cmd.Flags().IntVar(&batchSize, "batch", 0, "Batch size for evaluation (only valid with --eval)")
 	return cmd
 }
