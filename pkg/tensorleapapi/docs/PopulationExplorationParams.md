@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SessionRunId** | **string** |  | 
+**VersionId** | **string** |  | 
+**InferenceArtifactId** | **string** |  | 
 **ProjectId** | **string** |  | 
 **BatchSize** | **float64** |  | 
-**FromEpoch** | **float64** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **TimeFilter** | Pointer to [**ESFilter**](ESFilter.md) |  | [optional] 
 **NotApplyTimeFilterOnUnlabeledOnly** | Pointer to **bool** |  | [optional] 
@@ -26,7 +26,7 @@ Name | Type | Description | Notes
 
 ### NewPopulationExplorationParams
 
-`func NewPopulationExplorationParams(sessionRunId string, projectId string, batchSize float64, fromEpoch float64, digest string, numOfSamples float64, balanceBy []string, shouldFillRemainingWithUnbalanced bool, reductionAlgorithm ReductionAlgorithm, ) *PopulationExplorationParams`
+`func NewPopulationExplorationParams(versionId string, inferenceArtifactId string, projectId string, batchSize float64, digest string, numOfSamples float64, balanceBy []string, shouldFillRemainingWithUnbalanced bool, reductionAlgorithm ReductionAlgorithm, ) *PopulationExplorationParams`
 
 NewPopulationExplorationParams instantiates a new PopulationExplorationParams object
 This constructor will assign default values to properties that have it defined,
@@ -41,24 +41,44 @@ NewPopulationExplorationParamsWithDefaults instantiates a new PopulationExplorat
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *PopulationExplorationParams) GetSessionRunId() string`
+`func (o *PopulationExplorationParams) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *PopulationExplorationParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *PopulationExplorationParams) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *PopulationExplorationParams) SetSessionRunId(v string)`
+`func (o *PopulationExplorationParams) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
+
+
+### GetInferenceArtifactId
+
+`func (o *PopulationExplorationParams) GetInferenceArtifactId() string`
+
+GetInferenceArtifactId returns the InferenceArtifactId field if non-nil, zero value otherwise.
+
+### GetInferenceArtifactIdOk
+
+`func (o *PopulationExplorationParams) GetInferenceArtifactIdOk() (*string, bool)`
+
+GetInferenceArtifactIdOk returns a tuple with the InferenceArtifactId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInferenceArtifactId
+
+`func (o *PopulationExplorationParams) SetInferenceArtifactId(v string)`
+
+SetInferenceArtifactId sets InferenceArtifactId field to given value.
 
 
 ### GetProjectId
@@ -99,26 +119,6 @@ and a boolean to check if the value has been set.
 `func (o *PopulationExplorationParams) SetBatchSize(v float64)`
 
 SetBatchSize sets BatchSize field to given value.
-
-
-### GetFromEpoch
-
-`func (o *PopulationExplorationParams) GetFromEpoch() float64`
-
-GetFromEpoch returns the FromEpoch field if non-nil, zero value otherwise.
-
-### GetFromEpochOk
-
-`func (o *PopulationExplorationParams) GetFromEpochOk() (*float64, bool)`
-
-GetFromEpochOk returns a tuple with the FromEpoch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFromEpoch
-
-`func (o *PopulationExplorationParams) SetFromEpoch(v float64)`
-
-SetFromEpoch sets FromEpoch field to given value.
 
 
 ### GetFilters

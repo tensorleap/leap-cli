@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**SessionRunsToEpochs** | [**[]SessionRunToEpoch**](SessionRunToEpoch.md) |  | 
+**InferenceArtifactIds** | **[]string** |  | 
 **ShowAllEpochs** | **bool** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewGenericDataQueryParams
 
-`func NewGenericDataQueryParams(projectId string, sessionRunsToEpochs []SessionRunToEpoch, showAllEpochs bool, aggregations []Aggregations, buckets []SplitAgg, ) *GenericDataQueryParams`
+`func NewGenericDataQueryParams(projectId string, inferenceArtifactIds []string, showAllEpochs bool, aggregations []Aggregations, buckets []SplitAgg, ) *GenericDataQueryParams`
 
 NewGenericDataQueryParams instantiates a new GenericDataQueryParams object
 This constructor will assign default values to properties that have it defined,
@@ -54,24 +54,24 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetSessionRunsToEpochs
+### GetInferenceArtifactIds
 
-`func (o *GenericDataQueryParams) GetSessionRunsToEpochs() []SessionRunToEpoch`
+`func (o *GenericDataQueryParams) GetInferenceArtifactIds() []string`
 
-GetSessionRunsToEpochs returns the SessionRunsToEpochs field if non-nil, zero value otherwise.
+GetInferenceArtifactIds returns the InferenceArtifactIds field if non-nil, zero value otherwise.
 
-### GetSessionRunsToEpochsOk
+### GetInferenceArtifactIdsOk
 
-`func (o *GenericDataQueryParams) GetSessionRunsToEpochsOk() (*[]SessionRunToEpoch, bool)`
+`func (o *GenericDataQueryParams) GetInferenceArtifactIdsOk() (*[]string, bool)`
 
-GetSessionRunsToEpochsOk returns a tuple with the SessionRunsToEpochs field if it's non-nil, zero value otherwise
+GetInferenceArtifactIdsOk returns a tuple with the InferenceArtifactIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunsToEpochs
+### SetInferenceArtifactIds
 
-`func (o *GenericDataQueryParams) SetSessionRunsToEpochs(v []SessionRunToEpoch)`
+`func (o *GenericDataQueryParams) SetInferenceArtifactIds(v []string)`
 
-SetSessionRunsToEpochs sets SessionRunsToEpochs field to given value.
+SetInferenceArtifactIds sets InferenceArtifactIds field to given value.
 
 
 ### GetShowAllEpochs

@@ -6,16 +6,15 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Digest** | **string** |  | 
 **TargetFilters** | [**[]ESFilter**](ESFilter.md) |  | 
-**Sources** | [**[]GenerateSyntheticDataParamsSourcesInner**](GenerateSyntheticDataParamsSourcesInner.md) |  | 
-**FromEpoch** | **float64** |  | 
-**SessionRunId** | **string** |  | 
+**Sources** | [**[]SyntheticDataJobParamsSourcesInner**](SyntheticDataJobParamsSourcesInner.md) |  | 
+**VersionId** | **string** |  | 
 **Type** | **string** |  | 
 
 ## Methods
 
 ### NewSyntheticDataJobParams
 
-`func NewSyntheticDataJobParams(digest string, targetFilters []ESFilter, sources []GenerateSyntheticDataParamsSourcesInner, fromEpoch float64, sessionRunId string, type_ string, ) *SyntheticDataJobParams`
+`func NewSyntheticDataJobParams(digest string, targetFilters []ESFilter, sources []SyntheticDataJobParamsSourcesInner, versionId string, type_ string, ) *SyntheticDataJobParams`
 
 NewSyntheticDataJobParams instantiates a new SyntheticDataJobParams object
 This constructor will assign default values to properties that have it defined,
@@ -72,62 +71,42 @@ SetTargetFilters sets TargetFilters field to given value.
 
 ### GetSources
 
-`func (o *SyntheticDataJobParams) GetSources() []GenerateSyntheticDataParamsSourcesInner`
+`func (o *SyntheticDataJobParams) GetSources() []SyntheticDataJobParamsSourcesInner`
 
 GetSources returns the Sources field if non-nil, zero value otherwise.
 
 ### GetSourcesOk
 
-`func (o *SyntheticDataJobParams) GetSourcesOk() (*[]GenerateSyntheticDataParamsSourcesInner, bool)`
+`func (o *SyntheticDataJobParams) GetSourcesOk() (*[]SyntheticDataJobParamsSourcesInner, bool)`
 
 GetSourcesOk returns a tuple with the Sources field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSources
 
-`func (o *SyntheticDataJobParams) SetSources(v []GenerateSyntheticDataParamsSourcesInner)`
+`func (o *SyntheticDataJobParams) SetSources(v []SyntheticDataJobParamsSourcesInner)`
 
 SetSources sets Sources field to given value.
 
 
-### GetFromEpoch
+### GetVersionId
 
-`func (o *SyntheticDataJobParams) GetFromEpoch() float64`
+`func (o *SyntheticDataJobParams) GetVersionId() string`
 
-GetFromEpoch returns the FromEpoch field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetFromEpochOk
+### GetVersionIdOk
 
-`func (o *SyntheticDataJobParams) GetFromEpochOk() (*float64, bool)`
+`func (o *SyntheticDataJobParams) GetVersionIdOk() (*string, bool)`
 
-GetFromEpochOk returns a tuple with the FromEpoch field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFromEpoch
+### SetVersionId
 
-`func (o *SyntheticDataJobParams) SetFromEpoch(v float64)`
+`func (o *SyntheticDataJobParams) SetVersionId(v string)`
 
-SetFromEpoch sets FromEpoch field to given value.
-
-
-### GetSessionRunId
-
-`func (o *SyntheticDataJobParams) GetSessionRunId() string`
-
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
-
-### GetSessionRunIdOk
-
-`func (o *SyntheticDataJobParams) GetSessionRunIdOk() (*string, bool)`
-
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSessionRunId
-
-`func (o *SyntheticDataJobParams) SetSessionRunId(v string)`
-
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
 
 
 ### GetType

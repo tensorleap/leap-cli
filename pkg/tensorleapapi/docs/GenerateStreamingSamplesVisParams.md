@@ -6,14 +6,14 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VisualizationType** | **string** |  | 
 **SampleIdentities** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
-**SessionRunId** | **string** |  | 
+**VisArtifactId** | **string** |  | 
 **ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewGenerateStreamingSamplesVisParams
 
-`func NewGenerateStreamingSamplesVisParams(visualizationType string, sampleIdentities []SampleIdentity, sessionRunId string, projectId string, ) *GenerateStreamingSamplesVisParams`
+`func NewGenerateStreamingSamplesVisParams(visualizationType string, sampleIdentities []SampleIdentity, visArtifactId string, projectId string, ) *GenerateStreamingSamplesVisParams`
 
 NewGenerateStreamingSamplesVisParams instantiates a new GenerateStreamingSamplesVisParams object
 This constructor will assign default values to properties that have it defined,
@@ -68,24 +68,24 @@ and a boolean to check if the value has been set.
 SetSampleIdentities sets SampleIdentities field to given value.
 
 
-### GetSessionRunId
+### GetVisArtifactId
 
-`func (o *GenerateStreamingSamplesVisParams) GetSessionRunId() string`
+`func (o *GenerateStreamingSamplesVisParams) GetVisArtifactId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVisArtifactId returns the VisArtifactId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVisArtifactIdOk
 
-`func (o *GenerateStreamingSamplesVisParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *GenerateStreamingSamplesVisParams) GetVisArtifactIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVisArtifactIdOk returns a tuple with the VisArtifactId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVisArtifactId
 
-`func (o *GenerateStreamingSamplesVisParams) SetSessionRunId(v string)`
+`func (o *GenerateStreamingSamplesVisParams) SetVisArtifactId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVisArtifactId sets VisArtifactId field to given value.
 
 
 ### GetProjectId

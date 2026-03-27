@@ -16,14 +16,13 @@ Name | Type | Description | Notes
 **IsOverwrite** | **bool** |  | 
 **SessionId** | Pointer to **string** |  | [optional] 
 **Epoch** | Pointer to **float64** |  | [optional] 
-**SessionRunId** | **string** |  | 
 **Sample** | [**SampleIdentity**](SampleIdentity.md) |  | 
 
 ## Methods
 
 ### NewJobNotificationContext
 
-`func NewJobNotificationContext(jobId string, jobType JobType, codeSnapshotId string, versionId string, versionName string, projectName string, projectId string, modelName string, modelExtId string, isOverwrite bool, sessionRunId string, sample SampleIdentity, ) *JobNotificationContext`
+`func NewJobNotificationContext(jobId string, jobType JobType, codeSnapshotId string, versionId string, versionName string, projectName string, projectId string, modelName string, modelExtId string, isOverwrite bool, sample SampleIdentity, ) *JobNotificationContext`
 
 NewJobNotificationContext instantiates a new JobNotificationContext object
 This constructor will assign default values to properties that have it defined,
@@ -287,26 +286,6 @@ SetEpoch sets Epoch field to given value.
 `func (o *JobNotificationContext) HasEpoch() bool`
 
 HasEpoch returns a boolean if a field has been set.
-
-### GetSessionRunId
-
-`func (o *JobNotificationContext) GetSessionRunId() string`
-
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
-
-### GetSessionRunIdOk
-
-`func (o *JobNotificationContext) GetSessionRunIdOk() (*string, bool)`
-
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetSessionRunId
-
-`func (o *JobNotificationContext) SetSessionRunId(v string)`
-
-SetSessionRunId sets SessionRunId field to given value.
-
 
 ### GetSample
 

@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **X** | [**SplitAgg**](SplitAgg.md) |  | 
 **Y** | [**SplitAgg**](SplitAgg.md) |  | 
 **Color** | [**Aggregations**](Aggregations.md) |  | 
-**SessionRunsToEpochs** | [**[]SessionRunToEpoch**](SessionRunToEpoch.md) |  | 
+**InferenceArtifactIds** | **[]string** |  | 
 **ShowAllEpochs** | **bool** |  | 
 **VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **HorizontalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewHeatmapChartsParams
 
-`func NewHeatmapChartsParams(projectId string, x SplitAgg, y SplitAgg, color Aggregations, sessionRunsToEpochs []SessionRunToEpoch, showAllEpochs bool, ) *HeatmapChartsParams`
+`func NewHeatmapChartsParams(projectId string, x SplitAgg, y SplitAgg, color Aggregations, inferenceArtifactIds []string, showAllEpochs bool, ) *HeatmapChartsParams`
 
 NewHeatmapChartsParams instantiates a new HeatmapChartsParams object
 This constructor will assign default values to properties that have it defined,
@@ -114,24 +114,24 @@ and a boolean to check if the value has been set.
 SetColor sets Color field to given value.
 
 
-### GetSessionRunsToEpochs
+### GetInferenceArtifactIds
 
-`func (o *HeatmapChartsParams) GetSessionRunsToEpochs() []SessionRunToEpoch`
+`func (o *HeatmapChartsParams) GetInferenceArtifactIds() []string`
 
-GetSessionRunsToEpochs returns the SessionRunsToEpochs field if non-nil, zero value otherwise.
+GetInferenceArtifactIds returns the InferenceArtifactIds field if non-nil, zero value otherwise.
 
-### GetSessionRunsToEpochsOk
+### GetInferenceArtifactIdsOk
 
-`func (o *HeatmapChartsParams) GetSessionRunsToEpochsOk() (*[]SessionRunToEpoch, bool)`
+`func (o *HeatmapChartsParams) GetInferenceArtifactIdsOk() (*[]string, bool)`
 
-GetSessionRunsToEpochsOk returns a tuple with the SessionRunsToEpochs field if it's non-nil, zero value otherwise
+GetInferenceArtifactIdsOk returns a tuple with the InferenceArtifactIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunsToEpochs
+### SetInferenceArtifactIds
 
-`func (o *HeatmapChartsParams) SetSessionRunsToEpochs(v []SessionRunToEpoch)`
+`func (o *HeatmapChartsParams) SetInferenceArtifactIds(v []string)`
 
-SetSessionRunsToEpochs sets SessionRunsToEpochs field to given value.
+SetInferenceArtifactIds sets InferenceArtifactIds field to given value.
 
 
 ### GetShowAllEpochs

@@ -5,8 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**SessionRunId** | **string** |  | 
-**Epoch** | **float64** |  | 
+**VersionId** | **string** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **MetadataTags** | **[]string** |  | 
 **PrioritizedMetadataTags** | Pointer to **[]string** |  | [optional] 
@@ -16,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewGenerateDatasetBalancingParams
 
-`func NewGenerateDatasetBalancingParams(projectId string, sessionRunId string, epoch float64, metadataTags []string, ) *GenerateDatasetBalancingParams`
+`func NewGenerateDatasetBalancingParams(projectId string, versionId string, metadataTags []string, ) *GenerateDatasetBalancingParams`
 
 NewGenerateDatasetBalancingParams instantiates a new GenerateDatasetBalancingParams object
 This constructor will assign default values to properties that have it defined,
@@ -51,44 +50,24 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *GenerateDatasetBalancingParams) GetSessionRunId() string`
+`func (o *GenerateDatasetBalancingParams) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *GenerateDatasetBalancingParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *GenerateDatasetBalancingParams) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *GenerateDatasetBalancingParams) SetSessionRunId(v string)`
+`func (o *GenerateDatasetBalancingParams) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
-
-
-### GetEpoch
-
-`func (o *GenerateDatasetBalancingParams) GetEpoch() float64`
-
-GetEpoch returns the Epoch field if non-nil, zero value otherwise.
-
-### GetEpochOk
-
-`func (o *GenerateDatasetBalancingParams) GetEpochOk() (*float64, bool)`
-
-GetEpochOk returns a tuple with the Epoch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEpoch
-
-`func (o *GenerateDatasetBalancingParams) SetEpoch(v float64)`
-
-SetEpoch sets Epoch field to given value.
+SetVersionId sets VersionId field to given value.
 
 
 ### GetFilters

@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **ProjectId** | **string** |  | 
 **Cid** | **string** |  | 
 **JobId** | **string** |  | 
-**SessionRunId** | **string** |  | 
+**VersionId** | **string** |  | 
 **JobParms** | Pointer to [**JobParams**](JobParams.md) |  | [optional] 
 **Type** | [**AnalyzeTypeEnum**](AnalyzeTypeEnum.md) |  | 
 **CreatedAt** | **time.Time** |  | 
@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 
 ### NewSlimVisualization
 
-`func NewSlimVisualization(projectId string, cid string, jobId string, sessionRunId string, type_ AnalyzeTypeEnum, createdAt time.Time, epoch float64, visualizationUuid string, blob string, csvBlob string, ) *SlimVisualization`
+`func NewSlimVisualization(projectId string, cid string, jobId string, versionId string, type_ AnalyzeTypeEnum, createdAt time.Time, epoch float64, visualizationUuid string, blob string, csvBlob string, ) *SlimVisualization`
 
 NewSlimVisualization instantiates a new SlimVisualization object
 This constructor will assign default values to properties that have it defined,
@@ -97,24 +97,24 @@ and a boolean to check if the value has been set.
 SetJobId sets JobId field to given value.
 
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *SlimVisualization) GetSessionRunId() string`
+`func (o *SlimVisualization) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *SlimVisualization) GetSessionRunIdOk() (*string, bool)`
+`func (o *SlimVisualization) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *SlimVisualization) SetSessionRunId(v string)`
+`func (o *SlimVisualization) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
 
 
 ### GetJobParms

@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Filters** | [**[]ESFilter**](ESFilter.md) |  | 
-**SessionRunIds** | **[]string** |  | 
+**InferenceArtifactIds** | **[]string** |  | 
 **Fields** | [**[]QueryFieldValues**](QueryFieldValues.md) |  | 
 **ProjectId** | **string** |  | 
 
@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewGetFieldsValuesRequest
 
-`func NewGetFieldsValuesRequest(filters []ESFilter, sessionRunIds []string, fields []QueryFieldValues, projectId string, ) *GetFieldsValuesRequest`
+`func NewGetFieldsValuesRequest(filters []ESFilter, inferenceArtifactIds []string, fields []QueryFieldValues, projectId string, ) *GetFieldsValuesRequest`
 
 NewGetFieldsValuesRequest instantiates a new GetFieldsValuesRequest object
 This constructor will assign default values to properties that have it defined,
@@ -48,24 +48,24 @@ and a boolean to check if the value has been set.
 SetFilters sets Filters field to given value.
 
 
-### GetSessionRunIds
+### GetInferenceArtifactIds
 
-`func (o *GetFieldsValuesRequest) GetSessionRunIds() []string`
+`func (o *GetFieldsValuesRequest) GetInferenceArtifactIds() []string`
 
-GetSessionRunIds returns the SessionRunIds field if non-nil, zero value otherwise.
+GetInferenceArtifactIds returns the InferenceArtifactIds field if non-nil, zero value otherwise.
 
-### GetSessionRunIdsOk
+### GetInferenceArtifactIdsOk
 
-`func (o *GetFieldsValuesRequest) GetSessionRunIdsOk() (*[]string, bool)`
+`func (o *GetFieldsValuesRequest) GetInferenceArtifactIdsOk() (*[]string, bool)`
 
-GetSessionRunIdsOk returns a tuple with the SessionRunIds field if it's non-nil, zero value otherwise
+GetInferenceArtifactIdsOk returns a tuple with the InferenceArtifactIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunIds
+### SetInferenceArtifactIds
 
-`func (o *GetFieldsValuesRequest) SetSessionRunIds(v []string)`
+`func (o *GetFieldsValuesRequest) SetInferenceArtifactIds(v []string)`
 
-SetSessionRunIds sets SessionRunIds field to given value.
+SetInferenceArtifactIds sets InferenceArtifactIds field to given value.
 
 
 ### GetFields

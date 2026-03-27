@@ -5,8 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**SessionRunId** | **string** |  | 
-**Epoch** | **float64** |  | 
+**VersionId** | **string** |  | 
 **NumOfSamplesToLabel** | Pointer to **float64** |  | [optional] 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 
@@ -14,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewGenerateLabelParams
 
-`func NewGenerateLabelParams(projectId string, sessionRunId string, epoch float64, ) *GenerateLabelParams`
+`func NewGenerateLabelParams(projectId string, versionId string, ) *GenerateLabelParams`
 
 NewGenerateLabelParams instantiates a new GenerateLabelParams object
 This constructor will assign default values to properties that have it defined,
@@ -49,44 +48,24 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *GenerateLabelParams) GetSessionRunId() string`
+`func (o *GenerateLabelParams) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *GenerateLabelParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *GenerateLabelParams) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *GenerateLabelParams) SetSessionRunId(v string)`
+`func (o *GenerateLabelParams) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
-
-
-### GetEpoch
-
-`func (o *GenerateLabelParams) GetEpoch() float64`
-
-GetEpoch returns the Epoch field if non-nil, zero value otherwise.
-
-### GetEpochOk
-
-`func (o *GenerateLabelParams) GetEpochOk() (*float64, bool)`
-
-GetEpochOk returns a tuple with the Epoch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEpoch
-
-`func (o *GenerateLabelParams) SetEpoch(v float64)`
-
-SetEpoch sets Epoch field to given value.
+SetVersionId sets VersionId field to given value.
 
 
 ### GetNumOfSamplesToLabel

@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**SessionRunIds** | **[]string** |  | 
+**InferenceArtifactIds** | **[]string** |  | 
 
 ## Methods
 
 ### NewGetDashletFieldsParams
 
-`func NewGetDashletFieldsParams(projectId string, sessionRunIds []string, ) *GetDashletFieldsParams`
+`func NewGetDashletFieldsParams(projectId string, inferenceArtifactIds []string, ) *GetDashletFieldsParams`
 
 NewGetDashletFieldsParams instantiates a new GetDashletFieldsParams object
 This constructor will assign default values to properties that have it defined,
@@ -46,24 +46,24 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetSessionRunIds
+### GetInferenceArtifactIds
 
-`func (o *GetDashletFieldsParams) GetSessionRunIds() []string`
+`func (o *GetDashletFieldsParams) GetInferenceArtifactIds() []string`
 
-GetSessionRunIds returns the SessionRunIds field if non-nil, zero value otherwise.
+GetInferenceArtifactIds returns the InferenceArtifactIds field if non-nil, zero value otherwise.
 
-### GetSessionRunIdsOk
+### GetInferenceArtifactIdsOk
 
-`func (o *GetDashletFieldsParams) GetSessionRunIdsOk() (*[]string, bool)`
+`func (o *GetDashletFieldsParams) GetInferenceArtifactIdsOk() (*[]string, bool)`
 
-GetSessionRunIdsOk returns a tuple with the SessionRunIds field if it's non-nil, zero value otherwise
+GetInferenceArtifactIdsOk returns a tuple with the InferenceArtifactIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunIds
+### SetInferenceArtifactIds
 
-`func (o *GetDashletFieldsParams) SetSessionRunIds(v []string)`
+`func (o *GetDashletFieldsParams) SetInferenceArtifactIds(v []string)`
 
-SetSessionRunIds sets SessionRunIds field to given value.
+SetInferenceArtifactIds sets InferenceArtifactIds field to given value.
 
 
 

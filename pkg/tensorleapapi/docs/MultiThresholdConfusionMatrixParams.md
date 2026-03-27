@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SessionRunsToEpochs** | [**[]SessionRunToEpoch**](SessionRunToEpoch.md) |  | 
+**InferenceArtifactIds** | **[]string** |  | 
 **ProjectId** | **string** |  | 
 **CustomMetricName** | **string** |  | 
 **VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewMultiThresholdConfusionMatrixParams
 
-`func NewMultiThresholdConfusionMatrixParams(sessionRunsToEpochs []SessionRunToEpoch, projectId string, customMetricName string, ) *MultiThresholdConfusionMatrixParams`
+`func NewMultiThresholdConfusionMatrixParams(inferenceArtifactIds []string, projectId string, customMetricName string, ) *MultiThresholdConfusionMatrixParams`
 
 NewMultiThresholdConfusionMatrixParams instantiates a new MultiThresholdConfusionMatrixParams object
 This constructor will assign default values to properties that have it defined,
@@ -31,24 +31,24 @@ NewMultiThresholdConfusionMatrixParamsWithDefaults instantiates a new MultiThres
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetSessionRunsToEpochs
+### GetInferenceArtifactIds
 
-`func (o *MultiThresholdConfusionMatrixParams) GetSessionRunsToEpochs() []SessionRunToEpoch`
+`func (o *MultiThresholdConfusionMatrixParams) GetInferenceArtifactIds() []string`
 
-GetSessionRunsToEpochs returns the SessionRunsToEpochs field if non-nil, zero value otherwise.
+GetInferenceArtifactIds returns the InferenceArtifactIds field if non-nil, zero value otherwise.
 
-### GetSessionRunsToEpochsOk
+### GetInferenceArtifactIdsOk
 
-`func (o *MultiThresholdConfusionMatrixParams) GetSessionRunsToEpochsOk() (*[]SessionRunToEpoch, bool)`
+`func (o *MultiThresholdConfusionMatrixParams) GetInferenceArtifactIdsOk() (*[]string, bool)`
 
-GetSessionRunsToEpochsOk returns a tuple with the SessionRunsToEpochs field if it's non-nil, zero value otherwise
+GetInferenceArtifactIdsOk returns a tuple with the InferenceArtifactIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunsToEpochs
+### SetInferenceArtifactIds
 
-`func (o *MultiThresholdConfusionMatrixParams) SetSessionRunsToEpochs(v []SessionRunToEpoch)`
+`func (o *MultiThresholdConfusionMatrixParams) SetInferenceArtifactIds(v []string)`
 
-SetSessionRunsToEpochs sets SessionRunsToEpochs field to given value.
+SetInferenceArtifactIds sets InferenceArtifactIds field to given value.
 
 
 ### GetProjectId

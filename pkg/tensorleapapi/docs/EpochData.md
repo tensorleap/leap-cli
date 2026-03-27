@@ -4,19 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SessionId** | **string** |  | 
+**VersionId** | **string** |  | 
 **Epoch** | **float64** |  | 
 **Tags** | **[]string** |  | 
-**WeightsData** | Pointer to [**SessionWeightData**](SessionWeightData.md) |  | [optional] 
 **UploadedModelFilePath** | Pointer to **string** |  | [optional] 
-**Runs** | [**[]SessionRunData**](SessionRunData.md) |  | 
 **ExternalData** | Pointer to [**EpochDataExternalData**](EpochDataExternalData.md) |  | [optional] 
 
 ## Methods
 
 ### NewEpochData
 
-`func NewEpochData(sessionId string, epoch float64, tags []string, runs []SessionRunData, ) *EpochData`
+`func NewEpochData(versionId string, epoch float64, tags []string, ) *EpochData`
 
 NewEpochData instantiates a new EpochData object
 This constructor will assign default values to properties that have it defined,
@@ -31,24 +29,24 @@ NewEpochDataWithDefaults instantiates a new EpochData object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetSessionId
+### GetVersionId
 
-`func (o *EpochData) GetSessionId() string`
+`func (o *EpochData) GetVersionId() string`
 
-GetSessionId returns the SessionId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionIdOk
+### GetVersionIdOk
 
-`func (o *EpochData) GetSessionIdOk() (*string, bool)`
+`func (o *EpochData) GetVersionIdOk() (*string, bool)`
 
-GetSessionIdOk returns a tuple with the SessionId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionId
+### SetVersionId
 
-`func (o *EpochData) SetSessionId(v string)`
+`func (o *EpochData) SetVersionId(v string)`
 
-SetSessionId sets SessionId field to given value.
+SetVersionId sets VersionId field to given value.
 
 
 ### GetEpoch
@@ -91,31 +89,6 @@ and a boolean to check if the value has been set.
 SetTags sets Tags field to given value.
 
 
-### GetWeightsData
-
-`func (o *EpochData) GetWeightsData() SessionWeightData`
-
-GetWeightsData returns the WeightsData field if non-nil, zero value otherwise.
-
-### GetWeightsDataOk
-
-`func (o *EpochData) GetWeightsDataOk() (*SessionWeightData, bool)`
-
-GetWeightsDataOk returns a tuple with the WeightsData field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetWeightsData
-
-`func (o *EpochData) SetWeightsData(v SessionWeightData)`
-
-SetWeightsData sets WeightsData field to given value.
-
-### HasWeightsData
-
-`func (o *EpochData) HasWeightsData() bool`
-
-HasWeightsData returns a boolean if a field has been set.
-
 ### GetUploadedModelFilePath
 
 `func (o *EpochData) GetUploadedModelFilePath() string`
@@ -140,26 +113,6 @@ SetUploadedModelFilePath sets UploadedModelFilePath field to given value.
 `func (o *EpochData) HasUploadedModelFilePath() bool`
 
 HasUploadedModelFilePath returns a boolean if a field has been set.
-
-### GetRuns
-
-`func (o *EpochData) GetRuns() []SessionRunData`
-
-GetRuns returns the Runs field if non-nil, zero value otherwise.
-
-### GetRunsOk
-
-`func (o *EpochData) GetRunsOk() (*[]SessionRunData, bool)`
-
-GetRunsOk returns a tuple with the Runs field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetRuns
-
-`func (o *EpochData) SetRuns(v []SessionRunData)`
-
-SetRuns sets Runs field to given value.
-
 
 ### GetExternalData
 
