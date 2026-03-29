@@ -145,48 +145,103 @@ func PrintWhoami(ctx context.Context) error {
 	return nil
 }
 
-// ErrAuthRequired is returned when the user needs to authenticate
-var ErrAuthRequired = fmt.Errorf("authentication required. Please run: leap auth login")
-
-// ErrAuthInvalid is returned when the stored credentials are invalid
-var ErrAuthInvalid = fmt.Errorf("authentication invalid or expired. Please run: leap auth login")
-
 // RequireAuth checks if the user is authenticated and validates the credentials.
-// It first checks if URL and API key are configured, then validates them by calling the API.
-// Returns the authenticated context and user data if successful, or an error with a helpful message.
+// If authentication is missing or invalid, it automatically triggers the interactive login flow.
+// Returns the authenticated context and user data if successful.
 func RequireAuth(ctx context.Context) (context.Context, *tensorleapapi.UserData, error) {
 	env := GetCurrentEnv()
 
-	// Check if URL is configured
-	if env.ApiUrl == "" {
-		log.Warn("No API URL configured")
-		return ctx, nil, ErrAuthRequired
+	if env.ApiUrl != "" && env.ApiKey != "" {
+		authCtx := env.AuthContext(ctx)
+		userData, err := GetWhoami(authCtx)
+		if err == nil {
+			return authCtx, userData, nil
+		}
+		log.Warnf("Current authentication is invalid or expired: %v", err)
 	}
 
-	// Check if API key is configured
-	if env.ApiKey == "" {
-		log.Warn("No API key configured")
-		return ctx, nil, ErrAuthRequired
+	return InteractiveLogin(ctx)
+}
+
+// InteractiveLogin prompts the user through the authentication flow interactively.
+// It reuses the existing API URL if one is configured, otherwise asks for it.
+// Returns the authenticated context and user data after successful login.
+func InteractiveLogin(ctx context.Context) (context.Context, *tensorleapapi.UserData, error) {
+	log.Info("Authentication required. Starting login flow...")
+
+	env := GetCurrentEnv()
+	var apiUrl string
+
+	if env.ApiUrl != "" {
+		log.Infof("Using configured API URL: %s", env.ApiUrl)
+		apiUrl = env.ApiUrl
+	} else {
+		baseUrl, err := AskForUrl("")
+		if err != nil {
+			return ctx, nil, err
+		}
+		normalized, err := api.NormalizeAPIUrl(baseUrl)
+		if err != nil {
+			return ctx, nil, err
+		}
+		apiUrl = normalized
 	}
 
-	// Create authenticated context
-	authCtx := env.AuthContext(ctx)
+	useLogin, err := AskIfUseLogin()
+	if err != nil {
+		return ctx, nil, err
+	}
 
-	// Validate credentials by calling WhoAmI
+	var apiKey string
+	if useLogin {
+		useBrowser, err := AskIfOpenBrowser()
+		if err != nil {
+			return ctx, nil, err
+		}
+		if useBrowser {
+			apiKey, err = LoginAndGetAuthTokenWithBrowser(ctx, apiUrl)
+			if err != nil {
+				return ctx, nil, err
+			}
+		} else {
+			userName, password, err := AskForUserNameAndPassword("", "")
+			if err != nil {
+				return ctx, nil, err
+			}
+			apiKey, err = LoginAndGetAuthToken(apiUrl, userName, password)
+			if err != nil {
+				return ctx, nil, err
+			}
+		}
+	} else {
+		apiKey, err = AskForApiKey()
+		if err != nil {
+			return ctx, nil, err
+		}
+	}
+
+	apiKey = strings.TrimSpace(apiKey)
+
+	name := EnvNameFromUrl(apiUrl)
+	if env.Name != "" {
+		name = env.Name
+	}
+
+	newEnv := NewEnv(name, apiUrl, apiKey)
+	authCtx := newEnv.AuthContext(ctx)
+
 	userData, err := GetWhoami(authCtx)
 	if err != nil {
-		log.Warnf("Failed to validate authentication: %v", err)
-		return ctx, nil, ErrAuthInvalid
+		return ctx, nil, fmt.Errorf("login verification failed: %v", err)
+	}
+
+	fmt.Printf("Logged in as: %s (%s)\n", userData.Local.Email, userData.TeamName)
+
+	if err := Login(newEnv); err != nil {
+		return ctx, nil, err
 	}
 
 	return authCtx, userData, nil
-}
-
-// RequireAuthSimple is a simpler version of RequireAuth that only returns an error.
-// Use this when you don't need the user data and the context is already set up.
-func RequireAuthSimple(ctx context.Context) error {
-	_, _, err := RequireAuth(ctx)
-	return err
 }
 
 func InitMaybeUnauthedContext(ctx context.Context, defaultUrl string) (context.Context, error) {

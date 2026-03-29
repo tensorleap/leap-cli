@@ -46,7 +46,8 @@ Examples:
 				return fmt.Errorf("--batch requires --eval")
 			}
 
-			if err := auth.RequireAuthSimple(cmd.Context()); err != nil {
+			ctx, _, err := auth.RequireAuth(cmd.Context())
+			if err != nil {
 				return err
 			}
 
@@ -74,7 +75,6 @@ Examples:
 				analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
 				return err
 			}
-			ctx := cmd.Context()
 			currentProject, err := project.SyncProjectIdToWorkspaceConfig(ctx, workspaceConfig)
 			if err != nil {
 				// Track projects push failed

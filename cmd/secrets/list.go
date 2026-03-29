@@ -15,10 +15,11 @@ func NewListCmd() *cobra.Command {
 		Short:   "List secrets",
 		Long:    `List secrets`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := auth.CheckLoggedIn(); err != nil {
+			ctx, _, err := auth.RequireAuth(cmd.Context())
+			if err != nil {
 				return err
 			}
-			list, err := secret.GetSecretList(cmd.Context())
+			list, err := secret.GetSecretList(ctx)
 			if err != nil {
 				return err
 			}

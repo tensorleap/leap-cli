@@ -54,10 +54,10 @@ Examples:
   leap pull -a
 `,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := auth.RequireAuthSimple(cmd.Context()); err != nil {
+			ctx, _, err := auth.RequireAuth(cmd.Context())
+			if err != nil {
 				return err
 			}
-			ctx := cmd.Context()
 
 			var projectId string
 			workspaceConfig, err := workspace.GetWorkspaceConfig()

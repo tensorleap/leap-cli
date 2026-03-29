@@ -13,12 +13,11 @@ var RootCommand = &cobra.Command{
 	Short:   "Manage project",
 	Long:    `Manage project`,
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
-		// Set up auth context (same as parent root command)
-		env := auth.GetCurrentEnv()
-		authCtx := env.AuthContext(context.Background())
+		authCtx, _, err := auth.RequireAuth(context.Background())
+		if err != nil {
+			return err
+		}
 		cmd.SetContext(authCtx)
-
-		// Then validate authentication
-		return auth.RequireAuthSimple(authCtx)
+		return nil
 	},
 }
