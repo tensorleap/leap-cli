@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **HorizontalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **InnerSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
-**SessionRunsToEpochs** | [**[]SessionRunToEpoch**](SessionRunToEpoch.md) |  | 
+**InferenceArtifactIds** | **[]string** |  | 
 **ShowAllEpochs** | **bool** |  | 
 **ElementInstance** | Pointer to **bool** |  | [optional] 
 
@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewMultiChartsParams
 
-`func NewMultiChartsParams(projectId string, x SplitAgg, y Aggregations, sessionRunsToEpochs []SessionRunToEpoch, showAllEpochs bool, ) *MultiChartsParams`
+`func NewMultiChartsParams(projectId string, x SplitAgg, y Aggregations, inferenceArtifactIds []string, showAllEpochs bool, ) *MultiChartsParams`
 
 NewMultiChartsParams instantiates a new MultiChartsParams object
 This constructor will assign default values to properties that have it defined,
@@ -194,24 +194,24 @@ SetFilters sets Filters field to given value.
 
 HasFilters returns a boolean if a field has been set.
 
-### GetSessionRunsToEpochs
+### GetInferenceArtifactIds
 
-`func (o *MultiChartsParams) GetSessionRunsToEpochs() []SessionRunToEpoch`
+`func (o *MultiChartsParams) GetInferenceArtifactIds() []string`
 
-GetSessionRunsToEpochs returns the SessionRunsToEpochs field if non-nil, zero value otherwise.
+GetInferenceArtifactIds returns the InferenceArtifactIds field if non-nil, zero value otherwise.
 
-### GetSessionRunsToEpochsOk
+### GetInferenceArtifactIdsOk
 
-`func (o *MultiChartsParams) GetSessionRunsToEpochsOk() (*[]SessionRunToEpoch, bool)`
+`func (o *MultiChartsParams) GetInferenceArtifactIdsOk() (*[]string, bool)`
 
-GetSessionRunsToEpochsOk returns a tuple with the SessionRunsToEpochs field if it's non-nil, zero value otherwise
+GetInferenceArtifactIdsOk returns a tuple with the InferenceArtifactIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunsToEpochs
+### SetInferenceArtifactIds
 
-`func (o *MultiChartsParams) SetSessionRunsToEpochs(v []SessionRunToEpoch)`
+`func (o *MultiChartsParams) SetInferenceArtifactIds(v []string)`
 
-SetSessionRunsToEpochs sets SessionRunsToEpochs field to given value.
+SetInferenceArtifactIds sets InferenceArtifactIds field to given value.
 
 
 ### GetShowAllEpochs

@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SessionRunId** | **string** |  | 
+**VersionId** | **string** |  | 
 **ProjectId** | **string** |  | 
 **Epoch** | **float64** |  | 
 
@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 
 ### NewSessionTestData
 
-`func NewSessionTestData(sessionRunId string, projectId string, epoch float64, ) *SessionTestData`
+`func NewSessionTestData(versionId string, projectId string, epoch float64, ) *SessionTestData`
 
 NewSessionTestData instantiates a new SessionTestData object
 This constructor will assign default values to properties that have it defined,
@@ -27,24 +27,24 @@ NewSessionTestDataWithDefaults instantiates a new SessionTestData object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *SessionTestData) GetSessionRunId() string`
+`func (o *SessionTestData) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *SessionTestData) GetSessionRunIdOk() (*string, bool)`
+`func (o *SessionTestData) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *SessionTestData) SetSessionRunId(v string)`
+`func (o *SessionTestData) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
 
 
 ### GetProjectId

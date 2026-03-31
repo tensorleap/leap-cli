@@ -6,14 +6,14 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Samples** | [**[]SampleIdentity**](SampleIdentity.md) | Visible / batch samples to fetch data for. | 
 **Epoch** | **float64** |  | 
-**SessionRunIds** | **[]string** |  | 
+**InferenceArtifactIds** | **[]string** |  | 
 **ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewGetSampleEnrichmentParams
 
-`func NewGetSampleEnrichmentParams(samples []SampleIdentity, epoch float64, sessionRunIds []string, projectId string, ) *GetSampleEnrichmentParams`
+`func NewGetSampleEnrichmentParams(samples []SampleIdentity, epoch float64, inferenceArtifactIds []string, projectId string, ) *GetSampleEnrichmentParams`
 
 NewGetSampleEnrichmentParams instantiates a new GetSampleEnrichmentParams object
 This constructor will assign default values to properties that have it defined,
@@ -68,24 +68,24 @@ and a boolean to check if the value has been set.
 SetEpoch sets Epoch field to given value.
 
 
-### GetSessionRunIds
+### GetInferenceArtifactIds
 
-`func (o *GetSampleEnrichmentParams) GetSessionRunIds() []string`
+`func (o *GetSampleEnrichmentParams) GetInferenceArtifactIds() []string`
 
-GetSessionRunIds returns the SessionRunIds field if non-nil, zero value otherwise.
+GetInferenceArtifactIds returns the InferenceArtifactIds field if non-nil, zero value otherwise.
 
-### GetSessionRunIdsOk
+### GetInferenceArtifactIdsOk
 
-`func (o *GetSampleEnrichmentParams) GetSessionRunIdsOk() (*[]string, bool)`
+`func (o *GetSampleEnrichmentParams) GetInferenceArtifactIdsOk() (*[]string, bool)`
 
-GetSessionRunIdsOk returns a tuple with the SessionRunIds field if it's non-nil, zero value otherwise
+GetInferenceArtifactIdsOk returns a tuple with the InferenceArtifactIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunIds
+### SetInferenceArtifactIds
 
-`func (o *GetSampleEnrichmentParams) SetSessionRunIds(v []string)`
+`func (o *GetSampleEnrichmentParams) SetInferenceArtifactIds(v []string)`
 
-SetSessionRunIds sets SessionRunIds field to given value.
+SetInferenceArtifactIds sets InferenceArtifactIds field to given value.
 
 
 ### GetProjectId

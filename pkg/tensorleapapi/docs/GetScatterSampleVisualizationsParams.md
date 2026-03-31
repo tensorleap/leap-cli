@@ -4,15 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SessionRunId** | **string** |  | 
+**VersionId** | **string** |  | 
 **ProjectId** | **string** |  | 
-**Epoch** | **float64** |  | 
 
 ## Methods
 
 ### NewGetScatterSampleVisualizationsParams
 
-`func NewGetScatterSampleVisualizationsParams(sessionRunId string, projectId string, epoch float64, ) *GetScatterSampleVisualizationsParams`
+`func NewGetScatterSampleVisualizationsParams(versionId string, projectId string, ) *GetScatterSampleVisualizationsParams`
 
 NewGetScatterSampleVisualizationsParams instantiates a new GetScatterSampleVisualizationsParams object
 This constructor will assign default values to properties that have it defined,
@@ -27,24 +26,24 @@ NewGetScatterSampleVisualizationsParamsWithDefaults instantiates a new GetScatte
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *GetScatterSampleVisualizationsParams) GetSessionRunId() string`
+`func (o *GetScatterSampleVisualizationsParams) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *GetScatterSampleVisualizationsParams) GetSessionRunIdOk() (*string, bool)`
+`func (o *GetScatterSampleVisualizationsParams) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *GetScatterSampleVisualizationsParams) SetSessionRunId(v string)`
+`func (o *GetScatterSampleVisualizationsParams) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
 
 
 ### GetProjectId
@@ -65,26 +64,6 @@ and a boolean to check if the value has been set.
 `func (o *GetScatterSampleVisualizationsParams) SetProjectId(v string)`
 
 SetProjectId sets ProjectId field to given value.
-
-
-### GetEpoch
-
-`func (o *GetScatterSampleVisualizationsParams) GetEpoch() float64`
-
-GetEpoch returns the Epoch field if non-nil, zero value otherwise.
-
-### GetEpochOk
-
-`func (o *GetScatterSampleVisualizationsParams) GetEpochOk() (*float64, bool)`
-
-GetEpochOk returns a tuple with the Epoch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEpoch
-
-`func (o *GetScatterSampleVisualizationsParams) SetEpoch(v float64)`
-
-SetEpoch sets Epoch field to given value.
 
 
 

@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**SessionWeightId** | **string** |  | 
+**ModelId** | **string** |  | 
 **ExportModelType** | [**ExportModelTypeEnum**](ExportModelTypeEnum.md) |  | 
 **Title** | **string** |  | 
 **PruneModel** | **bool** |  | 
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewAddExportModelJobParams
 
-`func NewAddExportModelJobParams(projectId string, sessionWeightId string, exportModelType ExportModelTypeEnum, title string, pruneModel bool, ) *AddExportModelJobParams`
+`func NewAddExportModelJobParams(projectId string, modelId string, exportModelType ExportModelTypeEnum, title string, pruneModel bool, ) *AddExportModelJobParams`
 
 NewAddExportModelJobParams instantiates a new AddExportModelJobParams object
 This constructor will assign default values to properties that have it defined,
@@ -49,24 +49,24 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetSessionWeightId
+### GetModelId
 
-`func (o *AddExportModelJobParams) GetSessionWeightId() string`
+`func (o *AddExportModelJobParams) GetModelId() string`
 
-GetSessionWeightId returns the SessionWeightId field if non-nil, zero value otherwise.
+GetModelId returns the ModelId field if non-nil, zero value otherwise.
 
-### GetSessionWeightIdOk
+### GetModelIdOk
 
-`func (o *AddExportModelJobParams) GetSessionWeightIdOk() (*string, bool)`
+`func (o *AddExportModelJobParams) GetModelIdOk() (*string, bool)`
 
-GetSessionWeightIdOk returns a tuple with the SessionWeightId field if it's non-nil, zero value otherwise
+GetModelIdOk returns a tuple with the ModelId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionWeightId
+### SetModelId
 
-`func (o *AddExportModelJobParams) SetSessionWeightId(v string)`
+`func (o *AddExportModelJobParams) SetModelId(v string)`
 
-SetSessionWeightId sets SessionWeightId field to given value.
+SetModelId sets ModelId field to given value.
 
 
 ### GetExportModelType

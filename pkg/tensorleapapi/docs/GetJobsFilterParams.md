@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **LastUpdated** | Pointer to **time.Time** |  | [optional] 
-**SessionRunIds** | Pointer to **[]string** |  | [optional] 
+**VersionIds** | Pointer to **[]string** |  | [optional] 
 **Types** | Pointer to [**[]JobType**](JobType.md) |  | [optional] 
 **SubTypes** | Pointer to [**[]JobSubType**](JobSubType.md) |  | [optional] 
 **Trigger** | Pointer to [**JobTrigger**](JobTrigger.md) |  | [optional] 
@@ -59,30 +59,30 @@ SetLastUpdated sets LastUpdated field to given value.
 
 HasLastUpdated returns a boolean if a field has been set.
 
-### GetSessionRunIds
+### GetVersionIds
 
-`func (o *GetJobsFilterParams) GetSessionRunIds() []string`
+`func (o *GetJobsFilterParams) GetVersionIds() []string`
 
-GetSessionRunIds returns the SessionRunIds field if non-nil, zero value otherwise.
+GetVersionIds returns the VersionIds field if non-nil, zero value otherwise.
 
-### GetSessionRunIdsOk
+### GetVersionIdsOk
 
-`func (o *GetJobsFilterParams) GetSessionRunIdsOk() (*[]string, bool)`
+`func (o *GetJobsFilterParams) GetVersionIdsOk() (*[]string, bool)`
 
-GetSessionRunIdsOk returns a tuple with the SessionRunIds field if it's non-nil, zero value otherwise
+GetVersionIdsOk returns a tuple with the VersionIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunIds
+### SetVersionIds
 
-`func (o *GetJobsFilterParams) SetSessionRunIds(v []string)`
+`func (o *GetJobsFilterParams) SetVersionIds(v []string)`
 
-SetSessionRunIds sets SessionRunIds field to given value.
+SetVersionIds sets VersionIds field to given value.
 
-### HasSessionRunIds
+### HasVersionIds
 
-`func (o *GetJobsFilterParams) HasSessionRunIds() bool`
+`func (o *GetJobsFilterParams) HasVersionIds() bool`
 
-HasSessionRunIds returns a boolean if a field has been set.
+HasVersionIds returns a boolean if a field has been set.
 
 ### GetTypes
 

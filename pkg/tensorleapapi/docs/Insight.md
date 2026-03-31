@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Cid** | **string** |  | 
-**SessionRunId** | **string** |  | 
+**VersionId** | Pointer to **string** |  | [optional] 
 **InsightType** | [**InsightType**](InsightType.md) |  | 
 **Index** | **float64** |  | 
 **Status** | [**InsightStatus**](InsightStatus.md) |  | 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewInsight
 
-`func NewInsight(cid string, sessionRunId string, insightType InsightType, index float64, status InsightStatus, createdAt time.Time, updatedAt time.Time, ) *Insight`
+`func NewInsight(cid string, insightType InsightType, index float64, status InsightStatus, createdAt time.Time, updatedAt time.Time, ) *Insight`
 
 NewInsight instantiates a new Insight object
 This constructor will assign default values to properties that have it defined,
@@ -51,25 +51,30 @@ and a boolean to check if the value has been set.
 SetCid sets Cid field to given value.
 
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *Insight) GetSessionRunId() string`
+`func (o *Insight) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *Insight) GetSessionRunIdOk() (*string, bool)`
+`func (o *Insight) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *Insight) SetSessionRunId(v string)`
+`func (o *Insight) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
 
+### HasVersionId
+
+`func (o *Insight) HasVersionId() bool`
+
+HasVersionId returns a boolean if a field has been set.
 
 ### GetInsightType
 

@@ -6,22 +6,22 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** |  | 
 **JobId** | **string** |  | 
-**SessionRunId** | **string** |  | 
-**SessionRunName** | **string** |  | 
-**Epoch** | **float64** |  | 
+**VersionId** | **string** |  | 
+**VersionName** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
 **CreatedBy** | **string** |  | 
 **NextTrialsFileUrl** | Pointer to **string** |  | [optional] 
 **BestTrialsFileUrl** | Pointer to **string** |  | [optional] 
 **Status** | [**JobStatus**](JobStatus.md) |  | 
-**Sources** | [**[]GenerateSyntheticDataParamsSourcesInner**](GenerateSyntheticDataParamsSourcesInner.md) |  | 
+**Sources** | [**[]SyntheticDataJobParamsSourcesInner**](SyntheticDataJobParamsSourcesInner.md) |  | 
 **TargetFilters** | [**[]ESFilter**](ESFilter.md) |  | 
+**RunProcess** | Pointer to [**RunProcess**](RunProcess.md) |  | [optional] 
 
 ## Methods
 
 ### NewSyntheticData
 
-`func NewSyntheticData(id string, jobId string, sessionRunId string, sessionRunName string, epoch float64, createdAt time.Time, createdBy string, status JobStatus, sources []GenerateSyntheticDataParamsSourcesInner, targetFilters []ESFilter, ) *SyntheticData`
+`func NewSyntheticData(id string, jobId string, versionId string, versionName string, createdAt time.Time, createdBy string, status JobStatus, sources []SyntheticDataJobParamsSourcesInner, targetFilters []ESFilter, ) *SyntheticData`
 
 NewSyntheticData instantiates a new SyntheticData object
 This constructor will assign default values to properties that have it defined,
@@ -76,64 +76,44 @@ and a boolean to check if the value has been set.
 SetJobId sets JobId field to given value.
 
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *SyntheticData) GetSessionRunId() string`
+`func (o *SyntheticData) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *SyntheticData) GetSessionRunIdOk() (*string, bool)`
+`func (o *SyntheticData) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *SyntheticData) SetSessionRunId(v string)`
+`func (o *SyntheticData) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
 
 
-### GetSessionRunName
+### GetVersionName
 
-`func (o *SyntheticData) GetSessionRunName() string`
+`func (o *SyntheticData) GetVersionName() string`
 
-GetSessionRunName returns the SessionRunName field if non-nil, zero value otherwise.
+GetVersionName returns the VersionName field if non-nil, zero value otherwise.
 
-### GetSessionRunNameOk
+### GetVersionNameOk
 
-`func (o *SyntheticData) GetSessionRunNameOk() (*string, bool)`
+`func (o *SyntheticData) GetVersionNameOk() (*string, bool)`
 
-GetSessionRunNameOk returns a tuple with the SessionRunName field if it's non-nil, zero value otherwise
+GetVersionNameOk returns a tuple with the VersionName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunName
+### SetVersionName
 
-`func (o *SyntheticData) SetSessionRunName(v string)`
+`func (o *SyntheticData) SetVersionName(v string)`
 
-SetSessionRunName sets SessionRunName field to given value.
-
-
-### GetEpoch
-
-`func (o *SyntheticData) GetEpoch() float64`
-
-GetEpoch returns the Epoch field if non-nil, zero value otherwise.
-
-### GetEpochOk
-
-`func (o *SyntheticData) GetEpochOk() (*float64, bool)`
-
-GetEpochOk returns a tuple with the Epoch field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEpoch
-
-`func (o *SyntheticData) SetEpoch(v float64)`
-
-SetEpoch sets Epoch field to given value.
+SetVersionName sets VersionName field to given value.
 
 
 ### GetCreatedAt
@@ -248,20 +228,20 @@ SetStatus sets Status field to given value.
 
 ### GetSources
 
-`func (o *SyntheticData) GetSources() []GenerateSyntheticDataParamsSourcesInner`
+`func (o *SyntheticData) GetSources() []SyntheticDataJobParamsSourcesInner`
 
 GetSources returns the Sources field if non-nil, zero value otherwise.
 
 ### GetSourcesOk
 
-`func (o *SyntheticData) GetSourcesOk() (*[]GenerateSyntheticDataParamsSourcesInner, bool)`
+`func (o *SyntheticData) GetSourcesOk() (*[]SyntheticDataJobParamsSourcesInner, bool)`
 
 GetSourcesOk returns a tuple with the Sources field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSources
 
-`func (o *SyntheticData) SetSources(v []GenerateSyntheticDataParamsSourcesInner)`
+`func (o *SyntheticData) SetSources(v []SyntheticDataJobParamsSourcesInner)`
 
 SetSources sets Sources field to given value.
 
@@ -285,6 +265,31 @@ and a boolean to check if the value has been set.
 
 SetTargetFilters sets TargetFilters field to given value.
 
+
+### GetRunProcess
+
+`func (o *SyntheticData) GetRunProcess() RunProcess`
+
+GetRunProcess returns the RunProcess field if non-nil, zero value otherwise.
+
+### GetRunProcessOk
+
+`func (o *SyntheticData) GetRunProcessOk() (*RunProcess, bool)`
+
+GetRunProcessOk returns a tuple with the RunProcess field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRunProcess
+
+`func (o *SyntheticData) SetRunProcess(v RunProcess)`
+
+SetRunProcess sets RunProcess field to given value.
+
+### HasRunProcess
+
+`func (o *SyntheticData) HasRunProcess() bool`
+
+HasRunProcess returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

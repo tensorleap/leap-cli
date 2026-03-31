@@ -9,13 +9,13 @@ Name | Type | Description | Notes
 **Tests** | **float64** |  | 
 **Projects** | **float64** |  | 
 **Networks** | **float64** |  | 
-**Sessions** | **float64** |  | 
+**Versions** | **float64** |  | 
 
 ## Methods
 
 ### NewGetStatisticsResponse
 
-`func NewGetStatisticsResponse(activeUsers float64, openIssues float64, tests float64, projects float64, networks float64, sessions float64, ) *GetStatisticsResponse`
+`func NewGetStatisticsResponse(activeUsers float64, openIssues float64, tests float64, projects float64, networks float64, versions float64, ) *GetStatisticsResponse`
 
 NewGetStatisticsResponse instantiates a new GetStatisticsResponse object
 This constructor will assign default values to properties that have it defined,
@@ -130,24 +130,24 @@ and a boolean to check if the value has been set.
 SetNetworks sets Networks field to given value.
 
 
-### GetSessions
+### GetVersions
 
-`func (o *GetStatisticsResponse) GetSessions() float64`
+`func (o *GetStatisticsResponse) GetVersions() float64`
 
-GetSessions returns the Sessions field if non-nil, zero value otherwise.
+GetVersions returns the Versions field if non-nil, zero value otherwise.
 
-### GetSessionsOk
+### GetVersionsOk
 
-`func (o *GetStatisticsResponse) GetSessionsOk() (*float64, bool)`
+`func (o *GetStatisticsResponse) GetVersionsOk() (*float64, bool)`
 
-GetSessionsOk returns a tuple with the Sessions field if it's non-nil, zero value otherwise
+GetVersionsOk returns a tuple with the Versions field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessions
+### SetVersions
 
-`func (o *GetStatisticsResponse) SetSessions(v float64)`
+`func (o *GetStatisticsResponse) SetVersions(v float64)`
 
-SetSessions sets Sessions field to given value.
+SetVersions sets Versions field to given value.
 
 
 

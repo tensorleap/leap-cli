@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SessionRunId** | **string** |  | 
+**VersionId** | **string** |  | 
 **QueryStatus** | **string** |  | 
 
 ## Methods
 
 ### NewSessionTestResultError
 
-`func NewSessionTestResultError(sessionRunId string, queryStatus string, ) *SessionTestResultError`
+`func NewSessionTestResultError(versionId string, queryStatus string, ) *SessionTestResultError`
 
 NewSessionTestResultError instantiates a new SessionTestResultError object
 This constructor will assign default values to properties that have it defined,
@@ -26,24 +26,24 @@ NewSessionTestResultErrorWithDefaults instantiates a new SessionTestResultError 
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetSessionRunId
+### GetVersionId
 
-`func (o *SessionTestResultError) GetSessionRunId() string`
+`func (o *SessionTestResultError) GetVersionId() string`
 
-GetSessionRunId returns the SessionRunId field if non-nil, zero value otherwise.
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
 
-### GetSessionRunIdOk
+### GetVersionIdOk
 
-`func (o *SessionTestResultError) GetSessionRunIdOk() (*string, bool)`
+`func (o *SessionTestResultError) GetVersionIdOk() (*string, bool)`
 
-GetSessionRunIdOk returns a tuple with the SessionRunId field if it's non-nil, zero value otherwise
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSessionRunId
+### SetVersionId
 
-`func (o *SessionTestResultError) SetSessionRunId(v string)`
+`func (o *SessionTestResultError) SetVersionId(v string)`
 
-SetSessionRunId sets SessionRunId field to given value.
+SetVersionId sets VersionId field to given value.
 
 
 ### GetQueryStatus
