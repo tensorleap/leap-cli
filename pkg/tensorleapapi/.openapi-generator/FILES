@@ -174,6 +174,7 @@ docs/GetFieldsValuesResponse.md
 docs/GetFieldsValuesResponseResultsInner.md
 docs/GetGeneratedLabelsParams.md
 docs/GetGenericBaseImageTypesResponse.md
+docs/GetImportModelUploadUrlParams.md
 docs/GetInsightsParams.md
 docs/GetInsightsResponse.md
 docs/GetIssueFileUploadSignedUrl.md
@@ -445,6 +446,7 @@ docs/UpdateVersionNameParams.md
 docs/UpdateVersionParams.md
 docs/UpdateVersionResponse.md
 docs/UploadModelFileType.md
+docs/UploadedModel.md
 docs/UpsertStateParams.md
 docs/UpsertStateResponse.md
 docs/UserData.md
@@ -640,6 +642,7 @@ model_get_fields_values_response.go
 model_get_fields_values_response_results_inner.go
 model_get_generated_labels_params.go
 model_get_generic_base_image_types_response.go
+model_get_import_model_upload_url_params.go
 model_get_insights_params.go
 model_get_insights_response.go
 model_get_issue_file_upload_signed_url.go
@@ -911,6 +914,7 @@ model_update_version_name_params.go
 model_update_version_params.go
 model_update_version_response.go
 model_upload_model_file_type.go
+model_uploaded_model.go
 model_upsert_state_params.go
 model_upsert_state_response.go
 model_user_data.go

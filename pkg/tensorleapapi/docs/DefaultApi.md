@@ -69,6 +69,7 @@ Method | HTTP request | Description
 [**GetGeneratedLabels**](DefaultAPI.md#GetGeneratedLabels) | **Post** /datasetcuration/getGeneratedLabels | 
 [**GetGenericBaseImageTypes**](DefaultAPI.md#GetGenericBaseImageTypes) | **Post** /versions/getGenericBaseImageTypes | 
 [**GetHeatmapChart**](DefaultAPI.md#GetHeatmapChart) | **Post** /sessionmetrics/getHeatmapChart | 
+[**GetImportModelUploadUrl**](DefaultAPI.md#GetImportModelUploadUrl) | **Post** /versions/getImportModelUploadUrl | 
 [**GetInsights**](DefaultAPI.md#GetInsights) | **Post** /insights/getInsights | 
 [**GetIssueFileUploadSignedUrl**](DefaultAPI.md#GetIssueFileUploadSignedUrl) | **Post** /issues/getIssueFileUploadSignedUrl | 
 [**GetJobLogs**](DefaultAPI.md#GetJobLogs) | **Post** /jobs/getJobLogs | 
@@ -4233,6 +4234,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**MultiChartsResponse**](MultiChartsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetImportModelUploadUrl
+
+> ExternalImportModelStorage GetImportModelUploadUrl(ctx).GetImportModelUploadUrlParams(getImportModelUploadUrlParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getImportModelUploadUrlParams := *openapiclient.NewGetImportModelUploadUrlParams("FileName_example", "ProjectId_example") // GetImportModelUploadUrlParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetImportModelUploadUrl(context.Background()).GetImportModelUploadUrlParams(getImportModelUploadUrlParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetImportModelUploadUrl``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetImportModelUploadUrl`: ExternalImportModelStorage
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetImportModelUploadUrl`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetImportModelUploadUrlRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getImportModelUploadUrlParams** | [**GetImportModelUploadUrlParams**](GetImportModelUploadUrlParams.md) |  | 
+
+### Return type
+
+[**ExternalImportModelStorage**](ExternalImportModelStorage.md)
 
 ### Authorization
 

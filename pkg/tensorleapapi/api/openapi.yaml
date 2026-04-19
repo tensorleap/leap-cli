@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.23
+  version: 11.0.29
 servers:
 - url: /api/v2
 paths:
@@ -2285,6 +2285,26 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/GetUploadSignedUrlParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExternalImportModelStorage"
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /versions/getImportModelUploadUrl:
+    post:
+      operationId: GetImportModelUploadUrl
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetImportModelUploadUrlParams"
         required: true
       responses:
         "200":
@@ -33101,6 +33121,20 @@ components:
         type: number
       properties: {}
       type: object
+    UploadedModel:
+      additionalProperties: true
+      example:
+        transformInputs: true
+        blobPath: blobPath
+      properties:
+        blobPath:
+          type: string
+        transformInputs:
+          type: boolean
+      required:
+      - blobPath
+      - transformInputs
+      type: object
     Version:
       additionalProperties: true
       example:
@@ -33119,6 +33153,9 @@ components:
         createdAt: 2000-01-23T04:56:07.000+00:00
         esMetricIndex: esMetricIndex
         createdBy: createdBy
+        uploadedModel:
+          transformInputs: true
+          blobPath: blobPath
         teamId: teamId
         graphValidationData:
           metadata:
@@ -33252,6 +33289,8 @@ components:
           type: string
         esInspectionIndex:
           type: string
+        uploadedModel:
+          $ref: "#/components/schemas/UploadedModel"
       required:
       - branch
       - cid
@@ -33301,6 +33340,9 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           esMetricIndex: esMetricIndex
           createdBy: createdBy
+          uploadedModel:
+            transformInputs: true
+            blobPath: blobPath
           teamId: teamId
           graphValidationData:
             metadata:
@@ -33495,6 +33537,9 @@ components:
         createdAt: 2000-01-23T04:56:07.000+00:00
         esMetricIndex: esMetricIndex
         csvBlobPath: csvBlobPath
+        uploadedModel:
+          transformInputs: true
+          blobPath: blobPath
         graphValidationData:
           metadata:
           - connection_name: connection_name
@@ -33729,6 +33774,8 @@ components:
             type: number
           properties: {}
           type: object
+        uploadedModel:
+          $ref: "#/components/schemas/UploadedModel"
       required:
       - branchName
       - cid
@@ -33754,6 +33801,9 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           esMetricIndex: esMetricIndex
           csvBlobPath: csvBlobPath
+          uploadedModel:
+            transformInputs: true
+            blobPath: blobPath
           graphValidationData:
             metadata:
             - connection_name: connection_name
@@ -33932,6 +33982,9 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           esMetricIndex: esMetricIndex
           csvBlobPath: csvBlobPath
+          uploadedModel:
+            transformInputs: true
+            blobPath: blobPath
           graphValidationData:
             metadata:
             - connection_name: connection_name
@@ -34148,6 +34201,23 @@ components:
           type: string
       required:
       - fileName
+      type: object
+    GetImportModelUploadUrlParams:
+      additionalProperties: true
+      example:
+        fileName: fileName
+        origin: origin
+        projectId: projectId
+      properties:
+        origin:
+          type: string
+        fileName:
+          type: string
+        projectId:
+          type: string
+      required:
+      - fileName
+      - projectId
       type: object
     GetDownloadSignedUrlResponse:
       additionalProperties: true

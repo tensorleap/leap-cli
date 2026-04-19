@@ -25,6 +25,7 @@ Name | Type | Description | Notes
 **InferenceArtifactId** | Pointer to **string** |  | [optional] 
 **EsMetricIndex** | Pointer to **string** |  | [optional] 
 **EsInspectionIndex** | Pointer to **string** |  | [optional] 
+**UploadedModel** | Pointer to [**UploadedModel**](UploadedModel.md) |  | [optional] 
 
 ## Methods
 
@@ -514,6 +515,31 @@ SetEsInspectionIndex sets EsInspectionIndex field to given value.
 `func (o *Version) HasEsInspectionIndex() bool`
 
 HasEsInspectionIndex returns a boolean if a field has been set.
+
+### GetUploadedModel
+
+`func (o *Version) GetUploadedModel() UploadedModel`
+
+GetUploadedModel returns the UploadedModel field if non-nil, zero value otherwise.
+
+### GetUploadedModelOk
+
+`func (o *Version) GetUploadedModelOk() (*UploadedModel, bool)`
+
+GetUploadedModelOk returns a tuple with the UploadedModel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUploadedModel
+
+`func (o *Version) SetUploadedModel(v UploadedModel)`
+
+SetUploadedModel sets UploadedModel field to given value.
+
+### HasUploadedModel
+
+`func (o *Version) HasUploadedModel() bool`
+
+HasUploadedModel returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
