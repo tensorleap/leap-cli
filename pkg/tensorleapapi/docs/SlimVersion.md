@@ -29,6 +29,7 @@ Name | Type | Description | Notes
 **InferenceArtifactId** | Pointer to **string** |  | [optional] 
 **EsMetricIndex** | Pointer to **string** |  | [optional] 
 **EpochTags** | Pointer to **map[string]float64** |  | [optional] 
+**UploadedModel** | Pointer to [**UploadedModel**](UploadedModel.md) |  | [optional] 
 
 ## Methods
 
@@ -618,6 +619,31 @@ SetEpochTags sets EpochTags field to given value.
 `func (o *SlimVersion) HasEpochTags() bool`
 
 HasEpochTags returns a boolean if a field has been set.
+
+### GetUploadedModel
+
+`func (o *SlimVersion) GetUploadedModel() UploadedModel`
+
+GetUploadedModel returns the UploadedModel field if non-nil, zero value otherwise.
+
+### GetUploadedModelOk
+
+`func (o *SlimVersion) GetUploadedModelOk() (*UploadedModel, bool)`
+
+GetUploadedModelOk returns a tuple with the UploadedModel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUploadedModel
+
+`func (o *SlimVersion) SetUploadedModel(v UploadedModel)`
+
+SetUploadedModel sets UploadedModel field to given value.
+
+### HasUploadedModel
+
+`func (o *SlimVersion) HasUploadedModel() bool`
+
+HasUploadedModel returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
