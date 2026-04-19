@@ -37,6 +37,20 @@ func GetUploadSignedUrl(ctx context.Context, blobPath string) (*tensorleapapi.Ex
 	return res, nil
 }
 
+func GetImportModelUploadUrl(ctx context.Context, fileName string, projectId string) (*tensorleapapi.ExternalImportModelStorage, error) {
+	params := *tensorleapapi.NewGetImportModelUploadUrlParams(fileName, projectId)
+
+	base_url := GetBaseUrlFromContext(ctx)
+	params.SetOrigin(base_url)
+	res, res_http, err := ApiClient.GetImportModelUploadUrl(ctx).
+		GetImportModelUploadUrlParams(params).
+		Execute()
+	if err = CheckRes(res_http, err); err != nil {
+		return nil, fmt.Errorf("failed to get import model upload url: %v", err)
+	}
+	return res, nil
+}
+
 func GetSignedUrl(ctx context.Context, url string, method tensorleapapi.HttpMethods, expire time.Duration, origin *string) (string, error) {
 	expireTime := float64(expire.Seconds())
 	getUrlParams := *tensorleapapi.NewGetSignedUrlParams(url, expireTime, method)

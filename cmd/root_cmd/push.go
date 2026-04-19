@@ -108,7 +108,13 @@ Examples:
 			}
 			properties["model_path"] = modelPath
 
-			if !isOverwrite || !overwriteVersionHasModel {
+			overwriteVersionHasUploadedModel := false
+			if overwriteVersionInfo != nil {
+				overwriteVersionHasUploadedModel = overwriteVersionInfo.HasUploadedModel
+			}
+
+			needsNewModel := !isOverwrite || (!overwriteVersionHasModel && !overwriteVersionHasUploadedModel)
+			if needsNewModel {
 				err := model.SelectModelType(&modelType, modelPath)
 				if err != nil {
 					// Track projects push failed
@@ -229,7 +235,7 @@ Examples:
 				return fmt.Errorf("latest code parsing failed, add --force to push anyway")
 			}
 			if !isOverwrite {
-				importModelInfo, err := model.PrepareImportModelFromFilePath(ctx, modelPath, transformInput, modelType)
+				importModelInfo, err := model.PrepareImportModelFromFilePath(ctx, currentProject.GetCid(), modelPath, transformInput, modelType)
 				if err != nil {
 					return err
 				}
@@ -245,8 +251,8 @@ Examples:
 				}
 			} else {
 				var importModelInfo *tensorleapapi.ImportModelInfo
-				if !overwriteVersionHasModel {
-					importModelInfo, err = model.PrepareImportModelFromFilePath(ctx, modelPath, transformInput, modelType)
+				if !overwriteVersionHasModel && !overwriteVersionHasUploadedModel {
+					importModelInfo, err = model.PrepareImportModelFromFilePath(ctx, currentProject.GetCid(), modelPath, transformInput, modelType)
 					if err != nil {
 						return err
 					}
