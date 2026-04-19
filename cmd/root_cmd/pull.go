@@ -229,7 +229,7 @@ func askUserToSelectVersionWithCode(ctx context.Context, projectId string) (*Ver
 	options := []string{}
 
 	for _, version := range versionsWithCode {
-		status, _ := model.CalcVersionStatus(&version, runsStatusesPerVersionId[version.GetCid()])
+		status, _, _ := model.CalcVersionStatus(&version, runsStatusesPerVersionId[version.GetCid()])
 		displayName := model.FormatVersionDisplayName(&version, status, maxLengthOfVersionName)
 		options = append(options, displayName)
 
