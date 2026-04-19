@@ -99,10 +99,11 @@ const (
 )
 
 type VersionInfo struct {
-	VersionId   string
-	VersionName string
-	HasModel    bool
-	Status      VersionStatus
+	VersionId        string
+	VersionName      string
+	HasModel         bool
+	HasUploadedModel bool
+	Status           VersionStatus
 }
 
 func AskUserForModelPathOrOverwrite(ctx context.Context, projectId string) (isOverwrite bool, overwriteVersionInfo *VersionInfo, modelPath string, err error) {
@@ -111,7 +112,7 @@ func AskUserForModelPathOrOverwrite(ctx context.Context, projectId string) (isOv
 		return false, nil, "", err
 	}
 	if overwriteVersionInfo != nil {
-		if overwriteVersionInfo.HasModel {
+		if overwriteVersionInfo.HasModel || overwriteVersionInfo.HasUploadedModel {
 			return true, overwriteVersionInfo, "", nil
 		}
 		log.Warn("The selected version does not have a model, you will be asked for a model path to import")
@@ -148,15 +149,16 @@ func AskUserForNewVersionOrSelectExistingVersion(ctx context.Context, projectId 
 	}
 
 	for _, version := range versions {
-		status, hasModel := CalcVersionStatus(&version, runsStatusesPerVersionId[version.GetCid()])
+		status, hasModel, hasUploadedModel := CalcVersionStatus(&version, runsStatusesPerVersionId[version.GetCid()])
 		displayName := FormatVersionDisplayName(&version, status, maxLengthOfVersionName)
 		options = append(options, displayName)
 
 		versionInfos = append(versionInfos, VersionInfo{
-			VersionId:   version.GetCid(),
-			VersionName: version.GetNotes(),
-			HasModel:    hasModel,
-			Status:      status,
+			VersionId:        version.GetCid(),
+			VersionName:      version.GetNotes(),
+			HasModel:         hasModel,
+			HasUploadedModel: hasUploadedModel,
+			Status:           status,
 		})
 	}
 
@@ -229,8 +231,9 @@ func GetRunsStatusesPerVersionId(ctx context.Context, projectId string) (map[str
 	return runsStatusesPerVersionId, nil
 }
 
-func CalcVersionStatus(version *tensorleapapi.SlimVersion, jobs []tensorleapapi.RunProcess) (VersionStatus, bool) {
+func CalcVersionStatus(version *tensorleapapi.SlimVersion, jobs []tensorleapapi.RunProcess) (VersionStatus, bool, bool) {
 	hasModel := version.HasModelId()
+	hasUploadedModel := version.HasUploadedModel()
 	if jobs == nil {
 		jobs = []tensorleapapi.RunProcess{}
 	}
@@ -243,17 +246,17 @@ func CalcVersionStatus(version *tensorleapapi.SlimVersion, jobs []tensorleapapi.
 	}
 	for _, job := range lastJobByType {
 		if api.IsJobRunning(job.GetStatus()) {
-			return VersionStatus_RUNNING, hasModel
+			return VersionStatus_RUNNING, hasModel, hasUploadedModel
 		}
 	}
 	if !hasModel {
-		return VersionStatus_FAILED, hasModel
+		return VersionStatus_FAILED, hasModel, hasUploadedModel
 	}
 	for _, job := range lastJobByType {
 		if api.IsJobFailed(job.GetStatus()) {
-			return VersionStatus_FAILED, hasModel
+			return VersionStatus_FAILED, hasModel, hasUploadedModel
 		}
 	}
 
-	return VersionStatus_FINISHED, hasModel
+	return VersionStatus_FINISHED, hasModel, hasUploadedModel
 }

@@ -17,9 +17,9 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
-func PrepareImportModelFromFilePath(ctx context.Context, filePath string, transformInput bool, modelType string) (*tensorleapapi.ImportModelInfo, error) {
+func PrepareImportModelFromFilePath(ctx context.Context, projectId string, filePath string, transformInput bool, modelType string) (*tensorleapapi.ImportModelInfo, error) {
 	fileName := filepath.Base(filePath)
-	signedUrlData, err := api.GetUploadSignedUrl(ctx, fileName)
+	signedUrlData, err := api.GetImportModelUploadUrl(ctx, fileName, projectId)
 	if err != nil {
 		return nil, err
 	}
