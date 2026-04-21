@@ -51,6 +51,7 @@ Method | HTTP request | Description
 [**GetCodeSnapshot**](DefaultAPI.md#GetCodeSnapshot) | **Post** /versions/getCodeSnapshot | 
 [**GetCodeSnapshotUploadUrl**](DefaultAPI.md#GetCodeSnapshotUploadUrl) | **Post** /versions/getCodeSnapshotUploadUrl | 
 [**GetCollectionDisplayData**](DefaultAPI.md#GetCollectionDisplayData) | **Post** /sample-collection/getCollectionDisplayData | 
+[**GetCollectionSamplesMetadata**](DefaultAPI.md#GetCollectionSamplesMetadata) | **Post** /sample-collection/getCollectionSamplesMetadata | 
 [**GetConfusionMatrixLabels**](DefaultAPI.md#GetConfusionMatrixLabels) | **Post** /sessionmetrics/getConfusionMatrixLabels | 
 [**GetConfusionMatrixResultCombinations**](DefaultAPI.md#GetConfusionMatrixResultCombinations) | **Post** /sessionmetrics/getConfusionMatrixResultCombinations | 
 [**GetConfusionMatrixTable**](DefaultAPI.md#GetConfusionMatrixTable) | **Post** /sessionmetrics/getConfusionMatrixTable | 
@@ -3097,6 +3098,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetCollectionDisplayDataResponse**](GetCollectionDisplayDataResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetCollectionSamplesMetadata
+
+> GetCollectionSamplesMetadataResponse GetCollectionSamplesMetadata(ctx).GetCollectionSamplesMetadataParams(getCollectionSamplesMetadataParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getCollectionSamplesMetadataParams := *openapiclient.NewGetCollectionSamplesMetadataParams("InferenceArtifactId_example", "CollectionId_example", "ProjectId_example") // GetCollectionSamplesMetadataParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetCollectionSamplesMetadata(context.Background()).GetCollectionSamplesMetadataParams(getCollectionSamplesMetadataParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetCollectionSamplesMetadata``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetCollectionSamplesMetadata`: GetCollectionSamplesMetadataResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetCollectionSamplesMetadata`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetCollectionSamplesMetadataRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getCollectionSamplesMetadataParams** | [**GetCollectionSamplesMetadataParams**](GetCollectionSamplesMetadataParams.md) |  | 
+
+### Return type
+
+[**GetCollectionSamplesMetadataResponse**](GetCollectionSamplesMetadataResponse.md)
 
 ### Authorization
 
