@@ -155,6 +155,8 @@ docs/GetCodeSnapshotResponse.md
 docs/GetCodeSnapshotUploadUrlParams.md
 docs/GetCollectionDisplayDataParams.md
 docs/GetCollectionDisplayDataResponse.md
+docs/GetCollectionSamplesMetadataParams.md
+docs/GetCollectionSamplesMetadataResponse.md
 docs/GetConfusionMatrixLabels.md
 docs/GetConfusionMatrixResultCombinationsParams.md
 docs/GetCurrentProjectVersionParams.md
@@ -305,6 +307,9 @@ docs/MachineTypeOption.md
 docs/MaskImageData.md
 docs/MaskTextData.md
 docs/MessageLevel.md
+docs/MetadataField.md
+docs/MetadataFieldValue.md
+docs/MetadataFieldValueValue.md
 docs/MetricInstance.md
 docs/MetricMessageParams.md
 docs/MetricStatisticElement.md
@@ -623,6 +628,8 @@ model_get_code_snapshot_response.go
 model_get_code_snapshot_upload_url_params.go
 model_get_collection_display_data_params.go
 model_get_collection_display_data_response.go
+model_get_collection_samples_metadata_params.go
+model_get_collection_samples_metadata_response.go
 model_get_confusion_matrix_labels.go
 model_get_confusion_matrix_result_combinations_params.go
 model_get_current_project_version_params.go
@@ -773,6 +780,9 @@ model_machine_type_option.go
 model_mask_image_data.go
 model_mask_text_data.go
 model_message_level.go
+model_metadata_field.go
+model_metadata_field_value.go
+model_metadata_field_value_value.go
 model_metric_instance.go
 model_metric_message_params.go
 model_metric_statistic_element.go

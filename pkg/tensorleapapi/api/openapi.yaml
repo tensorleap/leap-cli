@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.29
+  version: 11.0.31
 servers:
 - url: /api/v2
 paths:
@@ -1641,6 +1641,26 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PopulateCollectionFromFiltersResponse"
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /sample-collection/getCollectionSamplesMetadata:
+    post:
+      operationId: GetCollectionSamplesMetadata
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetCollectionSamplesMetadataParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetCollectionSamplesMetadataResponse"
           description: Ok
       security:
       - jwt:
@@ -24677,6 +24697,7 @@ components:
     GetEnvironmentInfoResponse:
       additionalProperties: true
       example:
+        localBucketPath: localBucketPath
         schemaVersion: 0.8008281904610115
         gatewayUrl: gatewayUrl
         licenseMetadata:
@@ -24709,6 +24730,8 @@ components:
           type: string
         licenseMetadata:
           $ref: "#/components/schemas/LicenseMetadata"
+        localBucketPath:
+          type: string
       required:
       - clientStoragePrefixUrl
       - disableDatadogMetrics
@@ -30511,6 +30534,88 @@ components:
       required:
       - filters
       - inferenceArtifactIds
+      - projectId
+      type: object
+    MetadataFieldValue:
+      example:
+        count: 0.8008281904610115
+        value: MetadataFieldValue_value
+      properties:
+        count:
+          format: double
+          type: number
+        value:
+          $ref: "#/components/schemas/MetadataFieldValue_value"
+      required:
+      - count
+      - value
+      type: object
+    MetadataField:
+      example:
+        values:
+        - count: 0.8008281904610115
+          value: MetadataFieldValue_value
+        - count: 0.8008281904610115
+          value: MetadataFieldValue_value
+        type: string
+        key: key
+      properties:
+        values:
+          items:
+            $ref: "#/components/schemas/MetadataFieldValue"
+          type: array
+        type:
+          enum:
+          - string
+          - number
+          type: string
+        key:
+          type: string
+      required:
+      - key
+      - type
+      - values
+      type: object
+    GetCollectionSamplesMetadataResponse:
+      example:
+        fields:
+        - values:
+          - count: 0.8008281904610115
+            value: MetadataFieldValue_value
+          - count: 0.8008281904610115
+            value: MetadataFieldValue_value
+          type: string
+          key: key
+        - values:
+          - count: 0.8008281904610115
+            value: MetadataFieldValue_value
+          - count: 0.8008281904610115
+            value: MetadataFieldValue_value
+          type: string
+          key: key
+      properties:
+        fields:
+          items:
+            $ref: "#/components/schemas/MetadataField"
+          type: array
+      required:
+      - fields
+      type: object
+    GetCollectionSamplesMetadataParams:
+      example:
+        inferenceArtifactId: inferenceArtifactId
+        collectionId: collectionId
+        projectId: projectId
+      properties:
+        inferenceArtifactId:
+          type: string
+        collectionId:
+          type: string
+        projectId:
+          type: string
+      required:
+      - collectionId
+      - inferenceArtifactId
       - projectId
       type: object
     GenerateStreamingSamplesVisParams:
@@ -38852,6 +38957,11 @@ components:
       - data
       - sampleId
       type: object
+    MetadataFieldValue_value:
+      anyOf:
+      - type: string
+      - format: double
+        type: number
     EpochData_externalData:
       example:
         metrics:
