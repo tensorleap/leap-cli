@@ -24,6 +24,7 @@ const (
 	IMPORTMODELTYPE_ONNX     ImportModelType = "ONNX"
 	IMPORTMODELTYPE_PB_TF2   ImportModelType = "PB_TF2"
 	IMPORTMODELTYPE_H5_TF2   ImportModelType = "H5_TF2"
+	IMPORTMODELTYPE_PT2      ImportModelType = "PT2"
 )
 
 // All allowed values of ImportModelType enum
@@ -32,6 +33,7 @@ var AllowedImportModelTypeEnumValues = []ImportModelType{
 	"ONNX",
 	"PB_TF2",
 	"H5_TF2",
+	"PT2",
 }
 
 func (v *ImportModelType) UnmarshalJSON(src []byte) error {

@@ -21,6 +21,7 @@ var MODEL_TYPES = []string{
 	string(tensorleapapi.IMPORTMODELTYPE_ONNX),
 	string(tensorleapapi.IMPORTMODELTYPE_PB_TF2),
 	string(tensorleapapi.IMPORTMODELTYPE_H5_TF2),
+	string(tensorleapapi.IMPORTMODELTYPE_PT2),
 }
 
 func GetDefaultMessageFromModelPath(filePath string) string {
@@ -73,6 +74,9 @@ func SelectModelType(modelType *string, modelPath string) error {
 		return nil
 	case ".onnx":
 		*modelType = string(tensorleapapi.IMPORTMODELTYPE_ONNX)
+		return nil
+	case ".pt2":
+		*modelType = string(tensorleapapi.IMPORTMODELTYPE_PT2)
 		return nil
 	case ".tar.gz":
 		*modelType = string(tensorleapapi.IMPORTMODELTYPE_PB_TF2)
@@ -186,7 +190,7 @@ func AskUserForNewVersionOrSelectExistingVersion(ctx context.Context, projectId 
 }
 
 func AskUserForModelPath(ctx context.Context) (modelPath string, err error) {
-	allowedExt := []string{".h5", ".onnx"}
+	allowedExt := []string{".h5", ".onnx", ".pt2"}
 	ignoredDirs := []string{".venv"}
 	return local.SelectFile(allowedExt, "Select model file", ignoredDirs)
 }
