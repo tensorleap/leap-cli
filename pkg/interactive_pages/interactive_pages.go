@@ -1,7 +1,9 @@
 package interactive_pages
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/atotto/clipboard"
@@ -38,6 +40,10 @@ var (
 	helpStyle = lipgloss.NewStyle().
 			Foreground(colorGray).
 			MarginTop(1)
+
+	quitHintStyle = lipgloss.NewStyle().
+			Foreground(colorWhite).
+			Bold(true)
 
 	activeTabStyle = lipgloss.NewStyle().
 			Bold(true).
@@ -602,7 +608,8 @@ func (r *TabbedReport) renderHelper(output *strings.Builder) {
 func (r *TabbedReport) renderHelpText(output *strings.Builder) {
 	scrollInfo := r.formatScrollInfo()
 	copyStatus := r.formatCopyStatus()
-	helpText := fmt.Sprintf("← → tabs • ↑↓ scroll • 'c' copy • q quit%s%s", scrollInfo, copyStatus)
+	quitHint := quitHintStyle.Render("Q quit")
+	helpText := fmt.Sprintf("← → tabs • ↑↓ scroll • 'c' copy • %s%s%s", quitHint, scrollInfo, copyStatus)
 	output.WriteString(helpStyle.Render(helpText))
 	output.WriteString("\n")
 }
@@ -755,7 +762,27 @@ func removeAnsiCodes(text string) string {
 type ReportPages = TabbedReport
 type InteractivePage = Page
 
+func confirmInteractiveView() bool {
+	fmt.Print("View errors in interactive mode? (Y/n): ")
+	reader := bufio.NewReader(os.Stdin)
+	input, err := reader.ReadString('\n')
+	if err != nil {
+		return true
+	}
+	input = strings.TrimSpace(strings.ToLower(input))
+	return input == "" || input == "y" || input == "yes"
+}
+
 func RunInteractivePages(report *TabbedReport) error {
+	if !confirmInteractiveView() {
+		PrintOnly(report)
+		return nil
+	}
+
+	return runInteractiveTUI(report)
+}
+
+func runInteractiveTUI(report *TabbedReport) error {
 	program := tea.NewProgram(
 		report,
 		tea.WithAltScreen(),
