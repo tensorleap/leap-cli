@@ -6,36 +6,38 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Cid** | **string** |  | 
 **CreatedBy** | **string** |  | 
+**TeamId** | **string** |  | 
 **ProjectId** | **string** |  | 
-**BranchName** | **string** |  | 
-**Tags** | **string** |  | 
+**Branch** | **string** |  | 
+**Tag** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 **Notes** | **string** |  | 
-**CodeSnapshotId** | Pointer to **string** |  | [optional] 
 **IsFavourite** | **bool** |  | 
+**CodeSnapshotId** | Pointer to **string** |  | [optional] 
 **Hash** | Pointer to **NullableString** |  | [optional] 
 **GraphValidationData** | Pointer to [**GraphValidatorData**](GraphValidatorData.md) |  | [optional] 
-**TeamId** | **string** |  | 
+**ModelId** | Pointer to **string** |  | [optional] 
+**EpochTags** | Pointer to **map[string]float64** |  | [optional] 
+**UploadedModel** | Pointer to [**UploadedModel**](UploadedModel.md) |  | [optional] 
+**Resources** | [**VersionResources**](VersionResources.md) |  | 
+**ParentVersionId** | Pointer to **string** |  | [optional] 
+**IsActive** | Pointer to **bool** |  | [optional] 
+**ExperimentId** | Pointer to **string** |  | [optional] 
+**UpdateActions** | Pointer to [**[]UpdateAction**](UpdateAction.md) |  | [optional] 
+**SerialNumber** | Pointer to **float64** |  | [optional] 
 **Properties** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
 **HasExternalEpoch** | **bool** |  | 
 **IsEvaluate** | **bool** |  | 
 **EvaluateParams** | Pointer to [**VersionEvaluateParams**](VersionEvaluateParams.md) |  | [optional] 
 **CanContinueEvaluate** | Pointer to **bool** |  | [optional] 
-**CsvBlobPath** | Pointer to **string** |  | [optional] 
 **Jobs** | [**[]Job**](Job.md) |  | 
-**ModelId** | Pointer to **string** |  | [optional] 
-**VisArtifactId** | Pointer to **string** |  | [optional] 
-**InferenceArtifactId** | Pointer to **string** |  | [optional] 
-**EsMetricIndex** | Pointer to **string** |  | [optional] 
-**EpochTags** | Pointer to **map[string]float64** |  | [optional] 
-**UploadedModel** | Pointer to [**UploadedModel**](UploadedModel.md) |  | [optional] 
 
 ## Methods
 
 ### NewSlimVersion
 
-`func NewSlimVersion(cid string, createdBy string, projectId string, branchName string, tags string, createdAt time.Time, updatedAt time.Time, notes string, isFavourite bool, teamId string, hasExternalEpoch bool, isEvaluate bool, jobs []Job, ) *SlimVersion`
+`func NewSlimVersion(cid string, createdBy string, teamId string, projectId string, branch string, tag string, createdAt time.Time, updatedAt time.Time, notes string, isFavourite bool, resources VersionResources, hasExternalEpoch bool, isEvaluate bool, jobs []Job, ) *SlimVersion`
 
 NewSlimVersion instantiates a new SlimVersion object
 This constructor will assign default values to properties that have it defined,
@@ -90,6 +92,26 @@ and a boolean to check if the value has been set.
 SetCreatedBy sets CreatedBy field to given value.
 
 
+### GetTeamId
+
+`func (o *SlimVersion) GetTeamId() string`
+
+GetTeamId returns the TeamId field if non-nil, zero value otherwise.
+
+### GetTeamIdOk
+
+`func (o *SlimVersion) GetTeamIdOk() (*string, bool)`
+
+GetTeamIdOk returns a tuple with the TeamId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTeamId
+
+`func (o *SlimVersion) SetTeamId(v string)`
+
+SetTeamId sets TeamId field to given value.
+
+
 ### GetProjectId
 
 `func (o *SlimVersion) GetProjectId() string`
@@ -110,44 +132,44 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetBranchName
+### GetBranch
 
-`func (o *SlimVersion) GetBranchName() string`
+`func (o *SlimVersion) GetBranch() string`
 
-GetBranchName returns the BranchName field if non-nil, zero value otherwise.
+GetBranch returns the Branch field if non-nil, zero value otherwise.
 
-### GetBranchNameOk
+### GetBranchOk
 
-`func (o *SlimVersion) GetBranchNameOk() (*string, bool)`
+`func (o *SlimVersion) GetBranchOk() (*string, bool)`
 
-GetBranchNameOk returns a tuple with the BranchName field if it's non-nil, zero value otherwise
+GetBranchOk returns a tuple with the Branch field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetBranchName
+### SetBranch
 
-`func (o *SlimVersion) SetBranchName(v string)`
+`func (o *SlimVersion) SetBranch(v string)`
 
-SetBranchName sets BranchName field to given value.
+SetBranch sets Branch field to given value.
 
 
-### GetTags
+### GetTag
 
-`func (o *SlimVersion) GetTags() string`
+`func (o *SlimVersion) GetTag() string`
 
-GetTags returns the Tags field if non-nil, zero value otherwise.
+GetTag returns the Tag field if non-nil, zero value otherwise.
 
-### GetTagsOk
+### GetTagOk
 
-`func (o *SlimVersion) GetTagsOk() (*string, bool)`
+`func (o *SlimVersion) GetTagOk() (*string, bool)`
 
-GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+GetTagOk returns a tuple with the Tag field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetTags
+### SetTag
 
-`func (o *SlimVersion) SetTags(v string)`
+`func (o *SlimVersion) SetTag(v string)`
 
-SetTags sets Tags field to given value.
+SetTag sets Tag field to given value.
 
 
 ### GetCreatedAt
@@ -210,6 +232,26 @@ and a boolean to check if the value has been set.
 SetNotes sets Notes field to given value.
 
 
+### GetIsFavourite
+
+`func (o *SlimVersion) GetIsFavourite() bool`
+
+GetIsFavourite returns the IsFavourite field if non-nil, zero value otherwise.
+
+### GetIsFavouriteOk
+
+`func (o *SlimVersion) GetIsFavouriteOk() (*bool, bool)`
+
+GetIsFavouriteOk returns a tuple with the IsFavourite field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsFavourite
+
+`func (o *SlimVersion) SetIsFavourite(v bool)`
+
+SetIsFavourite sets IsFavourite field to given value.
+
+
 ### GetCodeSnapshotId
 
 `func (o *SlimVersion) GetCodeSnapshotId() string`
@@ -234,26 +276,6 @@ SetCodeSnapshotId sets CodeSnapshotId field to given value.
 `func (o *SlimVersion) HasCodeSnapshotId() bool`
 
 HasCodeSnapshotId returns a boolean if a field has been set.
-
-### GetIsFavourite
-
-`func (o *SlimVersion) GetIsFavourite() bool`
-
-GetIsFavourite returns the IsFavourite field if non-nil, zero value otherwise.
-
-### GetIsFavouriteOk
-
-`func (o *SlimVersion) GetIsFavouriteOk() (*bool, bool)`
-
-GetIsFavouriteOk returns a tuple with the IsFavourite field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetIsFavourite
-
-`func (o *SlimVersion) SetIsFavourite(v bool)`
-
-SetIsFavourite sets IsFavourite field to given value.
-
 
 ### GetHash
 
@@ -315,25 +337,225 @@ SetGraphValidationData sets GraphValidationData field to given value.
 
 HasGraphValidationData returns a boolean if a field has been set.
 
-### GetTeamId
+### GetModelId
 
-`func (o *SlimVersion) GetTeamId() string`
+`func (o *SlimVersion) GetModelId() string`
 
-GetTeamId returns the TeamId field if non-nil, zero value otherwise.
+GetModelId returns the ModelId field if non-nil, zero value otherwise.
 
-### GetTeamIdOk
+### GetModelIdOk
 
-`func (o *SlimVersion) GetTeamIdOk() (*string, bool)`
+`func (o *SlimVersion) GetModelIdOk() (*string, bool)`
 
-GetTeamIdOk returns a tuple with the TeamId field if it's non-nil, zero value otherwise
+GetModelIdOk returns a tuple with the ModelId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetTeamId
+### SetModelId
 
-`func (o *SlimVersion) SetTeamId(v string)`
+`func (o *SlimVersion) SetModelId(v string)`
 
-SetTeamId sets TeamId field to given value.
+SetModelId sets ModelId field to given value.
 
+### HasModelId
+
+`func (o *SlimVersion) HasModelId() bool`
+
+HasModelId returns a boolean if a field has been set.
+
+### GetEpochTags
+
+`func (o *SlimVersion) GetEpochTags() map[string]float64`
+
+GetEpochTags returns the EpochTags field if non-nil, zero value otherwise.
+
+### GetEpochTagsOk
+
+`func (o *SlimVersion) GetEpochTagsOk() (*map[string]float64, bool)`
+
+GetEpochTagsOk returns a tuple with the EpochTags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEpochTags
+
+`func (o *SlimVersion) SetEpochTags(v map[string]float64)`
+
+SetEpochTags sets EpochTags field to given value.
+
+### HasEpochTags
+
+`func (o *SlimVersion) HasEpochTags() bool`
+
+HasEpochTags returns a boolean if a field has been set.
+
+### GetUploadedModel
+
+`func (o *SlimVersion) GetUploadedModel() UploadedModel`
+
+GetUploadedModel returns the UploadedModel field if non-nil, zero value otherwise.
+
+### GetUploadedModelOk
+
+`func (o *SlimVersion) GetUploadedModelOk() (*UploadedModel, bool)`
+
+GetUploadedModelOk returns a tuple with the UploadedModel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUploadedModel
+
+`func (o *SlimVersion) SetUploadedModel(v UploadedModel)`
+
+SetUploadedModel sets UploadedModel field to given value.
+
+### HasUploadedModel
+
+`func (o *SlimVersion) HasUploadedModel() bool`
+
+HasUploadedModel returns a boolean if a field has been set.
+
+### GetResources
+
+`func (o *SlimVersion) GetResources() VersionResources`
+
+GetResources returns the Resources field if non-nil, zero value otherwise.
+
+### GetResourcesOk
+
+`func (o *SlimVersion) GetResourcesOk() (*VersionResources, bool)`
+
+GetResourcesOk returns a tuple with the Resources field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetResources
+
+`func (o *SlimVersion) SetResources(v VersionResources)`
+
+SetResources sets Resources field to given value.
+
+
+### GetParentVersionId
+
+`func (o *SlimVersion) GetParentVersionId() string`
+
+GetParentVersionId returns the ParentVersionId field if non-nil, zero value otherwise.
+
+### GetParentVersionIdOk
+
+`func (o *SlimVersion) GetParentVersionIdOk() (*string, bool)`
+
+GetParentVersionIdOk returns a tuple with the ParentVersionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetParentVersionId
+
+`func (o *SlimVersion) SetParentVersionId(v string)`
+
+SetParentVersionId sets ParentVersionId field to given value.
+
+### HasParentVersionId
+
+`func (o *SlimVersion) HasParentVersionId() bool`
+
+HasParentVersionId returns a boolean if a field has been set.
+
+### GetIsActive
+
+`func (o *SlimVersion) GetIsActive() bool`
+
+GetIsActive returns the IsActive field if non-nil, zero value otherwise.
+
+### GetIsActiveOk
+
+`func (o *SlimVersion) GetIsActiveOk() (*bool, bool)`
+
+GetIsActiveOk returns a tuple with the IsActive field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsActive
+
+`func (o *SlimVersion) SetIsActive(v bool)`
+
+SetIsActive sets IsActive field to given value.
+
+### HasIsActive
+
+`func (o *SlimVersion) HasIsActive() bool`
+
+HasIsActive returns a boolean if a field has been set.
+
+### GetExperimentId
+
+`func (o *SlimVersion) GetExperimentId() string`
+
+GetExperimentId returns the ExperimentId field if non-nil, zero value otherwise.
+
+### GetExperimentIdOk
+
+`func (o *SlimVersion) GetExperimentIdOk() (*string, bool)`
+
+GetExperimentIdOk returns a tuple with the ExperimentId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExperimentId
+
+`func (o *SlimVersion) SetExperimentId(v string)`
+
+SetExperimentId sets ExperimentId field to given value.
+
+### HasExperimentId
+
+`func (o *SlimVersion) HasExperimentId() bool`
+
+HasExperimentId returns a boolean if a field has been set.
+
+### GetUpdateActions
+
+`func (o *SlimVersion) GetUpdateActions() []UpdateAction`
+
+GetUpdateActions returns the UpdateActions field if non-nil, zero value otherwise.
+
+### GetUpdateActionsOk
+
+`func (o *SlimVersion) GetUpdateActionsOk() (*[]UpdateAction, bool)`
+
+GetUpdateActionsOk returns a tuple with the UpdateActions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUpdateActions
+
+`func (o *SlimVersion) SetUpdateActions(v []UpdateAction)`
+
+SetUpdateActions sets UpdateActions field to given value.
+
+### HasUpdateActions
+
+`func (o *SlimVersion) HasUpdateActions() bool`
+
+HasUpdateActions returns a boolean if a field has been set.
+
+### GetSerialNumber
+
+`func (o *SlimVersion) GetSerialNumber() float64`
+
+GetSerialNumber returns the SerialNumber field if non-nil, zero value otherwise.
+
+### GetSerialNumberOk
+
+`func (o *SlimVersion) GetSerialNumberOk() (*float64, bool)`
+
+GetSerialNumberOk returns a tuple with the SerialNumber field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSerialNumber
+
+`func (o *SlimVersion) SetSerialNumber(v float64)`
+
+SetSerialNumber sets SerialNumber field to given value.
+
+### HasSerialNumber
+
+`func (o *SlimVersion) HasSerialNumber() bool`
+
+HasSerialNumber returns a boolean if a field has been set.
 
 ### GetProperties
 
@@ -450,31 +672,6 @@ SetCanContinueEvaluate sets CanContinueEvaluate field to given value.
 
 HasCanContinueEvaluate returns a boolean if a field has been set.
 
-### GetCsvBlobPath
-
-`func (o *SlimVersion) GetCsvBlobPath() string`
-
-GetCsvBlobPath returns the CsvBlobPath field if non-nil, zero value otherwise.
-
-### GetCsvBlobPathOk
-
-`func (o *SlimVersion) GetCsvBlobPathOk() (*string, bool)`
-
-GetCsvBlobPathOk returns a tuple with the CsvBlobPath field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCsvBlobPath
-
-`func (o *SlimVersion) SetCsvBlobPath(v string)`
-
-SetCsvBlobPath sets CsvBlobPath field to given value.
-
-### HasCsvBlobPath
-
-`func (o *SlimVersion) HasCsvBlobPath() bool`
-
-HasCsvBlobPath returns a boolean if a field has been set.
-
 ### GetJobs
 
 `func (o *SlimVersion) GetJobs() []Job`
@@ -494,156 +691,6 @@ and a boolean to check if the value has been set.
 
 SetJobs sets Jobs field to given value.
 
-
-### GetModelId
-
-`func (o *SlimVersion) GetModelId() string`
-
-GetModelId returns the ModelId field if non-nil, zero value otherwise.
-
-### GetModelIdOk
-
-`func (o *SlimVersion) GetModelIdOk() (*string, bool)`
-
-GetModelIdOk returns a tuple with the ModelId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetModelId
-
-`func (o *SlimVersion) SetModelId(v string)`
-
-SetModelId sets ModelId field to given value.
-
-### HasModelId
-
-`func (o *SlimVersion) HasModelId() bool`
-
-HasModelId returns a boolean if a field has been set.
-
-### GetVisArtifactId
-
-`func (o *SlimVersion) GetVisArtifactId() string`
-
-GetVisArtifactId returns the VisArtifactId field if non-nil, zero value otherwise.
-
-### GetVisArtifactIdOk
-
-`func (o *SlimVersion) GetVisArtifactIdOk() (*string, bool)`
-
-GetVisArtifactIdOk returns a tuple with the VisArtifactId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetVisArtifactId
-
-`func (o *SlimVersion) SetVisArtifactId(v string)`
-
-SetVisArtifactId sets VisArtifactId field to given value.
-
-### HasVisArtifactId
-
-`func (o *SlimVersion) HasVisArtifactId() bool`
-
-HasVisArtifactId returns a boolean if a field has been set.
-
-### GetInferenceArtifactId
-
-`func (o *SlimVersion) GetInferenceArtifactId() string`
-
-GetInferenceArtifactId returns the InferenceArtifactId field if non-nil, zero value otherwise.
-
-### GetInferenceArtifactIdOk
-
-`func (o *SlimVersion) GetInferenceArtifactIdOk() (*string, bool)`
-
-GetInferenceArtifactIdOk returns a tuple with the InferenceArtifactId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetInferenceArtifactId
-
-`func (o *SlimVersion) SetInferenceArtifactId(v string)`
-
-SetInferenceArtifactId sets InferenceArtifactId field to given value.
-
-### HasInferenceArtifactId
-
-`func (o *SlimVersion) HasInferenceArtifactId() bool`
-
-HasInferenceArtifactId returns a boolean if a field has been set.
-
-### GetEsMetricIndex
-
-`func (o *SlimVersion) GetEsMetricIndex() string`
-
-GetEsMetricIndex returns the EsMetricIndex field if non-nil, zero value otherwise.
-
-### GetEsMetricIndexOk
-
-`func (o *SlimVersion) GetEsMetricIndexOk() (*string, bool)`
-
-GetEsMetricIndexOk returns a tuple with the EsMetricIndex field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEsMetricIndex
-
-`func (o *SlimVersion) SetEsMetricIndex(v string)`
-
-SetEsMetricIndex sets EsMetricIndex field to given value.
-
-### HasEsMetricIndex
-
-`func (o *SlimVersion) HasEsMetricIndex() bool`
-
-HasEsMetricIndex returns a boolean if a field has been set.
-
-### GetEpochTags
-
-`func (o *SlimVersion) GetEpochTags() map[string]float64`
-
-GetEpochTags returns the EpochTags field if non-nil, zero value otherwise.
-
-### GetEpochTagsOk
-
-`func (o *SlimVersion) GetEpochTagsOk() (*map[string]float64, bool)`
-
-GetEpochTagsOk returns a tuple with the EpochTags field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetEpochTags
-
-`func (o *SlimVersion) SetEpochTags(v map[string]float64)`
-
-SetEpochTags sets EpochTags field to given value.
-
-### HasEpochTags
-
-`func (o *SlimVersion) HasEpochTags() bool`
-
-HasEpochTags returns a boolean if a field has been set.
-
-### GetUploadedModel
-
-`func (o *SlimVersion) GetUploadedModel() UploadedModel`
-
-GetUploadedModel returns the UploadedModel field if non-nil, zero value otherwise.
-
-### GetUploadedModelOk
-
-`func (o *SlimVersion) GetUploadedModelOk() (*UploadedModel, bool)`
-
-GetUploadedModelOk returns a tuple with the UploadedModel field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetUploadedModel
-
-`func (o *SlimVersion) SetUploadedModel(v UploadedModel)`
-
-SetUploadedModel sets UploadedModel field to given value.
-
-### HasUploadedModel
-
-`func (o *SlimVersion) HasUploadedModel() bool`
-
-HasUploadedModel returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -1,88 +1,88 @@
-# UpdateVersionNameParams
+# RenameExperimentParams
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Cid** | **string** |  | 
+**ExperimentId** | **string** |  | 
 **ProjectId** | **string** |  | 
 **Name** | **string** |  | 
 
 ## Methods
 
-### NewUpdateVersionNameParams
+### NewRenameExperimentParams
 
-`func NewUpdateVersionNameParams(cid string, projectId string, name string, ) *UpdateVersionNameParams`
+`func NewRenameExperimentParams(experimentId string, projectId string, name string, ) *RenameExperimentParams`
 
-NewUpdateVersionNameParams instantiates a new UpdateVersionNameParams object
+NewRenameExperimentParams instantiates a new RenameExperimentParams object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewUpdateVersionNameParamsWithDefaults
+### NewRenameExperimentParamsWithDefaults
 
-`func NewUpdateVersionNameParamsWithDefaults() *UpdateVersionNameParams`
+`func NewRenameExperimentParamsWithDefaults() *RenameExperimentParams`
 
-NewUpdateVersionNameParamsWithDefaults instantiates a new UpdateVersionNameParams object
+NewRenameExperimentParamsWithDefaults instantiates a new RenameExperimentParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetCid
+### GetExperimentId
 
-`func (o *UpdateVersionNameParams) GetCid() string`
+`func (o *RenameExperimentParams) GetExperimentId() string`
 
-GetCid returns the Cid field if non-nil, zero value otherwise.
+GetExperimentId returns the ExperimentId field if non-nil, zero value otherwise.
 
-### GetCidOk
+### GetExperimentIdOk
 
-`func (o *UpdateVersionNameParams) GetCidOk() (*string, bool)`
+`func (o *RenameExperimentParams) GetExperimentIdOk() (*string, bool)`
 
-GetCidOk returns a tuple with the Cid field if it's non-nil, zero value otherwise
+GetExperimentIdOk returns a tuple with the ExperimentId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCid
+### SetExperimentId
 
-`func (o *UpdateVersionNameParams) SetCid(v string)`
+`func (o *RenameExperimentParams) SetExperimentId(v string)`
 
-SetCid sets Cid field to given value.
+SetExperimentId sets ExperimentId field to given value.
 
 
 ### GetProjectId
 
-`func (o *UpdateVersionNameParams) GetProjectId() string`
+`func (o *RenameExperimentParams) GetProjectId() string`
 
 GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
 
 ### GetProjectIdOk
 
-`func (o *UpdateVersionNameParams) GetProjectIdOk() (*string, bool)`
+`func (o *RenameExperimentParams) GetProjectIdOk() (*string, bool)`
 
 GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetProjectId
 
-`func (o *UpdateVersionNameParams) SetProjectId(v string)`
+`func (o *RenameExperimentParams) SetProjectId(v string)`
 
 SetProjectId sets ProjectId field to given value.
 
 
 ### GetName
 
-`func (o *UpdateVersionNameParams) GetName() string`
+`func (o *RenameExperimentParams) GetName() string`
 
 GetName returns the Name field if non-nil, zero value otherwise.
 
 ### GetNameOk
 
-`func (o *UpdateVersionNameParams) GetNameOk() (*string, bool)`
+`func (o *RenameExperimentParams) GetNameOk() (*string, bool)`
 
 GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetName
 
-`func (o *UpdateVersionNameParams) SetName(v string)`
+`func (o *RenameExperimentParams) SetName(v string)`
 
 SetName sets Name field to given value.
 

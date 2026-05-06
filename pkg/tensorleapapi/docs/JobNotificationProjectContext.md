@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **JobId** | **string** |  | 
 **JobType** | [**JobType**](JobType.md) |  | 
+**JobSubType** | Pointer to [**JobSubType**](JobSubType.md) |  | [optional] 
 **ProjectName** | **string** |  | 
 
 ## Methods
@@ -66,6 +67,31 @@ and a boolean to check if the value has been set.
 
 SetJobType sets JobType field to given value.
 
+
+### GetJobSubType
+
+`func (o *JobNotificationProjectContext) GetJobSubType() JobSubType`
+
+GetJobSubType returns the JobSubType field if non-nil, zero value otherwise.
+
+### GetJobSubTypeOk
+
+`func (o *JobNotificationProjectContext) GetJobSubTypeOk() (*JobSubType, bool)`
+
+GetJobSubTypeOk returns a tuple with the JobSubType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetJobSubType
+
+`func (o *JobNotificationProjectContext) SetJobSubType(v JobSubType)`
+
+SetJobSubType sets JobSubType field to given value.
+
+### HasJobSubType
+
+`func (o *JobNotificationProjectContext) HasJobSubType() bool`
+
+HasJobSubType returns a boolean if a field has been set.
 
 ### GetProjectName
 

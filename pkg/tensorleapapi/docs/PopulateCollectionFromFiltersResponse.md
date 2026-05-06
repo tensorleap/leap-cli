@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**NumOfAlreadyInCollection** | **float64** |  | 
 **NumOfAddedSamples** | **float64** |  | 
 **CollectionId** | **string** |  | 
 
@@ -11,7 +12,7 @@ Name | Type | Description | Notes
 
 ### NewPopulateCollectionFromFiltersResponse
 
-`func NewPopulateCollectionFromFiltersResponse(numOfAddedSamples float64, collectionId string, ) *PopulateCollectionFromFiltersResponse`
+`func NewPopulateCollectionFromFiltersResponse(numOfAlreadyInCollection float64, numOfAddedSamples float64, collectionId string, ) *PopulateCollectionFromFiltersResponse`
 
 NewPopulateCollectionFromFiltersResponse instantiates a new PopulateCollectionFromFiltersResponse object
 This constructor will assign default values to properties that have it defined,
@@ -25,6 +26,26 @@ will change when the set of required properties is changed
 NewPopulateCollectionFromFiltersResponseWithDefaults instantiates a new PopulateCollectionFromFiltersResponse object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetNumOfAlreadyInCollection
+
+`func (o *PopulateCollectionFromFiltersResponse) GetNumOfAlreadyInCollection() float64`
+
+GetNumOfAlreadyInCollection returns the NumOfAlreadyInCollection field if non-nil, zero value otherwise.
+
+### GetNumOfAlreadyInCollectionOk
+
+`func (o *PopulateCollectionFromFiltersResponse) GetNumOfAlreadyInCollectionOk() (*float64, bool)`
+
+GetNumOfAlreadyInCollectionOk returns a tuple with the NumOfAlreadyInCollection field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNumOfAlreadyInCollection
+
+`func (o *PopulateCollectionFromFiltersResponse) SetNumOfAlreadyInCollection(v float64)`
+
+SetNumOfAlreadyInCollection sets NumOfAlreadyInCollection field to given value.
+
 
 ### GetNumOfAddedSamples
 

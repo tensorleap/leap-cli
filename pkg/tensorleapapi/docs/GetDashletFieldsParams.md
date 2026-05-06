@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
+**VersionIds** | Pointer to **[]string** |  | [optional] 
 **InferenceArtifactIds** | **[]string** |  | 
 
 ## Methods
@@ -45,6 +46,31 @@ and a boolean to check if the value has been set.
 
 SetProjectId sets ProjectId field to given value.
 
+
+### GetVersionIds
+
+`func (o *GetDashletFieldsParams) GetVersionIds() []string`
+
+GetVersionIds returns the VersionIds field if non-nil, zero value otherwise.
+
+### GetVersionIdsOk
+
+`func (o *GetDashletFieldsParams) GetVersionIdsOk() (*[]string, bool)`
+
+GetVersionIdsOk returns a tuple with the VersionIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVersionIds
+
+`func (o *GetDashletFieldsParams) SetVersionIds(v []string)`
+
+SetVersionIds sets VersionIds field to given value.
+
+### HasVersionIds
+
+`func (o *GetDashletFieldsParams) HasVersionIds() bool`
+
+HasVersionIds returns a boolean if a field has been set.
 
 ### GetInferenceArtifactIds
 

@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VersionId** | **string** |  | 
-**InferenceArtifactId** | **string** |  | 
 **ProjectId** | **string** |  | 
 **BatchSize** | **float64** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
@@ -24,7 +23,7 @@ Name | Type | Description | Notes
 
 ### NewPickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail
 
-`func NewPickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail(versionId string, inferenceArtifactId string, projectId string, batchSize float64, numOfSamples float64, balanceBy []string, shouldFillRemainingWithUnbalanced bool, reductionAlgorithm ReductionAlgorithm, ) *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail`
+`func NewPickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail(versionId string, projectId string, batchSize float64, numOfSamples float64, balanceBy []string, shouldFillRemainingWithUnbalanced bool, reductionAlgorithm ReductionAlgorithm, ) *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail`
 
 NewPickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail instantiates a new PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail object
 This constructor will assign default values to properties that have it defined,
@@ -57,26 +56,6 @@ and a boolean to check if the value has been set.
 `func (o *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail) SetVersionId(v string)`
 
 SetVersionId sets VersionId field to given value.
-
-
-### GetInferenceArtifactId
-
-`func (o *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail) GetInferenceArtifactId() string`
-
-GetInferenceArtifactId returns the InferenceArtifactId field if non-nil, zero value otherwise.
-
-### GetInferenceArtifactIdOk
-
-`func (o *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail) GetInferenceArtifactIdOk() (*string, bool)`
-
-GetInferenceArtifactIdOk returns a tuple with the InferenceArtifactId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetInferenceArtifactId
-
-`func (o *PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail) SetInferenceArtifactId(v string)`
-
-SetInferenceArtifactId sets InferenceArtifactId field to given value.
 
 
 ### GetProjectId

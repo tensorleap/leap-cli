@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.31
+  version: 11.0.63
 servers:
 - url: /api/v2
 paths:
@@ -527,6 +527,69 @@ paths:
       security:
       - jwt:
         - not-demo
+  /evaluate/resetEvaluate:
+    post:
+      operationId: ResetEvaluate
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetEvaluateParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+        - licensed
+  /evaluate/updateEvaluateArtifact:
+    post:
+      operationId: UpdateEvaluateArtifact
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateEvaluateArtifactParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+        - licensed
+  /evaluate/continueUpdateEvaluate:
+    post:
+      operationId: ContinueUpdateEvaluate
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContinueUpdateEvaluateParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+        - licensed
   /exportedmodels/getExportedModelJobs:
     post:
       operationId: GetExportedModelJobs
@@ -1580,8 +1643,32 @@ paths:
               $ref: "#/components/schemas/UpdateSampleCollectionParams"
         required: true
       responses:
-        "204":
-          description: No content
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateSampleCollectionResponse"
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /sample-collection/removeSamplesFromCollection:
+    post:
+      operationId: RemoveSamplesFromCollection
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RemoveSamplesFromCollectionParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RemoveSamplesFromCollectionResponse"
+          description: Ok
       security:
       - jwt:
         - not-demo
@@ -1678,6 +1765,86 @@ paths:
       responses:
         "204":
           description: No content
+      security:
+      - jwt:
+        - not-demo
+  /sample-collection/ensureCollectionIndex:
+    post:
+      operationId: EnsureCollectionIndex
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EnsureCollectionIndexParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnsureCollectionIndexResponse"
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /sample-collection/getCollectionSampleOrder:
+    post:
+      operationId: GetCollectionSampleOrder
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetCollectionSampleOrderParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetCollectionSampleOrderResponse"
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /sample-collection/getVersionSampleOrder:
+    post:
+      operationId: GetVersionSampleOrder
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetVersionSampleOrderParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetVersionSampleOrderResponse"
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /sample-collection/getVersionSamplesMetadata:
+    post:
+      operationId: GetVersionSamplesMetadata
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetVersionSamplesMetadataParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetVersionSamplesMetadataResponse"
+          description: Ok
       security:
       - jwt:
         - not-demo
@@ -2296,6 +2463,44 @@ paths:
           description: Ok
       security:
       - jwt: []
+  /versions/getSlimActiveVersions:
+    post:
+      operationId: GetSlimActiveVersions
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetSlimActiveVersionsParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetSlimActiveVersionsResponse"
+          description: Ok
+      security:
+      - jwt: []
+  /versions/getSlimExperimentVersions:
+    post:
+      operationId: GetSlimExperimentVersions
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetSlimExperimentVersionsParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetSlimExperimentVersionsResponse"
+          description: Ok
+      security:
+      - jwt: []
   /versions/getUploadSignedUrl:
     post:
       operationId: GetUploadSignedUrl
@@ -2376,19 +2581,55 @@ paths:
       security:
       - jwt:
         - not-demo
-  /versions/updateVersionName:
+  /versions/renameExperiment:
     post:
-      operationId: UpdateVersionName
+      operationId: RenameExperiment
       parameters: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateVersionNameParams"
+              $ref: "#/components/schemas/RenameExperimentParams"
         required: true
       responses:
         "204":
           description: No content
+      security:
+      - jwt:
+        - not-demo
+  /versions/removeExperiment:
+    post:
+      operationId: RemoveExperiment
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RemoveExperimentParams"
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt:
+        - not-demo
+  /versions/setActiveVersion:
+    post:
+      operationId: SetActiveVersion
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetActiveVersionParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SetActiveVersionResponse"
+          description: Ok
       security:
       - jwt:
         - not-demo
@@ -3342,7 +3583,7 @@ components:
     ScatterInsightType:
       enum:
       - low_performance
-      - under_representation
+      - out_of_distribution
       - duplication
       - data_leakage
       - domain_gap
@@ -3913,7 +4154,7 @@ components:
       - unlabeled
       - additional
       type: string
-    UnderRepresentationInsight:
+    OutOfDistributionInsight:
       additionalProperties: true
       properties:
         id_:
@@ -3965,16 +4206,8 @@ components:
           type: array
         latent_space:
           type: string
-        under_representation_dataset:
+        subset:
           $ref: "#/components/schemas/DataStateType"
-        under_representation_n_samples:
-          format: double
-          type: number
-        over_representation_dataset:
-          $ref: "#/components/schemas/DataStateType"
-        over_representation_n_samples:
-          format: double
-          type: number
       required:
       - auto_generated
       - blob_path
@@ -3983,13 +4216,10 @@ components:
       - min_hash
       - mutual_info_elements
       - n_samples
-      - over_representation_dataset
-      - over_representation_n_samples
       - severity
       - severity_metrics
+      - subset
       - type
-      - under_representation_dataset
-      - under_representation_n_samples
       type: object
     ScatterInsightBase:
       additionalProperties: true
@@ -4339,7 +4569,7 @@ components:
     InsightType:
       anyOf:
       - $ref: "#/components/schemas/LowPerformanceInsight"
-      - $ref: "#/components/schemas/UnderRepresentationInsight"
+      - $ref: "#/components/schemas/OutOfDistributionInsight"
       - $ref: "#/components/schemas/ScatterInsightBase"
       - $ref: "#/components/schemas/DuplicationInsight"
       - $ref: "#/components/schemas/DataLeakageInsight"
@@ -10649,10 +10879,17 @@ components:
         inferenceArtifactIds:
         - inferenceArtifactIds
         - inferenceArtifactIds
+        versionIds:
+        - versionIds
+        - versionIds
         projectId: projectId
       properties:
         projectId:
           type: string
+        versionIds:
+          items:
+            type: string
+          type: array
         inferenceArtifactIds:
           items:
             type: string
@@ -10680,7 +10917,6 @@ components:
     Pick_PopulationExplorationParams.Exclude_keyofPopulationExplorationParams.digest-or-reRunAfterFail__:
       description: "From T, pick a set of properties whose keys are in the union K"
       example:
-        inferenceArtifactId: inferenceArtifactId
         elementInstance: true
         reductionAlgorithm: TSNE
         latentSpaceType: latentSpaceType
@@ -11312,8 +11548,6 @@ components:
       properties:
         versionId:
           type: string
-        inferenceArtifactId:
-          type: string
         projectId:
           type: string
         batchSize:
@@ -11349,7 +11583,6 @@ components:
       required:
       - balanceBy
       - batchSize
-      - inferenceArtifactId
       - numOfSamples
       - projectId
       - reductionAlgorithm
@@ -11362,7 +11595,6 @@ components:
       additionalProperties: true
       example:
         populationParams:
-          inferenceArtifactId: inferenceArtifactId
           elementInstance: true
           reductionAlgorithm: TSNE
           latentSpaceType: latentSpaceType
@@ -12573,6 +12805,8 @@ components:
       type: object
     FetchSimilarJobParams:
       properties:
+        latentSpaceType:
+          type: string
         digest:
           type: string
         filters:
@@ -12951,6 +13185,41 @@ components:
       - projectId
       - versionName
       type: object
+    UpdateAction:
+      enum:
+      - metadata
+      - metric_config
+      - insights
+      - visualizations
+      type: string
+    UpdateEvaluateArtifactParams:
+      additionalProperties: true
+      example:
+        updateActions:
+        - metadata
+        - metadata
+        versionId: versionId
+        copyMode: true
+        projectId: projectId
+        sourceVersionId: sourceVersionId
+      properties:
+        versionId:
+          type: string
+        projectId:
+          type: string
+        updateActions:
+          items:
+            $ref: "#/components/schemas/UpdateAction"
+          type: array
+        copyMode:
+          type: boolean
+        sourceVersionId:
+          type: string
+      required:
+      - projectId
+      - updateActions
+      - versionId
+      type: object
     JobParams:
       anyOf:
       - $ref: "#/components/schemas/EvaluateParams"
@@ -12966,6 +13235,7 @@ components:
       - $ref: "#/components/schemas/ImportProjectParams"
       - $ref: "#/components/schemas/ParesCodeSnapshotParams"
       - $ref: "#/components/schemas/PushCodeSnapshotParams"
+      - $ref: "#/components/schemas/UpdateEvaluateArtifactParams"
     CodeSnapshotInfo:
       additionalProperties: true
       example:
@@ -13285,6 +13555,7 @@ components:
       - $ref: "#/components/schemas/MetricMessageParams"
     EngineSettingKey:
       enum:
+      - PRIORITIZE_AUTO_SETTINGS_MAIN
       - PROCESS_REQUIRED_CPU
       - PROCESS_LIMIT_CPU
       - PROCESS_REQUIRED_MEMORY
@@ -13376,16 +13647,39 @@ components:
       - EXPORT_PROJECT
       - IMPORT_PROJECT
       type: string
+    JobSubType:
+      enum:
+      - Evaluate
+      - Population Exploration
+      - Labeling Recommendation
+      - Synthetic Data Generation
+      - Dataset Balancing
+      - Visualizers Calculation
+      - Sample Analysis
+      - Graph Validate
+      - Fetch Similar
+      - Export Project
+      - Copy Project
+      - Import Project
+      - Code Parse
+      - Import Model
+      - Generate Insights
+      - Streaming Samples Vis
+      - Update Evaluate
+      type: string
     JobNotificationBaseContext:
       additionalProperties: true
       example:
         jobId: jobId
         jobType: WARMUP
+        jobSubType: Evaluate
       properties:
         jobId:
           type: string
         jobType:
           $ref: "#/components/schemas/JobType"
+        jobSubType:
+          $ref: "#/components/schemas/JobSubType"
       required:
       - jobId
       - jobType
@@ -13397,6 +13691,8 @@ components:
           type: string
         jobType:
           $ref: "#/components/schemas/JobType"
+        jobSubType:
+          $ref: "#/components/schemas/JobSubType"
         codeSnapshotId:
           type: string
         versionId:
@@ -13417,6 +13713,8 @@ components:
           type: string
         jobType:
           $ref: "#/components/schemas/JobType"
+        jobSubType:
+          $ref: "#/components/schemas/JobSubType"
         projectName:
           type: string
         projectId:
@@ -13451,6 +13749,8 @@ components:
           type: string
         jobType:
           $ref: "#/components/schemas/JobType"
+        jobSubType:
+          $ref: "#/components/schemas/JobSubType"
         projectName:
           type: string
         projectId:
@@ -13485,6 +13785,8 @@ components:
           type: string
         jobType:
           $ref: "#/components/schemas/JobType"
+        jobSubType:
+          $ref: "#/components/schemas/JobSubType"
         projectName:
           type: string
         projectId:
@@ -13522,6 +13824,8 @@ components:
           type: string
         jobType:
           $ref: "#/components/schemas/JobType"
+        jobSubType:
+          $ref: "#/components/schemas/JobSubType"
         projectName:
           type: string
       required:
@@ -13546,6 +13850,7 @@ components:
         context:
           jobId: jobId
           jobType: WARMUP
+          jobSubType: Evaluate
         isRead: true
         title: title
         projectId: projectId
@@ -13630,6 +13935,7 @@ components:
           context:
             jobId: jobId
             jobType: WARMUP
+            jobSubType: Evaluate
           isRead: true
           title: title
           projectId: projectId
@@ -13647,6 +13953,7 @@ components:
           context:
             jobId: jobId
             jobType: WARMUP
+            jobSubType: Evaluate
           isRead: true
           title: title
           projectId: projectId
@@ -13756,6 +14063,7 @@ components:
             context:
               jobId: jobId
               jobType: WARMUP
+              jobSubType: Evaluate
             isRead: true
             title: title
             projectId: projectId
@@ -13773,6 +14081,7 @@ components:
             context:
               jobId: jobId
               jobType: WARMUP
+              jobSubType: Evaluate
             isRead: true
             title: title
             projectId: projectId
@@ -14297,6 +14606,7 @@ components:
               context:
                 jobId: jobId
                 jobType: WARMUP
+                jobSubType: Evaluate
               isRead: true
               title: title
               projectId: projectId
@@ -14314,6 +14624,7 @@ components:
               context:
                 jobId: jobId
                 jobType: WARMUP
+                jobSubType: Evaluate
               isRead: true
               title: title
               projectId: projectId
@@ -14790,6 +15101,7 @@ components:
               context:
                 jobId: jobId
                 jobType: WARMUP
+                jobSubType: Evaluate
               isRead: true
               title: title
               projectId: projectId
@@ -14807,6 +15119,7 @@ components:
               context:
                 jobId: jobId
                 jobType: WARMUP
+                jobSubType: Evaluate
               isRead: true
               title: title
               projectId: projectId
@@ -17407,6 +17720,7 @@ components:
             context:
               jobId: jobId
               jobType: WARMUP
+              jobSubType: Evaluate
             isRead: true
             title: title
             projectId: projectId
@@ -17424,6 +17738,7 @@ components:
             context:
               jobId: jobId
               jobType: WARMUP
+              jobSubType: Evaluate
             isRead: true
             title: title
             projectId: projectId
@@ -18767,6 +19082,7 @@ components:
               context:
                 jobId: jobId
                 jobType: WARMUP
+                jobSubType: Evaluate
               isRead: true
               title: title
               projectId: projectId
@@ -18784,6 +19100,7 @@ components:
               context:
                 jobId: jobId
                 jobType: WARMUP
+                jobSubType: Evaluate
               isRead: true
               title: title
               projectId: projectId
@@ -20082,6 +20399,7 @@ components:
               context:
                 jobId: jobId
                 jobType: WARMUP
+                jobSubType: Evaluate
               isRead: true
               title: title
               projectId: projectId
@@ -20099,6 +20417,7 @@ components:
               context:
                 jobId: jobId
                 jobType: WARMUP
+                jobSubType: Evaluate
               isRead: true
               title: title
               projectId: projectId
@@ -21050,6 +21369,7 @@ components:
             context:
               jobId: jobId
               jobType: WARMUP
+              jobSubType: Evaluate
             isRead: true
             title: title
             projectId: projectId
@@ -21067,6 +21387,7 @@ components:
             context:
               jobId: jobId
               jobType: WARMUP
+              jobSubType: Evaluate
             isRead: true
             title: title
             projectId: projectId
@@ -21602,6 +21923,7 @@ components:
               context:
                 jobId: jobId
                 jobType: WARMUP
+                jobSubType: Evaluate
               isRead: true
               title: title
               projectId: projectId
@@ -21619,6 +21941,7 @@ components:
               context:
                 jobId: jobId
                 jobType: WARMUP
+                jobSubType: Evaluate
               isRead: true
               title: title
               projectId: projectId
@@ -22100,6 +22423,7 @@ components:
               context:
                 jobId: jobId
                 jobType: WARMUP
+                jobSubType: Evaluate
               isRead: true
               title: title
               projectId: projectId
@@ -22117,6 +22441,7 @@ components:
               context:
                 jobId: jobId
                 jobType: WARMUP
+                jobSubType: Evaluate
               isRead: true
               title: title
               projectId: projectId
@@ -22589,25 +22914,6 @@ components:
       - datasetBalancingId
       - projectId
       type: object
-    JobSubType:
-      enum:
-      - Evaluate
-      - Population Exploration
-      - Labeling Recommendation
-      - Synthetic Data Generation
-      - Dataset Balancing
-      - Visualizers Calculation
-      - Sample Analysis
-      - Graph Validate
-      - Fetch Similar
-      - Export Project
-      - Copy Project
-      - Import Project
-      - Code Parse
-      - Import Model
-      - Generate Insights
-      - Streaming Samples Vis
-      type: string
     EventsSnapshot:
       additionalProperties: true
       example:
@@ -22739,6 +23045,39 @@ components:
         batchSize:
           format: double
           type: number
+      required:
+      - projectId
+      - versionId
+      type: object
+    ResetEvaluateParams:
+      additionalProperties: true
+      example:
+        versionId: versionId
+        batchSize: 0.8008281904610115
+        projectId: projectId
+      properties:
+        versionId:
+          type: string
+        projectId:
+          type: string
+        batchSize:
+          format: double
+          type: number
+      required:
+      - batchSize
+      - projectId
+      - versionId
+      type: object
+    ContinueUpdateEvaluateParams:
+      additionalProperties: true
+      example:
+        versionId: versionId
+        projectId: projectId
+      properties:
+        versionId:
+          type: string
+        projectId:
+          type: string
       required:
       - projectId
       - versionId
@@ -24230,6 +24569,7 @@ components:
             context:
               jobId: jobId
               jobType: WARMUP
+              jobSubType: Evaluate
             isRead: true
             title: title
             projectId: projectId
@@ -24247,6 +24587,7 @@ components:
             context:
               jobId: jobId
               jobType: WARMUP
+              jobSubType: Evaluate
             isRead: true
             title: title
             projectId: projectId
@@ -24301,6 +24642,7 @@ components:
             context:
               jobId: jobId
               jobType: WARMUP
+              jobSubType: Evaluate
             isRead: true
             title: title
             projectId: projectId
@@ -24318,6 +24660,7 @@ components:
             context:
               jobId: jobId
               jobType: WARMUP
+              jobSubType: Evaluate
             isRead: true
             title: title
             projectId: projectId
@@ -24680,6 +25023,7 @@ components:
       additionalProperties: true
       example:
         maxUsers: 6.027456183070403
+        maxConcurrentEvaluateJobsPerUser: 1.4658129805029452
         type: free
         expirationDate: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -24689,6 +25033,13 @@ components:
           format: date-time
           type: string
         maxUsers:
+          format: double
+          type: number
+        maxConcurrentEvaluateJobsPerUser:
+          description: |-
+            Maximum number of concurrent Evaluate (or Continue-Evaluate) jobs a single
+            user is allowed to have running at the same time. Undefined or 0 means
+            unlimited.
           format: double
           type: number
       required:
@@ -24702,6 +25053,7 @@ components:
         gatewayUrl: gatewayUrl
         licenseMetadata:
           maxUsers: 6.027456183070403
+          maxConcurrentEvaluateJobsPerUser: 1.4658129805029452
           type: free
           expirationDate: 2000-01-23T04:56:07.000+00:00
         isCloud: true
@@ -24932,9 +25284,6 @@ components:
       additionalProperties: true
       example:
         horizontalSplit: null
-        inferenceArtifactIds:
-        - inferenceArtifactIds
-        - inferenceArtifactIds
         elementInstance: true
         x:
           field: field
@@ -24944,6 +25293,9 @@ components:
           distribution: continuous
           order: desc
         innerSplit: null
+        versionIds:
+        - versionIds
+        - versionIds
         "y":
           field: field
           aggregation: Average
@@ -25376,7 +25728,7 @@ components:
           items:
             $ref: "#/components/schemas/ESFilter"
           type: array
-        inferenceArtifactIds:
+        versionIds:
           items:
             type: string
           type: array
@@ -25385,18 +25737,15 @@ components:
         elementInstance:
           type: boolean
       required:
-      - inferenceArtifactIds
       - projectId
       - showAllEpochs
+      - versionIds
       - x
       - "y"
       type: object
     HeatmapChartsParams:
       additionalProperties: true
       example:
-        inferenceArtifactIds:
-        - inferenceArtifactIds
-        - inferenceArtifactIds
         horizontalSplit: null
         elementInstance: true
         color:
@@ -25409,6 +25758,9 @@ components:
           orderField: orderField
           distribution: continuous
           order: desc
+        versionIds:
+        - versionIds
+        - versionIds
         "y": null
         verticalSplit: null
         filters:
@@ -25831,7 +26183,7 @@ components:
           $ref: "#/components/schemas/SplitAgg"
         color:
           $ref: "#/components/schemas/Aggregations"
-        inferenceArtifactIds:
+        versionIds:
           items:
             type: string
           type: array
@@ -25849,23 +26201,23 @@ components:
           type: boolean
       required:
       - color
-      - inferenceArtifactIds
       - projectId
       - showAllEpochs
+      - versionIds
       - x
       - "y"
       type: object
     GenericDataQueryParams:
       additionalProperties: true
       example:
-        inferenceArtifactIds:
-        - inferenceArtifactIds
-        - inferenceArtifactIds
         horizontalSplit: null
         elementInstance: true
         buckets:
         - null
         - null
+        versionIds:
+        - versionIds
+        - versionIds
         innerSplit: null
         verticalSplit:
           field: field
@@ -26293,7 +26645,7 @@ components:
       properties:
         projectId:
           type: string
-        inferenceArtifactIds:
+        versionIds:
           items:
             type: string
           type: array
@@ -26322,7 +26674,6 @@ components:
       required:
       - aggregations
       - buckets
-      - inferenceArtifactIds
       - projectId
       - showAllEpochs
       type: object
@@ -26341,28 +26692,28 @@ components:
       type: object
     ConfusionMetricNamesParams:
       example:
-        inferenceArtifactIds:
-        - inferenceArtifactIds
-        - inferenceArtifactIds
+        versionIds:
+        - versionIds
+        - versionIds
         projectId: projectId
       properties:
-        inferenceArtifactIds:
+        versionIds:
           items:
             type: string
           type: array
         projectId:
           type: string
       required:
-      - inferenceArtifactIds
       - projectId
+      - versionIds
       type: object
     ConfusionMatrixParams:
       additionalProperties: true
       example:
-        inferenceArtifactIds:
-        - inferenceArtifactIds
-        - inferenceArtifactIds
         horizontalSplit: null
+        versionIds:
+        - versionIds
+        - versionIds
         x:
           field: field
           limit: 0.8008281904610115
@@ -26787,7 +27138,7 @@ components:
       properties:
         projectId:
           type: string
-        inferenceArtifactIds:
+        versionIds:
           items:
             type: string
           type: array
@@ -26810,8 +27161,8 @@ components:
           type: array
       required:
       - customMetricName
-      - inferenceArtifactIds
       - projectId
+      - versionIds
       - x
       type: object
     GetBalancedAccuracyParams:
@@ -26825,11 +27176,11 @@ components:
     MultiThresholdConfusionMatrixParams:
       additionalProperties: true
       example:
-        inferenceArtifactIds:
-        - inferenceArtifactIds
-        - inferenceArtifactIds
         horizontalSplit: null
         elementInstance: true
+        versionIds:
+        - versionIds
+        - versionIds
         verticalSplit:
           field: field
           limit: 0.8008281904610115
@@ -27249,7 +27600,7 @@ components:
         projectId: projectId
         customMetricName: customMetricName
       properties:
-        inferenceArtifactIds:
+        versionIds:
           items:
             type: string
           type: array
@@ -27269,19 +27620,19 @@ components:
           type: boolean
       required:
       - customMetricName
-      - inferenceArtifactIds
       - projectId
+      - versionIds
       type: object
     GetPrCurveParams:
       $ref: "#/components/schemas/MultiThresholdConfusionMatrixParams"
     RocConfusionMatrixParams:
       additionalProperties: true
       example:
-        inferenceArtifactIds:
-        - inferenceArtifactIds
-        - inferenceArtifactIds
         horizontalSplit: null
         elementInstance: true
+        versionIds:
+        - versionIds
+        - versionIds
         absAxis: true
         verticalSplit:
           field: field
@@ -27702,7 +28053,7 @@ components:
         projectId: projectId
         customMetricName: customMetricName
       properties:
-        inferenceArtifactIds:
+        versionIds:
           items:
             type: string
           type: array
@@ -27724,8 +28075,8 @@ components:
           type: boolean
       required:
       - customMetricName
-      - inferenceArtifactIds
       - projectId
+      - versionIds
       type: object
     GetRocParams:
       $ref: "#/components/schemas/RocConfusionMatrixParams"
@@ -27748,9 +28099,6 @@ components:
         - splitByLabel
         type: object
       example:
-        inferenceArtifactIds:
-        - inferenceArtifactIds
-        - inferenceArtifactIds
         horizontalSplit: null
         splitByLabel: true
         splitByLabelOrder: desc
@@ -27758,6 +28106,9 @@ components:
         filterLabels:
         - filterLabels
         - filterLabels
+        versionIds:
+        - versionIds
+        - versionIds
         verticalSplit:
           field: field
           limit: 0.8008281904610115
@@ -28187,13 +28538,13 @@ components:
             type: array
         type: object
       example:
-        inferenceArtifactIds:
-        - inferenceArtifactIds
-        - inferenceArtifactIds
         horizontalSplit: null
         filterLabels:
         - filterLabels
         - filterLabels
+        versionIds:
+        - versionIds
+        - versionIds
         x:
           field: field
           limit: 0.8008281904610115
@@ -28656,20 +29007,20 @@ components:
     GetConfusionMatrixLabels:
       additionalProperties: true
       example:
-        inferenceArtifactIds:
-        - inferenceArtifactIds
-        - inferenceArtifactIds
+        versionIds:
+        - versionIds
+        - versionIds
         projectId: projectId
       properties:
         projectId:
           type: string
-        inferenceArtifactIds:
+        versionIds:
           items:
             type: string
           type: array
       required:
-      - inferenceArtifactIds
       - projectId
+      - versionIds
       type: object
     GetFieldsValuesResponse:
       example:
@@ -28719,9 +29070,9 @@ components:
       type: object
     GetFieldsValuesRequest:
       example:
-        inferenceArtifactIds:
-        - inferenceArtifactIds
-        - inferenceArtifactIds
+        versionIds:
+        - versionIds
+        - versionIds
         filters:
         - field: field
           disable: true
@@ -29148,7 +29499,7 @@ components:
           items:
             $ref: "#/components/schemas/ESFilter"
           type: array
-        inferenceArtifactIds:
+        versionIds:
           items:
             type: string
           type: array
@@ -29161,7 +29512,6 @@ components:
       required:
       - fields
       - filters
-      - inferenceArtifactIds
       - projectId
       type: object
     GetSampleEnrichmentResponse:
@@ -29183,10 +29533,9 @@ components:
       type: object
     GetSampleEnrichmentParams:
       example:
-        inferenceArtifactIds:
-        - inferenceArtifactIds
-        - inferenceArtifactIds
-        epoch: 6.027456183070403
+        versionIds:
+        - versionIds
+        - versionIds
         projectId: projectId
         samples:
         - index: 0.8008281904610115
@@ -29201,20 +29550,16 @@ components:
           items:
             $ref: "#/components/schemas/SampleIdentity"
           type: array
-        epoch:
-          format: double
-          type: number
-        inferenceArtifactIds:
+        versionIds:
           items:
             type: string
           type: array
         projectId:
           type: string
       required:
-      - epoch
-      - inferenceArtifactIds
       - projectId
       - samples
+      - versionIds
       type: object
     HealthStatus:
       additionalProperties: true
@@ -29275,6 +29620,7 @@ components:
           context:
             jobId: jobId
             jobType: WARMUP
+            jobSubType: Evaluate
           isRead: true
           title: title
           projectId: projectId
@@ -29292,6 +29638,7 @@ components:
           context:
             jobId: jobId
             jobType: WARMUP
+            jobSubType: Evaluate
           isRead: true
           title: title
           projectId: projectId
@@ -29321,6 +29668,7 @@ components:
           context:
             jobId: jobId
             jobType: WARMUP
+            jobSubType: Evaluate
           isRead: true
           title: title
           projectId: projectId
@@ -29338,6 +29686,7 @@ components:
           context:
             jobId: jobId
             jobType: WARMUP
+            jobSubType: Evaluate
           isRead: true
           title: title
           projectId: projectId
@@ -29965,6 +30314,18 @@ components:
       - projectId
       - sampleCollectionIds
       type: object
+    UpdateSampleCollectionResponse:
+      example:
+        numOfAlreadyInCollection: 0.8008281904610115
+        numOfAddedSamples: 6.027456183070403
+      properties:
+        numOfAlreadyInCollection:
+          format: double
+          type: number
+        numOfAddedSamples:
+          format: double
+          type: number
+      type: object
     UpdateSampleCollectionParams:
       example:
         sampleCollectionId: sampleCollectionId
@@ -29986,6 +30347,94 @@ components:
         description:
           type: string
         name:
+          type: string
+        sampleCollectionId:
+          type: string
+        projectId:
+          type: string
+      required:
+      - projectId
+      - sampleCollectionId
+      type: object
+    RemoveSamplesFromCollectionResponse:
+      example:
+        numOfRemoved: 0.8008281904610115
+      properties:
+        numOfRemoved:
+          format: double
+          type: number
+      required:
+      - numOfRemoved
+      type: object
+    CollectionFilterSpec:
+      example:
+        field: field
+        range:
+          min: 6.027456183070403
+          max: 0.8008281904610115
+        hiddenValues:
+        - CollectionFilterSpec_hiddenValues_inner
+        - CollectionFilterSpec_hiddenValues_inner
+      properties:
+        range:
+          $ref: "#/components/schemas/CollectionFilterSpec_range"
+        hiddenValues:
+          items:
+            $ref: "#/components/schemas/CollectionFilterSpec_hiddenValues_inner"
+          type: array
+        field:
+          type: string
+      required:
+      - field
+      type: object
+    RemoveSamplesFromCollectionParams:
+      example:
+        excluded:
+        - index: 0.8008281904610115
+          state: training
+          hashed_index: hashed_index
+        - index: 0.8008281904610115
+          state: training
+          hashed_index: hashed_index
+        sampleCollectionId: sampleCollectionId
+        versionId: versionId
+        filters:
+        - field: field
+          range:
+            min: 6.027456183070403
+            max: 0.8008281904610115
+          hiddenValues:
+          - CollectionFilterSpec_hiddenValues_inner
+          - CollectionFilterSpec_hiddenValues_inner
+        - field: field
+          range:
+            min: 6.027456183070403
+            max: 0.8008281904610115
+          hiddenValues:
+          - CollectionFilterSpec_hiddenValues_inner
+          - CollectionFilterSpec_hiddenValues_inner
+        included:
+        - index: 0.8008281904610115
+          state: training
+          hashed_index: hashed_index
+        - index: 0.8008281904610115
+          state: training
+          hashed_index: hashed_index
+        projectId: projectId
+      properties:
+        included:
+          items:
+            $ref: "#/components/schemas/SampleIdentity"
+          type: array
+        excluded:
+          items:
+            $ref: "#/components/schemas/SampleIdentity"
+          type: array
+        filters:
+          items:
+            $ref: "#/components/schemas/CollectionFilterSpec"
+          type: array
+        versionId:
           type: string
         sampleCollectionId:
           type: string
@@ -30084,9 +30533,13 @@ components:
       type: object
     PopulateCollectionFromFiltersResponse:
       example:
-        numOfAddedSamples: 0.8008281904610115
+        numOfAlreadyInCollection: 0.8008281904610115
+        numOfAddedSamples: 6.027456183070403
         collectionId: collectionId
       properties:
+        numOfAlreadyInCollection:
+          format: double
+          type: number
         numOfAddedSamples:
           format: double
           type: number
@@ -30095,6 +30548,7 @@ components:
       required:
       - collectionId
       - numOfAddedSamples
+      - numOfAlreadyInCollection
       type: object
     PopulateCollectionFromFiltersParams:
       example:
@@ -30102,6 +30556,9 @@ components:
         - inferenceArtifactIds
         - inferenceArtifactIds
         name: name
+        versionIds:
+        - versionIds
+        - versionIds
         description: description
         filters:
         - field: field
@@ -30529,6 +30986,10 @@ components:
           items:
             type: string
           type: array
+        versionIds:
+          items:
+            type: string
+          type: array
         projectId:
           type: string
       required:
@@ -30538,28 +30999,36 @@ components:
       type: object
     MetadataFieldValue:
       example:
-        count: 0.8008281904610115
-        value: MetadataFieldValue_value
+        count: 2.3021358869347655
+        value: CollectionFilterSpec_hiddenValues_inner
       properties:
         count:
           format: double
           type: number
         value:
-          $ref: "#/components/schemas/MetadataFieldValue_value"
+          $ref: "#/components/schemas/CollectionFilterSpec_hiddenValues_inner"
       required:
       - count
       - value
       type: object
     MetadataField:
       example:
+        min: 5.637376656633329
+        max: 5.962133916683182
         values:
-        - count: 0.8008281904610115
-          value: MetadataFieldValue_value
-        - count: 0.8008281904610115
-          value: MetadataFieldValue_value
+        - count: 2.3021358869347655
+          value: CollectionFilterSpec_hiddenValues_inner
+        - count: 2.3021358869347655
+          value: CollectionFilterSpec_hiddenValues_inner
         type: string
         key: key
       properties:
+        max:
+          format: double
+          type: number
+        min:
+          format: double
+          type: number
         values:
           items:
             $ref: "#/components/schemas/MetadataFieldValue"
@@ -30576,38 +31045,98 @@ components:
       - type
       - values
       type: object
+    CollectionIndexStatus:
+      enum:
+      - building
+      - ready
+      - failed
+      type: string
     GetCollectionSamplesMetadataResponse:
       example:
+        filteredSamplesCount: 0.8008281904610115
+        samplesCount: 6.027456183070403
+        esIndexedCount: 1.4658129805029452
+        indexStatus: building
         fields:
-        - values:
-          - count: 0.8008281904610115
-            value: MetadataFieldValue_value
-          - count: 0.8008281904610115
-            value: MetadataFieldValue_value
+        - min: 5.637376656633329
+          max: 5.962133916683182
+          values:
+          - count: 2.3021358869347655
+            value: CollectionFilterSpec_hiddenValues_inner
+          - count: 2.3021358869347655
+            value: CollectionFilterSpec_hiddenValues_inner
           type: string
           key: key
-        - values:
-          - count: 0.8008281904610115
-            value: MetadataFieldValue_value
-          - count: 0.8008281904610115
-            value: MetadataFieldValue_value
+        - min: 5.637376656633329
+          max: 5.962133916683182
+          values:
+          - count: 2.3021358869347655
+            value: CollectionFilterSpec_hiddenValues_inner
+          - count: 2.3021358869347655
+            value: CollectionFilterSpec_hiddenValues_inner
           type: string
           key: key
       properties:
+        filteredSamplesCount:
+          description: |-
+            Number of indexed docs that match the *current* filter spec across
+            ALL active filters (i.e. the size of the filtered subset). When no
+            filters are active, equals `esIndexedCount`.
+          format: double
+          type: number
+        samplesCount:
+          format: double
+          type: number
+        esIndexedCount:
+          format: double
+          type: number
+        indexStatus:
+          $ref: "#/components/schemas/CollectionIndexStatus"
         fields:
           items:
             $ref: "#/components/schemas/MetadataField"
           type: array
       required:
+      - esIndexedCount
       - fields
+      - filteredSamplesCount
+      - indexStatus
+      - samplesCount
       type: object
     GetCollectionSamplesMetadataParams:
       example:
         inferenceArtifactId: inferenceArtifactId
+        versionId: versionId
+        filters:
+        - field: field
+          range:
+            min: 6.027456183070403
+            max: 0.8008281904610115
+          hiddenValues:
+          - CollectionFilterSpec_hiddenValues_inner
+          - CollectionFilterSpec_hiddenValues_inner
+        - field: field
+          range:
+            min: 6.027456183070403
+            max: 0.8008281904610115
+          hiddenValues:
+          - CollectionFilterSpec_hiddenValues_inner
+          - CollectionFilterSpec_hiddenValues_inner
         collectionId: collectionId
         projectId: projectId
       properties:
+        filters:
+          description: |-
+            Active filter spec (same shape used by `getCollectionSampleOrder`).
+            Each field's bucket counts are computed against the other fields'
+            filters, so the sidebar shows the right "available samples per
+            bucket if you pick this option next" numbers.
+          items:
+            $ref: "#/components/schemas/CollectionFilterSpec"
+          type: array
         inferenceArtifactId:
+          type: string
+        versionId:
           type: string
         collectionId:
           type: string
@@ -30646,6 +31175,331 @@ components:
       - sampleIdentities
       - visArtifactId
       - visualizationType
+      type: object
+    EnsureCollectionIndexResponse:
+      example:
+        samplesCount: 0.8008281904610115
+        esIndexedCount: 6.027456183070403
+        error: error
+        status: building
+      properties:
+        error:
+          type: string
+        samplesCount:
+          format: double
+          type: number
+        esIndexedCount:
+          format: double
+          type: number
+        status:
+          $ref: "#/components/schemas/CollectionIndexStatus"
+      required:
+      - esIndexedCount
+      - samplesCount
+      - status
+      type: object
+    EnsureCollectionIndexParams:
+      example:
+        inferenceArtifactId: inferenceArtifactId
+        collectionId: collectionId
+        projectId: projectId
+      properties:
+        inferenceArtifactId:
+          type: string
+        collectionId:
+          type: string
+        projectId:
+          type: string
+      required:
+      - collectionId
+      - inferenceArtifactId
+      - projectId
+      type: object
+    CollectionSampleRow:
+      additionalProperties:
+        $ref: "#/components/schemas/CollectionSampleRow_value"
+      description: |-
+        A flattened sample row ready for the metadata table.
+          - `id` is the cache key `"${state}-${index}"`, suitable as a DataGrid
+            row id.
+          - `state` / `index` come from the doc's `sample_identity`.
+          - All remaining keys are flattened metadata / metrics fields
+            (e.g. `"metadata.image_std"`, `"metrics.loss"`).
+      example:
+        index: CollectionFilterSpec_hiddenValues_inner
+        state: state
+        id: id
+      properties:
+        index:
+          $ref: "#/components/schemas/CollectionFilterSpec_hiddenValues_inner"
+        state:
+          type: string
+        id:
+          type: string
+      required:
+      - id
+      - index
+      - state
+      type: object
+    GetCollectionSampleOrderResponse:
+      example:
+        cursor: cursor
+        total: 0.8008281904610115
+        rows:
+        - index: CollectionFilterSpec_hiddenValues_inner
+          state: state
+          id: id
+        - index: CollectionFilterSpec_hiddenValues_inner
+          state: state
+          id: id
+        samples:
+        - index: 0.8008281904610115
+          state: training
+          hashed_index: hashed_index
+        - index: 0.8008281904610115
+          state: training
+          hashed_index: hashed_index
+        status: building
+      properties:
+        cursor:
+          type: string
+        total:
+          format: double
+          type: number
+        rows:
+          description: |-
+            Same rows as `samples`, but with metadata/metrics flattened in. The
+            table-pagination hook uses these directly as DataGrid rows.
+          items:
+            $ref: "#/components/schemas/CollectionSampleRow"
+          type: array
+        samples:
+          description: Identities-only — kept for callers that just need state/index.
+          items:
+            $ref: "#/components/schemas/SampleIdentity"
+          type: array
+        status:
+          $ref: "#/components/schemas/CollectionIndexStatus"
+      required:
+      - rows
+      - samples
+      - status
+      type: object
+    CollectionSortSpec:
+      example:
+        field: field
+        dir: asc
+      properties:
+        dir:
+          enum:
+          - asc
+          - desc
+          type: string
+        field:
+          type: string
+      required:
+      - dir
+      - field
+      type: object
+    GetCollectionSampleOrderParams:
+      example:
+        cursor: cursor
+        inferenceArtifactId: inferenceArtifactId
+        pageSize: 0.8008281904610115
+        filters:
+        - field: field
+          range:
+            min: 6.027456183070403
+            max: 0.8008281904610115
+          hiddenValues:
+          - CollectionFilterSpec_hiddenValues_inner
+          - CollectionFilterSpec_hiddenValues_inner
+        - field: field
+          range:
+            min: 6.027456183070403
+            max: 0.8008281904610115
+          hiddenValues:
+          - CollectionFilterSpec_hiddenValues_inner
+          - CollectionFilterSpec_hiddenValues_inner
+        sort:
+          field: field
+          dir: asc
+        collectionId: collectionId
+        projectId: projectId
+      properties:
+        pageSize:
+          format: double
+          type: number
+        cursor:
+          description: Opaque pagination token; here it's a stringified `from` offset.
+          type: string
+        filters:
+          items:
+            $ref: "#/components/schemas/CollectionFilterSpec"
+          type: array
+        sort:
+          $ref: "#/components/schemas/CollectionSortSpec"
+        inferenceArtifactId:
+          type: string
+        collectionId:
+          type: string
+        projectId:
+          type: string
+      required:
+      - collectionId
+      - inferenceArtifactId
+      - projectId
+      type: object
+    GetVersionSampleOrderResponse:
+      example:
+        cursor: cursor
+        total: 0.8008281904610115
+        rows:
+        - index: CollectionFilterSpec_hiddenValues_inner
+          state: state
+          id: id
+        - index: CollectionFilterSpec_hiddenValues_inner
+          state: state
+          id: id
+        samples:
+        - index: 0.8008281904610115
+          state: training
+          hashed_index: hashed_index
+        - index: 0.8008281904610115
+          state: training
+          hashed_index: hashed_index
+      properties:
+        cursor:
+          type: string
+        total:
+          format: double
+          type: number
+        rows:
+          items:
+            $ref: "#/components/schemas/CollectionSampleRow"
+          type: array
+        samples:
+          items:
+            $ref: "#/components/schemas/SampleIdentity"
+          type: array
+      required:
+      - rows
+      - samples
+      type: object
+    GetVersionSampleOrderParams:
+      example:
+        cursor: cursor
+        versionId: versionId
+        pageSize: 0.8008281904610115
+        filters:
+        - field: field
+          range:
+            min: 6.027456183070403
+            max: 0.8008281904610115
+          hiddenValues:
+          - CollectionFilterSpec_hiddenValues_inner
+          - CollectionFilterSpec_hiddenValues_inner
+        - field: field
+          range:
+            min: 6.027456183070403
+            max: 0.8008281904610115
+          hiddenValues:
+          - CollectionFilterSpec_hiddenValues_inner
+          - CollectionFilterSpec_hiddenValues_inner
+        sort:
+          field: field
+          dir: asc
+        projectId: projectId
+      properties:
+        pageSize:
+          format: double
+          type: number
+        cursor:
+          type: string
+        filters:
+          items:
+            $ref: "#/components/schemas/CollectionFilterSpec"
+          type: array
+        sort:
+          $ref: "#/components/schemas/CollectionSortSpec"
+        versionId:
+          type: string
+        projectId:
+          type: string
+      required:
+      - projectId
+      - versionId
+      type: object
+    GetVersionSamplesMetadataResponse:
+      example:
+        filteredSamplesCount: 0.8008281904610115
+        samplesCount: 6.027456183070403
+        fields:
+        - min: 5.637376656633329
+          max: 5.962133916683182
+          values:
+          - count: 2.3021358869347655
+            value: CollectionFilterSpec_hiddenValues_inner
+          - count: 2.3021358869347655
+            value: CollectionFilterSpec_hiddenValues_inner
+          type: string
+          key: key
+        - min: 5.637376656633329
+          max: 5.962133916683182
+          values:
+          - count: 2.3021358869347655
+            value: CollectionFilterSpec_hiddenValues_inner
+          - count: 2.3021358869347655
+            value: CollectionFilterSpec_hiddenValues_inner
+          type: string
+          key: key
+      properties:
+        filteredSamplesCount:
+          format: double
+          type: number
+        samplesCount:
+          format: double
+          type: number
+        fields:
+          items:
+            $ref: "#/components/schemas/MetadataField"
+          type: array
+      required:
+      - fields
+      - filteredSamplesCount
+      - samplesCount
+      type: object
+    GetVersionSamplesMetadataParams:
+      example:
+        versionId: versionId
+        filters:
+        - field: field
+          range:
+            min: 6.027456183070403
+            max: 0.8008281904610115
+          hiddenValues:
+          - CollectionFilterSpec_hiddenValues_inner
+          - CollectionFilterSpec_hiddenValues_inner
+        - field: field
+          range:
+            min: 6.027456183070403
+            max: 0.8008281904610115
+          hiddenValues:
+          - CollectionFilterSpec_hiddenValues_inner
+          - CollectionFilterSpec_hiddenValues_inner
+        projectId: projectId
+      properties:
+        filters:
+          items:
+            $ref: "#/components/schemas/CollectionFilterSpec"
+          type: array
+        versionId:
+          type: string
+        projectId:
+          type: string
+      required:
+      - projectId
+      - versionId
       type: object
     AddSecretManagerResponse:
       additionalProperties: true
@@ -33097,6 +33951,20 @@ components:
       - is_custom_loss
       - name
       type: object
+    AvailableLatentSpace:
+      additionalProperties: true
+      example:
+        friendly_name: friendly_name
+        latent_space_id: latent_space_id
+      properties:
+        latent_space_id:
+          type: string
+        friendly_name:
+          type: string
+      required:
+      - friendly_name
+      - latent_space_id
+      type: object
     GraphValidatorData:
       additionalProperties: true
       example:
@@ -33127,6 +33995,11 @@ components:
           name: name
           error: error
           node_id: node_id
+        available_latent_spaces:
+        - friendly_name: friendly_name
+          latent_space_id: latent_space_id
+        - friendly_name: friendly_name
+          latent_space_id: latent_space_id
         general_error: general_error
         ground_truths:
         - connection_name: connection_name
@@ -33208,9 +34081,14 @@ components:
           items:
             $ref: "#/components/schemas/ValidatedNode"
           type: array
+        available_latent_spaces:
+          items:
+            $ref: "#/components/schemas/AvailableLatentSpace"
+          type: array
         general_error:
           type: string
       required:
+      - available_latent_spaces
       - custom_layers
       - ground_truths
       - inputs
@@ -33240,23 +34118,111 @@ components:
       - blobPath
       - transformInputs
       type: object
+    InferenceArtifactResources:
+      additionalProperties: true
+      example:
+        metric_compute_insights: metric_compute_insights
+        metric_directions: metric_directions
+      properties:
+        metric_directions:
+          type: string
+        metric_compute_insights:
+          type: string
+      type: object
+    VisArtifactResources:
+      additionalProperties: true
+      example:
+        insights_revision: insights_revision
+        sample_visualizers_revision: sample_visualizers_revision
+      properties:
+        insights_revision:
+          type: string
+        sample_visualizers_revision:
+          type: string
+      type: object
+    VersionResources:
+      additionalProperties: true
+      example:
+        overrided_version_id: overrided_version_id
+        inference_resources:
+          metric_compute_insights: metric_compute_insights
+          metric_directions: metric_directions
+        es_model_id: es_model_id
+        population_exploration_digest_seed_count: 6.027456183070403
+        inference_artifact_id: inference_artifact_id
+        es_inspection_index: es_inspection_index
+        insights_index_counter: 1.4658129805029452
+        vis_resources:
+          insights_revision: insights_revision
+          sample_visualizers_revision: sample_visualizers_revision
+        csv_blob_path: csv_blob_path
+        vis_artifact_id: vis_artifact_id
+        es_metrics_index: es_metrics_index
+      properties:
+        inference_artifact_id:
+          type: string
+        vis_artifact_id:
+          type: string
+        inference_resources:
+          $ref: "#/components/schemas/InferenceArtifactResources"
+        vis_resources:
+          $ref: "#/components/schemas/VisArtifactResources"
+        es_metrics_index:
+          type: string
+        es_inspection_index:
+          type: string
+        es_model_id:
+          type: string
+        population_exploration_digest_seed_count:
+          format: double
+          type: number
+        insights_index_counter:
+          format: double
+          type: number
+        csv_blob_path:
+          type: string
+        overrided_version_id:
+          type: string
+      required:
+      - inference_artifact_id
+      - inference_resources
+      - vis_artifact_id
+      - vis_resources
+      type: object
     Version:
       additionalProperties: true
       example:
-        inferenceArtifactId: inferenceArtifactId
+        updateActions:
+        - metadata
+        - metadata
         notes: notes
+        serialNumber: 5.962133916683182
         data:
           nodes: "{}"
           id: id
         modelId: modelId
+        resources:
+          overrided_version_id: overrided_version_id
+          inference_resources:
+            metric_compute_insights: metric_compute_insights
+            metric_directions: metric_directions
+          es_model_id: es_model_id
+          population_exploration_digest_seed_count: 6.027456183070403
+          inference_artifact_id: inference_artifact_id
+          es_inspection_index: es_inspection_index
+          insights_index_counter: 1.4658129805029452
+          vis_resources:
+            insights_revision: insights_revision
+            sample_visualizers_revision: sample_visualizers_revision
+          csv_blob_path: csv_blob_path
+          vis_artifact_id: vis_artifact_id
+          es_metrics_index: es_metrics_index
         epochTags:
           key: 0.8008281904610115
-        visArtifactId: visArtifactId
+        isActive: true
         branch: branch
-        esInspectionIndex: esInspectionIndex
         codeSnapshotId: codeSnapshotId
         createdAt: 2000-01-23T04:56:07.000+00:00
-        esMetricIndex: esMetricIndex
         createdBy: createdBy
         uploadedModel:
           transformInputs: true
@@ -33290,6 +34256,11 @@ components:
             name: name
             error: error
             node_id: node_id
+          available_latent_spaces:
+          - friendly_name: friendly_name
+            latent_space_id: latent_space_id
+          - friendly_name: friendly_name
+            latent_space_id: latent_space_id
           general_error: general_error
           ground_truths:
           - connection_name: connection_name
@@ -33338,12 +34309,14 @@ components:
             name: name
             error: error
             node_id: node_id
+        experimentId: experimentId
         tag: tag
         projectId: projectId
         isFavourite: true
         hash: hash
         cid: cid
         updatedAt: 2000-01-23T04:56:07.000+00:00
+        parentVersionId: parentVersionId
         status: draft
       properties:
         cid:
@@ -33358,8 +34331,6 @@ components:
           type: string
         tag:
           type: string
-        data:
-          $ref: "#/components/schemas/ModelGraph"
         createdAt:
           format: date-time
           type: string
@@ -33368,13 +34339,12 @@ components:
           type: string
         notes:
           type: string
-        status:
-          $ref: "#/components/schemas/VersionStatus"
         isFavourite:
           type: boolean
         codeSnapshotId:
           type: string
         hash:
+          nullable: true
           type: string
         graphValidationData:
           $ref: "#/components/schemas/GraphValidatorData"
@@ -33386,16 +34356,27 @@ components:
             type: number
           properties: {}
           type: object
-        visArtifactId:
-          type: string
-        inferenceArtifactId:
-          type: string
-        esMetricIndex:
-          type: string
-        esInspectionIndex:
-          type: string
         uploadedModel:
           $ref: "#/components/schemas/UploadedModel"
+        resources:
+          $ref: "#/components/schemas/VersionResources"
+        parentVersionId:
+          type: string
+        isActive:
+          type: boolean
+        experimentId:
+          type: string
+        updateActions:
+          items:
+            $ref: "#/components/schemas/UpdateAction"
+          type: array
+        serialNumber:
+          format: double
+          type: number
+        data:
+          $ref: "#/components/schemas/ModelGraph"
+        status:
+          $ref: "#/components/schemas/VersionStatus"
       required:
       - branch
       - cid
@@ -33404,6 +34385,7 @@ components:
       - isFavourite
       - notes
       - projectId
+      - resources
       - status
       - tag
       - teamId
@@ -33430,20 +34412,37 @@ components:
           updatedAt: 2000-01-23T04:56:07.000+00:00
           status: visible
         version:
-          inferenceArtifactId: inferenceArtifactId
+          updateActions:
+          - metadata
+          - metadata
           notes: notes
+          serialNumber: 5.962133916683182
           data:
             nodes: "{}"
             id: id
           modelId: modelId
+          resources:
+            overrided_version_id: overrided_version_id
+            inference_resources:
+              metric_compute_insights: metric_compute_insights
+              metric_directions: metric_directions
+            es_model_id: es_model_id
+            population_exploration_digest_seed_count: 6.027456183070403
+            inference_artifact_id: inference_artifact_id
+            es_inspection_index: es_inspection_index
+            insights_index_counter: 1.4658129805029452
+            vis_resources:
+              insights_revision: insights_revision
+              sample_visualizers_revision: sample_visualizers_revision
+            csv_blob_path: csv_blob_path
+            vis_artifact_id: vis_artifact_id
+            es_metrics_index: es_metrics_index
           epochTags:
             key: 0.8008281904610115
-          visArtifactId: visArtifactId
+          isActive: true
           branch: branch
-          esInspectionIndex: esInspectionIndex
           codeSnapshotId: codeSnapshotId
           createdAt: 2000-01-23T04:56:07.000+00:00
-          esMetricIndex: esMetricIndex
           createdBy: createdBy
           uploadedModel:
             transformInputs: true
@@ -33477,6 +34476,11 @@ components:
               name: name
               error: error
               node_id: node_id
+            available_latent_spaces:
+            - friendly_name: friendly_name
+              latent_space_id: latent_space_id
+            - friendly_name: friendly_name
+              latent_space_id: latent_space_id
             general_error: general_error
             ground_truths:
             - connection_name: connection_name
@@ -33525,12 +34529,14 @@ components:
               name: name
               error: error
               node_id: node_id
+          experimentId: experimentId
           tag: tag
           projectId: projectId
           isFavourite: true
           hash: hash
           cid: cid
           updatedAt: 2000-01-23T04:56:07.000+00:00
+          parentVersionId: parentVersionId
           status: draft
       properties:
         project:
@@ -33615,8 +34621,8 @@ components:
         dataStates:
         - training
         - training
-        batchSize: 0.8008281904610115
-        evaluatedEpoch: 6.027456183070403
+        batchSize: 1.4658129805029452
+        evaluatedEpoch: 5.962133916683182
       properties:
         dataStates:
           items:
@@ -33639,9 +34645,9 @@ components:
         notes: notes
         canContinueEvaluate: true
         modelId: modelId
+        isActive: true
+        branch: branch
         createdAt: 2000-01-23T04:56:07.000+00:00
-        esMetricIndex: esMetricIndex
-        csvBlobPath: csvBlobPath
         uploadedModel:
           transformInputs: true
           blobPath: blobPath
@@ -33673,6 +34679,11 @@ components:
             name: name
             error: error
             node_id: node_id
+          available_latent_spaces:
+          - friendly_name: friendly_name
+            latent_space_id: latent_space_id
+          - friendly_name: friendly_name
+            latent_space_id: latent_space_id
           general_error: general_error
           ground_truths:
           - connection_name: connection_name
@@ -33721,15 +34732,21 @@ components:
             name: name
             error: error
             node_id: node_id
+        experimentId: experimentId
+        tag: tag
         isFavourite: true
         updatedAt: 2000-01-23T04:56:07.000+00:00
-        inferenceArtifactId: inferenceArtifactId
+        parentVersionId: parentVersionId
+        updateActions:
+        - metadata
+        - metadata
+        serialNumber: 6.027456183070403
         evaluateParams:
           dataStates:
           - training
           - training
-          batchSize: 0.8008281904610115
-          evaluatedEpoch: 6.027456183070403
+          batchSize: 1.4658129805029452
+          evaluatedEpoch: 5.962133916683182
         jobs:
         - eventsSnapshot:
             events:
@@ -33803,12 +34820,25 @@ components:
             name: name
             codeSnapshotId: codeSnapshotId
           logsBlobName: logsBlobName
-        branchName: branchName
-        visArtifactId: visArtifactId
+        resources:
+          overrided_version_id: overrided_version_id
+          inference_resources:
+            metric_compute_insights: metric_compute_insights
+            metric_directions: metric_directions
+          es_model_id: es_model_id
+          population_exploration_digest_seed_count: 6.027456183070403
+          inference_artifact_id: inference_artifact_id
+          es_inspection_index: es_inspection_index
+          insights_index_counter: 1.4658129805029452
+          vis_resources:
+            insights_revision: insights_revision
+            sample_visualizers_revision: sample_visualizers_revision
+          csv_blob_path: csv_blob_path
+          vis_artifact_id: vis_artifact_id
+          es_metrics_index: es_metrics_index
         epochTags:
-          key: 1.4658129805029452
+          key: 0.8008281904610115
         codeSnapshotId: codeSnapshotId
-        tags: tags
         createdBy: createdBy
         teamId: teamId
         projectId: projectId
@@ -33822,11 +34852,13 @@ components:
           type: string
         createdBy:
           type: string
+        teamId:
+          type: string
         projectId:
           type: string
-        branchName:
+        branch:
           type: string
-        tags:
+        tag:
           type: string
         createdAt:
           format: date-time
@@ -33836,17 +34868,40 @@ components:
           type: string
         notes:
           type: string
-        codeSnapshotId:
-          type: string
         isFavourite:
           type: boolean
+        codeSnapshotId:
+          type: string
         hash:
           nullable: true
           type: string
         graphValidationData:
           $ref: "#/components/schemas/GraphValidatorData"
-        teamId:
+        modelId:
           type: string
+        epochTags:
+          additionalProperties:
+            format: double
+            type: number
+          properties: {}
+          type: object
+        uploadedModel:
+          $ref: "#/components/schemas/UploadedModel"
+        resources:
+          $ref: "#/components/schemas/VersionResources"
+        parentVersionId:
+          type: string
+        isActive:
+          type: boolean
+        experimentId:
+          type: string
+        updateActions:
+          items:
+            $ref: "#/components/schemas/UpdateAction"
+          type: array
+        serialNumber:
+          format: double
+          type: number
         properties:
           description: Construct a type with a set of properties K of type T
           properties: {}
@@ -33859,30 +34914,12 @@ components:
           $ref: "#/components/schemas/VersionEvaluateParams"
         canContinueEvaluate:
           type: boolean
-        csvBlobPath:
-          type: string
         jobs:
           items:
             $ref: "#/components/schemas/Job"
           type: array
-        modelId:
-          type: string
-        visArtifactId:
-          type: string
-        inferenceArtifactId:
-          type: string
-        esMetricIndex:
-          type: string
-        epochTags:
-          additionalProperties:
-            format: double
-            type: number
-          properties: {}
-          type: object
-        uploadedModel:
-          $ref: "#/components/schemas/UploadedModel"
       required:
-      - branchName
+      - branch
       - cid
       - createdAt
       - createdBy
@@ -33892,7 +34929,8 @@ components:
       - jobs
       - notes
       - projectId
-      - tags
+      - resources
+      - tag
       - teamId
       - updatedAt
       type: object
@@ -33903,9 +34941,9 @@ components:
         - notes: notes
           canContinueEvaluate: true
           modelId: modelId
+          isActive: true
+          branch: branch
           createdAt: 2000-01-23T04:56:07.000+00:00
-          esMetricIndex: esMetricIndex
-          csvBlobPath: csvBlobPath
           uploadedModel:
             transformInputs: true
             blobPath: blobPath
@@ -33937,6 +34975,11 @@ components:
               name: name
               error: error
               node_id: node_id
+            available_latent_spaces:
+            - friendly_name: friendly_name
+              latent_space_id: latent_space_id
+            - friendly_name: friendly_name
+              latent_space_id: latent_space_id
             general_error: general_error
             ground_truths:
             - connection_name: connection_name
@@ -33985,15 +35028,21 @@ components:
               name: name
               error: error
               node_id: node_id
+          experimentId: experimentId
+          tag: tag
           isFavourite: true
           updatedAt: 2000-01-23T04:56:07.000+00:00
-          inferenceArtifactId: inferenceArtifactId
+          parentVersionId: parentVersionId
+          updateActions:
+          - metadata
+          - metadata
+          serialNumber: 6.027456183070403
           evaluateParams:
             dataStates:
             - training
             - training
-            batchSize: 0.8008281904610115
-            evaluatedEpoch: 6.027456183070403
+            batchSize: 1.4658129805029452
+            evaluatedEpoch: 5.962133916683182
           jobs:
           - eventsSnapshot:
               events:
@@ -34067,12 +35116,25 @@ components:
               name: name
               codeSnapshotId: codeSnapshotId
             logsBlobName: logsBlobName
-          branchName: branchName
-          visArtifactId: visArtifactId
+          resources:
+            overrided_version_id: overrided_version_id
+            inference_resources:
+              metric_compute_insights: metric_compute_insights
+              metric_directions: metric_directions
+            es_model_id: es_model_id
+            population_exploration_digest_seed_count: 6.027456183070403
+            inference_artifact_id: inference_artifact_id
+            es_inspection_index: es_inspection_index
+            insights_index_counter: 1.4658129805029452
+            vis_resources:
+              insights_revision: insights_revision
+              sample_visualizers_revision: sample_visualizers_revision
+            csv_blob_path: csv_blob_path
+            vis_artifact_id: vis_artifact_id
+            es_metrics_index: es_metrics_index
           epochTags:
-            key: 1.4658129805029452
+            key: 0.8008281904610115
           codeSnapshotId: codeSnapshotId
-          tags: tags
           createdBy: createdBy
           teamId: teamId
           projectId: projectId
@@ -34084,9 +35146,9 @@ components:
         - notes: notes
           canContinueEvaluate: true
           modelId: modelId
+          isActive: true
+          branch: branch
           createdAt: 2000-01-23T04:56:07.000+00:00
-          esMetricIndex: esMetricIndex
-          csvBlobPath: csvBlobPath
           uploadedModel:
             transformInputs: true
             blobPath: blobPath
@@ -34118,6 +35180,11 @@ components:
               name: name
               error: error
               node_id: node_id
+            available_latent_spaces:
+            - friendly_name: friendly_name
+              latent_space_id: latent_space_id
+            - friendly_name: friendly_name
+              latent_space_id: latent_space_id
             general_error: general_error
             ground_truths:
             - connection_name: connection_name
@@ -34166,15 +35233,21 @@ components:
               name: name
               error: error
               node_id: node_id
+          experimentId: experimentId
+          tag: tag
           isFavourite: true
           updatedAt: 2000-01-23T04:56:07.000+00:00
-          inferenceArtifactId: inferenceArtifactId
+          parentVersionId: parentVersionId
+          updateActions:
+          - metadata
+          - metadata
+          serialNumber: 6.027456183070403
           evaluateParams:
             dataStates:
             - training
             - training
-            batchSize: 0.8008281904610115
-            evaluatedEpoch: 6.027456183070403
+            batchSize: 1.4658129805029452
+            evaluatedEpoch: 5.962133916683182
           jobs:
           - eventsSnapshot:
               events:
@@ -34248,12 +35321,25 @@ components:
               name: name
               codeSnapshotId: codeSnapshotId
             logsBlobName: logsBlobName
-          branchName: branchName
-          visArtifactId: visArtifactId
+          resources:
+            overrided_version_id: overrided_version_id
+            inference_resources:
+              metric_compute_insights: metric_compute_insights
+              metric_directions: metric_directions
+            es_model_id: es_model_id
+            population_exploration_digest_seed_count: 6.027456183070403
+            inference_artifact_id: inference_artifact_id
+            es_inspection_index: es_inspection_index
+            insights_index_counter: 1.4658129805029452
+            vis_resources:
+              insights_revision: insights_revision
+              sample_visualizers_revision: sample_visualizers_revision
+            csv_blob_path: csv_blob_path
+            vis_artifact_id: vis_artifact_id
+            es_metrics_index: es_metrics_index
           epochTags:
-            key: 1.4658129805029452
+            key: 0.8008281904610115
           codeSnapshotId: codeSnapshotId
-          tags: tags
           createdBy: createdBy
           teamId: teamId
           projectId: projectId
@@ -34278,6 +35364,874 @@ components:
         projectId:
           type: string
       required:
+      - projectId
+      type: object
+    GetSlimActiveVersionsResponse:
+      additionalProperties: true
+      example:
+        versions:
+        - notes: notes
+          canContinueEvaluate: true
+          modelId: modelId
+          isActive: true
+          branch: branch
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          uploadedModel:
+            transformInputs: true
+            blobPath: blobPath
+          graphValidationData:
+            metadata:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            inputs:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            custom_layers:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            available_latent_spaces:
+            - friendly_name: friendly_name
+              latent_space_id: latent_space_id
+            - friendly_name: friendly_name
+              latent_space_id: latent_space_id
+            general_error: general_error
+            ground_truths:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            prediction_types:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            metrics:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            visualizers:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            losses:
+            - connection_name: connection_name
+              is_custom_loss: true
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              is_custom_loss: true
+              name: name
+              error: error
+              node_id: node_id
+          experimentId: experimentId
+          tag: tag
+          isFavourite: true
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          parentVersionId: parentVersionId
+          updateActions:
+          - metadata
+          - metadata
+          serialNumber: 6.027456183070403
+          evaluateParams:
+            dataStates:
+            - training
+            - training
+            batchSize: 1.4658129805029452
+            evaluatedEpoch: 5.962133916683182
+          jobs:
+          - eventsSnapshot:
+              events:
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              snapshotIndex: 0.8008281904610115
+            type: WARMUP
+            params:
+              inferenceArtifactId: inferenceArtifactId
+              versionId: versionId
+              monitor: true
+              batchSize: 5.962133916683182
+              projectId: projectId
+            version: version
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            versionId: versionId
+            createdBy: createdBy
+            teamId: teamId
+            subType: Evaluate
+            projectId: projectId
+            cid: cid
+            status: UNSTARTED
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            codeSnapshotInfo:
+              name: name
+              codeSnapshotId: codeSnapshotId
+            logsBlobName: logsBlobName
+          - eventsSnapshot:
+              events:
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              snapshotIndex: 0.8008281904610115
+            type: WARMUP
+            params:
+              inferenceArtifactId: inferenceArtifactId
+              versionId: versionId
+              monitor: true
+              batchSize: 5.962133916683182
+              projectId: projectId
+            version: version
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            versionId: versionId
+            createdBy: createdBy
+            teamId: teamId
+            subType: Evaluate
+            projectId: projectId
+            cid: cid
+            status: UNSTARTED
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            codeSnapshotInfo:
+              name: name
+              codeSnapshotId: codeSnapshotId
+            logsBlobName: logsBlobName
+          resources:
+            overrided_version_id: overrided_version_id
+            inference_resources:
+              metric_compute_insights: metric_compute_insights
+              metric_directions: metric_directions
+            es_model_id: es_model_id
+            population_exploration_digest_seed_count: 6.027456183070403
+            inference_artifact_id: inference_artifact_id
+            es_inspection_index: es_inspection_index
+            insights_index_counter: 1.4658129805029452
+            vis_resources:
+              insights_revision: insights_revision
+              sample_visualizers_revision: sample_visualizers_revision
+            csv_blob_path: csv_blob_path
+            vis_artifact_id: vis_artifact_id
+            es_metrics_index: es_metrics_index
+          epochTags:
+            key: 0.8008281904610115
+          codeSnapshotId: codeSnapshotId
+          createdBy: createdBy
+          teamId: teamId
+          projectId: projectId
+          hash: hash
+          properties: "{}"
+          cid: cid
+          hasExternalEpoch: true
+          isEvaluate: true
+        - notes: notes
+          canContinueEvaluate: true
+          modelId: modelId
+          isActive: true
+          branch: branch
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          uploadedModel:
+            transformInputs: true
+            blobPath: blobPath
+          graphValidationData:
+            metadata:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            inputs:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            custom_layers:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            available_latent_spaces:
+            - friendly_name: friendly_name
+              latent_space_id: latent_space_id
+            - friendly_name: friendly_name
+              latent_space_id: latent_space_id
+            general_error: general_error
+            ground_truths:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            prediction_types:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            metrics:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            visualizers:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            losses:
+            - connection_name: connection_name
+              is_custom_loss: true
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              is_custom_loss: true
+              name: name
+              error: error
+              node_id: node_id
+          experimentId: experimentId
+          tag: tag
+          isFavourite: true
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          parentVersionId: parentVersionId
+          updateActions:
+          - metadata
+          - metadata
+          serialNumber: 6.027456183070403
+          evaluateParams:
+            dataStates:
+            - training
+            - training
+            batchSize: 1.4658129805029452
+            evaluatedEpoch: 5.962133916683182
+          jobs:
+          - eventsSnapshot:
+              events:
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              snapshotIndex: 0.8008281904610115
+            type: WARMUP
+            params:
+              inferenceArtifactId: inferenceArtifactId
+              versionId: versionId
+              monitor: true
+              batchSize: 5.962133916683182
+              projectId: projectId
+            version: version
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            versionId: versionId
+            createdBy: createdBy
+            teamId: teamId
+            subType: Evaluate
+            projectId: projectId
+            cid: cid
+            status: UNSTARTED
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            codeSnapshotInfo:
+              name: name
+              codeSnapshotId: codeSnapshotId
+            logsBlobName: logsBlobName
+          - eventsSnapshot:
+              events:
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              snapshotIndex: 0.8008281904610115
+            type: WARMUP
+            params:
+              inferenceArtifactId: inferenceArtifactId
+              versionId: versionId
+              monitor: true
+              batchSize: 5.962133916683182
+              projectId: projectId
+            version: version
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            versionId: versionId
+            createdBy: createdBy
+            teamId: teamId
+            subType: Evaluate
+            projectId: projectId
+            cid: cid
+            status: UNSTARTED
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            codeSnapshotInfo:
+              name: name
+              codeSnapshotId: codeSnapshotId
+            logsBlobName: logsBlobName
+          resources:
+            overrided_version_id: overrided_version_id
+            inference_resources:
+              metric_compute_insights: metric_compute_insights
+              metric_directions: metric_directions
+            es_model_id: es_model_id
+            population_exploration_digest_seed_count: 6.027456183070403
+            inference_artifact_id: inference_artifact_id
+            es_inspection_index: es_inspection_index
+            insights_index_counter: 1.4658129805029452
+            vis_resources:
+              insights_revision: insights_revision
+              sample_visualizers_revision: sample_visualizers_revision
+            csv_blob_path: csv_blob_path
+            vis_artifact_id: vis_artifact_id
+            es_metrics_index: es_metrics_index
+          epochTags:
+            key: 0.8008281904610115
+          codeSnapshotId: codeSnapshotId
+          createdBy: createdBy
+          teamId: teamId
+          projectId: projectId
+          hash: hash
+          properties: "{}"
+          cid: cid
+          hasExternalEpoch: true
+          isEvaluate: true
+      properties:
+        versions:
+          items:
+            $ref: "#/components/schemas/SlimVersion"
+          type: array
+      required:
+      - versions
+      type: object
+    GetSlimActiveVersionsParams:
+      additionalProperties: true
+      example:
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+      required:
+      - projectId
+      type: object
+    GetSlimExperimentVersionsResponse:
+      additionalProperties: true
+      example:
+        versions:
+        - notes: notes
+          canContinueEvaluate: true
+          modelId: modelId
+          isActive: true
+          branch: branch
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          uploadedModel:
+            transformInputs: true
+            blobPath: blobPath
+          graphValidationData:
+            metadata:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            inputs:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            custom_layers:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            available_latent_spaces:
+            - friendly_name: friendly_name
+              latent_space_id: latent_space_id
+            - friendly_name: friendly_name
+              latent_space_id: latent_space_id
+            general_error: general_error
+            ground_truths:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            prediction_types:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            metrics:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            visualizers:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            losses:
+            - connection_name: connection_name
+              is_custom_loss: true
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              is_custom_loss: true
+              name: name
+              error: error
+              node_id: node_id
+          experimentId: experimentId
+          tag: tag
+          isFavourite: true
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          parentVersionId: parentVersionId
+          updateActions:
+          - metadata
+          - metadata
+          serialNumber: 6.027456183070403
+          evaluateParams:
+            dataStates:
+            - training
+            - training
+            batchSize: 1.4658129805029452
+            evaluatedEpoch: 5.962133916683182
+          jobs:
+          - eventsSnapshot:
+              events:
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              snapshotIndex: 0.8008281904610115
+            type: WARMUP
+            params:
+              inferenceArtifactId: inferenceArtifactId
+              versionId: versionId
+              monitor: true
+              batchSize: 5.962133916683182
+              projectId: projectId
+            version: version
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            versionId: versionId
+            createdBy: createdBy
+            teamId: teamId
+            subType: Evaluate
+            projectId: projectId
+            cid: cid
+            status: UNSTARTED
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            codeSnapshotInfo:
+              name: name
+              codeSnapshotId: codeSnapshotId
+            logsBlobName: logsBlobName
+          - eventsSnapshot:
+              events:
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              snapshotIndex: 0.8008281904610115
+            type: WARMUP
+            params:
+              inferenceArtifactId: inferenceArtifactId
+              versionId: versionId
+              monitor: true
+              batchSize: 5.962133916683182
+              projectId: projectId
+            version: version
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            versionId: versionId
+            createdBy: createdBy
+            teamId: teamId
+            subType: Evaluate
+            projectId: projectId
+            cid: cid
+            status: UNSTARTED
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            codeSnapshotInfo:
+              name: name
+              codeSnapshotId: codeSnapshotId
+            logsBlobName: logsBlobName
+          resources:
+            overrided_version_id: overrided_version_id
+            inference_resources:
+              metric_compute_insights: metric_compute_insights
+              metric_directions: metric_directions
+            es_model_id: es_model_id
+            population_exploration_digest_seed_count: 6.027456183070403
+            inference_artifact_id: inference_artifact_id
+            es_inspection_index: es_inspection_index
+            insights_index_counter: 1.4658129805029452
+            vis_resources:
+              insights_revision: insights_revision
+              sample_visualizers_revision: sample_visualizers_revision
+            csv_blob_path: csv_blob_path
+            vis_artifact_id: vis_artifact_id
+            es_metrics_index: es_metrics_index
+          epochTags:
+            key: 0.8008281904610115
+          codeSnapshotId: codeSnapshotId
+          createdBy: createdBy
+          teamId: teamId
+          projectId: projectId
+          hash: hash
+          properties: "{}"
+          cid: cid
+          hasExternalEpoch: true
+          isEvaluate: true
+        - notes: notes
+          canContinueEvaluate: true
+          modelId: modelId
+          isActive: true
+          branch: branch
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          uploadedModel:
+            transformInputs: true
+            blobPath: blobPath
+          graphValidationData:
+            metadata:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            inputs:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            custom_layers:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            available_latent_spaces:
+            - friendly_name: friendly_name
+              latent_space_id: latent_space_id
+            - friendly_name: friendly_name
+              latent_space_id: latent_space_id
+            general_error: general_error
+            ground_truths:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            prediction_types:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            metrics:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            visualizers:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            losses:
+            - connection_name: connection_name
+              is_custom_loss: true
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              is_custom_loss: true
+              name: name
+              error: error
+              node_id: node_id
+          experimentId: experimentId
+          tag: tag
+          isFavourite: true
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          parentVersionId: parentVersionId
+          updateActions:
+          - metadata
+          - metadata
+          serialNumber: 6.027456183070403
+          evaluateParams:
+            dataStates:
+            - training
+            - training
+            batchSize: 1.4658129805029452
+            evaluatedEpoch: 5.962133916683182
+          jobs:
+          - eventsSnapshot:
+              events:
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              snapshotIndex: 0.8008281904610115
+            type: WARMUP
+            params:
+              inferenceArtifactId: inferenceArtifactId
+              versionId: versionId
+              monitor: true
+              batchSize: 5.962133916683182
+              projectId: projectId
+            version: version
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            versionId: versionId
+            createdBy: createdBy
+            teamId: teamId
+            subType: Evaluate
+            projectId: projectId
+            cid: cid
+            status: UNSTARTED
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            codeSnapshotInfo:
+              name: name
+              codeSnapshotId: codeSnapshotId
+            logsBlobName: logsBlobName
+          - eventsSnapshot:
+              events:
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              snapshotIndex: 0.8008281904610115
+            type: WARMUP
+            params:
+              inferenceArtifactId: inferenceArtifactId
+              versionId: versionId
+              monitor: true
+              batchSize: 5.962133916683182
+              projectId: projectId
+            version: version
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            versionId: versionId
+            createdBy: createdBy
+            teamId: teamId
+            subType: Evaluate
+            projectId: projectId
+            cid: cid
+            status: UNSTARTED
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            codeSnapshotInfo:
+              name: name
+              codeSnapshotId: codeSnapshotId
+            logsBlobName: logsBlobName
+          resources:
+            overrided_version_id: overrided_version_id
+            inference_resources:
+              metric_compute_insights: metric_compute_insights
+              metric_directions: metric_directions
+            es_model_id: es_model_id
+            population_exploration_digest_seed_count: 6.027456183070403
+            inference_artifact_id: inference_artifact_id
+            es_inspection_index: es_inspection_index
+            insights_index_counter: 1.4658129805029452
+            vis_resources:
+              insights_revision: insights_revision
+              sample_visualizers_revision: sample_visualizers_revision
+            csv_blob_path: csv_blob_path
+            vis_artifact_id: vis_artifact_id
+            es_metrics_index: es_metrics_index
+          epochTags:
+            key: 0.8008281904610115
+          codeSnapshotId: codeSnapshotId
+          createdBy: createdBy
+          teamId: teamId
+          projectId: projectId
+          hash: hash
+          properties: "{}"
+          cid: cid
+          hasExternalEpoch: true
+          isEvaluate: true
+      properties:
+        versions:
+          items:
+            $ref: "#/components/schemas/SlimVersion"
+          type: array
+      required:
+      - versions
+      type: object
+    GetSlimExperimentVersionsParams:
+      additionalProperties: true
+      example:
+        experimentId: experimentId
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        experimentId:
+          type: string
+      required:
+      - experimentId
       - projectId
       type: object
     ExternalImportModelStorage:
@@ -34379,23 +36333,473 @@ components:
       - fileName
       - method
       type: object
-    UpdateVersionNameParams:
+    RenameExperimentParams:
       additionalProperties: true
       example:
         name: name
+        experimentId: experimentId
         projectId: projectId
-        cid: cid
       properties:
-        cid:
+        experimentId:
           type: string
         projectId:
           type: string
         name:
           type: string
       required:
-      - cid
+      - experimentId
       - name
       - projectId
+      type: object
+    RemoveExperimentParams:
+      additionalProperties: true
+      example:
+        experimentId: experimentId
+        projectId: projectId
+      properties:
+        experimentId:
+          type: string
+        projectId:
+          type: string
+      required:
+      - experimentId
+      - projectId
+      type: object
+    SetActiveVersionResponse:
+      additionalProperties: true
+      example:
+        versions:
+        - notes: notes
+          canContinueEvaluate: true
+          modelId: modelId
+          isActive: true
+          branch: branch
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          uploadedModel:
+            transformInputs: true
+            blobPath: blobPath
+          graphValidationData:
+            metadata:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            inputs:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            custom_layers:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            available_latent_spaces:
+            - friendly_name: friendly_name
+              latent_space_id: latent_space_id
+            - friendly_name: friendly_name
+              latent_space_id: latent_space_id
+            general_error: general_error
+            ground_truths:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            prediction_types:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            metrics:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            visualizers:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            losses:
+            - connection_name: connection_name
+              is_custom_loss: true
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              is_custom_loss: true
+              name: name
+              error: error
+              node_id: node_id
+          experimentId: experimentId
+          tag: tag
+          isFavourite: true
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          parentVersionId: parentVersionId
+          updateActions:
+          - metadata
+          - metadata
+          serialNumber: 6.027456183070403
+          evaluateParams:
+            dataStates:
+            - training
+            - training
+            batchSize: 1.4658129805029452
+            evaluatedEpoch: 5.962133916683182
+          jobs:
+          - eventsSnapshot:
+              events:
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              snapshotIndex: 0.8008281904610115
+            type: WARMUP
+            params:
+              inferenceArtifactId: inferenceArtifactId
+              versionId: versionId
+              monitor: true
+              batchSize: 5.962133916683182
+              projectId: projectId
+            version: version
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            versionId: versionId
+            createdBy: createdBy
+            teamId: teamId
+            subType: Evaluate
+            projectId: projectId
+            cid: cid
+            status: UNSTARTED
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            codeSnapshotInfo:
+              name: name
+              codeSnapshotId: codeSnapshotId
+            logsBlobName: logsBlobName
+          - eventsSnapshot:
+              events:
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              snapshotIndex: 0.8008281904610115
+            type: WARMUP
+            params:
+              inferenceArtifactId: inferenceArtifactId
+              versionId: versionId
+              monitor: true
+              batchSize: 5.962133916683182
+              projectId: projectId
+            version: version
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            versionId: versionId
+            createdBy: createdBy
+            teamId: teamId
+            subType: Evaluate
+            projectId: projectId
+            cid: cid
+            status: UNSTARTED
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            codeSnapshotInfo:
+              name: name
+              codeSnapshotId: codeSnapshotId
+            logsBlobName: logsBlobName
+          resources:
+            overrided_version_id: overrided_version_id
+            inference_resources:
+              metric_compute_insights: metric_compute_insights
+              metric_directions: metric_directions
+            es_model_id: es_model_id
+            population_exploration_digest_seed_count: 6.027456183070403
+            inference_artifact_id: inference_artifact_id
+            es_inspection_index: es_inspection_index
+            insights_index_counter: 1.4658129805029452
+            vis_resources:
+              insights_revision: insights_revision
+              sample_visualizers_revision: sample_visualizers_revision
+            csv_blob_path: csv_blob_path
+            vis_artifact_id: vis_artifact_id
+            es_metrics_index: es_metrics_index
+          epochTags:
+            key: 0.8008281904610115
+          codeSnapshotId: codeSnapshotId
+          createdBy: createdBy
+          teamId: teamId
+          projectId: projectId
+          hash: hash
+          properties: "{}"
+          cid: cid
+          hasExternalEpoch: true
+          isEvaluate: true
+        - notes: notes
+          canContinueEvaluate: true
+          modelId: modelId
+          isActive: true
+          branch: branch
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          uploadedModel:
+            transformInputs: true
+            blobPath: blobPath
+          graphValidationData:
+            metadata:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            inputs:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            custom_layers:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            available_latent_spaces:
+            - friendly_name: friendly_name
+              latent_space_id: latent_space_id
+            - friendly_name: friendly_name
+              latent_space_id: latent_space_id
+            general_error: general_error
+            ground_truths:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            prediction_types:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            metrics:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            visualizers:
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              name: name
+              error: error
+              node_id: node_id
+            losses:
+            - connection_name: connection_name
+              is_custom_loss: true
+              name: name
+              error: error
+              node_id: node_id
+            - connection_name: connection_name
+              is_custom_loss: true
+              name: name
+              error: error
+              node_id: node_id
+          experimentId: experimentId
+          tag: tag
+          isFavourite: true
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          parentVersionId: parentVersionId
+          updateActions:
+          - metadata
+          - metadata
+          serialNumber: 6.027456183070403
+          evaluateParams:
+            dataStates:
+            - training
+            - training
+            batchSize: 1.4658129805029452
+            evaluatedEpoch: 5.962133916683182
+          jobs:
+          - eventsSnapshot:
+              events:
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              snapshotIndex: 0.8008281904610115
+            type: WARMUP
+            params:
+              inferenceArtifactId: inferenceArtifactId
+              versionId: versionId
+              monitor: true
+              batchSize: 5.962133916683182
+              projectId: projectId
+            version: version
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            versionId: versionId
+            createdBy: createdBy
+            teamId: teamId
+            subType: Evaluate
+            projectId: projectId
+            cid: cid
+            status: UNSTARTED
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            codeSnapshotInfo:
+              name: name
+              codeSnapshotId: codeSnapshotId
+            logsBlobName: logsBlobName
+          - eventsSnapshot:
+              events:
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              - name: name
+                progress:
+                  total: 6.027456183070403
+                  current: 1.4658129805029452
+                id: id
+                status: UNSTARTED
+              snapshotIndex: 0.8008281904610115
+            type: WARMUP
+            params:
+              inferenceArtifactId: inferenceArtifactId
+              versionId: versionId
+              monitor: true
+              batchSize: 5.962133916683182
+              projectId: projectId
+            version: version
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            versionId: versionId
+            createdBy: createdBy
+            teamId: teamId
+            subType: Evaluate
+            projectId: projectId
+            cid: cid
+            status: UNSTARTED
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+            codeSnapshotInfo:
+              name: name
+              codeSnapshotId: codeSnapshotId
+            logsBlobName: logsBlobName
+          resources:
+            overrided_version_id: overrided_version_id
+            inference_resources:
+              metric_compute_insights: metric_compute_insights
+              metric_directions: metric_directions
+            es_model_id: es_model_id
+            population_exploration_digest_seed_count: 6.027456183070403
+            inference_artifact_id: inference_artifact_id
+            es_inspection_index: es_inspection_index
+            insights_index_counter: 1.4658129805029452
+            vis_resources:
+              insights_revision: insights_revision
+              sample_visualizers_revision: sample_visualizers_revision
+            csv_blob_path: csv_blob_path
+            vis_artifact_id: vis_artifact_id
+            es_metrics_index: es_metrics_index
+          epochTags:
+            key: 0.8008281904610115
+          codeSnapshotId: codeSnapshotId
+          createdBy: createdBy
+          teamId: teamId
+          projectId: projectId
+          hash: hash
+          properties: "{}"
+          cid: cid
+          hasExternalEpoch: true
+          isEvaluate: true
+      properties:
+        versions:
+          items:
+            $ref: "#/components/schemas/SlimVersion"
+          type: array
+      required:
+      - versions
+      type: object
+    SetActiveVersionParams:
+      additionalProperties: true
+      example:
+        versionId: versionId
+        projectId: projectId
+      properties:
+        versionId:
+          type: string
+        projectId:
+          type: string
+      required:
+      - projectId
+      - versionId
       type: object
     TagModelRequest:
       additionalProperties: true
@@ -37092,7 +39496,6 @@ components:
     PopulationExplorationParams:
       additionalProperties: true
       example:
-        inferenceArtifactId: inferenceArtifactId
         elementInstance: true
         reductionAlgorithm: TSNE
         latentSpaceType: latentSpaceType
@@ -37726,8 +40129,6 @@ components:
       properties:
         versionId:
           type: string
-        inferenceArtifactId:
-          type: string
         projectId:
           type: string
         batchSize:
@@ -37768,7 +40169,6 @@ components:
       - balanceBy
       - batchSize
       - digest
-      - inferenceArtifactId
       - numOfSamples
       - projectId
       - reductionAlgorithm
@@ -37797,6 +40197,7 @@ components:
       additionalProperties: true
       example:
         versionId: versionId
+        latentSpaceType: latentSpaceType
         limit: 0.8008281904610115
         sampleIds:
         - index: 0.8008281904610115
@@ -38233,6 +40634,8 @@ components:
             $ref: "#/components/schemas/ESFilter"
           type: array
         digest:
+          type: string
+        latentSpaceType:
           type: string
       required:
       - digest
@@ -38957,11 +41360,30 @@ components:
       - data
       - sampleId
       type: object
-    MetadataFieldValue_value:
+    CollectionFilterSpec_range:
+      example:
+        min: 6.027456183070403
+        max: 0.8008281904610115
+      properties:
+        max:
+          format: double
+          type: number
+        min:
+          format: double
+          type: number
+      type: object
+    CollectionFilterSpec_hiddenValues_inner:
       anyOf:
       - type: string
       - format: double
         type: number
+    CollectionSampleRow_value:
+      anyOf:
+      - type: string
+      - format: double
+        type: number
+      - type: boolean
+      nullable: true
     EpochData_externalData:
       example:
         metrics:

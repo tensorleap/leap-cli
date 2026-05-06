@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**InferenceArtifactIds** | **[]string** |  | 
+**VersionIds** | **[]string** |  | 
 **ProjectId** | **string** |  | 
 **CustomMetricName** | **string** |  | 
 **VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 
 ### NewConfusionMatrixTableParams
 
-`func NewConfusionMatrixTableParams(inferenceArtifactIds []string, projectId string, customMetricName string, splitByLabel bool, ) *ConfusionMatrixTableParams`
+`func NewConfusionMatrixTableParams(versionIds []string, projectId string, customMetricName string, splitByLabel bool, ) *ConfusionMatrixTableParams`
 
 NewConfusionMatrixTableParams instantiates a new ConfusionMatrixTableParams object
 This constructor will assign default values to properties that have it defined,
@@ -35,24 +35,24 @@ NewConfusionMatrixTableParamsWithDefaults instantiates a new ConfusionMatrixTabl
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetInferenceArtifactIds
+### GetVersionIds
 
-`func (o *ConfusionMatrixTableParams) GetInferenceArtifactIds() []string`
+`func (o *ConfusionMatrixTableParams) GetVersionIds() []string`
 
-GetInferenceArtifactIds returns the InferenceArtifactIds field if non-nil, zero value otherwise.
+GetVersionIds returns the VersionIds field if non-nil, zero value otherwise.
 
-### GetInferenceArtifactIdsOk
+### GetVersionIdsOk
 
-`func (o *ConfusionMatrixTableParams) GetInferenceArtifactIdsOk() (*[]string, bool)`
+`func (o *ConfusionMatrixTableParams) GetVersionIdsOk() (*[]string, bool)`
 
-GetInferenceArtifactIdsOk returns a tuple with the InferenceArtifactIds field if it's non-nil, zero value otherwise
+GetVersionIdsOk returns a tuple with the VersionIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetInferenceArtifactIds
+### SetVersionIds
 
-`func (o *ConfusionMatrixTableParams) SetInferenceArtifactIds(v []string)`
+`func (o *ConfusionMatrixTableParams) SetVersionIds(v []string)`
 
-SetInferenceArtifactIds sets InferenceArtifactIds field to given value.
+SetVersionIds sets VersionIds field to given value.
 
 
 ### GetProjectId

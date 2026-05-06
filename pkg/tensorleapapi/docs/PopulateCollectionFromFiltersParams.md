@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **CollectionId** | Pointer to **string** |  | [optional] 
 **Filters** | [**[]ESFilter**](ESFilter.md) |  | 
 **InferenceArtifactIds** | **[]string** |  | 
+**VersionIds** | Pointer to **[]string** |  | [optional] 
 **ProjectId** | **string** |  | 
 
 ## Methods
@@ -144,6 +145,31 @@ and a boolean to check if the value has been set.
 
 SetInferenceArtifactIds sets InferenceArtifactIds field to given value.
 
+
+### GetVersionIds
+
+`func (o *PopulateCollectionFromFiltersParams) GetVersionIds() []string`
+
+GetVersionIds returns the VersionIds field if non-nil, zero value otherwise.
+
+### GetVersionIdsOk
+
+`func (o *PopulateCollectionFromFiltersParams) GetVersionIdsOk() (*[]string, bool)`
+
+GetVersionIdsOk returns a tuple with the VersionIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVersionIds
+
+`func (o *PopulateCollectionFromFiltersParams) SetVersionIds(v []string)`
+
+SetVersionIds sets VersionIds field to given value.
+
+### HasVersionIds
+
+`func (o *PopulateCollectionFromFiltersParams) HasVersionIds() bool`
+
+HasVersionIds returns a boolean if a field has been set.
 
 ### GetProjectId
 

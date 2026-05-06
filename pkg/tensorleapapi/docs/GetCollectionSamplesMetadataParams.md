@@ -4,7 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Filters** | Pointer to [**[]CollectionFilterSpec**](CollectionFilterSpec.md) | Active filter spec (same shape used by &#x60;getCollectionSampleOrder&#x60;). Each field&#39;s bucket counts are computed against the other fields&#39; filters, so the sidebar shows the right \&quot;available samples per bucket if you pick this option next\&quot; numbers. | [optional] 
 **InferenceArtifactId** | **string** |  | 
+**VersionId** | Pointer to **string** |  | [optional] 
 **CollectionId** | **string** |  | 
 **ProjectId** | **string** |  | 
 
@@ -27,6 +29,31 @@ NewGetCollectionSamplesMetadataParamsWithDefaults instantiates a new GetCollecti
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
+### GetFilters
+
+`func (o *GetCollectionSamplesMetadataParams) GetFilters() []CollectionFilterSpec`
+
+GetFilters returns the Filters field if non-nil, zero value otherwise.
+
+### GetFiltersOk
+
+`func (o *GetCollectionSamplesMetadataParams) GetFiltersOk() (*[]CollectionFilterSpec, bool)`
+
+GetFiltersOk returns a tuple with the Filters field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFilters
+
+`func (o *GetCollectionSamplesMetadataParams) SetFilters(v []CollectionFilterSpec)`
+
+SetFilters sets Filters field to given value.
+
+### HasFilters
+
+`func (o *GetCollectionSamplesMetadataParams) HasFilters() bool`
+
+HasFilters returns a boolean if a field has been set.
+
 ### GetInferenceArtifactId
 
 `func (o *GetCollectionSamplesMetadataParams) GetInferenceArtifactId() string`
@@ -46,6 +73,31 @@ and a boolean to check if the value has been set.
 
 SetInferenceArtifactId sets InferenceArtifactId field to given value.
 
+
+### GetVersionId
+
+`func (o *GetCollectionSamplesMetadataParams) GetVersionId() string`
+
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
+
+### GetVersionIdOk
+
+`func (o *GetCollectionSamplesMetadataParams) GetVersionIdOk() (*string, bool)`
+
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVersionId
+
+`func (o *GetCollectionSamplesMetadataParams) SetVersionId(v string)`
+
+SetVersionId sets VersionId field to given value.
+
+### HasVersionId
+
+`func (o *GetCollectionSamplesMetadataParams) HasVersionId() bool`
+
+HasVersionId returns a boolean if a field has been set.
 
 ### GetCollectionId
 

@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VersionId** | **string** |  | 
-**InferenceArtifactId** | **string** |  | 
 **ProjectId** | **string** |  | 
 **BatchSize** | **float64** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
@@ -26,7 +25,7 @@ Name | Type | Description | Notes
 
 ### NewPopulationExplorationParams
 
-`func NewPopulationExplorationParams(versionId string, inferenceArtifactId string, projectId string, batchSize float64, digest string, numOfSamples float64, balanceBy []string, shouldFillRemainingWithUnbalanced bool, reductionAlgorithm ReductionAlgorithm, ) *PopulationExplorationParams`
+`func NewPopulationExplorationParams(versionId string, projectId string, batchSize float64, digest string, numOfSamples float64, balanceBy []string, shouldFillRemainingWithUnbalanced bool, reductionAlgorithm ReductionAlgorithm, ) *PopulationExplorationParams`
 
 NewPopulationExplorationParams instantiates a new PopulationExplorationParams object
 This constructor will assign default values to properties that have it defined,
@@ -59,26 +58,6 @@ and a boolean to check if the value has been set.
 `func (o *PopulationExplorationParams) SetVersionId(v string)`
 
 SetVersionId sets VersionId field to given value.
-
-
-### GetInferenceArtifactId
-
-`func (o *PopulationExplorationParams) GetInferenceArtifactId() string`
-
-GetInferenceArtifactId returns the InferenceArtifactId field if non-nil, zero value otherwise.
-
-### GetInferenceArtifactIdOk
-
-`func (o *PopulationExplorationParams) GetInferenceArtifactIdOk() (*string, bool)`
-
-GetInferenceArtifactIdOk returns a tuple with the InferenceArtifactId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetInferenceArtifactId
-
-`func (o *PopulationExplorationParams) SetInferenceArtifactId(v string)`
-
-SetInferenceArtifactId sets InferenceArtifactId field to given value.
 
 
 ### GetProjectId

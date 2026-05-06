@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **HorizontalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **InnerSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
-**InferenceArtifactIds** | **[]string** |  | 
+**VersionIds** | **[]string** |  | 
 **ShowAllEpochs** | **bool** |  | 
 **ElementInstance** | Pointer to **bool** |  | [optional] 
 
@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewMultiChartsParams
 
-`func NewMultiChartsParams(projectId string, x SplitAgg, y Aggregations, inferenceArtifactIds []string, showAllEpochs bool, ) *MultiChartsParams`
+`func NewMultiChartsParams(projectId string, x SplitAgg, y Aggregations, versionIds []string, showAllEpochs bool, ) *MultiChartsParams`
 
 NewMultiChartsParams instantiates a new MultiChartsParams object
 This constructor will assign default values to properties that have it defined,
@@ -194,24 +194,24 @@ SetFilters sets Filters field to given value.
 
 HasFilters returns a boolean if a field has been set.
 
-### GetInferenceArtifactIds
+### GetVersionIds
 
-`func (o *MultiChartsParams) GetInferenceArtifactIds() []string`
+`func (o *MultiChartsParams) GetVersionIds() []string`
 
-GetInferenceArtifactIds returns the InferenceArtifactIds field if non-nil, zero value otherwise.
+GetVersionIds returns the VersionIds field if non-nil, zero value otherwise.
 
-### GetInferenceArtifactIdsOk
+### GetVersionIdsOk
 
-`func (o *MultiChartsParams) GetInferenceArtifactIdsOk() (*[]string, bool)`
+`func (o *MultiChartsParams) GetVersionIdsOk() (*[]string, bool)`
 
-GetInferenceArtifactIdsOk returns a tuple with the InferenceArtifactIds field if it's non-nil, zero value otherwise
+GetVersionIdsOk returns a tuple with the VersionIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetInferenceArtifactIds
+### SetVersionIds
 
-`func (o *MultiChartsParams) SetInferenceArtifactIds(v []string)`
+`func (o *MultiChartsParams) SetVersionIds(v []string)`
 
-SetInferenceArtifactIds sets InferenceArtifactIds field to given value.
+SetVersionIds sets VersionIds field to given value.
 
 
 ### GetShowAllEpochs

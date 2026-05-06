@@ -12,13 +12,14 @@ Name | Type | Description | Notes
 **Losses** | [**[]ValidatedLossNode**](ValidatedLossNode.md) |  | 
 **Metrics** | [**[]ValidatedNode**](ValidatedNode.md) |  | 
 **CustomLayers** | [**[]ValidatedNode**](ValidatedNode.md) |  | 
+**AvailableLatentSpaces** | [**[]AvailableLatentSpace**](AvailableLatentSpace.md) |  | 
 **GeneralError** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewGraphValidatorData
 
-`func NewGraphValidatorData(inputs []ValidatedNode, metadata []ValidatedNode, groundTruths []ValidatedNode, predictionTypes []ValidatedNode, visualizers []ValidatedNode, losses []ValidatedLossNode, metrics []ValidatedNode, customLayers []ValidatedNode, ) *GraphValidatorData`
+`func NewGraphValidatorData(inputs []ValidatedNode, metadata []ValidatedNode, groundTruths []ValidatedNode, predictionTypes []ValidatedNode, visualizers []ValidatedNode, losses []ValidatedLossNode, metrics []ValidatedNode, customLayers []ValidatedNode, availableLatentSpaces []AvailableLatentSpace, ) *GraphValidatorData`
 
 NewGraphValidatorData instantiates a new GraphValidatorData object
 This constructor will assign default values to properties that have it defined,
@@ -191,6 +192,26 @@ and a boolean to check if the value has been set.
 `func (o *GraphValidatorData) SetCustomLayers(v []ValidatedNode)`
 
 SetCustomLayers sets CustomLayers field to given value.
+
+
+### GetAvailableLatentSpaces
+
+`func (o *GraphValidatorData) GetAvailableLatentSpaces() []AvailableLatentSpace`
+
+GetAvailableLatentSpaces returns the AvailableLatentSpaces field if non-nil, zero value otherwise.
+
+### GetAvailableLatentSpacesOk
+
+`func (o *GraphValidatorData) GetAvailableLatentSpacesOk() (*[]AvailableLatentSpace, bool)`
+
+GetAvailableLatentSpacesOk returns a tuple with the AvailableLatentSpaces field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAvailableLatentSpaces
+
+`func (o *GraphValidatorData) SetAvailableLatentSpaces(v []AvailableLatentSpace)`
+
+SetAvailableLatentSpaces sets AvailableLatentSpaces field to given value.
 
 
 ### GetGeneralError

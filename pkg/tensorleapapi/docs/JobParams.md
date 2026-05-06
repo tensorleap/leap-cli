@@ -16,11 +16,11 @@ Name | Type | Description | Notes
 **ExtId** | **string** |  | 
 **Title** | **string** |  | 
 **Epoch** | **float64** |  | 
+**LatentSpaceType** | Pointer to **string** |  | [optional] 
 **Digest** | **string** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **SampleIds** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
 **Limit** | **float64** |  | 
-**LatentSpaceType** | Pointer to **string** |  | [optional] 
 **ForceExecute** | Pointer to **bool** |  | [optional] 
 **ElementInstance** | Pointer to **bool** |  | [optional] 
 **UseCustomLatentSpace** | Pointer to **bool** |  | [optional] 
@@ -53,12 +53,15 @@ Name | Type | Description | Notes
 **VersionName** | **string** |  | 
 **BranchName** | Pointer to **string** |  | [optional] 
 **OverwriteVersionId** | Pointer to **string** |  | [optional] 
+**UpdateActions** | [**[]UpdateAction**](UpdateAction.md) |  | 
+**CopyMode** | Pointer to **bool** |  | [optional] 
+**SourceVersionId** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewJobParams
 
-`func NewJobParams(versionId string, inferenceArtifactId string, projectId string, batchSize float64, evaluatedEpoch float64, type_ ExportModelTypeEnum, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, labelingAlgorithm LabelingAlgorithm, targetFilters []ESFilter, sources []SyntheticDataJobParamsSourcesInner, metadataTags []string, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, codeUrl string, codeEntryFile string, versionName string, ) *JobParams`
+`func NewJobParams(versionId string, inferenceArtifactId string, projectId string, batchSize float64, evaluatedEpoch float64, type_ ExportModelTypeEnum, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, labelingAlgorithm LabelingAlgorithm, targetFilters []ESFilter, sources []SyntheticDataJobParamsSourcesInner, metadataTags []string, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, codeUrl string, codeEntryFile string, versionName string, updateActions []UpdateAction, ) *JobParams`
 
 NewJobParams instantiates a new JobParams object
 This constructor will assign default values to properties that have it defined,
@@ -328,6 +331,31 @@ and a boolean to check if the value has been set.
 SetEpoch sets Epoch field to given value.
 
 
+### GetLatentSpaceType
+
+`func (o *JobParams) GetLatentSpaceType() string`
+
+GetLatentSpaceType returns the LatentSpaceType field if non-nil, zero value otherwise.
+
+### GetLatentSpaceTypeOk
+
+`func (o *JobParams) GetLatentSpaceTypeOk() (*string, bool)`
+
+GetLatentSpaceTypeOk returns a tuple with the LatentSpaceType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLatentSpaceType
+
+`func (o *JobParams) SetLatentSpaceType(v string)`
+
+SetLatentSpaceType sets LatentSpaceType field to given value.
+
+### HasLatentSpaceType
+
+`func (o *JobParams) HasLatentSpaceType() bool`
+
+HasLatentSpaceType returns a boolean if a field has been set.
+
 ### GetDigest
 
 `func (o *JobParams) GetDigest() string`
@@ -412,31 +440,6 @@ and a boolean to check if the value has been set.
 
 SetLimit sets Limit field to given value.
 
-
-### GetLatentSpaceType
-
-`func (o *JobParams) GetLatentSpaceType() string`
-
-GetLatentSpaceType returns the LatentSpaceType field if non-nil, zero value otherwise.
-
-### GetLatentSpaceTypeOk
-
-`func (o *JobParams) GetLatentSpaceTypeOk() (*string, bool)`
-
-GetLatentSpaceTypeOk returns a tuple with the LatentSpaceType field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetLatentSpaceType
-
-`func (o *JobParams) SetLatentSpaceType(v string)`
-
-SetLatentSpaceType sets LatentSpaceType field to given value.
-
-### HasLatentSpaceType
-
-`func (o *JobParams) HasLatentSpaceType() bool`
-
-HasLatentSpaceType returns a boolean if a field has been set.
 
 ### GetForceExecute
 
@@ -1147,6 +1150,76 @@ SetOverwriteVersionId sets OverwriteVersionId field to given value.
 `func (o *JobParams) HasOverwriteVersionId() bool`
 
 HasOverwriteVersionId returns a boolean if a field has been set.
+
+### GetUpdateActions
+
+`func (o *JobParams) GetUpdateActions() []UpdateAction`
+
+GetUpdateActions returns the UpdateActions field if non-nil, zero value otherwise.
+
+### GetUpdateActionsOk
+
+`func (o *JobParams) GetUpdateActionsOk() (*[]UpdateAction, bool)`
+
+GetUpdateActionsOk returns a tuple with the UpdateActions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUpdateActions
+
+`func (o *JobParams) SetUpdateActions(v []UpdateAction)`
+
+SetUpdateActions sets UpdateActions field to given value.
+
+
+### GetCopyMode
+
+`func (o *JobParams) GetCopyMode() bool`
+
+GetCopyMode returns the CopyMode field if non-nil, zero value otherwise.
+
+### GetCopyModeOk
+
+`func (o *JobParams) GetCopyModeOk() (*bool, bool)`
+
+GetCopyModeOk returns a tuple with the CopyMode field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCopyMode
+
+`func (o *JobParams) SetCopyMode(v bool)`
+
+SetCopyMode sets CopyMode field to given value.
+
+### HasCopyMode
+
+`func (o *JobParams) HasCopyMode() bool`
+
+HasCopyMode returns a boolean if a field has been set.
+
+### GetSourceVersionId
+
+`func (o *JobParams) GetSourceVersionId() string`
+
+GetSourceVersionId returns the SourceVersionId field if non-nil, zero value otherwise.
+
+### GetSourceVersionIdOk
+
+`func (o *JobParams) GetSourceVersionIdOk() (*string, bool)`
+
+GetSourceVersionIdOk returns a tuple with the SourceVersionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSourceVersionId
+
+`func (o *JobParams) SetSourceVersionId(v string)`
+
+SetSourceVersionId sets SourceVersionId field to given value.
+
+### HasSourceVersionId
+
+`func (o *JobParams) HasSourceVersionId() bool`
+
+HasSourceVersionId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

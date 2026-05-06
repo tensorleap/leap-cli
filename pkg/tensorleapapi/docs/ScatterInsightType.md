@@ -5,7 +5,7 @@
 
 * `LOW_PERFORMANCE` (value: `"low_performance"`)
 
-* `UNDER_REPRESENTATION` (value: `"under_representation"`)
+* `OUT_OF_DISTRIBUTION` (value: `"out_of_distribution"`)
 
 * `DUPLICATION` (value: `"duplication"`)
 
