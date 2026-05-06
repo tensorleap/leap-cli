@@ -31,6 +31,7 @@ docs/AnalyzeTypeEnum.md
 docs/ApplyInsightsStatusParams.md
 docs/AuthProviderEnum.md
 docs/AuthStatus.md
+docs/AvailableLatentSpace.md
 docs/BBoxImageData.md
 docs/BBoxImageViz.md
 docs/BaseSplitAgg.md
@@ -49,6 +50,13 @@ docs/CodeSnapshotSetupStatus.md
 docs/CodeSnapshotUploadUrlResponse.md
 docs/CollectionDisplayData.md
 docs/CollectionFilterDisplayData.md
+docs/CollectionFilterSpec.md
+docs/CollectionFilterSpecHiddenValuesInner.md
+docs/CollectionFilterSpecRange.md
+docs/CollectionIndexStatus.md
+docs/CollectionSampleRow.md
+docs/CollectionSampleRowValue.md
+docs/CollectionSortSpec.md
 docs/CompositeVizData.md
 docs/CompositeVizItem.md
 docs/ConfusionMatrixLabelsResponse.md
@@ -57,6 +65,7 @@ docs/ConfusionMatrixTableParams.md
 docs/ConfusionMetricNamesParams.md
 docs/ConfusionMetricNamesResponse.md
 docs/ContinueEvaluateParams.md
+docs/ContinueUpdateEvaluateParams.md
 docs/ContinuesAgg.md
 docs/CreateSampleVisualizationsParams.md
 docs/CreateSessionTestRequest.md
@@ -104,6 +113,8 @@ docs/DuplicationInsight.md
 docs/ESFilter.md
 docs/ESFilterValue.md
 docs/EngineSettingKey.md
+docs/EnsureCollectionIndexParams.md
+docs/EnsureCollectionIndexResponse.md
 docs/EpochData.md
 docs/EpochDataExternalData.md
 docs/EpochMetricsValue.md
@@ -155,6 +166,8 @@ docs/GetCodeSnapshotResponse.md
 docs/GetCodeSnapshotUploadUrlParams.md
 docs/GetCollectionDisplayDataParams.md
 docs/GetCollectionDisplayDataResponse.md
+docs/GetCollectionSampleOrderParams.md
+docs/GetCollectionSampleOrderResponse.md
 docs/GetCollectionSamplesMetadataParams.md
 docs/GetCollectionSamplesMetadataResponse.md
 docs/GetConfusionMatrixLabels.md
@@ -211,6 +224,10 @@ docs/GetSessionTestResultsRequest.md
 docs/GetSignedUrlParams.md
 docs/GetSingleIssueParams.md
 docs/GetSingleSessionTestRequest.md
+docs/GetSlimActiveVersionsParams.md
+docs/GetSlimActiveVersionsResponse.md
+docs/GetSlimExperimentVersionsParams.md
+docs/GetSlimExperimentVersionsResponse.md
 docs/GetSlimJobsResponse.md
 docs/GetSlimVisualizationParams.md
 docs/GetSlimVisualizationResponse.md
@@ -224,6 +241,10 @@ docs/GetTeamsResponse.md
 docs/GetUploadModelSignedUrlRequest.md
 docs/GetUploadSignedUrlParams.md
 docs/GetVersionEpochsResponse.md
+docs/GetVersionSampleOrderParams.md
+docs/GetVersionSampleOrderResponse.md
+docs/GetVersionSamplesMetadataParams.md
+docs/GetVersionSamplesMetadataResponse.md
 docs/GetVersionsEpochsRequest.md
 docs/GetVersionsVisualizationsParams.md
 docs/GetVersionsVisualizationsResponse.md
@@ -251,6 +272,7 @@ docs/ImportNewModelParams.md
 docs/ImportProjectParams.md
 docs/ImportProjectRequest.md
 docs/ImportProjectResponse.md
+docs/InferenceArtifactResources.md
 docs/InitExperimentRequest.md
 docs/InitExperimentResponse.md
 docs/Insight.md
@@ -309,7 +331,6 @@ docs/MaskTextData.md
 docs/MessageLevel.md
 docs/MetadataField.md
 docs/MetadataFieldValue.md
-docs/MetadataFieldValueValue.md
 docs/MetricInstance.md
 docs/MetricMessageParams.md
 docs/MetricStatisticElement.md
@@ -335,6 +356,7 @@ docs/NumberSchema.md
 docs/OperatorEnum.md
 docs/OptionalAnalysis.md
 docs/OrderType.md
+docs/OutOfDistributionInsight.md
 docs/OverwriteModelParams.md
 docs/PanelLayout.md
 docs/ParesCodeSnapshotParams.md
@@ -360,7 +382,12 @@ docs/PushCodeSnapshotParams.md
 docs/PushCodeSnapshotResponse.md
 docs/QueryFieldValues.md
 docs/ReductionAlgorithm.md
+docs/RemoveExperimentParams.md
 docs/RemoveSampleCollectionParams.md
+docs/RemoveSamplesFromCollectionParams.md
+docs/RemoveSamplesFromCollectionResponse.md
+docs/RenameExperimentParams.md
+docs/ResetEvaluateParams.md
 docs/RocConfusionMatrixParams.md
 docs/RotateApiKeyResponse.md
 docs/RunImportModelResponse.md
@@ -394,6 +421,8 @@ docs/SessionTestResult.md
 docs/SessionTestResultError.md
 docs/SessionTestResultNotFound.md
 docs/SessionTestResultSuccess.md
+docs/SetActiveVersionParams.md
+docs/SetActiveVersionResponse.md
 docs/SetCodeChallengeRequest.md
 docs/SetDefaultTeamRequest.md
 docs/SetExperimentPropertiesRequest.md
@@ -434,11 +463,13 @@ docs/TextData.md
 docs/TextViz.md
 docs/TrashSecretManagerParams.md
 docs/TrashSecretManagerResponse.md
-docs/UnderRepresentationInsight.md
+docs/UpdateAction.md
 docs/UpdateDashboardParams.md
+docs/UpdateEvaluateArtifactParams.md
 docs/UpdateIssueParams.md
 docs/UpdateProjectMetaRequest.md
 docs/UpdateSampleCollectionParams.md
+docs/UpdateSampleCollectionResponse.md
 docs/UpdateSecretManagerParams.md
 docs/UpdateSecretManagerResponse.md
 docs/UpdateSessionTestRequest.md
@@ -447,7 +478,6 @@ docs/UpdateUserNameRequest.md
 docs/UpdateUserRoleRequest.md
 docs/UpdateUserStatusRequest.md
 docs/UpdateUserTeamRequest.md
-docs/UpdateVersionNameParams.md
 docs/UpdateVersionParams.md
 docs/UpdateVersionResponse.md
 docs/UploadModelFileType.md
@@ -464,9 +494,11 @@ docs/ValueWithKey.md
 docs/Version.md
 docs/VersionEvaluateParams.md
 docs/VersionPopulatedJob.md
+docs/VersionResources.md
 docs/VersionStatus.md
 docs/VideoData.md
 docs/VideoHeatmapData.md
+docs/VisArtifactResources.md
 docs/VisData.md
 docs/Visualization.md
 docs/VisualizationData.md
@@ -505,6 +537,7 @@ model_analyze_type_enum.go
 model_apply_insights_status_params.go
 model_auth_provider_enum.go
 model_auth_status.go
+model_available_latent_space.go
 model_b_box_image_data.go
 model_b_box_image_viz.go
 model_base_split_agg.go
@@ -523,6 +556,13 @@ model_code_snapshot_setup_status.go
 model_code_snapshot_upload_url_response.go
 model_collection_display_data.go
 model_collection_filter_display_data.go
+model_collection_filter_spec.go
+model_collection_filter_spec_hidden_values_inner.go
+model_collection_filter_spec_range.go
+model_collection_index_status.go
+model_collection_sample_row.go
+model_collection_sample_row_value.go
+model_collection_sort_spec.go
 model_composite_viz_data.go
 model_composite_viz_item.go
 model_confusion_matrix_labels_response.go
@@ -531,6 +571,7 @@ model_confusion_matrix_table_params.go
 model_confusion_metric_names_params.go
 model_confusion_metric_names_response.go
 model_continue_evaluate_params.go
+model_continue_update_evaluate_params.go
 model_continues_agg.go
 model_create_sample_visualizations_params.go
 model_create_session_test_request.go
@@ -575,6 +616,8 @@ model_distinct_agg.go
 model_domain_gap_insight.go
 model_duplication_insight.go
 model_engine_setting_key.go
+model_ensure_collection_index_params.go
+model_ensure_collection_index_response.go
 model_epoch_data.go
 model_epoch_data_external_data.go
 model_epoch_metrics_value.go
@@ -628,6 +671,8 @@ model_get_code_snapshot_response.go
 model_get_code_snapshot_upload_url_params.go
 model_get_collection_display_data_params.go
 model_get_collection_display_data_response.go
+model_get_collection_sample_order_params.go
+model_get_collection_sample_order_response.go
 model_get_collection_samples_metadata_params.go
 model_get_collection_samples_metadata_response.go
 model_get_confusion_matrix_labels.go
@@ -684,6 +729,10 @@ model_get_session_test_results_request.go
 model_get_signed_url_params.go
 model_get_single_issue_params.go
 model_get_single_session_test_request.go
+model_get_slim_active_versions_params.go
+model_get_slim_active_versions_response.go
+model_get_slim_experiment_versions_params.go
+model_get_slim_experiment_versions_response.go
 model_get_slim_jobs_response.go
 model_get_slim_visualization_params.go
 model_get_slim_visualization_response.go
@@ -697,6 +746,10 @@ model_get_teams_response.go
 model_get_upload_model_signed_url_request.go
 model_get_upload_signed_url_params.go
 model_get_version_epochs_response.go
+model_get_version_sample_order_params.go
+model_get_version_sample_order_response.go
+model_get_version_samples_metadata_params.go
+model_get_version_samples_metadata_response.go
 model_get_versions_epochs_request.go
 model_get_versions_visualizations_params.go
 model_get_versions_visualizations_response.go
@@ -724,6 +777,7 @@ model_import_new_model_params.go
 model_import_project_params.go
 model_import_project_request.go
 model_import_project_response.go
+model_inference_artifact_resources.go
 model_init_experiment_request.go
 model_init_experiment_response.go
 model_insight.go
@@ -782,7 +836,6 @@ model_mask_text_data.go
 model_message_level.go
 model_metadata_field.go
 model_metadata_field_value.go
-model_metadata_field_value_value.go
 model_metric_instance.go
 model_metric_message_params.go
 model_metric_statistic_element.go
@@ -808,6 +861,7 @@ model_number_schema.go
 model_operator_enum.go
 model_optional_analysis.go
 model_order_type.go
+model_out_of_distribution_insight.go
 model_overwrite_model_params.go
 model_panel_layout.go
 model_pares_code_snapshot_params.go
@@ -833,7 +887,12 @@ model_push_code_snapshot_params.go
 model_push_code_snapshot_response.go
 model_query_field_values.go
 model_reduction_algorithm.go
+model_remove_experiment_params.go
 model_remove_sample_collection_params.go
+model_remove_samples_from_collection_params.go
+model_remove_samples_from_collection_response.go
+model_rename_experiment_params.go
+model_reset_evaluate_params.go
 model_roc_confusion_matrix_params.go
 model_rotate_api_key_response.go
 model_run_import_model_response.go
@@ -867,6 +926,8 @@ model_session_test_result.go
 model_session_test_result_error.go
 model_session_test_result_not_found.go
 model_session_test_result_success.go
+model_set_active_version_params.go
+model_set_active_version_response.go
 model_set_code_challenge_request.go
 model_set_default_team_request.go
 model_set_experiment_properties_request.go
@@ -907,11 +968,13 @@ model_text_data.go
 model_text_viz.go
 model_trash_secret_manager_params.go
 model_trash_secret_manager_response.go
-model_under_representation_insight.go
+model_update_action.go
 model_update_dashboard_params.go
+model_update_evaluate_artifact_params.go
 model_update_issue_params.go
 model_update_project_meta_request.go
 model_update_sample_collection_params.go
+model_update_sample_collection_response.go
 model_update_secret_manager_params.go
 model_update_secret_manager_response.go
 model_update_session_test_request.go
@@ -920,7 +983,6 @@ model_update_user_name_request.go
 model_update_user_role_request.go
 model_update_user_status_request.go
 model_update_user_team_request.go
-model_update_version_name_params.go
 model_update_version_params.go
 model_update_version_response.go
 model_upload_model_file_type.go
@@ -937,9 +999,11 @@ model_value_with_key.go
 model_version.go
 model_version_evaluate_params.go
 model_version_populated_job.go
+model_version_resources.go
 model_version_status.go
 model_video_data.go
 model_video_heatmap_data.go
+model_vis_artifact_resources.go
 model_vis_data.go
 model_visualization.go
 model_visualization_data.go

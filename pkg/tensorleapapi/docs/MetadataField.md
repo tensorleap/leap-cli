@@ -4,6 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Max** | Pointer to **float64** |  | [optional] 
+**Min** | Pointer to **float64** |  | [optional] 
 **Values** | [**[]MetadataFieldValue**](MetadataFieldValue.md) |  | 
 **Type** | **string** |  | 
 **Key** | **string** |  | 
@@ -26,6 +28,56 @@ will change when the set of required properties is changed
 NewMetadataFieldWithDefaults instantiates a new MetadataField object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetMax
+
+`func (o *MetadataField) GetMax() float64`
+
+GetMax returns the Max field if non-nil, zero value otherwise.
+
+### GetMaxOk
+
+`func (o *MetadataField) GetMaxOk() (*float64, bool)`
+
+GetMaxOk returns a tuple with the Max field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMax
+
+`func (o *MetadataField) SetMax(v float64)`
+
+SetMax sets Max field to given value.
+
+### HasMax
+
+`func (o *MetadataField) HasMax() bool`
+
+HasMax returns a boolean if a field has been set.
+
+### GetMin
+
+`func (o *MetadataField) GetMin() float64`
+
+GetMin returns the Min field if non-nil, zero value otherwise.
+
+### GetMinOk
+
+`func (o *MetadataField) GetMinOk() (*float64, bool)`
+
+GetMinOk returns a tuple with the Min field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMin
+
+`func (o *MetadataField) SetMin(v float64)`
+
+SetMin sets Min field to given value.
+
+### HasMin
+
+`func (o *MetadataField) HasMin() bool`
+
+HasMin returns a boolean if a field has been set.
 
 ### GetValues
 

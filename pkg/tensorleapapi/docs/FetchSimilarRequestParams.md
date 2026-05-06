@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **SampleIds** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **Digest** | **string** |  | 
+**LatentSpaceType** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -154,6 +155,31 @@ and a boolean to check if the value has been set.
 
 SetDigest sets Digest field to given value.
 
+
+### GetLatentSpaceType
+
+`func (o *FetchSimilarRequestParams) GetLatentSpaceType() string`
+
+GetLatentSpaceType returns the LatentSpaceType field if non-nil, zero value otherwise.
+
+### GetLatentSpaceTypeOk
+
+`func (o *FetchSimilarRequestParams) GetLatentSpaceTypeOk() (*string, bool)`
+
+GetLatentSpaceTypeOk returns a tuple with the LatentSpaceType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLatentSpaceType
+
+`func (o *FetchSimilarRequestParams) SetLatentSpaceType(v string)`
+
+SetLatentSpaceType sets LatentSpaceType field to given value.
+
+### HasLatentSpaceType
+
+`func (o *FetchSimilarRequestParams) HasLatentSpaceType() bool`
+
+HasLatentSpaceType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

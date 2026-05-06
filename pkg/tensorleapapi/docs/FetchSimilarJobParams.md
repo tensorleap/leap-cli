@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**LatentSpaceType** | Pointer to **string** |  | [optional] 
 **Digest** | **string** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **SampleIds** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
@@ -30,6 +31,31 @@ will change when the set of required properties is changed
 NewFetchSimilarJobParamsWithDefaults instantiates a new FetchSimilarJobParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetLatentSpaceType
+
+`func (o *FetchSimilarJobParams) GetLatentSpaceType() string`
+
+GetLatentSpaceType returns the LatentSpaceType field if non-nil, zero value otherwise.
+
+### GetLatentSpaceTypeOk
+
+`func (o *FetchSimilarJobParams) GetLatentSpaceTypeOk() (*string, bool)`
+
+GetLatentSpaceTypeOk returns a tuple with the LatentSpaceType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLatentSpaceType
+
+`func (o *FetchSimilarJobParams) SetLatentSpaceType(v string)`
+
+SetLatentSpaceType sets LatentSpaceType field to given value.
+
+### HasLatentSpaceType
+
+`func (o *FetchSimilarJobParams) HasLatentSpaceType() bool`
+
+HasLatentSpaceType returns a boolean if a field has been set.
 
 ### GetDigest
 

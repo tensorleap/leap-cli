@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Filters** | [**[]ESFilter**](ESFilter.md) |  | 
-**InferenceArtifactIds** | **[]string** |  | 
+**VersionIds** | Pointer to **[]string** |  | [optional] 
 **Fields** | [**[]QueryFieldValues**](QueryFieldValues.md) |  | 
 **ProjectId** | **string** |  | 
 
@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewGetFieldsValuesRequest
 
-`func NewGetFieldsValuesRequest(filters []ESFilter, inferenceArtifactIds []string, fields []QueryFieldValues, projectId string, ) *GetFieldsValuesRequest`
+`func NewGetFieldsValuesRequest(filters []ESFilter, fields []QueryFieldValues, projectId string, ) *GetFieldsValuesRequest`
 
 NewGetFieldsValuesRequest instantiates a new GetFieldsValuesRequest object
 This constructor will assign default values to properties that have it defined,
@@ -48,25 +48,30 @@ and a boolean to check if the value has been set.
 SetFilters sets Filters field to given value.
 
 
-### GetInferenceArtifactIds
+### GetVersionIds
 
-`func (o *GetFieldsValuesRequest) GetInferenceArtifactIds() []string`
+`func (o *GetFieldsValuesRequest) GetVersionIds() []string`
 
-GetInferenceArtifactIds returns the InferenceArtifactIds field if non-nil, zero value otherwise.
+GetVersionIds returns the VersionIds field if non-nil, zero value otherwise.
 
-### GetInferenceArtifactIdsOk
+### GetVersionIdsOk
 
-`func (o *GetFieldsValuesRequest) GetInferenceArtifactIdsOk() (*[]string, bool)`
+`func (o *GetFieldsValuesRequest) GetVersionIdsOk() (*[]string, bool)`
 
-GetInferenceArtifactIdsOk returns a tuple with the InferenceArtifactIds field if it's non-nil, zero value otherwise
+GetVersionIdsOk returns a tuple with the VersionIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetInferenceArtifactIds
+### SetVersionIds
 
-`func (o *GetFieldsValuesRequest) SetInferenceArtifactIds(v []string)`
+`func (o *GetFieldsValuesRequest) SetVersionIds(v []string)`
 
-SetInferenceArtifactIds sets InferenceArtifactIds field to given value.
+SetVersionIds sets VersionIds field to given value.
 
+### HasVersionIds
+
+`func (o *GetFieldsValuesRequest) HasVersionIds() bool`
+
+HasVersionIds returns a boolean if a field has been set.
 
 ### GetFields
 

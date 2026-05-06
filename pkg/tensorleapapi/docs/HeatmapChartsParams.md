@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **X** | [**SplitAgg**](SplitAgg.md) |  | 
 **Y** | [**SplitAgg**](SplitAgg.md) |  | 
 **Color** | [**Aggregations**](Aggregations.md) |  | 
-**InferenceArtifactIds** | **[]string** |  | 
+**VersionIds** | **[]string** |  | 
 **ShowAllEpochs** | **bool** |  | 
 **VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
 **HorizontalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewHeatmapChartsParams
 
-`func NewHeatmapChartsParams(projectId string, x SplitAgg, y SplitAgg, color Aggregations, inferenceArtifactIds []string, showAllEpochs bool, ) *HeatmapChartsParams`
+`func NewHeatmapChartsParams(projectId string, x SplitAgg, y SplitAgg, color Aggregations, versionIds []string, showAllEpochs bool, ) *HeatmapChartsParams`
 
 NewHeatmapChartsParams instantiates a new HeatmapChartsParams object
 This constructor will assign default values to properties that have it defined,
@@ -114,24 +114,24 @@ and a boolean to check if the value has been set.
 SetColor sets Color field to given value.
 
 
-### GetInferenceArtifactIds
+### GetVersionIds
 
-`func (o *HeatmapChartsParams) GetInferenceArtifactIds() []string`
+`func (o *HeatmapChartsParams) GetVersionIds() []string`
 
-GetInferenceArtifactIds returns the InferenceArtifactIds field if non-nil, zero value otherwise.
+GetVersionIds returns the VersionIds field if non-nil, zero value otherwise.
 
-### GetInferenceArtifactIdsOk
+### GetVersionIdsOk
 
-`func (o *HeatmapChartsParams) GetInferenceArtifactIdsOk() (*[]string, bool)`
+`func (o *HeatmapChartsParams) GetVersionIdsOk() (*[]string, bool)`
 
-GetInferenceArtifactIdsOk returns a tuple with the InferenceArtifactIds field if it's non-nil, zero value otherwise
+GetVersionIdsOk returns a tuple with the VersionIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetInferenceArtifactIds
+### SetVersionIds
 
-`func (o *HeatmapChartsParams) SetInferenceArtifactIds(v []string)`
+`func (o *HeatmapChartsParams) SetVersionIds(v []string)`
 
-SetInferenceArtifactIds sets InferenceArtifactIds field to given value.
+SetVersionIds sets VersionIds field to given value.
 
 
 ### GetShowAllEpochs

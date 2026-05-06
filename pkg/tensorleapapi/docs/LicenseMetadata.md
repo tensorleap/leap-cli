@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Type** | [**LicenseType**](LicenseType.md) |  | 
 **ExpirationDate** | Pointer to **time.Time** |  | [optional] 
 **MaxUsers** | Pointer to **float64** |  | [optional] 
+**MaxConcurrentEvaluateJobsPerUser** | Pointer to **float64** | Maximum number of concurrent Evaluate (or Continue-Evaluate) jobs a single user is allowed to have running at the same time. Undefined or 0 means unlimited. | [optional] 
 
 ## Methods
 
@@ -96,6 +97,31 @@ SetMaxUsers sets MaxUsers field to given value.
 `func (o *LicenseMetadata) HasMaxUsers() bool`
 
 HasMaxUsers returns a boolean if a field has been set.
+
+### GetMaxConcurrentEvaluateJobsPerUser
+
+`func (o *LicenseMetadata) GetMaxConcurrentEvaluateJobsPerUser() float64`
+
+GetMaxConcurrentEvaluateJobsPerUser returns the MaxConcurrentEvaluateJobsPerUser field if non-nil, zero value otherwise.
+
+### GetMaxConcurrentEvaluateJobsPerUserOk
+
+`func (o *LicenseMetadata) GetMaxConcurrentEvaluateJobsPerUserOk() (*float64, bool)`
+
+GetMaxConcurrentEvaluateJobsPerUserOk returns a tuple with the MaxConcurrentEvaluateJobsPerUser field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMaxConcurrentEvaluateJobsPerUser
+
+`func (o *LicenseMetadata) SetMaxConcurrentEvaluateJobsPerUser(v float64)`
+
+SetMaxConcurrentEvaluateJobsPerUser sets MaxConcurrentEvaluateJobsPerUser field to given value.
+
+### HasMaxConcurrentEvaluateJobsPerUser
+
+`func (o *LicenseMetadata) HasMaxConcurrentEvaluateJobsPerUser() bool`
+
+HasMaxConcurrentEvaluateJobsPerUser returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
-**InferenceArtifactIds** | **[]string** |  | 
+**VersionIds** | Pointer to **[]string** |  | [optional] 
 **ShowAllEpochs** | **bool** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 
 ### NewGenericDataQueryParams
 
-`func NewGenericDataQueryParams(projectId string, inferenceArtifactIds []string, showAllEpochs bool, aggregations []Aggregations, buckets []SplitAgg, ) *GenericDataQueryParams`
+`func NewGenericDataQueryParams(projectId string, showAllEpochs bool, aggregations []Aggregations, buckets []SplitAgg, ) *GenericDataQueryParams`
 
 NewGenericDataQueryParams instantiates a new GenericDataQueryParams object
 This constructor will assign default values to properties that have it defined,
@@ -54,25 +54,30 @@ and a boolean to check if the value has been set.
 SetProjectId sets ProjectId field to given value.
 
 
-### GetInferenceArtifactIds
+### GetVersionIds
 
-`func (o *GenericDataQueryParams) GetInferenceArtifactIds() []string`
+`func (o *GenericDataQueryParams) GetVersionIds() []string`
 
-GetInferenceArtifactIds returns the InferenceArtifactIds field if non-nil, zero value otherwise.
+GetVersionIds returns the VersionIds field if non-nil, zero value otherwise.
 
-### GetInferenceArtifactIdsOk
+### GetVersionIdsOk
 
-`func (o *GenericDataQueryParams) GetInferenceArtifactIdsOk() (*[]string, bool)`
+`func (o *GenericDataQueryParams) GetVersionIdsOk() (*[]string, bool)`
 
-GetInferenceArtifactIdsOk returns a tuple with the InferenceArtifactIds field if it's non-nil, zero value otherwise
+GetVersionIdsOk returns a tuple with the VersionIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetInferenceArtifactIds
+### SetVersionIds
 
-`func (o *GenericDataQueryParams) SetInferenceArtifactIds(v []string)`
+`func (o *GenericDataQueryParams) SetVersionIds(v []string)`
 
-SetInferenceArtifactIds sets InferenceArtifactIds field to given value.
+SetVersionIds sets VersionIds field to given value.
 
+### HasVersionIds
+
+`func (o *GenericDataQueryParams) HasVersionIds() bool`
+
+HasVersionIds returns a boolean if a field has been set.
 
 ### GetShowAllEpochs
 

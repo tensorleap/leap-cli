@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**InferenceArtifactIds** | **[]string** |  | 
+**VersionIds** | **[]string** |  | 
 **ProjectId** | **string** |  | 
 **CustomMetricName** | **string** |  | 
 **VerticalSplit** | Pointer to [**SplitAgg**](SplitAgg.md) |  | [optional] 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewMultiThresholdConfusionMatrixParams
 
-`func NewMultiThresholdConfusionMatrixParams(inferenceArtifactIds []string, projectId string, customMetricName string, ) *MultiThresholdConfusionMatrixParams`
+`func NewMultiThresholdConfusionMatrixParams(versionIds []string, projectId string, customMetricName string, ) *MultiThresholdConfusionMatrixParams`
 
 NewMultiThresholdConfusionMatrixParams instantiates a new MultiThresholdConfusionMatrixParams object
 This constructor will assign default values to properties that have it defined,
@@ -31,24 +31,24 @@ NewMultiThresholdConfusionMatrixParamsWithDefaults instantiates a new MultiThres
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetInferenceArtifactIds
+### GetVersionIds
 
-`func (o *MultiThresholdConfusionMatrixParams) GetInferenceArtifactIds() []string`
+`func (o *MultiThresholdConfusionMatrixParams) GetVersionIds() []string`
 
-GetInferenceArtifactIds returns the InferenceArtifactIds field if non-nil, zero value otherwise.
+GetVersionIds returns the VersionIds field if non-nil, zero value otherwise.
 
-### GetInferenceArtifactIdsOk
+### GetVersionIdsOk
 
-`func (o *MultiThresholdConfusionMatrixParams) GetInferenceArtifactIdsOk() (*[]string, bool)`
+`func (o *MultiThresholdConfusionMatrixParams) GetVersionIdsOk() (*[]string, bool)`
 
-GetInferenceArtifactIdsOk returns a tuple with the InferenceArtifactIds field if it's non-nil, zero value otherwise
+GetVersionIdsOk returns a tuple with the VersionIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetInferenceArtifactIds
+### SetVersionIds
 
-`func (o *MultiThresholdConfusionMatrixParams) SetInferenceArtifactIds(v []string)`
+`func (o *MultiThresholdConfusionMatrixParams) SetVersionIds(v []string)`
 
-SetInferenceArtifactIds sets InferenceArtifactIds field to given value.
+SetVersionIds sets VersionIds field to given value.
 
 
 ### GetProjectId

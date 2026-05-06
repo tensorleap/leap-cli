@@ -35,6 +35,8 @@
 
 * `STREAMING_SAMPLES_VIS` (value: `"Streaming Samples Vis"`)
 
+* `UPDATE_EVALUATE` (value: `"Update Evaluate"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

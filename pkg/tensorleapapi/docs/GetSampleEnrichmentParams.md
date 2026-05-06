@@ -5,15 +5,14 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Samples** | [**[]SampleIdentity**](SampleIdentity.md) | Visible / batch samples to fetch data for. | 
-**Epoch** | **float64** |  | 
-**InferenceArtifactIds** | **[]string** |  | 
+**VersionIds** | **[]string** |  | 
 **ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewGetSampleEnrichmentParams
 
-`func NewGetSampleEnrichmentParams(samples []SampleIdentity, epoch float64, inferenceArtifactIds []string, projectId string, ) *GetSampleEnrichmentParams`
+`func NewGetSampleEnrichmentParams(samples []SampleIdentity, versionIds []string, projectId string, ) *GetSampleEnrichmentParams`
 
 NewGetSampleEnrichmentParams instantiates a new GetSampleEnrichmentParams object
 This constructor will assign default values to properties that have it defined,
@@ -48,44 +47,24 @@ and a boolean to check if the value has been set.
 SetSamples sets Samples field to given value.
 
 
-### GetEpoch
+### GetVersionIds
 
-`func (o *GetSampleEnrichmentParams) GetEpoch() float64`
+`func (o *GetSampleEnrichmentParams) GetVersionIds() []string`
 
-GetEpoch returns the Epoch field if non-nil, zero value otherwise.
+GetVersionIds returns the VersionIds field if non-nil, zero value otherwise.
 
-### GetEpochOk
+### GetVersionIdsOk
 
-`func (o *GetSampleEnrichmentParams) GetEpochOk() (*float64, bool)`
+`func (o *GetSampleEnrichmentParams) GetVersionIdsOk() (*[]string, bool)`
 
-GetEpochOk returns a tuple with the Epoch field if it's non-nil, zero value otherwise
+GetVersionIdsOk returns a tuple with the VersionIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetEpoch
+### SetVersionIds
 
-`func (o *GetSampleEnrichmentParams) SetEpoch(v float64)`
+`func (o *GetSampleEnrichmentParams) SetVersionIds(v []string)`
 
-SetEpoch sets Epoch field to given value.
-
-
-### GetInferenceArtifactIds
-
-`func (o *GetSampleEnrichmentParams) GetInferenceArtifactIds() []string`
-
-GetInferenceArtifactIds returns the InferenceArtifactIds field if non-nil, zero value otherwise.
-
-### GetInferenceArtifactIdsOk
-
-`func (o *GetSampleEnrichmentParams) GetInferenceArtifactIdsOk() (*[]string, bool)`
-
-GetInferenceArtifactIdsOk returns a tuple with the InferenceArtifactIds field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetInferenceArtifactIds
-
-`func (o *GetSampleEnrichmentParams) SetInferenceArtifactIds(v []string)`
-
-SetInferenceArtifactIds sets InferenceArtifactIds field to given value.
+SetVersionIds sets VersionIds field to given value.
 
 
 ### GetProjectId

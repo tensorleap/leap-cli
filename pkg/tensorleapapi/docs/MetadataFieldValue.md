@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Count** | **float64** |  | 
-**Value** | [**MetadataFieldValueValue**](MetadataFieldValueValue.md) |  | 
+**Value** | [**CollectionFilterSpecHiddenValuesInner**](CollectionFilterSpecHiddenValuesInner.md) |  | 
 
 ## Methods
 
 ### NewMetadataFieldValue
 
-`func NewMetadataFieldValue(count float64, value MetadataFieldValueValue, ) *MetadataFieldValue`
+`func NewMetadataFieldValue(count float64, value CollectionFilterSpecHiddenValuesInner, ) *MetadataFieldValue`
 
 NewMetadataFieldValue instantiates a new MetadataFieldValue object
 This constructor will assign default values to properties that have it defined,
@@ -48,20 +48,20 @@ SetCount sets Count field to given value.
 
 ### GetValue
 
-`func (o *MetadataFieldValue) GetValue() MetadataFieldValueValue`
+`func (o *MetadataFieldValue) GetValue() CollectionFilterSpecHiddenValuesInner`
 
 GetValue returns the Value field if non-nil, zero value otherwise.
 
 ### GetValueOk
 
-`func (o *MetadataFieldValue) GetValueOk() (*MetadataFieldValueValue, bool)`
+`func (o *MetadataFieldValue) GetValueOk() (*CollectionFilterSpecHiddenValuesInner, bool)`
 
 GetValueOk returns a tuple with the Value field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetValue
 
-`func (o *MetadataFieldValue) SetValue(v MetadataFieldValueValue)`
+`func (o *MetadataFieldValue) SetValue(v CollectionFilterSpecHiddenValuesInner)`
 
 SetValue sets Value field to given value.
 
