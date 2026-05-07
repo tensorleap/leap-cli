@@ -126,7 +126,7 @@ func AskUserForModelPathOrOverwrite(ctx context.Context, projectId string) (isOv
 
 func AskUserForNewVersionOrSelectExistingVersion(ctx context.Context, projectId string) (*VersionInfo, error) {
 
-	versions, err := GetVersions(ctx, projectId)
+	versions, err := GetSlimActiveVersions(ctx, projectId)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +166,7 @@ func AskUserForNewVersionOrSelectExistingVersion(ctx context.Context, projectId 
 	hasOptions := len(options) > 1
 	if hasOptions {
 
-		fmt.Println(text.FgYellow.Sprint("\n\n NOTE: Overriding needs a new evaluation for any change except visualization \n\n"))
+		fmt.Println(text.FgYellow.Sprint("\n\n NOTE: When overriding with --eval, you can choose which artifacts to update \n\n"))
 
 		prompt := &survey.Select{
 			Message: "Create new, or overwrite existing model version",

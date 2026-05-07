@@ -72,6 +72,42 @@ func AskForBatchSize(defaultBatchSize int) (int, error) {
 	return batchSize, nil
 }
 
+var updateActionLabels = map[tensorleapapi.UpdateAction]string{
+	tensorleapapi.UPDATEACTION_INSIGHTS:       "Insights",
+	tensorleapapi.UPDATEACTION_METRIC_CONFIG:  "Metrics Configuration",
+	tensorleapapi.UPDATEACTION_METADATA:       "Metadata",
+	tensorleapapi.UPDATEACTION_VISUALIZATIONS: "Visualizations",
+}
+
+func AskForUpdateActions() ([]tensorleapapi.UpdateAction, error) {
+	allActions := tensorleapapi.AllowedUpdateActionEnumValues
+
+	labels := make([]string, len(allActions))
+	labelToAction := make(map[string]tensorleapapi.UpdateAction, len(allActions))
+	for i, action := range allActions {
+		label := updateActionLabels[action]
+		labels[i] = label
+		labelToAction[label] = action
+	}
+
+	var selectedLabels []string
+	prompt := &survey.MultiSelect{
+		Message: "Select what to update:",
+		Options: labels,
+		Default: labels,
+	}
+	err := survey.AskOne(prompt, &selectedLabels, survey.WithValidator(survey.MinItems(1)))
+	if err != nil {
+		return nil, err
+	}
+
+	result := make([]tensorleapapi.UpdateAction, len(selectedLabels))
+	for i, label := range selectedLabels {
+		result[i] = labelToAction[label]
+	}
+	return result, nil
+}
+
 func RunEvaluate(ctx context.Context, projectId, versionId string, batchSize int) error {
 	existingVersionParams := tensorleapapi.NewEvaluateExistingVersionParams(
 		versionId,
@@ -225,4 +261,17 @@ func terminateJob(ctx context.Context, jobId string) error {
 	params := tensorleapapi.NewTerminateJobParams(jobId)
 	_, res, err := api.ApiClient.TerminateJob(ctx).TerminateJobParams(*params).Execute()
 	return api.CheckRes(res, err)
+}
+
+func RunUpdateEvaluateArtifact(ctx context.Context, projectId, versionId string, updateActions []tensorleapapi.UpdateAction) error {
+	params := tensorleapapi.NewUpdateEvaluateArtifactParams(versionId, projectId, updateActions)
+
+	log.Info("Starting update evaluate artifact...")
+	job, res, err := api.ApiClient.UpdateEvaluateArtifact(ctx).UpdateEvaluateArtifactParams(*params).Execute()
+	if err = api.CheckRes(res, err); err != nil {
+		return fmt.Errorf("failed to start update evaluate artifact: %w", err)
+	}
+
+	log.Infof("Update evaluate artifact started with job ID: %s", job.GetCid())
+	return nil
 }

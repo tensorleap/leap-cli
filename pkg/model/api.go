@@ -295,3 +295,11 @@ func GetVersions(ctx context.Context, projectId string) ([]tensorleapapi.SlimVer
 	}
 	return versions.Versions, nil
 }
+
+func GetSlimActiveVersions(ctx context.Context, projectId string) ([]tensorleapapi.SlimVersion, error) {
+	versions, _, err := api.ApiClient.GetSlimActiveVersions(ctx).GetSlimActiveVersionsParams(*tensorleapapi.NewGetSlimActiveVersionsParams(projectId)).Execute()
+	if err != nil {
+		return nil, err
+	}
+	return versions.Versions, nil
+}
