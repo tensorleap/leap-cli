@@ -166,17 +166,25 @@ Examples:
 			}
 
 			var evalBatchSize int
+			var updateActions []tensorleapapi.UpdateAction
 			if runEval {
-				if batchSize > 0 {
-					evalBatchSize = batchSize
-				} else {
-					defaultBatchSize, err := model.GetLatestEvaluateBatchSize(ctx, currentProject.GetCid())
+				if isOverwrite {
+					updateActions, err = model.AskForUpdateActions()
 					if err != nil {
-						log.Warnf("failed to get latest evaluate batch size: %v", err)
+						return fmt.Errorf("failed to get update actions: %w", err)
 					}
-					evalBatchSize, err = model.AskForBatchSize(defaultBatchSize)
-					if err != nil {
-						return fmt.Errorf("failed to get batch size: %w", err)
+				} else {
+					if batchSize > 0 {
+						evalBatchSize = batchSize
+					} else {
+						defaultBatchSize, err := model.GetLatestEvaluateBatchSize(ctx, currentProject.GetCid())
+						if err != nil {
+							log.Warnf("failed to get latest evaluate batch size: %v", err)
+						}
+						evalBatchSize, err = model.AskForBatchSize(defaultBatchSize)
+						if err != nil {
+							return fmt.Errorf("failed to get batch size: %w", err)
+						}
 					}
 				}
 			}
@@ -283,9 +291,16 @@ Examples:
 			analytics.SendEvent(analytics.EventCliProjectsPushSuccess, properties)
 
 			if runEval {
-				err = model.RunEvaluate(ctx, currentProject.GetCid(), codeSnapshotResponse.VersionId, evalBatchSize)
-				if err != nil {
-					return fmt.Errorf("failed to run evaluation: %w", err)
+				if isOverwrite && len(updateActions) > 0 {
+					err = model.RunUpdateEvaluateArtifact(ctx, currentProject.GetCid(), codeSnapshotResponse.VersionId, updateActions)
+					if err != nil {
+						return fmt.Errorf("failed to run update evaluate artifact: %w", err)
+					}
+				} else {
+					err = model.RunEvaluate(ctx, currentProject.GetCid(), codeSnapshotResponse.VersionId, evalBatchSize)
+					if err != nil {
+						return fmt.Errorf("failed to run evaluation: %w", err)
+					}
 				}
 			}
 
