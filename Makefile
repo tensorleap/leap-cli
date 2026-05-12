@@ -10,6 +10,10 @@ LDFLAGS := -w -s -X 'github.com/tensorleap/leap-cli/pkg/version.CliVersion=$(CLI
 
 export CGO_ENABLED=0
 
+.PHONY: dev
+dev:
+	sudo go build -o "$(shell dirname $(shell which leap))/leapdev" .
+
 .PHONY: build-cross
 build-cross:
 	gox \
