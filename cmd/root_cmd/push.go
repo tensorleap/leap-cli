@@ -28,6 +28,8 @@ func NewPushCmd() *cobra.Command {
 	var pythonVersion string
 	var runEval bool
 	var batchSize int
+	var overwriteVersionRef string
+	var updateParts []string
 
 	var cmd = &cobra.Command{
 		Use:   "push",
@@ -40,10 +42,16 @@ Examples:
 
   # Push and run evaluation after
   leap push -e
+
+  # Overwrite a version by id (non-interactive) and refresh metadata after eval
+  leap push --overwrite-version <versionId> -e -u metadata
 `,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if batchSize > 0 && !runEval {
 				return fmt.Errorf("--batch requires --eval")
+			}
+			if len(updateParts) > 0 && !runEval {
+				return fmt.Errorf("--update (-u) requires --eval (-e)")
 			}
 
 			ctx, _, err := auth.RequireAuth(cmd.Context())
@@ -53,15 +61,17 @@ Examples:
 
 			// Define base properties for all analytics events
 			properties := map[string]interface{}{
-				"secret_id":            secretId,
-				"model_version_name":   modelVersionName,
-				"code_version_message": codeVersionMessage,
-				"model_type":           modelType,
-				"branch":               branch,
-				"transform_input":      transformInput,
-				"no_wait":              noWait,
-				"python_version":       pythonVersion,
-				"model_path":           modelPath,
+				"secret_id":               secretId,
+				"model_version_name":      modelVersionName,
+				"code_version_message":    codeVersionMessage,
+				"model_type":              modelType,
+				"branch":                  branch,
+				"transform_input":         transformInput,
+				"no_wait":                 noWait,
+				"python_version":          pythonVersion,
+				"model_path":              modelPath,
+				"overwrite_version_ref":   overwriteVersionRef,
+				"update_parts":            updateParts,
 			}
 
 			// Track projects push started
@@ -86,7 +96,16 @@ Examples:
 
 			var isOverwrite bool
 			var overwriteVersionInfo *model.VersionInfo
-			if len(modelPath) == 0 {
+			if overwriteVersionRef != "" {
+				overwriteVersionInfo, err = model.ResolveVersionInfoFromRef(ctx, currentProject.GetCid(), overwriteVersionRef)
+				if err != nil {
+					return err
+				}
+				isOverwrite = overwriteVersionInfo.HasModel || overwriteVersionInfo.HasUploadedModel
+				if !isOverwrite && len(modelPath) == 0 {
+					return fmt.Errorf("version %q has no model; set --model-path (-m)", overwriteVersionRef)
+				}
+			} else if len(modelPath) == 0 {
 				isOverwrite, overwriteVersionInfo, modelPath, err = model.AskUserForModelPathOrOverwrite(ctx, currentProject.GetCid())
 				if err != nil {
 					return err
@@ -167,24 +186,80 @@ Examples:
 
 			var evalBatchSize int
 			var updateActions []tensorleapapi.UpdateAction
+			// Tracks whether we'll dispatch to RunUpdateEvaluateArtifact
+			// (true) or RunEvaluate (false) once the push finishes.
+			// Decided up-front so we can also collect a batch size now
+			// when the answer is "run evaluate".
+			runUpdateEvaluate := false
+			if len(updateParts) > 0 && !isOverwrite {
+				return fmt.Errorf("--update (-u) only applies when overwriting an existing version (use --overwrite-version or choose overwrite in the prompt)")
+			}
 			if runEval {
-				if isOverwrite {
-					updateActions, err = model.AskForUpdateActions()
-					if err != nil {
-						return fmt.Errorf("failed to get update actions: %w", err)
-					}
-				} else {
+				askBatchSize := func() error {
 					if batchSize > 0 {
 						evalBatchSize = batchSize
+						return nil
+					}
+					defaultBatchSize, err := model.GetLatestEvaluateBatchSize(ctx, currentProject.GetCid())
+					if err != nil {
+						log.Warnf("failed to get latest evaluate batch size: %v", err)
+					}
+					evalBatchSize, err = model.AskForBatchSize(defaultBatchSize)
+					if err != nil {
+						return fmt.Errorf("failed to get batch size: %w", err)
+					}
+					return nil
+				}
+
+				if isOverwrite {
+					// --update flag wins over the interactive prompt —
+					// scripts shouldn't be forced through a TTY.
+					updateActions, err = model.ParseUpdateActionsFromFlags(updateParts)
+					if err != nil {
+						return err
+					}
+					if len(updateActions) > 0 {
+						runUpdateEvaluate = true
 					} else {
-						defaultBatchSize, err := model.GetLatestEvaluateBatchSize(ctx, currentProject.GetCid())
-						if err != nil {
-							log.Warnf("failed to get latest evaluate batch size: %v", err)
+						// No flag supplied. If there's no evaluation data
+						// anywhere in the override chain (including the
+						// target version itself) there's nothing to lift —
+						// skip the "what changed" dialog entirely and just
+						// run a fresh evaluate. Mirrors the UI showing
+						// "Run Evaluate" instead of "Update Evaluate" in
+						// that case.
+						hasEvalData, evalErr := model.HasEvaluatedAncestorOrSelf(ctx, currentProject.GetCid(), overwriteVersionId)
+						if evalErr != nil {
+							log.Warnf("failed to check evaluation data for override chain: %v", evalErr)
+							hasEvalData = true
 						}
-						evalBatchSize, err = model.AskForBatchSize(defaultBatchSize)
-						if err != nil {
-							return fmt.Errorf("failed to get batch size: %w", err)
+						if !hasEvalData {
+							log.Info("No evaluation data found in the override chain — running a fresh evaluate.")
+							if err := askBatchSize(); err != nil {
+								return err
+							}
+						} else {
+							plan, planErr := model.AskForEvaluatePlan()
+							if planErr != nil {
+								return fmt.Errorf("failed to get update plan: %w", planErr)
+							}
+							if plan.Kind == model.EvaluatePlanReset {
+								// User picked "Metrics" (or anything else
+								// that implies code changes the cached
+								// inference can't represent) — fall through
+								// to a full re-evaluate.
+								if err := askBatchSize(); err != nil {
+									return err
+								}
+							} else {
+								updateActions = plan.UpdateActions
+								runUpdateEvaluate = true
+							}
 						}
+					}
+				} else {
+					if err := askBatchSize(); err != nil {
+						return err
 					}
 				}
 			}
@@ -291,7 +366,7 @@ Examples:
 			analytics.SendEvent(analytics.EventCliProjectsPushSuccess, properties)
 
 			if runEval {
-				if isOverwrite && len(updateActions) > 0 {
+				if runUpdateEvaluate {
 					err = model.RunUpdateEvaluateArtifact(ctx, currentProject.GetCid(), codeSnapshotResponse.VersionId, updateActions)
 					if err != nil {
 						return fmt.Errorf("failed to run update evaluate artifact: %w", err)
@@ -317,5 +392,7 @@ Examples:
 	cmd.Flags().StringVarP(&modelPath, "model-path", "m", "", "Path to the model file")
 	cmd.Flags().BoolVarP(&runEval, "eval", "e", false, "Run evaluation on the model after push completes")
 	cmd.Flags().IntVar(&batchSize, "batch", 0, "Batch size for evaluation (only valid with --eval)")
+	cmd.Flags().StringVar(&overwriteVersionRef, "overwrite-version", "", "Overwrite this existing version (version id from UI/API; a name is accepted only if exactly one version in the project has that name)")
+	cmd.Flags().StringSliceVarP(&updateParts, "update", "u", nil, "With --eval on overwrite: artifact(s) to refresh (repeatable). Values: metadata, metric_config, insights, visualizations")
 	return cmd
 }

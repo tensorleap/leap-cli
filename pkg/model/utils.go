@@ -185,6 +185,64 @@ func AskUserForNewVersionOrSelectExistingVersion(ctx context.Context, projectId 
 	return &versionInfos[selectedIndex-1], nil
 }
 
+func versionInfoFromSlim(version *tensorleapapi.SlimVersion, runsStatusesPerVersionId map[string][]tensorleapapi.RunProcess) *VersionInfo {
+	status, hasModel, hasUploadedModel := CalcVersionStatus(version, runsStatusesPerVersionId[version.GetCid()])
+	return &VersionInfo{
+		VersionId:        version.GetCid(),
+		VersionName:      version.GetNotes(),
+		HasModel:         hasModel,
+		HasUploadedModel: hasUploadedModel,
+		Status:           status,
+	}
+}
+
+// ResolveVersionInfoFromRef finds a project version by id (cid). A version name is accepted only when it matches exactly one version in the project.
+func ResolveVersionInfoFromRef(ctx context.Context, projectId, versionRef string) (*VersionInfo, error) {
+	versionRef = strings.TrimSpace(versionRef)
+	if versionRef == "" {
+		return nil, fmt.Errorf("version reference is empty")
+	}
+	versions, err := GetVersions(ctx, projectId)
+	if err != nil {
+		return nil, err
+	}
+	runsStatusesPerVersionId, err := GetRunsStatusesPerVersionId(ctx, projectId)
+	if err != nil {
+		return nil, err
+	}
+	for i := range versions {
+		v := &versions[i]
+		if v.GetCid() == versionRef {
+			return versionInfoFromSlim(v, runsStatusesPerVersionId), nil
+		}
+	}
+	var nameMatches []*tensorleapapi.SlimVersion
+	for i := range versions {
+		v := &versions[i]
+		if v.GetNotes() == versionRef {
+			nameMatches = append(nameMatches, v)
+		}
+	}
+	switch len(nameMatches) {
+	case 0:
+		return nil, fmt.Errorf("no version found for %q (use the version id from the UI or API)", versionRef)
+	case 1:
+		return versionInfoFromSlim(nameMatches[0], runsStatusesPerVersionId), nil
+	default:
+		ids := make([]string, 0, len(nameMatches))
+		for _, v := range nameMatches {
+			ids = append(ids, v.GetCid())
+		}
+		const maxList = 12
+		if len(ids) > maxList {
+			ids = ids[:maxList]
+			ids = append(ids, "...")
+		}
+		return nil, fmt.Errorf("version name %q is not unique in this project (%d versions); use --overwrite-version with a version id. Example ids: %s",
+			versionRef, len(nameMatches), strings.Join(ids, ", "))
+	}
+}
+
 func AskUserForModelPath(ctx context.Context) (modelPath string, err error) {
 	allowedExt := []string{".h5", ".onnx"}
 	ignoredDirs := []string{".venv"}

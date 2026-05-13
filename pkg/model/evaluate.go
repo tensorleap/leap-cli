@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
+	"strings"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/tensorleap/leap-cli/pkg/api"
@@ -72,40 +73,210 @@ func AskForBatchSize(defaultBatchSize int) (int, error) {
 	return batchSize, nil
 }
 
-var updateActionLabels = map[tensorleapapi.UpdateAction]string{
-	tensorleapapi.UPDATEACTION_INSIGHTS:       "Insights",
-	tensorleapapi.UPDATEACTION_METRIC_CONFIG:  "Metrics Configuration",
-	tensorleapapi.UPDATEACTION_METADATA:       "Metadata",
-	tensorleapapi.UPDATEACTION_VISUALIZATIONS: "Visualizations",
+// ParseUpdateActionsFromFlags maps CLI tokens to API update actions (repeatable -u / --update).
+// The flag still operates on the engine-contract enum (metadata, metric_config,
+// insights, visualizations) — the friendlier "what changed in your code" model
+// only applies to the interactive prompt; flag callers are usually scripts that
+// already know which artifact bucket they want to refresh.
+func ParseUpdateActionsFromFlags(parts []string) ([]tensorleapapi.UpdateAction, error) {
+	if len(parts) == 0 {
+		return nil, nil
+	}
+	seen := make(map[tensorleapapi.UpdateAction]struct{})
+	out := make([]tensorleapapi.UpdateAction, 0, len(parts))
+	for _, raw := range parts {
+		p := strings.TrimSpace(strings.ToLower(raw))
+		if p == "" {
+			continue
+		}
+		act, err := tensorleapapi.NewUpdateActionFromValue(p)
+		if err != nil {
+			return nil, fmt.Errorf("invalid --update value %q: %w (allowed: metadata, metric_config, insights, visualizations)", raw, err)
+		}
+		if _, ok := seen[*act]; ok {
+			continue
+		}
+		seen[*act] = struct{}{}
+		out = append(out, *act)
+	}
+	if len(out) == 0 {
+		return nil, fmt.Errorf("no valid --update values after parsing")
+	}
+	return out, nil
 }
 
-func AskForUpdateActions() ([]tensorleapapi.UpdateAction, error) {
-	allActions := tensorleapapi.AllowedUpdateActionEnumValues
+// EvaluatePlanKind tells the push flow whether the selected changes can be
+// lifted onto the existing evaluation (Update) or need a full re-evaluate
+// (Reset). The dialog computes this for us so the call site only has to
+// dispatch.
+type EvaluatePlanKind int
 
-	labels := make([]string, len(allActions))
-	labelToAction := make(map[string]tensorleapapi.UpdateAction, len(allActions))
-	for i, action := range allActions {
-		label := updateActionLabels[action]
+const (
+	EvaluatePlanUpdate EvaluatePlanKind = iota
+	EvaluatePlanReset
+)
+
+// EvaluatePlan is the result of the interactive "what changed in your code"
+// dialog. When Kind == Reset, UpdateActions is empty and the caller should
+// run RunEvaluate. Otherwise it's the deduped UpdateAction[] for
+// RunUpdateEvaluateArtifact.
+type EvaluatePlan struct {
+	Kind          EvaluatePlanKind
+	UpdateActions []tensorleapapi.UpdateAction
+}
+
+// changeOption mirrors the UI's ChangeOption — same 5 buckets, same hints,
+// same cascade rules (a metadata change implies insights need to regen).
+// Keeping the wording in sync with the dialog in web-ui means a user who
+// learned the flow in one surface doesn't have to relearn it in the other.
+type changeOption struct {
+	key   string
+	label string
+	hint  string
+}
+
+var changeOptions = []changeOption{
+	{key: "metadata", label: "Metadata", hint: "Added / updated / removed"},
+	{key: "metric_direction", label: "Metric direction", hint: "Direction only — values unchanged"},
+	{key: "metrics", label: "Metrics", hint: "Added / updated / removed"},
+	{key: "insights", label: "Insights config", hint: ""},
+	{key: "visualizations", label: "Visualizations", hint: "Added / updated / removed"},
+}
+
+// planUpdateEvaluate is the CLI mirror of the web-ui's planUpdateEvaluate.
+// Keeping the two in sync (same cascade, same "metrics ⇒ reset" rule) is what
+// makes the prompts behave identically across surfaces.
+func planUpdateEvaluate(selected map[string]bool) EvaluatePlan {
+	if selected["metrics"] {
+		return EvaluatePlan{Kind: EvaluatePlanReset}
+	}
+
+	actions := make(map[tensorleapapi.UpdateAction]struct{})
+	if selected["metadata"] {
+		// Metadata cascades into insights — insights analysis reads from
+		// metadata so it has to regenerate too.
+		actions[tensorleapapi.UPDATEACTION_METADATA] = struct{}{}
+		actions[tensorleapapi.UPDATEACTION_INSIGHTS] = struct{}{}
+	}
+	if selected["metric_direction"] {
+		actions[tensorleapapi.UPDATEACTION_METRIC_CONFIG] = struct{}{}
+	}
+	if selected["insights"] {
+		actions[tensorleapapi.UPDATEACTION_INSIGHTS] = struct{}{}
+	}
+	if selected["visualizations"] {
+		actions[tensorleapapi.UPDATEACTION_VISUALIZATIONS] = struct{}{}
+	}
+
+	// Emit in canonical pipeline order so the printed action list reads
+	// like the engine actually runs.
+	ordered := []tensorleapapi.UpdateAction{
+		tensorleapapi.UPDATEACTION_METADATA,
+		tensorleapapi.UPDATEACTION_METRIC_CONFIG,
+		tensorleapapi.UPDATEACTION_INSIGHTS,
+		tensorleapapi.UPDATEACTION_VISUALIZATIONS,
+	}
+	out := make([]tensorleapapi.UpdateAction, 0, len(actions))
+	for _, a := range ordered {
+		if _, ok := actions[a]; ok {
+			out = append(out, a)
+		}
+	}
+	return EvaluatePlan{Kind: EvaluatePlanUpdate, UpdateActions: out}
+}
+
+// AskForEvaluatePlan shows the "what changed in your code" prompt, matching
+// the web-ui's UpdateEvaluateDialog. Returning an EvaluatePlan lets the
+// caller dispatch to RunEvaluate (Reset) or RunUpdateEvaluateArtifact
+// (Update) without having to know how the dialog mapped the picks.
+func AskForEvaluatePlan() (EvaluatePlan, error) {
+	labels := make([]string, len(changeOptions))
+	labelToKey := make(map[string]string, len(changeOptions))
+	for i, opt := range changeOptions {
+		label := opt.label
+		if opt.hint != "" {
+			label = fmt.Sprintf("%s — %s", opt.label, opt.hint)
+		}
 		labels[i] = label
-		labelToAction[label] = action
+		labelToKey[label] = opt.key
 	}
 
 	var selectedLabels []string
 	prompt := &survey.MultiSelect{
-		Message: "Select what to update:",
+		Message: "What changed in your code?",
 		Options: labels,
-		Default: labels,
 	}
-	err := survey.AskOne(prompt, &selectedLabels, survey.WithValidator(survey.MinItems(1)))
-	if err != nil {
-		return nil, err
+	if err := survey.AskOne(prompt, &selectedLabels, survey.WithValidator(survey.MinItems(1))); err != nil {
+		return EvaluatePlan{}, err
 	}
 
-	result := make([]tensorleapapi.UpdateAction, len(selectedLabels))
-	for i, label := range selectedLabels {
-		result[i] = labelToAction[label]
+	selected := make(map[string]bool, len(selectedLabels))
+	for _, l := range selectedLabels {
+		selected[labelToKey[l]] = true
 	}
-	return result, nil
+	return planUpdateEvaluate(selected), nil
+}
+
+// hasOwnEvalData mirrors hasOwnEvalData in web-ui/VersionControlContext.
+// A version has eval data iff any of these three resource fields is set —
+// they're the three signals the engine writes when it lands evaluation
+// results on a version.
+func hasOwnEvalData(v *tensorleapapi.SlimVersion) bool {
+	res := v.GetResources()
+	if res.GetEsMetricsIndex() != "" {
+		return true
+	}
+	if res.GetEsModelId() != "" {
+		return true
+	}
+	if res.GetInferenceArtifactId() != "" {
+		return true
+	}
+	return false
+}
+
+// HasEvaluatedAncestorOrSelf walks the override chain starting at versionId
+// and returns true if any version in the chain (including the start) carries
+// evaluation data. Mirrors the UI's hasEvaluatedAncestor logic so the two
+// surfaces agree on when there's actually something to "update".
+//
+// When this returns false the caller should skip the dialog entirely —
+// there's no source to lift evaluation results from, so the only sensible
+// action is a fresh evaluate.
+func HasEvaluatedAncestorOrSelf(ctx context.Context, projectId, versionId string) (bool, error) {
+	versions, err := GetVersions(ctx, projectId)
+	if err != nil {
+		return false, fmt.Errorf("failed to load versions for eval-data check: %w", err)
+	}
+	byCid := make(map[string]*tensorleapapi.SlimVersion, len(versions))
+	for i := range versions {
+		byCid[versions[i].GetCid()] = &versions[i]
+	}
+
+	cur, ok := byCid[versionId]
+	if !ok {
+		// Couldn't resolve the starting version — fall back to the safe
+		// answer (assume eval data exists so we still show the dialog
+		// rather than silently bypassing the user's choice).
+		return true, nil
+	}
+
+	seen := make(map[string]struct{})
+	for cur != nil {
+		if hasOwnEvalData(cur) {
+			return true, nil
+		}
+		if _, dup := seen[cur.GetCid()]; dup {
+			break
+		}
+		seen[cur.GetCid()] = struct{}{}
+		nextId := cur.GetParentVersionId()
+		if nextId == "" {
+			break
+		}
+		cur = byCid[nextId]
+	}
+	return false, nil
 }
 
 func RunEvaluate(ctx context.Context, projectId, versionId string, batchSize int) error {
