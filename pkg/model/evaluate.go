@@ -199,9 +199,21 @@ func buildEvaluateJobOptions(
 		if formatted, err := api.ParseAndFormatDateToLocalTime(j.StartedAt); err == nil {
 			startedLabel = formatted
 		}
+		// Prefer human-readable names that the backend resolves for us;
+		// fall back to the raw ObjectIds when the server didn't (or couldn't)
+		// provide a name. The disambiguating jobId stays at the end so two
+		// identically-named jobs are still distinguishable.
+		projectLabel := j.ProjectName
+		if projectLabel == "" {
+			projectLabel = j.ProjectId
+		}
+		versionLabel := j.VersionName
+		if versionLabel == "" {
+			versionLabel = j.VersionId
+		}
 		label := fmt.Sprintf(
-			"jobId=%s  versionId=%s  started=%s",
-			j.JobId, j.VersionId, startedLabel,
+			"%s  ·  %s  ·  started=%s  ·  jobId=%s",
+			projectLabel, versionLabel, startedLabel, j.JobId,
 		)
 		options = append(options, label)
 		byLabel[label] = j
