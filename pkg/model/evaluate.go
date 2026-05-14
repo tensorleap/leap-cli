@@ -14,6 +14,12 @@ import (
 
 const DEFAULT_BATCH_SIZE = 1
 
+// ErrEvaluateCancelled is returned from the interactive concurrent-evaluate
+// recovery flow when the user explicitly declines to terminate any running
+// job (or aborts the prompt via Ctrl+C). It's a sentinel so RunEvaluate can
+// short-circuit to a clean exit instead of treating user intent as a failure.
+var ErrEvaluateCancelled = errors.New("evaluation cancelled by user")
+
 func GetLatestEvaluateBatchSize(ctx context.Context, projectId string) (int, error) {
 	versions, err := GetVersions(ctx, projectId)
 	if err != nil {
@@ -97,6 +103,14 @@ func RunEvaluate(ctx context.Context, projectId, versionId string, batchSize int
 		if errors.As(err, &limitErr) {
 			job, err = handleConcurrentEvaluateLimit(ctx, limitErr, callEvaluate)
 			if err != nil {
+				// User-initiated cancel (or Ctrl+C) is a deliberate choice,
+				// not a failure: log a friendly note and return nil so the
+				// parent command exits cleanly without a scary "Error:" line
+				// or a usage dump.
+				if errors.Is(err, ErrEvaluateCancelled) {
+					log.Warn("Evaluation skipped — cancelled by user.")
+					return nil
+				}
 				return err
 			}
 		} else {
@@ -142,10 +156,12 @@ func handleConcurrentEvaluateLimit(
 			Options: options,
 		}
 		if err := survey.AskOne(prompt, &selected); err != nil {
-			return nil, fmt.Errorf("evaluation cancelled: %w", err)
+			// Treat any prompt failure (most commonly Ctrl+C / InterruptErr)
+			// as a deliberate cancellation so RunEvaluate exits cleanly.
+			return nil, errors.Join(ErrEvaluateCancelled, err)
 		}
 		if selected == cancelLabel {
-			return nil, errors.New("evaluation cancelled by user")
+			return nil, ErrEvaluateCancelled
 		}
 
 		chosen := byLabel[selected]
