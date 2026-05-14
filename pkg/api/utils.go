@@ -143,6 +143,45 @@ func IsValidStatus(response *http.Response) bool {
 	return response.StatusCode >= 200 && response.StatusCode < 300
 }
 
+// HintVersionMismatch returns err unchanged unless its shape suggests a
+// CLI/server version mismatch, in which case it wraps err with an actionable
+// hint telling the user to upgrade the server or the CLI. The detection is
+// duck-typed on the error string so it works for both *HTTPError and
+// *tensorleapapi.GenericOpenAPIError without coupling to the generated code.
+func HintVersionMismatch(err error) error {
+	if err == nil || !looksLikeVersionMismatch(err) {
+		return err
+	}
+	return fmt.Errorf(
+		"%w\n\nThis may indicate a CLI/server version mismatch. "+
+			"Run 'leap server upgrade' on the server host to upgrade the server, "+
+			"or 'leap cli upgrade -s | bash' to upgrade the CLI.",
+		err,
+	)
+}
+
+func looksLikeVersionMismatch(err error) bool {
+	if err == nil {
+		return false
+	}
+	msg := err.Error()
+	if strings.Contains(msg, "404 Not Found") || strings.Contains(msg, "405 Method Not Allowed") {
+		return true
+	}
+	// OpenAPI client emits this when a response is missing a required field —
+	// the typical shape of a server-too-old response decode failure.
+	if strings.Contains(msg, "no value given for required property") {
+		return true
+	}
+	var httpErr *HTTPError
+	if errors.As(err, &httpErr) {
+		if httpErr.StatusCode == http.StatusNotFound || httpErr.StatusCode == http.StatusMethodNotAllowed {
+			return true
+		}
+	}
+	return false
+}
+
 func init() {
 	http.DefaultClient = NewDefaultClient()
 }
