@@ -140,6 +140,15 @@ func CheckRes(response *http.Response, err error) error {
 				Body:       body,
 			}
 		}
+		// The auto-generated OpenAPI client returns a non-nil error for any
+		// non-2xx response (e.g. 429), so the structured-error detection has
+		// to live here, not just below in the `err == nil` branch.
+		if response != nil && response.StatusCode == http.StatusTooManyRequests {
+			body := extractBodyFromError(err)
+			if cle := parseConcurrentEvaluateLimitError(response.Request.URL.String(), []byte(body)); cle != nil {
+				return cle
+			}
+		}
 		return err
 	}
 	if IsValidStatus(response) {
