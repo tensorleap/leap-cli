@@ -22,6 +22,45 @@ type HTTPError struct {
 	Body       string
 }
 
+// ConcurrentEvaluateLimitCode is the machine-readable code the node-server
+// returns on the structured 429 payload when the per-user concurrent
+// Evaluate/Continue-Evaluate jobs limit is reached. Mirrors the constant in
+// node-server's evaluate logic.
+const ConcurrentEvaluateLimitCode = "CONCURRENT_EVALUATE_LIMIT"
+
+// RunningEvaluateJobInfo mirrors the entries the backend sends inside
+// `runningJobs` on a CONCURRENT_EVALUATE_LIMIT error. Used by the CLI to
+// offer an interactive terminate-and-retry flow.
+type RunningEvaluateJobInfo struct {
+	JobId     string `json:"jobId"`
+	ProjectId string `json:"projectId"`
+	VersionId string `json:"versionId"`
+	StartedAt string `json:"startedAt"`
+	SubType   string `json:"subType"`
+}
+
+// ConcurrentEvaluateLimitError is returned by CheckRes when an Evaluate or
+// Continue-Evaluate request is rejected because the user is already at their
+// per-user concurrent-jobs limit. Callers can type-assert on this error to
+// offer a friendly recovery flow (terminate one of the running jobs, then
+// retry the original action).
+type ConcurrentEvaluateLimitError struct {
+	URL         string
+	Message     string
+	Limit       int
+	RunningJobs []RunningEvaluateJobInfo
+}
+
+func (e *ConcurrentEvaluateLimitError) Error() string {
+	if e.Message != "" {
+		return e.Message
+	}
+	return fmt.Sprintf(
+		"Concurrent Evaluate jobs limit reached (limit=%d, running=%d)",
+		e.Limit, len(e.RunningJobs),
+	)
+}
+
 const LEAP_SKIP_SSL_VERIFY = "LEAP_SKIP_SSL_VERIFY"
 
 var ErrAuth = errors.New("user is not currently authenticated, to authenticate - please run 'leap auth login'")
@@ -101,6 +140,15 @@ func CheckRes(response *http.Response, err error) error {
 				Body:       body,
 			}
 		}
+		// The auto-generated OpenAPI client returns a non-nil error for any
+		// non-2xx response (e.g. 429), so the structured-error detection has
+		// to live here, not just below in the `err == nil` branch.
+		if response != nil && response.StatusCode == http.StatusTooManyRequests {
+			body := extractBodyFromError(err)
+			if cle := parseConcurrentEvaluateLimitError(response.Request.URL.String(), []byte(body)); cle != nil {
+				return cle
+			}
+		}
 		return err
 	}
 	if IsValidStatus(response) {
@@ -119,10 +167,43 @@ func CheckRes(response *http.Response, err error) error {
 	if err != nil {
 		body = []byte(fmt.Sprintf("Error reading response body: %s", err))
 	}
+
+	// Detect the structured concurrent-evaluate-limit error so the caller can
+	// offer a friendly recovery flow instead of dumping the raw JSON.
+	if response.StatusCode == http.StatusTooManyRequests {
+		if cle := parseConcurrentEvaluateLimitError(response.Request.URL.String(), body); cle != nil {
+			return cle
+		}
+	}
+
 	return &HTTPError{
 		URL:        response.Request.URL.String(),
 		StatusCode: response.StatusCode,
 		Body:       string(body),
+	}
+}
+
+// parseConcurrentEvaluateLimitError returns a typed error if `body` is the
+// node-server's structured CONCURRENT_EVALUATE_LIMIT payload, otherwise nil
+// (so the caller can fall back to a generic HTTPError).
+func parseConcurrentEvaluateLimitError(url string, body []byte) *ConcurrentEvaluateLimitError {
+	var parsed struct {
+		Error       string                   `json:"error"`
+		Code        string                   `json:"code"`
+		Limit       int                      `json:"limit"`
+		RunningJobs []RunningEvaluateJobInfo `json:"runningJobs"`
+	}
+	if err := json.Unmarshal(body, &parsed); err != nil {
+		return nil
+	}
+	if parsed.Code != ConcurrentEvaluateLimitCode {
+		return nil
+	}
+	return &ConcurrentEvaluateLimitError{
+		URL:         url,
+		Message:     parsed.Error,
+		Limit:       parsed.Limit,
+		RunningJobs: parsed.RunningJobs,
 	}
 }
 
