@@ -126,12 +126,18 @@ func getServerVersionSafe(ctx context.Context) string {
 	return v
 }
 
-// initServerVersionForAnalytics fetches the server version and sets it on
-// the analytics package so it is included in all subsequent Mixpanel events.
-func initServerVersionForAnalytics(ctx context.Context) {
-	if v := getServerVersionSafe(ctx); v != "" {
-		analytics.ServerVersion = v
+// logCurrentServerVersion fetches the installed Helm chart version, logs it
+// under the given label so users can verify which server they're operating on
+// before/after an install or upgrade, and stashes it on the analytics package
+// so it is included in subsequent Mixpanel events. No-op when no installation
+// is found (e.g. fresh install).
+func logCurrentServerVersion(ctx context.Context, label string) {
+	v := getServerVersionSafe(ctx)
+	if v == "" {
+		return
 	}
+	log.Infof("%s: %s", label, v)
+	analytics.ServerVersion = v
 }
 
 func handleLicenseAfterInstall(cmd *cobra.Command, licenseFlag *auth.LicenseFlag) error {
