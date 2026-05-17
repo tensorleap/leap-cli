@@ -32,11 +32,13 @@ const ConcurrentEvaluateLimitCode = "CONCURRENT_EVALUATE_LIMIT"
 // `runningJobs` on a CONCURRENT_EVALUATE_LIMIT error. Used by the CLI to
 // offer an interactive terminate-and-retry flow.
 type RunningEvaluateJobInfo struct {
-	JobId     string `json:"jobId"`
-	ProjectId string `json:"projectId"`
-	VersionId string `json:"versionId"`
-	StartedAt string `json:"startedAt"`
-	SubType   string `json:"subType"`
+	JobId       string `json:"jobId"`
+	ProjectId   string `json:"projectId"`
+	ProjectName string `json:"projectName,omitempty"`
+	VersionId   string `json:"versionId"`
+	VersionName string `json:"versionName,omitempty"`
+	StartedAt   string `json:"startedAt"`
+	SubType     string `json:"subType"`
 }
 
 // ConcurrentEvaluateLimitError is returned by CheckRes when an Evaluate or
