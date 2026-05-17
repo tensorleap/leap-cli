@@ -13,6 +13,7 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/config"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
+	"github.com/tensorleap/leap-cli/pkg/version"
 )
 
 var ErrNotLoggedIn = fmt.Errorf("not logged in")
@@ -155,6 +156,7 @@ func RequireAuth(ctx context.Context) (context.Context, *tensorleapapi.UserData,
 		authCtx := env.AuthContext(ctx)
 		userData, err := GetWhoami(authCtx)
 		if err == nil {
+			version.CheckServerCompatibility(authCtx)
 			return authCtx, userData, nil
 		}
 		log.Warnf("Current authentication is invalid or expired: %v", err)
@@ -234,6 +236,8 @@ func InteractiveLogin(ctx context.Context) (context.Context, *tensorleapapi.User
 	if err != nil {
 		return ctx, nil, fmt.Errorf("login verification failed: %v", err)
 	}
+
+	version.CheckServerCompatibility(authCtx)
 
 	fmt.Printf("Logged in as: %s (%s)\n", userData.Local.Email, userData.TeamName)
 

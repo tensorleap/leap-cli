@@ -15,6 +15,7 @@ import (
 	"github.com/tensorleap/leap-cli/cmd/run"
 	"github.com/tensorleap/leap-cli/cmd/secrets"
 	"github.com/tensorleap/leap-cli/cmd/server"
+	"github.com/tensorleap/leap-cli/pkg/api"
 	authPkg "github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/config"
 	hubPkg "github.com/tensorleap/leap-cli/pkg/hub"
@@ -79,7 +80,7 @@ func init() {
 
 func Execute() {
 	if err := RootCommand.Execute(); err != nil {
-		log.Error(err)
+		log.Error(api.HintVersionMismatch(err))
 		os.Exit(1)
 	}
 }
