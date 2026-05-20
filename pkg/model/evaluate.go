@@ -73,11 +73,7 @@ func AskForBatchSize(defaultBatchSize int) (int, error) {
 	return batchSize, nil
 }
 
-// ParseUpdateActionsFromFlags maps CLI tokens to API update actions (repeatable -u / --update).
-// The flag still operates on the engine-contract enum (metadata, metric_config,
-// insights, visualizations) — the friendlier "what changed in your code" model
-// only applies to the interactive prompt; flag callers are usually scripts that
-// already know which artifact bucket they want to refresh.
+// ParseUpdateActionsFromFlags maps CLI tokens to API update actions.
 func ParseUpdateActionsFromFlags(parts []string) ([]tensorleapapi.UpdateAction, error) {
 	if len(parts) == 0 {
 		return nil, nil
@@ -105,10 +101,7 @@ func ParseUpdateActionsFromFlags(parts []string) ([]tensorleapapi.UpdateAction, 
 	return out, nil
 }
 
-// EvaluatePlanKind tells the push flow whether the selected changes can be
-// lifted onto the existing evaluation (Update) or need a full re-evaluate
-// (Reset). The dialog computes this for us so the call site only has to
-// dispatch.
+// EvaluatePlanKind selects between Update and Reset.
 type EvaluatePlanKind int
 
 const (
@@ -116,19 +109,12 @@ const (
 	EvaluatePlanReset
 )
 
-// EvaluatePlan is the result of the interactive "what changed in your code"
-// dialog. When Kind == Reset, UpdateActions is empty and the caller should
-// run RunEvaluate. Otherwise it's the deduped UpdateAction[] for
-// RunUpdateEvaluateArtifact.
+// EvaluatePlan is the resolved set of update actions.
 type EvaluatePlan struct {
 	Kind          EvaluatePlanKind
 	UpdateActions []tensorleapapi.UpdateAction
 }
 
-// changeOption mirrors the UI's ChangeOption — same 5 buckets, same hints,
-// same cascade rules (a metadata change implies insights need to regen).
-// Keeping the wording in sync with the dialog in web-ui means a user who
-// learned the flow in one surface doesn't have to relearn it in the other.
 type changeOption struct {
 	key   string
 	label string
@@ -143,9 +129,6 @@ var changeOptions = []changeOption{
 	{key: "visualizations", label: "Visualizations", hint: "Added / updated / removed"},
 }
 
-// planUpdateEvaluate is the CLI mirror of the web-ui's planUpdateEvaluate.
-// Keeping the two in sync (same cascade, same "metrics ⇒ reset" rule) is what
-// makes the prompts behave identically across surfaces.
 func planUpdateEvaluate(selected map[string]bool) EvaluatePlan {
 	if selected["metrics"] {
 		return EvaluatePlan{Kind: EvaluatePlanReset}
@@ -153,13 +136,12 @@ func planUpdateEvaluate(selected map[string]bool) EvaluatePlan {
 
 	actions := make(map[tensorleapapi.UpdateAction]struct{})
 	if selected["metadata"] {
-		// Metadata cascades into insights — insights analysis reads from
-		// metadata so it has to regenerate too.
 		actions[tensorleapapi.UPDATEACTION_METADATA] = struct{}{}
 		actions[tensorleapapi.UPDATEACTION_INSIGHTS] = struct{}{}
 	}
 	if selected["metric_direction"] {
 		actions[tensorleapapi.UPDATEACTION_METRIC_CONFIG] = struct{}{}
+		actions[tensorleapapi.UPDATEACTION_INSIGHTS] = struct{}{}
 	}
 	if selected["insights"] {
 		actions[tensorleapapi.UPDATEACTION_INSIGHTS] = struct{}{}
@@ -168,8 +150,6 @@ func planUpdateEvaluate(selected map[string]bool) EvaluatePlan {
 		actions[tensorleapapi.UPDATEACTION_VISUALIZATIONS] = struct{}{}
 	}
 
-	// Emit in canonical pipeline order so the printed action list reads
-	// like the engine actually runs.
 	ordered := []tensorleapapi.UpdateAction{
 		tensorleapapi.UPDATEACTION_METADATA,
 		tensorleapapi.UPDATEACTION_METRIC_CONFIG,
@@ -185,10 +165,7 @@ func planUpdateEvaluate(selected map[string]bool) EvaluatePlan {
 	return EvaluatePlan{Kind: EvaluatePlanUpdate, UpdateActions: out}
 }
 
-// AskForEvaluatePlan shows the "what changed in your code" prompt, matching
-// the web-ui's UpdateEvaluateDialog. Returning an EvaluatePlan lets the
-// caller dispatch to RunEvaluate (Reset) or RunUpdateEvaluateArtifact
-// (Update) without having to know how the dialog mapped the picks.
+// AskForEvaluatePlan prompts the user for which artifacts changed and returns the resolved plan.
 func AskForEvaluatePlan() (EvaluatePlan, error) {
 	labels := make([]string, len(changeOptions))
 	labelToKey := make(map[string]string, len(changeOptions))
@@ -217,10 +194,45 @@ func AskForEvaluatePlan() (EvaluatePlan, error) {
 	return planUpdateEvaluate(selected), nil
 }
 
-// hasOwnEvalData mirrors hasOwnEvalData in web-ui/VersionControlContext.
-// A version has eval data iff any of these three resource fields is set —
-// they're the three signals the engine writes when it lands evaluation
-// results on a version.
+// FormatEvaluatePlan renders the plan as human-readable verb phrases.
+func FormatEvaluatePlan(plan EvaluatePlan) []string {
+	if plan.Kind == EvaluatePlanReset {
+		return []string{"Re-evaluate (full)"}
+	}
+	out := make([]string, 0, len(plan.UpdateActions))
+	for _, a := range plan.UpdateActions {
+		switch a {
+		case tensorleapapi.UPDATEACTION_METADATA:
+			out = append(out, "Update metadata")
+		case tensorleapapi.UPDATEACTION_METRIC_CONFIG:
+			out = append(out, "Update metric directions")
+		case tensorleapapi.UPDATEACTION_INSIGHTS:
+			out = append(out, "Regenerate insights")
+		case tensorleapapi.UPDATEACTION_VISUALIZATIONS:
+			out = append(out, "Regenerate visualizations")
+		default:
+			out = append(out, string(a))
+		}
+	}
+	return out
+}
+
+// PrintEvaluatePlan logs the resolved plan as a bulleted list.
+func PrintEvaluatePlan(plan EvaluatePlan) {
+	items := FormatEvaluatePlan(plan)
+	if len(items) == 0 {
+		return
+	}
+	if plan.Kind == EvaluatePlanReset {
+		log.Info("Will run:")
+	} else {
+		log.Info("Will update:")
+	}
+	for _, item := range items {
+		log.Infof("  • %s", item)
+	}
+}
+
 func hasOwnEvalData(v *tensorleapapi.SlimVersion) bool {
 	res := v.GetResources()
 	if res.GetEsMetricsIndex() != "" {
@@ -235,14 +247,7 @@ func hasOwnEvalData(v *tensorleapapi.SlimVersion) bool {
 	return false
 }
 
-// HasEvaluatedAncestorOrSelf walks the override chain starting at versionId
-// and returns true if any version in the chain (including the start) carries
-// evaluation data. Mirrors the UI's hasEvaluatedAncestor logic so the two
-// surfaces agree on when there's actually something to "update".
-//
-// When this returns false the caller should skip the dialog entirely —
-// there's no source to lift evaluation results from, so the only sensible
-// action is a fresh evaluate.
+// HasEvaluatedAncestorOrSelf reports whether versionId or any version in its override chain has evaluation data.
 func HasEvaluatedAncestorOrSelf(ctx context.Context, projectId, versionId string) (bool, error) {
 	versions, err := GetVersions(ctx, projectId)
 	if err != nil {
@@ -255,9 +260,6 @@ func HasEvaluatedAncestorOrSelf(ctx context.Context, projectId, versionId string
 
 	cur, ok := byCid[versionId]
 	if !ok {
-		// Couldn't resolve the starting version — fall back to the safe
-		// answer (assume eval data exists so we still show the dialog
-		// rather than silently bypassing the user's choice).
 		return true, nil
 	}
 
@@ -301,7 +303,7 @@ func RunEvaluate(ctx context.Context, projectId, versionId string, batchSize int
 		return job, nil
 	}
 
-	log.Info("Starting evaluation...")
+	log.Infof("Starting evaluation (batch size %d)...", batchSize)
 	job, err := callEvaluate()
 	if err != nil {
 		// Special-case the structured concurrent-evaluate-limit error so the
@@ -436,6 +438,11 @@ func terminateJob(ctx context.Context, jobId string) error {
 
 func RunUpdateEvaluateArtifact(ctx context.Context, projectId, versionId string, updateActions []tensorleapapi.UpdateAction) error {
 	params := tensorleapapi.NewUpdateEvaluateArtifactParams(versionId, projectId, updateActions)
+
+	PrintEvaluatePlan(EvaluatePlan{
+		Kind:          EvaluatePlanUpdate,
+		UpdateActions: updateActions,
+	})
 
 	log.Info("Starting update evaluate artifact...")
 	job, res, err := api.ApiClient.UpdateEvaluateArtifact(ctx).UpdateEvaluateArtifactParams(*params).Execute()

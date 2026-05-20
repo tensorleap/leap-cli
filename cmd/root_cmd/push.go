@@ -59,7 +59,6 @@ Examples:
 				return err
 			}
 
-			// Define base properties for all analytics events
 			properties := map[string]interface{}{
 				"secret_id":               secretId,
 				"model_version_name":      modelVersionName,
@@ -74,12 +73,10 @@ Examples:
 				"update_parts":            updateParts,
 			}
 
-			// Track projects push started
 			analytics.SendEvent(analytics.EventCliProjectsPushStarted, properties)
 
 			workspaceConfig, err := workspace.GetWorkspaceConfig()
 			if err != nil {
-				// Track projects push failed
 				properties["error"] = err.Error()
 				properties["stage"] = "get_workspace_config"
 				analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
@@ -87,7 +84,6 @@ Examples:
 			}
 			currentProject, err := project.SyncProjectIdToWorkspaceConfig(ctx, workspaceConfig)
 			if err != nil {
-				// Track projects push failed
 				properties["error"] = err.Error()
 				properties["stage"] = "sync_project"
 				analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
@@ -136,7 +132,6 @@ Examples:
 			if needsNewModel {
 				err := model.SelectModelType(&modelType, modelPath)
 				if err != nil {
-					// Track projects push failed
 					properties["error"] = err.Error()
 					properties["stage"] = "select_model_type"
 					analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
@@ -147,7 +142,6 @@ Examples:
 				defaultMessage := model.GetDefaultMessageFromModelPath(modelPath)
 				err = model.InitMessage(&modelVersionName, defaultMessage)
 				if err != nil {
-					// Track projects push failed
 					properties["error"] = err.Error()
 					properties["stage"] = "init_message"
 					analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
@@ -159,7 +153,6 @@ Examples:
 
 			branch, err = code.SyncBranchFromFlagAndConfig(branch, workspaceConfig)
 			if err != nil {
-				// Track projects push failed
 				properties["error"] = err.Error()
 				properties["stage"] = "sync_branch"
 				analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
@@ -168,7 +161,6 @@ Examples:
 
 			secretId, err := secret.SyncSecretIdFromFlagAndConfig(ctx, secretId, workspaceConfig)
 			if err != nil {
-				// Track projects push failed
 				properties["error"] = err.Error()
 				properties["stage"] = "sync_secret"
 				analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
@@ -177,7 +169,6 @@ Examples:
 
 			pythonVersion, err = code.SyncPythonVersionFromFlagAndConfig(ctx, pythonVersion, workspaceConfig)
 			if err != nil {
-				// Track projects push failed
 				properties["error"] = err.Error()
 				properties["stage"] = "sync_python_version"
 				analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
@@ -186,10 +177,6 @@ Examples:
 
 			var evalBatchSize int
 			var updateActions []tensorleapapi.UpdateAction
-			// Tracks whether we'll dispatch to RunUpdateEvaluateArtifact
-			// (true) or RunEvaluate (false) once the push finishes.
-			// Decided up-front so we can also collect a batch size now
-			// when the answer is "run evaluate".
 			runUpdateEvaluate := false
 			if len(updateParts) > 0 && !isOverwrite {
 				return fmt.Errorf("--update (-u) only applies when overwriting an existing version (use --overwrite-version or choose overwrite in the prompt)")
@@ -212,8 +199,6 @@ Examples:
 				}
 
 				if isOverwrite {
-					// --update flag wins over the interactive prompt —
-					// scripts shouldn't be forced through a TTY.
 					updateActions, err = model.ParseUpdateActionsFromFlags(updateParts)
 					if err != nil {
 						return err
@@ -221,13 +206,6 @@ Examples:
 					if len(updateActions) > 0 {
 						runUpdateEvaluate = true
 					} else {
-						// No flag supplied. If there's no evaluation data
-						// anywhere in the override chain (including the
-						// target version itself) there's nothing to lift —
-						// skip the "what changed" dialog entirely and just
-						// run a fresh evaluate. Mirrors the UI showing
-						// "Run Evaluate" instead of "Update Evaluate" in
-						// that case.
 						hasEvalData, evalErr := model.HasEvaluatedAncestorOrSelf(ctx, currentProject.GetCid(), overwriteVersionId)
 						if evalErr != nil {
 							log.Warnf("failed to check evaluation data for override chain: %v", evalErr)
@@ -244,10 +222,6 @@ Examples:
 								return fmt.Errorf("failed to get update plan: %w", planErr)
 							}
 							if plan.Kind == model.EvaluatePlanReset {
-								// User picked "Metrics" (or anything else
-								// that implies code changes the cached
-								// inference can't represent) — fall through
-								// to a full re-evaluate.
 								if err := askBatchSize(); err != nil {
 									return err
 								}
@@ -266,7 +240,6 @@ Examples:
 
 			close, tarGzFile, err := code.BundleCodeIntoTempFile(".", workspaceConfig)
 			if err != nil {
-				// Track projects push failed
 				properties["error"] = err.Error()
 				properties["stage"] = "bundle_code"
 				analytics.SendEvent(analytics.EventCliProjectsPushFailed, properties)
@@ -289,7 +262,6 @@ Examples:
 
 				ok, err := code.WaitForCodeIntegrationStatus(ctx, currentProject.GetCid(), codeSnapshotResponse.CodeSnapshot.Cid)
 				if err != nil {
-					// Track projects push failed
 					properties["error"] = err.Error()
 					properties["stage"] = "wait_for_code_parsing"
 					properties["code_snapshot_id"] = codeSnapshotResponse.CodeSnapshot.Cid
@@ -300,7 +272,6 @@ Examples:
 				if ok {
 					log.Info("Code parsed successfully")
 				} else {
-					// Track projects push failed due to code parsing failure
 					properties["error"] = "code parsing failed"
 					properties["stage"] = "code_parsing"
 					properties["code_snapshot_id"] = codeSnapshotResponse.CodeSnapshot.Cid
@@ -309,7 +280,6 @@ Examples:
 					return fmt.Errorf("code parsing failed")
 				}
 			} else if code.IsCodeParseFailed(&codeSnapshotResponse.CodeSnapshot) {
-				// Track projects push failed due to previous code parsing failure
 				properties["error"] = "latest code parsing failed"
 				properties["stage"] = "previous_code_parsing_failed"
 				properties["code_snapshot_id"] = codeSnapshotResponse.CodeSnapshot.Cid
@@ -324,7 +294,6 @@ Examples:
 				}
 				_, err = model.ImportModel(ctx, currentProject.GetCid(), codeSnapshotResponse.VersionId, importModelInfo, !noWait)
 				if err != nil {
-					// Track projects push failed
 					properties["error"] = err.Error()
 					properties["stage"] = "import_model"
 					properties["code_snapshot_id"] = codeSnapshotResponse.CodeSnapshot.Cid
@@ -342,7 +311,6 @@ Examples:
 				}
 				_, err := model.OverrideModel(ctx, currentProject.GetCid(), codeSnapshotResponse.VersionId, !noWait, importModelInfo)
 				if err != nil {
-					// Track projects push failed
 					properties["error"] = err.Error()
 					properties["stage"] = "override_model"
 					properties["code_snapshot_id"] = codeSnapshotResponse.CodeSnapshot.Cid
@@ -353,7 +321,6 @@ Examples:
 				}
 			}
 
-			// Track projects push success
 			properties["code_snapshot_id"] = codeSnapshotResponse.CodeSnapshot.Cid
 			properties["version_id"] = codeSnapshotResponse.VersionId
 			properties["project_id"] = currentProject.GetCid()
