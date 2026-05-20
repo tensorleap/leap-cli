@@ -57,7 +57,6 @@ func InitMessage(msg *string, defaultMsg string) error {
 
 func SelectModelType(modelType *string, modelPath string) error {
 
-	// Extract the file extension from the modelPath
 	ext := strings.ToLower(filepath.Ext(modelPath))
 
 	if len(*modelType) > 0 && slices.Contains(MODEL_TYPES, *modelType) {
