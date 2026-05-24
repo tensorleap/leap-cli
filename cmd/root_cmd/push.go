@@ -60,17 +60,17 @@ Examples:
 			}
 
 			properties := map[string]interface{}{
-				"secret_id":               secretId,
-				"model_version_name":      modelVersionName,
-				"code_version_message":    codeVersionMessage,
-				"model_type":              modelType,
-				"branch":                  branch,
-				"transform_input":         transformInput,
-				"no_wait":                 noWait,
-				"python_version":          pythonVersion,
-				"model_path":              modelPath,
-				"overwrite_version_ref":   overwriteVersionRef,
-				"update_parts":            updateParts,
+				"secret_id":             secretId,
+				"model_version_name":    modelVersionName,
+				"code_version_message":  codeVersionMessage,
+				"model_type":            modelType,
+				"branch":                branch,
+				"transform_input":       transformInput,
+				"no_wait":               noWait,
+				"python_version":        pythonVersion,
+				"model_path":            modelPath,
+				"overwrite_version_ref": overwriteVersionRef,
+				"update_parts":          updateParts,
 			}
 
 			analytics.SendEvent(analytics.EventCliProjectsPushStarted, properties)
