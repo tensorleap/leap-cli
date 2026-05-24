@@ -444,12 +444,12 @@ func RunUpdateEvaluateArtifact(ctx context.Context, projectId, versionId string,
 		UpdateActions: updateActions,
 	})
 
-	log.Info("Starting update evaluate artifact...")
+	log.Info("Starting update evaluate...")
 	job, res, err := api.ApiClient.UpdateEvaluateArtifact(ctx).UpdateEvaluateArtifactParams(*params).Execute()
 	if err = api.CheckRes(res, err); err != nil {
-		return fmt.Errorf("failed to start update evaluate artifact: %w", err)
+		return fmt.Errorf("failed to start update evaluate: %w", err)
 	}
 
-	log.Infof("Update evaluate artifact started with job ID: %s", job.GetCid())
+	log.Infof("Update evaluate started with job ID: %s", job.GetCid())
 	return nil
 }
