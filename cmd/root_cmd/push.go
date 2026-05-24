@@ -336,7 +336,7 @@ Examples:
 				if runUpdateEvaluate {
 					err = model.RunUpdateEvaluateArtifact(ctx, currentProject.GetCid(), codeSnapshotResponse.VersionId, updateActions)
 					if err != nil {
-						return fmt.Errorf("failed to run update evaluate artifact: %w", err)
+						return fmt.Errorf("failed to run update evaluate: %w", err)
 					}
 				} else {
 					err = model.RunEvaluate(ctx, currentProject.GetCid(), codeSnapshotResponse.VersionId, evalBatchSize)
