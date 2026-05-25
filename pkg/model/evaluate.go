@@ -130,15 +130,17 @@ var changeOptions = []changeOption{
 }
 
 func planUpdateEvaluate(selected map[string]bool) EvaluatePlan {
-	if selected["metrics"] {
+	// Metrics added/removed AND metadata-changed both route to
+	// resetEvaluate. The engine's UpdateAction.Metadata path cannot
+	// safely refresh detector pickles / NN indexer / other LS-dependent
+	// artifacts when metadata columns are added — a fresh evaluate
+	// against the version is the safe path. resetEvaluate decides
+	// in-place vs new-version based on whether eval data already exists.
+	if selected["metrics"] || selected["metadata"] {
 		return EvaluatePlan{Kind: EvaluatePlanReset}
 	}
 
 	actions := make(map[tensorleapapi.UpdateAction]struct{})
-	if selected["metadata"] {
-		actions[tensorleapapi.UPDATEACTION_METADATA] = struct{}{}
-		actions[tensorleapapi.UPDATEACTION_INSIGHTS] = struct{}{}
-	}
 	if selected["metric_direction"] {
 		actions[tensorleapapi.UPDATEACTION_METRIC_CONFIG] = struct{}{}
 		actions[tensorleapapi.UPDATEACTION_INSIGHTS] = struct{}{}
