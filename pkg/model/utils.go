@@ -165,10 +165,10 @@ func AskUserForNewVersionOrSelectExistingVersion(ctx context.Context, projectId 
 	hasOptions := len(options) > 1
 	if hasOptions {
 
-		fmt.Println(text.FgYellow.Sprint("\n\n NOTE: When overriding with --eval, you can choose which artifacts to update \n\n"))
+		fmt.Println(text.FgYellow.Sprint("\n\n NOTE: When overwriting with --eval, we auto-detect what changed and re-run only what's needed \n\n"))
 
 		prompt := &survey.Select{
-			Message: "Create new, or overwrite existing model version",
+			Message: "Create new, or overwrite existing",
 			Options: options,
 			Default: selectedIndex,
 		}
