@@ -131,6 +131,7 @@ const (
 	ChangeMetadataUpdate ChangeKey = iota
 	ChangeVisualizationUpdate
 	ChangeMetricsAddOrUpdate
+	ChangeForceInsights
 )
 
 type changeOption struct {
@@ -143,6 +144,7 @@ var changeOptions = []changeOption{
 	{key: ChangeMetadataUpdate, label: "Edited a metadata", hint: "same column, new values"},
 	{key: ChangeVisualizationUpdate, label: "Edited a visualization", hint: "same visualizer, new code"},
 	{key: ChangeMetricsAddOrUpdate, label: "Added or edited a metric", hint: "new metric, or changed values"},
+	{key: ChangeForceInsights, label: "Reinforce insights", hint: "force re-run insights even if nothing else changed"},
 }
 
 func planUpdateEvaluate(selected map[ChangeKey]bool) EvaluatePlan {
@@ -150,16 +152,20 @@ func planUpdateEvaluate(selected map[ChangeKey]bool) EvaluatePlan {
 	// invalidate derived artifacts (detector pickles, NN indexer,
 	// display_pe DBs) in ways the in-place update_evaluate path can't
 	// patch — route to resetEvaluate, which decides in-place vs new-
-	// version based on whether eval data already exists.
+	// version based on whether eval data already exists. A full re-eval
+	// re-derives insights too, so the ForceInsights flag is redundant
+	// on this path.
 	if selected[ChangeMetricsAddOrUpdate] || selected[ChangeMetadataUpdate] {
 		return EvaluatePlan{Kind: EvaluatePlanReset}
 	}
 
-	// "Updated existing visualization" only needs the visualization
-	// artifact regenerated — update_evaluate handles it.
-	actions := make([]tensorleapapi.UpdateAction, 0, 1)
+	// update_evaluate path: visualization edit and/or force-insights.
+	actions := make([]tensorleapapi.UpdateAction, 0, 2)
 	if selected[ChangeVisualizationUpdate] {
 		actions = append(actions, tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION)
+	}
+	if selected[ChangeForceInsights] {
+		actions = append(actions, tensorleapapi.UPDATEACTION_UPDATE_INSIGHTS)
 	}
 	return EvaluatePlan{Kind: EvaluatePlanUpdate, UpdateActions: actions}
 }
