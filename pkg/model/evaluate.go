@@ -172,12 +172,14 @@ func planUpdateEvaluate(selected map[ChangeKey]bool) EvaluatePlan {
 
 // AskForEvaluatePlan prompts the user for which artifacts changed and returns the resolved plan.
 func AskForEvaluatePlan() (EvaluatePlan, error) {
-	// We auto-detect added/removed metadata, visualizations, and metrics
-	// by diffing names against the last evaluated source. Direction /
-	// compute_insights flag changes live inside the user's Python and
-	// aren't visible here, so the prompt covers those.
+	// What the engine actually auto-detects today: added metadata
+	// columns, added visualizers, metric direction flips, and
+	// compute_insights flag changes. Edits to existing items (same
+	// name, new behavior) are NOT visible to the engine — they're
+	// what this prompt is for.
 	log.Info("Auto-detected — no need to select:")
-	log.Info("  • Added or removed metadata / visualizations / metrics")
+	log.Info("  • Added metadata or visualizations")
+	log.Info("  • Metric direction or insight-config changes")
 	log.Info("Tell us about edits to things that already existed:")
 
 	labels := make([]string, len(changeOptions))
@@ -208,6 +210,9 @@ func AskForEvaluatePlan() (EvaluatePlan, error) {
 }
 
 // FormatEvaluatePlan renders the plan as human-readable verb phrases.
+// Returns an empty slice when no actions were selected on the update
+// path — the engine auto-detects in that case and the caller (Print)
+// surfaces a different message.
 func FormatEvaluatePlan(plan EvaluatePlan) []string {
 	if plan.Kind == EvaluatePlanReset {
 		return []string{"Re-evaluate (full)"}
@@ -233,6 +238,13 @@ func FormatEvaluatePlan(plan EvaluatePlan) []string {
 // PrintEvaluatePlan logs the resolved plan as a bulleted list.
 func PrintEvaluatePlan(plan EvaluatePlan) {
 	items := FormatEvaluatePlan(plan)
+	if plan.Kind == EvaluatePlanUpdate && len(items) == 0 {
+		// No forced actions — the engine's auto-detect phases decide
+		// at runtime what (if anything) actually runs.
+		log.Info("Will run:")
+		log.Info("  • Auto-detect (engine decides)")
+		return
+	}
 	if len(items) == 0 {
 		return
 	}
