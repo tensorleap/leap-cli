@@ -360,6 +360,6 @@ Examples:
 	cmd.Flags().BoolVarP(&runEval, "eval", "e", false, "Run evaluation on the model after push completes")
 	cmd.Flags().IntVar(&batchSize, "batch", 0, "Batch size for evaluation (only valid with --eval)")
 	cmd.Flags().StringVar(&overwriteVersionRef, "overwrite-version", "", "Overwrite this existing version (version id from UI/API; a name is accepted only if exactly one version in the project has that name)")
-	cmd.Flags().StringSliceVarP(&updateParts, "update", "u", nil, "With --eval on overwrite: artifact(s) to refresh (repeatable). Values: metadata, metric_config, insights, visualizations")
+	cmd.Flags().StringSliceVarP(&updateParts, "update", "u", nil, "With --eval on overwrite: artifact(s) to refresh (repeatable). Values: update_metadata, update_metric, update_insights, update_visualization")
 	return cmd
 }
