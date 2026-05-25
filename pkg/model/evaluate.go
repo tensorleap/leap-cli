@@ -87,7 +87,7 @@ func ParseUpdateActionsFromFlags(parts []string) ([]tensorleapapi.UpdateAction, 
 		}
 		act, err := tensorleapapi.NewUpdateActionFromValue(p)
 		if err != nil {
-			return nil, fmt.Errorf("invalid --update value %q: %w (allowed: metadata, metric_config, insights, visualizations)", raw, err)
+			return nil, fmt.Errorf("invalid --update value %q: %w (allowed: update_metadata, update_metric, update_insights, update_visualization)", raw, err)
 		}
 		if _, ok := seen[*act]; ok {
 			continue
@@ -115,61 +115,67 @@ type EvaluatePlan struct {
 	UpdateActions []tensorleapapi.UpdateAction
 }
 
+// ChangeKey is a typed token for "what kind of change happened in the
+// new code snapshot". It's the input vocabulary for planUpdateEvaluate
+// — using an enum (vs a `map[string]bool` of free-form strings) keeps
+// typos out of the routing logic and lets the compiler enforce the
+// switch arms in planUpdateEvaluate stay in sync with changeOptions.
+//
+// The set is intentionally narrow: only changes that the server CANNOT
+// auto-detect from a graph / pickle diff. Metric direction, insights
+// config, and "added new metadata / visualization" are all detected on
+// the backend, so we don't ask the user about them.
+type ChangeKey int
+
+const (
+	ChangeMetadataUpdate ChangeKey = iota
+	ChangeVisualizationUpdate
+	ChangeMetricsAddOrUpdate
+)
+
 type changeOption struct {
-	key   string
+	key   ChangeKey
 	label string
 	hint  string
 }
 
 var changeOptions = []changeOption{
-	{key: "metadata", label: "Metadata", hint: "Added / updated / removed"},
-	{key: "metric_direction", label: "Metric direction", hint: "Direction only — values unchanged"},
-	{key: "metrics", label: "Metrics", hint: "Added / updated / removed"},
-	{key: "insights", label: "Insights config", hint: ""},
-	{key: "visualizations", label: "Visualizations", hint: "Added / updated / removed"},
+	{key: ChangeMetadataUpdate, label: "Edited a metadata", hint: "same column, new values"},
+	{key: ChangeVisualizationUpdate, label: "Edited a visualization", hint: "same visualizer, new code"},
+	{key: ChangeMetricsAddOrUpdate, label: "Added or edited a metric", hint: "new metric, or changed values"},
 }
 
-func planUpdateEvaluate(selected map[string]bool) EvaluatePlan {
-	// Anything that touches metadata or metrics (added / removed /
-	// direction flipped) routes to resetEvaluate. The in-place
-	// update_evaluate path on the engine doesn't have a clean
-	// invalidation story for detector pickles / NN indexer /
-	// display_pe DBs when metadata or metric config changes — a fresh
-	// evaluate against the version is the safe option. resetEvaluate
-	// decides in-place vs new-version automatically based on whether
-	// eval data already exists.
-	//
-	// The remaining update_evaluate path covers visualizations + the
-	// explicit "regenerate insights" toggle.
-	if selected["metrics"] || selected["metric_direction"] || selected["metadata"] {
+func planUpdateEvaluate(selected map[ChangeKey]bool) EvaluatePlan {
+	// "Updated existing metadata" and "added/updated metrics" both
+	// invalidate derived artifacts (detector pickles, NN indexer,
+	// display_pe DBs) in ways the in-place update_evaluate path can't
+	// patch — route to resetEvaluate, which decides in-place vs new-
+	// version based on whether eval data already exists.
+	if selected[ChangeMetricsAddOrUpdate] || selected[ChangeMetadataUpdate] {
 		return EvaluatePlan{Kind: EvaluatePlanReset}
 	}
 
-	actions := make(map[tensorleapapi.UpdateAction]struct{})
-	if selected["insights"] {
-		actions[tensorleapapi.UPDATEACTION_INSIGHTS] = struct{}{}
+	// "Updated existing visualization" only needs the visualization
+	// artifact regenerated — update_evaluate handles it.
+	actions := make([]tensorleapapi.UpdateAction, 0, 1)
+	if selected[ChangeVisualizationUpdate] {
+		actions = append(actions, tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION)
 	}
-	if selected["visualizations"] {
-		actions[tensorleapapi.UPDATEACTION_VISUALIZATIONS] = struct{}{}
-	}
-
-	ordered := []tensorleapapi.UpdateAction{
-		tensorleapapi.UPDATEACTION_INSIGHTS,
-		tensorleapapi.UPDATEACTION_VISUALIZATIONS,
-	}
-	out := make([]tensorleapapi.UpdateAction, 0, len(actions))
-	for _, a := range ordered {
-		if _, ok := actions[a]; ok {
-			out = append(out, a)
-		}
-	}
-	return EvaluatePlan{Kind: EvaluatePlanUpdate, UpdateActions: out}
+	return EvaluatePlan{Kind: EvaluatePlanUpdate, UpdateActions: actions}
 }
 
 // AskForEvaluatePlan prompts the user for which artifacts changed and returns the resolved plan.
 func AskForEvaluatePlan() (EvaluatePlan, error) {
+	// The backend auto-detects most "I changed X" cases by diffing the
+	// new code snapshot against the last evaluated source. The prompt
+	// below only asks about edits we can't catch from a diff.
+	log.Info("Auto-detected — no need to select:")
+	log.Info("  • New or removed metadata / visualizations")
+	log.Info("  • Metric direction or insights-config changes")
+	log.Info("Tell us only about edits to things that already existed:")
+
 	labels := make([]string, len(changeOptions))
-	labelToKey := make(map[string]string, len(changeOptions))
+	labelToKey := make(map[string]ChangeKey, len(changeOptions))
 	for i, opt := range changeOptions {
 		label := opt.label
 		if opt.hint != "" {
@@ -181,14 +187,14 @@ func AskForEvaluatePlan() (EvaluatePlan, error) {
 
 	var selectedLabels []string
 	prompt := &survey.MultiSelect{
-		Message: "What changed in your code?",
+		Message: "What did you change in your code?",
 		Options: labels,
 	}
-	if err := survey.AskOne(prompt, &selectedLabels, survey.WithValidator(survey.MinItems(1))); err != nil {
+	if err := survey.AskOne(prompt, &selectedLabels); err != nil {
 		return EvaluatePlan{}, err
 	}
 
-	selected := make(map[string]bool, len(selectedLabels))
+	selected := make(map[ChangeKey]bool, len(selectedLabels))
 	for _, l := range selectedLabels {
 		selected[labelToKey[l]] = true
 	}
@@ -203,13 +209,13 @@ func FormatEvaluatePlan(plan EvaluatePlan) []string {
 	out := make([]string, 0, len(plan.UpdateActions))
 	for _, a := range plan.UpdateActions {
 		switch a {
-		case tensorleapapi.UPDATEACTION_METADATA:
+		case tensorleapapi.UPDATEACTION_UPDATE_METADATA:
 			out = append(out, "Update metadata")
-		case tensorleapapi.UPDATEACTION_METRIC_CONFIG:
+		case tensorleapapi.UPDATEACTION_UPDATE_METRIC:
 			out = append(out, "Update metric directions")
-		case tensorleapapi.UPDATEACTION_INSIGHTS:
+		case tensorleapapi.UPDATEACTION_UPDATE_INSIGHTS:
 			out = append(out, "Regenerate insights")
-		case tensorleapapi.UPDATEACTION_VISUALIZATIONS:
+		case tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION:
 			out = append(out, "Regenerate visualizations")
 		default:
 			out = append(out, string(a))
