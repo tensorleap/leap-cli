@@ -10074,7 +10074,7 @@ import (
 )
 
 func main() {
-	updateEvaluateArtifactParams := *openapiclient.NewUpdateEvaluateArtifactParams("VersionId_example", "ProjectId_example", []openapiclient.UpdateAction{openapiclient.UpdateAction("metadata")}) // UpdateEvaluateArtifactParams | 
+	updateEvaluateArtifactParams := *openapiclient.NewUpdateEvaluateArtifactParams("VersionId_example", "ProjectId_example", []openapiclient.UpdateAction{openapiclient.UpdateAction("update_metadata")}) // UpdateEvaluateArtifactParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

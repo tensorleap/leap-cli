@@ -3,13 +3,13 @@
 ## Enum
 
 
-* `METADATA` (value: `"metadata"`)
+* `UPDATE_METADATA` (value: `"update_metadata"`)
 
-* `METRIC_CONFIG` (value: `"metric_config"`)
+* `UPDATE_METRIC` (value: `"update_metric"`)
 
-* `INSIGHTS` (value: `"insights"`)
+* `UPDATE_VISUALIZATION` (value: `"update_visualization"`)
 
-* `VISUALIZATIONS` (value: `"visualizations"`)
+* `UPDATE_INSIGHTS` (value: `"update_insights"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
