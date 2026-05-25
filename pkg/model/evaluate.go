@@ -166,13 +166,13 @@ func planUpdateEvaluate(selected map[ChangeKey]bool) EvaluatePlan {
 
 // AskForEvaluatePlan prompts the user for which artifacts changed and returns the resolved plan.
 func AskForEvaluatePlan() (EvaluatePlan, error) {
-	// The backend auto-detects most "I changed X" cases by diffing the
-	// new code snapshot against the last evaluated source. The prompt
-	// below only asks about edits we can't catch from a diff.
+	// We auto-detect added/removed metadata, visualizations, and metrics
+	// by diffing names against the last evaluated source. Direction /
+	// compute_insights flag changes live inside the user's Python and
+	// aren't visible here, so the prompt covers those.
 	log.Info("Auto-detected — no need to select:")
-	log.Info("  • New or removed metadata / visualizations")
-	log.Info("  • Metric direction or insights-config changes")
-	log.Info("Tell us only about edits to things that already existed:")
+	log.Info("  • Added or removed metadata / visualizations / metrics")
+	log.Info("Tell us about edits to things that already existed:")
 
 	labels := make([]string, len(changeOptions))
 	labelToKey := make(map[string]ChangeKey, len(changeOptions))
