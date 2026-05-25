@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.63
+  version: 11.0.66
 servers:
 - url: /api/v2
 paths:
@@ -13187,17 +13187,17 @@ components:
       type: object
     UpdateAction:
       enum:
-      - metadata
-      - metric_config
-      - insights
-      - visualizations
+      - update_metadata
+      - update_metric
+      - update_visualization
+      - update_insights
       type: string
     UpdateEvaluateArtifactParams:
       additionalProperties: true
       example:
         updateActions:
-        - metadata
-        - metadata
+        - update_metadata
+        - update_metadata
         versionId: versionId
         copyMode: true
         projectId: projectId
@@ -34193,8 +34193,8 @@ components:
       additionalProperties: true
       example:
         updateActions:
-        - metadata
-        - metadata
+        - update_metadata
+        - update_metadata
         notes: notes
         serialNumber: 5.962133916683182
         data:
@@ -34413,8 +34413,8 @@ components:
           status: visible
         version:
           updateActions:
-          - metadata
-          - metadata
+          - update_metadata
+          - update_metadata
           notes: notes
           serialNumber: 5.962133916683182
           data:
@@ -34738,8 +34738,8 @@ components:
         updatedAt: 2000-01-23T04:56:07.000+00:00
         parentVersionId: parentVersionId
         updateActions:
-        - metadata
-        - metadata
+        - update_metadata
+        - update_metadata
         serialNumber: 6.027456183070403
         evaluateParams:
           dataStates:
@@ -35034,8 +35034,8 @@ components:
           updatedAt: 2000-01-23T04:56:07.000+00:00
           parentVersionId: parentVersionId
           updateActions:
-          - metadata
-          - metadata
+          - update_metadata
+          - update_metadata
           serialNumber: 6.027456183070403
           evaluateParams:
             dataStates:
@@ -35239,8 +35239,8 @@ components:
           updatedAt: 2000-01-23T04:56:07.000+00:00
           parentVersionId: parentVersionId
           updateActions:
-          - metadata
-          - metadata
+          - update_metadata
+          - update_metadata
           serialNumber: 6.027456183070403
           evaluateParams:
             dataStates:
@@ -35466,8 +35466,8 @@ components:
           updatedAt: 2000-01-23T04:56:07.000+00:00
           parentVersionId: parentVersionId
           updateActions:
-          - metadata
-          - metadata
+          - update_metadata
+          - update_metadata
           serialNumber: 6.027456183070403
           evaluateParams:
             dataStates:
@@ -35671,8 +35671,8 @@ components:
           updatedAt: 2000-01-23T04:56:07.000+00:00
           parentVersionId: parentVersionId
           updateActions:
-          - metadata
-          - metadata
+          - update_metadata
+          - update_metadata
           serialNumber: 6.027456183070403
           evaluateParams:
             dataStates:
@@ -35898,8 +35898,8 @@ components:
           updatedAt: 2000-01-23T04:56:07.000+00:00
           parentVersionId: parentVersionId
           updateActions:
-          - metadata
-          - metadata
+          - update_metadata
+          - update_metadata
           serialNumber: 6.027456183070403
           evaluateParams:
             dataStates:
@@ -36103,8 +36103,8 @@ components:
           updatedAt: 2000-01-23T04:56:07.000+00:00
           parentVersionId: parentVersionId
           updateActions:
-          - metadata
-          - metadata
+          - update_metadata
+          - update_metadata
           serialNumber: 6.027456183070403
           evaluateParams:
             dataStates:
@@ -36465,8 +36465,8 @@ components:
           updatedAt: 2000-01-23T04:56:07.000+00:00
           parentVersionId: parentVersionId
           updateActions:
-          - metadata
-          - metadata
+          - update_metadata
+          - update_metadata
           serialNumber: 6.027456183070403
           evaluateParams:
             dataStates:
@@ -36670,8 +36670,8 @@ components:
           updatedAt: 2000-01-23T04:56:07.000+00:00
           parentVersionId: parentVersionId
           updateActions:
-          - metadata
-          - metadata
+          - update_metadata
+          - update_metadata
           serialNumber: 6.027456183070403
           evaluateParams:
             dataStates:
