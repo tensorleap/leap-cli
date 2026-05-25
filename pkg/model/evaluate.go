@@ -130,21 +130,22 @@ var changeOptions = []changeOption{
 }
 
 func planUpdateEvaluate(selected map[string]bool) EvaluatePlan {
-	// Metrics added/removed AND metadata-changed both route to
-	// resetEvaluate. The engine's UpdateAction.Metadata path cannot
-	// safely refresh detector pickles / NN indexer / other LS-dependent
-	// artifacts when metadata columns are added — a fresh evaluate
-	// against the version is the safe path. resetEvaluate decides
-	// in-place vs new-version based on whether eval data already exists.
-	if selected["metrics"] || selected["metadata"] {
+	// Anything that touches metadata or metrics (added / removed /
+	// direction flipped) routes to resetEvaluate. The in-place
+	// update_evaluate path on the engine doesn't have a clean
+	// invalidation story for detector pickles / NN indexer /
+	// display_pe DBs when metadata or metric config changes — a fresh
+	// evaluate against the version is the safe option. resetEvaluate
+	// decides in-place vs new-version automatically based on whether
+	// eval data already exists.
+	//
+	// The remaining update_evaluate path covers visualizations + the
+	// explicit "regenerate insights" toggle.
+	if selected["metrics"] || selected["metric_direction"] || selected["metadata"] {
 		return EvaluatePlan{Kind: EvaluatePlanReset}
 	}
 
 	actions := make(map[tensorleapapi.UpdateAction]struct{})
-	if selected["metric_direction"] {
-		actions[tensorleapapi.UPDATEACTION_METRIC_CONFIG] = struct{}{}
-		actions[tensorleapapi.UPDATEACTION_INSIGHTS] = struct{}{}
-	}
 	if selected["insights"] {
 		actions[tensorleapapi.UPDATEACTION_INSIGHTS] = struct{}{}
 	}
@@ -153,8 +154,6 @@ func planUpdateEvaluate(selected map[string]bool) EvaluatePlan {
 	}
 
 	ordered := []tensorleapapi.UpdateAction{
-		tensorleapapi.UPDATEACTION_METADATA,
-		tensorleapapi.UPDATEACTION_METRIC_CONFIG,
 		tensorleapapi.UPDATEACTION_INSIGHTS,
 		tensorleapapi.UPDATEACTION_VISUALIZATIONS,
 	}
