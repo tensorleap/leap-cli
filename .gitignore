@@ -1,3 +1,4 @@
 dist/
 
 leap-cli
+.worktrees/
