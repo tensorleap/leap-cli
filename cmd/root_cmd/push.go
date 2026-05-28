@@ -3,6 +3,8 @@ package root_cmd
 import (
 	"context"
 	"fmt"
+	"strconv"
+	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
@@ -27,7 +29,7 @@ type pushInputs struct {
 	runEval             bool
 	transformInput      bool
 	noWait              bool
-	batchSize           int
+	batch               string
 	overwriteVersionRef string
 	updateParts         []string
 }
@@ -85,7 +87,7 @@ Examples:
 	cmd.Flags().BoolVar(&in.noWait, "no-wait", false, "Do not wait for push to complete")
 	cmd.Flags().StringVarP(&in.modelPath, "model-path", "m", "", "Path to the model file")
 	cmd.Flags().BoolVarP(&in.runEval, "eval", "e", false, "Run evaluation on the model after push completes")
-	cmd.Flags().IntVar(&in.batchSize, "batch", 0, "Batch size for evaluation (only valid with --eval)")
+	cmd.Flags().StringVarP(&in.batch, "batch", "b", "", "Batch size for evaluation: a number or 'latest' (requires --eval; if omitted, prompts with the latest as default)")
 	cmd.Flags().StringVarP(&in.overwriteVersionRef, "overwrite", "o", "", "Overwrite an existing version (id, or name — picker shown if name is ambiguous)")
 	cmd.Flags().StringVar(&in.overwriteVersionRef, "overwrite-version", "", "")
 	_ = cmd.Flags().MarkDeprecated("overwrite-version", "use --overwrite (-o) instead")
@@ -140,7 +142,7 @@ func runPush(cmdCtx context.Context, in *pushInputs) error {
 }
 
 func validatePushInputs(in *pushInputs) error {
-	if in.batchSize > 0 && !in.runEval {
+	if in.batch != "" && !in.runEval {
 		return fmt.Errorf("--batch requires --eval")
 	}
 	if len(in.updateParts) > 0 && !in.runEval {
@@ -327,14 +329,25 @@ func (s *pushState) resolveEvalPlan() (batchSize int, updateActions []tensorleap
 }
 
 func (s *pushState) askOrDefaultBatchSize() (int, error) {
-	if s.inputs.batchSize > 0 {
-		return s.inputs.batchSize, nil
+	raw := strings.TrimSpace(s.inputs.batch)
+	if raw != "" && !strings.EqualFold(raw, "latest") {
+		n, err := strconv.Atoi(raw)
+		if err != nil || n <= 0 {
+			return 0, fmt.Errorf("--batch expects a positive integer or 'latest', got %q", s.inputs.batch)
+		}
+		return n, nil
 	}
-	defaultBatchSize, err := model.GetLatestEvaluateBatchSize(s.ctx, s.projectId())
+	latestBatchSize, err := model.GetLatestEvaluateBatchSize(s.ctx, s.projectId())
 	if err != nil {
 		log.Warnf("failed to get latest evaluate batch size: %v", err)
 	}
-	chosen, err := model.AskForBatchSize(defaultBatchSize)
+	if strings.EqualFold(raw, "latest") {
+		if latestBatchSize <= 0 {
+			return 0, fmt.Errorf("--batch latest: no previous evaluation found in this project; pass an explicit batch size")
+		}
+		return latestBatchSize, nil
+	}
+	chosen, err := model.AskForBatchSize(latestBatchSize)
 	if err != nil {
 		return 0, fmt.Errorf("failed to get batch size: %w", err)
 	}
