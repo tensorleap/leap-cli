@@ -282,41 +282,14 @@ func (s *pushState) resolveEvalPlan() (batchSize int, updateActions []tensorleap
 	if !in.runEval {
 		return
 	}
-
 	if !s.isOverwrite {
 		batchSize, err = s.askOrDefaultBatchSize()
 		return
 	}
 
-	parsedActions, err := model.ParseUpdateActionsFromFlags(in.updateParts)
-	if err != nil {
-		return
-	}
-	if len(parsedActions) > 0 {
-		plan := model.PlanFromUpdateActions(parsedActions)
-		if plan.Kind == model.EvaluatePlanReset {
-			batchSize, err = s.askOrDefaultBatchSize()
-			return
-		}
-		updateActions = plan.UpdateActions
-		runUpdateEvaluate = true
-		return
-	}
-
-	hasEvalData, evalErr := model.HasEvaluatedAncestorOrSelf(s.ctx, s.projectId(), s.overwriteVersion.VersionId)
-	if evalErr != nil {
-		log.Warnf("failed to check evaluation data for override chain: %v", evalErr)
-		hasEvalData = true
-	}
-	if !hasEvalData {
-		log.Info("No evaluation data found in the override chain — running a fresh evaluate.")
-		batchSize, err = s.askOrDefaultBatchSize()
-		return
-	}
-
-	plan, planErr := model.AskForEvaluatePlan()
+	plan, planErr := s.resolveOverwriteEvalPlan()
 	if planErr != nil {
-		err = fmt.Errorf("failed to get update plan: %w", planErr)
+		err = planErr
 		return
 	}
 	if plan.Kind == model.EvaluatePlanReset {
@@ -326,6 +299,39 @@ func (s *pushState) resolveEvalPlan() (batchSize int, updateActions []tensorleap
 	updateActions = plan.UpdateActions
 	runUpdateEvaluate = true
 	return
+}
+
+func (s *pushState) resolveOverwriteEvalPlan() (model.EvaluatePlan, error) {
+	if len(s.inputs.updateParts) > 0 {
+		parsed, err := model.ParseUpdateActionsFromFlags(s.inputs.updateParts)
+		if err != nil {
+			return model.EvaluatePlan{}, err
+		}
+		plan := model.PlanFromUpdateActions(parsed)
+		if plan.Kind == model.EvaluatePlanUpdate && !s.canUpdateEvaluate() {
+			log.Info("No evaluation data found in the override chain — running a fresh evaluate.")
+			return model.EvaluatePlan{Kind: model.EvaluatePlanReset}, nil
+		}
+		return plan, nil
+	}
+	if !s.canUpdateEvaluate() {
+		log.Info("No evaluation data found in the override chain — running a fresh evaluate.")
+		return model.EvaluatePlan{Kind: model.EvaluatePlanReset}, nil
+	}
+	plan, err := model.AskForEvaluatePlan()
+	if err != nil {
+		return model.EvaluatePlan{}, fmt.Errorf("failed to get update plan: %w", err)
+	}
+	return plan, nil
+}
+
+func (s *pushState) canUpdateEvaluate() bool {
+	hasEvalData, err := model.HasEvaluatedAncestorOrSelf(s.ctx, s.projectId(), s.overwriteVersion.VersionId)
+	if err != nil {
+		log.Warnf("failed to check evaluation data for override chain: %v", err)
+		return true
+	}
+	return hasEvalData
 }
 
 func (s *pushState) askOrDefaultBatchSize() (int, error) {
