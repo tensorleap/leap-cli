@@ -167,6 +167,15 @@ var changeOptions = []changeOption{
 	{key: ChangeForceInsights, label: "Force re-run insights"},
 }
 
+func PlanFromUpdateActions(actions []tensorleapapi.UpdateAction) EvaluatePlan {
+	for _, a := range actions {
+		if a == tensorleapapi.UPDATEACTION_UPDATE_METADATA || a == tensorleapapi.UPDATEACTION_UPDATE_METRIC {
+			return EvaluatePlan{Kind: EvaluatePlanReset}
+		}
+	}
+	return EvaluatePlan{Kind: EvaluatePlanUpdate, UpdateActions: actions}
+}
+
 func planUpdateEvaluate(selected map[ChangeKey]bool) EvaluatePlan {
 	// "Updated existing metadata" and "added/updated metrics" both
 	// invalidate derived artifacts (detector pickles, NN indexer,
