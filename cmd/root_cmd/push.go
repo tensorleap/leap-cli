@@ -286,11 +286,17 @@ func (s *pushState) resolveEvalPlan() (batchSize int, updateActions []tensorleap
 		return
 	}
 
-	updateActions, err = model.ParseUpdateActionsFromFlags(in.updateParts)
+	parsedActions, err := model.ParseUpdateActionsFromFlags(in.updateParts)
 	if err != nil {
 		return
 	}
-	if len(updateActions) > 0 {
+	if len(parsedActions) > 0 {
+		plan := model.PlanFromUpdateActions(parsedActions)
+		if plan.Kind == model.EvaluatePlanReset {
+			batchSize, err = s.askOrDefaultBatchSize()
+			return
+		}
+		updateActions = plan.UpdateActions
 		runUpdateEvaluate = true
 		return
 	}
