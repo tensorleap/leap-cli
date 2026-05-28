@@ -104,12 +104,10 @@ func ParseUpdateActionsFromFlags(parts []string) ([]tensorleapapi.UpdateAction, 
 		var act tensorleapapi.UpdateAction
 		if alias, ok := updateActionAliases[p]; ok {
 			act = alias
-		} else {
-			full, err := tensorleapapi.NewUpdateActionFromValue(p)
-			if err != nil {
-				return nil, fmt.Errorf("invalid --update value %q: %w (allowed: metadata, metric, insights, viz, visualization)", raw, err)
-			}
+		} else if full, ferr := tensorleapapi.NewUpdateActionFromValue(p); ferr == nil {
 			act = *full
+		} else {
+			return nil, fmt.Errorf("invalid --update value %q (allowed: metadata, metric, insights, visualization, viz)", raw)
 		}
 		if _, ok := seen[act]; ok {
 			continue
