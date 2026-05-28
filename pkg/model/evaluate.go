@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/jedib0t/go-pretty/v6/text"
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
@@ -73,7 +74,22 @@ func AskForBatchSize(defaultBatchSize int) (int, error) {
 	return batchSize, nil
 }
 
+// updateActionAliases maps user-facing short tokens to API enum values.
+// The full `update_*` spellings are still accepted via the fall-through
+// to `tensorleapapi.NewUpdateActionFromValue` below — so existing
+// scripts / CI invocations don't break.
+var updateActionAliases = map[string]tensorleapapi.UpdateAction{
+	"metadata":      tensorleapapi.UPDATEACTION_UPDATE_METADATA,
+	"metric":        tensorleapapi.UPDATEACTION_UPDATE_METRIC,
+	"insights":      tensorleapapi.UPDATEACTION_UPDATE_INSIGHTS,
+	"visualization": tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
+	"viz":           tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
+}
+
 // ParseUpdateActionsFromFlags maps CLI tokens to API update actions.
+// Accepts both the short aliases (metadata, metric, insights, viz,
+// visualization) and the full API enum spellings (update_metadata, …)
+// so old `-u update_foo` invocations keep working.
 func ParseUpdateActionsFromFlags(parts []string) ([]tensorleapapi.UpdateAction, error) {
 	if len(parts) == 0 {
 		return nil, nil
@@ -85,15 +101,21 @@ func ParseUpdateActionsFromFlags(parts []string) ([]tensorleapapi.UpdateAction, 
 		if p == "" {
 			continue
 		}
-		act, err := tensorleapapi.NewUpdateActionFromValue(p)
-		if err != nil {
-			return nil, fmt.Errorf("invalid --update value %q: %w (allowed: update_metadata, update_metric, update_insights, update_visualization)", raw, err)
+		var act tensorleapapi.UpdateAction
+		if alias, ok := updateActionAliases[p]; ok {
+			act = alias
+		} else {
+			full, err := tensorleapapi.NewUpdateActionFromValue(p)
+			if err != nil {
+				return nil, fmt.Errorf("invalid --update value %q: %w (allowed: metadata, metric, insights, viz, visualization)", raw, err)
+			}
+			act = *full
 		}
-		if _, ok := seen[*act]; ok {
+		if _, ok := seen[act]; ok {
 			continue
 		}
-		seen[*act] = struct{}{}
-		out = append(out, *act)
+		seen[act] = struct{}{}
+		out = append(out, act)
 	}
 	if len(out) == 0 {
 		return nil, fmt.Errorf("no valid --update values after parsing")
@@ -141,10 +163,10 @@ type changeOption struct {
 }
 
 var changeOptions = []changeOption{
-	{key: ChangeMetadataUpdate, label: "Edited a metadata", hint: "same column, new values"},
-	{key: ChangeVisualizationUpdate, label: "Edited a visualization", hint: "same visualizer, new code"},
-	{key: ChangeMetricsAddOrUpdate, label: "Added or edited a metric", hint: "new metric, or changed values"},
-	{key: ChangeForceInsights, label: "Reinforce insights", hint: "force re-run insights even if nothing else changed"},
+	{key: ChangeMetadataUpdate, label: "Edited an existing metadata"},
+	{key: ChangeVisualizationUpdate, label: "Edited an existing visualization"},
+	{key: ChangeMetricsAddOrUpdate, label: "Added or edited a metric"},
+	{key: ChangeForceInsights, label: "Force re-run insights"},
 }
 
 func planUpdateEvaluate(selected map[ChangeKey]bool) EvaluatePlan {
@@ -170,18 +192,45 @@ func planUpdateEvaluate(selected map[ChangeKey]bool) EvaluatePlan {
 	return EvaluatePlan{Kind: EvaluatePlanUpdate, UpdateActions: actions}
 }
 
+func init() {
+	// Push the inline `[Use arrows to move, space to select, type to
+	// filter]` hint onto its own line below the question. The default
+	// `MultiSelectQuestionTemplate` glues it to the message with two
+	// leading spaces, which crowds long-ish messages (ours includes
+	// an auto-detect parenthetical) into a single hard-to-scan line.
+	// The only edit vs the upstream template is the whitespace before
+	// the `[Use arrows…` block: `{{- "  "}}` (two spaces, leading
+	// dash strips the prior newline) → `{{ "\n  " }}` (newline +
+	// two spaces, no leading dash so the newline survives).
+	survey.MultiSelectQuestionTemplate = `
+{{- define "option"}}
+    {{- if eq .SelectedIndex .CurrentIndex }}{{color .Config.Icons.SelectFocus.Format }}{{ .Config.Icons.SelectFocus.Text }}{{color "reset"}}{{else}} {{end}}
+    {{- if index .Checked .CurrentOpt.Index }}{{color .Config.Icons.MarkedOption.Format }} {{ .Config.Icons.MarkedOption.Text }} {{else}}{{color .Config.Icons.UnmarkedOption.Format }} {{ .Config.Icons.UnmarkedOption.Text }} {{end}}
+    {{- color "reset"}}
+    {{- " "}}{{- .CurrentOpt.Value}}{{ if ne ($.GetDescription .CurrentOpt) "" }} - {{color "cyan"}}{{ $.GetDescription .CurrentOpt }}{{color "reset"}}{{end}}
+{{end}}
+{{- if .ShowHelp }}{{- color .Config.Icons.Help.Format }}{{ .Config.Icons.Help.Text }} {{ .Help }}{{color "reset"}}{{"\n"}}{{end}}
+{{- color .Config.Icons.Question.Format }}{{ .Config.Icons.Question.Text }} {{color "reset"}}
+{{- color "default+hb"}}{{ .Message }}{{ .FilterMessage }}{{color "reset"}}
+{{- if .ShowAnswer}}{{color "cyan"}} {{.Answer}}{{color "reset"}}{{"\n"}}
+{{- else }}
+	{{ "\n  " }}{{- color "cyan"}}[Use arrows to move, {{color "cyan+b"}}space{{color "cyan"}} to select,{{- if not .Config.RemoveSelectAll }} <right> to all,{{end}}{{- if not .Config.RemoveSelectNone }} <left> to none,{{end}} type to filter{{- if and .Help (not .ShowHelp)}}, {{ .Config.HelpInput }} for more help{{end}}]{{color "reset"}}
+  {{- "\n"}}
+  {{- range $ix, $option := .PageEntries}}
+    {{- template "option" $.IterateOption $ix $option}}
+  {{- end}}
+{{- end}}`
+}
+
 // AskForEvaluatePlan prompts the user for which artifacts changed and returns the resolved plan.
 func AskForEvaluatePlan() (EvaluatePlan, error) {
 	// What the engine actually auto-detects today: added metadata
 	// columns, added visualizers, metric direction flips, and
 	// compute_insights flag changes. Edits to existing items (same
 	// name, new behavior) are NOT visible to the engine — they're
-	// what this prompt is for.
-	log.Info("Auto-detected — no need to select:")
-	log.Info("  • Added metadata or visualizations")
-	log.Info("  • Metric direction or insight-config changes")
-	log.Info("Tell us about edits to things that already existed:")
-
+	// what this prompt is for. The auto-detect summary is in-prompt
+	// (below the question), not a separate log line, to keep the
+	// terminal footprint minimal.
 	labels := make([]string, len(changeOptions))
 	labelToKey := make(map[string]ChangeKey, len(changeOptions))
 	for i, opt := range changeOptions {
@@ -195,10 +244,20 @@ func AskForEvaluatePlan() (EvaluatePlan, error) {
 
 	var selectedLabels []string
 	prompt := &survey.MultiSelect{
-		Message: "What did you change in your code?",
+		Message: fmt.Sprintf(
+			"What did you change in your code? (%s: added meta/viz, metric-direction, insight-config)",
+			text.Bold.Sprint("auto-detected"),
+		),
 		Options: labels,
 	}
-	if err := survey.AskOne(prompt, &selectedLabels); err != nil {
+	// Drop the `<right> to all` / `<left> to none` hints — they bloat
+	// the inline instruction line and the 4-option list doesn't need a
+	// power-user shortcut for select-all.
+	if err := survey.AskOne(
+		prompt, &selectedLabels,
+		survey.WithRemoveSelectAll(),
+		survey.WithRemoveSelectNone(),
+	); err != nil {
 		return EvaluatePlan{}, err
 	}
 
@@ -235,27 +294,22 @@ func FormatEvaluatePlan(plan EvaluatePlan) []string {
 	return out
 }
 
-// PrintEvaluatePlan logs the resolved plan as a bulleted list.
+// PrintEvaluatePlan logs the resolved plan as a bulleted list using a
+// single "This will:" verb across all branches so the output stays
+// consistent regardless of which path planUpdateEvaluate took. The
+// update path always appends an auto-detect line so the user sees the
+// full picture (their selections + what the engine catches on its own).
 func PrintEvaluatePlan(plan EvaluatePlan) {
-	items := FormatEvaluatePlan(plan)
-	if plan.Kind == EvaluatePlanUpdate && len(items) == 0 {
-		// No forced actions — the engine's auto-detect phases decide
-		// at runtime what (if anything) actually runs.
-		log.Info("Will run:")
-		log.Info("  • Auto-detect (engine decides)")
-		return
-	}
-	if len(items) == 0 {
-		return
-	}
 	if plan.Kind == EvaluatePlanReset {
-		log.Info("Will run:")
-	} else {
-		log.Info("Will update:")
+		log.Info("This will:")
+		log.Info("  • Re-evaluate (full)")
+		return
 	}
-	for _, item := range items {
+	log.Info("This will:")
+	for _, item := range FormatEvaluatePlan(plan) {
 		log.Infof("  • %s", item)
 	}
+	log.Info("  • Auto-detect added meta/viz, metric-direction, insight-config")
 }
 
 func hasOwnEvalData(v *tensorleapapi.SlimVersion) bool {
