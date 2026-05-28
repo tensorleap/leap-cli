@@ -105,8 +105,8 @@ type VersionInfo struct {
 	Status           VersionStatus
 }
 
-func AskUserForModelPathOrOverwrite(ctx context.Context, projectId string) (isOverwrite bool, overwriteVersionInfo *VersionInfo, modelPath string, err error) {
-	overwriteVersionInfo, err = AskUserForNewVersionOrSelectExistingVersion(ctx, projectId)
+func AskUserForModelPathOrOverwrite(ctx context.Context, projectId string, currentName *string, runEval bool) (isOverwrite bool, overwriteVersionInfo *VersionInfo, modelPath string, err error) {
+	overwriteVersionInfo, err = AskUserForNewVersionOrSelectExistingVersion(ctx, projectId, runEval)
 	if err != nil {
 		return false, nil, "", err
 	}
@@ -115,15 +115,23 @@ func AskUserForModelPathOrOverwrite(ctx context.Context, projectId string) (isOv
 			return true, overwriteVersionInfo, "", nil
 		}
 		log.Warn("The selected version does not have a model, you will be asked for a model path to import")
+		modelPath, err = AskUserForModelPath(ctx)
+		if err != nil {
+			return false, nil, "", err
+		}
+		return false, overwriteVersionInfo, modelPath, nil
+	}
+	if err = InitMessage(currentName, ""); err != nil {
+		return false, nil, "", err
 	}
 	modelPath, err = AskUserForModelPath(ctx)
 	if err != nil {
 		return false, nil, "", err
 	}
-	return false, overwriteVersionInfo, modelPath, nil
+	return false, nil, modelPath, nil
 }
 
-func AskUserForNewVersionOrSelectExistingVersion(ctx context.Context, projectId string) (*VersionInfo, error) {
+func AskUserForNewVersionOrSelectExistingVersion(ctx context.Context, projectId string, runEval bool) (*VersionInfo, error) {
 
 	versions, err := GetSlimActiveVersions(ctx, projectId)
 	if err != nil {
@@ -165,10 +173,17 @@ func AskUserForNewVersionOrSelectExistingVersion(ctx context.Context, projectId 
 	hasOptions := len(options) > 1
 	if hasOptions {
 
-		fmt.Println(text.FgYellow.Sprint("\n\n NOTE: When overwriting with --eval, we auto-detect what changed and re-run only what's needed \n\n"))
+		// Only surface the eval hint when the caller didn't pass --eval:
+		// with --eval the diff is auto-detected and patched / re-evaluated
+		// for them; without --eval we want users to know that overwriting
+		// alone just replaces the version and they can drive evaluation
+		// from the UI afterwards.
+		if !runEval {
+			fmt.Println(text.FgYellow.Sprint("\n\n NOTE: Overwriting replaces the version. Use the update-evaluate dialog in the UI to re-evaluate (or re-run with --eval). \n\n"))
+		}
 
 		prompt := &survey.Select{
-			Message: "Create new, or overwrite existing",
+			Message: "Push as new, or overwrite existing",
 			Options: options,
 			Default: selectedIndex,
 		}
@@ -195,13 +210,12 @@ func versionInfoFromSlim(version *tensorleapapi.SlimVersion, runsStatusesPerVers
 	}
 }
 
-// ResolveVersionInfoFromRef finds a project version by id (cid). A version name is accepted only when it matches exactly one version in the project.
 func ResolveVersionInfoFromRef(ctx context.Context, projectId, versionRef string) (*VersionInfo, error) {
 	versionRef = strings.TrimSpace(versionRef)
 	if versionRef == "" {
 		return nil, fmt.Errorf("version reference is empty")
 	}
-	versions, err := GetVersions(ctx, projectId)
+	allVersions, err := GetVersions(ctx, projectId)
 	if err != nil {
 		return nil, err
 	}
@@ -209,37 +223,94 @@ func ResolveVersionInfoFromRef(ctx context.Context, projectId, versionRef string
 	if err != nil {
 		return nil, err
 	}
-	for i := range versions {
-		v := &versions[i]
+	for i := range allVersions {
+		v := &allVersions[i]
 		if v.GetCid() == versionRef {
 			return versionInfoFromSlim(v, runsStatusesPerVersionId), nil
 		}
 	}
-	var nameMatches []*tensorleapapi.SlimVersion
-	for i := range versions {
-		v := &versions[i]
-		if v.GetNotes() == versionRef {
-			nameMatches = append(nameMatches, v)
+	var activeNameMatches []*tensorleapapi.SlimVersion
+	for i := range allVersions {
+		v := &allVersions[i]
+		if v.GetIsActive() && v.GetNotes() == versionRef {
+			activeNameMatches = append(activeNameMatches, v)
 		}
 	}
-	switch len(nameMatches) {
+	switch len(activeNameMatches) {
 	case 0:
-		return nil, fmt.Errorf("no version found for %q (use the version id from the UI or API)", versionRef)
+		return nil, fmt.Errorf("no active version found for %q (use the version id from the UI or API)", versionRef)
 	case 1:
-		return versionInfoFromSlim(nameMatches[0], runsStatusesPerVersionId), nil
+		return versionInfoFromSlim(activeNameMatches[0], runsStatusesPerVersionId), nil
 	default:
+		return pickAmbiguousVersion(versionRef, activeNameMatches, runsStatusesPerVersionId)
+	}
+}
+
+func PrintResolvedOverwriteTarget(originalRef string, info *VersionInfo) {
+	if info == nil {
+		return
+	}
+	id := info.VersionId
+	if len(id) > 8 {
+		id = id[:8]
+	}
+	displayName := info.VersionName
+	if displayName == "" {
+		displayName = "(unnamed)"
+	}
+	if originalRef == info.VersionName || originalRef == info.VersionId {
+		log.Infof("Overwriting %s (id %s)", displayName, id)
+	} else {
+		log.Infof("Overwriting %s (id %s, matched %q)", displayName, id, originalRef)
+	}
+}
+
+func pickAmbiguousVersion(
+	versionRef string,
+	nameMatches []*tensorleapapi.SlimVersion,
+	runsStatusesPerVersionId map[string][]tensorleapapi.RunProcess,
+) (*VersionInfo, error) {
+	maxLen := 0
+	for _, v := range nameMatches {
+		if len(v.GetNotes()) > maxLen {
+			maxLen = len(v.GetNotes())
+		}
+	}
+	options := make([]string, len(nameMatches))
+	infos := make([]VersionInfo, len(nameMatches))
+	for i, v := range nameMatches {
+		status, hasModel, hasUploadedModel := CalcVersionStatus(v, runsStatusesPerVersionId[v.GetCid()])
+		options[i] = FormatVersionDisplayName(v, status, maxLen)
+		infos[i] = VersionInfo{
+			VersionId:        v.GetCid(),
+			VersionName:      v.GetNotes(),
+			HasModel:         hasModel,
+			HasUploadedModel: hasUploadedModel,
+			Status:           status,
+		}
+	}
+
+	idx := 0
+	prompt := &survey.Select{
+		Message: fmt.Sprintf("Multiple versions named %q — pick one", versionRef),
+		Options: options,
+		Default: idx,
+	}
+	if err := survey.AskOne(prompt, &idx); err != nil {
+		// Non-TTY (script) or user-cancel — surface the candidate ids
+		// so the caller can re-run with --overwrite <id>.
 		ids := make([]string, 0, len(nameMatches))
 		for _, v := range nameMatches {
 			ids = append(ids, v.GetCid())
 		}
 		const maxList = 12
 		if len(ids) > maxList {
-			ids = ids[:maxList]
-			ids = append(ids, "...")
+			ids = append(ids[:maxList], "...")
 		}
-		return nil, fmt.Errorf("version name %q is not unique in this project (%d versions); use --overwrite-version with a version id. Example ids: %s",
+		return nil, fmt.Errorf("version name %q is not unique (%d matches); use --overwrite with a version id. Candidates: %s",
 			versionRef, len(nameMatches), strings.Join(ids, ", "))
 	}
+	return &infos[idx], nil
 }
 
 func AskUserForModelPath(ctx context.Context) (modelPath string, err error) {
