@@ -47,45 +47,58 @@ lists the candidate ids so you can re-run with the exact one.
 leap push -o my-model -e
 ```
 
-You'll get a multi-select prompt for what you changed (only edits the
-engine can't auto-detect):
+You'll get a multi-select prompt for what you changed — engine no longer
+auto-detects, so you must pick what's true:
 
 ```
-? What did you change in your code? (auto-detected: added meta/viz, metric-direction, insight-config)
+? What did you change in your code?
   [Use arrows to move, space to select, type to filter]
-  [ ] Edited an existing metadata
-  [ ] Edited an existing visualization
-  [ ] Added or edited a metric
-  [ ] Force re-run insights
+  [ ] Added or edited a metadata           — triggers full re-evaluation
+  [ ] Added or edited a metric             — triggers full re-evaluation
+  [ ] Edited metric direction or insight-config — cheap update
+  [ ] Added or edited a visualization      — regenerate all visualizations
+  [ ] Reinforce insights                   — regenerate insights from scratch
 ```
 
 Then a plan summary:
 
 ```
 This will:
-  • Update visualizations
-  • Auto-detect added meta/viz, metric-direction, insight-config
+  • Regenerate visualizations
+```
+
+If you pick metadata or metric, the plan collapses to:
+
+```
+This will:
+  • Re-evaluate (full)
 ```
 
 ## Skip the prompt — name the artifacts explicitly
 
-`--update` (`-u`) tells `leap push` exactly which artifacts to refresh.
+`--update` (`-u`) tells `leap push` exactly what changed in the code.
 It **implies `--eval`** — you no longer need both flags.
 
 ```bash
-leap push -o my-model -u viz                       # regenerate visualizations only
-leap push -o my-model -u metadata -u insights      # refresh both
-leap push -o my-model -u metric                    # full re-evaluation triggered by metric change
+leap push -o my-model -u viz                          # regenerate visualizations only
+leap push -o my-model -u metric_direction             # cheap metric-direction patch
+leap push -o my-model -u metric                       # triggers a full re-evaluation
+leap push -o my-model -u metadata                     # triggers a full re-evaluation
+leap push -o my-model -u visualization -u insights    # refresh both
 ```
 
 Accepted values (case-insensitive):
 
-| short          | full (still accepted) |
-| -------------- | --------------------- |
-| `metadata`     | `update_metadata`     |
-| `metric`       | `update_metric`       |
-| `insights`     | `update_insights`     |
-| `visualization` / `viz` | `update_visualization` |
+| short                    | full (still accepted)     |
+| ------------------------ | ------------------------- |
+| `metadata`               | `update_metadata`         |
+| `metric`                 | `update_metric`           |
+| `metric_direction` / `direction` | `update_metric_direction` |
+| `insights`               | `update_insights`         |
+| `visualization` / `viz`  | `update_visualization`    |
+
+`metadata` and `metric` always trigger a fresh evaluation —
+update_evaluate doesn't support them today.
 
 ## Overwrite without evaluating
 
@@ -101,8 +114,8 @@ NOTE: Overwriting replaces the version. Use the update-evaluate dialog
       in the UI to re-evaluate (or re-run with --eval).
 ```
 
-The UI's update-evaluate dialog lets you drive the same diff-based
-refresh interactively, post-push.
+The UI's update-evaluate dialog walks the same five-action prompt as
+the CLI's `--eval` flow.
 
 ## Deprecated flag still works
 
@@ -122,5 +135,6 @@ and proceeds normally. Update your scripts at your leisure.
 | Overwrite by id                                  | `leap push -o <id>`                           |
 | Overwrite by name                                | `leap push -o <name>`                         |
 | Overwrite + force-refresh viz                    | `leap push -o <name> -u viz`                  |
-| Overwrite + refresh metadata and insights         | `leap push -o <name> -u metadata -u insights` |
-| Overwrite + full re-eval (auto-detect)            | `leap push -o <name> -e`                      |
+| Overwrite + cheap metric-direction patch          | `leap push -o <name> -u metric_direction`     |
+| Overwrite + interactive prompt for what changed   | `leap push -o <name> -e`                      |
+| Overwrite + force full re-eval                    | `leap push -o <name> -u metric`               |

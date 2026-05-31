@@ -62,17 +62,19 @@ Examples:
   # Push a new version non-interactively
   leap push -n my-model -m ./model.h5
 
-  # Overwrite an existing version by id, run eval (auto-detects changes)
+  # Overwrite an existing version by id, then prompt for what changed
   leap push -o 6a16a0cf -e
 
   # Overwrite by name — picker opens if the name is ambiguous
   leap push -o my-model -e
 
-  # Overwrite + force a specific artifact refresh (implies --eval)
+  # Overwrite + name what changed (implies --eval; skips the prompt)
   leap push -o my-model -u viz
+  leap push -o my-model -u metric_direction
+  leap push -o my-model -u metric          # triggers a full re-evaluation
 
   # Refresh multiple artifacts in one run
-  leap push -o my-model -u metadata -u insights
+  leap push -o my-model -u visualization -u insights
 `,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return runPush(cmd.Context(), in)
@@ -91,7 +93,7 @@ Examples:
 	cmd.Flags().StringVarP(&in.overwriteVersionRef, "overwrite", "o", "", "Overwrite an existing version (id, or name — picker shown if name is ambiguous)")
 	cmd.Flags().StringVar(&in.overwriteVersionRef, "overwrite-version", "", "")
 	_ = cmd.Flags().MarkDeprecated("overwrite-version", "use --overwrite (-o) instead")
-	cmd.Flags().StringSliceVarP(&in.updateParts, "update", "u", nil, "Artifact(s) to refresh on overwrite (repeatable; implies --eval). Values: metadata, metric, insights, visualization (viz)")
+	cmd.Flags().StringSliceVarP(&in.updateParts, "update", "u", nil, "What changed in the code on overwrite (repeatable; implies --eval; skips the prompt). Values: metadata, metric, metric_direction, insights, visualization (viz). metadata+metric trigger a full re-evaluation.")
 	return cmd
 }
 

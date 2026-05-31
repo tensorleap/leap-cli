@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/jedib0t/go-pretty/v6/text"
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
@@ -74,22 +73,19 @@ func AskForBatchSize(defaultBatchSize int) (int, error) {
 	return batchSize, nil
 }
 
-// updateActionAliases maps user-facing short tokens to API enum values.
-// The full `update_*` spellings are still accepted via the fall-through
-// to `tensorleapapi.NewUpdateActionFromValue` below — so existing
-// scripts / CI invocations don't break.
 var updateActionAliases = map[string]tensorleapapi.UpdateAction{
-	"metadata":      tensorleapapi.UPDATEACTION_UPDATE_METADATA,
-	"metric":        tensorleapapi.UPDATEACTION_UPDATE_METRIC,
-	"insights":      tensorleapapi.UPDATEACTION_UPDATE_INSIGHTS,
-	"visualization": tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
-	"viz":           tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
+	"metadata":         tensorleapapi.UPDATEACTION_UPDATE_METADATA,
+	"metric":           tensorleapapi.UPDATEACTION_UPDATE_METRIC,
+	"metric_direction": tensorleapapi.UPDATEACTION_UPDATE_METRIC_DIRECTION,
+	"metric-direction": tensorleapapi.UPDATEACTION_UPDATE_METRIC_DIRECTION,
+	"direction":        tensorleapapi.UPDATEACTION_UPDATE_METRIC_DIRECTION,
+	"insights":         tensorleapapi.UPDATEACTION_UPDATE_INSIGHTS,
+	"visualization":    tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
+	"viz":              tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
 }
 
-// ParseUpdateActionsFromFlags maps CLI tokens to API update actions.
-// Accepts both the short aliases (metadata, metric, insights, viz,
-// visualization) and the full API enum spellings (update_metadata, …)
-// so old `-u update_foo` invocations keep working.
+const updateActionAllowedHint = "metadata, metric, metric_direction, insights, visualization, viz"
+
 func ParseUpdateActionsFromFlags(parts []string) ([]tensorleapapi.UpdateAction, error) {
 	if len(parts) == 0 {
 		return nil, nil
@@ -107,7 +103,7 @@ func ParseUpdateActionsFromFlags(parts []string) ([]tensorleapapi.UpdateAction, 
 		} else if full, ferr := tensorleapapi.NewUpdateActionFromValue(p); ferr == nil {
 			act = *full
 		} else {
-			return nil, fmt.Errorf("invalid --update value %q (allowed: metadata, metric, insights, visualization, viz)", raw)
+			return nil, fmt.Errorf("invalid --update value %q (allowed: %s)", raw, updateActionAllowedHint)
 		}
 		if _, ok := seen[act]; ok {
 			continue
@@ -135,80 +131,84 @@ type EvaluatePlan struct {
 	UpdateActions []tensorleapapi.UpdateAction
 }
 
-// ChangeKey is a typed token for "what kind of change happened in the
-// new code snapshot". It's the input vocabulary for planUpdateEvaluate
-// — using an enum (vs a `map[string]bool` of free-form strings) keeps
-// typos out of the routing logic and lets the compiler enforce the
-// switch arms in planUpdateEvaluate stay in sync with changeOptions.
-//
-// The set is intentionally narrow: only changes that the server CANNOT
-// auto-detect from a graph / pickle diff. Metric direction, insights
-// config, and "added new metadata / visualization" are all detected on
-// the backend, so we don't ask the user about them.
 type ChangeKey int
 
 const (
-	ChangeMetadataUpdate ChangeKey = iota
-	ChangeVisualizationUpdate
-	ChangeMetricsAddOrUpdate
-	ChangeForceInsights
+	ChangeMetadata ChangeKey = iota
+	ChangeMetric
+	ChangeMetricDirection
+	ChangeVisualization
+	ChangeInsights
 )
 
 type changeOption struct {
-	key   ChangeKey
-	label string
-	hint  string
+	key    ChangeKey
+	label  string
+	hint   string
+	action tensorleapapi.UpdateAction
 }
 
 var changeOptions = []changeOption{
-	{key: ChangeMetadataUpdate, label: "Edited an existing metadata"},
-	{key: ChangeVisualizationUpdate, label: "Edited an existing visualization"},
-	{key: ChangeMetricsAddOrUpdate, label: "Added or edited a metric"},
-	{key: ChangeForceInsights, label: "Force re-run insights"},
+	{
+		key:    ChangeMetadata,
+		label:  "Added or edited a metadata",
+		hint:   "triggers full re-evaluation",
+		action: tensorleapapi.UPDATEACTION_UPDATE_METADATA,
+	},
+	{
+		key:    ChangeMetric,
+		label:  "Added or edited a metric",
+		hint:   "triggers full re-evaluation",
+		action: tensorleapapi.UPDATEACTION_UPDATE_METRIC,
+	},
+	{
+		key:    ChangeMetricDirection,
+		label:  "Edited metric direction or insight-config",
+		hint:   "cheap update — keeps existing evaluation",
+		action: tensorleapapi.UPDATEACTION_UPDATE_METRIC_DIRECTION,
+	},
+	{
+		key:    ChangeVisualization,
+		label:  "Added or edited a visualization",
+		hint:   "regenerate all visualizations",
+		action: tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
+	},
+	{
+		key:    ChangeInsights,
+		label:  "Reinforce insights",
+		hint:   "regenerate insights from scratch",
+		action: tensorleapapi.UPDATEACTION_UPDATE_INSIGHTS,
+	},
+}
+
+func triggersFullReeval(a tensorleapapi.UpdateAction) bool {
+	return a == tensorleapapi.UPDATEACTION_UPDATE_METADATA ||
+		a == tensorleapapi.UPDATEACTION_UPDATE_METRIC
 }
 
 func PlanFromUpdateActions(actions []tensorleapapi.UpdateAction) EvaluatePlan {
 	for _, a := range actions {
-		if a == tensorleapapi.UPDATEACTION_UPDATE_METADATA || a == tensorleapapi.UPDATEACTION_UPDATE_METRIC {
-			return EvaluatePlan{Kind: EvaluatePlanReset}
+		if triggersFullReeval(a) {
+			return EvaluatePlan{Kind: EvaluatePlanReset, UpdateActions: actions}
 		}
 	}
 	return EvaluatePlan{Kind: EvaluatePlanUpdate, UpdateActions: actions}
 }
 
 func planUpdateEvaluate(selected map[ChangeKey]bool) EvaluatePlan {
-	// "Updated existing metadata" and "added/updated metrics" both
-	// invalidate derived artifacts (detector pickles, NN indexer,
-	// display_pe DBs) in ways the in-place update_evaluate path can't
-	// patch — route to resetEvaluate, which decides in-place vs new-
-	// version based on whether eval data already exists. A full re-eval
-	// re-derives insights too, so the ForceInsights flag is redundant
-	// on this path.
-	if selected[ChangeMetricsAddOrUpdate] || selected[ChangeMetadataUpdate] {
-		return EvaluatePlan{Kind: EvaluatePlanReset}
+	actions := make([]tensorleapapi.UpdateAction, 0, len(changeOptions))
+	for _, opt := range changeOptions {
+		if selected[opt.key] {
+			actions = append(actions, opt.action)
+		}
 	}
-
-	// update_evaluate path: visualization edit and/or force-insights.
-	actions := make([]tensorleapapi.UpdateAction, 0, 2)
-	if selected[ChangeVisualizationUpdate] {
-		actions = append(actions, tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION)
-	}
-	if selected[ChangeForceInsights] {
-		actions = append(actions, tensorleapapi.UPDATEACTION_UPDATE_INSIGHTS)
-	}
-	return EvaluatePlan{Kind: EvaluatePlanUpdate, UpdateActions: actions}
+	return PlanFromUpdateActions(actions)
 }
 
 func init() {
-	// Push the inline `[Use arrows to move, space to select, type to
-	// filter]` hint onto its own line below the question. The default
-	// `MultiSelectQuestionTemplate` glues it to the message with two
-	// leading spaces, which crowds long-ish messages (ours includes
-	// an auto-detect parenthetical) into a single hard-to-scan line.
-	// The only edit vs the upstream template is the whitespace before
-	// the `[Use arrows…` block: `{{- "  "}}` (two spaces, leading
-	// dash strips the prior newline) → `{{ "\n  " }}` (newline +
-	// two spaces, no leading dash so the newline survives).
+	// Push the inline `[Use arrows … type to filter]` hint onto its own
+	// line below the question; the upstream template glues it to the
+	// message with two leading spaces, crowding longer prompts.
 	survey.MultiSelectQuestionTemplate = `
 {{- define "option"}}
     {{- if eq .SelectedIndex .CurrentIndex }}{{color .Config.Icons.SelectFocus.Format }}{{ .Config.Icons.SelectFocus.Text }}{{color "reset"}}{{else}} {{end}}
@@ -229,15 +229,7 @@ func init() {
 {{- end}}`
 }
 
-// AskForEvaluatePlan prompts the user for which artifacts changed and returns the resolved plan.
 func AskForEvaluatePlan() (EvaluatePlan, error) {
-	// What the engine actually auto-detects today: added metadata
-	// columns, added visualizers, metric direction flips, and
-	// compute_insights flag changes. Edits to existing items (same
-	// name, new behavior) are NOT visible to the engine — they're
-	// what this prompt is for. The auto-detect summary is in-prompt
-	// (below the question), not a separate log line, to keep the
-	// terminal footprint minimal.
 	labels := make([]string, len(changeOptions))
 	labelToKey := make(map[string]ChangeKey, len(changeOptions))
 	for i, opt := range changeOptions {
@@ -251,19 +243,14 @@ func AskForEvaluatePlan() (EvaluatePlan, error) {
 
 	var selectedLabels []string
 	prompt := &survey.MultiSelect{
-		Message: fmt.Sprintf(
-			"What did you change in your code? (%s: added meta/viz, metric-direction, insight-config)",
-			text.Bold.Sprint("auto-detected"),
-		),
+		Message: "What did you change in your code?",
 		Options: labels,
 	}
-	// Drop the `<right> to all` / `<left> to none` hints — they bloat
-	// the inline instruction line and the 4-option list doesn't need a
-	// power-user shortcut for select-all.
 	if err := survey.AskOne(
 		prompt, &selectedLabels,
 		survey.WithRemoveSelectAll(),
 		survey.WithRemoveSelectNone(),
+		survey.WithValidator(survey.Required),
 	); err != nil {
 		return EvaluatePlan{}, err
 	}
@@ -275,10 +262,6 @@ func AskForEvaluatePlan() (EvaluatePlan, error) {
 	return planUpdateEvaluate(selected), nil
 }
 
-// FormatEvaluatePlan renders the plan as human-readable verb phrases.
-// Returns an empty slice when no actions were selected on the update
-// path — the engine auto-detects in that case and the caller (Print)
-// surfaces a different message.
 func FormatEvaluatePlan(plan EvaluatePlan) []string {
 	if plan.Kind == EvaluatePlanReset {
 		return []string{"Re-evaluate (full)"}
@@ -286,10 +269,8 @@ func FormatEvaluatePlan(plan EvaluatePlan) []string {
 	out := make([]string, 0, len(plan.UpdateActions))
 	for _, a := range plan.UpdateActions {
 		switch a {
-		case tensorleapapi.UPDATEACTION_UPDATE_METADATA:
-			out = append(out, "Update metadata")
-		case tensorleapapi.UPDATEACTION_UPDATE_METRIC:
-			out = append(out, "Update metric directions")
+		case tensorleapapi.UPDATEACTION_UPDATE_METRIC_DIRECTION:
+			out = append(out, "Update metric direction")
 		case tensorleapapi.UPDATEACTION_UPDATE_INSIGHTS:
 			out = append(out, "Regenerate insights")
 		case tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION:
@@ -301,22 +282,11 @@ func FormatEvaluatePlan(plan EvaluatePlan) []string {
 	return out
 }
 
-// PrintEvaluatePlan logs the resolved plan as a bulleted list using a
-// single "This will:" verb across all branches so the output stays
-// consistent regardless of which path planUpdateEvaluate took. The
-// update path always appends an auto-detect line so the user sees the
-// full picture (their selections + what the engine catches on its own).
 func PrintEvaluatePlan(plan EvaluatePlan) {
-	if plan.Kind == EvaluatePlanReset {
-		log.Info("This will:")
-		log.Info("  • Re-evaluate (full)")
-		return
-	}
 	log.Info("This will:")
 	for _, item := range FormatEvaluatePlan(plan) {
 		log.Infof("  • %s", item)
 	}
-	log.Info("  • Auto-detect added meta/viz, metric-direction, insight-config")
 }
 
 func hasOwnEvalData(v *tensorleapapi.SlimVersion) bool {
