@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 .travis.yml
 README.md
 api/openapi.yaml
@@ -54,6 +53,7 @@ docs/CollectionFilterSpec.md
 docs/CollectionFilterSpecHiddenValuesInner.md
 docs/CollectionFilterSpecRange.md
 docs/CollectionIndexStatus.md
+docs/CollectionPopulationStatus.md
 docs/CollectionSampleRow.md
 docs/CollectionSampleRowValue.md
 docs/CollectionSortSpec.md
@@ -429,6 +429,8 @@ docs/SetExperimentPropertiesRequest.md
 docs/SetSettingValueWrapper.md
 docs/SetTeamMachineTypeParams.md
 docs/SetUserNotificationsAsRead200Response.md
+docs/SetVersionUpdateActionsParams.md
+docs/SetVersionUpdateActionsResponse.md
 docs/SettingSchema.md
 docs/SettingValue.md
 docs/SettingsAndValuesWrapper.md
@@ -466,6 +468,7 @@ docs/TrashSecretManagerResponse.md
 docs/UpdateAction.md
 docs/UpdateDashboardParams.md
 docs/UpdateEvaluateArtifactParams.md
+docs/UpdateInsightDescriptionParams.md
 docs/UpdateIssueParams.md
 docs/UpdateProjectMetaRequest.md
 docs/UpdateSampleCollectionParams.md
@@ -560,6 +563,7 @@ model_collection_filter_spec.go
 model_collection_filter_spec_hidden_values_inner.go
 model_collection_filter_spec_range.go
 model_collection_index_status.go
+model_collection_population_status.go
 model_collection_sample_row.go
 model_collection_sample_row_value.go
 model_collection_sort_spec.go
@@ -934,6 +938,8 @@ model_set_experiment_properties_request.go
 model_set_setting_value_wrapper.go
 model_set_team_machine_type_params.go
 model_set_user_notifications_as_read_200_response.go
+model_set_version_update_actions_params.go
+model_set_version_update_actions_response.go
 model_setting_schema.go
 model_setting_value.go
 model_settings_and_values_wrapper.go
@@ -971,6 +977,7 @@ model_trash_secret_manager_response.go
 model_update_action.go
 model_update_dashboard_params.go
 model_update_evaluate_artifact_params.go
+model_update_insight_description_params.go
 model_update_issue_params.go
 model_update_project_meta_request.go
 model_update_sample_collection_params.go
@@ -1015,5 +1022,4 @@ model_visualizer_message_params.go
 model_viz_info_type.go
 model_viz_type.go
 response.go
-test/api_default_test.go
 utils.go

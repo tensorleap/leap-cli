@@ -9,6 +9,8 @@
 
 * `POP_EXPLORATION` (value: `"POP_EXPLORATION"`)
 
+* `REDIS` (value: `"REDIS"`)
+
 * `GENERAL` (value: `"GENERAL"`)
 
 

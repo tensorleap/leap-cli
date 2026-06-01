@@ -7,6 +7,8 @@
 
 * `UPDATE_METRIC` (value: `"update_metric"`)
 
+* `UPDATE_METRIC_DIRECTION` (value: `"update_metric_direction"`)
+
 * `UPDATE_VISUALIZATION` (value: `"update_visualization"`)
 
 * `UPDATE_INSIGHTS` (value: `"update_insights"`)

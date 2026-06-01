@@ -4,13 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**PopulationStatus** | [**CollectionPopulationStatus**](CollectionPopulationStatus.md) |  | 
 **Cid** | **string** |  | 
 
 ## Methods
 
 ### NewAddSampleCollectionResponse
 
-`func NewAddSampleCollectionResponse(cid string, ) *AddSampleCollectionResponse`
+`func NewAddSampleCollectionResponse(populationStatus CollectionPopulationStatus, cid string, ) *AddSampleCollectionResponse`
 
 NewAddSampleCollectionResponse instantiates a new AddSampleCollectionResponse object
 This constructor will assign default values to properties that have it defined,
@@ -24,6 +25,26 @@ will change when the set of required properties is changed
 NewAddSampleCollectionResponseWithDefaults instantiates a new AddSampleCollectionResponse object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetPopulationStatus
+
+`func (o *AddSampleCollectionResponse) GetPopulationStatus() CollectionPopulationStatus`
+
+GetPopulationStatus returns the PopulationStatus field if non-nil, zero value otherwise.
+
+### GetPopulationStatusOk
+
+`func (o *AddSampleCollectionResponse) GetPopulationStatusOk() (*CollectionPopulationStatus, bool)`
+
+GetPopulationStatusOk returns a tuple with the PopulationStatus field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPopulationStatus
+
+`func (o *AddSampleCollectionResponse) SetPopulationStatus(v CollectionPopulationStatus)`
+
+SetPopulationStatus sets PopulationStatus field to given value.
+
 
 ### GetCid
 
