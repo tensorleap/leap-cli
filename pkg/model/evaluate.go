@@ -151,32 +151,29 @@ type changeOption struct {
 var changeOptions = []changeOption{
 	{
 		key:    ChangeMetadata,
-		label:  "Added or edited a metadata",
-		hint:   "triggers full re-evaluation",
+		label:  "Metadata",
+		hint:   "full re-eval",
 		action: tensorleapapi.UPDATEACTION_UPDATE_METADATA,
 	},
 	{
 		key:    ChangeMetric,
-		label:  "Added or edited a metric",
-		hint:   "triggers full re-evaluation",
+		label:  "Metric",
+		hint:   "full re-eval",
 		action: tensorleapapi.UPDATEACTION_UPDATE_METRIC,
 	},
 	{
 		key:    ChangeMetricDirection,
-		label:  "Edited metric direction or insight-config",
-		hint:   "cheap update — keeps existing evaluation",
+		label:  "Metric direction / insight-config",
 		action: tensorleapapi.UPDATEACTION_UPDATE_METRIC_DIRECTION,
 	},
 	{
 		key:    ChangeVisualization,
-		label:  "Added or edited a visualization",
-		hint:   "regenerate all visualizations",
+		label:  "Visualizations",
 		action: tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
 	},
 	{
 		key:    ChangeInsights,
-		label:  "Reinforce insights",
-		hint:   "regenerate insights from scratch",
+		label:  "Insights",
 		action: tensorleapapi.UPDATEACTION_UPDATE_INSIGHTS,
 	},
 }
@@ -243,7 +240,7 @@ func AskForEvaluatePlan() (EvaluatePlan, error) {
 
 	var selectedLabels []string
 	prompt := &survey.MultiSelect{
-		Message: "What did you change in your code?",
+		Message: "What do you want to update?",
 		Options: labels,
 	}
 	if err := survey.AskOne(
@@ -507,5 +504,19 @@ func RunUpdateEvaluateArtifact(ctx context.Context, projectId, versionId string,
 	}
 
 	log.Infof("Update evaluate started with job ID: %s", job.GetCid())
+	return nil
+}
+
+// PersistUpdateActions stores the user-declared updateActions on the version
+// without dispatching an evaluation. Used when the user picks what to update
+// but didn't pass --eval — the next evaluation run (via UI or another CLI
+// invocation) will see the recorded intent.
+func PersistUpdateActions(ctx context.Context, projectId, versionId string, updateActions []tensorleapapi.UpdateAction) error {
+	params := tensorleapapi.NewSetVersionUpdateActionsParams(versionId, projectId, updateActions)
+	_, res, err := api.ApiClient.SetVersionUpdateActions(ctx).SetVersionUpdateActionsParams(*params).Execute()
+	if err = api.CheckRes(res, err); err != nil {
+		return fmt.Errorf("failed to record update actions on version: %w", err)
+	}
+	log.Info("Recorded update actions on version (no evaluation dispatched).")
 	return nil
 }
