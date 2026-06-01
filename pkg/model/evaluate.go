@@ -163,7 +163,7 @@ var changeOptions = []changeOption{
 	},
 	{
 		key:    ChangeMetricDirection,
-		label:  "Metric direction / insight-config",
+		label:  "Metric direction",
 		action: tensorleapapi.UPDATEACTION_UPDATE_METRIC_DIRECTION,
 	},
 	{
