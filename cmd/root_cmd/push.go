@@ -124,7 +124,7 @@ func runPush(cmdCtx context.Context, in *pushInputs) error {
 		return err
 	}
 
-	evalBatchSize, updateActions, runUpdateEvaluate, err := s.resolveEvalPlan()
+	dispatch, err := s.resolveEvalPlan()
 	if err != nil {
 		return err
 	}
@@ -140,7 +140,7 @@ func runPush(cmdCtx context.Context, in *pushInputs) error {
 
 	s.sendSuccessEvent(codeResp, codePushed)
 
-	return s.triggerEvaluate(codeResp.VersionId, evalBatchSize, updateActions, runUpdateEvaluate)
+	return s.triggerEvaluate(codeResp.VersionId, dispatch)
 }
 
 func validatePushInputs(in *pushInputs) error {
@@ -275,50 +275,62 @@ func (s *pushState) syncBranchSecretAndPython() error {
 	return nil
 }
 
-func (s *pushState) resolveEvalPlan() (batchSize int, updateActions []tensorleapapi.UpdateAction, runUpdateEvaluate bool, err error) {
+type evalDispatch struct {
+	batchSize         int
+	updateActions     []tensorleapapi.UpdateAction
+	runUpdateEvaluate bool
+	persistOnly       bool
+}
+
+func (s *pushState) resolveEvalPlan() (evalDispatch, error) {
 	in := s.inputs
 	if len(in.updateParts) > 0 && !s.isOverwrite {
-		err = fmt.Errorf("--update (-u) only applies when overwriting an existing version (use --overwrite or choose overwrite in the prompt)")
-		return
-	}
-	if !in.runEval {
-		return
-	}
-	if !s.isOverwrite {
-		batchSize, err = s.askOrDefaultBatchSize()
-		return
+		return evalDispatch{}, fmt.Errorf("--update (-u) only applies when overwriting an existing version (use --overwrite or choose overwrite in the prompt)")
 	}
 
-	plan, planErr := s.resolveOverwriteEvalPlan()
-	if planErr != nil {
-		err = planErr
-		return
+	if !s.isOverwrite {
+		if !in.runEval {
+			return evalDispatch{}, nil
+		}
+		batchSize, err := s.askOrDefaultBatchSize()
+		return evalDispatch{batchSize: batchSize}, err
 	}
+
+	plan, err := s.resolveOverwriteEvalPlan()
+	if err != nil {
+		return evalDispatch{}, err
+	}
+
+	if !in.runEval {
+		return evalDispatch{updateActions: plan.UpdateActions, persistOnly: true}, nil
+	}
+
 	if plan.Kind == model.EvaluatePlanReset {
-		batchSize, err = s.askOrDefaultBatchSize()
-		return
+		batchSize, err := s.askOrDefaultBatchSize()
+		return evalDispatch{batchSize: batchSize, updateActions: plan.UpdateActions}, err
 	}
-	updateActions = plan.UpdateActions
-	runUpdateEvaluate = true
-	return
+	return evalDispatch{updateActions: plan.UpdateActions, runUpdateEvaluate: true}, nil
 }
 
 func (s *pushState) resolveOverwriteEvalPlan() (model.EvaluatePlan, error) {
+	plan, err := s.collectUserUpdatePlan()
+	if err != nil {
+		return model.EvaluatePlan{}, err
+	}
+	if s.inputs.runEval && plan.Kind == model.EvaluatePlanUpdate && !s.canUpdateEvaluate() {
+		log.Info("No evaluation data found in the override chain — running a fresh evaluate.")
+		return model.EvaluatePlan{Kind: model.EvaluatePlanReset, UpdateActions: plan.UpdateActions}, nil
+	}
+	return plan, nil
+}
+
+func (s *pushState) collectUserUpdatePlan() (model.EvaluatePlan, error) {
 	if len(s.inputs.updateParts) > 0 {
 		parsed, err := model.ParseUpdateActionsFromFlags(s.inputs.updateParts)
 		if err != nil {
 			return model.EvaluatePlan{}, err
 		}
-		plan := model.PlanFromUpdateActions(parsed)
-		if plan.Kind == model.EvaluatePlanUpdate && !s.canUpdateEvaluate() {
-			log.Info("No evaluation data found in the override chain — running a fresh evaluate.")
-			return model.EvaluatePlan{Kind: model.EvaluatePlanReset}, nil
-		}
-		return plan, nil
-	}
-	if !s.canUpdateEvaluate() {
-		log.Info("No evaluation data found in the override chain — running a fresh evaluate.")
-		return model.EvaluatePlan{Kind: model.EvaluatePlanReset}, nil
+		return model.PlanFromUpdateActions(parsed), nil
 	}
 	plan, err := model.AskForEvaluatePlan()
 	if err != nil {
@@ -450,17 +462,23 @@ func (s *pushState) sendSuccessEvent(codeResp *tensorleapapi.PushCodeSnapshotRes
 	analytics.SendEvent(analytics.EventCliProjectsPushSuccess, s.properties)
 }
 
-func (s *pushState) triggerEvaluate(versionId string, batchSize int, updateActions []tensorleapapi.UpdateAction, runUpdateEvaluate bool) error {
+func (s *pushState) triggerEvaluate(versionId string, dispatch evalDispatch) error {
+	if dispatch.persistOnly {
+		if len(dispatch.updateActions) == 0 {
+			return nil
+		}
+		return model.PersistUpdateActions(s.ctx, s.projectId(), versionId, dispatch.updateActions)
+	}
 	if !s.inputs.runEval {
 		return nil
 	}
-	if runUpdateEvaluate {
-		if err := model.RunUpdateEvaluateArtifact(s.ctx, s.projectId(), versionId, updateActions); err != nil {
+	if dispatch.runUpdateEvaluate {
+		if err := model.RunUpdateEvaluateArtifact(s.ctx, s.projectId(), versionId, dispatch.updateActions); err != nil {
 			return fmt.Errorf("failed to run update evaluate: %w", err)
 		}
 		return nil
 	}
-	if err := model.RunEvaluate(s.ctx, s.projectId(), versionId, batchSize); err != nil {
+	if err := model.RunEvaluate(s.ctx, s.projectId(), versionId, dispatch.batchSize); err != nil {
 		return fmt.Errorf("failed to run evaluation: %w", err)
 	}
 	return nil

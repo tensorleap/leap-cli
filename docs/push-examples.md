@@ -47,17 +47,17 @@ lists the candidate ids so you can re-run with the exact one.
 leap push -o my-model -e
 ```
 
-You'll get a multi-select prompt for what you changed — engine no longer
-auto-detects, so you must pick what's true:
+You'll get a multi-select prompt for what to update — engine no longer
+auto-detects, so you pick what to refresh:
 
 ```
-? What did you change in your code?
+? What do you want to update?
   [Use arrows to move, space to select, type to filter]
-  [ ] Added or edited a metadata           — triggers full re-evaluation
-  [ ] Added or edited a metric             — triggers full re-evaluation
-  [ ] Edited metric direction or insight-config — cheap update
-  [ ] Added or edited a visualization      — regenerate all visualizations
-  [ ] Reinforce insights                   — regenerate insights from scratch
+  [ ] Metadata — full re-eval
+  [ ] Metric — full re-eval
+  [ ] Metric direction / insight-config
+  [ ] Visualizations
+  [ ] Insights
 ```
 
 Then a plan summary:
@@ -106,15 +106,17 @@ update_evaluate doesn't support them today.
 leap push -o my-model            # no --eval, no --update
 ```
 
-When you overwrite without `--eval`, the CLI reminds you that
-evaluation isn't automatic:
+You still get the multi-select prompt — the answer is recorded on the
+version so the next time someone (UI, another CLI run) runs an
+evaluation against this version they see your declared intent.
 
 ```
 NOTE: Overwriting replaces the version. Use the update-evaluate dialog
       in the UI to re-evaluate (or re-run with --eval).
+Recorded update actions on version (no evaluation dispatched).
 ```
 
-The UI's update-evaluate dialog walks the same five-action prompt as
+The UI's update-evaluate dialog uses the same five-action prompt as
 the CLI's `--eval` flow.
 
 ## Deprecated flag still works
