@@ -238,7 +238,7 @@ func HintVersionMismatch(err error) error {
 	return fmt.Errorf(
 		"%w\n\nThis may indicate a CLI/server version mismatch. "+
 			"Run 'leap server upgrade' on the server host to upgrade the server, "+
-			"or 'leap cli upgrade -s | bash' to upgrade the CLI.",
+			"or 'leap cli upgrade -s | bash' to upgrade the CLI",
 		err,
 	)
 }
