@@ -55,7 +55,7 @@ auto-detects, so you pick what to refresh:
   [Use arrows to move, space to select, type to filter]
   [ ] Metadata — full re-eval
   [ ] Metric — full re-eval
-  [ ] Metric direction / insight-config
+  [ ] Metric direction
   [ ] Visualizations
   [ ] Insights
 ```
