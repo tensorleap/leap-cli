@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.66
+  version: 11.0.81
 servers:
 - url: /api/v2
 paths:
@@ -672,6 +672,21 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/ApplyInsightsStatusParams"
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
+  /insights/updateInsightDescription:
+    post:
+      operationId: UpdateInsightDescription
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateInsightDescriptionParams"
         required: true
       responses:
         "204":
@@ -2444,6 +2459,25 @@ paths:
           description: Ok
       security:
       - jwt: []
+  /versions/setVersionUpdateActions:
+    post:
+      operationId: SetVersionUpdateActions
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetVersionUpdateActionsParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SetVersionUpdateActionsResponse"
+          description: Ok
+      security:
+      - jwt: []
   /versions/getProjectSlimVersions:
     post:
       operationId: GetProjectSlimVersions
@@ -3600,6 +3634,7 @@ components:
       additionalProperties: true
       example:
         metric: metric
+        rank_by: rank_by
         value: ScatterFilter_value
         operator: smaller_than
       properties:
@@ -3609,6 +3644,8 @@ components:
           $ref: "#/components/schemas/ScatterFilter_value"
         operator:
           $ref: "#/components/schemas/OperatorEnum"
+        rank_by:
+          type: string
       required:
       - metric
       - operator
@@ -3816,9 +3853,11 @@ components:
               parent_id: parent_id
               display_filters:
               - metric: metric
+                rank_by: rank_by
                 value: ScatterFilter_value
                 operator: smaller_than
               - metric: metric
+                rank_by: rank_by
                 value: ScatterFilter_value
                 operator: smaller_than
               aggressor_fixing:
@@ -3909,9 +3948,11 @@ components:
               parent_id: parent_id
               display_filters:
               - metric: metric
+                rank_by: rank_by
                 value: ScatterFilter_value
                 operator: smaller_than
               - metric: metric
+                rank_by: rank_by
                 value: ScatterFilter_value
                 operator: smaller_than
               aggressor_fixing:
@@ -4066,9 +4107,11 @@ components:
         parent_id: parent_id
         display_filters:
         - metric: metric
+          rank_by: rank_by
           value: ScatterFilter_value
           operator: smaller_than
         - metric: metric
+          rank_by: rank_by
           value: ScatterFilter_value
           operator: smaller_than
         aggressor_fixing:
@@ -4659,9 +4702,11 @@ components:
             parent_id: parent_id
             display_filters:
             - metric: metric
+              rank_by: rank_by
               value: ScatterFilter_value
               operator: smaller_than
             - metric: metric
+              rank_by: rank_by
               value: ScatterFilter_value
               operator: smaller_than
             aggressor_fixing:
@@ -4752,9 +4797,11 @@ components:
             parent_id: parent_id
             display_filters:
             - metric: metric
+              rank_by: rank_by
               value: ScatterFilter_value
               operator: smaller_than
             - metric: metric
+              rank_by: rank_by
               value: ScatterFilter_value
               operator: smaller_than
             aggressor_fixing:
@@ -4965,9 +5012,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -5058,9 +5107,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -5169,9 +5220,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -5262,9 +5315,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -5529,9 +5584,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -5622,9 +5679,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -5733,9 +5792,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -5826,9 +5887,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -5965,9 +6028,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -6058,9 +6123,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -6169,9 +6236,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -6262,9 +6331,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -6443,9 +6514,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -6536,9 +6609,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -6647,9 +6722,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -6740,9 +6817,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -6879,9 +6958,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -6972,9 +7053,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -7083,9 +7166,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -7176,9 +7261,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -7323,9 +7410,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -7416,9 +7505,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -7527,9 +7618,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -7620,9 +7713,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -7759,9 +7854,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -7852,9 +7949,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -7963,9 +8062,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -8056,9 +8157,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -8225,9 +8328,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -8318,9 +8423,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -8429,9 +8536,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -8522,9 +8631,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -8661,9 +8772,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -8754,9 +8867,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -8865,9 +8980,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -8958,9 +9075,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -9136,9 +9255,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -9229,9 +9350,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -9340,9 +9463,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -9433,9 +9558,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -9572,9 +9699,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -9665,9 +9794,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -9776,9 +9907,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -9869,9 +10002,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -10045,9 +10180,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -10138,9 +10275,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -10249,9 +10388,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -10342,9 +10483,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -10481,9 +10624,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -10574,9 +10719,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -10685,9 +10832,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -10778,9 +10927,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -11006,9 +11157,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -11099,9 +11252,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -11210,9 +11365,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -11303,9 +11460,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -11425,9 +11584,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -11518,9 +11679,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -11684,9 +11847,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -11777,9 +11942,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -11888,9 +12055,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -11981,9 +12150,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -12103,9 +12274,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -12196,9 +12369,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -12319,9 +12494,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -12412,9 +12589,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -12523,9 +12702,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -12616,9 +12797,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -13189,6 +13372,7 @@ components:
       enum:
       - update_metadata
       - update_metric
+      - update_metric_direction
       - update_visualization
       - update_insights
       type: string
@@ -13575,6 +13759,9 @@ components:
       - SLIM_JOB_CPU_LIMIT
       - SLIM_JOB_REQUIRED_MEMORY
       - SLIM_JOB_LIMIT_MEMORY
+      - PRIORITIZE_AUTO_SETTINGS_REDIS
+      - REDIS_MEMORY_REQUEST
+      - REDIS_MEMORY_LIMIT
       - PIP_INDEX_URL
       - PIP_EXTRA_INDEX_URL
       - WARMUP_TIMEOUT_MINUTES
@@ -14186,9 +14373,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -14279,9 +14468,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -14390,9 +14581,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -14483,9 +14676,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -14729,9 +14924,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -14822,9 +15019,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -14933,9 +15132,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -15026,9 +15227,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -15224,9 +15427,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -15317,9 +15522,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -15428,9 +15635,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -15521,9 +15730,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -15683,9 +15894,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -15776,9 +15989,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -15887,9 +16102,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -15980,9 +16197,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -16095,9 +16314,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -16188,9 +16409,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -16299,9 +16522,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -16392,9 +16617,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -16505,9 +16732,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -16598,9 +16827,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -16709,9 +16940,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -16802,9 +17035,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -16944,9 +17179,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -17037,9 +17274,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -17148,9 +17387,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -17241,9 +17482,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -17356,9 +17599,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -17449,9 +17694,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -17560,9 +17807,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -17653,9 +17902,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -17843,9 +18094,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -17936,9 +18189,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -18047,9 +18302,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -18140,9 +18397,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -18306,9 +18565,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -18399,9 +18660,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -18510,9 +18773,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -18603,9 +18868,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -18718,9 +18985,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -18811,9 +19080,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -18922,9 +19193,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -19015,9 +19288,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -19205,9 +19480,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -19298,9 +19575,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -19409,9 +19688,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -19502,9 +19783,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -19623,9 +19906,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -19716,9 +20001,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -19827,9 +20114,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -19920,9 +20209,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -20035,9 +20326,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -20128,9 +20421,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -20239,9 +20534,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -20332,9 +20629,11 @@ components:
                     parent_id: parent_id
                     display_filters:
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     - metric: metric
+                      rank_by: rank_by
                       value: ScatterFilter_value
                       operator: smaller_than
                     aggressor_fixing:
@@ -20522,9 +20821,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -20615,9 +20916,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -20726,9 +21029,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -20819,9 +21124,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -20972,9 +21279,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -21065,9 +21374,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -21176,9 +21487,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -21269,9 +21582,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -21492,9 +21807,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -21585,9 +21902,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -21696,9 +22015,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -21789,9 +22110,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -22046,9 +22369,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -22139,9 +22464,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -22250,9 +22577,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -22343,9 +22672,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -22546,9 +22877,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -22639,9 +22972,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -22750,9 +23085,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -22843,9 +23180,11 @@ components:
                   parent_id: parent_id
                   display_filters:
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   - metric: metric
+                    rank_by: rank_by
                     value: ScatterFilter_value
                     operator: smaller_than
                   aggressor_fixing:
@@ -23262,6 +23601,7 @@ components:
         inferenceArtifactId: inferenceArtifactId
         createdAt: 2000-01-23T04:56:07.000+00:00
         index: 0.8008281904610115
+        description: description
         insightType:
           severity: 4.145608029883936
           automatic_tests:
@@ -23341,9 +23681,11 @@ components:
           parent_id: parent_id
           display_filters:
           - metric: metric
+            rank_by: rank_by
             value: ScatterFilter_value
             operator: smaller_than
           - metric: metric
+            rank_by: rank_by
             value: ScatterFilter_value
             operator: smaller_than
           aggressor_fixing:
@@ -23366,6 +23708,8 @@ components:
           type: number
         status:
           $ref: "#/components/schemas/InsightStatus"
+        description:
+          type: string
         createdAt:
           format: date-time
           type: string
@@ -23387,6 +23731,7 @@ components:
         - inferenceArtifactId: inferenceArtifactId
           createdAt: 2000-01-23T04:56:07.000+00:00
           index: 0.8008281904610115
+          description: description
           insightType:
             severity: 4.145608029883936
             automatic_tests:
@@ -23466,9 +23811,11 @@ components:
             parent_id: parent_id
             display_filters:
             - metric: metric
+              rank_by: rank_by
               value: ScatterFilter_value
               operator: smaller_than
             - metric: metric
+              rank_by: rank_by
               value: ScatterFilter_value
               operator: smaller_than
             aggressor_fixing:
@@ -23482,6 +23829,7 @@ components:
         - inferenceArtifactId: inferenceArtifactId
           createdAt: 2000-01-23T04:56:07.000+00:00
           index: 0.8008281904610115
+          description: description
           insightType:
             severity: 4.145608029883936
             automatic_tests:
@@ -23561,9 +23909,11 @@ components:
             parent_id: parent_id
             display_filters:
             - metric: metric
+              rank_by: rank_by
               value: ScatterFilter_value
               operator: smaller_than
             - metric: metric
+              rank_by: rank_by
               value: ScatterFilter_value
               operator: smaller_than
             aggressor_fixing:
@@ -23612,6 +23962,23 @@ components:
       - insightId
       - projectId
       - status
+      type: object
+    UpdateInsightDescriptionParams:
+      additionalProperties: true
+      example:
+        description: description
+        insightId: insightId
+        projectId: projectId
+      properties:
+        insightId:
+          type: string
+        projectId:
+          type: string
+        description:
+          type: string
+      required:
+      - insightId
+      - projectId
       type: object
     GenerateInsightsParams:
       additionalProperties: true
@@ -23703,9 +24070,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -23796,9 +24165,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -23907,9 +24278,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -24000,9 +24373,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -25385,9 +25760,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -25478,9 +25855,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -25589,9 +25968,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -25682,9 +26063,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -25848,9 +26231,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -25941,9 +26326,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -26052,9 +26439,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -26145,9 +26534,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -26311,9 +26702,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -26404,9 +26797,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -26515,9 +26910,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -26608,9 +27005,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -26809,9 +27208,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -26902,9 +27303,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -27013,9 +27416,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -27106,9 +27511,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -27273,9 +27680,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -27366,9 +27775,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -27477,9 +27888,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -27570,9 +27983,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -27726,9 +28141,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -27819,9 +28236,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -27930,9 +28349,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -28023,9 +28444,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -28202,9 +28625,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -28295,9 +28720,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -28406,9 +28833,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -28499,9 +28928,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -28640,9 +29071,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -28733,9 +29166,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -28844,9 +29279,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -28937,9 +29374,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -29158,9 +29597,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -29251,9 +29692,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -29362,9 +29805,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -29455,9 +29900,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -30184,18 +30631,41 @@ components:
       required:
       - projectId
       type: object
+    CollectionPopulationStatus:
+      description: |-
+        Status of the async samples-blob population for a collection (distinct
+        from CollectionIndexStatus, which tracks the downstream ES reindex).
+      enum:
+      - processing
+      - ready
+      - failed
+      type: string
     SampleCollection:
       example:
         samplesBlobName: samplesBlobName
         createdAt: 2000-01-23T04:56:07.000+00:00
         createdBy: createdBy
-        samplesCount: 0.8008281904610115
+        samplesCount: 6.027456183070403
         teamId: teamId
+        populationError: populationError
         name: name
         description: description
+        processedSamplesCount: 0.8008281904610115
+        populationStatus: processing
         projectId: projectId
         cid: cid
       properties:
+        populationError:
+          description: Error message when populationStatus === 'failed'.
+          type: string
+        processedSamplesCount:
+          description: |-
+            Live count of samples resolved so far while 'processing' — drives the
+            "Creating… N samples so far" / "Adding…" progress text.
+          format: double
+          type: number
+        populationStatus:
+          $ref: "#/components/schemas/CollectionPopulationStatus"
         samplesCount:
           format: double
           type: number
@@ -30220,6 +30690,7 @@ components:
       - cid
       - createdAt
       - name
+      - populationStatus
       - projectId
       - teamId
       type: object
@@ -30229,19 +30700,25 @@ components:
         - samplesBlobName: samplesBlobName
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
-          samplesCount: 0.8008281904610115
+          samplesCount: 6.027456183070403
           teamId: teamId
+          populationError: populationError
           name: name
           description: description
+          processedSamplesCount: 0.8008281904610115
+          populationStatus: processing
           projectId: projectId
           cid: cid
         - samplesBlobName: samplesBlobName
           createdAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
-          samplesCount: 0.8008281904610115
+          samplesCount: 6.027456183070403
           teamId: teamId
+          populationError: populationError
           name: name
           description: description
+          processedSamplesCount: 0.8008281904610115
+          populationStatus: processing
           projectId: projectId
           cid: cid
       properties:
@@ -30263,30 +30740,88 @@ components:
       type: object
     AddSampleCollectionResponse:
       example:
+        populationStatus: processing
         cid: cid
       properties:
+        populationStatus:
+          $ref: "#/components/schemas/CollectionPopulationStatus"
         cid:
           type: string
       required:
       - cid
+      - populationStatus
+      type: object
+    CollectionFilterSpec:
+      example:
+        field: field
+        range:
+          min: 6.027456183070403
+          max: 0.8008281904610115
+        hiddenValues:
+        - CollectionFilterSpec_hiddenValues_inner
+        - CollectionFilterSpec_hiddenValues_inner
+      properties:
+        range:
+          $ref: "#/components/schemas/CollectionFilterSpec_range"
+        hiddenValues:
+          items:
+            $ref: "#/components/schemas/CollectionFilterSpec_hiddenValues_inner"
+          type: array
+        field:
+          type: string
+      required:
+      - field
       type: object
     AddSampleCollectionParams:
       example:
+        excluded:
+        - index: 0.8008281904610115
+          state: training
+          hashed_index: hashed_index
+        - index: 0.8008281904610115
+          state: training
+          hashed_index: hashed_index
+        versionId: versionId
         name: name
         description: description
+        filters:
+        - field: field
+          range:
+            min: 6.027456183070403
+            max: 0.8008281904610115
+          hiddenValues:
+          - CollectionFilterSpec_hiddenValues_inner
+          - CollectionFilterSpec_hiddenValues_inner
+        - field: field
+          range:
+            min: 6.027456183070403
+            max: 0.8008281904610115
+          hiddenValues:
+          - CollectionFilterSpec_hiddenValues_inner
+          - CollectionFilterSpec_hiddenValues_inner
+        included:
+        - index: 0.8008281904610115
+          state: training
+          hashed_index: hashed_index
+        - index: 0.8008281904610115
+          state: training
+          hashed_index: hashed_index
         projectId: projectId
-        samples:
-        - index: 0.8008281904610115
-          state: training
-          hashed_index: hashed_index
-        - index: 0.8008281904610115
-          state: training
-          hashed_index: hashed_index
       properties:
-        samples:
+        included:
           items:
             $ref: "#/components/schemas/SampleIdentity"
           type: array
+        excluded:
+          items:
+            $ref: "#/components/schemas/SampleIdentity"
+          type: array
+        filters:
+          items:
+            $ref: "#/components/schemas/CollectionFilterSpec"
+          type: array
+        versionId:
+          type: string
         projectId:
           type: string
         description:
@@ -30328,22 +30863,55 @@ components:
       type: object
     UpdateSampleCollectionParams:
       example:
+        excluded:
+        - index: 0.8008281904610115
+          state: training
+          hashed_index: hashed_index
+        - index: 0.8008281904610115
+          state: training
+          hashed_index: hashed_index
         sampleCollectionId: sampleCollectionId
+        versionId: versionId
         name: name
         description: description
+        filters:
+        - field: field
+          range:
+            min: 6.027456183070403
+            max: 0.8008281904610115
+          hiddenValues:
+          - CollectionFilterSpec_hiddenValues_inner
+          - CollectionFilterSpec_hiddenValues_inner
+        - field: field
+          range:
+            min: 6.027456183070403
+            max: 0.8008281904610115
+          hiddenValues:
+          - CollectionFilterSpec_hiddenValues_inner
+          - CollectionFilterSpec_hiddenValues_inner
+        included:
+        - index: 0.8008281904610115
+          state: training
+          hashed_index: hashed_index
+        - index: 0.8008281904610115
+          state: training
+          hashed_index: hashed_index
         projectId: projectId
-        samples:
-        - index: 0.8008281904610115
-          state: training
-          hashed_index: hashed_index
-        - index: 0.8008281904610115
-          state: training
-          hashed_index: hashed_index
       properties:
-        samples:
+        included:
           items:
             $ref: "#/components/schemas/SampleIdentity"
           type: array
+        excluded:
+          items:
+            $ref: "#/components/schemas/SampleIdentity"
+          type: array
+        filters:
+          items:
+            $ref: "#/components/schemas/CollectionFilterSpec"
+          type: array
+        versionId:
+          type: string
         description:
           type: string
         name:
@@ -30365,27 +30933,6 @@ components:
           type: number
       required:
       - numOfRemoved
-      type: object
-    CollectionFilterSpec:
-      example:
-        field: field
-        range:
-          min: 6.027456183070403
-          max: 0.8008281904610115
-        hiddenValues:
-        - CollectionFilterSpec_hiddenValues_inner
-        - CollectionFilterSpec_hiddenValues_inner
-      properties:
-        range:
-          $ref: "#/components/schemas/CollectionFilterSpec_range"
-        hiddenValues:
-          items:
-            $ref: "#/components/schemas/CollectionFilterSpec_hiddenValues_inner"
-          type: array
-        field:
-          type: string
-      required:
-      - field
       type: object
     RemoveSamplesFromCollectionParams:
       example:
@@ -30645,9 +31192,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -30738,9 +31287,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -30849,9 +31400,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -30942,9 +31495,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -31766,9 +32321,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -31859,9 +32416,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -31970,9 +32529,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -32063,9 +32624,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -32090,6 +32653,7 @@ components:
             - null
             gt: 5.637376656633329
           operator: between
+        description: description
         projectId: projectId
       properties:
         projectId:
@@ -32102,6 +32666,8 @@ components:
           items:
             $ref: "#/components/schemas/ESFilter"
           type: array
+        description:
+          type: string
       required:
       - name
       - projectId
@@ -32201,9 +32767,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -32294,9 +32862,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -32405,9 +32975,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -32498,9 +33070,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -32525,6 +33099,7 @@ components:
             - null
             gt: 5.637376656633329
           operator: between
+        description: description
         projectId: projectId
         cid: cid
       properties:
@@ -32540,6 +33115,8 @@ components:
           items:
             $ref: "#/components/schemas/ESFilter"
           type: array
+        description:
+          type: string
       required:
       - cid
       - projectId
@@ -32641,9 +33218,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -32734,9 +33313,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -32845,9 +33426,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -32938,9 +33521,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -32965,6 +33550,7 @@ components:
             - null
             gt: 5.637376656633329
           operator: between
+        description: description
         projectId: projectId
         cid: cid
         updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -32991,6 +33577,8 @@ components:
           items:
             $ref: "#/components/schemas/ESFilter"
           type: array
+        description:
+          type: string
       required:
       - cid
       - createdAt
@@ -33190,6 +33778,7 @@ components:
       - EVALUATION_MAIN
       - EVALUATION_WORKERS
       - POP_EXPLORATION
+      - REDIS
       - GENERAL
       nullable: false
       type: string
@@ -34609,6 +35198,38 @@ components:
       required:
       - data
       - projectId
+      - versionId
+      type: object
+    SetVersionUpdateActionsResponse:
+      additionalProperties: true
+      example:
+        versionId: versionId
+      properties:
+        versionId:
+          type: string
+      required:
+      - versionId
+      type: object
+    SetVersionUpdateActionsParams:
+      additionalProperties: true
+      example:
+        updateActions:
+        - update_metadata
+        - update_metadata
+        versionId: versionId
+        projectId: projectId
+      properties:
+        versionId:
+          type: string
+        projectId:
+          type: string
+        updateActions:
+          items:
+            $ref: "#/components/schemas/UpdateAction"
+          type: array
+      required:
+      - projectId
+      - updateActions
       - versionId
       type: object
     Record_string.any_:
@@ -39240,14 +39861,22 @@ components:
       additionalProperties: true
       example:
         versionId: versionId
+        sampleIds:
+        - sampleIds
+        - sampleIds
         projectId: projectId
       properties:
         versionId:
           type: string
         projectId:
           type: string
+        sampleIds:
+          items:
+            type: string
+          type: array
       required:
       - projectId
+      - sampleIds
       - versionId
       type: object
     GetSampleVisualizationsPathsResponse:
@@ -39585,9 +40214,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -39678,9 +40309,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -39789,9 +40422,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -39882,9 +40517,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -40005,9 +40642,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -40098,9 +40737,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -40292,9 +40933,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -40385,9 +41028,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -40496,9 +41141,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -40589,9 +41236,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -40832,9 +41481,11 @@ components:
           parent_id: parent_id
           display_filters:
           - metric: metric
+            rank_by: rank_by
             value: ScatterFilter_value
             operator: smaller_than
           - metric: metric
+            rank_by: rank_by
             value: ScatterFilter_value
             operator: smaller_than
           aggressor_fixing:
@@ -40948,9 +41599,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -41041,9 +41694,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -41152,9 +41807,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:
@@ -41245,9 +41902,11 @@ components:
                 parent_id: parent_id
                 display_filters:
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 - metric: metric
+                  rank_by: rank_by
                   value: ScatterFilter_value
                   operator: smaller_than
                 aggressor_fixing:

@@ -6,12 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VersionId** | **string** |  | 
 **ProjectId** | **string** |  | 
+**SampleIds** | **[]string** |  | 
 
 ## Methods
 
 ### NewGetScatterSampleVisualizationsParams
 
-`func NewGetScatterSampleVisualizationsParams(versionId string, projectId string, ) *GetScatterSampleVisualizationsParams`
+`func NewGetScatterSampleVisualizationsParams(versionId string, projectId string, sampleIds []string, ) *GetScatterSampleVisualizationsParams`
 
 NewGetScatterSampleVisualizationsParams instantiates a new GetScatterSampleVisualizationsParams object
 This constructor will assign default values to properties that have it defined,
@@ -64,6 +65,26 @@ and a boolean to check if the value has been set.
 `func (o *GetScatterSampleVisualizationsParams) SetProjectId(v string)`
 
 SetProjectId sets ProjectId field to given value.
+
+
+### GetSampleIds
+
+`func (o *GetScatterSampleVisualizationsParams) GetSampleIds() []string`
+
+GetSampleIds returns the SampleIds field if non-nil, zero value otherwise.
+
+### GetSampleIdsOk
+
+`func (o *GetScatterSampleVisualizationsParams) GetSampleIdsOk() (*[]string, bool)`
+
+GetSampleIdsOk returns a tuple with the SampleIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSampleIds
+
+`func (o *GetScatterSampleVisualizationsParams) SetSampleIds(v []string)`
+
+SetSampleIds sets SampleIds field to given value.
 
 
 

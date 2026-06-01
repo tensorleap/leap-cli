@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Name** | Pointer to **string** |  | [optional] 
 **TestFilter** | Pointer to [**ClientFilterParams**](ClientFilterParams.md) |  | [optional] 
 **DatasetFilter** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
+**Description** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -143,6 +144,31 @@ SetDatasetFilter sets DatasetFilter field to given value.
 `func (o *UpdateSessionTestRequest) HasDatasetFilter() bool`
 
 HasDatasetFilter returns a boolean if a field has been set.
+
+### GetDescription
+
+`func (o *UpdateSessionTestRequest) GetDescription() string`
+
+GetDescription returns the Description field if non-nil, zero value otherwise.
+
+### GetDescriptionOk
+
+`func (o *UpdateSessionTestRequest) GetDescriptionOk() (*string, bool)`
+
+GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDescription
+
+`func (o *UpdateSessionTestRequest) SetDescription(v string)`
+
+SetDescription sets Description field to given value.
+
+### HasDescription
+
+`func (o *UpdateSessionTestRequest) HasDescription() bool`
+
+HasDescription returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

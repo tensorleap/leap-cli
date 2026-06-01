@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **InsightType** | [**InsightType**](InsightType.md) |  | 
 **Index** | **float64** |  | 
 **Status** | [**InsightStatus**](InsightStatus.md) |  | 
+**Description** | Pointer to **string** |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -135,6 +136,31 @@ and a boolean to check if the value has been set.
 
 SetStatus sets Status field to given value.
 
+
+### GetDescription
+
+`func (o *Insight) GetDescription() string`
+
+GetDescription returns the Description field if non-nil, zero value otherwise.
+
+### GetDescriptionOk
+
+`func (o *Insight) GetDescriptionOk() (*string, bool)`
+
+GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDescription
+
+`func (o *Insight) SetDescription(v string)`
+
+SetDescription sets Description field to given value.
+
+### HasDescription
+
+`func (o *Insight) HasDescription() bool`
+
+HasDescription returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

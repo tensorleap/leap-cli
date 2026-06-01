@@ -4,7 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Samples** | Pointer to [**[]SampleIdentity**](SampleIdentity.md) |  | [optional] 
+**Included** | Pointer to [**[]SampleIdentity**](SampleIdentity.md) |  | [optional] 
+**Excluded** | Pointer to [**[]SampleIdentity**](SampleIdentity.md) |  | [optional] 
+**Filters** | Pointer to [**[]CollectionFilterSpec**](CollectionFilterSpec.md) |  | [optional] 
+**VersionId** | Pointer to **string** |  | [optional] 
 **Description** | Pointer to **string** |  | [optional] 
 **Name** | Pointer to **string** |  | [optional] 
 **SampleCollectionId** | **string** |  | 
@@ -29,30 +32,105 @@ NewUpdateSampleCollectionParamsWithDefaults instantiates a new UpdateSampleColle
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetSamples
+### GetIncluded
 
-`func (o *UpdateSampleCollectionParams) GetSamples() []SampleIdentity`
+`func (o *UpdateSampleCollectionParams) GetIncluded() []SampleIdentity`
 
-GetSamples returns the Samples field if non-nil, zero value otherwise.
+GetIncluded returns the Included field if non-nil, zero value otherwise.
 
-### GetSamplesOk
+### GetIncludedOk
 
-`func (o *UpdateSampleCollectionParams) GetSamplesOk() (*[]SampleIdentity, bool)`
+`func (o *UpdateSampleCollectionParams) GetIncludedOk() (*[]SampleIdentity, bool)`
 
-GetSamplesOk returns a tuple with the Samples field if it's non-nil, zero value otherwise
+GetIncludedOk returns a tuple with the Included field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetSamples
+### SetIncluded
 
-`func (o *UpdateSampleCollectionParams) SetSamples(v []SampleIdentity)`
+`func (o *UpdateSampleCollectionParams) SetIncluded(v []SampleIdentity)`
 
-SetSamples sets Samples field to given value.
+SetIncluded sets Included field to given value.
 
-### HasSamples
+### HasIncluded
 
-`func (o *UpdateSampleCollectionParams) HasSamples() bool`
+`func (o *UpdateSampleCollectionParams) HasIncluded() bool`
 
-HasSamples returns a boolean if a field has been set.
+HasIncluded returns a boolean if a field has been set.
+
+### GetExcluded
+
+`func (o *UpdateSampleCollectionParams) GetExcluded() []SampleIdentity`
+
+GetExcluded returns the Excluded field if non-nil, zero value otherwise.
+
+### GetExcludedOk
+
+`func (o *UpdateSampleCollectionParams) GetExcludedOk() (*[]SampleIdentity, bool)`
+
+GetExcludedOk returns a tuple with the Excluded field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExcluded
+
+`func (o *UpdateSampleCollectionParams) SetExcluded(v []SampleIdentity)`
+
+SetExcluded sets Excluded field to given value.
+
+### HasExcluded
+
+`func (o *UpdateSampleCollectionParams) HasExcluded() bool`
+
+HasExcluded returns a boolean if a field has been set.
+
+### GetFilters
+
+`func (o *UpdateSampleCollectionParams) GetFilters() []CollectionFilterSpec`
+
+GetFilters returns the Filters field if non-nil, zero value otherwise.
+
+### GetFiltersOk
+
+`func (o *UpdateSampleCollectionParams) GetFiltersOk() (*[]CollectionFilterSpec, bool)`
+
+GetFiltersOk returns a tuple with the Filters field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFilters
+
+`func (o *UpdateSampleCollectionParams) SetFilters(v []CollectionFilterSpec)`
+
+SetFilters sets Filters field to given value.
+
+### HasFilters
+
+`func (o *UpdateSampleCollectionParams) HasFilters() bool`
+
+HasFilters returns a boolean if a field has been set.
+
+### GetVersionId
+
+`func (o *UpdateSampleCollectionParams) GetVersionId() string`
+
+GetVersionId returns the VersionId field if non-nil, zero value otherwise.
+
+### GetVersionIdOk
+
+`func (o *UpdateSampleCollectionParams) GetVersionIdOk() (*string, bool)`
+
+GetVersionIdOk returns a tuple with the VersionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVersionId
+
+`func (o *UpdateSampleCollectionParams) SetVersionId(v string)`
+
+SetVersionId sets VersionId field to given value.
+
+### HasVersionId
+
+`func (o *UpdateSampleCollectionParams) HasVersionId() bool`
+
+HasVersionId returns a boolean if a field has been set.
 
 ### GetDescription
 

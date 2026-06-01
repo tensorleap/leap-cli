@@ -4,6 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**PopulationError** | Pointer to **string** | Error message when populationStatus &#x3D;&#x3D;&#x3D; &#39;failed&#39;. | [optional] 
+**ProcessedSamplesCount** | Pointer to **float64** | Live count of samples resolved so far while &#39;processing&#39; — drives the \&quot;Creating… N samples so far\&quot; / \&quot;Adding…\&quot; progress text. | [optional] 
+**PopulationStatus** | [**CollectionPopulationStatus**](CollectionPopulationStatus.md) |  | 
 **SamplesCount** | Pointer to **float64** |  | [optional] 
 **SamplesBlobName** | Pointer to **string** |  | [optional] 
 **CreatedBy** | Pointer to **string** |  | [optional] 
@@ -18,7 +21,7 @@ Name | Type | Description | Notes
 
 ### NewSampleCollection
 
-`func NewSampleCollection(createdAt time.Time, name string, cid string, projectId string, teamId string, ) *SampleCollection`
+`func NewSampleCollection(populationStatus CollectionPopulationStatus, createdAt time.Time, name string, cid string, projectId string, teamId string, ) *SampleCollection`
 
 NewSampleCollection instantiates a new SampleCollection object
 This constructor will assign default values to properties that have it defined,
@@ -32,6 +35,76 @@ will change when the set of required properties is changed
 NewSampleCollectionWithDefaults instantiates a new SampleCollection object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetPopulationError
+
+`func (o *SampleCollection) GetPopulationError() string`
+
+GetPopulationError returns the PopulationError field if non-nil, zero value otherwise.
+
+### GetPopulationErrorOk
+
+`func (o *SampleCollection) GetPopulationErrorOk() (*string, bool)`
+
+GetPopulationErrorOk returns a tuple with the PopulationError field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPopulationError
+
+`func (o *SampleCollection) SetPopulationError(v string)`
+
+SetPopulationError sets PopulationError field to given value.
+
+### HasPopulationError
+
+`func (o *SampleCollection) HasPopulationError() bool`
+
+HasPopulationError returns a boolean if a field has been set.
+
+### GetProcessedSamplesCount
+
+`func (o *SampleCollection) GetProcessedSamplesCount() float64`
+
+GetProcessedSamplesCount returns the ProcessedSamplesCount field if non-nil, zero value otherwise.
+
+### GetProcessedSamplesCountOk
+
+`func (o *SampleCollection) GetProcessedSamplesCountOk() (*float64, bool)`
+
+GetProcessedSamplesCountOk returns a tuple with the ProcessedSamplesCount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProcessedSamplesCount
+
+`func (o *SampleCollection) SetProcessedSamplesCount(v float64)`
+
+SetProcessedSamplesCount sets ProcessedSamplesCount field to given value.
+
+### HasProcessedSamplesCount
+
+`func (o *SampleCollection) HasProcessedSamplesCount() bool`
+
+HasProcessedSamplesCount returns a boolean if a field has been set.
+
+### GetPopulationStatus
+
+`func (o *SampleCollection) GetPopulationStatus() CollectionPopulationStatus`
+
+GetPopulationStatus returns the PopulationStatus field if non-nil, zero value otherwise.
+
+### GetPopulationStatusOk
+
+`func (o *SampleCollection) GetPopulationStatusOk() (*CollectionPopulationStatus, bool)`
+
+GetPopulationStatusOk returns a tuple with the PopulationStatus field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPopulationStatus
+
+`func (o *SampleCollection) SetPopulationStatus(v CollectionPopulationStatus)`
+
+SetPopulationStatus sets PopulationStatus field to given value.
+
 
 ### GetSamplesCount
 

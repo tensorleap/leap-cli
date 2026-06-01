@@ -153,6 +153,7 @@ Method | HTTP request | Description
 [**SetExperimentProperties**](DefaultAPI.md#SetExperimentProperties) | **Post** /versions/setExperimentProperties | 
 [**SetMachineType**](DefaultAPI.md#SetMachineType) | **Post** /teams/setMachineType | 
 [**SetUserNotificationsAsRead**](DefaultAPI.md#SetUserNotificationsAsRead) | **Post** /notifications/setUserNotificationsAsRead | 
+[**SetVersionUpdateActions**](DefaultAPI.md#SetVersionUpdateActions) | **Post** /versions/setVersionUpdateActions | 
 [**StartTrial**](DefaultAPI.md#StartTrial) | **Post** /auth/startTrial | 
 [**StopJob**](DefaultAPI.md#StopJob) | **Post** /jobs/stopJob | 
 [**TagModel**](DefaultAPI.md#TagModel) | **Post** /versions/tagModel | 
@@ -162,6 +163,7 @@ Method | HTTP request | Description
 [**UpdateDashboard**](DefaultAPI.md#UpdateDashboard) | **Post** /dashboards/updateDashboard | 
 [**UpdateEngineSettings**](DefaultAPI.md#UpdateEngineSettings) | **Post** /settings/updateSetting | 
 [**UpdateEvaluateArtifact**](DefaultAPI.md#UpdateEvaluateArtifact) | **Post** /evaluate/updateEvaluateArtifact | 
+[**UpdateInsightDescription**](DefaultAPI.md#UpdateInsightDescription) | **Post** /insights/updateInsightDescription | 
 [**UpdateIssue**](DefaultAPI.md#UpdateIssue) | **Post** /issues/updateIssue | 
 [**UpdateProjectMeta**](DefaultAPI.md#UpdateProjectMeta) | **Post** /projects/updateProjectMeta | 
 [**UpdateSampleCollection**](DefaultAPI.md#UpdateSampleCollection) | **Post** /sample-collection/updateSampleCollection | 
@@ -5925,7 +5927,7 @@ import (
 )
 
 func main() {
-	getScatterSampleVisualizationsParams := *openapiclient.NewGetScatterSampleVisualizationsParams("VersionId_example", "ProjectId_example") // GetScatterSampleVisualizationsParams | 
+	getScatterSampleVisualizationsParams := *openapiclient.NewGetScatterSampleVisualizationsParams("VersionId_example", "ProjectId_example", []string{"SampleIds_example"}) // GetScatterSampleVisualizationsParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -9549,6 +9551,70 @@ Other parameters are passed through a pointer to a apiSetUserNotificationsAsRead
 [[Back to README]](../README.md)
 
 
+## SetVersionUpdateActions
+
+> SetVersionUpdateActionsResponse SetVersionUpdateActions(ctx).SetVersionUpdateActionsParams(setVersionUpdateActionsParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	setVersionUpdateActionsParams := *openapiclient.NewSetVersionUpdateActionsParams("VersionId_example", "ProjectId_example", []openapiclient.UpdateAction{openapiclient.UpdateAction("update_metadata")}) // SetVersionUpdateActionsParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.SetVersionUpdateActions(context.Background()).SetVersionUpdateActionsParams(setVersionUpdateActionsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SetVersionUpdateActions``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SetVersionUpdateActions`: SetVersionUpdateActionsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.SetVersionUpdateActions`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSetVersionUpdateActionsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **setVersionUpdateActionsParams** | [**SetVersionUpdateActionsParams**](SetVersionUpdateActionsParams.md) |  | 
+
+### Return type
+
+[**SetVersionUpdateActionsResponse**](SetVersionUpdateActionsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## StartTrial
 
 > UserData StartTrial(ctx).StartTrialParams(startTrialParams).Execute()
@@ -10113,6 +10179,68 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateInsightDescription
+
+> UpdateInsightDescription(ctx).UpdateInsightDescriptionParams(updateInsightDescriptionParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	updateInsightDescriptionParams := *openapiclient.NewUpdateInsightDescriptionParams("InsightId_example", "ProjectId_example") // UpdateInsightDescriptionParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.UpdateInsightDescription(context.Background()).UpdateInsightDescriptionParams(updateInsightDescriptionParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateInsightDescription``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateInsightDescriptionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **updateInsightDescriptionParams** | [**UpdateInsightDescriptionParams**](UpdateInsightDescriptionParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
