@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	"github.com/AlecAivazis/survey/v2"
@@ -137,6 +138,10 @@ func AskUserForNewVersionOrSelectExistingVersion(ctx context.Context, projectId 
 	if err != nil {
 		return nil, err
 	}
+
+	sort.SliceStable(versions, func(i, j int) bool {
+		return versions[i].GetUpdatedAt().After(versions[j].GetUpdatedAt())
+	})
 
 	runsStatusesPerVersionId, err := GetRunsStatusesPerVersionId(ctx, projectId)
 	if err != nil {
