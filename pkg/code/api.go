@@ -72,6 +72,61 @@ func PushCodeSnapshot(
 	return result, nil
 }
 
+// PushCodeAndModel uploads the code bundle and triggers the combined push job
+// (code parse + model import in one job) via the new push endpoint, replacing
+// the separate pushCodeSnapshot + importModel calls.
+func PushCodeAndModel(
+	ctx context.Context, tarGzFile io.Reader, fileSize int64,
+	entryFile, secretId, pythonVersion,
+	versionName, projectId, branch string,
+	overwriteVersionId string,
+	modelInfo tensorleapapi.ImportModelInfo,
+) (*tensorleapapi.PushResponse, error) {
+
+	uploadUrl, err := GetCodeSnapshotUploadUrl(ctx, projectId)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := api.UploadFile(uploadUrl, tarGzFile, fileSize); err != nil {
+		return nil, err
+	}
+
+	pushParams := *tensorleapapi.NewPushParams(
+		projectId,
+		uploadUrl,
+		entryFile,
+		versionName,
+		modelInfo,
+	)
+
+	if len(overwriteVersionId) > 0 {
+		pushParams.SetOverwriteVersionId(overwriteVersionId)
+	}
+
+	if len(pythonVersion) > 0 {
+		pushParams.GenericBaseImageType = &pythonVersion
+	}
+
+	if len(branch) > 0 {
+		pushParams.SetBranchName(branch)
+	}
+
+	if len(secretId) > 0 {
+		pushParams.SecretManagerId = &secretId
+	}
+
+	log.Info("Pushing code and model...")
+	result, response, err := api.ApiClient.Push(ctx).
+		PushParams(pushParams).
+		Execute()
+	if err = api.CheckRes(response, err); err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 const TIMEOUT_FOR_CODE_INTEGRATION_STATUS = 90 * time.Minute
 
 var ErrCodeIntegrationTimeout = fmt.Errorf("timeout occurred while waiting for the integration code status")

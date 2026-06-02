@@ -236,6 +236,32 @@ func OverrideModel(ctx context.Context, projectId, versionId string, waitForResu
 	return overrideModelJobId, nil
 }
 
+// WaitForPushJob waits for the combined push job (code parse + model import) to
+// finish. On failure it reports the import/validation errors and logs, same as
+// the standalone import-model wait.
+func WaitForPushJob(ctx context.Context, projectId, versionId, jobId string) error {
+	commandStartTime := time.Now()
+	okStatus, _, err := waitForImportModelJob(ctx, projectId, jobId)
+	if err == ErrImportModelTimeout {
+		return fmt.Errorf("timeout: push job did not complete within the allowed time (job may still be running on the server), job id: %s", jobId)
+	}
+	if err == ErrJobFailed || !okStatus {
+		report, collectErr := CollectImportModelJobErrors(ctx, projectId, jobId, versionId, commandStartTime)
+		if collectErr != nil {
+			return collectErr
+		}
+		if runErr := interactive_pages.RunInteractivePages(report.ToReportPages()); runErr != nil {
+			return runErr
+		}
+		return fmt.Errorf("push failed see errors above, for more logs run: leap run logs %s", jobId)
+	}
+	if err != nil {
+		return fmt.Errorf("error while waiting for push job: %v", err)
+	}
+	log.Println("Push completed successfully")
+	return nil
+}
+
 const TIMEOUT_FOR_IMPORT_MODEL_JOB = 60 * time.Minute
 
 var ErrJobFailed = fmt.Errorf("import model job failed")

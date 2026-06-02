@@ -129,18 +129,82 @@ func runPush(cmdCtx context.Context, in *pushInputs) error {
 		return err
 	}
 
-	codeResp, codePushed, err := s.pushCodeAndWaitForParsing()
+	versionId, codeSnapshotCid, codePushed, err := s.runPushFlow()
 	if err != nil {
 		return err
 	}
 
-	if err := s.applyModelToVersion(codeResp.VersionId); err != nil {
-		return err
+	s.sendSuccessEvent(versionId, codeSnapshotCid, codePushed)
+
+	return s.triggerEvaluate(versionId, dispatch)
+}
+
+// runPushFlow pushes the version and returns its id and code-snapshot id.
+// A new model goes through the combined push job (code parse + model import in
+// one). Overwriting a version that already has a model keeps the code-parse +
+// re-validate flow, since the push job always imports a model.
+func (s *pushState) runPushFlow() (versionId, codeSnapshotCid string, codePushed bool, err error) {
+	if s.needsNewModel() {
+		return s.runCombinedPush()
 	}
 
-	s.sendSuccessEvent(codeResp, codePushed)
+	codeResp, codePushed, err := s.pushCodeAndWaitForParsing()
+	if err != nil {
+		return "", "", false, err
+	}
+	if err := s.overrideExistingModel(codeResp.VersionId); err != nil {
+		return "", "", false, err
+	}
+	return codeResp.VersionId, codeResp.CodeSnapshot.Cid, codePushed, nil
+}
 
-	return s.triggerEvaluate(codeResp.VersionId, dispatch)
+func (s *pushState) runCombinedPush() (versionId, codeSnapshotCid string, codePushed bool, err error) {
+	in := s.inputs
+
+	closeBundle, tarGzFile, err := code.BundleCodeIntoTempFile(".", s.workspaceConfig)
+	if err != nil {
+		return "", "", false, s.fail("bundle_code", err)
+	}
+	defer closeBundle()
+
+	modelInfo, err := model.PrepareImportModelFromFilePath(s.ctx, s.projectId(), in.modelPath, in.transformInput, in.modelType)
+	if err != nil {
+		return "", "", false, s.fail("prepare_model", err)
+	}
+
+	fileStat, err := tarGzFile.Stat()
+	if err != nil {
+		return "", "", false, s.fail("bundle_code", fmt.Errorf("failed to get file stat: %w", err))
+	}
+
+	overwriteVersionId := ""
+	if s.overwriteVersion != nil {
+		overwriteVersionId = s.overwriteVersion.VersionId
+	}
+
+	pushResp, err := code.PushCodeAndModel(
+		s.ctx, tarGzFile, fileStat.Size(),
+		s.workspaceConfig.EntryFile, in.secretId, in.pythonVersion,
+		in.modelVersionName, s.projectId(), in.branch, overwriteVersionId,
+		*modelInfo,
+	)
+	if err != nil {
+		return "", "", false, s.fail("push", err)
+	}
+
+	s.properties["code_snapshot_id"] = pushResp.CodeSnapshot.Cid
+	s.properties["version_id"] = pushResp.VersionId
+	s.properties["job_id"] = pushResp.JobId
+
+	if in.noWait {
+		log.Info("Starting push job. JobId: ", pushResp.JobId)
+		return pushResp.VersionId, pushResp.CodeSnapshot.Cid, true, nil
+	}
+
+	if err := model.WaitForPushJob(s.ctx, s.projectId(), pushResp.VersionId, pushResp.JobId); err != nil {
+		return pushResp.VersionId, pushResp.CodeSnapshot.Cid, true, s.fail("push_job", err)
+	}
+	return pushResp.VersionId, pushResp.CodeSnapshot.Cid, true, nil
 }
 
 func validatePushInputs(in *pushInputs) error {
@@ -418,21 +482,11 @@ func (s *pushState) tagCodeResp(codeResp *tensorleapapi.PushCodeSnapshotResponse
 	s.properties["version_id"] = codeResp.VersionId
 }
 
-func (s *pushState) applyModelToVersion(versionId string) error {
+// overrideExistingModel re-validates the model already attached to an overwritten
+// version against the freshly parsed code. The combined push job is not used here
+// because it always imports a model; this path reuses the existing one.
+func (s *pushState) overrideExistingModel(versionId string) error {
 	in := s.inputs
-	if !s.isOverwrite {
-		importModelInfo, err := model.PrepareImportModelFromFilePath(s.ctx, s.projectId(), in.modelPath, in.transformInput, in.modelType)
-		if err != nil {
-			return err
-		}
-		if _, err = model.ImportModel(s.ctx, s.projectId(), versionId, importModelInfo, !in.noWait); err != nil {
-			s.properties["code_snapshot_id"] = versionId
-			s.properties["version_id"] = versionId
-			return s.fail("import_model", err)
-		}
-		return nil
-	}
-
 	var importModelInfo *tensorleapapi.ImportModelInfo
 	if !s.overwriteVersion.HasModel && !s.overwriteVersion.HasUploadedModel {
 		var err error
@@ -448,10 +502,10 @@ func (s *pushState) applyModelToVersion(versionId string) error {
 	return nil
 }
 
-func (s *pushState) sendSuccessEvent(codeResp *tensorleapapi.PushCodeSnapshotResponse, codePushed bool) {
+func (s *pushState) sendSuccessEvent(versionId, codeSnapshotCid string, codePushed bool) {
 	in := s.inputs
-	s.properties["code_snapshot_id"] = codeResp.CodeSnapshot.Cid
-	s.properties["version_id"] = codeResp.VersionId
+	s.properties["code_snapshot_id"] = codeSnapshotCid
+	s.properties["version_id"] = versionId
 	s.properties["project_id"] = s.projectId()
 	s.properties["final_secret_id"] = in.secretId
 	s.properties["final_python_version"] = in.pythonVersion
