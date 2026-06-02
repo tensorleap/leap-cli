@@ -31,6 +31,8 @@
 
 * `IMPORT_MODEL` (value: `"Import Model"`)
 
+* `PUSH` (value: `"Push"`)
+
 * `GENERATE_INSIGHTS` (value: `"Generate Insights"`)
 
 * `STREAMING_SAMPLES_VIS` (value: `"Streaming Samples Vis"`)

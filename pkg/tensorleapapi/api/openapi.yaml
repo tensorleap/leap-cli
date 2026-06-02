@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.81
+  version: 11.0.85
 servers:
 - url: /api/v2
 paths:
@@ -1532,6 +1532,26 @@ paths:
           description: Ok
       security:
       - jwt: []
+  /projects/getColorSupplierData/{projectId}:
+    get:
+      operationId: GetColorSupplierData
+      parameters:
+      - explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetColorSupplierDataResponse"
+          description: Ok
+      security:
+      - jwt: []
   /projects/exportProject:
     post:
       operationId: ExportProject
@@ -2346,66 +2366,6 @@ paths:
           description: No content
       security:
       - jwt: []
-  /versions/importModel:
-    post:
-      operationId: ImportModel
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ImportNewModelParams"
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/RunImportModelResponse"
-          description: Ok
-      security:
-      - jwt:
-        - not-demo
-  /versions/overwriteModel:
-    post:
-      operationId: OverwriteModel
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/OverwriteModelParams"
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/RunImportModelResponse"
-          description: Ok
-      security:
-      - jwt:
-        - not-demo
-  /versions/importExternalModel:
-    post:
-      operationId: ImportExternalModel
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ImportExternalModelParams"
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/RunImportModelResponse"
-          description: Ok
-      security:
-      - jwt:
-        - not-demo
   /versions/loadVersion:
     post:
       operationId: LoadVersion
@@ -2759,22 +2719,42 @@ paths:
       security:
       - jwt:
         - not-demo
-  /versions/pushCodeSnapshot:
+  /versions/push:
     post:
-      operationId: PushCodeSnapshot
+      operationId: Push
       parameters: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/PushCodeSnapshotParams"
+              $ref: "#/components/schemas/PushParams"
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PushCodeSnapshotResponse"
+                $ref: "#/components/schemas/PushResponse"
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /versions/pushOverride:
+    post:
+      operationId: PushOverride
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PushOverrideParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PushResponse"
           description: Ok
       security:
       - jwt:
@@ -13336,15 +13316,6 @@ components:
       type: object
     PushCodeSnapshotParams:
       additionalProperties: true
-      example:
-        codeUrl: codeUrl
-        overwriteVersionId: overwriteVersionId
-        genericBaseImageType: genericBaseImageType
-        secretManagerId: secretManagerId
-        branchName: branchName
-        codeEntryFile: codeEntryFile
-        versionName: versionName
-        projectId: projectId
       properties:
         projectId:
           type: string
@@ -13665,7 +13636,7 @@ components:
       - node_id
       - visualizer_name
       type: object
-    DatasetMessageParams:
+    CodeMessageParams:
       additionalProperties: true
       properties:
         message:
@@ -13734,7 +13705,7 @@ components:
       - $ref: "#/components/schemas/GeneralMessageParams"
       - $ref: "#/components/schemas/NodeMessageParams"
       - $ref: "#/components/schemas/VisualizerMessageParams"
-      - $ref: "#/components/schemas/DatasetMessageParams"
+      - $ref: "#/components/schemas/CodeMessageParams"
       - $ref: "#/components/schemas/LossMessageParams"
       - $ref: "#/components/schemas/MetricMessageParams"
     EngineSettingKey:
@@ -13831,6 +13802,7 @@ components:
       - SLIM_LS
       - STREAMING_HANDLER
       - STREAMING_SAMPLES_VIS
+      - PUSH
       - EXPORT_PROJECT
       - IMPORT_PROJECT
       type: string
@@ -13850,6 +13822,7 @@ components:
       - Import Project
       - Code Parse
       - Import Model
+      - Push
       - Generate Insights
       - Streaming Samples Vis
       - Update Evaluate
@@ -30601,6 +30574,29 @@ components:
       required:
       - projectId
       type: object
+    ColorLabelIndexMap:
+      additionalProperties:
+        format: double
+        type: number
+      properties: {}
+      type: object
+    ColorSupplierData:
+      additionalProperties:
+        $ref: "#/components/schemas/ColorLabelIndexMap"
+      properties: {}
+      type: object
+    GetColorSupplierDataResponse:
+      additionalProperties: true
+      example:
+        data: ""
+      properties:
+        data:
+          allOf:
+          - $ref: "#/components/schemas/ColorSupplierData"
+          nullable: true
+      required:
+      - data
+      type: object
     ExportProjectResponse:
       additionalProperties: true
       example:
@@ -34373,103 +34369,6 @@ components:
       - firstName
       - lastName
       type: object
-    RunImportModelResponse:
-      additionalProperties: true
-      example:
-        jobId: jobId
-      properties:
-        jobId:
-          type: string
-      required:
-      - jobId
-      type: object
-    ImportModelType:
-      enum:
-      - JSON_TF2
-      - ONNX
-      - PB_TF2
-      - H5_TF2
-      type: string
-    ImportModelInfo:
-      additionalProperties: true
-      example:
-        fileName: fileName
-        transformInputs: true
-        modelType: JSON_TF2
-      properties:
-        fileName:
-          type: string
-        modelType:
-          $ref: "#/components/schemas/ImportModelType"
-        transformInputs:
-          type: boolean
-      required:
-      - fileName
-      - modelType
-      type: object
-    ImportNewModelParams:
-      additionalProperties: true
-      example:
-        versionId: versionId
-        model:
-          fileName: fileName
-          transformInputs: true
-          modelType: JSON_TF2
-        projectId: projectId
-      properties:
-        projectId:
-          type: string
-        versionId:
-          type: string
-        model:
-          $ref: "#/components/schemas/ImportModelInfo"
-      required:
-      - model
-      - projectId
-      - versionId
-      type: object
-    OverwriteModelParams:
-      additionalProperties: true
-      example:
-        versionId: versionId
-        model:
-          fileName: fileName
-          transformInputs: true
-          modelType: JSON_TF2
-        projectId: projectId
-      properties:
-        projectId:
-          type: string
-        versionId:
-          type: string
-        model:
-          $ref: "#/components/schemas/ImportModelInfo"
-      required:
-      - projectId
-      - versionId
-      type: object
-    ImportExternalModelParams:
-      additionalProperties: true
-      example:
-        transformInputs: true
-        epoch: 0.8008281904610115
-        sessionId: sessionId
-        projectId: projectId
-      properties:
-        projectId:
-          type: string
-        sessionId:
-          type: string
-        epoch:
-          format: double
-          type: number
-        transformInputs:
-          type: boolean
-      required:
-      - epoch
-      - projectId
-      - sessionId
-      type: object
     Record_string.Node_:
       description: Construct a type with a set of properties K of type T
       properties: {}
@@ -37644,7 +37543,7 @@ components:
       - testSuccess
       - testFail
       type: string
-    DatasetPreprocess:
+    CodePreprocess:
       additionalProperties: true
       example:
         validation_length: 1.4658129805029452
@@ -37672,7 +37571,7 @@ components:
       - training_length
       - validation_length
       type: object
-    DatasetInputInstance:
+    CodeInputInstance:
       additionalProperties: true
       example:
         shape:
@@ -37695,14 +37594,14 @@ components:
       - name
       - shape
       type: object
-    DatasetMetadataType:
+    CodeMetadataType:
       enum:
       - float
       - string
       - int
       - boolean
       type: string
-    DatasetMetadataInstance:
+    CodeMetadataInstance:
       additionalProperties: true
       example:
         name: name
@@ -37711,12 +37610,12 @@ components:
         name:
           type: string
         type:
-          $ref: "#/components/schemas/DatasetMetadataType"
+          $ref: "#/components/schemas/CodeMetadataType"
       required:
       - name
       - type
       type: object
-    DatasetOutputInstance:
+    CodeOutputInstance:
       additionalProperties: true
       example:
         shape:
@@ -37827,7 +37726,7 @@ components:
       - arg_names
       - name
       type: object
-    DatasetSetup:
+    CodeSetup:
       additionalProperties: true
       example:
         outputs:
@@ -37903,18 +37802,18 @@ components:
           type: Image
       properties:
         preprocess:
-          $ref: "#/components/schemas/DatasetPreprocess"
+          $ref: "#/components/schemas/CodePreprocess"
         inputs:
           items:
-            $ref: "#/components/schemas/DatasetInputInstance"
+            $ref: "#/components/schemas/CodeInputInstance"
           type: array
         metadata:
           items:
-            $ref: "#/components/schemas/DatasetMetadataInstance"
+            $ref: "#/components/schemas/CodeMetadataInstance"
           type: array
         outputs:
           items:
-            $ref: "#/components/schemas/DatasetOutputInstance"
+            $ref: "#/components/schemas/CodeOutputInstance"
           type: array
         visualizers:
           items:
@@ -37942,7 +37841,7 @@ components:
       - preprocess
       - visualizers
       type: object
-    DatasetTestResultPayload:
+    CodeTestResultPayload:
       additionalProperties: true
       example:
         is_passed: true
@@ -38004,7 +37903,7 @@ components:
           type: string
         bindersStatus:
           items:
-            $ref: "#/components/schemas/DatasetTestResultPayload"
+            $ref: "#/components/schemas/CodeTestResultPayload"
           type: array
       required:
       - bindersStatus
@@ -38186,7 +38085,7 @@ components:
         setupStatus:
           $ref: "#/components/schemas/CodeSnapshotSetupStatus"
         setup:
-          $ref: "#/components/schemas/DatasetSetup"
+          $ref: "#/components/schemas/CodeSetup"
         jobId:
           type: string
         testStatus:
@@ -38349,7 +38248,7 @@ components:
       - projectId
       - teamId
       type: object
-    PushCodeSnapshotResponse:
+    PushResponse:
       additionalProperties: true
       example:
         codeSnapshot:
@@ -38475,15 +38374,115 @@ components:
           codeEntryFile: codeEntryFile
           projectId: projectId
           cid: cid
+        jobId: jobId
         versionId: versionId
       properties:
-        codeSnapshot:
-          $ref: "#/components/schemas/CodeSnapshot"
+        jobId:
+          type: string
         versionId:
           type: string
+        codeSnapshot:
+          $ref: "#/components/schemas/CodeSnapshot"
       required:
       - codeSnapshot
+      - jobId
       - versionId
+      type: object
+    ImportModelType:
+      enum:
+      - JSON_TF2
+      - ONNX
+      - PB_TF2
+      - H5_TF2
+      type: string
+    ImportModelInfo:
+      additionalProperties: true
+      example:
+        fileName: fileName
+        transformInputs: true
+        modelType: JSON_TF2
+      properties:
+        fileName:
+          type: string
+        modelType:
+          $ref: "#/components/schemas/ImportModelType"
+        transformInputs:
+          type: boolean
+      required:
+      - fileName
+      - modelType
+      type: object
+    PushParams:
+      additionalProperties: true
+      example:
+        codeUrl: codeUrl
+        overwriteVersionId: overwriteVersionId
+        genericBaseImageType: genericBaseImageType
+        secretManagerId: secretManagerId
+        branchName: branchName
+        model:
+          fileName: fileName
+          transformInputs: true
+          modelType: JSON_TF2
+        codeEntryFile: codeEntryFile
+        versionName: versionName
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        secretManagerId:
+          type: string
+        codeUrl:
+          type: string
+        codeEntryFile:
+          type: string
+        genericBaseImageType:
+          type: string
+        versionName:
+          type: string
+        branchName:
+          type: string
+        overwriteVersionId:
+          type: string
+        model:
+          $ref: "#/components/schemas/ImportModelInfo"
+      required:
+      - codeEntryFile
+      - codeUrl
+      - model
+      - projectId
+      - versionName
+      type: object
+    PushOverrideParams:
+      additionalProperties: true
+      example:
+        codeUrl: codeUrl
+        overwriteVersionId: overwriteVersionId
+        genericBaseImageType: genericBaseImageType
+        secretManagerId: secretManagerId
+        branchName: branchName
+        codeEntryFile: codeEntryFile
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        secretManagerId:
+          type: string
+        codeUrl:
+          type: string
+        codeEntryFile:
+          type: string
+        genericBaseImageType:
+          type: string
+        overwriteVersionId:
+          type: string
+        branchName:
+          type: string
+      required:
+      - codeEntryFile
+      - codeUrl
+      - overwriteVersionId
+      - projectId
       type: object
     GetCodeSnapshotResponse:
       additionalProperties: true
@@ -39403,6 +39402,7 @@ components:
       - SLIM_LS
       - STREAMING_HANDLER
       - STREAMING_SAMPLES_VIS
+      - PUSH
       type: string
     BasicVisualizationInfo:
       additionalProperties: true

@@ -1,4 +1,4 @@
-# DatasetPreprocess
+# CodePreprocess
 
 ## Properties
 
@@ -12,135 +12,135 @@ Name | Type | Description | Notes
 
 ## Methods
 
-### NewDatasetPreprocess
+### NewCodePreprocess
 
-`func NewDatasetPreprocess(trainingLength float64, validationLength float64, ) *DatasetPreprocess`
+`func NewCodePreprocess(trainingLength float64, validationLength float64, ) *CodePreprocess`
 
-NewDatasetPreprocess instantiates a new DatasetPreprocess object
+NewCodePreprocess instantiates a new CodePreprocess object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewDatasetPreprocessWithDefaults
+### NewCodePreprocessWithDefaults
 
-`func NewDatasetPreprocessWithDefaults() *DatasetPreprocess`
+`func NewCodePreprocessWithDefaults() *CodePreprocess`
 
-NewDatasetPreprocessWithDefaults instantiates a new DatasetPreprocess object
+NewCodePreprocessWithDefaults instantiates a new CodePreprocess object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetTrainingLength
 
-`func (o *DatasetPreprocess) GetTrainingLength() float64`
+`func (o *CodePreprocess) GetTrainingLength() float64`
 
 GetTrainingLength returns the TrainingLength field if non-nil, zero value otherwise.
 
 ### GetTrainingLengthOk
 
-`func (o *DatasetPreprocess) GetTrainingLengthOk() (*float64, bool)`
+`func (o *CodePreprocess) GetTrainingLengthOk() (*float64, bool)`
 
 GetTrainingLengthOk returns a tuple with the TrainingLength field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTrainingLength
 
-`func (o *DatasetPreprocess) SetTrainingLength(v float64)`
+`func (o *CodePreprocess) SetTrainingLength(v float64)`
 
 SetTrainingLength sets TrainingLength field to given value.
 
 
 ### GetValidationLength
 
-`func (o *DatasetPreprocess) GetValidationLength() float64`
+`func (o *CodePreprocess) GetValidationLength() float64`
 
 GetValidationLength returns the ValidationLength field if non-nil, zero value otherwise.
 
 ### GetValidationLengthOk
 
-`func (o *DatasetPreprocess) GetValidationLengthOk() (*float64, bool)`
+`func (o *CodePreprocess) GetValidationLengthOk() (*float64, bool)`
 
 GetValidationLengthOk returns a tuple with the ValidationLength field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetValidationLength
 
-`func (o *DatasetPreprocess) SetValidationLength(v float64)`
+`func (o *CodePreprocess) SetValidationLength(v float64)`
 
 SetValidationLength sets ValidationLength field to given value.
 
 
 ### GetTestLength
 
-`func (o *DatasetPreprocess) GetTestLength() float64`
+`func (o *CodePreprocess) GetTestLength() float64`
 
 GetTestLength returns the TestLength field if non-nil, zero value otherwise.
 
 ### GetTestLengthOk
 
-`func (o *DatasetPreprocess) GetTestLengthOk() (*float64, bool)`
+`func (o *CodePreprocess) GetTestLengthOk() (*float64, bool)`
 
 GetTestLengthOk returns a tuple with the TestLength field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTestLength
 
-`func (o *DatasetPreprocess) SetTestLength(v float64)`
+`func (o *CodePreprocess) SetTestLength(v float64)`
 
 SetTestLength sets TestLength field to given value.
 
 ### HasTestLength
 
-`func (o *DatasetPreprocess) HasTestLength() bool`
+`func (o *CodePreprocess) HasTestLength() bool`
 
 HasTestLength returns a boolean if a field has been set.
 
 ### GetUnlabeledLength
 
-`func (o *DatasetPreprocess) GetUnlabeledLength() float64`
+`func (o *CodePreprocess) GetUnlabeledLength() float64`
 
 GetUnlabeledLength returns the UnlabeledLength field if non-nil, zero value otherwise.
 
 ### GetUnlabeledLengthOk
 
-`func (o *DatasetPreprocess) GetUnlabeledLengthOk() (*float64, bool)`
+`func (o *CodePreprocess) GetUnlabeledLengthOk() (*float64, bool)`
 
 GetUnlabeledLengthOk returns a tuple with the UnlabeledLength field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUnlabeledLength
 
-`func (o *DatasetPreprocess) SetUnlabeledLength(v float64)`
+`func (o *CodePreprocess) SetUnlabeledLength(v float64)`
 
 SetUnlabeledLength sets UnlabeledLength field to given value.
 
 ### HasUnlabeledLength
 
-`func (o *DatasetPreprocess) HasUnlabeledLength() bool`
+`func (o *CodePreprocess) HasUnlabeledLength() bool`
 
 HasUnlabeledLength returns a boolean if a field has been set.
 
 ### GetAdditionalLength
 
-`func (o *DatasetPreprocess) GetAdditionalLength() float64`
+`func (o *CodePreprocess) GetAdditionalLength() float64`
 
 GetAdditionalLength returns the AdditionalLength field if non-nil, zero value otherwise.
 
 ### GetAdditionalLengthOk
 
-`func (o *DatasetPreprocess) GetAdditionalLengthOk() (*float64, bool)`
+`func (o *CodePreprocess) GetAdditionalLengthOk() (*float64, bool)`
 
 GetAdditionalLengthOk returns a tuple with the AdditionalLength field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAdditionalLength
 
-`func (o *DatasetPreprocess) SetAdditionalLength(v float64)`
+`func (o *CodePreprocess) SetAdditionalLength(v float64)`
 
 SetAdditionalLength sets AdditionalLength field to given value.
 
 ### HasAdditionalLength
 
-`func (o *DatasetPreprocess) HasAdditionalLength() bool`
+`func (o *CodePreprocess) HasAdditionalLength() bool`
 
 HasAdditionalLength returns a boolean if a field has been set.
 

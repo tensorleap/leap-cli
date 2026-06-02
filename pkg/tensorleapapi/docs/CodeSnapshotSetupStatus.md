@@ -6,13 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **GeneralError** | Pointer to **string** |  | [optional] 
 **PrintLog** | Pointer to **string** |  | [optional] 
-**BindersStatus** | [**[]DatasetTestResultPayload**](DatasetTestResultPayload.md) |  | 
+**BindersStatus** | [**[]CodeTestResultPayload**](CodeTestResultPayload.md) |  | 
 
 ## Methods
 
 ### NewCodeSnapshotSetupStatus
 
-`func NewCodeSnapshotSetupStatus(bindersStatus []DatasetTestResultPayload, ) *CodeSnapshotSetupStatus`
+`func NewCodeSnapshotSetupStatus(bindersStatus []CodeTestResultPayload, ) *CodeSnapshotSetupStatus`
 
 NewCodeSnapshotSetupStatus instantiates a new CodeSnapshotSetupStatus object
 This constructor will assign default values to properties that have it defined,
@@ -79,20 +79,20 @@ HasPrintLog returns a boolean if a field has been set.
 
 ### GetBindersStatus
 
-`func (o *CodeSnapshotSetupStatus) GetBindersStatus() []DatasetTestResultPayload`
+`func (o *CodeSnapshotSetupStatus) GetBindersStatus() []CodeTestResultPayload`
 
 GetBindersStatus returns the BindersStatus field if non-nil, zero value otherwise.
 
 ### GetBindersStatusOk
 
-`func (o *CodeSnapshotSetupStatus) GetBindersStatusOk() (*[]DatasetTestResultPayload, bool)`
+`func (o *CodeSnapshotSetupStatus) GetBindersStatusOk() (*[]CodeTestResultPayload, bool)`
 
 GetBindersStatusOk returns a tuple with the BindersStatus field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBindersStatus
 
-`func (o *CodeSnapshotSetupStatus) SetBindersStatus(v []DatasetTestResultPayload)`
+`func (o *CodeSnapshotSetupStatus) SetBindersStatus(v []CodeTestResultPayload)`
 
 SetBindersStatus sets BindersStatus field to given value.
 

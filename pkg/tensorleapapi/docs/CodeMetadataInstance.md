@@ -1,67 +1,67 @@
-# DatasetMetadataInstance
+# CodeMetadataInstance
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** |  | 
-**Type** | [**DatasetMetadataType**](DatasetMetadataType.md) |  | 
+**Type** | [**CodeMetadataType**](CodeMetadataType.md) |  | 
 
 ## Methods
 
-### NewDatasetMetadataInstance
+### NewCodeMetadataInstance
 
-`func NewDatasetMetadataInstance(name string, type_ DatasetMetadataType, ) *DatasetMetadataInstance`
+`func NewCodeMetadataInstance(name string, type_ CodeMetadataType, ) *CodeMetadataInstance`
 
-NewDatasetMetadataInstance instantiates a new DatasetMetadataInstance object
+NewCodeMetadataInstance instantiates a new CodeMetadataInstance object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewDatasetMetadataInstanceWithDefaults
+### NewCodeMetadataInstanceWithDefaults
 
-`func NewDatasetMetadataInstanceWithDefaults() *DatasetMetadataInstance`
+`func NewCodeMetadataInstanceWithDefaults() *CodeMetadataInstance`
 
-NewDatasetMetadataInstanceWithDefaults instantiates a new DatasetMetadataInstance object
+NewCodeMetadataInstanceWithDefaults instantiates a new CodeMetadataInstance object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetName
 
-`func (o *DatasetMetadataInstance) GetName() string`
+`func (o *CodeMetadataInstance) GetName() string`
 
 GetName returns the Name field if non-nil, zero value otherwise.
 
 ### GetNameOk
 
-`func (o *DatasetMetadataInstance) GetNameOk() (*string, bool)`
+`func (o *CodeMetadataInstance) GetNameOk() (*string, bool)`
 
 GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetName
 
-`func (o *DatasetMetadataInstance) SetName(v string)`
+`func (o *CodeMetadataInstance) SetName(v string)`
 
 SetName sets Name field to given value.
 
 
 ### GetType
 
-`func (o *DatasetMetadataInstance) GetType() DatasetMetadataType`
+`func (o *CodeMetadataInstance) GetType() CodeMetadataType`
 
 GetType returns the Type field if non-nil, zero value otherwise.
 
 ### GetTypeOk
 
-`func (o *DatasetMetadataInstance) GetTypeOk() (*DatasetMetadataType, bool)`
+`func (o *CodeMetadataInstance) GetTypeOk() (*CodeMetadataType, bool)`
 
 GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetType
 
-`func (o *DatasetMetadataInstance) SetType(v DatasetMetadataType)`
+`func (o *CodeMetadataInstance) SetType(v CodeMetadataType)`
 
 SetType sets Type field to given value.
 
