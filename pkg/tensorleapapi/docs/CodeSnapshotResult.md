@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ModelSetup** | Pointer to [**ModelSetup**](ModelSetup.md) |  | [optional] 
 **SetupStatus** | Pointer to [**CodeSnapshotSetupStatus**](CodeSnapshotSetupStatus.md) |  | [optional] 
-**Setup** | Pointer to [**DatasetSetup**](DatasetSetup.md) |  | [optional] 
+**Setup** | Pointer to [**CodeSetup**](CodeSetup.md) |  | [optional] 
 **JobId** | Pointer to **string** |  | [optional] 
 **TestStatus** | [**TestStatus**](TestStatus.md) |  | 
 
@@ -81,20 +81,20 @@ HasSetupStatus returns a boolean if a field has been set.
 
 ### GetSetup
 
-`func (o *CodeSnapshotResult) GetSetup() DatasetSetup`
+`func (o *CodeSnapshotResult) GetSetup() CodeSetup`
 
 GetSetup returns the Setup field if non-nil, zero value otherwise.
 
 ### GetSetupOk
 
-`func (o *CodeSnapshotResult) GetSetupOk() (*DatasetSetup, bool)`
+`func (o *CodeSnapshotResult) GetSetupOk() (*CodeSetup, bool)`
 
 GetSetupOk returns a tuple with the Setup field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSetup
 
-`func (o *CodeSnapshotResult) SetSetup(v DatasetSetup)`
+`func (o *CodeSnapshotResult) SetSetup(v CodeSetup)`
 
 SetSetup sets Setup field to given value.
 

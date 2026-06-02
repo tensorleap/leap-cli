@@ -1,4 +1,4 @@
-# DatasetMetadataType
+# CodeMetadataType
 
 ## Enum
 

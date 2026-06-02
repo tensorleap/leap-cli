@@ -29,6 +29,8 @@
 
 * `STREAMING_SAMPLES_VIS` (value: `"STREAMING_SAMPLES_VIS"`)
 
+* `PUSH` (value: `"PUSH"`)
+
 * `EXPORT_PROJECT` (value: `"EXPORT_PROJECT"`)
 
 * `IMPORT_PROJECT` (value: `"IMPORT_PROJECT"`)

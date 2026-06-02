@@ -1,4 +1,4 @@
-# DatasetMessageParams
+# CodeMessageParams
 
 ## Properties
 
@@ -12,124 +12,124 @@ Name | Type | Description | Notes
 
 ## Methods
 
-### NewDatasetMessageParams
+### NewCodeMessageParams
 
-`func NewDatasetMessageParams(message string, line float64, funcName string, module Module, ) *DatasetMessageParams`
+`func NewCodeMessageParams(message string, line float64, funcName string, module Module, ) *CodeMessageParams`
 
-NewDatasetMessageParams instantiates a new DatasetMessageParams object
+NewCodeMessageParams instantiates a new CodeMessageParams object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewDatasetMessageParamsWithDefaults
+### NewCodeMessageParamsWithDefaults
 
-`func NewDatasetMessageParamsWithDefaults() *DatasetMessageParams`
+`func NewCodeMessageParamsWithDefaults() *CodeMessageParams`
 
-NewDatasetMessageParamsWithDefaults instantiates a new DatasetMessageParams object
+NewCodeMessageParamsWithDefaults instantiates a new CodeMessageParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetMessage
 
-`func (o *DatasetMessageParams) GetMessage() string`
+`func (o *CodeMessageParams) GetMessage() string`
 
 GetMessage returns the Message field if non-nil, zero value otherwise.
 
 ### GetMessageOk
 
-`func (o *DatasetMessageParams) GetMessageOk() (*string, bool)`
+`func (o *CodeMessageParams) GetMessageOk() (*string, bool)`
 
 GetMessageOk returns a tuple with the Message field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMessage
 
-`func (o *DatasetMessageParams) SetMessage(v string)`
+`func (o *CodeMessageParams) SetMessage(v string)`
 
 SetMessage sets Message field to given value.
 
 
 ### GetMessageCode
 
-`func (o *DatasetMessageParams) GetMessageCode() string`
+`func (o *CodeMessageParams) GetMessageCode() string`
 
 GetMessageCode returns the MessageCode field if non-nil, zero value otherwise.
 
 ### GetMessageCodeOk
 
-`func (o *DatasetMessageParams) GetMessageCodeOk() (*string, bool)`
+`func (o *CodeMessageParams) GetMessageCodeOk() (*string, bool)`
 
 GetMessageCodeOk returns a tuple with the MessageCode field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMessageCode
 
-`func (o *DatasetMessageParams) SetMessageCode(v string)`
+`func (o *CodeMessageParams) SetMessageCode(v string)`
 
 SetMessageCode sets MessageCode field to given value.
 
 ### HasMessageCode
 
-`func (o *DatasetMessageParams) HasMessageCode() bool`
+`func (o *CodeMessageParams) HasMessageCode() bool`
 
 HasMessageCode returns a boolean if a field has been set.
 
 ### GetLine
 
-`func (o *DatasetMessageParams) GetLine() float64`
+`func (o *CodeMessageParams) GetLine() float64`
 
 GetLine returns the Line field if non-nil, zero value otherwise.
 
 ### GetLineOk
 
-`func (o *DatasetMessageParams) GetLineOk() (*float64, bool)`
+`func (o *CodeMessageParams) GetLineOk() (*float64, bool)`
 
 GetLineOk returns a tuple with the Line field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLine
 
-`func (o *DatasetMessageParams) SetLine(v float64)`
+`func (o *CodeMessageParams) SetLine(v float64)`
 
 SetLine sets Line field to given value.
 
 
 ### GetFuncName
 
-`func (o *DatasetMessageParams) GetFuncName() string`
+`func (o *CodeMessageParams) GetFuncName() string`
 
 GetFuncName returns the FuncName field if non-nil, zero value otherwise.
 
 ### GetFuncNameOk
 
-`func (o *DatasetMessageParams) GetFuncNameOk() (*string, bool)`
+`func (o *CodeMessageParams) GetFuncNameOk() (*string, bool)`
 
 GetFuncNameOk returns a tuple with the FuncName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFuncName
 
-`func (o *DatasetMessageParams) SetFuncName(v string)`
+`func (o *CodeMessageParams) SetFuncName(v string)`
 
 SetFuncName sets FuncName field to given value.
 
 
 ### GetModule
 
-`func (o *DatasetMessageParams) GetModule() Module`
+`func (o *CodeMessageParams) GetModule() Module`
 
 GetModule returns the Module field if non-nil, zero value otherwise.
 
 ### GetModuleOk
 
-`func (o *DatasetMessageParams) GetModuleOk() (*Module, bool)`
+`func (o *CodeMessageParams) GetModuleOk() (*Module, bool)`
 
 GetModuleOk returns a tuple with the Module field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetModule
 
-`func (o *DatasetMessageParams) SetModule(v Module)`
+`func (o *CodeMessageParams) SetModule(v Module)`
 
 SetModule sets Module field to given value.
 

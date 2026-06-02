@@ -55,6 +55,7 @@ Method | HTTP request | Description
 [**GetCollectionDisplayData**](DefaultAPI.md#GetCollectionDisplayData) | **Post** /sample-collection/getCollectionDisplayData | 
 [**GetCollectionSampleOrder**](DefaultAPI.md#GetCollectionSampleOrder) | **Post** /sample-collection/getCollectionSampleOrder | 
 [**GetCollectionSamplesMetadata**](DefaultAPI.md#GetCollectionSamplesMetadata) | **Post** /sample-collection/getCollectionSamplesMetadata | 
+[**GetColorSupplierData**](DefaultAPI.md#GetColorSupplierData) | **Get** /projects/getColorSupplierData/{projectId} | 
 [**GetConfusionMatrixLabels**](DefaultAPI.md#GetConfusionMatrixLabels) | **Post** /sessionmetrics/getConfusionMatrixLabels | 
 [**GetConfusionMatrixResultCombinations**](DefaultAPI.md#GetConfusionMatrixResultCombinations) | **Post** /sessionmetrics/getConfusionMatrixResultCombinations | 
 [**GetConfusionMatrixTable**](DefaultAPI.md#GetConfusionMatrixTable) | **Post** /sessionmetrics/getConfusionMatrixTable | 
@@ -121,8 +122,6 @@ Method | HTTP request | Description
 [**GetVisualization**](DefaultAPI.md#GetVisualization) | **Post** /visualizations/getVisualization | 
 [**GetXYChart**](DefaultAPI.md#GetXYChart) | **Post** /sessionmetrics/getXYChart | 
 [**HealthCheck**](DefaultAPI.md#HealthCheck) | **Get** /monitor/healthCheck | 
-[**ImportExternalModel**](DefaultAPI.md#ImportExternalModel) | **Post** /versions/importExternalModel | 
-[**ImportModel**](DefaultAPI.md#ImportModel) | **Post** /versions/importModel | 
 [**ImportProject**](DefaultAPI.md#ImportProject) | **Post** /projects/importProject | 
 [**InitExperiment**](DefaultAPI.md#InitExperiment) | **Post** /versions/initExperiment | 
 [**KeyGen**](DefaultAPI.md#KeyGen) | **Post** /auth/keygen | 
@@ -132,10 +131,10 @@ Method | HTTP request | Description
 [**LogExternalEpochData**](DefaultAPI.md#LogExternalEpochData) | **Post** /externalepochdata/logExternalEpochData | 
 [**Login**](DefaultAPI.md#Login) | **Post** /auth/login | 
 [**Logout**](DefaultAPI.md#Logout) | **Post** /auth/logout | 
-[**OverwriteModel**](DefaultAPI.md#OverwriteModel) | **Post** /versions/overwriteModel | 
 [**PopulateCollectionFromFilters**](DefaultAPI.md#PopulateCollectionFromFilters) | **Post** /sample-collection/populateCollectionFromFilters | 
 [**PopulationExploration**](DefaultAPI.md#PopulationExploration) | **Post** /visualizations/populationExploration | 
-[**PushCodeSnapshot**](DefaultAPI.md#PushCodeSnapshot) | **Post** /versions/pushCodeSnapshot | 
+[**Push**](DefaultAPI.md#Push) | **Post** /versions/push | 
+[**PushOverride**](DefaultAPI.md#PushOverride) | **Post** /versions/pushOverride | 
 [**RefreshLocalAuth**](DefaultAPI.md#RefreshLocalAuth) | **Post** /auth/refreshLocalAuth | 
 [**RemoveExperiment**](DefaultAPI.md#RemoveExperiment) | **Post** /versions/removeExperiment | 
 [**RemoveSamplesCollection**](DefaultAPI.md#RemoveSamplesCollection) | **Post** /sample-collection/removeSampleCollections | 
@@ -3376,6 +3375,74 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetColorSupplierData
+
+> GetColorSupplierDataResponse GetColorSupplierData(ctx, projectId).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	projectId := "projectId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetColorSupplierData(context.Background(), projectId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetColorSupplierData``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetColorSupplierData`: GetColorSupplierDataResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetColorSupplierData`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**projectId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetColorSupplierDataRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**GetColorSupplierDataResponse**](GetColorSupplierDataResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -7552,134 +7619,6 @@ No authorization required
 [[Back to README]](../README.md)
 
 
-## ImportExternalModel
-
-> RunImportModelResponse ImportExternalModel(ctx).ImportExternalModelParams(importExternalModelParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-	importExternalModelParams := *openapiclient.NewImportExternalModelParams("ProjectId_example", "SessionId_example", float64(123)) // ImportExternalModelParams | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DefaultAPI.ImportExternalModel(context.Background()).ImportExternalModelParams(importExternalModelParams).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ImportExternalModel``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `ImportExternalModel`: RunImportModelResponse
-	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ImportExternalModel`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiImportExternalModelRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **importExternalModelParams** | [**ImportExternalModelParams**](ImportExternalModelParams.md) |  | 
-
-### Return type
-
-[**RunImportModelResponse**](RunImportModelResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## ImportModel
-
-> RunImportModelResponse ImportModel(ctx).ImportNewModelParams(importNewModelParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-	importNewModelParams := *openapiclient.NewImportNewModelParams("ProjectId_example", "VersionId_example", *openapiclient.NewImportModelInfo("FileName_example", openapiclient.ImportModelType("JSON_TF2"))) // ImportNewModelParams | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DefaultAPI.ImportModel(context.Background()).ImportNewModelParams(importNewModelParams).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ImportModel``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `ImportModel`: RunImportModelResponse
-	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ImportModel`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiImportModelRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **importNewModelParams** | [**ImportNewModelParams**](ImportNewModelParams.md) |  | 
-
-### Return type
-
-[**RunImportModelResponse**](RunImportModelResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## ImportProject
 
 > ImportProjectResponse ImportProject(ctx).ImportProjectRequest(importProjectRequest).Execute()
@@ -8242,70 +8181,6 @@ Other parameters are passed through a pointer to a apiLogoutRequest struct via t
 [[Back to README]](../README.md)
 
 
-## OverwriteModel
-
-> RunImportModelResponse OverwriteModel(ctx).OverwriteModelParams(overwriteModelParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-	overwriteModelParams := *openapiclient.NewOverwriteModelParams("ProjectId_example", "VersionId_example") // OverwriteModelParams | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DefaultAPI.OverwriteModel(context.Background()).OverwriteModelParams(overwriteModelParams).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.OverwriteModel``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `OverwriteModel`: RunImportModelResponse
-	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.OverwriteModel`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiOverwriteModelRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **overwriteModelParams** | [**OverwriteModelParams**](OverwriteModelParams.md) |  | 
-
-### Return type
-
-[**RunImportModelResponse**](RunImportModelResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## PopulateCollectionFromFilters
 
 > PopulateCollectionFromFiltersResponse PopulateCollectionFromFilters(ctx).PopulateCollectionFromFiltersParams(populateCollectionFromFiltersParams).Execute()
@@ -8434,9 +8309,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## PushCodeSnapshot
+## Push
 
-> PushCodeSnapshotResponse PushCodeSnapshot(ctx).PushCodeSnapshotParams(pushCodeSnapshotParams).Execute()
+> PushResponse Push(ctx).PushParams(pushParams).Execute()
 
 
 
@@ -8453,17 +8328,17 @@ import (
 )
 
 func main() {
-	pushCodeSnapshotParams := *openapiclient.NewPushCodeSnapshotParams("ProjectId_example", "CodeUrl_example", "CodeEntryFile_example", "VersionName_example") // PushCodeSnapshotParams | 
+	pushParams := *openapiclient.NewPushParams("ProjectId_example", "CodeUrl_example", "CodeEntryFile_example", "VersionName_example", *openapiclient.NewImportModelInfo("FileName_example", openapiclient.ImportModelType("JSON_TF2"))) // PushParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DefaultAPI.PushCodeSnapshot(context.Background()).PushCodeSnapshotParams(pushCodeSnapshotParams).Execute()
+	resp, r, err := apiClient.DefaultAPI.Push(context.Background()).PushParams(pushParams).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.PushCodeSnapshot``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.Push``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `PushCodeSnapshot`: PushCodeSnapshotResponse
-	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.PushCodeSnapshot`: %v\n", resp)
+	// response from `Push`: PushResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.Push`: %v\n", resp)
 }
 ```
 
@@ -8473,16 +8348,80 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiPushCodeSnapshotRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiPushRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pushCodeSnapshotParams** | [**PushCodeSnapshotParams**](PushCodeSnapshotParams.md) |  | 
+ **pushParams** | [**PushParams**](PushParams.md) |  | 
 
 ### Return type
 
-[**PushCodeSnapshotResponse**](PushCodeSnapshotResponse.md)
+[**PushResponse**](PushResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## PushOverride
+
+> PushResponse PushOverride(ctx).PushOverrideParams(pushOverrideParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	pushOverrideParams := *openapiclient.NewPushOverrideParams("ProjectId_example", "CodeUrl_example", "CodeEntryFile_example", "OverwriteVersionId_example") // PushOverrideParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.PushOverride(context.Background()).PushOverrideParams(pushOverrideParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.PushOverride``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `PushOverride`: PushResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.PushOverride`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPushOverrideRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **pushOverrideParams** | [**PushOverrideParams**](PushOverrideParams.md) |  | 
+
+### Return type
+
+[**PushResponse**](PushResponse.md)
 
 ### Authorization
 

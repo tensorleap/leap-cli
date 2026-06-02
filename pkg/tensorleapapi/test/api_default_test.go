@@ -615,6 +615,20 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService GetColorSupplierData", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		var projectId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.GetColorSupplierData(context.Background(), projectId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService GetConfusionMatrixLabels", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -1407,30 +1421,6 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test DefaultAPIService ImportExternalModel", func(t *testing.T) {
-
-		t.Skip("skip test") // remove to run test
-
-		resp, httpRes, err := apiClient.DefaultAPI.ImportExternalModel(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test DefaultAPIService ImportModel", func(t *testing.T) {
-
-		t.Skip("skip test") // remove to run test
-
-		resp, httpRes, err := apiClient.DefaultAPI.ImportModel(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test DefaultAPIService ImportProject", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -1537,18 +1527,6 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test DefaultAPIService OverwriteModel", func(t *testing.T) {
-
-		t.Skip("skip test") // remove to run test
-
-		resp, httpRes, err := apiClient.DefaultAPI.OverwriteModel(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test DefaultAPIService PopulateCollectionFromFilters", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -1573,11 +1551,23 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test DefaultAPIService PushCodeSnapshot", func(t *testing.T) {
+	t.Run("Test DefaultAPIService Push", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
 
-		resp, httpRes, err := apiClient.DefaultAPI.PushCodeSnapshot(context.Background()).Execute()
+		resp, httpRes, err := apiClient.DefaultAPI.Push(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService PushOverride", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.PushOverride(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

@@ -1,13 +1,13 @@
-# DatasetSetup
+# CodeSetup
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Preprocess** | [**DatasetPreprocess**](DatasetPreprocess.md) |  | 
-**Inputs** | [**[]DatasetInputInstance**](DatasetInputInstance.md) |  | 
-**Metadata** | [**[]DatasetMetadataInstance**](DatasetMetadataInstance.md) |  | 
-**Outputs** | [**[]DatasetOutputInstance**](DatasetOutputInstance.md) |  | 
+**Preprocess** | [**CodePreprocess**](CodePreprocess.md) |  | 
+**Inputs** | [**[]CodeInputInstance**](CodeInputInstance.md) |  | 
+**Metadata** | [**[]CodeMetadataInstance**](CodeMetadataInstance.md) |  | 
+**Outputs** | [**[]CodeOutputInstance**](CodeOutputInstance.md) |  | 
 **Visualizers** | [**[]VisualizerInstance**](VisualizerInstance.md) |  | 
 **PredictionTypes** | [**[]PredictionTypeInstance**](PredictionTypeInstance.md) |  | 
 **CustomLosses** | [**[]CustomLossInstance**](CustomLossInstance.md) |  | 
@@ -15,179 +15,179 @@ Name | Type | Description | Notes
 
 ## Methods
 
-### NewDatasetSetup
+### NewCodeSetup
 
-`func NewDatasetSetup(preprocess DatasetPreprocess, inputs []DatasetInputInstance, metadata []DatasetMetadataInstance, outputs []DatasetOutputInstance, visualizers []VisualizerInstance, predictionTypes []PredictionTypeInstance, customLosses []CustomLossInstance, metrics []MetricInstance, ) *DatasetSetup`
+`func NewCodeSetup(preprocess CodePreprocess, inputs []CodeInputInstance, metadata []CodeMetadataInstance, outputs []CodeOutputInstance, visualizers []VisualizerInstance, predictionTypes []PredictionTypeInstance, customLosses []CustomLossInstance, metrics []MetricInstance, ) *CodeSetup`
 
-NewDatasetSetup instantiates a new DatasetSetup object
+NewCodeSetup instantiates a new CodeSetup object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewDatasetSetupWithDefaults
+### NewCodeSetupWithDefaults
 
-`func NewDatasetSetupWithDefaults() *DatasetSetup`
+`func NewCodeSetupWithDefaults() *CodeSetup`
 
-NewDatasetSetupWithDefaults instantiates a new DatasetSetup object
+NewCodeSetupWithDefaults instantiates a new CodeSetup object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetPreprocess
 
-`func (o *DatasetSetup) GetPreprocess() DatasetPreprocess`
+`func (o *CodeSetup) GetPreprocess() CodePreprocess`
 
 GetPreprocess returns the Preprocess field if non-nil, zero value otherwise.
 
 ### GetPreprocessOk
 
-`func (o *DatasetSetup) GetPreprocessOk() (*DatasetPreprocess, bool)`
+`func (o *CodeSetup) GetPreprocessOk() (*CodePreprocess, bool)`
 
 GetPreprocessOk returns a tuple with the Preprocess field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPreprocess
 
-`func (o *DatasetSetup) SetPreprocess(v DatasetPreprocess)`
+`func (o *CodeSetup) SetPreprocess(v CodePreprocess)`
 
 SetPreprocess sets Preprocess field to given value.
 
 
 ### GetInputs
 
-`func (o *DatasetSetup) GetInputs() []DatasetInputInstance`
+`func (o *CodeSetup) GetInputs() []CodeInputInstance`
 
 GetInputs returns the Inputs field if non-nil, zero value otherwise.
 
 ### GetInputsOk
 
-`func (o *DatasetSetup) GetInputsOk() (*[]DatasetInputInstance, bool)`
+`func (o *CodeSetup) GetInputsOk() (*[]CodeInputInstance, bool)`
 
 GetInputsOk returns a tuple with the Inputs field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetInputs
 
-`func (o *DatasetSetup) SetInputs(v []DatasetInputInstance)`
+`func (o *CodeSetup) SetInputs(v []CodeInputInstance)`
 
 SetInputs sets Inputs field to given value.
 
 
 ### GetMetadata
 
-`func (o *DatasetSetup) GetMetadata() []DatasetMetadataInstance`
+`func (o *CodeSetup) GetMetadata() []CodeMetadataInstance`
 
 GetMetadata returns the Metadata field if non-nil, zero value otherwise.
 
 ### GetMetadataOk
 
-`func (o *DatasetSetup) GetMetadataOk() (*[]DatasetMetadataInstance, bool)`
+`func (o *CodeSetup) GetMetadataOk() (*[]CodeMetadataInstance, bool)`
 
 GetMetadataOk returns a tuple with the Metadata field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMetadata
 
-`func (o *DatasetSetup) SetMetadata(v []DatasetMetadataInstance)`
+`func (o *CodeSetup) SetMetadata(v []CodeMetadataInstance)`
 
 SetMetadata sets Metadata field to given value.
 
 
 ### GetOutputs
 
-`func (o *DatasetSetup) GetOutputs() []DatasetOutputInstance`
+`func (o *CodeSetup) GetOutputs() []CodeOutputInstance`
 
 GetOutputs returns the Outputs field if non-nil, zero value otherwise.
 
 ### GetOutputsOk
 
-`func (o *DatasetSetup) GetOutputsOk() (*[]DatasetOutputInstance, bool)`
+`func (o *CodeSetup) GetOutputsOk() (*[]CodeOutputInstance, bool)`
 
 GetOutputsOk returns a tuple with the Outputs field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetOutputs
 
-`func (o *DatasetSetup) SetOutputs(v []DatasetOutputInstance)`
+`func (o *CodeSetup) SetOutputs(v []CodeOutputInstance)`
 
 SetOutputs sets Outputs field to given value.
 
 
 ### GetVisualizers
 
-`func (o *DatasetSetup) GetVisualizers() []VisualizerInstance`
+`func (o *CodeSetup) GetVisualizers() []VisualizerInstance`
 
 GetVisualizers returns the Visualizers field if non-nil, zero value otherwise.
 
 ### GetVisualizersOk
 
-`func (o *DatasetSetup) GetVisualizersOk() (*[]VisualizerInstance, bool)`
+`func (o *CodeSetup) GetVisualizersOk() (*[]VisualizerInstance, bool)`
 
 GetVisualizersOk returns a tuple with the Visualizers field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetVisualizers
 
-`func (o *DatasetSetup) SetVisualizers(v []VisualizerInstance)`
+`func (o *CodeSetup) SetVisualizers(v []VisualizerInstance)`
 
 SetVisualizers sets Visualizers field to given value.
 
 
 ### GetPredictionTypes
 
-`func (o *DatasetSetup) GetPredictionTypes() []PredictionTypeInstance`
+`func (o *CodeSetup) GetPredictionTypes() []PredictionTypeInstance`
 
 GetPredictionTypes returns the PredictionTypes field if non-nil, zero value otherwise.
 
 ### GetPredictionTypesOk
 
-`func (o *DatasetSetup) GetPredictionTypesOk() (*[]PredictionTypeInstance, bool)`
+`func (o *CodeSetup) GetPredictionTypesOk() (*[]PredictionTypeInstance, bool)`
 
 GetPredictionTypesOk returns a tuple with the PredictionTypes field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPredictionTypes
 
-`func (o *DatasetSetup) SetPredictionTypes(v []PredictionTypeInstance)`
+`func (o *CodeSetup) SetPredictionTypes(v []PredictionTypeInstance)`
 
 SetPredictionTypes sets PredictionTypes field to given value.
 
 
 ### GetCustomLosses
 
-`func (o *DatasetSetup) GetCustomLosses() []CustomLossInstance`
+`func (o *CodeSetup) GetCustomLosses() []CustomLossInstance`
 
 GetCustomLosses returns the CustomLosses field if non-nil, zero value otherwise.
 
 ### GetCustomLossesOk
 
-`func (o *DatasetSetup) GetCustomLossesOk() (*[]CustomLossInstance, bool)`
+`func (o *CodeSetup) GetCustomLossesOk() (*[]CustomLossInstance, bool)`
 
 GetCustomLossesOk returns a tuple with the CustomLosses field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCustomLosses
 
-`func (o *DatasetSetup) SetCustomLosses(v []CustomLossInstance)`
+`func (o *CodeSetup) SetCustomLosses(v []CustomLossInstance)`
 
 SetCustomLosses sets CustomLosses field to given value.
 
 
 ### GetMetrics
 
-`func (o *DatasetSetup) GetMetrics() []MetricInstance`
+`func (o *CodeSetup) GetMetrics() []MetricInstance`
 
 GetMetrics returns the Metrics field if non-nil, zero value otherwise.
 
 ### GetMetricsOk
 
-`func (o *DatasetSetup) GetMetricsOk() (*[]MetricInstance, bool)`
+`func (o *CodeSetup) GetMetricsOk() (*[]MetricInstance, bool)`
 
 GetMetricsOk returns a tuple with the Metrics field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMetrics
 
-`func (o *DatasetSetup) SetMetrics(v []MetricInstance)`
+`func (o *CodeSetup) SetMetrics(v []MetricInstance)`
 
 SetMetrics sets Metrics field to given value.
 
