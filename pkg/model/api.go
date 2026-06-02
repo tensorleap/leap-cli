@@ -250,7 +250,7 @@ func WaitForPushJob(ctx context.Context, projectId, versionId, jobId string) err
 		if collectErr != nil {
 			return collectErr
 		}
-		if runErr := interactive_pages.RunInteractivePages(report.ToReportPages()); runErr != nil {
+		if runErr := interactive_pages.RunInteractivePages(report.ToPushReportPages()); runErr != nil {
 			return runErr
 		}
 		return fmt.Errorf("push failed see errors above, for more logs run: leap run logs %s", jobId)

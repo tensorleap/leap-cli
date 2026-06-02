@@ -192,9 +192,27 @@ func (e *EmptyPageContent) View() string {
 // Conversion Function
 // ---------------------------
 
-// ToReportPages converts an ImportModelErrorReport to an interactive ReportPages
-// for displaying in a tabbed interface
+// ToReportPages converts the report to an interactive ReportPages titled for the
+// import-model flow.
 func (r *ImportModelErrorReport) ToReportPages() *interactive_pages.ReportPages {
+	return r.toReportPages(
+		"Import Model Error Report",
+		"Review the errors and warnings from the model import process",
+	)
+}
+
+// ToPushReportPages is the same report titled for the combined push flow
+// (code parse + model import).
+func (r *ImportModelErrorReport) ToPushReportPages() *interactive_pages.ReportPages {
+	return r.toReportPages(
+		"Push Error Report",
+		"Review the errors and warnings from the push (code parse + model import)",
+	)
+}
+
+func (r *ImportModelErrorReport) toReportPages(
+	title, subtitle string,
+) *interactive_pages.ReportPages {
 	pages := make([]interactive_pages.InteractivePage, 0)
 
 	if r.Notifications != nil && len(r.Notifications.Notifications) > 0 {
@@ -240,8 +258,8 @@ func (r *ImportModelErrorReport) ToReportPages() *interactive_pages.ReportPages 
 	}
 
 	return &interactive_pages.ReportPages{
-		Title:    "Import Model Error Report",
-		Subtitle: "Review the errors and warnings from the model import process",
+		Title:    title,
+		Subtitle: subtitle,
 		Helper:   "Use arrow keys to navigate tabs, scroll to view content, press 'c' to copy errors",
 		Pages:    pages,
 	}
