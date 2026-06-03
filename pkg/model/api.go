@@ -61,7 +61,7 @@ func ImportModel(ctx context.Context, projectId, versionId string, modelInfo *te
 
 	importModelJobId := importModelData.GetJobId()
 	if waitForResults {
-		okStatus, _, err := waitForImportModelJob(ctx, projectId, importModelJobId)
+		okStatus, _, err := waitForImportModelJob(ctx, projectId, importModelJobId, "import model")
 		if err == ErrImportModelTimeout {
 			return importModelJobId, fmt.Errorf("timeout: import model job did not complete within the allowed time (job may still be running on the server), job id: %s", importModelJobId)
 		}
@@ -220,7 +220,7 @@ func OverrideModel(ctx context.Context, projectId, versionId string, waitForResu
 	if !waitForResults {
 		return overrideModelJobId, nil
 	}
-	okStatus, _, err := waitForImportModelJob(ctx, projectId, overrideModelJobId)
+	okStatus, _, err := waitForImportModelJob(ctx, projectId, overrideModelJobId, "import model")
 	if err != nil {
 		return overrideModelJobId, err
 	}
@@ -241,7 +241,7 @@ func OverrideModel(ctx context.Context, projectId, versionId string, waitForResu
 // the standalone import-model wait.
 func WaitForPushJob(ctx context.Context, projectId, versionId, jobId string) error {
 	commandStartTime := time.Now()
-	okStatus, _, err := waitForImportModelJob(ctx, projectId, jobId)
+	okStatus, _, err := waitForImportModelJob(ctx, projectId, jobId, "push")
 	if err == ErrImportModelTimeout {
 		return fmt.Errorf("timeout: push job did not complete within the allowed time (job may still be running on the server), job id: %s", jobId)
 	}
@@ -268,8 +268,8 @@ var ErrJobFailed = fmt.Errorf("import model job failed")
 
 var ErrImportModelTimeout = fmt.Errorf("timeout occurred while waiting for import model job status")
 
-func waitForImportModelJob(ctx context.Context, projectId, importModelJobId string) (ok bool, job *tensorleapapi.Job, err error) {
-	fmt.Println("Waiting for import model result...")
+func waitForImportModelJob(ctx context.Context, projectId, importModelJobId, resultLabel string) (ok bool, job *tensorleapapi.Job, err error) {
+	fmt.Printf("Waiting for %s result...\n", resultLabel)
 	sleepDuration := 3 * time.Second
 
 	condition := func() (bool, []log.Step, error) {
