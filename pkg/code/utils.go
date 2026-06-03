@@ -553,26 +553,6 @@ func isExcluded(path string, excludePatterns []string) bool {
 	return false
 }
 
-func PushCode(ctx context.Context, tarGzFile *os.File, entryFile, secretId, pythonVersion, versionName, projectId, branch string, overwriteVersionId string) (pushed bool, current *tensorleapapi.PushCodeSnapshotResponse, err error) {
-
-	fileStat, err := tarGzFile.Stat()
-	if err != nil {
-		return false, nil, fmt.Errorf("failed to get file stat: %v", err)
-	}
-
-	codeSnapshot, err := PushCodeSnapshot(
-		ctx, tarGzFile, fileStat.Size(),
-		entryFile, secretId, pythonVersion, versionName,
-		projectId,
-		branch,
-		overwriteVersionId,
-	)
-	if err != nil {
-		return false, nil, err
-	}
-	return true, codeSnapshot, nil
-}
-
 func CompareCodeVersion(ctx context.Context, compareVersion *CodeSnapshot, tarGzFile *os.File, entryFile, secretId, pythonVersion string) (bool, error) {
 
 	if isCodeSnapshotEmpty(compareVersion) {
