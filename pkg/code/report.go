@@ -125,7 +125,7 @@ func CollectCodeSnapshotParserErr(civ *CodeSnapshot) *CodeSnapshotParserErrs {
 		errs.printLog = civ.ParseResult.SetupStatus.GetPrintLog()
 	}
 
-	hasErrors := lo.SomeBy(civ.ParseResult.SetupStatus.BindersStatus, func(binderStatus tensorleapapi.DatasetTestResultPayload) bool {
+	hasErrors := lo.SomeBy(civ.ParseResult.SetupStatus.BindersStatus, func(binderStatus tensorleapapi.CodeTestResultPayload) bool {
 		return !binderStatus.IsPassed && len(binderStatus.Display) > 0
 	})
 
