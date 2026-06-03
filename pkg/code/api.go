@@ -127,6 +127,54 @@ func PushCodeAndModel(
 	return result, nil
 }
 
+// PushOverride re-pushes code to an existing version and re-validates its
+// existing model via the override-push endpoint — no new model upload, no name
+// (both come from the overwritten version).
+func PushOverride(
+	ctx context.Context, tarGzFile io.Reader, fileSize int64,
+	entryFile, secretId, pythonVersion, projectId, branch string,
+	overwriteVersionId string,
+) (*tensorleapapi.PushResponse, error) {
+
+	uploadUrl, err := GetCodeSnapshotUploadUrl(ctx, projectId)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := api.UploadFile(uploadUrl, tarGzFile, fileSize); err != nil {
+		return nil, err
+	}
+
+	params := *tensorleapapi.NewPushOverrideParams(
+		projectId,
+		uploadUrl,
+		entryFile,
+		overwriteVersionId,
+	)
+
+	if len(pythonVersion) > 0 {
+		params.GenericBaseImageType = &pythonVersion
+	}
+
+	if len(branch) > 0 {
+		params.SetBranchName(branch)
+	}
+
+	if len(secretId) > 0 {
+		params.SecretManagerId = &secretId
+	}
+
+	log.Info("Pushing code (override)...")
+	result, response, err := api.ApiClient.PushOverride(ctx).
+		PushOverrideParams(params).
+		Execute()
+	if err = api.CheckRes(response, err); err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 const TIMEOUT_FOR_CODE_INTEGRATION_STATUS = 90 * time.Minute
 
 var ErrCodeIntegrationTimeout = fmt.Errorf("timeout occurred while waiting for the integration code status")
