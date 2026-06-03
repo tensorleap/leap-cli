@@ -46,49 +46,6 @@ func PrepareImportModelFromFilePath(ctx context.Context, projectId string, fileP
 	return modelInfo, nil
 }
 
-func ImportModel(ctx context.Context, projectId, versionId string, modelInfo *tensorleapapi.ImportModelInfo, waitForResults bool) (jobId string, err error) {
-	if modelInfo == nil {
-		return "", fmt.Errorf("model info is required")
-	}
-	commandStartTime := time.Now()
-
-	importModelParams := *tensorleapapi.NewImportNewModelParams(projectId, versionId, *modelInfo)
-
-	importModelData, _, err := api.ApiClient.ImportModel(ctx).ImportNewModelParams(importModelParams).Execute()
-	if err != nil {
-		return "", fmt.Errorf("failed to import model: %v", err)
-	}
-
-	importModelJobId := importModelData.GetJobId()
-	if waitForResults {
-		okStatus, _, err := waitForImportModelJob(ctx, projectId, importModelJobId, "import model")
-		if err == ErrImportModelTimeout {
-			return importModelJobId, fmt.Errorf("timeout: import model job did not complete within the allowed time (job may still be running on the server), job id: %s", importModelJobId)
-		}
-		if err == ErrJobFailed || !okStatus {
-			report, collectErr := CollectImportModelJobErrors(ctx, projectId, importModelJobId, versionId, commandStartTime)
-			if collectErr != nil {
-				return importModelJobId, collectErr
-			}
-			runErr := interactive_pages.RunInteractivePages(report.ToReportPages())
-			if runErr != nil {
-				return importModelJobId, runErr
-			}
-			return importModelJobId, fmt.Errorf("import model failed see errors above, for more logs run: leap run logs %s", importModelJobId)
-		}
-
-		if err != nil {
-			return importModelJobId, fmt.Errorf("error while waiting for import model job: %v", err)
-		}
-		log.Println("Model imported successfully")
-		return importModelJobId, nil
-
-	}
-
-	log.Println("Starting import model job. JobId: ", importModelJobId)
-	return importModelJobId, nil
-}
-
 func CollectImportModelJobErrors(ctx context.Context, projectId, jobId string, versionId string, commandStartTime time.Time) (*ImportModelErrorReport, error) {
 
 	report := &ImportModelErrorReport{}
@@ -204,36 +161,6 @@ func addValidationError(name string, nodes []ValidatedNode, report *ValidateAsse
 		report.Nodes = append(report.Nodes, validationError)
 	}
 	return true
-}
-
-func OverrideModel(ctx context.Context, projectId, versionId string, waitForResults bool, modelInfo *tensorleapapi.ImportModelInfo) (jobId string, err error) {
-	commandStartTime := time.Now()
-	params := *tensorleapapi.NewOverwriteModelParams(projectId, versionId)
-	if modelInfo != nil {
-		params.Model = modelInfo
-	}
-	overrideModelData, _, err := api.ApiClient.OverwriteModel(ctx).OverwriteModelParams(params).Execute()
-	if err != nil {
-		return "", err
-	}
-	overrideModelJobId := overrideModelData.GetJobId()
-	if !waitForResults {
-		return overrideModelJobId, nil
-	}
-	okStatus, _, err := waitForImportModelJob(ctx, projectId, overrideModelJobId, "import model")
-	if err != nil {
-		return overrideModelJobId, err
-	}
-	if okStatus {
-		log.Println("Successfully overridden model")
-	} else {
-		report, err := CollectImportModelJobErrors(ctx, projectId, overrideModelJobId, versionId, commandStartTime)
-		if err != nil {
-			return overrideModelJobId, err
-		}
-		report.Show()
-	}
-	return overrideModelJobId, nil
 }
 
 // WaitForPushJob waits for the combined push job (code parse + model import) to

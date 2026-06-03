@@ -22,56 +22,6 @@ func GetCodeSnapshot(ctx context.Context, projectId, id string) (*CodeSnapshot, 
 	return &res.CodeSnapshot, err
 }
 
-func PushCodeSnapshot(
-	ctx context.Context, tarGzFile io.Reader, fileSize int64,
-	entryFile, secretId, pythonVersion,
-	versionName, projectId, branch string,
-	overwriteVersionId string,
-) (*tensorleapapi.PushCodeSnapshotResponse, error) {
-
-	uploadUrl, err := GetCodeSnapshotUploadUrl(ctx, projectId)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := api.UploadFile(uploadUrl, tarGzFile, fileSize); err != nil {
-		return nil, err
-	}
-
-	saveCodeSnapshotParams := *tensorleapapi.NewPushCodeSnapshotParams(
-		projectId,
-		uploadUrl,
-		entryFile,
-		versionName,
-	)
-
-	if len(overwriteVersionId) > 0 {
-		saveCodeSnapshotParams.SetOverwriteVersionId(overwriteVersionId)
-	}
-
-	if len(pythonVersion) > 0 {
-		saveCodeSnapshotParams.GenericBaseImageType = &pythonVersion
-	}
-
-	if len(branch) > 0 {
-		saveCodeSnapshotParams.SetBranchName(branch)
-	}
-
-	if len(secretId) > 0 {
-		saveCodeSnapshotParams.SecretManagerId = &secretId
-	}
-
-	log.Info("Pushing code snapshot...")
-	result, response, err := api.ApiClient.PushCodeSnapshot(ctx).
-		PushCodeSnapshotParams(saveCodeSnapshotParams).
-		Execute()
-	if err = api.CheckRes(response, err); err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
 // PushCodeAndModel uploads the code bundle and triggers the combined push job
 // (code parse + model import in one job) via the new push endpoint, replacing
 // the separate pushCodeSnapshot + importModel calls.
