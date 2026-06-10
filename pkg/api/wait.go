@@ -113,9 +113,16 @@ func WaitForConditionWithSteps(ctx context.Context, condition func() (bool, []lo
 	return ErrorTimeout
 }
 
+// Terminal-success step statuses — work is done or was intentionally
+// skipped. Treated equivalently when deciding whether the run is over
+// or where to mark the failure when one occurs.
+func isStepStatusSucceeded(status log.StepStatus) bool {
+	return status == log.StepStatusDone || status == log.StepStatusSkipped
+}
+
 func markLastStepAsFailed(steps []log.Step) {
 	for _, step := range steps {
-		if step.Status != log.StepStatusDone {
+		if !isStepStatusSucceeded(step.Status) {
 			step.Status = log.StepStatusFailed
 			break
 		}
@@ -124,7 +131,7 @@ func markLastStepAsFailed(steps []log.Step) {
 
 func isAllStepsEnded(steps []log.Step) bool {
 	for _, step := range steps {
-		if step.Status != log.StepStatusDone && step.Status != log.StepStatusFailed {
+		if !isStepStatusSucceeded(step.Status) && step.Status != log.StepStatusFailed {
 			return false
 		}
 	}

@@ -248,6 +248,10 @@ const (
 	StepStatusRunning StepStatus = "RUNNING"
 	StepStatusPending StepStatus = "PENDING"
 	StepStatusWaiting StepStatus = "WAITING"
+	// Step's work wasn't needed for this run (engine marks events SKIPPED
+	// when the caller didn't request a given step or its inputs are
+	// unchanged). Terminal status, treat alongside DONE.
+	StepStatusSkipped StepStatus = "SKIPPED"
 )
 
 func diffIcon(status StepStatus) string {
@@ -258,6 +262,8 @@ func diffIcon(status StepStatus) string {
 		return text.FgRed.Sprint("✖")
 	case StepStatusRunning:
 		return text.FgHiBlue.Sprint("▶")
+	case StepStatusSkipped:
+		return text.FgCyan.Sprint("—")
 	default:
 		return text.FgHiBlack.Sprint("•")
 	}
