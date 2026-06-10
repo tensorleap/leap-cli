@@ -315,6 +315,8 @@ func StepsFromJob(job *tensorleapapi.Job) []log.Step {
 			return log.StepStatusDone
 		case tensorleapapi.STATUSENUM_FAILED:
 			return log.StepStatusFailed
+		case tensorleapapi.STATUSENUM_SKIPPED:
+			return log.StepStatusSkipped
 		default:
 			return log.StepStatusWaiting
 		}
