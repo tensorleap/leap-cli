@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **LastUpdated** | Pointer to **time.Time** |  | [optional] 
 **VersionIds** | Pointer to **[]string** |  | [optional] 
+**ExperimentIds** | Pointer to **[]string** |  | [optional] 
 **Types** | Pointer to [**[]JobType**](JobType.md) |  | [optional] 
 **SubTypes** | Pointer to [**[]JobSubType**](JobSubType.md) |  | [optional] 
 **Trigger** | Pointer to [**JobTrigger**](JobTrigger.md) |  | [optional] 
@@ -83,6 +84,31 @@ SetVersionIds sets VersionIds field to given value.
 `func (o *GetJobsFilterParams) HasVersionIds() bool`
 
 HasVersionIds returns a boolean if a field has been set.
+
+### GetExperimentIds
+
+`func (o *GetJobsFilterParams) GetExperimentIds() []string`
+
+GetExperimentIds returns the ExperimentIds field if non-nil, zero value otherwise.
+
+### GetExperimentIdsOk
+
+`func (o *GetJobsFilterParams) GetExperimentIdsOk() (*[]string, bool)`
+
+GetExperimentIdsOk returns a tuple with the ExperimentIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExperimentIds
+
+`func (o *GetJobsFilterParams) SetExperimentIds(v []string)`
+
+SetExperimentIds sets ExperimentIds field to given value.
+
+### HasExperimentIds
+
+`func (o *GetJobsFilterParams) HasExperimentIds() bool`
+
+HasExperimentIds returns a boolean if a field has been set.
 
 ### GetTypes
 

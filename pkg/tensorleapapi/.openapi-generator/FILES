@@ -95,6 +95,7 @@ docs/DatasetBalancing.md
 docs/DatasetBalancingJobParams.md
 docs/DatasetBalancingResponse.md
 docs/DefaultAPI.md
+docs/DeleteContainerLabelParams.md
 docs/DeleteDashboardParams.md
 docs/DeleteDatasetBalancingParams.md
 docs/DeleteGeneratedLabelParams.md
@@ -174,6 +175,8 @@ docs/GetCollectionSamplesMetadataResponse.md
 docs/GetColorSupplierDataResponse.md
 docs/GetConfusionMatrixLabels.md
 docs/GetConfusionMatrixResultCombinationsParams.md
+docs/GetContainerLabelsParams.md
+docs/GetContainerLabelsResponse.md
 docs/GetCurrentProjectVersionParams.md
 docs/GetCurrentProjectVersionResponse.md
 docs/GetDashboardParams.md
@@ -424,6 +427,7 @@ docs/SessionTestResultSuccess.md
 docs/SetActiveVersionParams.md
 docs/SetActiveVersionResponse.md
 docs/SetCodeChallengeRequest.md
+docs/SetContainerLabelParams.md
 docs/SetDefaultTeamRequest.md
 docs/SetExperimentPropertiesRequest.md
 docs/SetSettingValueWrapper.md
@@ -437,7 +441,6 @@ docs/SettingsAndValuesWrapper.md
 docs/SettingsCategory.md
 docs/SeverityMetricElement.md
 docs/SingleUserModeSettings.md
-docs/SizedLayout.md
 docs/SlimTeam.md
 docs/SlimUserData.md
 docs/SlimUserDataLocal.md
@@ -603,6 +606,7 @@ model_data_type_enum.go
 model_dataset_balancing.go
 model_dataset_balancing_job_params.go
 model_dataset_balancing_response.go
+model_delete_container_label_params.go
 model_delete_dashboard_params.go
 model_delete_dataset_balancing_params.go
 model_delete_generated_label_params.go
@@ -682,6 +686,8 @@ model_get_collection_samples_metadata_response.go
 model_get_color_supplier_data_response.go
 model_get_confusion_matrix_labels.go
 model_get_confusion_matrix_result_combinations_params.go
+model_get_container_labels_params.go
+model_get_container_labels_response.go
 model_get_current_project_version_params.go
 model_get_current_project_version_response.go
 model_get_dashboard_params.go
@@ -932,6 +938,7 @@ model_session_test_result_success.go
 model_set_active_version_params.go
 model_set_active_version_response.go
 model_set_code_challenge_request.go
+model_set_container_label_params.go
 model_set_default_team_request.go
 model_set_experiment_properties_request.go
 model_set_setting_value_wrapper.go
@@ -945,7 +952,6 @@ model_settings_and_values_wrapper.go
 model_settings_category.go
 model_severity_metric_element.go
 model_single_user_mode_settings.go
-model_sized_layout.go
 model_slim_team.go
 model_slim_user_data.go
 model_slim_user_data_local.go

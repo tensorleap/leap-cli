@@ -21,6 +21,7 @@ Method | HTTP request | Description
 [**CreateSessionTest**](DefaultAPI.md#CreateSessionTest) | **Post** /sessions-tests/createSessionTest | 
 [**CreateStreamingSamplesVisJob**](DefaultAPI.md#CreateStreamingSamplesVisJob) | **Post** /sample-collection/createStreamingSamplesVisJob | 
 [**CreateTeam**](DefaultAPI.md#CreateTeam) | **Post** /teams/createTeam | 
+[**DeleteContainerLabel**](DefaultAPI.md#DeleteContainerLabel) | **Post** /insightContainerLabels/deleteContainerLabel | 
 [**DeleteDashboard**](DefaultAPI.md#DeleteDashboard) | **Post** /dashboards/deleteDashboard | 
 [**DeleteDatasetBalancing**](DefaultAPI.md#DeleteDatasetBalancing) | **Post** /datasetcuration/deleteDatasetBalancing | 
 [**DeleteGeneratedLabel**](DefaultAPI.md#DeleteGeneratedLabel) | **Post** /datasetcuration/deleteGeneratedLabel | 
@@ -60,6 +61,7 @@ Method | HTTP request | Description
 [**GetConfusionMatrixResultCombinations**](DefaultAPI.md#GetConfusionMatrixResultCombinations) | **Post** /sessionmetrics/getConfusionMatrixResultCombinations | 
 [**GetConfusionMatrixTable**](DefaultAPI.md#GetConfusionMatrixTable) | **Post** /sessionmetrics/getConfusionMatrixTable | 
 [**GetConfusionMetricNames**](DefaultAPI.md#GetConfusionMetricNames) | **Post** /sessionmetrics/getConfusionMetricNames | 
+[**GetContainerLabels**](DefaultAPI.md#GetContainerLabels) | **Post** /insightContainerLabels/getContainerLabels | 
 [**GetCurrentProjectVersion**](DefaultAPI.md#GetCurrentProjectVersion) | **Post** /projects/getCurrentProjectVersion | 
 [**GetDashboard**](DefaultAPI.md#GetDashboard) | **Post** /dashboards/getDashboard | 
 [**GetDashletFields**](DefaultAPI.md#GetDashletFields) | **Post** /dashboards/getDashletFields | 
@@ -148,6 +150,7 @@ Method | HTTP request | Description
 [**SendUserMessage**](DefaultAPI.md#SendUserMessage) | **Post** /users/sendUserMessage | 
 [**SetActiveVersion**](DefaultAPI.md#SetActiveVersion) | **Post** /versions/setActiveVersion | 
 [**SetCodeChallenge**](DefaultAPI.md#SetCodeChallenge) | **Post** /auth/setCodeChallenge | 
+[**SetContainerLabel**](DefaultAPI.md#SetContainerLabel) | **Post** /insightContainerLabels/setContainerLabel | 
 [**SetDefaultTeam**](DefaultAPI.md#SetDefaultTeam) | **Post** /teams/setDefaultTeam | 
 [**SetExperimentProperties**](DefaultAPI.md#SetExperimentProperties) | **Post** /versions/setExperimentProperties | 
 [**SetMachineType**](DefaultAPI.md#SetMachineType) | **Post** /teams/setMachineType | 
@@ -264,7 +267,7 @@ import (
 )
 
 func main() {
-	addDashboardParams := *openapiclient.NewAddDashboardParams("ProjectId_example", "Name_example", []openapiclient.Dashlet{*openapiclient.NewDashlet("Cid_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))), "Type_example", *openapiclient.NewPopulationExplorationDashletData(map[string]interface{}(123), "Name_example", "Type_example"), "Name_example", []string{"CollectionIds_example"})}) // AddDashboardParams | 
+	addDashboardParams := *openapiclient.NewAddDashboardParams("ProjectId_example", "Name_example", []openapiclient.Dashlet{*openapiclient.NewDashlet("Cid_example", *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), "Type_example", *openapiclient.NewPopulationExplorationDashletData(map[string]interface{}(123), "Name_example", "Type_example"), "Name_example", []string{"CollectionIds_example"})}) // AddDashboardParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -1247,6 +1250,68 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteContainerLabel
+
+> DeleteContainerLabel(ctx).DeleteContainerLabelParams(deleteContainerLabelParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	deleteContainerLabelParams := *openapiclient.NewDeleteContainerLabelParams("ProjectId_example", "ContainerKey_example") // DeleteContainerLabelParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteContainerLabel(context.Background()).DeleteContainerLabelParams(deleteContainerLabelParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteContainerLabel``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteContainerLabelRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **deleteContainerLabelParams** | [**DeleteContainerLabelParams**](DeleteContainerLabelParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -3691,6 +3756,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ConfusionMetricNamesResponse**](ConfusionMetricNamesResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetContainerLabels
+
+> GetContainerLabelsResponse GetContainerLabels(ctx).GetContainerLabelsParams(getContainerLabelsParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getContainerLabelsParams := *openapiclient.NewGetContainerLabelsParams("ProjectId_example") // GetContainerLabelsParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetContainerLabels(context.Background()).GetContainerLabelsParams(getContainerLabelsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetContainerLabels``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetContainerLabels`: GetContainerLabelsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetContainerLabels`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetContainerLabelsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getContainerLabelsParams** | [**GetContainerLabelsParams**](GetContainerLabelsParams.md) |  | 
+
+### Return type
+
+[**GetContainerLabelsResponse**](GetContainerLabelsResponse.md)
 
 ### Authorization
 
@@ -9012,7 +9141,7 @@ import (
 )
 
 func main() {
-	saveAnalyzerLayoutParams := *openapiclient.NewSaveAnalyzerLayoutParams([]openapiclient.PanelLayout{*openapiclient.NewPanelLayout("VisualizationId_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))))}, "ProjectId_example") // SaveAnalyzerLayoutParams | 
+	saveAnalyzerLayoutParams := *openapiclient.NewSaveAnalyzerLayoutParams([]openapiclient.PanelLayout{*openapiclient.NewPanelLayout("VisualizationId_example", *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)))}, "ProjectId_example") // SaveAnalyzerLayoutParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -9226,6 +9355,68 @@ Other parameters are passed through a pointer to a apiSetCodeChallengeRequest st
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **setCodeChallengeRequest** | [**SetCodeChallengeRequest**](SetCodeChallengeRequest.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SetContainerLabel
+
+> SetContainerLabel(ctx).SetContainerLabelParams(setContainerLabelParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	setContainerLabelParams := *openapiclient.NewSetContainerLabelParams("ProjectId_example", "ContainerKey_example", "Label_example") // SetContainerLabelParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.SetContainerLabel(context.Background()).SetContainerLabelParams(setContainerLabelParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SetContainerLabel``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSetContainerLabelRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **setContainerLabelParams** | [**SetContainerLabelParams**](SetContainerLabelParams.md) |  | 
 
 ### Return type
 
@@ -9955,7 +10146,7 @@ import (
 )
 
 func main() {
-	updateDashboardParams := *openapiclient.NewUpdateDashboardParams("DashboardId_example", "Name_example", []openapiclient.Dashlet{*openapiclient.NewDashlet("Cid_example", *openapiclient.NewSizedLayout(*openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123))), "Type_example", *openapiclient.NewPopulationExplorationDashletData(map[string]interface{}(123), "Name_example", "Type_example"), "Name_example", []string{"CollectionIds_example"})}, "ProjectId_example") // UpdateDashboardParams | 
+	updateDashboardParams := *openapiclient.NewUpdateDashboardParams("DashboardId_example", "Name_example", []openapiclient.Dashlet{*openapiclient.NewDashlet("Cid_example", *openapiclient.NewLayout(float64(123), float64(123), float64(123), float64(123)), "Type_example", *openapiclient.NewPopulationExplorationDashletData(map[string]interface{}(123), "Name_example", "Type_example"), "Name_example", []string{"CollectionIds_example"})}, "ProjectId_example") // UpdateDashboardParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **VisualizationId** | **string** |  | 
-**Layout** | [**SizedLayout**](SizedLayout.md) |  | 
+**Layout** | [**Layout**](Layout.md) |  | 
 
 ## Methods
 
 ### NewPanelLayout
 
-`func NewPanelLayout(visualizationId string, layout SizedLayout, ) *PanelLayout`
+`func NewPanelLayout(visualizationId string, layout Layout, ) *PanelLayout`
 
 NewPanelLayout instantiates a new PanelLayout object
 This constructor will assign default values to properties that have it defined,
@@ -48,20 +48,20 @@ SetVisualizationId sets VisualizationId field to given value.
 
 ### GetLayout
 
-`func (o *PanelLayout) GetLayout() SizedLayout`
+`func (o *PanelLayout) GetLayout() Layout`
 
 GetLayout returns the Layout field if non-nil, zero value otherwise.
 
 ### GetLayoutOk
 
-`func (o *PanelLayout) GetLayoutOk() (*SizedLayout, bool)`
+`func (o *PanelLayout) GetLayoutOk() (*Layout, bool)`
 
 GetLayoutOk returns a tuple with the Layout field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLayout
 
-`func (o *PanelLayout) SetLayout(v SizedLayout)`
+`func (o *PanelLayout) SetLayout(v Layout)`
 
 SetLayout sets Layout field to given value.
 

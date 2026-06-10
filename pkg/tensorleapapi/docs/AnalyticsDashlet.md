@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Cid** | **string** |  | 
-**Layout** | [**SizedLayout**](SizedLayout.md) |  | 
+**Layout** | [**Layout**](Layout.md) |  | 
 **PinFilters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **Type** | **string** |  | 
 **Data** | [**AnalyticsDashletData**](AnalyticsDashletData.md) |  | 
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewAnalyticsDashlet
 
-`func NewAnalyticsDashlet(cid string, layout SizedLayout, type_ string, data AnalyticsDashletData, ) *AnalyticsDashlet`
+`func NewAnalyticsDashlet(cid string, layout Layout, type_ string, data AnalyticsDashletData, ) *AnalyticsDashlet`
 
 NewAnalyticsDashlet instantiates a new AnalyticsDashlet object
 This constructor will assign default values to properties that have it defined,
@@ -51,20 +51,20 @@ SetCid sets Cid field to given value.
 
 ### GetLayout
 
-`func (o *AnalyticsDashlet) GetLayout() SizedLayout`
+`func (o *AnalyticsDashlet) GetLayout() Layout`
 
 GetLayout returns the Layout field if non-nil, zero value otherwise.
 
 ### GetLayoutOk
 
-`func (o *AnalyticsDashlet) GetLayoutOk() (*SizedLayout, bool)`
+`func (o *AnalyticsDashlet) GetLayoutOk() (*Layout, bool)`
 
 GetLayoutOk returns a tuple with the Layout field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLayout
 
-`func (o *AnalyticsDashlet) SetLayout(v SizedLayout)`
+`func (o *AnalyticsDashlet) SetLayout(v Layout)`
 
 SetLayout sets Layout field to given value.
 
