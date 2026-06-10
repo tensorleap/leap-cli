@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **UpdatedAt** | **time.Time** |  | 
 **Params** | Pointer to [**JobParams**](JobParams.md) |  | [optional] 
 **VersionId** | Pointer to **string** |  | [optional] 
+**ExperimentId** | Pointer to **string** |  | [optional] 
 **TeamId** | **string** |  | 
 **CodeSnapshotInfo** | Pointer to [**CodeSnapshotInfo**](CodeSnapshotInfo.md) |  | [optional] 
 **EventsSnapshot** | Pointer to [**EventsSnapshot**](EventsSnapshot.md) |  | [optional] 
@@ -283,6 +284,31 @@ SetVersionId sets VersionId field to given value.
 `func (o *Job) HasVersionId() bool`
 
 HasVersionId returns a boolean if a field has been set.
+
+### GetExperimentId
+
+`func (o *Job) GetExperimentId() string`
+
+GetExperimentId returns the ExperimentId field if non-nil, zero value otherwise.
+
+### GetExperimentIdOk
+
+`func (o *Job) GetExperimentIdOk() (*string, bool)`
+
+GetExperimentIdOk returns a tuple with the ExperimentId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExperimentId
+
+`func (o *Job) SetExperimentId(v string)`
+
+SetExperimentId sets ExperimentId field to given value.
+
+### HasExperimentId
+
+`func (o *Job) HasExperimentId() bool`
+
+HasExperimentId returns a boolean if a field has been set.
 
 ### GetTeamId
 

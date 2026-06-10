@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **CreatedAt** | **time.Time** |  | 
 **Epoch** | **float64** |  | 
 **SampleId** | Pointer to **float64** |  | [optional] 
-**Layout** | Pointer to [**SizedLayout**](SizedLayout.md) |  | [optional] 
+**Layout** | Pointer to [**Layout**](Layout.md) |  | [optional] 
 **VisualizationUuid** | **string** |  | 
 **Blob** | **string** |  | 
 **CsvBlob** | **string** |  | 
@@ -230,20 +230,20 @@ HasSampleId returns a boolean if a field has been set.
 
 ### GetLayout
 
-`func (o *Visualization) GetLayout() SizedLayout`
+`func (o *Visualization) GetLayout() Layout`
 
 GetLayout returns the Layout field if non-nil, zero value otherwise.
 
 ### GetLayoutOk
 
-`func (o *Visualization) GetLayoutOk() (*SizedLayout, bool)`
+`func (o *Visualization) GetLayoutOk() (*Layout, bool)`
 
 GetLayoutOk returns a tuple with the Layout field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLayout
 
-`func (o *Visualization) SetLayout(v SizedLayout)`
+`func (o *Visualization) SetLayout(v Layout)`
 
 SetLayout sets Layout field to given value.
 

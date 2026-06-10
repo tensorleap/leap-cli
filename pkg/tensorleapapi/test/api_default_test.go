@@ -223,6 +223,17 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService DeleteContainerLabel", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.DeleteContainerLabel(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService DeleteDashboard", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -670,6 +681,18 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetConfusionMetricNames(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetContainerLabels", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.GetContainerLabels(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1718,6 +1741,17 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.SetCodeChallenge(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService SetContainerLabel", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.SetContainerLabel(context.Background()).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)

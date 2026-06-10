@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.85
+  version: 11.0.90
 servers:
 - url: /api/v2
 paths:
@@ -638,6 +638,55 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/LogExternalEpochDataRequest"
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
+  /insightContainerLabels/getContainerLabels:
+    post:
+      operationId: GetContainerLabels
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetContainerLabelsParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetContainerLabelsResponse"
+          description: Ok
+      security:
+      - jwt: []
+  /insightContainerLabels/setContainerLabel:
+    post:
+      operationId: SetContainerLabel
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetContainerLabelParams"
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
+  /insightContainerLabels/deleteContainerLabel:
+    post:
+      operationId: DeleteContainerLabel
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteContainerLabelParams"
         required: true
       responses:
         "204":
@@ -3470,44 +3519,6 @@ components:
       - x
       - "y"
       type: object
-    SizedLayout:
-      additionalProperties: true
-      example:
-        md:
-          w: 1.4658129805029452
-          x: 0.8008281904610115
-          h: 5.962133916683182
-          "y": 6.027456183070403
-        sm:
-          w: 1.4658129805029452
-          x: 0.8008281904610115
-          h: 5.962133916683182
-          "y": 6.027456183070403
-        xs:
-          w: 1.4658129805029452
-          x: 0.8008281904610115
-          h: 5.962133916683182
-          "y": 6.027456183070403
-        lg:
-          w: 1.4658129805029452
-          x: 0.8008281904610115
-          h: 5.962133916683182
-          "y": 6.027456183070403
-      properties:
-        xs:
-          $ref: "#/components/schemas/Layout"
-        sm:
-          $ref: "#/components/schemas/Layout"
-        md:
-          $ref: "#/components/schemas/Layout"
-        lg:
-          $ref: "#/components/schemas/Layout"
-      required:
-      - lg
-      - md
-      - sm
-      - xs
-      type: object
     FilterOperatorType:
       enum:
       - between
@@ -4883,26 +4894,10 @@ components:
       additionalProperties: true
       example:
         layout:
-          md:
-            w: 1.4658129805029452
-            x: 0.8008281904610115
-            h: 5.962133916683182
-            "y": 6.027456183070403
-          sm:
-            w: 1.4658129805029452
-            x: 0.8008281904610115
-            h: 5.962133916683182
-            "y": 6.027456183070403
-          xs:
-            w: 1.4658129805029452
-            x: 0.8008281904610115
-            h: 5.962133916683182
-            "y": 6.027456183070403
-          lg:
-            w: 1.4658129805029452
-            x: 0.8008281904610115
-            h: 5.962133916683182
-            "y": 6.027456183070403
+          w: 1.4658129805029452
+          x: 0.8008281904610115
+          h: 5.962133916683182
+          "y": 6.027456183070403
         data:
           data: "{}"
           name: name
@@ -5330,7 +5325,7 @@ components:
         cid:
           type: string
         layout:
-          $ref: "#/components/schemas/SizedLayout"
+          $ref: "#/components/schemas/Layout"
         pinFilters:
           items:
             $ref: "#/components/schemas/ESFilter"
@@ -5371,7 +5366,7 @@ components:
         cid:
           type: string
         layout:
-          $ref: "#/components/schemas/SizedLayout"
+          $ref: "#/components/schemas/Layout"
         pinFilters:
           items:
             $ref: "#/components/schemas/ESFilter"
@@ -5419,7 +5414,7 @@ components:
         cid:
           type: string
         layout:
-          $ref: "#/components/schemas/SizedLayout"
+          $ref: "#/components/schemas/Layout"
         pinFilters:
           items:
             $ref: "#/components/schemas/ESFilter"
@@ -5455,26 +5450,10 @@ components:
         projectId: projectId
         items:
         - layout:
-            md:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            sm:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            xs:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            lg:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
+            w: 1.4658129805029452
+            x: 0.8008281904610115
+            h: 5.962133916683182
+            "y": 6.027456183070403
           data:
             data: "{}"
             name: name
@@ -5899,26 +5878,10 @@ components:
           type: Analytics
           cid: cid
         - layout:
-            md:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            sm:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            xs:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            lg:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
+            w: 1.4658129805029452
+            x: 0.8008281904610115
+            h: 5.962133916683182
+            "y": 6.027456183070403
           data:
             data: "{}"
             name: name
@@ -6385,26 +6348,10 @@ components:
           projectId: projectId
           items:
           - layout:
-              md:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
-              sm:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
-              xs:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
-              lg:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
+              w: 1.4658129805029452
+              x: 0.8008281904610115
+              h: 5.962133916683182
+              "y": 6.027456183070403
             data:
               data: "{}"
               name: name
@@ -6829,26 +6776,10 @@ components:
             type: Analytics
             cid: cid
           - layout:
-              md:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
-              sm:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
-              xs:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
-              lg:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
+              w: 1.4658129805029452
+              x: 0.8008281904610115
+              h: 5.962133916683182
+              "y": 6.027456183070403
             data:
               data: "{}"
               name: name
@@ -7281,26 +7212,10 @@ components:
           projectId: projectId
           items:
           - layout:
-              md:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
-              sm:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
-              xs:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
-              lg:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
+              w: 1.4658129805029452
+              x: 0.8008281904610115
+              h: 5.962133916683182
+              "y": 6.027456183070403
             data:
               data: "{}"
               name: name
@@ -7725,26 +7640,10 @@ components:
             type: Analytics
             cid: cid
           - layout:
-              md:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
-              sm:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
-              xs:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
-              lg:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
+              w: 1.4658129805029452
+              x: 0.8008281904610115
+              h: 5.962133916683182
+              "y": 6.027456183070403
             data:
               data: "{}"
               name: name
@@ -8199,26 +8098,10 @@ components:
           projectId: projectId
           items:
           - layout:
-              md:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
-              sm:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
-              xs:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
-              lg:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
+              w: 1.4658129805029452
+              x: 0.8008281904610115
+              h: 5.962133916683182
+              "y": 6.027456183070403
             data:
               data: "{}"
               name: name
@@ -8643,26 +8526,10 @@ components:
             type: Analytics
             cid: cid
           - layout:
-              md:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
-              sm:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
-              xs:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
-              lg:
-                w: 1.4658129805029452
-                x: 0.8008281904610115
-                h: 5.962133916683182
-                "y": 6.027456183070403
+              w: 1.4658129805029452
+              x: 0.8008281904610115
+              h: 5.962133916683182
+              "y": 6.027456183070403
             data:
               data: "{}"
               name: name
@@ -9126,26 +8993,10 @@ components:
         projectId: projectId
         items:
         - layout:
-            md:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            sm:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            xs:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            lg:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
+            w: 1.4658129805029452
+            x: 0.8008281904610115
+            h: 5.962133916683182
+            "y": 6.027456183070403
           data:
             data: "{}"
             name: name
@@ -9570,26 +9421,10 @@ components:
           type: Analytics
           cid: cid
         - layout:
-            md:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            sm:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            xs:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            lg:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
+            w: 1.4658129805029452
+            x: 0.8008281904610115
+            h: 5.962133916683182
+            "y": 6.027456183070403
           data:
             data: "{}"
             name: name
@@ -10051,26 +9886,10 @@ components:
         description: description
         items:
         - layout:
-            md:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            sm:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            xs:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            lg:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
+            w: 1.4658129805029452
+            x: 0.8008281904610115
+            h: 5.962133916683182
+            "y": 6.027456183070403
           data:
             data: "{}"
             name: name
@@ -10495,26 +10314,10 @@ components:
           type: Analytics
           cid: cid
         - layout:
-            md:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            sm:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            xs:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            lg:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
+            w: 1.4658129805029452
+            x: 0.8008281904610115
+            h: 5.962133916683182
+            "y": 6.027456183070403
           data:
             data: "{}"
             name: name
@@ -12839,6 +12642,7 @@ components:
       - FAILED
       - STARTED
       - FINISHED
+      - SKIPPED
       type: string
     JobEventProgress:
       additionalProperties: true
@@ -23286,6 +23090,7 @@ components:
         createdBy: createdBy
         teamId: teamId
         subType: Evaluate
+        experimentId: experimentId
         projectId: projectId
         cid: cid
         status: UNSTARTED
@@ -23318,6 +23123,8 @@ components:
         params:
           $ref: "#/components/schemas/JobParams"
         versionId:
+          type: string
+        experimentId:
           type: string
         teamId:
           type: string
@@ -23560,6 +23367,64 @@ components:
       - epoch
       - experimentId
       - metrics
+      - projectId
+      type: object
+    Record_string.string_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
+    GetContainerLabelsResponse:
+      additionalProperties: true
+      example:
+        labels: "{}"
+      properties:
+        labels:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+      required:
+      - labels
+      type: object
+    GetContainerLabelsParams:
+      additionalProperties: true
+      example:
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+      required:
+      - projectId
+      type: object
+    SetContainerLabelParams:
+      additionalProperties: true
+      example:
+        containerKey: containerKey
+        label: label
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        containerKey:
+          type: string
+        label:
+          type: string
+      required:
+      - containerKey
+      - label
+      - projectId
+      type: object
+    DeleteContainerLabelParams:
+      additionalProperties: true
+      example:
+        containerKey: containerKey
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        containerKey:
+          type: string
+      required:
+      - containerKey
       - projectId
       type: object
     InsightStatus:
@@ -25046,6 +24911,9 @@ components:
         types:
         - WARMUP
         - WARMUP
+        experimentIds:
+        - experimentIds
+        - experimentIds
         showJobsFromDate: 2000-01-23T04:56:07.000+00:00
         versionIds:
         - versionIds
@@ -25067,6 +24935,10 @@ components:
           format: date-time
           type: string
         versionIds:
+          items:
+            type: string
+          type: array
+        experimentIds:
           items:
             type: string
           type: array
@@ -25128,6 +25000,7 @@ components:
           createdBy: createdBy
           teamId: teamId
           subType: Evaluate
+          experimentId: experimentId
           projectId: projectId
           cid: cid
           status: UNSTARTED
@@ -25164,6 +25037,7 @@ components:
           createdBy: createdBy
           teamId: teamId
           subType: Evaluate
+          experimentId: experimentId
           projectId: projectId
           cid: cid
           status: UNSTARTED
@@ -34332,10 +34206,6 @@ components:
       required:
       - success
       type: object
-    Record_string.string_:
-      description: Construct a type with a set of properties K of type T
-      properties: {}
-      type: object
     SendUserMessageParams:
       additionalProperties: true
       example:
@@ -35296,6 +35166,7 @@ components:
           createdBy: createdBy
           teamId: teamId
           subType: Evaluate
+          experimentId: experimentId
           projectId: projectId
           cid: cid
           status: UNSTARTED
@@ -35332,6 +35203,7 @@ components:
           createdBy: createdBy
           teamId: teamId
           subType: Evaluate
+          experimentId: experimentId
           projectId: projectId
           cid: cid
           status: UNSTARTED
@@ -35592,6 +35464,7 @@ components:
             createdBy: createdBy
             teamId: teamId
             subType: Evaluate
+            experimentId: experimentId
             projectId: projectId
             cid: cid
             status: UNSTARTED
@@ -35628,6 +35501,7 @@ components:
             createdBy: createdBy
             teamId: teamId
             subType: Evaluate
+            experimentId: experimentId
             projectId: projectId
             cid: cid
             status: UNSTARTED
@@ -35797,6 +35671,7 @@ components:
             createdBy: createdBy
             teamId: teamId
             subType: Evaluate
+            experimentId: experimentId
             projectId: projectId
             cid: cid
             status: UNSTARTED
@@ -35833,6 +35708,7 @@ components:
             createdBy: createdBy
             teamId: teamId
             subType: Evaluate
+            experimentId: experimentId
             projectId: projectId
             cid: cid
             status: UNSTARTED
@@ -36024,6 +35900,7 @@ components:
             createdBy: createdBy
             teamId: teamId
             subType: Evaluate
+            experimentId: experimentId
             projectId: projectId
             cid: cid
             status: UNSTARTED
@@ -36060,6 +35937,7 @@ components:
             createdBy: createdBy
             teamId: teamId
             subType: Evaluate
+            experimentId: experimentId
             projectId: projectId
             cid: cid
             status: UNSTARTED
@@ -36229,6 +36107,7 @@ components:
             createdBy: createdBy
             teamId: teamId
             subType: Evaluate
+            experimentId: experimentId
             projectId: projectId
             cid: cid
             status: UNSTARTED
@@ -36265,6 +36144,7 @@ components:
             createdBy: createdBy
             teamId: teamId
             subType: Evaluate
+            experimentId: experimentId
             projectId: projectId
             cid: cid
             status: UNSTARTED
@@ -36456,6 +36336,7 @@ components:
             createdBy: createdBy
             teamId: teamId
             subType: Evaluate
+            experimentId: experimentId
             projectId: projectId
             cid: cid
             status: UNSTARTED
@@ -36492,6 +36373,7 @@ components:
             createdBy: createdBy
             teamId: teamId
             subType: Evaluate
+            experimentId: experimentId
             projectId: projectId
             cid: cid
             status: UNSTARTED
@@ -36661,6 +36543,7 @@ components:
             createdBy: createdBy
             teamId: teamId
             subType: Evaluate
+            experimentId: experimentId
             projectId: projectId
             cid: cid
             status: UNSTARTED
@@ -36697,6 +36580,7 @@ components:
             createdBy: createdBy
             teamId: teamId
             subType: Evaluate
+            experimentId: experimentId
             projectId: projectId
             cid: cid
             status: UNSTARTED
@@ -37023,6 +36907,7 @@ components:
             createdBy: createdBy
             teamId: teamId
             subType: Evaluate
+            experimentId: experimentId
             projectId: projectId
             cid: cid
             status: UNSTARTED
@@ -37059,6 +36944,7 @@ components:
             createdBy: createdBy
             teamId: teamId
             subType: Evaluate
+            experimentId: experimentId
             projectId: projectId
             cid: cid
             status: UNSTARTED
@@ -37228,6 +37114,7 @@ components:
             createdBy: createdBy
             teamId: teamId
             subType: Evaluate
+            experimentId: experimentId
             projectId: projectId
             cid: cid
             status: UNSTARTED
@@ -37264,6 +37151,7 @@ components:
             createdBy: createdBy
             teamId: teamId
             subType: Evaluate
+            experimentId: experimentId
             projectId: projectId
             cid: cid
             status: UNSTARTED
@@ -39566,26 +39454,10 @@ components:
         epoch: 0.8008281904610115
         type: population_exploration
         layout:
-          md:
-            w: 1.4658129805029452
-            x: 0.8008281904610115
-            h: 5.962133916683182
-            "y": 6.027456183070403
-          sm:
-            w: 1.4658129805029452
-            x: 0.8008281904610115
-            h: 5.962133916683182
-            "y": 6.027456183070403
-          xs:
-            w: 1.4658129805029452
-            x: 0.8008281904610115
-            h: 5.962133916683182
-            "y": 6.027456183070403
-          lg:
-            w: 1.4658129805029452
-            x: 0.8008281904610115
-            h: 5.962133916683182
-            "y": 6.027456183070403
+          w: 1.4658129805029452
+          x: 0.8008281904610115
+          h: 5.962133916683182
+          "y": 6.027456183070403
         jobId: jobId
         createdAt: 2000-01-23T04:56:07.000+00:00
         blob: blob
@@ -39614,7 +39486,7 @@ components:
           format: double
           type: number
         layout:
-          $ref: "#/components/schemas/SizedLayout"
+          $ref: "#/components/schemas/Layout"
         visualizationUuid:
           type: string
         blob:
@@ -39666,26 +39538,10 @@ components:
         epoch: 0.8008281904610115
         type: population_exploration
         layout:
-          md:
-            w: 1.4658129805029452
-            x: 0.8008281904610115
-            h: 5.962133916683182
-            "y": 6.027456183070403
-          sm:
-            w: 1.4658129805029452
-            x: 0.8008281904610115
-            h: 5.962133916683182
-            "y": 6.027456183070403
-          xs:
-            w: 1.4658129805029452
-            x: 0.8008281904610115
-            h: 5.962133916683182
-            "y": 6.027456183070403
-          lg:
-            w: 1.4658129805029452
-            x: 0.8008281904610115
-            h: 5.962133916683182
-            "y": 6.027456183070403
+          w: 1.4658129805029452
+          x: 0.8008281904610115
+          h: 5.962133916683182
+          "y": 6.027456183070403
         jobId: jobId
         createdAt: 2000-01-23T04:56:07.000+00:00
         blob: blob
@@ -39714,7 +39570,7 @@ components:
           format: double
           type: number
         layout:
-          $ref: "#/components/schemas/SizedLayout"
+          $ref: "#/components/schemas/Layout"
         visualizationUuid:
           type: string
         blob:
@@ -39750,26 +39606,10 @@ components:
           epoch: 0.8008281904610115
           type: population_exploration
           layout:
-            md:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            sm:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            xs:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            lg:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
+            w: 1.4658129805029452
+            x: 0.8008281904610115
+            h: 5.962133916683182
+            "y": 6.027456183070403
           jobId: jobId
           createdAt: 2000-01-23T04:56:07.000+00:00
           blob: blob
@@ -39788,26 +39628,10 @@ components:
           epoch: 0.8008281904610115
           type: population_exploration
           layout:
-            md:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            sm:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            xs:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            lg:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
+            w: 1.4658129805029452
+            x: 0.8008281904610115
+            h: 5.962133916683182
+            "y": 6.027456183070403
           jobId: jobId
           createdAt: 2000-01-23T04:56:07.000+00:00
           blob: blob
@@ -39928,26 +39752,10 @@ components:
           epoch: 0.8008281904610115
           type: population_exploration
           layout:
-            md:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            sm:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            xs:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            lg:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
+            w: 1.4658129805029452
+            x: 0.8008281904610115
+            h: 5.962133916683182
+            "y": 6.027456183070403
           jobId: jobId
           createdAt: 2000-01-23T04:56:07.000+00:00
           blob: blob
@@ -39963,32 +39771,16 @@ components:
       additionalProperties: true
       example:
         layout:
-          md:
-            w: 1.4658129805029452
-            x: 0.8008281904610115
-            h: 5.962133916683182
-            "y": 6.027456183070403
-          sm:
-            w: 1.4658129805029452
-            x: 0.8008281904610115
-            h: 5.962133916683182
-            "y": 6.027456183070403
-          xs:
-            w: 1.4658129805029452
-            x: 0.8008281904610115
-            h: 5.962133916683182
-            "y": 6.027456183070403
-          lg:
-            w: 1.4658129805029452
-            x: 0.8008281904610115
-            h: 5.962133916683182
-            "y": 6.027456183070403
+          w: 1.4658129805029452
+          x: 0.8008281904610115
+          h: 5.962133916683182
+          "y": 6.027456183070403
         visualizationId: visualizationId
       properties:
         visualizationId:
           type: string
         layout:
-          $ref: "#/components/schemas/SizedLayout"
+          $ref: "#/components/schemas/Layout"
       required:
       - layout
       - visualizationId
@@ -39998,48 +39790,16 @@ components:
       example:
         panelsLayouts:
         - layout:
-            md:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            sm:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            xs:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            lg:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
+            w: 1.4658129805029452
+            x: 0.8008281904610115
+            h: 5.962133916683182
+            "y": 6.027456183070403
           visualizationId: visualizationId
         - layout:
-            md:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            sm:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            xs:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
-            lg:
-              w: 1.4658129805029452
-              x: 0.8008281904610115
-              h: 5.962133916683182
-              "y": 6.027456183070403
+            w: 1.4658129805029452
+            x: 0.8008281904610115
+            h: 5.962133916683182
+            "y": 6.027456183070403
           visualizationId: visualizationId
         projectId: projectId
       properties:
