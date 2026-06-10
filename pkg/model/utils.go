@@ -346,7 +346,12 @@ func FormatVersionDisplayName(version *tensorleapapi.SlimVersion, status Version
 }
 
 func GetRunsStatusesPerVersionId(ctx context.Context, projectId string) (map[string][]tensorleapapi.RunProcess, error) {
+	// Pushes after the code-parse + import-model merger run under a single
+	// JOBSUBTYPE_PUSH; older versions still have the two split jobs. Include
+	// all three so CalcVersionStatus can see a terminated push regardless of
+	// which job shape produced it.
 	subTypes := []tensorleapapi.JobSubType{
+		tensorleapapi.JOBSUBTYPE_PUSH,
 		tensorleapapi.JOBSUBTYPE_IMPORT_MODEL,
 		tensorleapapi.JOBSUBTYPE_CODE_PARSE,
 	}
