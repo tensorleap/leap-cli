@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **ProjectId** | **string** |  | 
 **BatchSize** | **float64** |  | 
 **Monitor** | Pointer to **bool** |  | [optional] 
+**NoVisualization** | Pointer to **bool** | When true the engine skips the &#x60;visualize_samples&#x60; step and marks it SKIPPED. The rest of the pipeline (data ingest, metrics, indices) still runs — useful for headless evaluation runs where the dashboard visualizations aren&#39;t needed. Defaults to false (engine-side default). | [optional] 
 **EvaluatedEpoch** | **float64** |  | 
 
 ## Methods
@@ -139,6 +140,31 @@ SetMonitor sets Monitor field to given value.
 `func (o *EvaluateExistingVersionParams) HasMonitor() bool`
 
 HasMonitor returns a boolean if a field has been set.
+
+### GetNoVisualization
+
+`func (o *EvaluateExistingVersionParams) GetNoVisualization() bool`
+
+GetNoVisualization returns the NoVisualization field if non-nil, zero value otherwise.
+
+### GetNoVisualizationOk
+
+`func (o *EvaluateExistingVersionParams) GetNoVisualizationOk() (*bool, bool)`
+
+GetNoVisualizationOk returns a tuple with the NoVisualization field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNoVisualization
+
+`func (o *EvaluateExistingVersionParams) SetNoVisualization(v bool)`
+
+SetNoVisualization sets NoVisualization field to given value.
+
+### HasNoVisualization
+
+`func (o *EvaluateExistingVersionParams) HasNoVisualization() bool`
+
+HasNoVisualization returns a boolean if a field has been set.
 
 ### GetEvaluatedEpoch
 
