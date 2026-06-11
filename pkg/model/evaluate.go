@@ -334,13 +334,16 @@ func HasEvaluatedAncestorOrSelf(ctx context.Context, projectId, versionId string
 	return false, nil
 }
 
-func RunEvaluate(ctx context.Context, projectId, versionId string, batchSize int) error {
+func RunEvaluate(ctx context.Context, projectId, versionId string, batchSize int, noVisualization bool) error {
 	existingVersionParams := tensorleapapi.NewEvaluateExistingVersionParams(
 		versionId,
 		projectId,
 		float64(batchSize),
 		0,
 	)
+	if noVisualization {
+		existingVersionParams.SetNoVisualization(true)
+	}
 
 	evaluateParams := tensorleapapi.EvaluateParams{
 		EvaluateExistingVersionParams: existingVersionParams,
