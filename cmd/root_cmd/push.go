@@ -32,6 +32,10 @@ type pushInputs struct {
 	batch               string
 	overwriteVersionRef string
 	updateParts         []string
+	// noVisualization opts out of the visualize_samples step in the engine
+	// when evaluating. Only meaningful alongside --eval / -u, since those
+	// are the paths that dispatch an evaluate job.
+	noVisualization bool
 }
 
 type pushState struct {
@@ -75,6 +79,9 @@ Examples:
 
   # Refresh multiple artifacts in one run
   leap push -o my-model -u visualization -u insights
+
+  # Push + evaluate without running the visualizations step (faster — no dashboard samples)
+  leap push -e --novis
 `,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return runPush(cmd.Context(), in)
@@ -94,6 +101,7 @@ Examples:
 	cmd.Flags().StringVar(&in.overwriteVersionRef, "overwrite-version", "", "")
 	_ = cmd.Flags().MarkDeprecated("overwrite-version", "use --overwrite (-o) instead")
 	cmd.Flags().StringSliceVarP(&in.updateParts, "update", "u", nil, "What changed in the code on overwrite (repeatable; implies --eval; skips the prompt). Values: metadata, metric, metric_direction, insights, visualization (viz). metadata+metric trigger a full re-evaluation.")
+	cmd.Flags().BoolVar(&in.noVisualization, "novis", false, "Skip the visualize_samples step on the subsequent evaluate (requires --eval / -u)")
 	return cmd
 }
 
@@ -244,6 +252,12 @@ func validatePushInputs(in *pushInputs) error {
 	if len(in.updateParts) > 0 && !in.runEval {
 		in.runEval = true
 	}
+	// --novis only makes sense when we're actually going to evaluate.
+	// --update implies --eval (set above), so we just check the final
+	// resolved runEval state.
+	if in.noVisualization && !in.runEval {
+		return fmt.Errorf("--novis requires --eval (-e) or --update (-u)")
+	}
 	return nil
 }
 
@@ -260,6 +274,7 @@ func newPushState(ctx context.Context, in *pushInputs) (*pushState, error) {
 		"model_path":            in.modelPath,
 		"overwrite_version_ref": in.overwriteVersionRef,
 		"update_parts":          in.updateParts,
+		"no_visualization":      in.noVisualization,
 	}
 	s := &pushState{ctx: ctx, inputs: in, properties: properties}
 
@@ -374,6 +389,11 @@ type evalDispatch struct {
 	updateActions     []tensorleapapi.UpdateAction
 	runUpdateEvaluate bool
 	persistOnly       bool
+	// noVisualization mirrors the CLI --novis flag; threaded through to
+	// the evaluate API call so the engine marks visualize_samples SKIPPED.
+	// Only consulted on the RunEvaluate path — update-evaluate-artifact
+	// has no visualization step to skip.
+	noVisualization bool
 }
 
 func (s *pushState) resolveEvalPlan() (evalDispatch, error) {
@@ -387,7 +407,7 @@ func (s *pushState) resolveEvalPlan() (evalDispatch, error) {
 			return evalDispatch{}, nil
 		}
 		batchSize, err := s.askOrDefaultBatchSize()
-		return evalDispatch{batchSize: batchSize}, err
+		return evalDispatch{batchSize: batchSize, noVisualization: in.noVisualization}, err
 	}
 
 	plan, err := s.resolveOverwriteEvalPlan()
@@ -401,7 +421,11 @@ func (s *pushState) resolveEvalPlan() (evalDispatch, error) {
 
 	if plan.Kind == model.EvaluatePlanReset {
 		batchSize, err := s.askOrDefaultBatchSize()
-		return evalDispatch{batchSize: batchSize, updateActions: plan.UpdateActions}, err
+		return evalDispatch{
+			batchSize:       batchSize,
+			updateActions:   plan.UpdateActions,
+			noVisualization: in.noVisualization,
+		}, err
 	}
 	return evalDispatch{updateActions: plan.UpdateActions, runUpdateEvaluate: true}, nil
 }
@@ -498,7 +522,7 @@ func (s *pushState) triggerEvaluate(versionId string, dispatch evalDispatch) err
 		}
 		return nil
 	}
-	if err := model.RunEvaluate(s.ctx, s.projectId(), versionId, dispatch.batchSize); err != nil {
+	if err := model.RunEvaluate(s.ctx, s.projectId(), versionId, dispatch.batchSize, dispatch.noVisualization); err != nil {
 		return fmt.Errorf("failed to run evaluation: %w", err)
 	}
 	return nil
