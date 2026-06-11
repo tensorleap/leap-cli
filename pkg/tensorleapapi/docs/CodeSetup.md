@@ -12,12 +12,13 @@ Name | Type | Description | Notes
 **PredictionTypes** | [**[]PredictionTypeInstance**](PredictionTypeInstance.md) |  | 
 **CustomLosses** | [**[]CustomLossInstance**](CustomLossInstance.md) |  | 
 **Metrics** | [**[]MetricInstance**](MetricInstance.md) |  | 
+**Simulations** | [**[]SimulationInstance**](SimulationInstance.md) |  | 
 
 ## Methods
 
 ### NewCodeSetup
 
-`func NewCodeSetup(preprocess CodePreprocess, inputs []CodeInputInstance, metadata []CodeMetadataInstance, outputs []CodeOutputInstance, visualizers []VisualizerInstance, predictionTypes []PredictionTypeInstance, customLosses []CustomLossInstance, metrics []MetricInstance, ) *CodeSetup`
+`func NewCodeSetup(preprocess CodePreprocess, inputs []CodeInputInstance, metadata []CodeMetadataInstance, outputs []CodeOutputInstance, visualizers []VisualizerInstance, predictionTypes []PredictionTypeInstance, customLosses []CustomLossInstance, metrics []MetricInstance, simulations []SimulationInstance, ) *CodeSetup`
 
 NewCodeSetup instantiates a new CodeSetup object
 This constructor will assign default values to properties that have it defined,
@@ -190,6 +191,26 @@ and a boolean to check if the value has been set.
 `func (o *CodeSetup) SetMetrics(v []MetricInstance)`
 
 SetMetrics sets Metrics field to given value.
+
+
+### GetSimulations
+
+`func (o *CodeSetup) GetSimulations() []SimulationInstance`
+
+GetSimulations returns the Simulations field if non-nil, zero value otherwise.
+
+### GetSimulationsOk
+
+`func (o *CodeSetup) GetSimulationsOk() (*[]SimulationInstance, bool)`
+
+GetSimulationsOk returns a tuple with the Simulations field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSimulations
+
+`func (o *CodeSetup) SetSimulations(v []SimulationInstance)`
+
+SetSimulations sets Simulations field to given value.
 
 
 

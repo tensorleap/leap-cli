@@ -440,6 +440,7 @@ docs/SettingValue.md
 docs/SettingsAndValuesWrapper.md
 docs/SettingsCategory.md
 docs/SeverityMetricElement.md
+docs/SimulationInstance.md
 docs/SingleUserModeSettings.md
 docs/SlimTeam.md
 docs/SlimUserData.md
@@ -951,6 +952,7 @@ model_setting_value.go
 model_settings_and_values_wrapper.go
 model_settings_category.go
 model_severity_metric_element.go
+model_simulation_instance.go
 model_single_user_mode_settings.go
 model_slim_team.go
 model_slim_user_data.go

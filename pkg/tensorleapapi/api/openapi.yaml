@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.90
+  version: 11.0.91
 servers:
 - url: /api/v2
 paths:
@@ -12688,6 +12688,7 @@ components:
       example:
         inferenceArtifactId: inferenceArtifactId
         versionId: versionId
+        noVisualization: true
         monitor: true
         batchSize: 5.962133916683182
         projectId: projectId
@@ -12702,6 +12703,14 @@ components:
           format: double
           type: number
         monitor:
+          type: boolean
+        noVisualization:
+          description: |-
+            When true the engine skips the `visualize_samples` step and marks it
+            SKIPPED. The rest of the pipeline (data ingest, metrics, indices) still
+            runs — useful for headless evaluation runs where the dashboard
+            visualizations aren't needed.
+            Defaults to false (engine-side default).
           type: boolean
       required:
       - batchSize
@@ -13867,6 +13876,7 @@ components:
         params:
           inferenceArtifactId: inferenceArtifactId
           versionId: versionId
+          noVisualization: true
           monitor: true
           batchSize: 5.962133916683182
           projectId: projectId
@@ -13995,6 +14005,7 @@ components:
           params:
             inferenceArtifactId: inferenceArtifactId
             versionId: versionId
+            noVisualization: true
             monitor: true
             batchSize: 5.962133916683182
             projectId: projectId
@@ -14546,6 +14557,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -15049,6 +15061,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -17716,6 +17729,7 @@ components:
           params:
             inferenceArtifactId: inferenceArtifactId
             versionId: versionId
+            noVisualization: true
             monitor: true
             batchSize: 5.962133916683182
             projectId: projectId
@@ -19102,6 +19116,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -20443,6 +20458,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -21429,6 +21445,7 @@ components:
           params:
             inferenceArtifactId: inferenceArtifactId
             versionId: versionId
+            noVisualization: true
             monitor: true
             batchSize: 5.962133916683182
             projectId: projectId
@@ -21991,6 +22008,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -22499,6 +22517,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -23081,6 +23100,7 @@ components:
         params:
           inferenceArtifactId: inferenceArtifactId
           versionId: versionId
+          noVisualization: true
           monitor: true
           batchSize: 5.962133916683182
           projectId: projectId
@@ -23152,6 +23172,7 @@ components:
       example:
         inferenceArtifactId: inferenceArtifactId
         versionId: versionId
+        noVisualization: true
         batchSize: 0.8008281904610115
         projectId: projectId
       properties:
@@ -23164,6 +23185,11 @@ components:
         batchSize:
           format: double
           type: number
+        noVisualization:
+          description: |-
+            When true the engine skips the `visualize_samples` step and marks it
+            SKIPPED. See EvaluateNewVersionParams.noVisualization. Defaults to false.
+          type: boolean
       required:
       - projectId
       - versionId
@@ -24750,6 +24776,7 @@ components:
           params:
             inferenceArtifactId: inferenceArtifactId
             versionId: versionId
+            noVisualization: true
             monitor: true
             batchSize: 5.962133916683182
             projectId: projectId
@@ -24823,6 +24850,7 @@ components:
           params:
             inferenceArtifactId: inferenceArtifactId
             versionId: versionId
+            noVisualization: true
             monitor: true
             batchSize: 5.962133916683182
             projectId: projectId
@@ -24991,6 +25019,7 @@ components:
           params:
             inferenceArtifactId: inferenceArtifactId
             versionId: versionId
+            noVisualization: true
             monitor: true
             batchSize: 5.962133916683182
             projectId: projectId
@@ -25028,6 +25057,7 @@ components:
           params:
             inferenceArtifactId: inferenceArtifactId
             versionId: versionId
+            noVisualization: true
             monitor: true
             batchSize: 5.962133916683182
             projectId: projectId
@@ -35157,6 +35187,7 @@ components:
           params:
             inferenceArtifactId: inferenceArtifactId
             versionId: versionId
+            noVisualization: true
             monitor: true
             batchSize: 5.962133916683182
             projectId: projectId
@@ -35194,6 +35225,7 @@ components:
           params:
             inferenceArtifactId: inferenceArtifactId
             versionId: versionId
+            noVisualization: true
             monitor: true
             batchSize: 5.962133916683182
             projectId: projectId
@@ -35455,6 +35487,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -35492,6 +35525,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -35662,6 +35696,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -35699,6 +35734,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -35891,6 +35927,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -35928,6 +35965,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -36098,6 +36136,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -36135,6 +36174,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -36327,6 +36367,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -36364,6 +36405,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -36534,6 +36576,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -36571,6 +36614,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -36898,6 +36942,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -36935,6 +36980,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -37105,6 +37151,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -37142,6 +37189,7 @@ components:
             params:
               inferenceArtifactId: inferenceArtifactId
               versionId: versionId
+              noVisualization: true
               monitor: true
               batchSize: 5.962133916683182
               projectId: projectId
@@ -37614,6 +37662,24 @@ components:
       - arg_names
       - name
       type: object
+    SimulationInstance:
+      additionalProperties: true
+      example:
+        name: name
+        param_names:
+        - param_names
+        - param_names
+      properties:
+        name:
+          type: string
+        param_names:
+          items:
+            type: string
+          type: array
+      required:
+      - name
+      - param_names
+      type: object
     CodeSetup:
       additionalProperties: true
       example:
@@ -37688,6 +37754,15 @@ components:
           - arg_names
           name: name
           type: Image
+        simulations:
+        - name: name
+          param_names:
+          - param_names
+          - param_names
+        - name: name
+          param_names:
+          - param_names
+          - param_names
       properties:
         preprocess:
           $ref: "#/components/schemas/CodePreprocess"
@@ -37719,6 +37794,10 @@ components:
           items:
             $ref: "#/components/schemas/MetricInstance"
           type: array
+        simulations:
+          items:
+            $ref: "#/components/schemas/SimulationInstance"
+          type: array
       required:
       - custom_losses
       - inputs
@@ -37727,6 +37806,7 @@ components:
       - outputs
       - prediction_types
       - preprocess
+      - simulations
       - visualizers
       type: object
     CodeTestResultPayload:
@@ -37949,6 +38029,15 @@ components:
             - arg_names
             name: name
             type: Image
+          simulations:
+          - name: name
+            param_names:
+            - param_names
+            - param_names
+          - name: name
+            param_names:
+            - param_names
+            - param_names
         modelSetup:
           custom_layers:
           - init_arg_names:
@@ -38085,6 +38174,15 @@ components:
               - arg_names
               name: name
               type: Image
+            simulations:
+            - name: name
+              param_names:
+              - param_names
+              - param_names
+            - name: name
+              param_names:
+              - param_names
+              - param_names
           modelSetup:
             custom_layers:
             - init_arg_names:
@@ -38241,6 +38339,15 @@ components:
                 - arg_names
                 name: name
                 type: Image
+              simulations:
+              - name: name
+                param_names:
+                - param_names
+                - param_names
+              - name: name
+                param_names:
+                - param_names
+                - param_names
             modelSetup:
               custom_layers:
               - init_arg_names:
@@ -38477,6 +38584,15 @@ components:
                 - arg_names
                 name: name
                 type: Image
+              simulations:
+              - name: name
+                param_names:
+                - param_names
+                - param_names
+              - name: name
+                param_names:
+                - param_names
+                - param_names
             modelSetup:
               custom_layers:
               - init_arg_names:
@@ -39448,6 +39564,7 @@ components:
         jobParms:
           inferenceArtifactId: inferenceArtifactId
           versionId: versionId
+          noVisualization: true
           monitor: true
           batchSize: 5.962133916683182
           projectId: projectId
@@ -39532,6 +39649,7 @@ components:
         jobParms:
           inferenceArtifactId: inferenceArtifactId
           versionId: versionId
+          noVisualization: true
           monitor: true
           batchSize: 5.962133916683182
           projectId: projectId
@@ -39600,6 +39718,7 @@ components:
           jobParms:
             inferenceArtifactId: inferenceArtifactId
             versionId: versionId
+            noVisualization: true
             monitor: true
             batchSize: 5.962133916683182
             projectId: projectId
@@ -39622,6 +39741,7 @@ components:
           jobParms:
             inferenceArtifactId: inferenceArtifactId
             versionId: versionId
+            noVisualization: true
             monitor: true
             batchSize: 5.962133916683182
             projectId: projectId
@@ -39746,6 +39866,7 @@ components:
           jobParms:
             inferenceArtifactId: inferenceArtifactId
             versionId: versionId
+            noVisualization: true
             monitor: true
             batchSize: 5.962133916683182
             projectId: projectId
