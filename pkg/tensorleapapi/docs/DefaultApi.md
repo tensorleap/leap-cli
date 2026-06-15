@@ -155,6 +155,7 @@ Method | HTTP request | Description
 [**SetExperimentProperties**](DefaultAPI.md#SetExperimentProperties) | **Post** /versions/setExperimentProperties | 
 [**SetMachineType**](DefaultAPI.md#SetMachineType) | **Post** /teams/setMachineType | 
 [**SetUserNotificationsAsRead**](DefaultAPI.md#SetUserNotificationsAsRead) | **Post** /notifications/setUserNotificationsAsRead | 
+[**SetVersionColor**](DefaultAPI.md#SetVersionColor) | **Post** /versions/setVersionColor | 
 [**SetVersionUpdateActions**](DefaultAPI.md#SetVersionUpdateActions) | **Post** /versions/setVersionUpdateActions | 
 [**StartTrial**](DefaultAPI.md#StartTrial) | **Post** /auth/startTrial | 
 [**StopJob**](DefaultAPI.md#StopJob) | **Post** /jobs/stopJob | 
@@ -9675,6 +9676,68 @@ Other parameters are passed through a pointer to a apiSetUserNotificationsAsRead
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SetVersionColor
+
+> SetVersionColor(ctx).SetVersionColorParams(setVersionColorParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	setVersionColorParams := *openapiclient.NewSetVersionColorParams("ProjectId_example", "Color_example", "ExperimentId_example") // SetVersionColorParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.SetVersionColor(context.Background()).SetVersionColorParams(setVersionColorParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SetVersionColor``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSetVersionColorRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **setVersionColorParams** | [**SetVersionColorParams**](SetVersionColorParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

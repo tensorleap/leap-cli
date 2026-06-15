@@ -5,9 +5,11 @@
 
 * `UNSTARTED` (value: `"UNSTARTED"`)
 
-* `STARTED` (value: `"STARTED"`)
-
 * `PENDING` (value: `"PENDING"`)
+
+* `INITIALIZING` (value: `"INITIALIZING"`)
+
+* `STARTED` (value: `"STARTED"`)
 
 * `STOPPED` (value: `"STOPPED"`)
 

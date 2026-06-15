@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.91
+  version: 11.0.94
 servers:
 - url: /api/v2
 paths:
@@ -2673,6 +2673,22 @@ paths:
               schema:
                 $ref: "#/components/schemas/SetActiveVersionResponse"
           description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /versions/setVersionColor:
+    post:
+      operationId: SetVersionColor
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetVersionColorParams"
+        required: true
+      responses:
+        "204":
+          description: No content
       security:
       - jwt:
         - not-demo
@@ -12629,8 +12645,9 @@ components:
     JobStatus:
       enum:
       - UNSTARTED
-      - STARTED
       - PENDING
+      - INITIALIZING
+      - STARTED
       - STOPPED
       - TERMINATED
       - FINISHED
@@ -34580,42 +34597,18 @@ components:
     Version:
       additionalProperties: true
       example:
-        updateActions:
-        - update_metadata
-        - update_metadata
         notes: notes
-        serialNumber: 5.962133916683182
+        color: color
         data:
           nodes: "{}"
           id: id
         modelId: modelId
-        resources:
-          overrided_version_id: overrided_version_id
-          inference_resources:
-            metric_compute_insights: metric_compute_insights
-            metric_directions: metric_directions
-          es_model_id: es_model_id
-          population_exploration_digest_seed_count: 6.027456183070403
-          inference_artifact_id: inference_artifact_id
-          es_inspection_index: es_inspection_index
-          insights_index_counter: 1.4658129805029452
-          vis_resources:
-            insights_revision: insights_revision
-            sample_visualizers_revision: sample_visualizers_revision
-          csv_blob_path: csv_blob_path
-          vis_artifact_id: vis_artifact_id
-          es_metrics_index: es_metrics_index
-        epochTags:
-          key: 0.8008281904610115
         isActive: true
         branch: branch
-        codeSnapshotId: codeSnapshotId
         createdAt: 2000-01-23T04:56:07.000+00:00
-        createdBy: createdBy
         uploadedModel:
           transformInputs: true
           blobPath: blobPath
-        teamId: teamId
         graphValidationData:
           metadata:
           - connection_name: connection_name
@@ -34699,12 +34692,37 @@ components:
             node_id: node_id
         experimentId: experimentId
         tag: tag
-        projectId: projectId
         isFavourite: true
-        hash: hash
-        cid: cid
         updatedAt: 2000-01-23T04:56:07.000+00:00
         parentVersionId: parentVersionId
+        updateActions:
+        - update_metadata
+        - update_metadata
+        serialNumber: 5.962133916683182
+        resources:
+          overrided_version_id: overrided_version_id
+          inference_resources:
+            metric_compute_insights: metric_compute_insights
+            metric_directions: metric_directions
+          es_model_id: es_model_id
+          population_exploration_digest_seed_count: 6.027456183070403
+          inference_artifact_id: inference_artifact_id
+          es_inspection_index: es_inspection_index
+          insights_index_counter: 1.4658129805029452
+          vis_resources:
+            insights_revision: insights_revision
+            sample_visualizers_revision: sample_visualizers_revision
+          csv_blob_path: csv_blob_path
+          vis_artifact_id: vis_artifact_id
+          es_metrics_index: es_metrics_index
+        epochTags:
+          key: 0.8008281904610115
+        codeSnapshotId: codeSnapshotId
+        createdBy: createdBy
+        teamId: teamId
+        projectId: projectId
+        hash: hash
+        cid: cid
         status: draft
       properties:
         cid:
@@ -34761,6 +34779,8 @@ components:
         serialNumber:
           format: double
           type: number
+        color:
+          type: string
         data:
           $ref: "#/components/schemas/ModelGraph"
         status:
@@ -34800,42 +34820,18 @@ components:
           updatedAt: 2000-01-23T04:56:07.000+00:00
           status: visible
         version:
-          updateActions:
-          - update_metadata
-          - update_metadata
           notes: notes
-          serialNumber: 5.962133916683182
+          color: color
           data:
             nodes: "{}"
             id: id
           modelId: modelId
-          resources:
-            overrided_version_id: overrided_version_id
-            inference_resources:
-              metric_compute_insights: metric_compute_insights
-              metric_directions: metric_directions
-            es_model_id: es_model_id
-            population_exploration_digest_seed_count: 6.027456183070403
-            inference_artifact_id: inference_artifact_id
-            es_inspection_index: es_inspection_index
-            insights_index_counter: 1.4658129805029452
-            vis_resources:
-              insights_revision: insights_revision
-              sample_visualizers_revision: sample_visualizers_revision
-            csv_blob_path: csv_blob_path
-            vis_artifact_id: vis_artifact_id
-            es_metrics_index: es_metrics_index
-          epochTags:
-            key: 0.8008281904610115
           isActive: true
           branch: branch
-          codeSnapshotId: codeSnapshotId
           createdAt: 2000-01-23T04:56:07.000+00:00
-          createdBy: createdBy
           uploadedModel:
             transformInputs: true
             blobPath: blobPath
-          teamId: teamId
           graphValidationData:
             metadata:
             - connection_name: connection_name
@@ -34919,12 +34915,37 @@ components:
               node_id: node_id
           experimentId: experimentId
           tag: tag
-          projectId: projectId
           isFavourite: true
-          hash: hash
-          cid: cid
           updatedAt: 2000-01-23T04:56:07.000+00:00
           parentVersionId: parentVersionId
+          updateActions:
+          - update_metadata
+          - update_metadata
+          serialNumber: 5.962133916683182
+          resources:
+            overrided_version_id: overrided_version_id
+            inference_resources:
+              metric_compute_insights: metric_compute_insights
+              metric_directions: metric_directions
+            es_model_id: es_model_id
+            population_exploration_digest_seed_count: 6.027456183070403
+            inference_artifact_id: inference_artifact_id
+            es_inspection_index: es_inspection_index
+            insights_index_counter: 1.4658129805029452
+            vis_resources:
+              insights_revision: insights_revision
+              sample_visualizers_revision: sample_visualizers_revision
+            csv_blob_path: csv_blob_path
+            vis_artifact_id: vis_artifact_id
+            es_metrics_index: es_metrics_index
+          epochTags:
+            key: 0.8008281904610115
+          codeSnapshotId: codeSnapshotId
+          createdBy: createdBy
+          teamId: teamId
+          projectId: projectId
+          hash: hash
+          cid: cid
           status: draft
       properties:
         project:
@@ -35063,6 +35084,7 @@ components:
       additionalProperties: true
       example:
         notes: notes
+        color: color
         canContinueEvaluate: true
         modelId: modelId
         isActive: true
@@ -35326,6 +35348,8 @@ components:
         serialNumber:
           format: double
           type: number
+        color:
+          type: string
         properties:
           description: Construct a type with a set of properties K of type T
           properties: {}
@@ -35363,6 +35387,7 @@ components:
       example:
         versions:
         - notes: notes
+          color: color
           canContinueEvaluate: true
           modelId: modelId
           isActive: true
@@ -35572,6 +35597,7 @@ components:
           hasExternalEpoch: true
           isEvaluate: true
         - notes: notes
+          color: color
           canContinueEvaluate: true
           modelId: modelId
           isActive: true
@@ -35803,6 +35829,7 @@ components:
       example:
         versions:
         - notes: notes
+          color: color
           canContinueEvaluate: true
           modelId: modelId
           isActive: true
@@ -36012,6 +36039,7 @@ components:
           hasExternalEpoch: true
           isEvaluate: true
         - notes: notes
+          color: color
           canContinueEvaluate: true
           modelId: modelId
           isActive: true
@@ -36243,6 +36271,7 @@ components:
       example:
         versions:
         - notes: notes
+          color: color
           canContinueEvaluate: true
           modelId: modelId
           isActive: true
@@ -36452,6 +36481,7 @@ components:
           hasExternalEpoch: true
           isEvaluate: true
         - notes: notes
+          color: color
           canContinueEvaluate: true
           modelId: modelId
           isActive: true
@@ -36818,6 +36848,7 @@ components:
       example:
         versions:
         - notes: notes
+          color: color
           canContinueEvaluate: true
           modelId: modelId
           isActive: true
@@ -37027,6 +37058,7 @@ components:
           hasExternalEpoch: true
           isEvaluate: true
         - notes: notes
+          color: color
           canContinueEvaluate: true
           modelId: modelId
           isActive: true
@@ -37256,6 +37288,24 @@ components:
       required:
       - projectId
       - versionId
+      type: object
+    SetVersionColorParams:
+      additionalProperties: true
+      example:
+        color: color
+        experimentId: experimentId
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        color:
+          type: string
+        experimentId:
+          type: string
+      required:
+      - color
+      - experimentId
+      - projectId
       type: object
     TagModelRequest:
       additionalProperties: true

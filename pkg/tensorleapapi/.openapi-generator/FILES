@@ -433,6 +433,7 @@ docs/SetExperimentPropertiesRequest.md
 docs/SetSettingValueWrapper.md
 docs/SetTeamMachineTypeParams.md
 docs/SetUserNotificationsAsRead200Response.md
+docs/SetVersionColorParams.md
 docs/SetVersionUpdateActionsParams.md
 docs/SetVersionUpdateActionsResponse.md
 docs/SettingSchema.md
@@ -945,6 +946,7 @@ model_set_experiment_properties_request.go
 model_set_setting_value_wrapper.go
 model_set_team_machine_type_params.go
 model_set_user_notifications_as_read_200_response.go
+model_set_version_color_params.go
 model_set_version_update_actions_params.go
 model_set_version_update_actions_response.go
 model_setting_schema.go

@@ -26,6 +26,7 @@ Name | Type | Description | Notes
 **ExperimentId** | Pointer to **string** |  | [optional] 
 **UpdateActions** | Pointer to [**[]UpdateAction**](UpdateAction.md) |  | [optional] 
 **SerialNumber** | Pointer to **float64** |  | [optional] 
+**Color** | Pointer to **string** |  | [optional] 
 **Properties** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
 **HasExternalEpoch** | **bool** |  | 
 **IsEvaluate** | **bool** |  | 
@@ -556,6 +557,31 @@ SetSerialNumber sets SerialNumber field to given value.
 `func (o *SlimVersion) HasSerialNumber() bool`
 
 HasSerialNumber returns a boolean if a field has been set.
+
+### GetColor
+
+`func (o *SlimVersion) GetColor() string`
+
+GetColor returns the Color field if non-nil, zero value otherwise.
+
+### GetColorOk
+
+`func (o *SlimVersion) GetColorOk() (*string, bool)`
+
+GetColorOk returns a tuple with the Color field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetColor
+
+`func (o *SlimVersion) SetColor(v string)`
+
+SetColor sets Color field to given value.
+
+### HasColor
+
+`func (o *SlimVersion) HasColor() bool`
+
+HasColor returns a boolean if a field has been set.
 
 ### GetProperties
 
