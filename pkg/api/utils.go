@@ -342,7 +342,10 @@ func IsJobFailed(jobStatus tensorleapapi.JobStatus) bool {
 }
 
 func IsJobRunning(jobStatus tensorleapapi.JobStatus) bool {
-	return jobStatus == tensorleapapi.JOBSTATUS_STARTED || jobStatus == tensorleapapi.JOBSTATUS_PENDING || jobStatus == tensorleapapi.JOBSTATUS_UNSTARTED
+	return jobStatus == tensorleapapi.JOBSTATUS_STARTED ||
+		jobStatus == tensorleapapi.JOBSTATUS_PENDING ||
+		jobStatus == tensorleapapi.JOBSTATUS_INITIALIZING ||
+		jobStatus == tensorleapapi.JOBSTATUS_UNSTARTED
 }
 
 func IsJobFinished(jobStatus tensorleapapi.JobStatus) bool {
