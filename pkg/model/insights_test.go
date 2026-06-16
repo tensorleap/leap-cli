@@ -16,12 +16,12 @@ func TestHasAnyInsightsOverride(t *testing.T) {
 		{"empty", &tensorleapapi.InsightsSettingsOverrides{}, false},
 		{
 			"metric active",
-			&tensorleapapi.InsightsSettingsOverrides{MetricActiveOverrides: map[string]bool{"m": false}},
+			&tensorleapapi.InsightsSettingsOverrides{MetricActiveOverrides: map[string]interface{}{"m": false}},
 			true,
 		},
 		{
 			"metric direction",
-			&tensorleapapi.InsightsSettingsOverrides{MetricDirectionOverrides: map[string]string{"m": "Upward"}},
+			&tensorleapapi.InsightsSettingsOverrides{MetricDirectionOverrides: map[string]interface{}{"m": "Upward"}},
 			true,
 		},
 		{
@@ -36,7 +36,7 @@ func TestHasAnyInsightsOverride(t *testing.T) {
 		},
 		{
 			"latent space ignore",
-			&tensorleapapi.InsightsSettingsOverrides{LatentSpaceIgnoreOverrides: map[string]bool{"balanced": false}},
+			&tensorleapapi.InsightsSettingsOverrides{LatentSpaceIgnoreOverrides: map[string]interface{}{"balanced": false}},
 			true,
 		},
 	}
