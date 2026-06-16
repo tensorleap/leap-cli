@@ -373,7 +373,7 @@ func (s *pushState) confirmInsightsSettingsOverrides() error {
 	if versionLabel == "" {
 		versionLabel = latest.Cid
 	}
-	
+
 	log.Warnf("The latest version %q has customized insight settings which will not be applied to the version you're about to push.\nIf you wish to carry over these settings, please apply them to the code integration first and then re-run `leap push`.", versionLabel)
 	if s.inputs.yes {
 		log.Info("Proceeding — insight-settings override warning acknowledged via --yes.")

@@ -197,6 +197,8 @@ docs/GetGenericBaseImageTypesResponse.md
 docs/GetImportModelUploadUrlParams.md
 docs/GetInsightsParams.md
 docs/GetInsightsResponse.md
+docs/GetInsightsSettingsParams.md
+docs/GetInsightsSettingsResponse.md
 docs/GetIssueFileUploadSignedUrl.md
 docs/GetJobLogsParams.md
 docs/GetJobLogsResponse.md
@@ -286,6 +288,8 @@ docs/InsightMetricInfo.md
 docs/InsightStatus.md
 docs/InsightType.md
 docs/InsightsJobParams.md
+docs/InsightsSettingsDefaults.md
+docs/InsightsSettingsOverrides.md
 docs/Issue.md
 docs/IssueAction.md
 docs/IssueActionType.md
@@ -311,6 +315,7 @@ docs/JobType.md
 docs/JobTypeEnum.md
 docs/LabelingAlgorithm.md
 docs/LabelingJobParams.md
+docs/LatentSpaceDefault.md
 docs/LatestExportedProject.md
 docs/LatestExportedProjectItem.md
 docs/Layout.md
@@ -334,6 +339,8 @@ docs/MaskTextData.md
 docs/MessageLevel.md
 docs/MetadataField.md
 docs/MetadataFieldValue.md
+docs/MetricDefault.md
+docs/MetricDirection.md
 docs/MetricInstance.md
 docs/MetricMessageParams.md
 docs/MetricStatisticElement.md
@@ -408,6 +415,7 @@ docs/SampleSelectionInfo.md
 docs/SampleVisualizationInfo.md
 docs/SamplesVisualizationsRefreshParams.md
 docs/SaveAnalyzerLayoutParams.md
+docs/SaveInsightsSettingsParams.md
 docs/ScatterFilter.md
 docs/ScatterFilterValue.md
 docs/ScatterInsightBase.md
@@ -710,6 +718,8 @@ model_get_generic_base_image_types_response.go
 model_get_import_model_upload_url_params.go
 model_get_insights_params.go
 model_get_insights_response.go
+model_get_insights_settings_params.go
+model_get_insights_settings_response.go
 model_get_issue_file_upload_signed_url.go
 model_get_job_logs_params.go
 model_get_job_logs_response.go
@@ -799,6 +809,8 @@ model_insight_metric_info.go
 model_insight_status.go
 model_insight_type.go
 model_insights_job_params.go
+model_insights_settings_defaults.go
+model_insights_settings_overrides.go
 model_issue.go
 model_issue_action.go
 model_issue_action_type.go
@@ -824,6 +836,7 @@ model_job_type.go
 model_job_type_enum.go
 model_labeling_algorithm.go
 model_labeling_job_params.go
+model_latent_space_default.go
 model_latest_exported_project.go
 model_latest_exported_project_item.go
 model_layout.go
@@ -847,6 +860,8 @@ model_mask_text_data.go
 model_message_level.go
 model_metadata_field.go
 model_metadata_field_value.go
+model_metric_default.go
+model_metric_direction.go
 model_metric_instance.go
 model_metric_message_params.go
 model_metric_statistic_element.go
@@ -921,6 +936,7 @@ model_sample_selection_info.go
 model_sample_visualization_info.go
 model_samples_visualizations_refresh_params.go
 model_save_analyzer_layout_params.go
+model_save_insights_settings_params.go
 model_scatter_filter.go
 model_scatter_filter_value.go
 model_scatter_insight_base.go

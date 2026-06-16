@@ -6,12 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **LatentSpaceId** | **string** |  | 
 **FriendlyName** | **string** |  | 
+**IgnoredByDefault** | **bool** |  | 
 
 ## Methods
 
 ### NewAvailableLatentSpace
 
-`func NewAvailableLatentSpace(latentSpaceId string, friendlyName string, ) *AvailableLatentSpace`
+`func NewAvailableLatentSpace(latentSpaceId string, friendlyName string, ignoredByDefault bool, ) *AvailableLatentSpace`
 
 NewAvailableLatentSpace instantiates a new AvailableLatentSpace object
 This constructor will assign default values to properties that have it defined,
@@ -64,6 +65,26 @@ and a boolean to check if the value has been set.
 `func (o *AvailableLatentSpace) SetFriendlyName(v string)`
 
 SetFriendlyName sets FriendlyName field to given value.
+
+
+### GetIgnoredByDefault
+
+`func (o *AvailableLatentSpace) GetIgnoredByDefault() bool`
+
+GetIgnoredByDefault returns the IgnoredByDefault field if non-nil, zero value otherwise.
+
+### GetIgnoredByDefaultOk
+
+`func (o *AvailableLatentSpace) GetIgnoredByDefaultOk() (*bool, bool)`
+
+GetIgnoredByDefaultOk returns a tuple with the IgnoredByDefault field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIgnoredByDefault
+
+`func (o *AvailableLatentSpace) SetIgnoredByDefault(v bool)`
+
+SetIgnoredByDefault sets IgnoredByDefault field to given value.
 
 
 
