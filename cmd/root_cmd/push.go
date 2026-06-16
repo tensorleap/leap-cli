@@ -1,8 +1,10 @@
 package root_cmd
 
 import (
+	"bufio"
 	"context"
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 
@@ -16,6 +18,7 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/secret"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 	"github.com/tensorleap/leap-cli/pkg/workspace"
+	"golang.org/x/term"
 )
 
 type pushInputs struct {
@@ -36,6 +39,9 @@ type pushInputs struct {
 	// when evaluating. Only meaningful alongside --eval / -u, since those
 	// are the paths that dispatch an evaluate job.
 	noVisualization bool
+	// yes acknowledges pre-push warnings (e.g. the latest version having
+	// insight-settings overrides) without prompting.
+	yes bool
 }
 
 type pushState struct {
@@ -102,6 +108,7 @@ Examples:
 	_ = cmd.Flags().MarkDeprecated("overwrite-version", "use --overwrite (-o) instead")
 	cmd.Flags().StringSliceVarP(&in.updateParts, "update", "u", nil, "What changed in the code on overwrite (repeatable; implies --eval; skips the prompt). Values: metadata, metric, metric_direction, insights, visualization (viz). metadata+metric trigger a full re-evaluation.")
 	cmd.Flags().BoolVar(&in.noVisualization, "novis", false, "Skip the visualize_samples step on the subsequent evaluate (requires --eval / -u)")
+	cmd.Flags().BoolVar(&in.yes, "yes", false, "Acknowledge pre-push warnings and proceed without prompting")
 	return cmd
 }
 
@@ -121,6 +128,10 @@ func runPush(cmdCtx context.Context, in *pushInputs) error {
 	}
 
 	analytics.SendEvent(analytics.EventCliProjectsPushStarted, s.properties)
+
+	if err := s.confirmInsightsSettingsOverrides(); err != nil {
+		return err
+	}
 
 	if err := s.resolveOverwriteTarget(); err != nil {
 		return err
@@ -334,6 +345,48 @@ func (s *pushState) resolveOverwriteTarget() error {
 		s.properties["version_has_model"] = s.overwriteVersion.HasModel
 	}
 	s.properties["model_path"] = in.modelPath
+	return nil
+}
+
+// confirmInsightsSettingsOverrides warns when the project's latest version has
+// insight-settings overrides — these are per-version and won't carry over to
+// the version being pushed — and requires the user to acknowledge before the
+// push proceeds (interactively, or via --yes).
+func (s *pushState) confirmInsightsSettingsOverrides() error {
+	latest, err := model.GetLatestProjectVersion(s.ctx, s.projectId())
+	if err != nil {
+		return s.fail("check_insights_overrides", err)
+	}
+	if latest == nil {
+		return nil
+	}
+
+	overrides, err := model.GetInsightsSettingsOverrides(s.ctx, s.projectId(), latest.Cid)
+	if err != nil {
+		return s.fail("check_insights_overrides", err)
+	}
+	if !model.HasAnyInsightsOverride(overrides) {
+		return nil
+	}
+
+	versionLabel := latest.Notes
+	if versionLabel == "" {
+		versionLabel = latest.Cid
+	}
+	
+	log.Warnf("The latest version %q has customized insight settings which will not be applied to the version you're about to push.\nIf you wish to carry over these settings, please apply them to the code integration first and then re-run `leap push`.", versionLabel)
+	if s.inputs.yes {
+		log.Info("Proceeding — insight-settings override warning acknowledged via --yes.")
+		return nil
+	}
+	if !term.IsTerminal(int(os.Stdin.Fd())) {
+		return fmt.Errorf("the latest version has insight settings overrides that won't carry over to the new version; re-run with --yes to acknowledge and proceed")
+	}
+
+	fmt.Print("\nPress enter to continue with the push, or Ctrl+C to cancel: ")
+	if _, err := bufio.NewReader(os.Stdin).ReadString('\n'); err != nil {
+		return err
+	}
 	return nil
 }
 
