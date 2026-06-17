@@ -22,7 +22,7 @@ var _ MappedNullable = &AvailableLatentSpace{}
 type AvailableLatentSpace struct {
 	LatentSpaceId        string `json:"latent_space_id"`
 	FriendlyName         string `json:"friendly_name"`
-	IgnoredByDefault     bool   `json:"ignored_by_default"`
+	IgnoredByDefault     *bool  `json:"ignored_by_default,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -32,11 +32,10 @@ type _AvailableLatentSpace AvailableLatentSpace
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAvailableLatentSpace(latentSpaceId string, friendlyName string, ignoredByDefault bool) *AvailableLatentSpace {
+func NewAvailableLatentSpace(latentSpaceId string, friendlyName string) *AvailableLatentSpace {
 	this := AvailableLatentSpace{}
 	this.LatentSpaceId = latentSpaceId
 	this.FriendlyName = friendlyName
-	this.IgnoredByDefault = ignoredByDefault
 	return &this
 }
 
@@ -96,28 +95,36 @@ func (o *AvailableLatentSpace) SetFriendlyName(v string) {
 	o.FriendlyName = v
 }
 
-// GetIgnoredByDefault returns the IgnoredByDefault field value
+// GetIgnoredByDefault returns the IgnoredByDefault field value if set, zero value otherwise.
 func (o *AvailableLatentSpace) GetIgnoredByDefault() bool {
-	if o == nil {
+	if o == nil || IsNil(o.IgnoredByDefault) {
 		var ret bool
 		return ret
 	}
-
-	return o.IgnoredByDefault
+	return *o.IgnoredByDefault
 }
 
-// GetIgnoredByDefaultOk returns a tuple with the IgnoredByDefault field value
+// GetIgnoredByDefaultOk returns a tuple with the IgnoredByDefault field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *AvailableLatentSpace) GetIgnoredByDefaultOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.IgnoredByDefault) {
 		return nil, false
 	}
-	return &o.IgnoredByDefault, true
+	return o.IgnoredByDefault, true
 }
 
-// SetIgnoredByDefault sets field value
+// HasIgnoredByDefault returns a boolean if a field has been set.
+func (o *AvailableLatentSpace) HasIgnoredByDefault() bool {
+	if o != nil && !IsNil(o.IgnoredByDefault) {
+		return true
+	}
+
+	return false
+}
+
+// SetIgnoredByDefault gets a reference to the given bool and assigns it to the IgnoredByDefault field.
 func (o *AvailableLatentSpace) SetIgnoredByDefault(v bool) {
-	o.IgnoredByDefault = v
+	o.IgnoredByDefault = &v
 }
 
 func (o AvailableLatentSpace) MarshalJSON() ([]byte, error) {
@@ -132,7 +139,9 @@ func (o AvailableLatentSpace) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["latent_space_id"] = o.LatentSpaceId
 	toSerialize["friendly_name"] = o.FriendlyName
-	toSerialize["ignored_by_default"] = o.IgnoredByDefault
+	if !IsNil(o.IgnoredByDefault) {
+		toSerialize["ignored_by_default"] = o.IgnoredByDefault
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -148,7 +157,6 @@ func (o *AvailableLatentSpace) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"latent_space_id",
 		"friendly_name",
-		"ignored_by_default",
 	}
 
 	allProperties := make(map[string]interface{})
