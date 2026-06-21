@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **LatentSpaceId** | **string** |  | 
 **FriendlyName** | **string** |  | 
+**IgnoredByDefault** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -65,6 +66,31 @@ and a boolean to check if the value has been set.
 
 SetFriendlyName sets FriendlyName field to given value.
 
+
+### GetIgnoredByDefault
+
+`func (o *AvailableLatentSpace) GetIgnoredByDefault() bool`
+
+GetIgnoredByDefault returns the IgnoredByDefault field if non-nil, zero value otherwise.
+
+### GetIgnoredByDefaultOk
+
+`func (o *AvailableLatentSpace) GetIgnoredByDefaultOk() (*bool, bool)`
+
+GetIgnoredByDefaultOk returns a tuple with the IgnoredByDefault field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIgnoredByDefault
+
+`func (o *AvailableLatentSpace) SetIgnoredByDefault(v bool)`
+
+SetIgnoredByDefault sets IgnoredByDefault field to given value.
+
+### HasIgnoredByDefault
+
+`func (o *AvailableLatentSpace) HasIgnoredByDefault() bool`
+
+HasIgnoredByDefault returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

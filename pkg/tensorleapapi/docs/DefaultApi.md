@@ -78,6 +78,7 @@ Method | HTTP request | Description
 [**GetHeatmapChart**](DefaultAPI.md#GetHeatmapChart) | **Post** /sessionmetrics/getHeatmapChart | 
 [**GetImportModelUploadUrl**](DefaultAPI.md#GetImportModelUploadUrl) | **Post** /versions/getImportModelUploadUrl | 
 [**GetInsights**](DefaultAPI.md#GetInsights) | **Post** /insights/getInsights | 
+[**GetInsightsSettings**](DefaultAPI.md#GetInsightsSettings) | **Post** /insightsSettings/getInsightsSettings | 
 [**GetIssueFileUploadSignedUrl**](DefaultAPI.md#GetIssueFileUploadSignedUrl) | **Post** /issues/getIssueFileUploadSignedUrl | 
 [**GetJobLogs**](DefaultAPI.md#GetJobLogs) | **Post** /jobs/getJobLogs | 
 [**GetLatestExportedProject**](DefaultAPI.md#GetLatestExportedProject) | **Post** /projects/getLatestExportedProject | 
@@ -147,6 +148,7 @@ Method | HTTP request | Description
 [**SampleAnalysis**](DefaultAPI.md#SampleAnalysis) | **Post** /visualizations/sampleAnalysis | 
 [**SamplesVisualizationsRefresh**](DefaultAPI.md#SamplesVisualizationsRefresh) | **Post** /visualizations/samplesVisualizationsRefresh | 
 [**SaveAnalyzerLayout**](DefaultAPI.md#SaveAnalyzerLayout) | **Post** /visualizations/saveAnalyzerLayout | 
+[**SaveInsightsSettings**](DefaultAPI.md#SaveInsightsSettings) | **Post** /insightsSettings/saveInsightsSettings | 
 [**SendUserMessage**](DefaultAPI.md#SendUserMessage) | **Post** /users/sendUserMessage | 
 [**SetActiveVersion**](DefaultAPI.md#SetActiveVersion) | **Post** /versions/setActiveVersion | 
 [**SetCodeChallenge**](DefaultAPI.md#SetCodeChallenge) | **Post** /auth/setCodeChallenge | 
@@ -4845,6 +4847,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetInsightsSettings
+
+> GetInsightsSettingsResponse GetInsightsSettings(ctx).GetInsightsSettingsParams(getInsightsSettingsParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getInsightsSettingsParams := *openapiclient.NewGetInsightsSettingsParams("ProjectId_example", "VersionId_example") // GetInsightsSettingsParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetInsightsSettings(context.Background()).GetInsightsSettingsParams(getInsightsSettingsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetInsightsSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetInsightsSettings`: GetInsightsSettingsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetInsightsSettings`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetInsightsSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getInsightsSettingsParams** | [**GetInsightsSettingsParams**](GetInsightsSettingsParams.md) |  | 
+
+### Return type
+
+[**GetInsightsSettingsResponse**](GetInsightsSettingsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetIssueFileUploadSignedUrl
 
 > IssueFileUploadSignedUrl GetIssueFileUploadSignedUrl(ctx).GetIssueFileUploadSignedUrl(getIssueFileUploadSignedUrl).Execute()
@@ -9166,6 +9232,68 @@ Other parameters are passed through a pointer to a apiSaveAnalyzerLayoutRequest 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **saveAnalyzerLayoutParams** | [**SaveAnalyzerLayoutParams**](SaveAnalyzerLayoutParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SaveInsightsSettings
+
+> SaveInsightsSettings(ctx).SaveInsightsSettingsParams(saveInsightsSettingsParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	saveInsightsSettingsParams := *openapiclient.NewSaveInsightsSettingsParams("ProjectId_example", "VersionId_example", map[string]interface{}(123), map[string]interface{}(123), []string{"IgnoredDomains_example"}, []string{"AddedDomains_example"}, map[string]interface{}(123)) // SaveInsightsSettingsParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.SaveInsightsSettings(context.Background()).SaveInsightsSettingsParams(saveInsightsSettingsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SaveInsightsSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSaveInsightsSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **saveInsightsSettingsParams** | [**SaveInsightsSettingsParams**](SaveInsightsSettingsParams.md) |  | 
 
 ### Return type
 

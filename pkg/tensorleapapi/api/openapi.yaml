@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.94
+  version: 11.0.95
 servers:
 - url: /api/v2
 paths:
@@ -751,6 +751,40 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/GenerateInsightsParams"
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
+  /insightsSettings/getInsightsSettings:
+    post:
+      operationId: GetInsightsSettings
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetInsightsSettingsParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetInsightsSettingsResponse"
+          description: Ok
+      security:
+      - jwt: []
+  /insightsSettings/saveInsightsSettings:
+    post:
+      operationId: SaveInsightsSettings
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SaveInsightsSettingsParams"
         required: true
       responses:
         "204":
@@ -24298,6 +24332,246 @@ components:
       required:
       - projectId
       type: object
+    Record_string.boolean_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
+    Record_string.MetricDirection_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
+    InsightsSettingsOverrides:
+      additionalProperties: true
+      example:
+        metricActiveOverrides: "{}"
+        latentSpaceIgnoreOverrides: "{}"
+        addedDomains:
+        - addedDomains
+        - addedDomains
+        metricDirectionOverrides: "{}"
+        ignoredDomains:
+        - ignoredDomains
+        - ignoredDomains
+      properties:
+        metricActiveOverrides:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+        metricDirectionOverrides:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+        ignoredDomains:
+          items:
+            type: string
+          type: array
+        addedDomains:
+          items:
+            type: string
+          type: array
+        latentSpaceIgnoreOverrides:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+      required:
+      - addedDomains
+      - ignoredDomains
+      - latentSpaceIgnoreOverrides
+      - metricActiveOverrides
+      - metricDirectionOverrides
+      type: object
+    MetricDirection:
+      enum:
+      - Upward
+      - Downward
+      type: string
+    MetricDefault:
+      additionalProperties: true
+      example:
+        name: name
+        active: true
+        direction: Upward
+      properties:
+        name:
+          type: string
+        direction:
+          $ref: "#/components/schemas/MetricDirection"
+        active:
+          type: boolean
+      required:
+      - active
+      - direction
+      - name
+      type: object
+    LatentSpaceDefault:
+      additionalProperties: true
+      example:
+        ignoredByDefault: true
+        id: id
+        friendlyName: friendlyName
+      properties:
+        id:
+          type: string
+        friendlyName:
+          type: string
+        ignoredByDefault:
+          type: boolean
+      required:
+      - friendlyName
+      - id
+      - ignoredByDefault
+      type: object
+    InsightsSettingsDefaults:
+      additionalProperties: true
+      example:
+        availableMetadata:
+        - availableMetadata
+        - availableMetadata
+        latentSpaces:
+        - ignoredByDefault: true
+          id: id
+          friendlyName: friendlyName
+        - ignoredByDefault: true
+          id: id
+          friendlyName: friendlyName
+        domains:
+        - domains
+        - domains
+        metrics:
+        - name: name
+          active: true
+          direction: Upward
+        - name: name
+          active: true
+          direction: Upward
+      properties:
+        metrics:
+          items:
+            $ref: "#/components/schemas/MetricDefault"
+          type: array
+        domains:
+          items:
+            type: string
+          type: array
+        availableMetadata:
+          items:
+            type: string
+          type: array
+        latentSpaces:
+          items:
+            $ref: "#/components/schemas/LatentSpaceDefault"
+          type: array
+      required:
+      - availableMetadata
+      - domains
+      - latentSpaces
+      - metrics
+      type: object
+    GetInsightsSettingsResponse:
+      additionalProperties: true
+      example:
+        defaults:
+          availableMetadata:
+          - availableMetadata
+          - availableMetadata
+          latentSpaces:
+          - ignoredByDefault: true
+            id: id
+            friendlyName: friendlyName
+          - ignoredByDefault: true
+            id: id
+            friendlyName: friendlyName
+          domains:
+          - domains
+          - domains
+          metrics:
+          - name: name
+            active: true
+            direction: Upward
+          - name: name
+            active: true
+            direction: Upward
+        overrides:
+          metricActiveOverrides: "{}"
+          latentSpaceIgnoreOverrides: "{}"
+          addedDomains:
+          - addedDomains
+          - addedDomains
+          metricDirectionOverrides: "{}"
+          ignoredDomains:
+          - ignoredDomains
+          - ignoredDomains
+      properties:
+        overrides:
+          $ref: "#/components/schemas/InsightsSettingsOverrides"
+        defaults:
+          $ref: "#/components/schemas/InsightsSettingsDefaults"
+      required:
+      - defaults
+      - overrides
+      type: object
+    GetInsightsSettingsParams:
+      additionalProperties: true
+      example:
+        versionId: versionId
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        versionId:
+          type: string
+      required:
+      - projectId
+      - versionId
+      type: object
+    SaveInsightsSettingsParams:
+      additionalProperties: true
+      example:
+        versionId: versionId
+        metricActiveOverrides: "{}"
+        latentSpaceIgnoreOverrides: "{}"
+        addedDomains:
+        - addedDomains
+        - addedDomains
+        metricDirectionOverrides: "{}"
+        ignoredDomains:
+        - ignoredDomains
+        - ignoredDomains
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        versionId:
+          type: string
+        metricActiveOverrides:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+        metricDirectionOverrides:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+        ignoredDomains:
+          items:
+            type: string
+          type: array
+        addedDomains:
+          items:
+            type: string
+          type: array
+        latentSpaceIgnoreOverrides:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+      required:
+      - addedDomains
+      - ignoredDomains
+      - latentSpaceIgnoreOverrides
+      - metricActiveOverrides
+      - metricDirectionOverrides
+      - projectId
+      - versionId
+      type: object
     IssueStatus:
       enum:
       - Open
@@ -34360,12 +34634,15 @@ components:
       additionalProperties: true
       example:
         friendly_name: friendly_name
+        ignored_by_default: true
         latent_space_id: latent_space_id
       properties:
         latent_space_id:
           type: string
         friendly_name:
           type: string
+        ignored_by_default:
+          type: boolean
       required:
       - friendly_name
       - latent_space_id
@@ -34402,8 +34679,10 @@ components:
           node_id: node_id
         available_latent_spaces:
         - friendly_name: friendly_name
+          ignored_by_default: true
           latent_space_id: latent_space_id
         - friendly_name: friendly_name
+          ignored_by_default: true
           latent_space_id: latent_space_id
         general_error: general_error
         ground_truths:
@@ -34639,8 +34918,10 @@ components:
             node_id: node_id
           available_latent_spaces:
           - friendly_name: friendly_name
+            ignored_by_default: true
             latent_space_id: latent_space_id
           - friendly_name: friendly_name
+            ignored_by_default: true
             latent_space_id: latent_space_id
           general_error: general_error
           ground_truths:
@@ -34862,8 +35143,10 @@ components:
               node_id: node_id
             available_latent_spaces:
             - friendly_name: friendly_name
+              ignored_by_default: true
               latent_space_id: latent_space_id
             - friendly_name: friendly_name
+              ignored_by_default: true
               latent_space_id: latent_space_id
             general_error: general_error
             ground_truths:
@@ -35123,8 +35406,10 @@ components:
             node_id: node_id
           available_latent_spaces:
           - friendly_name: friendly_name
+            ignored_by_default: true
             latent_space_id: latent_space_id
           - friendly_name: friendly_name
+            ignored_by_default: true
             latent_space_id: latent_space_id
           general_error: general_error
           ground_truths:
@@ -35426,8 +35711,10 @@ components:
               node_id: node_id
             available_latent_spaces:
             - friendly_name: friendly_name
+              ignored_by_default: true
               latent_space_id: latent_space_id
             - friendly_name: friendly_name
+              ignored_by_default: true
               latent_space_id: latent_space_id
             general_error: general_error
             ground_truths:
@@ -35636,8 +35923,10 @@ components:
               node_id: node_id
             available_latent_spaces:
             - friendly_name: friendly_name
+              ignored_by_default: true
               latent_space_id: latent_space_id
             - friendly_name: friendly_name
+              ignored_by_default: true
               latent_space_id: latent_space_id
             general_error: general_error
             ground_truths:
@@ -35868,8 +36157,10 @@ components:
               node_id: node_id
             available_latent_spaces:
             - friendly_name: friendly_name
+              ignored_by_default: true
               latent_space_id: latent_space_id
             - friendly_name: friendly_name
+              ignored_by_default: true
               latent_space_id: latent_space_id
             general_error: general_error
             ground_truths:
@@ -36078,8 +36369,10 @@ components:
               node_id: node_id
             available_latent_spaces:
             - friendly_name: friendly_name
+              ignored_by_default: true
               latent_space_id: latent_space_id
             - friendly_name: friendly_name
+              ignored_by_default: true
               latent_space_id: latent_space_id
             general_error: general_error
             ground_truths:
@@ -36310,8 +36603,10 @@ components:
               node_id: node_id
             available_latent_spaces:
             - friendly_name: friendly_name
+              ignored_by_default: true
               latent_space_id: latent_space_id
             - friendly_name: friendly_name
+              ignored_by_default: true
               latent_space_id: latent_space_id
             general_error: general_error
             ground_truths:
@@ -36520,8 +36815,10 @@ components:
               node_id: node_id
             available_latent_spaces:
             - friendly_name: friendly_name
+              ignored_by_default: true
               latent_space_id: latent_space_id
             - friendly_name: friendly_name
+              ignored_by_default: true
               latent_space_id: latent_space_id
             general_error: general_error
             ground_truths:
@@ -36887,8 +37184,10 @@ components:
               node_id: node_id
             available_latent_spaces:
             - friendly_name: friendly_name
+              ignored_by_default: true
               latent_space_id: latent_space_id
             - friendly_name: friendly_name
+              ignored_by_default: true
               latent_space_id: latent_space_id
             general_error: general_error
             ground_truths:
@@ -37097,8 +37396,10 @@ components:
               node_id: node_id
             available_latent_spaces:
             - friendly_name: friendly_name
+              ignored_by_default: true
               latent_space_id: latent_space_id
             - friendly_name: friendly_name
+              ignored_by_default: true
               latent_space_id: latent_space_id
             general_error: general_error
             ground_truths:
