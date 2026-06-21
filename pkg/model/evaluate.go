@@ -78,14 +78,8 @@ var updateActionAliases = map[string]tensorleapapi.UpdateAction{
 	"metric":        tensorleapapi.UPDATEACTION_UPDATE_METRIC,
 	"metric_config": tensorleapapi.UPDATEACTION_UPDATE_METRIC_CONFIG,
 	"metric-config": tensorleapapi.UPDATEACTION_UPDATE_METRIC_CONFIG,
-	// update_metric_config recalculates metric direction AND insights, so the
-	// former metric-direction / insights values map onto it (back-compat).
-	"metric_direction": tensorleapapi.UPDATEACTION_UPDATE_METRIC_CONFIG,
-	"metric-direction": tensorleapapi.UPDATEACTION_UPDATE_METRIC_CONFIG,
-	"direction":        tensorleapapi.UPDATEACTION_UPDATE_METRIC_CONFIG,
-	"insights":         tensorleapapi.UPDATEACTION_UPDATE_METRIC_CONFIG,
-	"visualization":    tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
-	"viz":              tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
+	"visualization": tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
+	"viz":           tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
 }
 
 const updateActionAllowedHint = "metadata, metric, metric_config, visualization, viz"
