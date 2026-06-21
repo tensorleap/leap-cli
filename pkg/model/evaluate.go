@@ -74,17 +74,21 @@ func AskForBatchSize(defaultBatchSize int) (int, error) {
 }
 
 var updateActionAliases = map[string]tensorleapapi.UpdateAction{
-	"metadata":         tensorleapapi.UPDATEACTION_UPDATE_METADATA,
-	"metric":           tensorleapapi.UPDATEACTION_UPDATE_METRIC,
-	"metric_direction": tensorleapapi.UPDATEACTION_UPDATE_METRIC_DIRECTION,
-	"metric-direction": tensorleapapi.UPDATEACTION_UPDATE_METRIC_DIRECTION,
-	"direction":        tensorleapapi.UPDATEACTION_UPDATE_METRIC_DIRECTION,
-	"insights":         tensorleapapi.UPDATEACTION_UPDATE_INSIGHTS,
+	"metadata":      tensorleapapi.UPDATEACTION_UPDATE_METADATA,
+	"metric":        tensorleapapi.UPDATEACTION_UPDATE_METRIC,
+	"metric_config": tensorleapapi.UPDATEACTION_UPDATE_METRIC_CONFIG,
+	"metric-config": tensorleapapi.UPDATEACTION_UPDATE_METRIC_CONFIG,
+	// update_metric_config recalculates metric direction AND insights, so the
+	// former metric-direction / insights values map onto it (back-compat).
+	"metric_direction": tensorleapapi.UPDATEACTION_UPDATE_METRIC_CONFIG,
+	"metric-direction": tensorleapapi.UPDATEACTION_UPDATE_METRIC_CONFIG,
+	"direction":        tensorleapapi.UPDATEACTION_UPDATE_METRIC_CONFIG,
+	"insights":         tensorleapapi.UPDATEACTION_UPDATE_METRIC_CONFIG,
 	"visualization":    tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
 	"viz":              tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
 }
 
-const updateActionAllowedHint = "metadata, metric, metric_direction, insights, visualization, viz"
+const updateActionAllowedHint = "metadata, metric, metric_config, visualization, viz"
 
 func ParseUpdateActionsFromFlags(parts []string) ([]tensorleapapi.UpdateAction, error) {
 	if len(parts) == 0 {
@@ -136,9 +140,8 @@ type ChangeKey int
 const (
 	ChangeMetadata ChangeKey = iota
 	ChangeMetric
-	ChangeMetricDirection
+	ChangeMetricConfig
 	ChangeVisualization
-	ChangeInsights
 )
 
 type changeOption struct {
@@ -162,19 +165,15 @@ var changeOptions = []changeOption{
 		action: tensorleapapi.UPDATEACTION_UPDATE_METRIC,
 	},
 	{
-		key:    ChangeMetricDirection,
-		label:  "Metric direction",
-		action: tensorleapapi.UPDATEACTION_UPDATE_METRIC_DIRECTION,
+		key:    ChangeMetricConfig,
+		label:  "Metric config",
+		hint:   "metric direction + insights",
+		action: tensorleapapi.UPDATEACTION_UPDATE_METRIC_CONFIG,
 	},
 	{
 		key:    ChangeVisualization,
 		label:  "Visualizations",
 		action: tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
-	},
-	{
-		key:    ChangeInsights,
-		label:  "Insights",
-		action: tensorleapapi.UPDATEACTION_UPDATE_INSIGHTS,
 	},
 }
 
@@ -266,10 +265,8 @@ func FormatEvaluatePlan(plan EvaluatePlan) []string {
 	out := make([]string, 0, len(plan.UpdateActions))
 	for _, a := range plan.UpdateActions {
 		switch a {
-		case tensorleapapi.UPDATEACTION_UPDATE_METRIC_DIRECTION:
-			out = append(out, "Update metric direction")
-		case tensorleapapi.UPDATEACTION_UPDATE_INSIGHTS:
-			out = append(out, "Regenerate insights")
+		case tensorleapapi.UPDATEACTION_UPDATE_METRIC_CONFIG:
+			out = append(out, "Update metric config", "Regenerate insights")
 		case tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION:
 			out = append(out, "Regenerate visualizations")
 		default:

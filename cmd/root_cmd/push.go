@@ -80,11 +80,11 @@ Examples:
 
   # Overwrite + name what changed (implies --eval; skips the prompt)
   leap push -o my-model -u viz
-  leap push -o my-model -u metric_direction
+  leap push -o my-model -u metric_config
   leap push -o my-model -u metric          # triggers a full re-evaluation
 
   # Refresh multiple artifacts in one run
-  leap push -o my-model -u visualization -u insights
+  leap push -o my-model -u visualization -u metric_config
 
   # Push + evaluate without running the visualizations step (faster — no dashboard samples)
   leap push -e --novis
@@ -106,7 +106,7 @@ Examples:
 	cmd.Flags().StringVarP(&in.overwriteVersionRef, "overwrite", "o", "", "Overwrite an existing version (id, or name — picker shown if name is ambiguous)")
 	cmd.Flags().StringVar(&in.overwriteVersionRef, "overwrite-version", "", "")
 	_ = cmd.Flags().MarkDeprecated("overwrite-version", "use --overwrite (-o) instead")
-	cmd.Flags().StringSliceVarP(&in.updateParts, "update", "u", nil, "What changed in the code on overwrite (repeatable; implies --eval; skips the prompt). Values: metadata, metric, metric_direction, insights, visualization (viz). metadata+metric trigger a full re-evaluation.")
+	cmd.Flags().StringSliceVarP(&in.updateParts, "update", "u", nil, "What changed in the code on overwrite (repeatable; implies --eval; skips the prompt). Values: metadata, metric, metric_config, visualization (viz). metadata+metric trigger a full re-evaluation.")
 	cmd.Flags().BoolVar(&in.noVisualization, "novis", false, "Skip the visualize_samples step on the subsequent evaluate (requires --eval / -u)")
 	cmd.Flags().BoolVar(&in.yes, "yes", false, "Acknowledge pre-push warnings and proceed without prompting")
 	return cmd
