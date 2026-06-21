@@ -12,7 +12,6 @@ Name | Type | Description | Notes
 **EsInspectionIndex** | Pointer to **string** |  | [optional] 
 **EsModelId** | Pointer to **string** |  | [optional] 
 **PopulationExplorationDigestSeedCount** | Pointer to **float64** |  | [optional] 
-**InsightsIndexCounter** | Pointer to **float64** |  | [optional] 
 **CsvBlobPath** | Pointer to **string** |  | [optional] 
 **OverridedVersionId** | Pointer to **string** |  | [optional] 
 
@@ -214,31 +213,6 @@ SetPopulationExplorationDigestSeedCount sets PopulationExplorationDigestSeedCoun
 `func (o *VersionResources) HasPopulationExplorationDigestSeedCount() bool`
 
 HasPopulationExplorationDigestSeedCount returns a boolean if a field has been set.
-
-### GetInsightsIndexCounter
-
-`func (o *VersionResources) GetInsightsIndexCounter() float64`
-
-GetInsightsIndexCounter returns the InsightsIndexCounter field if non-nil, zero value otherwise.
-
-### GetInsightsIndexCounterOk
-
-`func (o *VersionResources) GetInsightsIndexCounterOk() (*float64, bool)`
-
-GetInsightsIndexCounterOk returns a tuple with the InsightsIndexCounter field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetInsightsIndexCounter
-
-`func (o *VersionResources) SetInsightsIndexCounter(v float64)`
-
-SetInsightsIndexCounter sets InsightsIndexCounter field to given value.
-
-### HasInsightsIndexCounter
-
-`func (o *VersionResources) HasInsightsIndexCounter() bool`
-
-HasInsightsIndexCounter returns a boolean if a field has been set.
 
 ### GetCsvBlobPath
 

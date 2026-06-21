@@ -7,12 +7,13 @@ Name | Type | Description | Notes
 **Status** | [**PopulationExplorationResponseStatus**](PopulationExplorationResponseStatus.md) |  | 
 **JobId** | Pointer to **string** |  | [optional] 
 **ReadyArtifacts** | [**PartialPopulationExplorationArtifacts**](PartialPopulationExplorationArtifacts.md) |  | 
+**Digest** | **string** |  | 
 
 ## Methods
 
 ### NewPopulationExplorationResponse
 
-`func NewPopulationExplorationResponse(status PopulationExplorationResponseStatus, readyArtifacts PartialPopulationExplorationArtifacts, ) *PopulationExplorationResponse`
+`func NewPopulationExplorationResponse(status PopulationExplorationResponseStatus, readyArtifacts PartialPopulationExplorationArtifacts, digest string, ) *PopulationExplorationResponse`
 
 NewPopulationExplorationResponse instantiates a new PopulationExplorationResponse object
 This constructor will assign default values to properties that have it defined,
@@ -90,6 +91,26 @@ and a boolean to check if the value has been set.
 `func (o *PopulationExplorationResponse) SetReadyArtifacts(v PartialPopulationExplorationArtifacts)`
 
 SetReadyArtifacts sets ReadyArtifacts field to given value.
+
+
+### GetDigest
+
+`func (o *PopulationExplorationResponse) GetDigest() string`
+
+GetDigest returns the Digest field if non-nil, zero value otherwise.
+
+### GetDigestOk
+
+`func (o *PopulationExplorationResponse) GetDigestOk() (*string, bool)`
+
+GetDigestOk returns a tuple with the Digest field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDigest
+
+`func (o *PopulationExplorationResponse) SetDigest(v string)`
+
+SetDigest sets Digest field to given value.
 
 
 

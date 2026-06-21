@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.95
+  version: 11.0.100
 servers:
 - url: /api/v2
 paths:
@@ -13207,9 +13207,8 @@ components:
       enum:
       - update_metadata
       - update_metric
-      - update_metric_direction
+      - update_metric_config
       - update_visualization
-      - update_insights
       type: string
     UpdateEvaluateArtifactParams:
       additionalProperties: true
@@ -34835,7 +34834,6 @@ components:
         population_exploration_digest_seed_count: 6.027456183070403
         inference_artifact_id: inference_artifact_id
         es_inspection_index: es_inspection_index
-        insights_index_counter: 1.4658129805029452
         vis_resources:
           insights_revision: insights_revision
           sample_visualizers_revision: sample_visualizers_revision
@@ -34858,9 +34856,6 @@ components:
         es_model_id:
           type: string
         population_exploration_digest_seed_count:
-          format: double
-          type: number
-        insights_index_counter:
           format: double
           type: number
         csv_blob_path:
@@ -34979,7 +34974,7 @@ components:
         updateActions:
         - update_metadata
         - update_metadata
-        serialNumber: 5.962133916683182
+        serialNumber: 1.4658129805029452
         resources:
           overrided_version_id: overrided_version_id
           inference_resources:
@@ -34989,7 +34984,6 @@ components:
           population_exploration_digest_seed_count: 6.027456183070403
           inference_artifact_id: inference_artifact_id
           es_inspection_index: es_inspection_index
-          insights_index_counter: 1.4658129805029452
           vis_resources:
             insights_revision: insights_revision
             sample_visualizers_revision: sample_visualizers_revision
@@ -35204,7 +35198,7 @@ components:
           updateActions:
           - update_metadata
           - update_metadata
-          serialNumber: 5.962133916683182
+          serialNumber: 1.4658129805029452
           resources:
             overrided_version_id: overrided_version_id
             inference_resources:
@@ -35214,7 +35208,6 @@ components:
             population_exploration_digest_seed_count: 6.027456183070403
             inference_artifact_id: inference_artifact_id
             es_inspection_index: es_inspection_index
-            insights_index_counter: 1.4658129805029452
             vis_resources:
               insights_revision: insights_revision
               sample_visualizers_revision: sample_visualizers_revision
@@ -35560,7 +35553,6 @@ components:
           population_exploration_digest_seed_count: 6.027456183070403
           inference_artifact_id: inference_artifact_id
           es_inspection_index: es_inspection_index
-          insights_index_counter: 1.4658129805029452
           vis_resources:
             insights_revision: insights_revision
             sample_visualizers_revision: sample_visualizers_revision
@@ -35865,7 +35857,6 @@ components:
             population_exploration_digest_seed_count: 6.027456183070403
             inference_artifact_id: inference_artifact_id
             es_inspection_index: es_inspection_index
-            insights_index_counter: 1.4658129805029452
             vis_resources:
               insights_revision: insights_revision
               sample_visualizers_revision: sample_visualizers_revision
@@ -36077,7 +36068,6 @@ components:
             population_exploration_digest_seed_count: 6.027456183070403
             inference_artifact_id: inference_artifact_id
             es_inspection_index: es_inspection_index
-            insights_index_counter: 1.4658129805029452
             vis_resources:
               insights_revision: insights_revision
               sample_visualizers_revision: sample_visualizers_revision
@@ -36311,7 +36301,6 @@ components:
             population_exploration_digest_seed_count: 6.027456183070403
             inference_artifact_id: inference_artifact_id
             es_inspection_index: es_inspection_index
-            insights_index_counter: 1.4658129805029452
             vis_resources:
               insights_revision: insights_revision
               sample_visualizers_revision: sample_visualizers_revision
@@ -36523,7 +36512,6 @@ components:
             population_exploration_digest_seed_count: 6.027456183070403
             inference_artifact_id: inference_artifact_id
             es_inspection_index: es_inspection_index
-            insights_index_counter: 1.4658129805029452
             vis_resources:
               insights_revision: insights_revision
               sample_visualizers_revision: sample_visualizers_revision
@@ -36757,7 +36745,6 @@ components:
             population_exploration_digest_seed_count: 6.027456183070403
             inference_artifact_id: inference_artifact_id
             es_inspection_index: es_inspection_index
-            insights_index_counter: 1.4658129805029452
             vis_resources:
               insights_revision: insights_revision
               sample_visualizers_revision: sample_visualizers_revision
@@ -36969,7 +36956,6 @@ components:
             population_exploration_digest_seed_count: 6.027456183070403
             inference_artifact_id: inference_artifact_id
             es_inspection_index: es_inspection_index
-            insights_index_counter: 1.4658129805029452
             vis_resources:
               insights_revision: insights_revision
               sample_visualizers_revision: sample_visualizers_revision
@@ -37338,7 +37324,6 @@ components:
             population_exploration_digest_seed_count: 6.027456183070403
             inference_artifact_id: inference_artifact_id
             es_inspection_index: es_inspection_index
-            insights_index_counter: 1.4658129805029452
             vis_resources:
               insights_revision: insights_revision
               sample_visualizers_revision: sample_visualizers_revision
@@ -37550,7 +37535,6 @@ components:
             population_exploration_digest_seed_count: 6.027456183070403
             inference_artifact_id: inference_artifact_id
             es_inspection_index: es_inspection_index
-            insights_index_counter: 1.4658129805029452
             vis_resources:
               insights_revision: insights_revision
               sample_visualizers_revision: sample_visualizers_revision
@@ -40340,6 +40324,7 @@ components:
       additionalProperties: true
       example:
         jobId: jobId
+        digest: digest
         readyArtifacts:
           scatter: scatter
         status: UNSTARTED
@@ -40350,7 +40335,10 @@ components:
           type: string
         readyArtifacts:
           $ref: "#/components/schemas/Partial_PopulationExplorationArtifacts_"
+        digest:
+          type: string
       required:
+      - digest
       - readyArtifacts
       - status
       type: object
@@ -40781,7 +40769,6 @@ components:
         useCustomLatentSpace: true
         forceExecute: true
         versionId: versionId
-        digest: digest
         numOfSamples: 6.027456183070403
         notApplyTimeFilterOnUnlabeledOnly: true
         balanceBy:
@@ -41015,8 +41002,6 @@ components:
           $ref: "#/components/schemas/ESFilter"
         notApplyTimeFilterOnUnlabeledOnly:
           type: boolean
-        digest:
-          type: string
         numOfSamples:
           format: double
           type: number
@@ -41041,7 +41026,6 @@ components:
       required:
       - balanceBy
       - batchSize
-      - digest
       - numOfSamples
       - projectId
       - reductionAlgorithm
