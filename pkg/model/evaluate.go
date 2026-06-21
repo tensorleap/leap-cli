@@ -225,6 +225,21 @@ func init() {
 {{- end}}`
 }
 
+// AskRunEvaluate offers to run evaluation after a push (default Yes). The label
+// reflects whether the run will be an update-evaluate or a full evaluate.
+func AskRunEvaluate(isUpdateEvaluate bool) (bool, error) {
+	msg := "Run evaluate after push?"
+	if isUpdateEvaluate {
+		msg = "Run update-evaluate after push?"
+	}
+	run := true
+	prompt := &survey.Confirm{Message: msg, Default: true}
+	if err := survey.AskOne(prompt, &run); err != nil {
+		return false, err
+	}
+	return run, nil
+}
+
 func AskForEvaluatePlan() (EvaluatePlan, error) {
 	labels := make([]string, len(changeOptions))
 	labelToKey := make(map[string]ChangeKey, len(changeOptions))

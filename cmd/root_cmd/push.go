@@ -456,20 +456,36 @@ func (s *pushState) resolveEvalPlan() (evalDispatch, error) {
 	}
 
 	if !s.isOverwrite {
+		// New version → a full evaluate. Offer to run it (default Yes).
 		if !in.runEval {
-			return evalDispatch{}, nil
+			run, err := s.promptRunEvaluate(false)
+			if err != nil {
+				return evalDispatch{}, err
+			}
+			if !run {
+				return evalDispatch{}, nil
+			}
 		}
 		batchSize, err := s.askOrDefaultBatchSize()
 		return evalDispatch{batchSize: batchSize, noVisualization: in.noVisualization}, err
 	}
 
+	// Overwrite → ask what changed first; that decides whether the run would be
+	// an update-evaluate or a full re-evaluate. Then offer to run it (default
+	// Yes), labelling the prompt accordingly.
 	plan, err := s.resolveOverwriteEvalPlan()
 	if err != nil {
 		return evalDispatch{}, err
 	}
 
 	if !in.runEval {
-		return evalDispatch{updateActions: plan.UpdateActions, persistOnly: true}, nil
+		run, err := s.promptRunEvaluate(plan.Kind == model.EvaluatePlanUpdate)
+		if err != nil {
+			return evalDispatch{}, err
+		}
+		if !run {
+			return evalDispatch{updateActions: plan.UpdateActions, persistOnly: true}, nil
+		}
 	}
 
 	if plan.Kind == model.EvaluatePlanReset {
@@ -481,6 +497,18 @@ func (s *pushState) resolveEvalPlan() (evalDispatch, error) {
 		}, err
 	}
 	return evalDispatch{updateActions: plan.UpdateActions, runUpdateEvaluate: true}, nil
+}
+
+// promptRunEvaluate offers to run evaluation after the push (default Yes) when
+// the user didn't pass --eval (or -u, which implies it). isUpdateEvaluate picks
+// the label ("update-evaluate" vs "evaluate"). Returns false without prompting
+// when stdin isn't a terminal, so scripted/piped pushes keep the explicit
+// --eval requirement.
+func (s *pushState) promptRunEvaluate(isUpdateEvaluate bool) (bool, error) {
+	if !term.IsTerminal(int(os.Stdin.Fd())) {
+		return false, nil
+	}
+	return model.AskRunEvaluate(isUpdateEvaluate)
 }
 
 func (s *pushState) resolveOverwriteEvalPlan() (model.EvaluatePlan, error) {
