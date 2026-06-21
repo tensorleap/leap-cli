@@ -465,6 +465,7 @@ func (s *pushState) resolveEvalPlan() (evalDispatch, error) {
 			if !run {
 				return evalDispatch{}, nil
 			}
+			in.runEval = true
 		}
 		batchSize, err := s.askOrDefaultBatchSize()
 		return evalDispatch{batchSize: batchSize, noVisualization: in.noVisualization}, err
@@ -486,6 +487,7 @@ func (s *pushState) resolveEvalPlan() (evalDispatch, error) {
 		if !run {
 			return evalDispatch{updateActions: plan.UpdateActions, persistOnly: true}, nil
 		}
+		in.runEval = true
 	}
 
 	if plan.Kind == model.EvaluatePlanReset {
@@ -516,7 +518,7 @@ func (s *pushState) resolveOverwriteEvalPlan() (model.EvaluatePlan, error) {
 	if err != nil {
 		return model.EvaluatePlan{}, err
 	}
-	if s.inputs.runEval && plan.Kind == model.EvaluatePlanUpdate && !s.canUpdateEvaluate() {
+	if plan.Kind == model.EvaluatePlanUpdate && !s.canUpdateEvaluate() {
 		log.Info("No evaluation data found in the override chain — running a fresh evaluate.")
 		return model.EvaluatePlan{Kind: model.EvaluatePlanReset, UpdateActions: plan.UpdateActions}, nil
 	}
