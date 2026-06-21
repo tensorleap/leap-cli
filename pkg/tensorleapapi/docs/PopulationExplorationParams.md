@@ -10,7 +10,6 @@ Name | Type | Description | Notes
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **TimeFilter** | Pointer to [**ESFilter**](ESFilter.md) |  | [optional] 
 **NotApplyTimeFilterOnUnlabeledOnly** | Pointer to **bool** |  | [optional] 
-**Digest** | **string** |  | 
 **NumOfSamples** | **float64** |  | 
 **BalanceBy** | **[]string** |  | 
 **ShouldFillRemainingWithUnbalanced** | **bool** |  | 
@@ -25,7 +24,7 @@ Name | Type | Description | Notes
 
 ### NewPopulationExplorationParams
 
-`func NewPopulationExplorationParams(versionId string, projectId string, batchSize float64, digest string, numOfSamples float64, balanceBy []string, shouldFillRemainingWithUnbalanced bool, reductionAlgorithm ReductionAlgorithm, ) *PopulationExplorationParams`
+`func NewPopulationExplorationParams(versionId string, projectId string, batchSize float64, numOfSamples float64, balanceBy []string, shouldFillRemainingWithUnbalanced bool, reductionAlgorithm ReductionAlgorithm, ) *PopulationExplorationParams`
 
 NewPopulationExplorationParams instantiates a new PopulationExplorationParams object
 This constructor will assign default values to properties that have it defined,
@@ -174,26 +173,6 @@ SetNotApplyTimeFilterOnUnlabeledOnly sets NotApplyTimeFilterOnUnlabeledOnly fiel
 `func (o *PopulationExplorationParams) HasNotApplyTimeFilterOnUnlabeledOnly() bool`
 
 HasNotApplyTimeFilterOnUnlabeledOnly returns a boolean if a field has been set.
-
-### GetDigest
-
-`func (o *PopulationExplorationParams) GetDigest() string`
-
-GetDigest returns the Digest field if non-nil, zero value otherwise.
-
-### GetDigestOk
-
-`func (o *PopulationExplorationParams) GetDigestOk() (*string, bool)`
-
-GetDigestOk returns a tuple with the Digest field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDigest
-
-`func (o *PopulationExplorationParams) SetDigest(v string)`
-
-SetDigest sets Digest field to given value.
-
 
 ### GetNumOfSamples
 

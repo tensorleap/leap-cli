@@ -5427,7 +5427,7 @@ import (
 )
 
 func main() {
-	populationExplorationParams := *openapiclient.NewPopulationExplorationParams("VersionId_example", "ProjectId_example", float64(123), "Digest_example", float64(123), []string{"BalanceBy_example"}, false, openapiclient.ReductionAlgorithm("TSNE")) // PopulationExplorationParams | 
+	populationExplorationParams := *openapiclient.NewPopulationExplorationParams("VersionId_example", "ProjectId_example", float64(123), float64(123), []string{"BalanceBy_example"}, false, openapiclient.ReductionAlgorithm("TSNE")) // PopulationExplorationParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -8460,7 +8460,7 @@ import (
 )
 
 func main() {
-	populationExplorationParams := *openapiclient.NewPopulationExplorationParams("VersionId_example", "ProjectId_example", float64(123), "Digest_example", float64(123), []string{"BalanceBy_example"}, false, openapiclient.ReductionAlgorithm("TSNE")) // PopulationExplorationParams | 
+	populationExplorationParams := *openapiclient.NewPopulationExplorationParams("VersionId_example", "ProjectId_example", float64(123), float64(123), []string{"BalanceBy_example"}, false, openapiclient.ReductionAlgorithm("TSNE")) // PopulationExplorationParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
