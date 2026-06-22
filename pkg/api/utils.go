@@ -120,7 +120,11 @@ func NewDefaultClient() *http.Client {
 	customHttpClient := &http.Client{}
 
 	roundTripper := &CustomRoundTripper{
-		originalRoundTripper: http.Transport{},
+		// Replaces the global http.DefaultClient, so it must keep honoring
+		// HTTP(S)_PROXY/NO_PROXY the way the stock http.DefaultTransport does.
+		originalRoundTripper: http.Transport{
+			Proxy: http.ProxyFromEnvironment,
+		},
 	}
 	customHttpClient.Transport = roundTripper
 
