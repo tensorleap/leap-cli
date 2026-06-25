@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.100
+  version: 11.0.101
 servers:
 - url: /api/v2
 paths:
@@ -13666,6 +13666,7 @@ components:
       - STREAMING_HANDLER
       - STREAMING_SAMPLES_VIS
       - PUSH
+      - SYNTHETIC
       - EXPORT_PROJECT
       - IMPORT_PROJECT
       type: string
@@ -38000,6 +38001,7 @@ components:
     SimulationInstance:
       additionalProperties: true
       example:
+        sim_config: "{}"
         name: name
         param_names:
         - param_names
@@ -38011,9 +38013,14 @@ components:
           items:
             type: string
           type: array
+        sim_config:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
       required:
       - name
       - param_names
+      - sim_config
       type: object
     CodeSetup:
       additionalProperties: true
@@ -38090,11 +38097,13 @@ components:
           name: name
           type: Image
         simulations:
-        - name: name
+        - sim_config: "{}"
+          name: name
           param_names:
           - param_names
           - param_names
-        - name: name
+        - sim_config: "{}"
+          name: name
           param_names:
           - param_names
           - param_names
@@ -38365,11 +38374,13 @@ components:
             name: name
             type: Image
           simulations:
-          - name: name
+          - sim_config: "{}"
+            name: name
             param_names:
             - param_names
             - param_names
-          - name: name
+          - sim_config: "{}"
+            name: name
             param_names:
             - param_names
             - param_names
@@ -38510,11 +38521,13 @@ components:
               name: name
               type: Image
             simulations:
-            - name: name
+            - sim_config: "{}"
+              name: name
               param_names:
               - param_names
               - param_names
-            - name: name
+            - sim_config: "{}"
+              name: name
               param_names:
               - param_names
               - param_names
@@ -38675,11 +38688,13 @@ components:
                 name: name
                 type: Image
               simulations:
-              - name: name
+              - sim_config: "{}"
+                name: name
                 param_names:
                 - param_names
                 - param_names
-              - name: name
+              - sim_config: "{}"
+                name: name
                 param_names:
                 - param_names
                 - param_names
@@ -38920,11 +38935,13 @@ components:
                 name: name
                 type: Image
               simulations:
-              - name: name
+              - sim_config: "{}"
+                name: name
                 param_names:
                 - param_names
                 - param_names
-              - name: name
+              - sim_config: "{}"
+                name: name
                 param_names:
                 - param_names
                 - param_names
@@ -39742,6 +39759,7 @@ components:
       - STREAMING_HANDLER
       - STREAMING_SAMPLES_VIS
       - PUSH
+      - SYNTHETIC
       type: string
     BasicVisualizationInfo:
       additionalProperties: true

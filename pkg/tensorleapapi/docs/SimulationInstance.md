@@ -6,12 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** |  | 
 **ParamNames** | **[]string** |  | 
+**SimConfig** | **map[string]interface{}** | Construct a type with a set of properties K of type T | 
 
 ## Methods
 
 ### NewSimulationInstance
 
-`func NewSimulationInstance(name string, paramNames []string, ) *SimulationInstance`
+`func NewSimulationInstance(name string, paramNames []string, simConfig map[string]interface{}, ) *SimulationInstance`
 
 NewSimulationInstance instantiates a new SimulationInstance object
 This constructor will assign default values to properties that have it defined,
@@ -64,6 +65,26 @@ and a boolean to check if the value has been set.
 `func (o *SimulationInstance) SetParamNames(v []string)`
 
 SetParamNames sets ParamNames field to given value.
+
+
+### GetSimConfig
+
+`func (o *SimulationInstance) GetSimConfig() map[string]interface{}`
+
+GetSimConfig returns the SimConfig field if non-nil, zero value otherwise.
+
+### GetSimConfigOk
+
+`func (o *SimulationInstance) GetSimConfigOk() (*map[string]interface{}, bool)`
+
+GetSimConfigOk returns a tuple with the SimConfig field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSimConfig
+
+`func (o *SimulationInstance) SetSimConfig(v map[string]interface{})`
+
+SetSimConfig sets SimConfig field to given value.
 
 
 
