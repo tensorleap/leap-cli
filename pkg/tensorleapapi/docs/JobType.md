@@ -31,6 +31,8 @@
 
 * `PUSH` (value: `"PUSH"`)
 
+* `SYNTHETIC` (value: `"SYNTHETIC"`)
+
 * `EXPORT_PROJECT` (value: `"EXPORT_PROJECT"`)
 
 * `IMPORT_PROJECT` (value: `"IMPORT_PROJECT"`)
