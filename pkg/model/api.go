@@ -189,7 +189,7 @@ func WaitForPushJob(ctx context.Context, projectId, versionId, jobId string) err
 	return nil
 }
 
-const TIMEOUT_FOR_IMPORT_MODEL_JOB = 60 * time.Minute
+const TIMEOUT_FOR_IMPORT_MODEL_JOB = 90 * time.Minute
 
 var ErrJobFailed = fmt.Errorf("import model job failed")
 
