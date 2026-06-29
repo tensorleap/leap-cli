@@ -149,7 +149,7 @@ var changeOptions = []changeOption{
 	{
 		key:    ChangeMetadata,
 		label:  "Metadata",
-		hint:   "full re-eval",
+		hint:   "add new metadata",
 		action: tensorleapapi.UPDATEACTION_UPDATE_METADATA,
 	},
 	{
@@ -172,8 +172,7 @@ var changeOptions = []changeOption{
 }
 
 func triggersFullReeval(a tensorleapapi.UpdateAction) bool {
-	return a == tensorleapapi.UPDATEACTION_UPDATE_METADATA ||
-		a == tensorleapapi.UPDATEACTION_UPDATE_METRIC
+	return a == tensorleapapi.UPDATEACTION_UPDATE_METRIC
 }
 
 func PlanFromUpdateActions(actions []tensorleapapi.UpdateAction) EvaluatePlan {

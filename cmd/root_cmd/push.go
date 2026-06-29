@@ -106,7 +106,7 @@ Examples:
 	cmd.Flags().StringVarP(&in.overwriteVersionRef, "overwrite", "o", "", "Overwrite an existing version (id, or name — picker shown if name is ambiguous)")
 	cmd.Flags().StringVar(&in.overwriteVersionRef, "overwrite-version", "", "")
 	_ = cmd.Flags().MarkDeprecated("overwrite-version", "use --overwrite (-o) instead")
-	cmd.Flags().StringSliceVarP(&in.updateParts, "update", "u", nil, "What changed in the code on overwrite (repeatable; implies --eval; skips the prompt). Values: metadata, metric, metric_config, visualization (viz). metadata+metric trigger a full re-evaluation.")
+	cmd.Flags().StringSliceVarP(&in.updateParts, "update", "u", nil, "What changed in the code on overwrite (repeatable; implies --eval; skips the prompt). Values: metadata, metric, metric_config, visualization (viz). metric triggers a full re-evaluation.")
 	cmd.Flags().BoolVar(&in.noVisualization, "novis", false, "Skip the visualize_samples step on the subsequent evaluate (requires --eval / -u)")
 	cmd.Flags().BoolVar(&in.yes, "yes", false, "Acknowledge pre-push warnings and proceed without prompting")
 	return cmd
