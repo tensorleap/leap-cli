@@ -60,7 +60,7 @@ func SelectModelType(modelType *string, modelPath string) error {
 
 	ext := strings.ToLower(filepath.Ext(modelPath))
 
-	if len(*modelType) > 0 && slices.Contains(MODEL_TYPES, *modelType) {
+	if len(*modelType) > 0 && !slices.Contains(MODEL_TYPES, *modelType) {
 		log.Warn(fmt.Sprintf("Model type %s not supported. Supported types are: %s", *modelType, MODEL_TYPES))
 	}
 

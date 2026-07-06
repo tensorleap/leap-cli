@@ -9,6 +9,7 @@ import (
 	"github.com/atotto/clipboard"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"golang.org/x/term"
 )
 
 const (
@@ -763,6 +764,13 @@ type ReportPages = TabbedReport
 type InteractivePage = Page
 
 func confirmInteractiveView() bool {
+	// Without an interactive terminal (headless / piped / CI runs) there is no
+	// one to answer the prompt and no TTY to draw the interactive TUI on. Skip
+	// it and let the caller print the report plainly instead of hanging or
+	// crashing on an alt-screen program with no terminal.
+	if !term.IsTerminal(int(os.Stdin.Fd())) {
+		return false
+	}
 	fmt.Print("View errors in interactive mode? (Y/n): ")
 	reader := bufio.NewReader(os.Stdin)
 	input, err := reader.ReadString('\n')
