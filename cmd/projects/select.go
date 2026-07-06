@@ -5,6 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/code"
+	"github.com/tensorleap/leap-cli/pkg/entity"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/project"
 	"github.com/tensorleap/leap-cli/pkg/secret"
@@ -34,11 +35,29 @@ Pass a project id as an argument to select it non-interactively (no prompts):
 				projectId = args[0]
 			}
 
-			// With a projectId arg this resolves the project by id without
-			// prompting; without one it falls back to the interactive picker.
-			selectedProject, projectWasCreated, err := project.GetProjectFromProjectId(ctx, projectId, true)
-			if err != nil {
-				return fmt.Errorf("failed to select or create project: %w", err)
+			var selectedProject *project.ProjectEntity
+			projectWasCreated := false
+			if projectId != "" {
+				// Explicit id: resolve it directly and fail if it's unknown, so a
+				// headless `select <id>` reports a bad id instead of silently
+				// dropping into the interactive picker.
+				projects, listErr := project.GetProjects(ctx)
+				if listErr != nil {
+					return fmt.Errorf("failed to get projects: %w", listErr)
+				}
+				found, findErr := entity.GetEntityById(projectId, projects, project.ProjectEntityDesc)
+				if findErr != nil {
+					return fmt.Errorf("project with id %q not found", projectId)
+				}
+				selectedProject = found
+			} else {
+				// No arg: interactive create-or-select picker.
+				sp, wasCreated, selErr := project.GetProjectFromProjectId(ctx, "", true)
+				if selErr != nil {
+					return fmt.Errorf("failed to select or create project: %w", selErr)
+				}
+				selectedProject = sp
+				projectWasCreated = wasCreated
 			}
 
 			if workspaceConfig.SecretId != "" {
