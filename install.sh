@@ -134,12 +134,13 @@ downloadFile() {
 installFile() {
   echo "Preparing to install $APP_NAME into ${BIN_DIR}"
   runAsRoot chmod +x "$TMP_FILE"
-  # Remove any existing binary first instead of overwriting it in place.
-  # On macOS, overwriting an executable's content in place (same inode) can
-  # leave the kernel's code-signature validity cache stale, causing every
-  # subsequent run to be killed with "Taskgated Invalid Signature" (SIGKILL).
-  runAsRoot rm -f "$BIN_DIR/$APP_NAME"
-  runAsRoot cp "$TMP_FILE" "$BIN_DIR/$APP_NAME"
+  # Move (rather than cp) the new binary into place. On macOS, overwriting an
+  # existing executable's content in place (same inode) can leave the kernel's
+  # code-signature validity cache stale, causing every subsequent run to be
+  # killed with "Taskgated Invalid Signature" (SIGKILL). `mv` replaces the
+  # destination atomically with a fresh inode, so there's no window where
+  # $APP_NAME is missing if this step is interrupted, and no stale cache.
+  runAsRoot mv -f "$TMP_FILE" "$BIN_DIR/$APP_NAME"
   echo "$APP_NAME installed into $BIN_DIR/$APP_NAME"
 }
 
