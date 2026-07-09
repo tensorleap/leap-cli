@@ -134,13 +134,21 @@ downloadFile() {
 installFile() {
   echo "Preparing to install $APP_NAME into ${BIN_DIR}"
   runAsRoot chmod +x "$TMP_FILE"
-  # Move (rather than cp) the new binary into place. On macOS, overwriting an
-  # existing executable's content in place (same inode) can leave the kernel's
-  # code-signature validity cache stale, causing every subsequent run to be
-  # killed with "Taskgated Invalid Signature" (SIGKILL). `mv` replaces the
-  # destination atomically with a fresh inode, so there's no window where
-  # $APP_NAME is missing if this step is interrupted, and no stale cache.
-  runAsRoot mv -f "$TMP_FILE" "$BIN_DIR/$APP_NAME"
+  # Stage the new binary inside $BIN_DIR itself, then rename it into place.
+  # $TMPDIR can be a different filesystem than $BIN_DIR (e.g. a tmpfs-mounted
+  # /tmp, common on several Linux distros), in which case `mv $TMP_FILE
+  # $BIN_DIR/$APP_NAME` falls back to unlink-then-recreate and briefly leaves
+  # $APP_NAME missing entirely -- a problem for concurrent installs/runs on a
+  # shared multi-user machine. Renaming within $BIN_DIR is always a
+  # same-filesystem, atomic operation: every reader/executor sees either the
+  # complete old binary or the complete new one, never a partial or missing
+  # file. It also always lands a fresh inode, avoiding the stale macOS
+  # code-signature cache issue caused by overwriting an existing binary's
+  # content in place. The pid suffix keeps concurrent installs (e.g. two
+  # users on the same box) from colliding on the same staging path.
+  local STAGED_FILE="$BIN_DIR/.${APP_NAME}.tmp.$$"
+  runAsRoot cp "$TMP_FILE" "$STAGED_FILE"
+  runAsRoot mv -f "$STAGED_FILE" "$BIN_DIR/$APP_NAME"
   echo "$APP_NAME installed into $BIN_DIR/$APP_NAME"
 }
 
