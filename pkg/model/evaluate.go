@@ -319,9 +319,9 @@ func hasOwnEvalData(v *tensorleapapi.SlimVersion) bool {
 }
 
 // HasEvaluatedAncestorOrSelf reports whether versionId or any version in its
-// override chain has evaluation data. A failed override has no eval data of its
-// own, so we follow resources.overridedVersionId to the version it overrode and
-// keep walking until we find one that was actually evaluated.
+// parent chain has evaluation data. A failed override has no eval data of its
+// own, so we follow parentVersionId up the lineage and keep walking until we
+// find one that was actually evaluated.
 func HasEvaluatedAncestorOrSelf(ctx context.Context, projectId, versionId string) (bool, error) {
 	versions, err := GetVersions(ctx, projectId)
 	if err != nil {
@@ -346,8 +346,7 @@ func HasEvaluatedAncestorOrSelf(ctx context.Context, projectId, versionId string
 			break
 		}
 		seen[cur.GetCid()] = struct{}{}
-		res := cur.GetResources()
-		nextId := res.GetOverridedVersionId()
+		nextId := cur.GetParentVersionId()
 		if nextId == "" {
 			break
 		}
