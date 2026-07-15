@@ -533,7 +533,12 @@ func (s *pushState) collectUserUpdatePlan() (model.EvaluatePlan, error) {
 		}
 		return model.PlanFromUpdateActions(parsed), nil
 	}
-	plan, err := model.AskForEvaluatePlan()
+	// Retrying a failed version → re-offer the actions from that attempt.
+	var defaults []tensorleapapi.UpdateAction
+	if s.overwriteVersion != nil && s.overwriteVersion.Status == model.VersionStatus_FAILED {
+		defaults = s.overwriteVersion.UpdateActions
+	}
+	plan, err := model.AskForEvaluatePlan(defaults)
 	if err != nil {
 		return model.EvaluatePlan{}, fmt.Errorf("failed to get update plan: %w", err)
 	}
