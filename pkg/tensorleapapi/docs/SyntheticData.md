@@ -12,9 +12,14 @@ Name | Type | Description | Notes
 **CreatedBy** | **string** |  | 
 **NextTrialsFileUrl** | Pointer to **string** |  | [optional] 
 **BestTrialsFileUrl** | Pointer to **string** |  | [optional] 
+**BundleFileUrl** | Pointer to **string** |  | [optional] 
+**FilterFileUrl** | Pointer to **string** |  | [optional] 
 **Status** | [**JobStatus**](JobStatus.md) |  | 
 **Sources** | [**[]SyntheticDataJobParamsSourcesInner**](SyntheticDataJobParamsSourcesInner.md) |  | 
 **TargetFilters** | [**[]ESFilter**](ESFilter.md) |  | 
+**IsAuto** | Pointer to **bool** |  | [optional] 
+**SimulationNames** | Pointer to **[]string** |  | [optional] 
+**InitialSimulationFilters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **RunProcess** | Pointer to [**RunProcess**](RunProcess.md) |  | [optional] 
 
 ## Methods
@@ -206,6 +211,56 @@ SetBestTrialsFileUrl sets BestTrialsFileUrl field to given value.
 
 HasBestTrialsFileUrl returns a boolean if a field has been set.
 
+### GetBundleFileUrl
+
+`func (o *SyntheticData) GetBundleFileUrl() string`
+
+GetBundleFileUrl returns the BundleFileUrl field if non-nil, zero value otherwise.
+
+### GetBundleFileUrlOk
+
+`func (o *SyntheticData) GetBundleFileUrlOk() (*string, bool)`
+
+GetBundleFileUrlOk returns a tuple with the BundleFileUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBundleFileUrl
+
+`func (o *SyntheticData) SetBundleFileUrl(v string)`
+
+SetBundleFileUrl sets BundleFileUrl field to given value.
+
+### HasBundleFileUrl
+
+`func (o *SyntheticData) HasBundleFileUrl() bool`
+
+HasBundleFileUrl returns a boolean if a field has been set.
+
+### GetFilterFileUrl
+
+`func (o *SyntheticData) GetFilterFileUrl() string`
+
+GetFilterFileUrl returns the FilterFileUrl field if non-nil, zero value otherwise.
+
+### GetFilterFileUrlOk
+
+`func (o *SyntheticData) GetFilterFileUrlOk() (*string, bool)`
+
+GetFilterFileUrlOk returns a tuple with the FilterFileUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFilterFileUrl
+
+`func (o *SyntheticData) SetFilterFileUrl(v string)`
+
+SetFilterFileUrl sets FilterFileUrl field to given value.
+
+### HasFilterFileUrl
+
+`func (o *SyntheticData) HasFilterFileUrl() bool`
+
+HasFilterFileUrl returns a boolean if a field has been set.
+
 ### GetStatus
 
 `func (o *SyntheticData) GetStatus() JobStatus`
@@ -265,6 +320,81 @@ and a boolean to check if the value has been set.
 
 SetTargetFilters sets TargetFilters field to given value.
 
+
+### GetIsAuto
+
+`func (o *SyntheticData) GetIsAuto() bool`
+
+GetIsAuto returns the IsAuto field if non-nil, zero value otherwise.
+
+### GetIsAutoOk
+
+`func (o *SyntheticData) GetIsAutoOk() (*bool, bool)`
+
+GetIsAutoOk returns a tuple with the IsAuto field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsAuto
+
+`func (o *SyntheticData) SetIsAuto(v bool)`
+
+SetIsAuto sets IsAuto field to given value.
+
+### HasIsAuto
+
+`func (o *SyntheticData) HasIsAuto() bool`
+
+HasIsAuto returns a boolean if a field has been set.
+
+### GetSimulationNames
+
+`func (o *SyntheticData) GetSimulationNames() []string`
+
+GetSimulationNames returns the SimulationNames field if non-nil, zero value otherwise.
+
+### GetSimulationNamesOk
+
+`func (o *SyntheticData) GetSimulationNamesOk() (*[]string, bool)`
+
+GetSimulationNamesOk returns a tuple with the SimulationNames field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSimulationNames
+
+`func (o *SyntheticData) SetSimulationNames(v []string)`
+
+SetSimulationNames sets SimulationNames field to given value.
+
+### HasSimulationNames
+
+`func (o *SyntheticData) HasSimulationNames() bool`
+
+HasSimulationNames returns a boolean if a field has been set.
+
+### GetInitialSimulationFilters
+
+`func (o *SyntheticData) GetInitialSimulationFilters() []ESFilter`
+
+GetInitialSimulationFilters returns the InitialSimulationFilters field if non-nil, zero value otherwise.
+
+### GetInitialSimulationFiltersOk
+
+`func (o *SyntheticData) GetInitialSimulationFiltersOk() (*[]ESFilter, bool)`
+
+GetInitialSimulationFiltersOk returns a tuple with the InitialSimulationFilters field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInitialSimulationFilters
+
+`func (o *SyntheticData) SetInitialSimulationFilters(v []ESFilter)`
+
+SetInitialSimulationFilters sets InitialSimulationFilters field to given value.
+
+### HasInitialSimulationFilters
+
+`func (o *SyntheticData) HasInitialSimulationFilters() bool`
+
+HasInitialSimulationFilters returns a boolean if a field has been set.
 
 ### GetRunProcess
 

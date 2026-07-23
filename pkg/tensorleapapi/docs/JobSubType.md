@@ -13,6 +13,10 @@
 
 * `DATASET_BALANCING` (value: `"Dataset Balancing"`)
 
+* `SPLITTING` (value: `"Splitting"`)
+
+* `DOMAIN_GAP` (value: `"Domain Gap"`)
+
 * `VISUALIZERS_CALCULATION` (value: `"Visualizers Calculation"`)
 
 * `SAMPLE_ANALYSIS` (value: `"Sample Analysis"`)

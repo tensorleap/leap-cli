@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **SampleIdentity** | Pointer to [**SampleIdentity**](SampleIdentity.md) |  | [optional] 
 **FromDatasetSlice** | Pointer to [**DataStateType**](DataStateType.md) |  | [optional] 
 **ExtId** | **string** |  | 
+**DomainGapId** | Pointer to **string** |  | [optional] 
 **Title** | **string** |  | 
 **Epoch** | **float64** |  | 
 **LatentSpaceType** | Pointer to **string** |  | [optional] 
@@ -36,9 +37,17 @@ Name | Type | Description | Notes
 **NumOfSamplesToLabel** | Pointer to **float64** |  | [optional] 
 **TargetFilters** | [**[]ESFilter**](ESFilter.md) |  | 
 **Sources** | [**[]SyntheticDataJobParamsSourcesInner**](SyntheticDataJobParamsSourcesInner.md) |  | 
+**InitialSimulationFilters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
+**SimulationNames** | **[]string** |  | 
 **PercentageOfSamplesToPrune** | Pointer to **float64** |  | [optional] 
 **PrioritizedMetadataTags** | Pointer to **[]string** |  | [optional] 
 **MetadataTags** | **[]string** |  | 
+**SplitAcrossMetadata** | **[]string** |  | 
+**KeepTogetherMetadata** | **[]string** |  | 
+**SplitsToResplit** | [**[]SplitSubset**](SplitSubset.md) |  | 
+**GroupBFilters** | [**[]ESFilter**](ESFilter.md) |  | 
+**GroupAFilters** | [**[]ESFilter**](ESFilter.md) |  | 
+**VisArtifactId** | **string** |  | 
 **ExportUrl** | **string** |  | 
 **ProjectVersion** | **float64** |  | 
 **ExportOptions** | [**ExportOptions**](ExportOptions.md) |  | 
@@ -62,7 +71,7 @@ Name | Type | Description | Notes
 
 ### NewJobParams
 
-`func NewJobParams(versionId string, inferenceArtifactId string, projectId string, batchSize float64, evaluatedEpoch float64, type_ ExportModelTypeEnum, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, labelingAlgorithm LabelingAlgorithm, targetFilters []ESFilter, sources []SyntheticDataJobParamsSourcesInner, metadataTags []string, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, codeUrl string, codeEntryFile string, versionName string, updateActions []UpdateAction, ) *JobParams`
+`func NewJobParams(versionId string, inferenceArtifactId string, projectId string, batchSize float64, evaluatedEpoch float64, type_ ExportModelTypeEnum, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, labelingAlgorithm LabelingAlgorithm, targetFilters []ESFilter, sources []SyntheticDataJobParamsSourcesInner, simulationNames []string, metadataTags []string, splitAcrossMetadata []string, keepTogetherMetadata []string, splitsToResplit []SplitSubset, groupBFilters []ESFilter, groupAFilters []ESFilter, visArtifactId string, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, codeUrl string, codeEntryFile string, versionName string, updateActions []UpdateAction, ) *JobParams`
 
 NewJobParams instantiates a new JobParams object
 This constructor will assign default values to properties that have it defined,
@@ -316,6 +325,31 @@ and a boolean to check if the value has been set.
 
 SetExtId sets ExtId field to given value.
 
+
+### GetDomainGapId
+
+`func (o *JobParams) GetDomainGapId() string`
+
+GetDomainGapId returns the DomainGapId field if non-nil, zero value otherwise.
+
+### GetDomainGapIdOk
+
+`func (o *JobParams) GetDomainGapIdOk() (*string, bool)`
+
+GetDomainGapIdOk returns a tuple with the DomainGapId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDomainGapId
+
+`func (o *JobParams) SetDomainGapId(v string)`
+
+SetDomainGapId sets DomainGapId field to given value.
+
+### HasDomainGapId
+
+`func (o *JobParams) HasDomainGapId() bool`
+
+HasDomainGapId returns a boolean if a field has been set.
 
 ### GetTitle
 
@@ -782,6 +816,51 @@ and a boolean to check if the value has been set.
 SetSources sets Sources field to given value.
 
 
+### GetInitialSimulationFilters
+
+`func (o *JobParams) GetInitialSimulationFilters() []ESFilter`
+
+GetInitialSimulationFilters returns the InitialSimulationFilters field if non-nil, zero value otherwise.
+
+### GetInitialSimulationFiltersOk
+
+`func (o *JobParams) GetInitialSimulationFiltersOk() (*[]ESFilter, bool)`
+
+GetInitialSimulationFiltersOk returns a tuple with the InitialSimulationFilters field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInitialSimulationFilters
+
+`func (o *JobParams) SetInitialSimulationFilters(v []ESFilter)`
+
+SetInitialSimulationFilters sets InitialSimulationFilters field to given value.
+
+### HasInitialSimulationFilters
+
+`func (o *JobParams) HasInitialSimulationFilters() bool`
+
+HasInitialSimulationFilters returns a boolean if a field has been set.
+
+### GetSimulationNames
+
+`func (o *JobParams) GetSimulationNames() []string`
+
+GetSimulationNames returns the SimulationNames field if non-nil, zero value otherwise.
+
+### GetSimulationNamesOk
+
+`func (o *JobParams) GetSimulationNamesOk() (*[]string, bool)`
+
+GetSimulationNamesOk returns a tuple with the SimulationNames field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSimulationNames
+
+`func (o *JobParams) SetSimulationNames(v []string)`
+
+SetSimulationNames sets SimulationNames field to given value.
+
+
 ### GetPercentageOfSamplesToPrune
 
 `func (o *JobParams) GetPercentageOfSamplesToPrune() float64`
@@ -850,6 +929,126 @@ and a boolean to check if the value has been set.
 `func (o *JobParams) SetMetadataTags(v []string)`
 
 SetMetadataTags sets MetadataTags field to given value.
+
+
+### GetSplitAcrossMetadata
+
+`func (o *JobParams) GetSplitAcrossMetadata() []string`
+
+GetSplitAcrossMetadata returns the SplitAcrossMetadata field if non-nil, zero value otherwise.
+
+### GetSplitAcrossMetadataOk
+
+`func (o *JobParams) GetSplitAcrossMetadataOk() (*[]string, bool)`
+
+GetSplitAcrossMetadataOk returns a tuple with the SplitAcrossMetadata field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSplitAcrossMetadata
+
+`func (o *JobParams) SetSplitAcrossMetadata(v []string)`
+
+SetSplitAcrossMetadata sets SplitAcrossMetadata field to given value.
+
+
+### GetKeepTogetherMetadata
+
+`func (o *JobParams) GetKeepTogetherMetadata() []string`
+
+GetKeepTogetherMetadata returns the KeepTogetherMetadata field if non-nil, zero value otherwise.
+
+### GetKeepTogetherMetadataOk
+
+`func (o *JobParams) GetKeepTogetherMetadataOk() (*[]string, bool)`
+
+GetKeepTogetherMetadataOk returns a tuple with the KeepTogetherMetadata field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetKeepTogetherMetadata
+
+`func (o *JobParams) SetKeepTogetherMetadata(v []string)`
+
+SetKeepTogetherMetadata sets KeepTogetherMetadata field to given value.
+
+
+### GetSplitsToResplit
+
+`func (o *JobParams) GetSplitsToResplit() []SplitSubset`
+
+GetSplitsToResplit returns the SplitsToResplit field if non-nil, zero value otherwise.
+
+### GetSplitsToResplitOk
+
+`func (o *JobParams) GetSplitsToResplitOk() (*[]SplitSubset, bool)`
+
+GetSplitsToResplitOk returns a tuple with the SplitsToResplit field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSplitsToResplit
+
+`func (o *JobParams) SetSplitsToResplit(v []SplitSubset)`
+
+SetSplitsToResplit sets SplitsToResplit field to given value.
+
+
+### GetGroupBFilters
+
+`func (o *JobParams) GetGroupBFilters() []ESFilter`
+
+GetGroupBFilters returns the GroupBFilters field if non-nil, zero value otherwise.
+
+### GetGroupBFiltersOk
+
+`func (o *JobParams) GetGroupBFiltersOk() (*[]ESFilter, bool)`
+
+GetGroupBFiltersOk returns a tuple with the GroupBFilters field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGroupBFilters
+
+`func (o *JobParams) SetGroupBFilters(v []ESFilter)`
+
+SetGroupBFilters sets GroupBFilters field to given value.
+
+
+### GetGroupAFilters
+
+`func (o *JobParams) GetGroupAFilters() []ESFilter`
+
+GetGroupAFilters returns the GroupAFilters field if non-nil, zero value otherwise.
+
+### GetGroupAFiltersOk
+
+`func (o *JobParams) GetGroupAFiltersOk() (*[]ESFilter, bool)`
+
+GetGroupAFiltersOk returns a tuple with the GroupAFilters field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGroupAFilters
+
+`func (o *JobParams) SetGroupAFilters(v []ESFilter)`
+
+SetGroupAFilters sets GroupAFilters field to given value.
+
+
+### GetVisArtifactId
+
+`func (o *JobParams) GetVisArtifactId() string`
+
+GetVisArtifactId returns the VisArtifactId field if non-nil, zero value otherwise.
+
+### GetVisArtifactIdOk
+
+`func (o *JobParams) GetVisArtifactIdOk() (*string, bool)`
+
+GetVisArtifactIdOk returns a tuple with the VisArtifactId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVisArtifactId
+
+`func (o *JobParams) SetVisArtifactId(v string)`
+
+SetVisArtifactId sets VisArtifactId field to given value.
 
 
 ### GetExportUrl

@@ -7,12 +7,13 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **Direction** | [**MetricDirection**](MetricDirection.md) |  | 
 **Active** | **bool** |  | 
+**Relevant** | **bool** |  | 
 
 ## Methods
 
 ### NewMetricDefault
 
-`func NewMetricDefault(name string, direction MetricDirection, active bool, ) *MetricDefault`
+`func NewMetricDefault(name string, direction MetricDirection, active bool, relevant bool, ) *MetricDefault`
 
 NewMetricDefault instantiates a new MetricDefault object
 This constructor will assign default values to properties that have it defined,
@@ -85,6 +86,26 @@ and a boolean to check if the value has been set.
 `func (o *MetricDefault) SetActive(v bool)`
 
 SetActive sets Active field to given value.
+
+
+### GetRelevant
+
+`func (o *MetricDefault) GetRelevant() bool`
+
+GetRelevant returns the Relevant field if non-nil, zero value otherwise.
+
+### GetRelevantOk
+
+`func (o *MetricDefault) GetRelevantOk() (*bool, bool)`
+
+GetRelevantOk returns a tuple with the Relevant field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRelevant
+
+`func (o *MetricDefault) SetRelevant(v bool)`
+
+SetRelevant sets Relevant field to given value.
 
 
 

@@ -3,6 +3,8 @@
 ## Enum
 
 
+* `STREAMING_HANDLER` (value: `"STREAMING_HANDLER"`)
+
 * `WARMUP` (value: `"WARMUP"`)
 
 * `TRAINING` (value: `"TRAINING"`)
@@ -24,8 +26,6 @@
 * `DRY_RUN_GRAPH` (value: `"DRY_RUN_GRAPH"`)
 
 * `SLIM_LS` (value: `"SLIM_LS"`)
-
-* `STREAMING_HANDLER` (value: `"STREAMING_HANDLER"`)
 
 * `STREAMING_SAMPLES_VIS` (value: `"STREAMING_SAMPLES_VIS"`)
 

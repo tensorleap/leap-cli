@@ -25,6 +25,8 @@
 
 * `VIDEO_HEATMAP` (value: `"video_heatmap"`)
 
+* `AUDIO` (value: `"audio"`)
+
 * `GRAD_ANALYSIS` (value: `"grad_analysis"`)
 
 * `COMPOSITE_VISUALIZATION` (value: `"composite_visualization"`)

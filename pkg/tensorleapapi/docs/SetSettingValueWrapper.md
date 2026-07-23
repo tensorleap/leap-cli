@@ -6,12 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Unset** | Pointer to **[]string** |  | [optional] 
 **Set** | Pointer to [**[]ValueWithKey**](ValueWithKey.md) |  | [optional] 
+**ProjectId** | **string** |  | 
 
 ## Methods
 
 ### NewSetSettingValueWrapper
 
-`func NewSetSettingValueWrapper() *SetSettingValueWrapper`
+`func NewSetSettingValueWrapper(projectId string, ) *SetSettingValueWrapper`
 
 NewSetSettingValueWrapper instantiates a new SetSettingValueWrapper object
 This constructor will assign default values to properties that have it defined,
@@ -75,6 +76,26 @@ SetSet sets Set field to given value.
 `func (o *SetSettingValueWrapper) HasSet() bool`
 
 HasSet returns a boolean if a field has been set.
+
+### GetProjectId
+
+`func (o *SetSettingValueWrapper) GetProjectId() string`
+
+GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
+
+### GetProjectIdOk
+
+`func (o *SetSettingValueWrapper) GetProjectIdOk() (*string, bool)`
+
+GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectId
+
+`func (o *SetSettingValueWrapper) SetProjectId(v string)`
+
+SetProjectId sets ProjectId field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

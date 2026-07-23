@@ -256,6 +256,28 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService DeleteDatasetSplitting", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.DeleteDatasetSplitting(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DeleteDomainGap", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.DeleteDomainGap(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService DeleteGeneratedLabel", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -439,11 +461,44 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService GenerateAutoSyntheticData", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GenerateAutoSyntheticData(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService GenerateDatasetBalancing", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.GenerateDatasetBalancing(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GenerateDatasetSplitting", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GenerateDatasetSplitting(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GenerateDomainGap", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GenerateDomainGap(context.Background()).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -741,6 +796,30 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetDatasetBalancing(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetDatasetSplitting", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.GetDatasetSplitting(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetDomainGap", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.GetDomainGap(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1156,6 +1235,18 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService GetScatterVisualizersManifest", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.GetScatterVisualizersManifest(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService GetSecretManagerList", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -1365,6 +1456,18 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetUploadSignedUrl(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetUserUiState", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.GetUserUiState(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

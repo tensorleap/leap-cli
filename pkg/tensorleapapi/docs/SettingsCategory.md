@@ -11,6 +11,8 @@
 
 * `REDIS` (value: `"REDIS"`)
 
+* `STREAMING_HANDLER` (value: `"STREAMING_HANDLER"`)
+
 * `GENERAL` (value: `"GENERAL"`)
 
 
