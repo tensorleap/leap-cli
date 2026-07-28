@@ -329,7 +329,7 @@ func (s *pushState) resolveOverwriteTarget() error {
 			return fmt.Errorf("version %q has no model; set --model-path (-m)", in.overwriteVersionRef)
 		}
 	} else if in.modelPath == "" {
-		isOverwrite, info, chosenPath, err := model.AskUserForModelPathOrOverwrite(s.ctx, s.projectId(), &in.modelVersionName, in.runEval)
+		isOverwrite, info, chosenPath, err := model.AskUserForModelPathOrOverwrite(s.ctx, s.projectId(), &in.modelVersionName)
 		if err != nil {
 			return err
 		}

@@ -106,8 +106,8 @@ type VersionInfo struct {
 	Status           VersionStatus
 }
 
-func AskUserForModelPathOrOverwrite(ctx context.Context, projectId string, currentName *string, runEval bool) (isOverwrite bool, overwriteVersionInfo *VersionInfo, modelPath string, err error) {
-	overwriteVersionInfo, err = AskUserForNewVersionOrSelectExistingVersion(ctx, projectId, runEval)
+func AskUserForModelPathOrOverwrite(ctx context.Context, projectId string, currentName *string) (isOverwrite bool, overwriteVersionInfo *VersionInfo, modelPath string, err error) {
+	overwriteVersionInfo, err = AskUserForNewVersionOrSelectExistingVersion(ctx, projectId)
 	if err != nil {
 		return false, nil, "", err
 	}
@@ -132,7 +132,7 @@ func AskUserForModelPathOrOverwrite(ctx context.Context, projectId string, curre
 	return false, nil, modelPath, nil
 }
 
-func AskUserForNewVersionOrSelectExistingVersion(ctx context.Context, projectId string, runEval bool) (*VersionInfo, error) {
+func AskUserForNewVersionOrSelectExistingVersion(ctx context.Context, projectId string) (*VersionInfo, error) {
 
 	versions, err := GetSlimActiveVersions(ctx, projectId)
 	if err != nil {
@@ -177,16 +177,6 @@ func AskUserForNewVersionOrSelectExistingVersion(ctx context.Context, projectId 
 	selectedIndex := 0
 	hasOptions := len(options) > 1
 	if hasOptions {
-
-		// Only surface the eval hint when the caller didn't pass --eval:
-		// with --eval the diff is auto-detected and patched / re-evaluated
-		// for them; without --eval we want users to know that overwriting
-		// alone just replaces the version and they can drive evaluation
-		// from the UI afterwards.
-		if !runEval {
-			fmt.Println(text.FgYellow.Sprint("\n\n NOTE: Overwriting replaces the version. Use the update-evaluate dialog in the UI to re-evaluate (or re-run with --eval). \n\n"))
-		}
-
 		prompt := &survey.Select{
 			Message: "Push as new, or overwrite existing",
 			Options: options,
