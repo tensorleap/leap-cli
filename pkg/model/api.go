@@ -191,6 +191,13 @@ func WaitForPushJob(ctx context.Context, projectId, versionId, jobId string) err
 
 const TIMEOUT_FOR_IMPORT_MODEL_JOB = 60 * time.Minute
 
+// maxWaitForImportModelJob caps the total wait across no-progress retries.
+// Var (not const) so tests can shrink it.
+var maxWaitForImportModelJob = 6 * time.Hour
+
+// waitForSteps is a seam for tests to stub the underlying step-waiter.
+var waitForSteps = api.WaitForConditionWithSteps
+
 var ErrJobFailed = fmt.Errorf("import model job failed")
 
 var ErrImportModelTimeout = fmt.Errorf("timeout occurred while waiting for import model job status")
@@ -215,7 +222,20 @@ func waitForImportModelJob(ctx context.Context, projectId, importModelJobId, res
 		return false, steps, nil
 	}
 
-	err = api.WaitForConditionWithSteps(ctx, condition, sleepDuration, TIMEOUT_FOR_IMPORT_MODEL_JOB)
+	// TIMEOUT_FOR_IMPORT_MODEL_JOB is a no-progress window, not a total cap: the
+	// job can stall for long stretches (e.g. first-run dataset download) while
+	// still running server-side, and giving up here would also drop the pending
+	// --eval dispatch (EN-2398). On a no-progress timeout, warn and keep waiting
+	// up to maxWaitForImportModelJob; ctx cancellation surfaces as ErrorTimeout
+	// from the waiter, so check ctx.Err() to abort on Ctrl+C.
+	start := time.Now()
+	for {
+		err = waitForSteps(ctx, condition, sleepDuration, TIMEOUT_FOR_IMPORT_MODEL_JOB)
+		if err != api.ErrorTimeout || ctx.Err() != nil || time.Since(start) >= maxWaitForImportModelJob {
+			break
+		}
+		log.Warnf("No progress from the %s job in the last %s — it may still be running on the server; continuing to wait (Ctrl+C to stop)...", resultLabel, TIMEOUT_FOR_IMPORT_MODEL_JOB)
+	}
 
 	if err == api.ErrorTimeout {
 		return false, nil, ErrImportModelTimeout
