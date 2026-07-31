@@ -514,15 +514,14 @@ func (s *pushState) promptRunEvaluate(isUpdateEvaluate bool) (bool, error) {
 }
 
 func (s *pushState) resolveOverwriteEvalPlan() (model.EvaluatePlan, error) {
-	plan, err := s.collectUserUpdatePlan()
-	if err != nil {
-		return model.EvaluatePlan{}, err
+	// Update-evaluate needs a previous version with evaluation data in the
+	// override chain. If none exists, don't ask what to update — just run a
+	// full evaluate.
+	if !s.canUpdateEvaluate() {
+		log.Info("No previous version with evaluation data found — running a full evaluate.")
+		return model.EvaluatePlan{Kind: model.EvaluatePlanReset}, nil
 	}
-	if plan.Kind == model.EvaluatePlanUpdate && !s.canUpdateEvaluate() {
-		log.Info("No evaluation data found in the override chain — running a fresh evaluate.")
-		return model.EvaluatePlan{Kind: model.EvaluatePlanReset, UpdateActions: plan.UpdateActions}, nil
-	}
-	return plan, nil
+	return s.collectUserUpdatePlan()
 }
 
 func (s *pushState) collectUserUpdatePlan() (model.EvaluatePlan, error) {
@@ -533,7 +532,12 @@ func (s *pushState) collectUserUpdatePlan() (model.EvaluatePlan, error) {
 		}
 		return model.PlanFromUpdateActions(parsed), nil
 	}
-	plan, err := model.AskForEvaluatePlan()
+	// Retrying a failed version → re-offer the actions from that attempt.
+	var defaults []tensorleapapi.UpdateAction
+	if s.overwriteVersion != nil && s.overwriteVersion.Status == model.VersionStatus_FAILED {
+		defaults = s.overwriteVersion.UpdateActions
+	}
+	plan, err := model.AskForEvaluatePlan(defaults)
 	if err != nil {
 		return model.EvaluatePlan{}, fmt.Errorf("failed to get update plan: %w", err)
 	}
