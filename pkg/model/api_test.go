@@ -10,13 +10,41 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
-func stubWaiter(calls *int, results ...error) func(context.Context, func() (bool, []log.Step, error), time.Duration, time.Duration) error {
-	return func(context.Context, func() (bool, []log.Step, error), time.Duration, time.Duration) error {
+func stubWaiter(calls *int, results ...error) func(context.Context, func() (bool, []log.Step, error), time.Duration, time.Duration, *api.LogTail) error {
+	return func(context.Context, func() (bool, []log.Step, error), time.Duration, time.Duration, *api.LogTail) error {
 		*calls++
 		if *calls <= len(results) {
 			return results[*calls-1]
 		}
 		return results[len(results)-1]
+	}
+}
+
+// The push flow waits here, not in code.WaitForCodeIntegrationStatus, so this
+// is where the pippin log tail has to be attached. Regression: it was wired
+// into the code package, which nothing calls, and this path passed nil.
+func TestWaitForImportModelJobAttachesBuildDependenciesLogTail(t *testing.T) {
+	orig := waitForSteps
+	defer func() { waitForSteps = orig }()
+
+	var got *api.LogTail
+	waitForSteps = func(_ context.Context, _ func() (bool, []log.Step, error), _ time.Duration, _ time.Duration, tail *api.LogTail) error {
+		got = tail
+		return nil
+	}
+
+	if _, _, err := waitForImportModelJob(context.Background(), "p", "job-123", "push"); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	if got == nil {
+		t.Fatal("expected a log tail to be attached to the push wait, got nil")
+	}
+	if got.StepID != api.BuildDependenciesStepID {
+		t.Errorf("got StepID %q, want %q", got.StepID, api.BuildDependenciesStepID)
+	}
+	if got.Fetch == nil {
+		t.Error("expected a non-nil Fetch on the log tail")
 	}
 }
 

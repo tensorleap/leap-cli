@@ -222,6 +222,15 @@ func waitForImportModelJob(ctx context.Context, projectId, importModelJobId, res
 		return false, steps, nil
 	}
 
+	// Pippin's dependency build can run for tens of minutes with no step-level
+	// change, so stream its output to show the push isn't stuck.
+	buildLogTail := &api.LogTail{
+		StepID: api.BuildDependenciesStepID,
+		Fetch: func() ([]string, error) {
+			return run.GetBuildLogTail(ctx, importModelJobId, log.LogTailHeight)
+		},
+	}
+
 	// TIMEOUT_FOR_IMPORT_MODEL_JOB is a no-progress window, not a total cap: the
 	// job can stall for long stretches (e.g. first-run dataset download) while
 	// still running server-side, and giving up here would also drop the pending
@@ -230,7 +239,7 @@ func waitForImportModelJob(ctx context.Context, projectId, importModelJobId, res
 	// from the waiter, so check ctx.Err() to abort on Ctrl+C.
 	start := time.Now()
 	for {
-		err = waitForSteps(ctx, condition, sleepDuration, TIMEOUT_FOR_IMPORT_MODEL_JOB)
+		err = waitForSteps(ctx, condition, sleepDuration, TIMEOUT_FOR_IMPORT_MODEL_JOB, buildLogTail)
 		if err != api.ErrorTimeout || ctx.Err() != nil || time.Since(start) >= maxWaitForImportModelJob {
 			break
 		}

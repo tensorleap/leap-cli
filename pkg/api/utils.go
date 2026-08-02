@@ -332,6 +332,7 @@ func StepsFromJob(job *tensorleapapi.Job) []log.Step {
 			total = event.Progress.Total
 		}
 		jobSteps = append(jobSteps, log.Step{
+			ID:      event.Id,
 			Name:    event.Name,
 			Status:  mapStatus(event.Status),
 			Current: current,

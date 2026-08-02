@@ -221,7 +221,7 @@ func ExportProject(ctx context.Context, projectId string, copyToUrl string, opti
 		}
 
 		return false, steps, nil
-	}, 20*time.Second, TIMEOUT_FOR_PROJECT_PUBLISH)
+	}, 20*time.Second, TIMEOUT_FOR_PROJECT_PUBLISH, nil)
 
 	if err != nil {
 		return nil, fmt.Errorf("failed to wait for project to be copied: %v", err)
@@ -308,7 +308,7 @@ func waitForImportProjectJob(ctx context.Context, jobId string) error {
 
 		return false, steps, nil
 	}
-	err := api.WaitForConditionWithSteps(ctx, condition, sleepDuration, TIMEOUT_FOR_IMPORT_PROJECT_JOB)
+	err := api.WaitForConditionWithSteps(ctx, condition, sleepDuration, TIMEOUT_FOR_IMPORT_PROJECT_JOB, nil)
 	if err != nil {
 		return fmt.Errorf("failed to wait for the import project job status: %v", err)
 	}
