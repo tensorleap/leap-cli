@@ -24,6 +24,8 @@ Method | HTTP request | Description
 [**DeleteContainerLabel**](DefaultAPI.md#DeleteContainerLabel) | **Post** /insightContainerLabels/deleteContainerLabel | 
 [**DeleteDashboard**](DefaultAPI.md#DeleteDashboard) | **Post** /dashboards/deleteDashboard | 
 [**DeleteDatasetBalancing**](DefaultAPI.md#DeleteDatasetBalancing) | **Post** /datasetcuration/deleteDatasetBalancing | 
+[**DeleteDatasetSplitting**](DefaultAPI.md#DeleteDatasetSplitting) | **Post** /datasetcuration/deleteDatasetSplitting | 
+[**DeleteDomainGap**](DefaultAPI.md#DeleteDomainGap) | **Post** /datasetcuration/deleteDomainGap | 
 [**DeleteGeneratedLabel**](DefaultAPI.md#DeleteGeneratedLabel) | **Post** /datasetcuration/deleteGeneratedLabel | 
 [**DeleteIssue**](DefaultAPI.md#DeleteIssue) | **Post** /issues/deleteIssue | 
 [**DeleteProject**](DefaultAPI.md#DeleteProject) | **Post** /projects/deleteProject | 
@@ -40,7 +42,10 @@ Method | HTTP request | Description
 [**ExportProject**](DefaultAPI.md#ExportProject) | **Post** /projects/exportProject | 
 [**ExtendTrial**](DefaultAPI.md#ExtendTrial) | **Post** /auth/extendTrial | 
 [**FetchSimilar**](DefaultAPI.md#FetchSimilar) | **Post** /visualizations/fetchSimilar | 
+[**GenerateAutoSyntheticData**](DefaultAPI.md#GenerateAutoSyntheticData) | **Post** /datasetcuration/generateAutoSyntheticData | 
 [**GenerateDatasetBalancing**](DefaultAPI.md#GenerateDatasetBalancing) | **Post** /datasetcuration/generateDatasetBalancing | 
+[**GenerateDatasetSplitting**](DefaultAPI.md#GenerateDatasetSplitting) | **Post** /datasetcuration/generateDatasetSplitting | 
+[**GenerateDomainGap**](DefaultAPI.md#GenerateDomainGap) | **Post** /datasetcuration/generateDomainGap | 
 [**GenerateInsights**](DefaultAPI.md#GenerateInsights) | **Post** /insights/generateInsights | 
 [**GenerateLabels**](DefaultAPI.md#GenerateLabels) | **Post** /datasetcuration/generateLabels | 
 [**GenerateStreamingSamplesVis**](DefaultAPI.md#GenerateStreamingSamplesVis) | **Post** /sample-collection/generateStreamingSamplesVis | 
@@ -66,6 +71,8 @@ Method | HTTP request | Description
 [**GetDashboard**](DefaultAPI.md#GetDashboard) | **Post** /dashboards/getDashboard | 
 [**GetDashletFields**](DefaultAPI.md#GetDashletFields) | **Post** /dashboards/getDashletFields | 
 [**GetDatasetBalancing**](DefaultAPI.md#GetDatasetBalancing) | **Post** /datasetcuration/getDatasetBalancing | 
+[**GetDatasetSplitting**](DefaultAPI.md#GetDatasetSplitting) | **Post** /datasetcuration/getDatasetSplitting | 
+[**GetDomainGap**](DefaultAPI.md#GetDomainGap) | **Post** /datasetcuration/getDomainGap | 
 [**GetDownloadSignedUrl**](DefaultAPI.md#GetDownloadSignedUrl) | **Post** /versions/getDownloadSignedUrl | 
 [**GetEngineSettings**](DefaultAPI.md#GetEngineSettings) | **Post** /settings/getEngineSettings | 
 [**GetEnvironmentInfo**](DefaultAPI.md#GetEnvironmentInfo) | **Post** /metadata/getEnvironmentInfo | 
@@ -100,6 +107,7 @@ Method | HTTP request | Description
 [**GetSampleEnrichment**](DefaultAPI.md#GetSampleEnrichment) | **Post** /sessionmetrics/getSampleEnrichment | 
 [**GetSampleVisualizationsPath**](DefaultAPI.md#GetSampleVisualizationsPath) | **Post** /visualizations/getSampleVisualizationsPath | 
 [**GetScatterSampleVisualizations**](DefaultAPI.md#GetScatterSampleVisualizations) | **Post** /visualizations/getScatterSampleVisualizations | 
+[**GetScatterVisualizersManifest**](DefaultAPI.md#GetScatterVisualizersManifest) | **Post** /visualizations/getScatterVisualizersManifest | 
 [**GetSecretManagerList**](DefaultAPI.md#GetSecretManagerList) | **Post** /secret-manager/getSecretManagerList | 
 [**GetSessionTestResult**](DefaultAPI.md#GetSessionTestResult) | **Post** /sessions-tests/getSessionTestResult | 
 [**GetSignedUrl**](DefaultAPI.md#GetSignedUrl) | **Post** /versions/getSignedUrl | 
@@ -118,6 +126,7 @@ Method | HTTP request | Description
 [**GetTeams**](DefaultAPI.md#GetTeams) | **Post** /teams/getTeams | 
 [**GetUploadModelSignedUrl**](DefaultAPI.md#GetUploadModelSignedUrl) | **Post** /versions/getUploadModelSignedUrl | 
 [**GetUploadSignedUrl**](DefaultAPI.md#GetUploadSignedUrl) | **Post** /versions/getUploadSignedUrl | 
+[**GetUserUiState**](DefaultAPI.md#GetUserUiState) | **Get** /users/getUiState | 
 [**GetVersionSampleOrder**](DefaultAPI.md#GetVersionSampleOrder) | **Post** /sample-collection/getVersionSampleOrder | 
 [**GetVersionSamplesMetadata**](DefaultAPI.md#GetVersionSamplesMetadata) | **Post** /sample-collection/getVersionSamplesMetadata | 
 [**GetVersionsEpochs**](DefaultAPI.md#GetVersionsEpochs) | **Post** /versions/getVersionsEpochs | 
@@ -1445,6 +1454,130 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## DeleteDatasetSplitting
+
+> DeleteDatasetSplitting(ctx).DeleteDatasetSplittingParams(deleteDatasetSplittingParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	deleteDatasetSplittingParams := *openapiclient.NewDeleteDatasetSplittingParams("ProjectId_example", "DatasetSplittingId_example") // DeleteDatasetSplittingParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteDatasetSplitting(context.Background()).DeleteDatasetSplittingParams(deleteDatasetSplittingParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteDatasetSplitting``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteDatasetSplittingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **deleteDatasetSplittingParams** | [**DeleteDatasetSplittingParams**](DeleteDatasetSplittingParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteDomainGap
+
+> DeleteDomainGap(ctx).DeleteDomainGapParams(deleteDomainGapParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	deleteDomainGapParams := *openapiclient.NewDeleteDomainGapParams("ProjectId_example", "DomainGapId_example") // DeleteDomainGapParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteDomainGap(context.Background()).DeleteDomainGapParams(deleteDomainGapParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteDomainGap``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteDomainGapRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **deleteDomainGapParams** | [**DeleteDomainGapParams**](DeleteDomainGapParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## DeleteGeneratedLabel
 
 > DeleteGeneratedLabel(ctx).DeleteGeneratedLabelParams(deleteGeneratedLabelParams).Execute()
@@ -2451,6 +2584,68 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GenerateAutoSyntheticData
+
+> GenerateAutoSyntheticData(ctx).GenerateAutoSyntheticDataParams(generateAutoSyntheticDataParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	generateAutoSyntheticDataParams := *openapiclient.NewGenerateAutoSyntheticDataParams("ProjectId_example", "VersionId_example", []string{"SimulationNames_example"}, []openapiclient.ESFilter{*openapiclient.NewESFilter(openapiclient.FilterOperatorType("between"), "Field_example", *openapiclient.NewESFilterValue())}) // GenerateAutoSyntheticDataParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.GenerateAutoSyntheticData(context.Background()).GenerateAutoSyntheticDataParams(generateAutoSyntheticDataParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GenerateAutoSyntheticData``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGenerateAutoSyntheticDataRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **generateAutoSyntheticDataParams** | [**GenerateAutoSyntheticDataParams**](GenerateAutoSyntheticDataParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GenerateDatasetBalancing
 
 > GenerateDatasetBalancing(ctx).GenerateDatasetBalancingParams(generateDatasetBalancingParams).Execute()
@@ -2494,6 +2689,130 @@ Other parameters are passed through a pointer to a apiGenerateDatasetBalancingRe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **generateDatasetBalancingParams** | [**GenerateDatasetBalancingParams**](GenerateDatasetBalancingParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GenerateDatasetSplitting
+
+> GenerateDatasetSplitting(ctx).GenerateDatasetSplittingParams(generateDatasetSplittingParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	generateDatasetSplittingParams := *openapiclient.NewGenerateDatasetSplittingParams("ProjectId_example", "VersionId_example", []openapiclient.SplitSubset{openapiclient.SplitSubset("training")}, []string{"KeepTogetherMetadata_example"}, []string{"SplitAcrossMetadata_example"}) // GenerateDatasetSplittingParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.GenerateDatasetSplitting(context.Background()).GenerateDatasetSplittingParams(generateDatasetSplittingParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GenerateDatasetSplitting``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGenerateDatasetSplittingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **generateDatasetSplittingParams** | [**GenerateDatasetSplittingParams**](GenerateDatasetSplittingParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GenerateDomainGap
+
+> GenerateDomainGap(ctx).GenerateDomainGapParams(generateDomainGapParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	generateDomainGapParams := *openapiclient.NewGenerateDomainGapParams("ProjectId_example", "VersionId_example", []openapiclient.ESFilter{*openapiclient.NewESFilter(openapiclient.FilterOperatorType("between"), "Field_example", *openapiclient.NewESFilterValue())}, []openapiclient.ESFilter{*openapiclient.NewESFilter(openapiclient.FilterOperatorType("between"), "Field_example", *openapiclient.NewESFilterValue())}) // GenerateDomainGapParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.GenerateDomainGap(context.Background()).GenerateDomainGapParams(generateDomainGapParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GenerateDomainGap``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGenerateDomainGapRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **generateDomainGapParams** | [**GenerateDomainGapParams**](GenerateDomainGapParams.md) |  | 
 
 ### Return type
 
@@ -4094,6 +4413,134 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetDatasetSplitting
+
+> DatasetSplittingResponse GetDatasetSplitting(ctx).GetDatasetSplittingParams(getDatasetSplittingParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getDatasetSplittingParams := *openapiclient.NewGetDatasetSplittingParams("ProjectId_example") // GetDatasetSplittingParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetDatasetSplitting(context.Background()).GetDatasetSplittingParams(getDatasetSplittingParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetDatasetSplitting``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetDatasetSplitting`: DatasetSplittingResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetDatasetSplitting`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetDatasetSplittingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getDatasetSplittingParams** | [**GetDatasetSplittingParams**](GetDatasetSplittingParams.md) |  | 
+
+### Return type
+
+[**DatasetSplittingResponse**](DatasetSplittingResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetDomainGap
+
+> DomainGapResponse GetDomainGap(ctx).GetDomainGapParams(getDomainGapParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getDomainGapParams := *openapiclient.NewGetDomainGapParams("ProjectId_example") // GetDomainGapParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetDomainGap(context.Background()).GetDomainGapParams(getDomainGapParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetDomainGap``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetDomainGap`: DomainGapResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetDomainGap`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetDomainGapRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getDomainGapParams** | [**GetDomainGapParams**](GetDomainGapParams.md) |  | 
+
+### Return type
+
+[**DomainGapResponse**](DomainGapResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetDownloadSignedUrl
 
 > GetDownloadSignedUrlResponse GetDownloadSignedUrl(ctx).GetDownloadSignedUrlParams(getDownloadSignedUrlParams).Execute()
@@ -4160,7 +4607,7 @@ Name | Type | Description  | Notes
 
 ## GetEngineSettings
 
-> SettingsAndValuesWrapper GetEngineSettings(ctx).Execute()
+> SettingsAndValuesWrapper GetEngineSettings(ctx).GetEngineSettingsParams(getEngineSettingsParams).Execute()
 
 
 
@@ -4177,10 +4624,11 @@ import (
 )
 
 func main() {
+	getEngineSettingsParams := *openapiclient.NewGetEngineSettingsParams("ProjectId_example") // GetEngineSettingsParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DefaultAPI.GetEngineSettings(context.Background()).Execute()
+	resp, r, err := apiClient.DefaultAPI.GetEngineSettings(context.Background()).GetEngineSettingsParams(getEngineSettingsParams).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetEngineSettings``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -4192,12 +4640,16 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetEngineSettingsRequest struct via the builder pattern
 
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getEngineSettingsParams** | [**GetEngineSettingsParams**](GetEngineSettingsParams.md) |  | 
 
 ### Return type
 
@@ -4209,7 +4661,7 @@ Other parameters are passed through a pointer to a apiGetEngineSettingsRequest s
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -6235,6 +6687,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetScatterVisualizersManifest
+
+> GetScatterVisualizersManifestResponse GetScatterVisualizersManifest(ctx).GetScatterVisualizersManifestParams(getScatterVisualizersManifestParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getScatterVisualizersManifestParams := *openapiclient.NewGetScatterVisualizersManifestParams("VersionId_example", "ProjectId_example") // GetScatterVisualizersManifestParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetScatterVisualizersManifest(context.Background()).GetScatterVisualizersManifestParams(getScatterVisualizersManifestParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetScatterVisualizersManifest``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetScatterVisualizersManifest`: GetScatterVisualizersManifestResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetScatterVisualizersManifest`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetScatterVisualizersManifestRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getScatterVisualizersManifestParams** | [**GetScatterVisualizersManifestParams**](GetScatterVisualizersManifestParams.md) |  | 
+
+### Return type
+
+[**GetScatterVisualizersManifestResponse**](GetScatterVisualizersManifestResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetSecretManagerList
 
 > GetSecretManagerListResponse GetSecretManagerList(ctx).Execute()
@@ -7365,6 +7881,65 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetUserUiState
+
+> GetUserUiStateResponse GetUserUiState(ctx).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetUserUiState(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetUserUiState``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetUserUiState`: GetUserUiStateResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetUserUiState`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetUserUiStateRequest struct via the builder pattern
+
+
+### Return type
+
+[**GetUserUiStateResponse**](GetUserUiStateResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -10399,7 +10974,7 @@ import (
 )
 
 func main() {
-	setSettingValueWrapper := *openapiclient.NewSetSettingValueWrapper() // SetSettingValueWrapper | 
+	setSettingValueWrapper := *openapiclient.NewSetSettingValueWrapper("ProjectId_example") // SetSettingValueWrapper | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

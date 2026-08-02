@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **MetricDirections** | Pointer to **string** |  | [optional] 
 **MetricComputeInsights** | Pointer to **string** |  | [optional] 
+**Metadata** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -75,6 +76,31 @@ SetMetricComputeInsights sets MetricComputeInsights field to given value.
 `func (o *InferenceArtifactResources) HasMetricComputeInsights() bool`
 
 HasMetricComputeInsights returns a boolean if a field has been set.
+
+### GetMetadata
+
+`func (o *InferenceArtifactResources) GetMetadata() string`
+
+GetMetadata returns the Metadata field if non-nil, zero value otherwise.
+
+### GetMetadataOk
+
+`func (o *InferenceArtifactResources) GetMetadataOk() (*string, bool)`
+
+GetMetadataOk returns a tuple with the Metadata field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMetadata
+
+`func (o *InferenceArtifactResources) SetMetadata(v string)`
+
+SetMetadata sets Metadata field to given value.
+
+### HasMetadata
+
+`func (o *InferenceArtifactResources) HasMetadata() bool`
+
+HasMetadata returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

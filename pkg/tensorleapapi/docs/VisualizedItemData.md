@@ -20,6 +20,9 @@ Name | Type | Description | Notes
 **Text** | **[]string** |  | 
 **Mask** | **[]float64** |  | 
 **VideoBlob** | **string** |  | 
+**AudioBlob** | **string** |  | 
+**Visual** | [**AudioDataVisual**](AudioDataVisual.md) |  | 
+**SampleRate** | **float64** |  | 
 **Data** | [**[]CompositeVizItem**](CompositeVizItem.md) |  | 
 **Algo** | Pointer to [**SampleAnalysisAlgo**](SampleAnalysisAlgo.md) |  | [optional] 
 
@@ -27,7 +30,7 @@ Name | Type | Description | Notes
 
 ### NewVisualizedItemData
 
-`func NewVisualizedItemData(blob string, type_ DataTypeEnum, heatmapBlob string, body [][]float64, labels []string, boundingBox []BoundingBox, maskBlob string, text []string, mask []float64, videoBlob string, data []CompositeVizItem, ) *VisualizedItemData`
+`func NewVisualizedItemData(blob string, type_ DataTypeEnum, heatmapBlob string, body [][]float64, labels []string, boundingBox []BoundingBox, maskBlob string, text []string, mask []float64, videoBlob string, audioBlob string, visual AudioDataVisual, sampleRate float64, data []CompositeVizItem, ) *VisualizedItemData`
 
 NewVisualizedItemData instantiates a new VisualizedItemData object
 This constructor will assign default values to properties that have it defined,
@@ -390,6 +393,66 @@ and a boolean to check if the value has been set.
 `func (o *VisualizedItemData) SetVideoBlob(v string)`
 
 SetVideoBlob sets VideoBlob field to given value.
+
+
+### GetAudioBlob
+
+`func (o *VisualizedItemData) GetAudioBlob() string`
+
+GetAudioBlob returns the AudioBlob field if non-nil, zero value otherwise.
+
+### GetAudioBlobOk
+
+`func (o *VisualizedItemData) GetAudioBlobOk() (*string, bool)`
+
+GetAudioBlobOk returns a tuple with the AudioBlob field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAudioBlob
+
+`func (o *VisualizedItemData) SetAudioBlob(v string)`
+
+SetAudioBlob sets AudioBlob field to given value.
+
+
+### GetVisual
+
+`func (o *VisualizedItemData) GetVisual() AudioDataVisual`
+
+GetVisual returns the Visual field if non-nil, zero value otherwise.
+
+### GetVisualOk
+
+`func (o *VisualizedItemData) GetVisualOk() (*AudioDataVisual, bool)`
+
+GetVisualOk returns a tuple with the Visual field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVisual
+
+`func (o *VisualizedItemData) SetVisual(v AudioDataVisual)`
+
+SetVisual sets Visual field to given value.
+
+
+### GetSampleRate
+
+`func (o *VisualizedItemData) GetSampleRate() float64`
+
+GetSampleRate returns the SampleRate field if non-nil, zero value otherwise.
+
+### GetSampleRateOk
+
+`func (o *VisualizedItemData) GetSampleRateOk() (*float64, bool)`
+
+GetSampleRateOk returns a tuple with the SampleRate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSampleRate
+
+`func (o *VisualizedItemData) SetSampleRate(v float64)`
+
+SetSampleRate sets SampleRate field to given value.
 
 
 ### GetData

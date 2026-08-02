@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **Digest** | **string** |  | 
 **Refresh** | Pointer to **bool** |  | [optional] 
 **Trigger** | Pointer to [**JobTrigger**](JobTrigger.md) |  | [optional] 
+**DomainGapId** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -164,6 +165,31 @@ SetTrigger sets Trigger field to given value.
 `func (o *CreateSampleVisualizationsParams) HasTrigger() bool`
 
 HasTrigger returns a boolean if a field has been set.
+
+### GetDomainGapId
+
+`func (o *CreateSampleVisualizationsParams) GetDomainGapId() string`
+
+GetDomainGapId returns the DomainGapId field if non-nil, zero value otherwise.
+
+### GetDomainGapIdOk
+
+`func (o *CreateSampleVisualizationsParams) GetDomainGapIdOk() (*string, bool)`
+
+GetDomainGapIdOk returns a tuple with the DomainGapId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDomainGapId
+
+`func (o *CreateSampleVisualizationsParams) SetDomainGapId(v string)`
+
+SetDomainGapId sets DomainGapId field to given value.
+
+### HasDomainGapId
+
+`func (o *CreateSampleVisualizationsParams) HasDomainGapId() bool`
+
+HasDomainGapId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

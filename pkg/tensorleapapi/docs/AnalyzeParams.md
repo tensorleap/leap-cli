@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **SampleIdentity** | Pointer to [**SampleIdentity**](SampleIdentity.md) |  | [optional] 
 **FromDatasetSlice** | Pointer to [**DataStateType**](DataStateType.md) |  | [optional] 
 **ExtId** | **string** |  | 
+**DomainGapId** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -169,6 +170,31 @@ and a boolean to check if the value has been set.
 
 SetExtId sets ExtId field to given value.
 
+
+### GetDomainGapId
+
+`func (o *AnalyzeParams) GetDomainGapId() string`
+
+GetDomainGapId returns the DomainGapId field if non-nil, zero value otherwise.
+
+### GetDomainGapIdOk
+
+`func (o *AnalyzeParams) GetDomainGapIdOk() (*string, bool)`
+
+GetDomainGapIdOk returns a tuple with the DomainGapId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDomainGapId
+
+`func (o *AnalyzeParams) SetDomainGapId(v string)`
+
+SetDomainGapId sets DomainGapId field to given value.
+
+### HasDomainGapId
+
+`func (o *AnalyzeParams) HasDomainGapId() bool`
+
+HasDomainGapId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
