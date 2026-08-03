@@ -56,7 +56,10 @@ type LogTail struct {
 	Fetch  func() ([]string, error)
 }
 
-// logTailFetchEvery throttles the tail relative to the step poll. At the usual
+// logTailFetchEvery throttles the tail relative to the step poll. Fetching the
+// tail is far more expensive than the status poll it rides along with — the
+// server reads thousands of log lines per container and shells out to `kubectl
+// describe` — so it runs on every other poll rather than every one. At the usual
 // 3s poll that's a refresh roughly every 6s, matching the web UI's cadence.
 const logTailFetchEvery = 2
 
@@ -113,7 +116,9 @@ func WaitForConditionWithSteps(ctx context.Context, condition func() (bool, []lo
 				return err
 			}
 			renderer.Update(steps)
-			updateLogTail(renderer, tail, steps, poll)
+			// Only the fetch is throttled; updateLogTail still runs every poll so
+			// it can take the tail down promptly when the step ends.
+			updateLogTail(renderer, tail, steps, poll%logTailFetchEvery == 0)
 
 			if done {
 				isAllStepsDone := isAllStepsEnded(steps)
@@ -141,7 +146,12 @@ func WaitForConditionWithSteps(ctx context.Context, condition func() (bool, []lo
 // updateLogTail refreshes the tail while its step is running, and takes it down
 // once the step ends — except on failure, where the last lines are the most
 // useful thing on screen and are left frozen for the error report that follows.
-func updateLogTail(renderer *log.Renderer, tail *LogTail, steps []log.Step, poll int) {
+//
+// mayFetch is the caller's throttle: taking the tail down is cheap and happens
+// on every call, but fetching is expensive, so the caller decides when to offer
+// it. This function may still decline — there's nothing to fetch unless the step
+// is running.
+func updateLogTail(renderer *log.Renderer, tail *LogTail, steps []log.Step, mayFetch bool) {
 	if tail == nil || tail.Fetch == nil {
 		return
 	}
@@ -161,7 +171,7 @@ func updateLogTail(renderer *log.Renderer, tail *LogTail, steps []log.Step, poll
 		return
 	}
 
-	if poll%logTailFetchEvery != 0 {
+	if !mayFetch {
 		return
 	}
 
