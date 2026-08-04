@@ -160,7 +160,7 @@ func WaitForCodeIntegrationStatus(ctx context.Context, projectId, codeSnapshotId
 		return false, steps, nil
 	}
 
-	err := api.WaitForConditionWithSteps(ctx, condition, sleepDuration, TIMEOUT_FOR_CODE_INTEGRATION_STATUS)
+	err := api.WaitForConditionWithSteps(ctx, condition, sleepDuration, TIMEOUT_FOR_CODE_INTEGRATION_STATUS, nil)
 
 	if err == api.ErrorTimeout {
 		return false, ErrCodeIntegrationTimeout

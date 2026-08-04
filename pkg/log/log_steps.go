@@ -16,6 +16,10 @@ import (
 // -----------------------------
 
 type Step struct {
+	// ID is the server-side event id (e.g. "build_dependencies"). Stable across
+	// wording changes to Name, so behaviour keyed off a specific step matches on
+	// this rather than on the display label.
+	ID      string
 	Name    string
 	Status  StepStatus
 	Current float64
@@ -34,6 +38,7 @@ type Job struct {
 type rendererImpl interface {
 	Start()
 	Update(steps []Step)
+	UpdateLogs(lines []string)
 	Stop()
 }
 
@@ -55,21 +60,23 @@ func NewRenderer() *Renderer {
 	return &Renderer{impl: newLogRenderer(), IsTTY: false}
 }
 
-func (r *Renderer) Start()              { r.impl.Start() }
-func (r *Renderer) Update(steps []Step) { r.impl.Update(steps) }
-func (r *Renderer) Stop()               { r.impl.Stop() }
+func (r *Renderer) Start()                    { r.impl.Start() }
+func (r *Renderer) Update(steps []Step)       { r.impl.Update(steps) }
+func (r *Renderer) UpdateLogs(lines []string) { r.impl.UpdateLogs(lines) }
+func (r *Renderer) Stop()                     { r.impl.Stop() }
 
 // ====================================================================
 // TTY RENDERER (interactive spinner + in-place updates)
 // ====================================================================
 
 type ttyRenderer struct {
-	mu      sync.Mutex
-	writer  *blockWriter
-	steps   []Step
-	stepMap map[string]*Step
-	stopCh  chan struct{}
-	done    bool
+	mu       sync.Mutex
+	writer   *blockWriter
+	steps    []Step
+	stepMap  map[string]*Step
+	logLines []string
+	stopCh   chan struct{}
+	done     bool
 }
 
 func newTTYRenderer() *ttyRenderer {
@@ -137,12 +144,24 @@ func (r *ttyRenderer) Update(steps []Step) {
 	r.stepMap = newMap
 }
 
-func (r *ttyRenderer) redraw(spin string) {
-	lines := r.renderLines(spin)
-	r.writer.Render(lines)
+// UpdateLogs sets the rolling log tail shown beneath the steps. Pass nil to
+// remove it.
+func (r *ttyRenderer) UpdateLogs(lines []string) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	r.logLines = lines
 }
 
-func (r *ttyRenderer) renderLines(spin string) []string {
+func (r *ttyRenderer) redraw(spin string) {
+	width := getTerminalWidth()
+	lines := r.renderLines(spin, width)
+	r.writer.Render(lines, width)
+}
+
+// logGutter keeps the tail visually subordinate to the steps above it.
+var logGutter = text.FgHiBlack.Sprint("│")
+
+func (r *ttyRenderer) renderLines(spin string, width int) []string {
 	lines := []string{}
 
 	for _, s := range r.steps {
@@ -151,6 +170,28 @@ func (r *ttyRenderer) renderLines(spin string) []string {
 			icon = text.FgHiBlue.Sprint(spin)
 		}
 		lines = append(lines, printStepStatus(s, icon))
+	}
+
+	if len(r.logLines) == 0 {
+		return lines
+	}
+
+	// The whole block is cursor-addressed, so it has to fit on screen —
+	// clearPreviousLines can't reach rows that have scrolled off the top.
+	height := LogTailHeight
+	if max := getTerminalHeight() / 3; height > max {
+		height = max
+	}
+	// "  │ " prefix; the tail wraps to the remaining columns.
+	const gutterWidth = 4
+	tailWidth := width - gutterWidth
+	if height < 1 || tailWidth < 1 {
+		return lines
+	}
+
+	lines = append(lines, "")
+	for _, row := range fixedTail(r.logLines, height, tailWidth) {
+		lines = append(lines, "  "+logGutter+" "+row)
 	}
 	return lines
 }
@@ -162,15 +203,24 @@ func (r *ttyRenderer) renderLines(spin string) []string {
 type blockWriter struct {
 	mu        sync.Mutex
 	lineCount int
+	lastWidth int
 }
 
 func newBlockWriter() *blockWriter { return &blockWriter{} }
 
-func (bw *blockWriter) Render(lines []string) {
+// Render repaints the block in place. Callers must pass only lines that fit
+// within width — lineCount counts strings while clearPreviousLines erases rows,
+// so a wrapped line would leave debris behind on every frame.
+func (bw *blockWriter) Render(lines []string, width int) {
 	bw.mu.Lock()
 	defer bw.mu.Unlock()
 
-	if bw.lineCount > 0 {
+	// On resize the terminal re-flows rows we already printed, so lineCount no
+	// longer describes what's on screen and erasing would eat the wrong rows.
+	// Leaving one stale block behind beats accumulating debris every frame.
+	resized := bw.lastWidth != 0 && bw.lastWidth != width
+
+	if bw.lineCount > 0 && !resized {
 		clearPreviousLines(bw.lineCount)
 	}
 
@@ -178,6 +228,7 @@ func (bw *blockWriter) Render(lines []string) {
 		fmt.Println(ln)
 	}
 	bw.lineCount = len(lines)
+	bw.lastWidth = width
 }
 
 func clearPreviousLines(n int) {
@@ -195,11 +246,13 @@ type logRenderer struct {
 	mu          sync.Mutex
 	lastPrinted map[string]Step
 	steps       []Step
+	printedLogs map[string]bool
 }
 
 func newLogRenderer() *logRenderer {
 	return &logRenderer{
 		lastPrinted: make(map[string]Step),
+		printedLogs: make(map[string]bool),
 	}
 }
 
@@ -222,6 +275,22 @@ func (r *logRenderer) Update(steps []Step) {
 			fmt.Println(printStepStatus(s, diffIcon(s.Status)))
 			r.lastPrinted[s.Name] = s
 		}
+	}
+}
+
+// UpdateLogs appends log lines not yet seen. A rolling window is meaningless
+// when the output is a file or CI log, so each line is printed once instead.
+func (r *logRenderer) UpdateLogs(lines []string) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+
+	for _, line := range lines {
+		clean := sanitizeLine(line)
+		if clean == "" || r.printedLogs[clean] {
+			continue
+		}
+		r.printedLogs[clean] = true
+		fmt.Printf("    | %s\n", clean)
 	}
 }
 
