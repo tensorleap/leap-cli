@@ -5,6 +5,8 @@
 
 * `UNSTARTED` (value: `"UNSTARTED"`)
 
+* `QUEUED` (value: `"QUEUED"`)
+
 * `PENDING` (value: `"PENDING"`)
 
 * `INITIALIZING` (value: `"INITIALIZING"`)
