@@ -189,7 +189,7 @@ func WaitForPushJob(ctx context.Context, projectId, versionId, jobId string) err
 	return nil
 }
 
-const TIMEOUT_FOR_IMPORT_MODEL_JOB = 60 * time.Minute
+const TIMEOUT_FOR_IMPORT_MODEL_JOB = 90 * time.Minute
 
 // maxWaitForImportModelJob caps the total wait across no-progress retries.
 // Var (not const) so tests can shrink it.
