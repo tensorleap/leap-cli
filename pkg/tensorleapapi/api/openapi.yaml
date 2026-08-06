@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.125
+  version: 11.0.129
 servers:
 - url: /api/v2
 paths:
@@ -12830,6 +12830,7 @@ components:
     JobStatus:
       enum:
       - UNSTARTED
+      - QUEUED
       - PENDING
       - INITIALIZING
       - STARTED
@@ -13832,6 +13833,7 @@ components:
       - $ref: "#/components/schemas/MetricMessageParams"
     EngineSettingKey:
       enum:
+      - CLUSTER_MEMORY_OVERRIDE_GB
       - PRIORITIZE_AUTO_SETTINGS_MAIN
       - PROCESS_REQUIRED_CPU
       - PROCESS_LIMIT_CPU
@@ -32200,9 +32202,14 @@ components:
       required:
       - data
       type: object
+    Record_string.ReferenceStats_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
     GenericDataResponse:
       additionalProperties: true
       example:
+        referenceStats: "{}"
         data:
         - metadata: "{}"
           data: "{}"
@@ -32215,6 +32222,10 @@ components:
           items:
             $ref: "#/components/schemas/GenericDataItem"
           type: array
+        referenceStats:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
       required:
       - data
       type: object
@@ -32223,6 +32234,7 @@ components:
       example:
         verticalKey: null
         data:
+          referenceStats: "{}"
           data:
           - metadata: "{}"
             data: "{}"
@@ -32247,6 +32259,7 @@ components:
         charts:
         - verticalKey: null
           data:
+            referenceStats: "{}"
             data:
             - metadata: "{}"
               data: "{}"
@@ -32257,6 +32270,7 @@ components:
           horizontalKey: SplitValue
         - verticalKey: null
           data:
+            referenceStats: "{}"
             data:
             - metadata: "{}"
               data: "{}"
@@ -33744,6 +33758,7 @@ components:
         - field: field
           aggregation: Average
         showAllEpochs: true
+        referenceStatsField: referenceStatsField
       properties:
         projectId:
           type: string
@@ -33773,6 +33788,8 @@ components:
           type: array
         elementInstance:
           type: boolean
+        referenceStatsField:
+          type: string
       required:
       - aggregations
       - buckets
@@ -46154,11 +46171,6 @@ components:
         sample_rate:
           format: double
           type: number
-        x_range:
-          items:
-            format: double
-            type: number
-          type: array
         type:
           $ref: "#/components/schemas/DataTypeEnum"
       required:

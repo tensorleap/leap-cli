@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **Aggregations** | [**[]Aggregations**](Aggregations.md) |  | 
 **Buckets** | [**[]SplitAgg**](SplitAgg.md) |  | 
 **ElementInstance** | Pointer to **bool** |  | [optional] 
+**ReferenceStatsField** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -263,6 +264,31 @@ SetElementInstance sets ElementInstance field to given value.
 `func (o *GenericDataQueryParams) HasElementInstance() bool`
 
 HasElementInstance returns a boolean if a field has been set.
+
+### GetReferenceStatsField
+
+`func (o *GenericDataQueryParams) GetReferenceStatsField() string`
+
+GetReferenceStatsField returns the ReferenceStatsField field if non-nil, zero value otherwise.
+
+### GetReferenceStatsFieldOk
+
+`func (o *GenericDataQueryParams) GetReferenceStatsFieldOk() (*string, bool)`
+
+GetReferenceStatsFieldOk returns a tuple with the ReferenceStatsField field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReferenceStatsField
+
+`func (o *GenericDataQueryParams) SetReferenceStatsField(v string)`
+
+SetReferenceStatsField sets ReferenceStatsField field to given value.
+
+### HasReferenceStatsField
+
+`func (o *GenericDataQueryParams) HasReferenceStatsField() bool`
+
+HasReferenceStatsField returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
