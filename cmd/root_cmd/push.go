@@ -257,15 +257,14 @@ func (s *pushState) runCombinedPush() (versionId, codeSnapshotCid string, codePu
 }
 
 func validatePushInputs(in *pushInputs) error {
-	if in.batch != "" && !in.runEval {
-		return fmt.Errorf("--batch requires --eval")
-	}
+	// --update implies --eval; resolve it first so every check below sees the
+	// final runEval state (checking --batch earlier rejected valid `-u --batch`).
 	if len(in.updateParts) > 0 && !in.runEval {
 		in.runEval = true
 	}
-	// --novis only makes sense when we're actually going to evaluate.
-	// --update implies --eval (set above), so we just check the final
-	// resolved runEval state.
+	if in.batch != "" && !in.runEval {
+		return fmt.Errorf("--batch requires --eval")
+	}
 	if in.noVisualization && !in.runEval {
 		return fmt.Errorf("--novis requires --eval (-e) or --update (-u)")
 	}
