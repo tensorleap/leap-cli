@@ -88,6 +88,11 @@ Examples:
 
   # Push + evaluate without running the visualizations step (faster — no dashboard samples)
   leap push -e --novis
+
+  # Fire-and-forget: return as soon as the push starts and let the server run the
+  # evaluation when it finishes. Needs every parameter up front — nothing is prompted.
+  leap push -e --no-wait -b 64 -m ./model.h5 -n my-model
+  leap run info <jobId>            # status, and the chained evaluate's job id
 `,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return runPush(cmd.Context(), in)
@@ -99,10 +104,10 @@ Examples:
 	cmd.Flags().StringVar(&in.branch, "branch", "", "Name of the branch [OPTIONAL]")
 	cmd.Flags().StringVar(&in.secretId, "secretId", "", "Secret id")
 	cmd.Flags().BoolVar(&in.transformInput, "transform-input", false, "Transpose the input data to channel-last format")
-	cmd.Flags().BoolVar(&in.noWait, "no-wait", false, "Do not wait for push to complete")
+	cmd.Flags().BoolVar(&in.noWait, "no-wait", false, "Do not wait for push to complete. With --eval the server runs the evaluation itself once the push finishes; follow it with 'leap run info <jobId>'")
 	cmd.Flags().StringVarP(&in.modelPath, "model-path", "m", "", "Path to the model file")
 	cmd.Flags().BoolVarP(&in.runEval, "eval", "e", false, "Run evaluation on the model after push completes")
-	cmd.Flags().StringVarP(&in.batch, "batch", "b", "", "Batch size for evaluation: a number or 'latest' (requires --eval; if omitted, prompts with the latest as default)")
+	cmd.Flags().StringVarP(&in.batch, "batch", "b", "", "Batch size for evaluation: a number or 'latest' (requires --eval; required with --no-wait; otherwise prompts with the latest as default)")
 	cmd.Flags().StringVarP(&in.overwriteVersionRef, "overwrite", "o", "", "Overwrite an existing version (id, or name — picker shown if name is ambiguous)")
 	cmd.Flags().StringVar(&in.overwriteVersionRef, "overwrite-version", "", "")
 	_ = cmd.Flags().MarkDeprecated("overwrite-version", "use --overwrite (-o) instead")
@@ -148,7 +153,7 @@ func runPush(cmdCtx context.Context, in *pushInputs) error {
 		return err
 	}
 
-	versionId, codeSnapshotCid, codePushed, err := s.runPushFlow()
+	versionId, codeSnapshotCid, codePushed, err := s.runPushFlow(dispatch)
 	if err != nil {
 		return err
 	}
@@ -162,14 +167,14 @@ func runPush(cmdCtx context.Context, in *pushInputs) error {
 // A new model goes through the combined push job (code parse + model import in
 // one). Overwriting a version that already has a model goes through the
 // override-push job (re-parse code + re-validate the existing model, no upload).
-func (s *pushState) runPushFlow() (versionId, codeSnapshotCid string, codePushed bool, err error) {
+func (s *pushState) runPushFlow(dispatch evalDispatch) (versionId, codeSnapshotCid string, codePushed bool, err error) {
 	if s.needsNewModel() {
-		return s.runCombinedPush()
+		return s.runCombinedPush(dispatch)
 	}
-	return s.runOverridePush()
+	return s.runOverridePush(dispatch)
 }
 
-func (s *pushState) runOverridePush() (versionId, codeSnapshotCid string, codePushed bool, err error) {
+func (s *pushState) runOverridePush(dispatch evalDispatch) (versionId, codeSnapshotCid string, codePushed bool, err error) {
 	in := s.inputs
 
 	closeBundle, tarGzFile, err := code.BundleCodeIntoTempFile(".", s.workspaceConfig)
@@ -187,6 +192,7 @@ func (s *pushState) runOverridePush() (versionId, codeSnapshotCid string, codePu
 		s.ctx, tarGzFile, fileStat.Size(),
 		s.workspaceConfig.EntryFile, in.secretId, in.pythonVersion,
 		s.projectId(), in.branch, s.overwriteVersion.VersionId,
+		s.chainedEvaluateRequest(dispatch),
 	)
 	if err != nil {
 		return "", "", false, s.fail("push_override", err)
@@ -197,7 +203,7 @@ func (s *pushState) runOverridePush() (versionId, codeSnapshotCid string, codePu
 	s.properties["job_id"] = pushResp.JobId
 
 	if in.noWait {
-		log.Info("Starting push job. JobId: ", pushResp.JobId)
+		s.printNoWaitSummary(pushResp, dispatch)
 		return pushResp.VersionId, pushResp.CodeSnapshot.Cid, true, nil
 	}
 
@@ -207,7 +213,7 @@ func (s *pushState) runOverridePush() (versionId, codeSnapshotCid string, codePu
 	return pushResp.VersionId, pushResp.CodeSnapshot.Cid, true, nil
 }
 
-func (s *pushState) runCombinedPush() (versionId, codeSnapshotCid string, codePushed bool, err error) {
+func (s *pushState) runCombinedPush(dispatch evalDispatch) (versionId, codeSnapshotCid string, codePushed bool, err error) {
 	in := s.inputs
 
 	closeBundle, tarGzFile, err := code.BundleCodeIntoTempFile(".", s.workspaceConfig)
@@ -236,6 +242,7 @@ func (s *pushState) runCombinedPush() (versionId, codeSnapshotCid string, codePu
 		s.workspaceConfig.EntryFile, in.secretId, in.pythonVersion,
 		in.modelVersionName, s.projectId(), in.branch, overwriteVersionId,
 		*modelInfo,
+		s.chainedEvaluateRequest(dispatch),
 	)
 	if err != nil {
 		return "", "", false, s.fail("push", err)
@@ -246,7 +253,7 @@ func (s *pushState) runCombinedPush() (versionId, codeSnapshotCid string, codePu
 	s.properties["job_id"] = pushResp.JobId
 
 	if in.noWait {
-		log.Info("Starting push job. JobId: ", pushResp.JobId)
+		s.printNoWaitSummary(pushResp, dispatch)
 		return pushResp.VersionId, pushResp.CodeSnapshot.Cid, true, nil
 	}
 
@@ -268,7 +275,42 @@ func validatePushInputs(in *pushInputs) error {
 	if in.noVisualization && !in.runEval {
 		return fmt.Errorf("--novis requires --eval (-e) or --update (-u)")
 	}
+	// --eval --no-wait hands the evaluation to the server, which needs every
+	// parameter up front: the command returns before the push job finishes, so
+	// there is nobody left to answer a prompt. Reject anything that would.
+	if in.noWait && in.runEval {
+		if len(in.updateParts) > 0 {
+			return fmt.Errorf("--update (-u) cannot be combined with --no-wait: update-evaluate is not chained server-side; drop --no-wait")
+		}
+		if in.batch == "" {
+			return fmt.Errorf("--eval with --no-wait requires --batch (a positive integer, or 'latest' to reuse the project's last batch size)")
+		}
+		if in.modelPath == "" && in.overwriteVersionRef == "" {
+			return fmt.Errorf("--eval with --no-wait requires --model-path (-m) or --overwrite (-o); otherwise push would prompt for the model")
+		}
+	}
 	return nil
+}
+
+// chainRequested reports whether the server should run the evaluation itself
+// once the push job finishes. Both the decision to send evaluateOnSuccess and
+// the decision to skip the local dispatch read this one predicate — keeping
+// them in sync is what stops the evaluate being dispatched twice.
+func (s *pushState) chainRequested() bool {
+	return s.inputs.noWait && s.inputs.runEval
+}
+
+// chainedEvaluateRequest builds the server-side evaluate instruction, or nil
+// when the CLI is dispatching the evaluation itself.
+func (s *pushState) chainedEvaluateRequest(dispatch evalDispatch) *tensorleapapi.ChainedEvaluateRequest {
+	if !s.chainRequested() {
+		return nil
+	}
+	req := tensorleapapi.NewChainedEvaluateRequest(float64(dispatch.batchSize))
+	if dispatch.noVisualization {
+		req.SetNoVisualization(true)
+	}
+	return req
 }
 
 func newPushState(ctx context.Context, in *pushInputs) (*pushState, error) {
@@ -454,6 +496,15 @@ func (s *pushState) resolveEvalPlan() (evalDispatch, error) {
 		return evalDispatch{}, fmt.Errorf("--update (-u) only applies when overwriting an existing version (use --overwrite or choose overwrite in the prompt)")
 	}
 
+	// A chained run is always a full evaluate: --update is rejected alongside
+	// --no-wait, and there is no interactive step left in which to ask what
+	// changed. Short-circuit before the overwrite path's "what do you want to
+	// update?" multi-select, which would otherwise block a headless push.
+	if s.chainRequested() {
+		batchSize, err := s.askOrDefaultBatchSize()
+		return evalDispatch{batchSize: batchSize, noVisualization: in.noVisualization}, err
+	}
+
 	if !s.isOverwrite {
 		// New version → a full evaluate. Offer to run it (default Yes).
 		if !in.runEval {
@@ -574,6 +625,19 @@ func (s *pushState) askOrDefaultBatchSize() (int, error) {
 	return chosen, nil
 }
 
+// printNoWaitSummary reports the ids a --no-wait caller needs to follow the run
+// without a second lookup. Kept stable and line-oriented: this is the handoff
+// point for CI and for agents driving the CLI.
+func (s *pushState) printNoWaitSummary(pushResp *tensorleapapi.PushResponse, dispatch evalDispatch) {
+	log.Info("Starting push job. JobId: ", pushResp.JobId)
+	log.Infof("  versionId: %s", pushResp.VersionId)
+	log.Infof("  projectId: %s", s.projectId())
+	if s.chainRequested() {
+		log.Infof("  chained evaluate: requested (batch size %d)", dispatch.batchSize)
+	}
+	log.Infof("Track it with: leap run info %s", pushResp.JobId)
+}
+
 func (s *pushState) sendSuccessEvent(versionId, codeSnapshotCid string, codePushed bool) {
 	in := s.inputs
 	s.properties["code_snapshot_id"] = codeSnapshotCid
@@ -589,6 +653,13 @@ func (s *pushState) sendSuccessEvent(versionId, codeSnapshotCid string, codePush
 }
 
 func (s *pushState) triggerEvaluate(versionId string, dispatch evalDispatch) error {
+	// The server was asked to run the evaluation when the push job finishes;
+	// dispatching here too would start a second one immediately — against a
+	// version whose push hasn't parsed the code yet — and that doomed job would
+	// then block the chained one via the active-evaluate check.
+	if s.chainRequested() {
+		return nil
+	}
 	if dispatch.persistOnly {
 		if len(dispatch.updateActions) == 0 {
 			return nil
