@@ -63,6 +63,7 @@ Name | Type | Description | Notes
 **VersionName** | **string** |  | 
 **BranchName** | Pointer to **string** |  | [optional] 
 **OverwriteVersionId** | Pointer to **string** |  | [optional] 
+**EvaluateOnSuccess** | Pointer to [**ChainedEvaluateRequest**](ChainedEvaluateRequest.md) |  | [optional] 
 **UpdateActions** | [**[]UpdateAction**](UpdateAction.md) |  | 
 **CopyMode** | Pointer to **bool** |  | [optional] 
 **SourceVersionId** | Pointer to **string** |  | [optional] 
@@ -1375,6 +1376,31 @@ SetOverwriteVersionId sets OverwriteVersionId field to given value.
 `func (o *JobParams) HasOverwriteVersionId() bool`
 
 HasOverwriteVersionId returns a boolean if a field has been set.
+
+### GetEvaluateOnSuccess
+
+`func (o *JobParams) GetEvaluateOnSuccess() ChainedEvaluateRequest`
+
+GetEvaluateOnSuccess returns the EvaluateOnSuccess field if non-nil, zero value otherwise.
+
+### GetEvaluateOnSuccessOk
+
+`func (o *JobParams) GetEvaluateOnSuccessOk() (*ChainedEvaluateRequest, bool)`
+
+GetEvaluateOnSuccessOk returns a tuple with the EvaluateOnSuccess field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEvaluateOnSuccess
+
+`func (o *JobParams) SetEvaluateOnSuccess(v ChainedEvaluateRequest)`
+
+SetEvaluateOnSuccess sets EvaluateOnSuccess field to given value.
+
+### HasEvaluateOnSuccess
+
+`func (o *JobParams) HasEvaluateOnSuccess() bool`
+
+HasEvaluateOnSuccess returns a boolean if a field has been set.
 
 ### GetUpdateActions
 

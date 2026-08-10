@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **CodeSnapshotInfo** | Pointer to [**CodeSnapshotInfo**](CodeSnapshotInfo.md) |  | [optional] 
 **LogsBlobName** | Pointer to **string** |  | [optional] 
 **Notifications** | Pointer to [**[]Notification**](Notification.md) |  | [optional] 
+**ChainedEvaluate** | Pointer to [**ChainedEvaluateInfo**](ChainedEvaluateInfo.md) |  | [optional] 
 
 ## Methods
 
@@ -456,6 +457,31 @@ SetNotifications sets Notifications field to given value.
 `func (o *RunProcess) HasNotifications() bool`
 
 HasNotifications returns a boolean if a field has been set.
+
+### GetChainedEvaluate
+
+`func (o *RunProcess) GetChainedEvaluate() ChainedEvaluateInfo`
+
+GetChainedEvaluate returns the ChainedEvaluate field if non-nil, zero value otherwise.
+
+### GetChainedEvaluateOk
+
+`func (o *RunProcess) GetChainedEvaluateOk() (*ChainedEvaluateInfo, bool)`
+
+GetChainedEvaluateOk returns a tuple with the ChainedEvaluate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetChainedEvaluate
+
+`func (o *RunProcess) SetChainedEvaluate(v ChainedEvaluateInfo)`
+
+SetChainedEvaluate sets ChainedEvaluate field to given value.
+
+### HasChainedEvaluate
+
+`func (o *RunProcess) HasChainedEvaluate() bool`
+
+HasChainedEvaluate returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

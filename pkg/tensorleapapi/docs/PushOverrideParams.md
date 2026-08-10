@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **GenericBaseImageType** | Pointer to **string** |  | [optional] 
 **OverwriteVersionId** | **string** |  | 
 **BranchName** | Pointer to **string** |  | [optional] 
+**EvaluateOnSuccess** | Pointer to [**ChainedEvaluateRequest**](ChainedEvaluateRequest.md) |  | [optional] 
 
 ## Methods
 
@@ -185,6 +186,31 @@ SetBranchName sets BranchName field to given value.
 `func (o *PushOverrideParams) HasBranchName() bool`
 
 HasBranchName returns a boolean if a field has been set.
+
+### GetEvaluateOnSuccess
+
+`func (o *PushOverrideParams) GetEvaluateOnSuccess() ChainedEvaluateRequest`
+
+GetEvaluateOnSuccess returns the EvaluateOnSuccess field if non-nil, zero value otherwise.
+
+### GetEvaluateOnSuccessOk
+
+`func (o *PushOverrideParams) GetEvaluateOnSuccessOk() (*ChainedEvaluateRequest, bool)`
+
+GetEvaluateOnSuccessOk returns a tuple with the EvaluateOnSuccess field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEvaluateOnSuccess
+
+`func (o *PushOverrideParams) SetEvaluateOnSuccess(v ChainedEvaluateRequest)`
+
+SetEvaluateOnSuccess sets EvaluateOnSuccess field to given value.
+
+### HasEvaluateOnSuccess
+
+`func (o *PushOverrideParams) HasEvaluateOnSuccess() bool`
+
+HasEvaluateOnSuccess returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
