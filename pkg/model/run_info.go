@@ -105,20 +105,35 @@ func BuildRunInfo(ctx context.Context, jobId string) (*RunInfo, error) {
 	return info, nil
 }
 
-// collectRunErrorReport reuses the exact collector the interactive push viewer
-// uses, so `leap run info` and the TUI can never drift apart. The job's own
-// creation time replaces the command start time used on the live push path.
+// collectRunErrorReport gathers the failure detail for a run.
+//
+// A push gets the collector the interactive viewer uses, so the two report the
+// same thing. Every other job type gets notifications and logs only: graph
+// validation records what a push checked about the code integration, and an
+// evaluate runs against a version that was validated long before it started —
+// the section has nothing to say about why this run failed.
 func collectRunErrorReport(ctx context.Context, job *tensorleapapi.Job) *ImportModelErrorReport {
-	projectId, versionId := job.GetProjectId(), job.GetVersionId()
-	if projectId == "" || versionId == "" {
-		return nil
+	if !wantsFullPushReport(job) {
+		return CollectJobFailureDetail(ctx, job.Cid, job.CreatedAt)
 	}
+
+	projectId, versionId := job.GetProjectId(), job.GetVersionId()
 	report, err := CollectImportModelJobErrors(ctx, projectId, job.Cid, versionId, job.CreatedAt)
 	if err != nil {
-		log.Warnf("failed to collect the error report for run %s: %v", job.Cid, err)
-		return nil
+		// Most likely the version is gone. Still worth reporting what we can.
+		log.Warnf("failed to collect the full error report for run %s: %v", job.Cid, err)
+		return CollectJobFailureDetail(ctx, job.Cid, job.CreatedAt)
 	}
 	return report
+}
+
+// wantsFullPushReport reports whether the version-scoped graph-validation
+// section applies to this run — only a push, and only one we can resolve a
+// version for.
+func wantsFullPushReport(job *tensorleapapi.Job) bool {
+	return job.Type == tensorleapapi.JOBTYPE_PUSH &&
+		job.GetProjectId() != "" &&
+		job.GetVersionId() != ""
 }
 
 func runInfoSteps(job *tensorleapapi.Job) []RunInfoStep {
