@@ -90,9 +90,12 @@ Examples:
   leap push -e --novis
 
   # Fire-and-forget: return as soon as the push starts and let the server run the
-  # evaluation when it finishes. Needs every parameter up front — nothing is prompted.
-  leap push -e --no-wait -b 64 -m ./model.h5 -n my-model
+  # evaluation when it finishes. Prompts for anything missing, just like a plain push.
+  leap push -e --no-wait
   leap run info <jobId>            # status, and the chained evaluate's job id
+
+  # The same, fully specified — required when stdin isn't a terminal (CI, agents)
+  leap push -e --no-wait -b 64 -m ./model.h5 -n my-model
 `,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return runPush(cmd.Context(), in)
@@ -107,7 +110,7 @@ Examples:
 	cmd.Flags().BoolVar(&in.noWait, "no-wait", false, "Do not wait for push to complete. With --eval the server runs the evaluation itself once the push finishes; follow it with 'leap run info <jobId>'")
 	cmd.Flags().StringVarP(&in.modelPath, "model-path", "m", "", "Path to the model file")
 	cmd.Flags().BoolVarP(&in.runEval, "eval", "e", false, "Run evaluation on the model after push completes")
-	cmd.Flags().StringVarP(&in.batch, "batch", "b", "", "Batch size for evaluation: a number or 'latest' (requires --eval; required with --no-wait; otherwise prompts with the latest as default)")
+	cmd.Flags().StringVarP(&in.batch, "batch", "b", "", "Batch size for evaluation: a number or 'latest' (requires --eval; if omitted, prompts with the latest as default — and is required when stdin is not a terminal)")
 	cmd.Flags().StringVarP(&in.overwriteVersionRef, "overwrite", "o", "", "Overwrite an existing version (id, or name — picker shown if name is ambiguous)")
 	cmd.Flags().StringVar(&in.overwriteVersionRef, "overwrite-version", "", "")
 	_ = cmd.Flags().MarkDeprecated("overwrite-version", "use --overwrite (-o) instead")
@@ -118,7 +121,7 @@ Examples:
 }
 
 func runPush(cmdCtx context.Context, in *pushInputs) error {
-	if err := validatePushInputs(in); err != nil {
+	if err := validatePushInputs(in, term.IsTerminal(int(os.Stdin.Fd()))); err != nil {
 		return err
 	}
 
@@ -263,7 +266,11 @@ func (s *pushState) runCombinedPush(dispatch evalDispatch) (versionId, codeSnaps
 	return pushResp.VersionId, pushResp.CodeSnapshot.Cid, true, nil
 }
 
-func validatePushInputs(in *pushInputs) error {
+// validatePushInputs rejects flag combinations that cannot work. `interactive`
+// says whether stdin is a terminal: everything the push needs is collected
+// before the push job is created — while the user is still watching, even under
+// --no-wait — so a missing value is only fatal when there is nobody to ask.
+func validatePushInputs(in *pushInputs, interactive bool) error {
 	// --update implies --eval; resolve it first so every check below sees the
 	// final runEval state (checking --batch earlier rejected valid `-u --batch`).
 	if len(in.updateParts) > 0 && !in.runEval {
@@ -275,18 +282,22 @@ func validatePushInputs(in *pushInputs) error {
 	if in.noVisualization && !in.runEval {
 		return fmt.Errorf("--novis requires --eval (-e) or --update (-u)")
 	}
-	// --eval --no-wait hands the evaluation to the server, which needs every
-	// parameter up front: the command returns before the push job finishes, so
-	// there is nobody left to answer a prompt. Reject anything that would.
+
 	if in.noWait && in.runEval {
+		// Not a prompting problem: the server only knows how to chain a full
+		// evaluate, so there is no answer the user could give that would help.
 		if len(in.updateParts) > 0 {
 			return fmt.Errorf("--update (-u) cannot be combined with --no-wait: update-evaluate is not chained server-side; drop --no-wait")
 		}
-		if in.batch == "" {
-			return fmt.Errorf("--eval with --no-wait requires --batch (a positive integer, or 'latest' to reuse the project's last batch size)")
-		}
-		if in.modelPath == "" && in.overwriteVersionRef == "" {
-			return fmt.Errorf("--eval with --no-wait requires --model-path (-m) or --overwrite (-o); otherwise push would prompt for the model")
+		// Headless, so the prompts below would have nobody to answer them.
+		// Fail with the flag to pass rather than letting a survey error escape.
+		if !interactive {
+			if in.batch == "" {
+				return fmt.Errorf("--eval with --no-wait requires --batch when stdin is not a terminal (a positive integer, or 'latest' to reuse the project's last batch size)")
+			}
+			if in.modelPath == "" && in.overwriteVersionRef == "" {
+				return fmt.Errorf("--eval with --no-wait requires --model-path (-m) or --overwrite (-o) when stdin is not a terminal")
+			}
 		}
 	}
 	return nil
@@ -496,11 +507,14 @@ func (s *pushState) resolveEvalPlan() (evalDispatch, error) {
 		return evalDispatch{}, fmt.Errorf("--update (-u) only applies when overwriting an existing version (use --overwrite or choose overwrite in the prompt)")
 	}
 
-	// A chained run is always a full evaluate: --update is rejected alongside
-	// --no-wait, and there is no interactive step left in which to ask what
-	// changed. Short-circuit before the overwrite path's "what do you want to
-	// update?" multi-select, which would otherwise block a headless push.
+	// A chained run is always a full evaluate — the server has no update-evaluate
+	// path — so skip the overwrite branch's "what do you want to update?"
+	// multi-select. Say so when overwriting, where that prompt would otherwise
+	// have appeared and its absence is a surprise.
 	if s.chainRequested() {
+		if s.isOverwrite {
+			log.Info("Chained evaluation runs a full re-evaluate; drop --no-wait to choose what changed instead.")
+		}
 		batchSize, err := s.askOrDefaultBatchSize()
 		return evalDispatch{batchSize: batchSize, noVisualization: in.noVisualization}, err
 	}
