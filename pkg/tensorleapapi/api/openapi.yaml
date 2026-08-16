@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.129
+  version: 11.0.133
 servers:
 - url: /api/v2
 paths:
@@ -13435,6 +13435,25 @@ components:
       - codeUrl
       - projectId
       type: object
+    ChainedEvaluateRequest:
+      additionalProperties: true
+      description: |-
+        Ask the server to start an Evaluate job itself once the push job finishes
+        successfully, instead of the client dispatching it after waiting. Used by
+        `leap push --eval --no-wait`, which returns as soon as the push job is
+        created and so has nobody left to trigger the evaluation.
+      example:
+        noVisualization: true
+        batchSize: 0.8008281904610115
+      properties:
+        batchSize:
+          format: double
+          type: number
+        noVisualization:
+          type: boolean
+      required:
+      - batchSize
+      type: object
     PushCodeSnapshotParams:
       additionalProperties: true
       properties:
@@ -13454,6 +13473,8 @@ components:
           type: string
         overwriteVersionId:
           type: string
+        evaluateOnSuccess:
+          $ref: "#/components/schemas/ChainedEvaluateRequest"
       required:
       - codeEntryFile
       - codeUrl
@@ -14194,6 +14215,37 @@ components:
       - title
       - user
       type: object
+    ChainedEvaluateInfo:
+      additionalProperties: true
+      description: |-
+        Outcome of the Evaluate a push job was asked to chain (`leap push --eval
+        --no-wait`). `status` is derived from the push job's own status plus the
+        recorded jobId/error — it is never stored, so a push that ends without ever
+        reaching the dispatch still reports a sensible terminal value.
+
+        pending    — push still running, or finished and the dispatch hasn't landed
+        dispatched — evaluate job created; see jobId
+        failed     — dispatch was rejected; see error
+        skipped    — push did not finish successfully, so no evaluate was attempted
+      example:
+        jobId: jobId
+        error: error
+        status: pending
+      properties:
+        status:
+          enum:
+          - pending
+          - dispatched
+          - failed
+          - skipped
+          type: string
+        jobId:
+          type: string
+        error:
+          type: string
+      required:
+      - status
+      type: object
     RunProcess:
       additionalProperties: true
       example:
@@ -14210,6 +14262,10 @@ components:
         createdAt: createdAt
         versionId: versionId
         processId: processId
+        chainedEvaluate:
+          jobId: jobId
+          error: error
+          status: pending
         projectName: projectName
         jobType: jobType
         batchSize: 5.637376656633329
@@ -14313,6 +14369,8 @@ components:
           items:
             $ref: "#/components/schemas/Notification"
           type: array
+        chainedEvaluate:
+          $ref: "#/components/schemas/ChainedEvaluateInfo"
       required:
       - createdAt
       - events
@@ -14325,6 +14383,7 @@ components:
     GeneratedLabel:
       additionalProperties: true
       example:
+        suggestedClusterFileUrl: suggestedClusterFileUrl
         runProcess:
           datasetName: datasetName
           versionName: versionName
@@ -14339,6 +14398,10 @@ components:
           createdAt: createdAt
           versionId: versionId
           processId: processId
+          chainedEvaluate:
+            jobId: jobId
+            error: error
+            status: pending
           projectName: projectName
           jobType: jobType
           batchSize: 5.637376656633329
@@ -14826,6 +14889,7 @@ components:
         isDeleted: true
         createdBy: createdBy
         numOfSamples: 0.8008281904610115
+        statsFileUrl: statsFileUrl
         fileUrl: fileUrl
         id: id
         status: UNSTARTED
@@ -14852,6 +14916,10 @@ components:
           type: string
         filterFileUrl:
           type: string
+        statsFileUrl:
+          type: string
+        suggestedClusterFileUrl:
+          type: string
         status:
           $ref: "#/components/schemas/JobStatus"
         isDeleted:
@@ -14877,7 +14945,8 @@ components:
       additionalProperties: true
       example:
         labels:
-        - runProcess:
+        - suggestedClusterFileUrl: suggestedClusterFileUrl
+          runProcess:
             datasetName: datasetName
             versionName: versionName
             params:
@@ -14891,6 +14960,10 @@ components:
             createdAt: createdAt
             versionId: versionId
             processId: processId
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             projectName: projectName
             jobType: jobType
             batchSize: 5.637376656633329
@@ -15378,10 +15451,12 @@ components:
           isDeleted: true
           createdBy: createdBy
           numOfSamples: 0.8008281904610115
+          statsFileUrl: statsFileUrl
           fileUrl: fileUrl
           id: id
           status: UNSTARTED
-        - runProcess:
+        - suggestedClusterFileUrl: suggestedClusterFileUrl
+          runProcess:
             datasetName: datasetName
             versionName: versionName
             params:
@@ -15395,6 +15470,10 @@ components:
             createdAt: createdAt
             versionId: versionId
             processId: processId
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             projectName: projectName
             jobType: jobType
             batchSize: 5.637376656633329
@@ -15882,6 +15961,7 @@ components:
           isDeleted: true
           createdBy: createdBy
           numOfSamples: 0.8008281904610115
+          statsFileUrl: statsFileUrl
           fileUrl: fileUrl
           id: id
           status: UNSTARTED
@@ -19340,6 +19420,10 @@ components:
           createdAt: createdAt
           versionId: versionId
           processId: processId
+          chainedEvaluate:
+            jobId: jobId
+            error: error
+            status: pending
           projectName: projectName
           jobType: jobType
           batchSize: 5.637376656633329
@@ -21164,6 +21248,10 @@ components:
             createdAt: createdAt
             versionId: versionId
             processId: processId
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             projectName: projectName
             jobType: jobType
             batchSize: 5.637376656633329
@@ -22929,6 +23017,10 @@ components:
             createdAt: createdAt
             versionId: versionId
             processId: processId
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             projectName: projectName
             jobType: jobType
             batchSize: 5.637376656633329
@@ -23927,6 +24019,10 @@ components:
           createdAt: createdAt
           versionId: versionId
           processId: processId
+          chainedEvaluate:
+            jobId: jobId
+            error: error
+            status: pending
           projectName: projectName
           jobType: jobType
           batchSize: 5.637376656633329
@@ -24490,6 +24586,10 @@ components:
             createdAt: createdAt
             versionId: versionId
             processId: processId
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             projectName: projectName
             jobType: jobType
             batchSize: 5.637376656633329
@@ -24999,6 +25099,10 @@ components:
             createdAt: createdAt
             versionId: versionId
             processId: processId
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             projectName: projectName
             jobType: jobType
             batchSize: 5.637376656633329
@@ -25587,6 +25691,10 @@ components:
           createdAt: createdAt
           versionId: versionId
           processId: processId
+          chainedEvaluate:
+            jobId: jobId
+            error: error
+            status: pending
           projectName: projectName
           jobType: jobType
           batchSize: 5.637376656633329
@@ -25734,6 +25842,10 @@ components:
             createdAt: createdAt
             versionId: versionId
             processId: processId
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             projectName: projectName
             jobType: jobType
             batchSize: 5.637376656633329
@@ -25828,6 +25940,10 @@ components:
             createdAt: createdAt
             versionId: versionId
             processId: processId
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             projectName: projectName
             jobType: jobType
             batchSize: 5.637376656633329
@@ -26806,6 +26922,10 @@ components:
           createdAt: createdAt
           versionId: versionId
           processId: processId
+          chainedEvaluate:
+            jobId: jobId
+            error: error
+            status: pending
           projectName: projectName
           jobType: jobType
           batchSize: 5.637376656633329
@@ -27773,6 +27893,10 @@ components:
             createdAt: createdAt
             versionId: versionId
             processId: processId
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             projectName: projectName
             jobType: jobType
             batchSize: 5.637376656633329
@@ -28692,6 +28816,10 @@ components:
             createdAt: createdAt
             versionId: versionId
             processId: processId
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             projectName: projectName
             jobType: jobType
             batchSize: 5.637376656633329
@@ -29688,6 +29816,10 @@ components:
         createdAt: 2000-01-23T04:56:07.000+00:00
         versionId: versionId
         createdBy: createdBy
+        chainedEvaluate:
+          jobId: jobId
+          error: error
+          status: pending
         teamId: teamId
         subType: Evaluate
         experimentId: experimentId
@@ -29734,6 +29866,8 @@ components:
           $ref: "#/components/schemas/EventsSnapshot"
         logsBlobName:
           type: string
+        chainedEvaluate:
+          $ref: "#/components/schemas/ChainedEvaluateInfo"
       required:
       - cid
       - createdAt
@@ -31612,6 +31746,10 @@ components:
           createdAt: createdAt
           versionId: versionId
           processId: processId
+          chainedEvaluate:
+            jobId: jobId
+            error: error
+            status: pending
           projectName: projectName
           jobType: jobType
           batchSize: 5.637376656633329
@@ -31686,6 +31824,10 @@ components:
           createdAt: createdAt
           versionId: versionId
           processId: processId
+          chainedEvaluate:
+            jobId: jobId
+            error: error
+            status: pending
           projectName: projectName
           jobType: jobType
           batchSize: 5.637376656633329
@@ -31855,6 +31997,10 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           versionId: versionId
           createdBy: createdBy
+          chainedEvaluate:
+            jobId: jobId
+            error: error
+            status: pending
           teamId: teamId
           subType: Evaluate
           experimentId: experimentId
@@ -31893,6 +32039,10 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           versionId: versionId
           createdBy: createdBy
+          chainedEvaluate:
+            jobId: jobId
+            error: error
+            status: pending
           teamId: teamId
           subType: Evaluate
           experimentId: experimentId
@@ -42089,6 +42239,10 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           versionId: versionId
           createdBy: createdBy
+          chainedEvaluate:
+            jobId: jobId
+            error: error
+            status: pending
           teamId: teamId
           subType: Evaluate
           experimentId: experimentId
@@ -42127,6 +42281,10 @@ components:
           createdAt: 2000-01-23T04:56:07.000+00:00
           versionId: versionId
           createdBy: createdBy
+          chainedEvaluate:
+            jobId: jobId
+            error: error
+            status: pending
           teamId: teamId
           subType: Evaluate
           experimentId: experimentId
@@ -42394,6 +42552,10 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             versionId: versionId
             createdBy: createdBy
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             teamId: teamId
             subType: Evaluate
             experimentId: experimentId
@@ -42432,6 +42594,10 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             versionId: versionId
             createdBy: createdBy
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             teamId: teamId
             subType: Evaluate
             experimentId: experimentId
@@ -42606,6 +42772,10 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             versionId: versionId
             createdBy: createdBy
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             teamId: teamId
             subType: Evaluate
             experimentId: experimentId
@@ -42644,6 +42814,10 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             versionId: versionId
             createdBy: createdBy
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             teamId: teamId
             subType: Evaluate
             experimentId: experimentId
@@ -42840,6 +43014,10 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             versionId: versionId
             createdBy: createdBy
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             teamId: teamId
             subType: Evaluate
             experimentId: experimentId
@@ -42878,6 +43056,10 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             versionId: versionId
             createdBy: createdBy
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             teamId: teamId
             subType: Evaluate
             experimentId: experimentId
@@ -43052,6 +43234,10 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             versionId: versionId
             createdBy: createdBy
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             teamId: teamId
             subType: Evaluate
             experimentId: experimentId
@@ -43090,6 +43276,10 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             versionId: versionId
             createdBy: createdBy
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             teamId: teamId
             subType: Evaluate
             experimentId: experimentId
@@ -43286,6 +43476,10 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             versionId: versionId
             createdBy: createdBy
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             teamId: teamId
             subType: Evaluate
             experimentId: experimentId
@@ -43324,6 +43518,10 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             versionId: versionId
             createdBy: createdBy
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             teamId: teamId
             subType: Evaluate
             experimentId: experimentId
@@ -43498,6 +43696,10 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             versionId: versionId
             createdBy: createdBy
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             teamId: teamId
             subType: Evaluate
             experimentId: experimentId
@@ -43536,6 +43738,10 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             versionId: versionId
             createdBy: createdBy
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             teamId: teamId
             subType: Evaluate
             experimentId: experimentId
@@ -43867,6 +44073,10 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             versionId: versionId
             createdBy: createdBy
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             teamId: teamId
             subType: Evaluate
             experimentId: experimentId
@@ -43905,6 +44115,10 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             versionId: versionId
             createdBy: createdBy
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             teamId: teamId
             subType: Evaluate
             experimentId: experimentId
@@ -44079,6 +44293,10 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             versionId: versionId
             createdBy: createdBy
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             teamId: teamId
             subType: Evaluate
             experimentId: experimentId
@@ -44117,6 +44335,10 @@ components:
             createdAt: 2000-01-23T04:56:07.000+00:00
             versionId: versionId
             createdBy: createdBy
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
             teamId: teamId
             subType: Evaluate
             experimentId: experimentId
@@ -45377,6 +45599,9 @@ components:
         codeUrl: codeUrl
         overwriteVersionId: overwriteVersionId
         genericBaseImageType: genericBaseImageType
+        evaluateOnSuccess:
+          noVisualization: true
+          batchSize: 0.8008281904610115
         secretManagerId: secretManagerId
         branchName: branchName
         model:
@@ -45403,6 +45628,8 @@ components:
           type: string
         overwriteVersionId:
           type: string
+        evaluateOnSuccess:
+          $ref: "#/components/schemas/ChainedEvaluateRequest"
         model:
           $ref: "#/components/schemas/ImportModelInfo"
       required:
@@ -45418,6 +45645,9 @@ components:
         codeUrl: codeUrl
         overwriteVersionId: overwriteVersionId
         genericBaseImageType: genericBaseImageType
+        evaluateOnSuccess:
+          noVisualization: true
+          batchSize: 0.8008281904610115
         secretManagerId: secretManagerId
         branchName: branchName
         codeEntryFile: codeEntryFile
@@ -45437,6 +45667,8 @@ components:
           type: string
         branchName:
           type: string
+        evaluateOnSuccess:
+          $ref: "#/components/schemas/ChainedEvaluateRequest"
       required:
       - codeEntryFile
       - codeUrl
@@ -46171,6 +46403,11 @@ components:
         sample_rate:
           format: double
           type: number
+        x_range:
+          items:
+            format: double
+            type: number
+          type: array
         type:
           $ref: "#/components/schemas/DataTypeEnum"
       required:

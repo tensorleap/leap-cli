@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **AudioBlob** | **string** |  | 
 **Visual** | [**AudioDataVisual**](AudioDataVisual.md) |  | 
 **SampleRate** | **float64** |  | 
+**XRange** | Pointer to **[]float64** |  | [optional] 
 **Type** | [**DataTypeEnum**](DataTypeEnum.md) |  | 
 
 ## Methods
@@ -87,6 +88,31 @@ and a boolean to check if the value has been set.
 
 SetSampleRate sets SampleRate field to given value.
 
+
+### GetXRange
+
+`func (o *AudioData) GetXRange() []float64`
+
+GetXRange returns the XRange field if non-nil, zero value otherwise.
+
+### GetXRangeOk
+
+`func (o *AudioData) GetXRangeOk() (*[]float64, bool)`
+
+GetXRangeOk returns a tuple with the XRange field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetXRange
+
+`func (o *AudioData) SetXRange(v []float64)`
+
+SetXRange sets XRange field to given value.
+
+### HasXRange
+
+`func (o *AudioData) HasXRange() bool`
+
+HasXRange returns a boolean if a field has been set.
 
 ### GetType
 

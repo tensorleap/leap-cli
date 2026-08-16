@@ -9,8 +9,8 @@ import (
 )
 
 type JobFailureNotificationReport struct {
-	JobId         string
-	Notifications []NotificationReport
+	JobId         string               `json:"jobId"`
+	Notifications []NotificationReport `json:"notifications"`
 }
 
 func (r *JobFailureNotificationReport) View() string {
@@ -22,10 +22,10 @@ func (r *JobFailureNotificationReport) View() string {
 }
 
 type NotificationReport struct {
-	Level        MessageLevel
-	Title        string
-	Message      string
-	ExtraMessage string
+	Level        MessageLevel `json:"level"`
+	Title        string       `json:"title"`
+	Message      string       `json:"message"`
+	ExtraMessage string       `json:"extraMessage,omitempty"`
 }
 
 func ToNotificationReport(notification Notification) NotificationReport {

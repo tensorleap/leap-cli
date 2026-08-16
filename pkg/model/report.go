@@ -16,22 +16,22 @@ import (
 // ---------------------------
 
 type ValidateAssetError struct {
-	Error          string
-	Name           string
-	NodeId         string
-	ConnectionName string
-	Type           string
+	Error          string `json:"error"`
+	Name           string `json:"name"`
+	NodeId         string `json:"nodeId,omitempty"`
+	ConnectionName string `json:"connectionName,omitempty"`
+	Type           string `json:"type"`
 }
 
 type ValidateAssetReport struct {
-	GeneralError string
-	Nodes        []ValidateAssetError
+	GeneralError string               `json:"generalError,omitempty"`
+	Nodes        []ValidateAssetError `json:"nodes,omitempty"`
 }
 
 type ImportModelErrorReport struct {
-	Notifications       *notification.JobFailureNotificationReport
-	ValidateAssetReport *ValidateAssetReport
-	TopLogs             []string
+	Notifications       *notification.JobFailureNotificationReport `json:"notifications,omitempty"`
+	ValidateAssetReport *ValidateAssetReport                       `json:"validationErrors,omitempty"`
+	TopLogs             []run.LogLine                              `json:"topLogs,omitempty"`
 }
 
 // ---------------------------

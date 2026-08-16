@@ -25,12 +25,16 @@ func GetCodeSnapshot(ctx context.Context, projectId, id string) (*CodeSnapshot, 
 // PushCodeAndModel uploads the code bundle and triggers the combined push job
 // (code parse + model import in one job) via the new push endpoint, replacing
 // the separate pushCodeSnapshot + importModel calls.
+// evaluateOnSuccess, when non-nil, asks the server to start the evaluation
+// itself once the push job finishes — used by --no-wait, where the CLI is gone
+// before the push completes.
 func PushCodeAndModel(
 	ctx context.Context, tarGzFile io.Reader, fileSize int64,
 	entryFile, secretId, pythonVersion,
 	versionName, projectId, branch string,
 	overwriteVersionId string,
 	modelInfo tensorleapapi.ImportModelInfo,
+	evaluateOnSuccess *tensorleapapi.ChainedEvaluateRequest,
 ) (*tensorleapapi.PushResponse, error) {
 
 	uploadUrl, err := GetCodeSnapshotUploadUrl(ctx, projectId)
@@ -66,6 +70,10 @@ func PushCodeAndModel(
 		pushParams.SecretManagerId = &secretId
 	}
 
+	if evaluateOnSuccess != nil {
+		pushParams.SetEvaluateOnSuccess(*evaluateOnSuccess)
+	}
+
 	log.Info("Pushing code and model...")
 	result, response, err := api.ApiClient.Push(ctx).
 		PushParams(pushParams).
@@ -84,6 +92,7 @@ func PushOverride(
 	ctx context.Context, tarGzFile io.Reader, fileSize int64,
 	entryFile, secretId, pythonVersion, projectId, branch string,
 	overwriteVersionId string,
+	evaluateOnSuccess *tensorleapapi.ChainedEvaluateRequest,
 ) (*tensorleapapi.PushResponse, error) {
 
 	uploadUrl, err := GetCodeSnapshotUploadUrl(ctx, projectId)
@@ -112,6 +121,10 @@ func PushOverride(
 
 	if len(secretId) > 0 {
 		params.SecretManagerId = &secretId
+	}
+
+	if evaluateOnSuccess != nil {
+		params.SetEvaluateOnSuccess(*evaluateOnSuccess)
 	}
 
 	log.Info("Pushing code (override)...")

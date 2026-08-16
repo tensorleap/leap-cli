@@ -20,6 +20,7 @@ Name | Type | Description | Notes
 **CodeSnapshotInfo** | Pointer to [**CodeSnapshotInfo**](CodeSnapshotInfo.md) |  | [optional] 
 **EventsSnapshot** | Pointer to [**EventsSnapshot**](EventsSnapshot.md) |  | [optional] 
 **LogsBlobName** | Pointer to **string** |  | [optional] 
+**ChainedEvaluate** | Pointer to [**ChainedEvaluateInfo**](ChainedEvaluateInfo.md) |  | [optional] 
 
 ## Methods
 
@@ -404,6 +405,31 @@ SetLogsBlobName sets LogsBlobName field to given value.
 `func (o *Job) HasLogsBlobName() bool`
 
 HasLogsBlobName returns a boolean if a field has been set.
+
+### GetChainedEvaluate
+
+`func (o *Job) GetChainedEvaluate() ChainedEvaluateInfo`
+
+GetChainedEvaluate returns the ChainedEvaluate field if non-nil, zero value otherwise.
+
+### GetChainedEvaluateOk
+
+`func (o *Job) GetChainedEvaluateOk() (*ChainedEvaluateInfo, bool)`
+
+GetChainedEvaluateOk returns a tuple with the ChainedEvaluate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetChainedEvaluate
+
+`func (o *Job) SetChainedEvaluate(v ChainedEvaluateInfo)`
+
+SetChainedEvaluate sets ChainedEvaluate field to given value.
+
+### HasChainedEvaluate
+
+`func (o *Job) HasChainedEvaluate() bool`
+
+HasChainedEvaluate returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

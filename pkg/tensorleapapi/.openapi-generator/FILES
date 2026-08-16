@@ -43,6 +43,8 @@ docs/BoolSchema.md
 docs/BoundingBox.md
 docs/CalcPopulationExplorationDigestParams.md
 docs/CalcPopulationExplorationDigestResponse.md
+docs/ChainedEvaluateInfo.md
+docs/ChainedEvaluateRequest.md
 docs/ChartData.md
 docs/ClientFilterParams.md
 docs/Clusters.md
@@ -587,6 +589,8 @@ model_bool_schema.go
 model_bounding_box.go
 model_calc_population_exploration_digest_params.go
 model_calc_population_exploration_digest_response.go
+model_chained_evaluate_info.go
+model_chained_evaluate_request.go
 model_chart_data.go
 model_client_filter_params.go
 model_clusters.go

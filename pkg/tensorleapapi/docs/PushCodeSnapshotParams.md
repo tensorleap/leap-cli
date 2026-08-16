@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **VersionName** | **string** |  | 
 **BranchName** | Pointer to **string** |  | [optional] 
 **OverwriteVersionId** | Pointer to **string** |  | [optional] 
+**EvaluateOnSuccess** | Pointer to [**ChainedEvaluateRequest**](ChainedEvaluateRequest.md) |  | [optional] 
 
 ## Methods
 
@@ -211,6 +212,31 @@ SetOverwriteVersionId sets OverwriteVersionId field to given value.
 `func (o *PushCodeSnapshotParams) HasOverwriteVersionId() bool`
 
 HasOverwriteVersionId returns a boolean if a field has been set.
+
+### GetEvaluateOnSuccess
+
+`func (o *PushCodeSnapshotParams) GetEvaluateOnSuccess() ChainedEvaluateRequest`
+
+GetEvaluateOnSuccess returns the EvaluateOnSuccess field if non-nil, zero value otherwise.
+
+### GetEvaluateOnSuccessOk
+
+`func (o *PushCodeSnapshotParams) GetEvaluateOnSuccessOk() (*ChainedEvaluateRequest, bool)`
+
+GetEvaluateOnSuccessOk returns a tuple with the EvaluateOnSuccess field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEvaluateOnSuccess
+
+`func (o *PushCodeSnapshotParams) SetEvaluateOnSuccess(v ChainedEvaluateRequest)`
+
+SetEvaluateOnSuccess sets EvaluateOnSuccess field to given value.
+
+### HasEvaluateOnSuccess
+
+`func (o *PushCodeSnapshotParams) HasEvaluateOnSuccess() bool`
+
+HasEvaluateOnSuccess returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

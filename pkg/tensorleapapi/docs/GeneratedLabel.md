@@ -14,6 +14,8 @@ Name | Type | Description | Notes
 **FilePath** | **string** |  | 
 **FileUrl** | Pointer to **string** |  | [optional] 
 **FilterFileUrl** | Pointer to **string** |  | [optional] 
+**StatsFileUrl** | Pointer to **string** |  | [optional] 
+**SuggestedClusterFileUrl** | Pointer to **string** |  | [optional] 
 **Status** | [**JobStatus**](JobStatus.md) |  | 
 **IsDeleted** | **bool** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
@@ -252,6 +254,56 @@ SetFilterFileUrl sets FilterFileUrl field to given value.
 `func (o *GeneratedLabel) HasFilterFileUrl() bool`
 
 HasFilterFileUrl returns a boolean if a field has been set.
+
+### GetStatsFileUrl
+
+`func (o *GeneratedLabel) GetStatsFileUrl() string`
+
+GetStatsFileUrl returns the StatsFileUrl field if non-nil, zero value otherwise.
+
+### GetStatsFileUrlOk
+
+`func (o *GeneratedLabel) GetStatsFileUrlOk() (*string, bool)`
+
+GetStatsFileUrlOk returns a tuple with the StatsFileUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStatsFileUrl
+
+`func (o *GeneratedLabel) SetStatsFileUrl(v string)`
+
+SetStatsFileUrl sets StatsFileUrl field to given value.
+
+### HasStatsFileUrl
+
+`func (o *GeneratedLabel) HasStatsFileUrl() bool`
+
+HasStatsFileUrl returns a boolean if a field has been set.
+
+### GetSuggestedClusterFileUrl
+
+`func (o *GeneratedLabel) GetSuggestedClusterFileUrl() string`
+
+GetSuggestedClusterFileUrl returns the SuggestedClusterFileUrl field if non-nil, zero value otherwise.
+
+### GetSuggestedClusterFileUrlOk
+
+`func (o *GeneratedLabel) GetSuggestedClusterFileUrlOk() (*string, bool)`
+
+GetSuggestedClusterFileUrlOk returns a tuple with the SuggestedClusterFileUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSuggestedClusterFileUrl
+
+`func (o *GeneratedLabel) SetSuggestedClusterFileUrl(v string)`
+
+SetSuggestedClusterFileUrl sets SuggestedClusterFileUrl field to given value.
+
+### HasSuggestedClusterFileUrl
+
+`func (o *GeneratedLabel) HasSuggestedClusterFileUrl() bool`
+
+HasSuggestedClusterFileUrl returns a boolean if a field has been set.
 
 ### GetStatus
 

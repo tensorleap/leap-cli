@@ -46,14 +46,39 @@ func PrepareImportModelFromFilePath(ctx context.Context, projectId string, fileP
 	return modelInfo, nil
 }
 
-func CollectImportModelJobErrors(ctx context.Context, projectId, jobId string, versionId string, commandStartTime time.Time) (*ImportModelErrorReport, error) {
-
+// CollectJobFailureDetail gathers the part of a failure report that depends
+// only on the job: its error notifications and its top error log lines. Both
+// are best-effort — a missing section is worth reporting around, not failing
+// over.
+//
+// `since` bounds the notification query: the live push path passes the moment
+// it started waiting, and a later lookup passes the job's own creation time.
+func CollectJobFailureDetail(ctx context.Context, jobId string, since time.Time) *ImportModelErrorReport {
 	report := &ImportModelErrorReport{}
-	var err error
-	report.Notifications, err = notification.GetJobFailureNotifications(ctx, jobId, commandStartTime)
+
+	notifications, err := notification.GetJobFailureNotifications(ctx, jobId, since)
 	if err != nil {
-		log.Warnf("failed to print import model notifications: %v", err)
+		log.Warnf("failed to fetch notifications for job %s: %v", jobId, err)
+	} else {
+		report.Notifications = notifications
 	}
+
+	topLogs, err := getImportModelLogs(ctx, jobId)
+	if err != nil {
+		log.Errorf("failed to fetch top error logs for job %s: %v", jobId, err)
+	} else {
+		report.TopLogs = topLogs
+	}
+
+	return report
+}
+
+// CollectImportModelJobErrors is the full push report: the job-level detail
+// above, plus the graph-validation errors recorded on the version the push
+// produced. Only a push has that section — it describes what was checked about
+// the code integration.
+func CollectImportModelJobErrors(ctx context.Context, projectId, jobId string, versionId string, commandStartTime time.Time) (*ImportModelErrorReport, error) {
+	report := CollectJobFailureDetail(ctx, jobId, commandStartTime)
 
 	versions, err := GetVersions(ctx, projectId)
 	if err != nil {
@@ -63,22 +88,18 @@ func CollectImportModelJobErrors(ctx context.Context, projectId, jobId string, v
 		return version.GetCid() == versionId
 	})
 	if !found {
-		return nil, fmt.Errorf("failed to find version: %v", err)
+		return nil, fmt.Errorf("failed to find version %s in project %s", versionId, projectId)
 	}
 
 	report.ValidateAssetReport, err = GetGraphValidationErrors(currentVersion.GraphValidationData)
 	if err != nil {
 		return nil, fmt.Errorf("failed to print graph validation errors: %v", err)
 	}
-	report.TopLogs, err = getImportModelLogs(ctx, jobId)
-	if err != nil {
-		log.Errorf("failed to fetch import model top error logs: %v", err)
-	}
 
 	return report, nil
 }
 
-func getImportModelLogs(ctx context.Context, importModelJobId string) ([]string, error) {
+func getImportModelLogs(ctx context.Context, importModelJobId string) ([]run.LogLine, error) {
 	runLogs, err := run.GetRunLogs(ctx, importModelJobId)
 	if err != nil {
 		return nil, err
