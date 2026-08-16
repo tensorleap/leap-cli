@@ -3,6 +3,7 @@ package run
 import (
 	"archive/tar"
 	"context"
+	"encoding/json"
 	"fmt"
 	"os"
 	"regexp"
@@ -22,8 +23,23 @@ func GetRunLogs(ctx context.Context, jobId string) ([]tlApi.PodLogs, error) {
 	return job.PodsLogs, nil
 }
 
-func GetTopLogs(logs []tlApi.PodLogs, pat *regexp.Regexp, count int) []string {
-	var result []string
+// LogLine is a single raw pod log line. Engine logs are themselves JSON
+// documents, so marshaling one as a plain Go string would escape it a second
+// time (`\"` becomes `\\\"`) and make it unreadable. A line that is already a
+// JSON object is embedded verbatim instead; anything else falls back to a
+// string.
+type LogLine string
+
+func (l LogLine) MarshalJSON() ([]byte, error) {
+	trimmed := strings.TrimSpace(string(l))
+	if strings.HasPrefix(trimmed, "{") && json.Valid([]byte(trimmed)) {
+		return []byte(trimmed), nil
+	}
+	return json.Marshal(string(l))
+}
+
+func GetTopLogs(logs []tlApi.PodLogs, pat *regexp.Regexp, count int) []LogLine {
+	var result []LogLine
 	seen := make(map[string]bool)
 
 	for _, podLog := range logs {
@@ -50,7 +66,7 @@ func GetTopLogs(logs []tlApi.PodLogs, pat *regexp.Regexp, count int) []string {
 		for _, line := range topFromPod {
 			if !seen[line] {
 				seen[line] = true
-				result = append(result, line)
+				result = append(result, LogLine(line))
 			}
 		}
 	}

@@ -18,7 +18,7 @@ var (
 )
 
 type LogsPageContent struct {
-	Logs []string
+	Logs []LogLine
 }
 
 func (l *LogsPageContent) Init() tea.Cmd { return nil }
@@ -35,7 +35,7 @@ func (l *LogsPageContent) View() string {
 	var b strings.Builder
 
 	for i, logEntry := range l.Logs {
-		b.WriteString(fmt.Sprintf("• %s\n", pageValueStyle.Render(logEntry)))
+		b.WriteString(fmt.Sprintf("• %s\n", pageValueStyle.Render(string(logEntry))))
 		if i < len(l.Logs)-1 {
 			b.WriteString("\n")
 		}

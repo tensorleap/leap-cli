@@ -38,7 +38,7 @@ func CollectErrorsOnCodeParseFailed(ctx context.Context, jobId string, codeSnaps
 	return &report, nil
 }
 
-func GetLastEngineErrors(ctx context.Context, jobId string, count int) ([]string, error) {
+func GetLastEngineErrors(ctx context.Context, jobId string, count int) ([]run.LogLine, error) {
 	logs, err := run.GetRunLogs(ctx, jobId)
 	if err != nil {
 		return nil, err
@@ -54,7 +54,7 @@ func GetLastEngineErrors(ctx context.Context, jobId string, count int) ([]string
 type CodeSnapshotParserErr struct {
 	notifications          *notification.JobFailureNotificationReport
 	codeSnapshotParserErrs *CodeSnapshotParserErrs
-	TopLogs                []string
+	TopLogs                []run.LogLine
 }
 
 func (r *CodeSnapshotParserErr) Init() tea.Cmd {
@@ -75,7 +75,7 @@ func (r *CodeSnapshotParserErr) View() string {
 	}
 	if r.TopLogs != nil {
 		for _, log := range r.TopLogs {
-			view += log + "\n"
+			view += string(log) + "\n"
 		}
 	}
 	return view

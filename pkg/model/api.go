@@ -99,7 +99,7 @@ func CollectImportModelJobErrors(ctx context.Context, projectId, jobId string, v
 	return report, nil
 }
 
-func getImportModelLogs(ctx context.Context, importModelJobId string) ([]string, error) {
+func getImportModelLogs(ctx context.Context, importModelJobId string) ([]run.LogLine, error) {
 	runLogs, err := run.GetRunLogs(ctx, importModelJobId)
 	if err != nil {
 		return nil, err

@@ -31,7 +31,7 @@ type ValidateAssetReport struct {
 type ImportModelErrorReport struct {
 	Notifications       *notification.JobFailureNotificationReport `json:"notifications,omitempty"`
 	ValidateAssetReport *ValidateAssetReport                       `json:"validationErrors,omitempty"`
-	TopLogs             []string                                   `json:"topLogs,omitempty"`
+	TopLogs             []run.LogLine                              `json:"topLogs,omitempty"`
 }
 
 // ---------------------------
