@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
-	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/model"
 )
 
@@ -39,10 +38,12 @@ Examples:
 				if err != nil {
 					return fmt.Errorf("failed to encode run info: %w", err)
 				}
-				log.Println(string(encoded))
+				// Straight to stdout, not the logger: its INFO/timestamp prefix
+				// would corrupt the payload for `| jq` and every other consumer.
+				fmt.Fprintln(cmd.OutOrStdout(), string(encoded))
 				return nil
 			case "text":
-				log.Println(renderRunInfoText(info))
+				fmt.Fprintln(cmd.OutOrStdout(), renderRunInfoText(info))
 				return nil
 			default:
 				return fmt.Errorf("invalid --output %q (allowed: json, text)", output)
