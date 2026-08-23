@@ -22,6 +22,11 @@ import (
 )
 
 type pushInputs struct {
+	// projectName targets a project explicitly by name, instead of the
+	// projectId recorded in leap.yaml. A per-invocation override: leap.yaml is
+	// left untouched, so a scripted push can aim anywhere without dirtying the
+	// workspace's sticky default.
+	projectName         string
 	secretId            string
 	modelVersionName    string
 	codeVersionMessage  string
@@ -72,6 +77,9 @@ Examples:
   # Push a new version non-interactively
   leap push -n my-model -m ./model.h5
 
+  # Push into a specific project by name, ignoring leap.yaml's projectId
+  leap push --project-name "My Project" -n my-model -m ./model.h5
+
   # Overwrite an existing version by id, then prompt for what changed
   leap push -o 6a16a0cf -e
 
@@ -102,6 +110,7 @@ Examples:
 		},
 	}
 
+	cmd.Flags().StringVar(&in.projectName, "project-name", "", "Name of the project to push into, instead of the projectId in leap.yaml (leap.yaml is left unchanged; 'leap projects list' shows the names)")
 	cmd.Flags().StringVarP(&in.modelVersionName, "name", "n", "", "Model version name")
 	cmd.Flags().StringVar(&in.modelType, "type", "", "Type is the type of the model file [JSON_TF2 / ONNX / PB_TF2 / H5_TF2]")
 	cmd.Flags().StringVar(&in.branch, "branch", "", "Name of the branch [OPTIONAL]")
@@ -276,6 +285,13 @@ func validatePushInputs(in *pushInputs, interactive bool) error {
 	if len(in.updateParts) > 0 && !in.runEval {
 		in.runEval = true
 	}
+	// A CI-supplied value can arrive padded, so trim it. Reject a flag that was
+	// passed but says nothing rather than silently falling back to leap.yaml.
+	if in.projectName != "" {
+		if in.projectName = strings.TrimSpace(in.projectName); in.projectName == "" {
+			return fmt.Errorf("--project-name cannot be empty")
+		}
+	}
 	if in.batch != "" && !in.runEval {
 		return fmt.Errorf("--batch requires --eval")
 	}
@@ -326,6 +342,7 @@ func (s *pushState) chainedEvaluateRequest(dispatch evalDispatch) *tensorleapapi
 
 func newPushState(ctx context.Context, in *pushInputs) (*pushState, error) {
 	properties := map[string]interface{}{
+		"project_name":          in.projectName,
 		"secret_id":             in.secretId,
 		"model_version_name":    in.modelVersionName,
 		"code_version_message":  in.codeVersionMessage,
@@ -347,13 +364,32 @@ func newPushState(ctx context.Context, in *pushInputs) (*pushState, error) {
 	}
 	s.workspaceConfig = workspaceConfig
 
-	currentProject, err := project.SyncProjectIdToWorkspaceConfig(ctx, workspaceConfig)
+	currentProject, err := s.resolveProject()
 	if err != nil {
-		return nil, s.fail("sync_project", err)
+		return nil, err
 	}
 	s.project = currentProject
 
 	return s, nil
+}
+
+// resolveProject picks the project to push into: the one named by
+// --project-name, or else the workspace's projectId (resolved and refreshed as
+// before, prompting when it is missing or stale).
+func (s *pushState) resolveProject() (*tensorleapapi.Project, error) {
+	if s.inputs.projectName == "" {
+		currentProject, err := project.SyncProjectIdToWorkspaceConfig(s.ctx, s.workspaceConfig)
+		if err != nil {
+			return nil, s.fail("sync_project", err)
+		}
+		return currentProject, nil
+	}
+	named, err := project.GetProjectByName(s.ctx, s.inputs.projectName)
+	if err != nil {
+		return nil, s.fail("resolve_project_name", err)
+	}
+	log.Infof("Pushing into project %q (id %s)", named.GetName(), named.GetCid())
+	return named, nil
 }
 
 func (s *pushState) fail(stage string, err error) error {
