@@ -18,6 +18,11 @@ func TestValidatePushInputs(t *testing.T) {
 		{"novis with update", pushInputs{noVisualization: true, updateParts: []string{"model"}}, interactive, false},
 		{"novis alone", pushInputs{noVisualization: true}, interactive, true},
 
+		// --project-name is padded-safe but must not be blank when passed.
+		{"project name", pushInputs{projectName: "My Project"}, interactive, false},
+		{"project name padded", pushInputs{projectName: "  My Project  "}, interactive, false},
+		{"project name blank", pushInputs{projectName: "   "}, interactive, true},
+
 		// Everything a push needs is collected before the job is created, while
 		// the user is still watching — so --no-wait prompts like any other push.
 		{"no-wait eval, prompt for everything", pushInputs{noWait: true, runEval: true}, interactive, false},
@@ -46,5 +51,15 @@ func TestValidatePushInputs(t *testing.T) {
 				t.Fatalf("wantErr=%v, got %v", c.wantErr, err)
 			}
 		})
+	}
+}
+
+func TestValidatePushInputsTrimsProjectName(t *testing.T) {
+	in := pushInputs{projectName: "  My Project  "}
+	if err := validatePushInputs(&in, true); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if in.projectName != "My Project" {
+		t.Fatalf("projectName not trimmed, got %q", in.projectName)
 	}
 }

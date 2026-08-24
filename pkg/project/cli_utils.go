@@ -2,6 +2,7 @@ package project
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/tensorleap/leap-cli/pkg/entity"
@@ -29,6 +30,21 @@ func GetProjectFromProjectId(ctx context.Context, projectId string, askForNewPro
 		}
 	}
 	return project, wasCreated, nil
+}
+
+// GetProjectByName resolves a project by its exact name. Names are unique per
+// team server-side (add, rename and import all reject a duplicate), so a match
+// is unambiguous and no picker is needed.
+func GetProjectByName(ctx context.Context, name string) (*ProjectEntity, error) {
+	projects, err := GetProjects(ctx)
+	if err != nil {
+		return nil, err
+	}
+	project, err := entity.GetEntityByDisplayName(name, projects, ProjectEntityDesc)
+	if err != nil {
+		return nil, fmt.Errorf("no project named %q — run 'leap projects list' to see existing names, or 'leap projects create %q' to create it", name, name)
+	}
+	return project, nil
 }
 
 func SelectOrCreateProject(ctx context.Context, projects []ProjectEntity, askForNewProjectFirst bool) (*ProjectEntity, bool, error) {
