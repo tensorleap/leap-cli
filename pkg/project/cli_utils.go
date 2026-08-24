@@ -42,7 +42,7 @@ func GetProjectByName(ctx context.Context, name string) (*ProjectEntity, error) 
 	}
 	project, err := entity.GetEntityByDisplayName(name, projects, ProjectEntityDesc)
 	if err != nil {
-		return nil, fmt.Errorf("no project named %q — run 'leap projects list' to see the available names", name)
+		return nil, fmt.Errorf("no project named %q — run 'leap projects list' to see existing names, or 'leap projects create %q' to create it", name, name)
 	}
 	return project, nil
 }
