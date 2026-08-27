@@ -111,7 +111,7 @@ Examples:
 	}
 
 	cmd.Flags().StringVar(&in.projectName, "project-name", "", "Name of the project to push into, instead of the projectId in leap.yaml (leap.yaml is left unchanged; 'leap projects list' shows the names)")
-	cmd.Flags().StringVarP(&in.modelVersionName, "name", "n", "", "Model version name")
+	cmd.Flags().StringVarP(&in.modelVersionName, "name", "n", "", "Model version name (targets a new version; skips the overwrite prompt)")
 	cmd.Flags().StringVar(&in.modelType, "type", "", "Type is the type of the model file [JSON_TF2 / ONNX / PB_TF2 / H5_TF2]")
 	cmd.Flags().StringVar(&in.branch, "branch", "", "Name of the branch [OPTIONAL]")
 	cmd.Flags().StringVar(&in.secretId, "secretId", "", "Secret id")
@@ -275,6 +275,13 @@ func (s *pushState) runCombinedPush(dispatch evalDispatch) (versionId, codeSnaps
 	return pushResp.VersionId, pushResp.CodeSnapshot.Cid, true, nil
 }
 
+// wantsNewVersion reports whether the flags express an explicit intent to push a
+// new version rather than overwrite one. -n (name) is that signal: with no
+// --overwrite target, naming a version means create it (EN-2462).
+func wantsNewVersion(in *pushInputs) bool {
+	return in.overwriteVersionRef == "" && in.modelVersionName != ""
+}
+
 // validatePushInputs rejects flag combinations that cannot work. `interactive`
 // says whether stdin is a terminal: everything the push needs is collected
 // before the push job is created — while the user is still watching, even under
@@ -415,6 +422,16 @@ func (s *pushState) resolveOverwriteTarget() error {
 		s.isOverwrite = info.HasModel || info.HasUploadedModel
 		if !s.isOverwrite && in.modelPath == "" {
 			return fmt.Errorf("version %q has no model; set --model-path (-m)", in.overwriteVersionRef)
+		}
+	} else if wantsNewVersion(in) {
+		// -n signals intent to create a new version (EN-2462): don't offer the
+		// overwrite path, just collect the model file if it wasn't given.
+		if in.modelPath == "" {
+			chosenPath, err := model.AskUserForModelPath(s.ctx)
+			if err != nil {
+				return err
+			}
+			in.modelPath = chosenPath
 		}
 	} else if in.modelPath == "" {
 		isOverwrite, info, chosenPath, err := model.AskUserForModelPathOrOverwrite(s.ctx, s.projectId(), &in.modelVersionName)
