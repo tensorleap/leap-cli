@@ -54,6 +54,27 @@ func TestValidatePushInputs(t *testing.T) {
 	}
 }
 
+func TestWantsNewVersion(t *testing.T) {
+	cases := []struct {
+		name string
+		in   pushInputs
+		want bool
+	}{
+		{"name only", pushInputs{modelVersionName: "v"}, true},
+		{"name and model path", pushInputs{modelVersionName: "v", modelPath: "m.h5"}, true},
+		{"name but overwrite wins", pushInputs{modelVersionName: "v", overwriteVersionRef: "v1"}, false},
+		{"no name", pushInputs{modelPath: "m.h5"}, false},
+		{"nothing", pushInputs{}, false},
+	}
+	for _, c := range cases {
+		t.Run(c.name, func(t *testing.T) {
+			if got := wantsNewVersion(&c.in); got != c.want {
+				t.Fatalf("wantsNewVersion=%v, want %v", got, c.want)
+			}
+		})
+	}
+}
+
 func TestValidatePushInputsTrimsProjectName(t *testing.T) {
 	in := pushInputs{projectName: "  My Project  "}
 	if err := validatePushInputs(&in, true); err != nil {
