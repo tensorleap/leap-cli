@@ -223,7 +223,7 @@ func init() {
 func AskRunEvaluate(isUpdateEvaluate bool) (bool, error) {
 	msg := "Run evaluate after push?"
 	if isUpdateEvaluate {
-		msg = "Run update-evaluate after push?"
+		msg = "Run evaluate to update these assets?"
 	}
 	run := true
 	prompt := &survey.Confirm{Message: msg, Default: true}
@@ -233,9 +233,18 @@ func AskRunEvaluate(isUpdateEvaluate bool) (bool, error) {
 	return run, nil
 }
 
-func AskForEvaluatePlan() (EvaluatePlan, error) {
+// AskForEvaluatePlan prompts for what to update. defaults pre-selects the
+// matching options — used to re-offer the previous selection when retrying a
+// failed update-evaluate.
+func AskForEvaluatePlan(defaults []tensorleapapi.UpdateAction) (EvaluatePlan, error) {
+	defaultActions := make(map[tensorleapapi.UpdateAction]bool, len(defaults))
+	for _, a := range defaults {
+		defaultActions[a] = true
+	}
+
 	labels := make([]string, len(changeOptions))
 	labelToKey := make(map[string]ChangeKey, len(changeOptions))
+	var defaultLabels []string
 	for i, opt := range changeOptions {
 		label := opt.label
 		if opt.hint != "" {
@@ -243,12 +252,16 @@ func AskForEvaluatePlan() (EvaluatePlan, error) {
 		}
 		labels[i] = label
 		labelToKey[label] = opt.key
+		if defaultActions[opt.action] {
+			defaultLabels = append(defaultLabels, label)
+		}
 	}
 
 	var selectedLabels []string
 	prompt := &survey.MultiSelect{
 		Message: "What do you want to update?",
 		Options: labels,
+		Default: defaultLabels,
 	}
 	if err := survey.AskOne(
 		prompt, &selectedLabels,
@@ -305,7 +318,10 @@ func hasOwnEvalData(v *tensorleapapi.SlimVersion) bool {
 	return false
 }
 
-// HasEvaluatedAncestorOrSelf reports whether versionId or any version in its override chain has evaluation data.
+// HasEvaluatedAncestorOrSelf reports whether versionId or any version in its
+// parent chain has evaluation data. A failed override has no eval data of its
+// own, so we follow parentVersionId up the lineage and keep walking until we
+// find one that was actually evaluated.
 func HasEvaluatedAncestorOrSelf(ctx context.Context, projectId, versionId string) (bool, error) {
 	versions, err := GetVersions(ctx, projectId)
 	if err != nil {
