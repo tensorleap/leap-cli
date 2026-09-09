@@ -192,6 +192,18 @@ func PlanFromUpdateActions(actions []tensorleapapi.UpdateAction) EvaluatePlan {
 	return EvaluatePlan{Kind: EvaluatePlanUpdate, UpdateActions: actions}
 }
 
+// PlanEvaluatesNewSamples reports whether the plan includes the Samples update.
+// Choosing it only makes sense to run the evaluation, so callers skip the
+// "run it after push?" prompt instead of offering to merely record the intent.
+func PlanEvaluatesNewSamples(plan EvaluatePlan) bool {
+	for _, a := range plan.UpdateActions {
+		if a == tensorleapapi.UPDATEACTION_UPDATE_SAMPLES {
+			return true
+		}
+	}
+	return false
+}
+
 func planUpdateEvaluate(selected map[ChangeKey]bool) EvaluatePlan {
 	actions := make([]tensorleapapi.UpdateAction, 0, len(changeOptions))
 	for _, opt := range changeOptions {

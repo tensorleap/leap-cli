@@ -23,6 +23,9 @@ func TestSamplesUpdateAction(t *testing.T) {
 		if plan.Kind != c.kind {
 			t.Fatalf("%v: kind %v, want %v", c.flags, plan.Kind, c.kind)
 		}
+		if !PlanEvaluatesNewSamples(plan) {
+			t.Fatalf("%v: a plan with samples must always run the evaluation", c.flags)
+		}
 		if got := FormatEvaluatePlan(plan)[0]; got != c.first {
 			t.Fatalf("%v: first line %q, want %q", c.flags, got, c.first)
 		}

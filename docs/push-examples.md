@@ -112,6 +112,9 @@ leap push -o my-model            # no --eval, no --update
 You still get the multi-select prompt — the answer is recorded on the
 version so the next time someone (UI, another CLI run) runs an
 evaluation against this version they see your declared intent.
+Picking **Samples** is the exception: it always runs the continue-evaluate
+(there is nothing to record without evaluating the new samples), so the
+"Run update-evaluate after push?" question is skipped.
 
 ```
 NOTE: Overwriting replaces the version. Use the update-evaluate dialog

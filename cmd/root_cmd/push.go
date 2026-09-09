@@ -596,6 +596,11 @@ func (s *pushState) resolveEvalPlan() (evalDispatch, error) {
 		return evalDispatch{}, err
 	}
 
+	// "Samples" exists only to evaluate the added samples: nothing to ask.
+	if !in.runEval && model.PlanEvaluatesNewSamples(plan) {
+		in.runEval = true
+	}
+
 	if !in.runEval {
 		run, err := s.promptRunEvaluate(plan.Kind == model.EvaluatePlanUpdate)
 		if err != nil {
