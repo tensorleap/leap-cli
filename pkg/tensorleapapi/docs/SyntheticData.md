@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **BestTrialsFileUrl** | Pointer to **string** |  | [optional] 
 **BundleFileUrl** | Pointer to **string** |  | [optional] 
 **FilterFileUrl** | Pointer to **string** |  | [optional] 
+**StatsFileUrl** | Pointer to **string** |  | [optional] 
 **Status** | [**JobStatus**](JobStatus.md) |  | 
 **Sources** | [**[]SyntheticDataJobParamsSourcesInner**](SyntheticDataJobParamsSourcesInner.md) |  | 
 **TargetFilters** | [**[]ESFilter**](ESFilter.md) |  | 
@@ -260,6 +261,31 @@ SetFilterFileUrl sets FilterFileUrl field to given value.
 `func (o *SyntheticData) HasFilterFileUrl() bool`
 
 HasFilterFileUrl returns a boolean if a field has been set.
+
+### GetStatsFileUrl
+
+`func (o *SyntheticData) GetStatsFileUrl() string`
+
+GetStatsFileUrl returns the StatsFileUrl field if non-nil, zero value otherwise.
+
+### GetStatsFileUrlOk
+
+`func (o *SyntheticData) GetStatsFileUrlOk() (*string, bool)`
+
+GetStatsFileUrlOk returns a tuple with the StatsFileUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStatsFileUrl
+
+`func (o *SyntheticData) SetStatsFileUrl(v string)`
+
+SetStatsFileUrl sets StatsFileUrl field to given value.
+
+### HasStatsFileUrl
+
+`func (o *SyntheticData) HasStatsFileUrl() bool`
+
+HasStatsFileUrl returns a boolean if a field has been set.
 
 ### GetStatus
 

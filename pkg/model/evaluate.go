@@ -80,9 +80,10 @@ var updateActionAliases = map[string]tensorleapapi.UpdateAction{
 	"metric-config": tensorleapapi.UPDATEACTION_UPDATE_METRIC_CONFIG,
 	"visualization": tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
 	"viz":           tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
+	"samples":       tensorleapapi.UPDATEACTION_UPDATE_SAMPLES,
 }
 
-const updateActionAllowedHint = "metadata, metric, metric_config, visualization, viz"
+const updateActionAllowedHint = "metadata, metric, metric_config, visualization, viz, samples"
 
 func ParseUpdateActionsFromFlags(parts []string) ([]tensorleapapi.UpdateAction, error) {
 	if len(parts) == 0 {
@@ -136,6 +137,7 @@ const (
 	ChangeMetric
 	ChangeMetricConfig
 	ChangeVisualization
+	ChangeSamples
 )
 
 type changeOption struct {
@@ -168,6 +170,12 @@ var changeOptions = []changeOption{
 		key:    ChangeVisualization,
 		label:  "Visualizations",
 		action: tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
+	},
+	{
+		key:    ChangeSamples,
+		label:  "Samples",
+		hint:   "evaluate newly added samples only",
+		action: tensorleapapi.UPDATEACTION_UPDATE_SAMPLES,
 	},
 }
 
@@ -277,6 +285,8 @@ func FormatEvaluatePlan(plan EvaluatePlan) []string {
 			out = append(out, "Update metric config", "Regenerate insights")
 		case tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION:
 			out = append(out, "Regenerate visualizations")
+		case tensorleapapi.UPDATEACTION_UPDATE_SAMPLES:
+			out = append(out, "Evaluate newly added samples")
 		default:
 			out = append(out, string(a))
 		}

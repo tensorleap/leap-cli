@@ -53,11 +53,11 @@ auto-detects, so you pick what to refresh:
 ```
 ? What do you want to update?
   [Use arrows to move, space to select, type to filter]
-  [ ] Metadata — full re-eval
+  [ ] Metadata — add new metadata
   [ ] Metric — full re-eval
-  [ ] Metric direction
+  [ ] Metric config — metric direction + insights
   [ ] Visualizations
-  [ ] Insights
+  [ ] Samples — evaluate newly added samples only
 ```
 
 Then a plan summary:
@@ -67,7 +67,7 @@ This will:
   • Regenerate visualizations
 ```
 
-If you pick metadata or metric, the plan collapses to:
+If you pick metric, the plan collapses to:
 
 ```
 This will:
@@ -81,10 +81,11 @@ It **implies `--eval`** — you no longer need both flags.
 
 ```bash
 leap push -o my-model -u viz                          # regenerate visualizations only
-leap push -o my-model -u metric_direction             # cheap metric-direction patch
+leap push -o my-model -u metric_config                # metric direction + insights
 leap push -o my-model -u metric                       # triggers a full re-evaluation
-leap push -o my-model -u metadata                     # triggers a full re-evaluation
-leap push -o my-model -u visualization -u insights    # refresh both
+leap push -o my-model -u metadata                     # add new metadata
+leap push -o my-model -u samples                      # evaluate only the newly added samples
+leap push -o my-model -u samples -u metadata          # both, in one continue-evaluate
 ```
 
 Accepted values (case-insensitive):
@@ -93,12 +94,14 @@ Accepted values (case-insensitive):
 | ------------------------ | ------------------------- |
 | `metadata`               | `update_metadata`         |
 | `metric`                 | `update_metric`           |
-| `metric_direction` / `direction` | `update_metric_direction` |
-| `insights`               | `update_insights`         |
+| `metric_config` / `metric-config` | `update_metric_config` |
 | `visualization` / `viz`  | `update_visualization`    |
+| `samples`                | `update_samples`          |
 
-`metadata` and `metric` always trigger a fresh evaluation —
-update_evaluate doesn't support them today.
+`metric` always triggers a fresh evaluation. `samples` runs a
+continue-evaluate: only sample ids that are new since the last evaluation
+are evaluated and appended to the existing results (any dataset state —
+existing ids must stay stable; removing samples is rejected).
 
 ## Overwrite without evaluating
 
@@ -137,6 +140,7 @@ and proceeds normally. Update your scripts at your leisure.
 | Overwrite by id                                  | `leap push -o <id>`                           |
 | Overwrite by name                                | `leap push -o <name>`                         |
 | Overwrite + force-refresh viz                    | `leap push -o <name> -u viz`                  |
-| Overwrite + cheap metric-direction patch          | `leap push -o <name> -u metric_direction`     |
+| Overwrite + metric config patch                   | `leap push -o <name> -u metric_config`        |
+| Overwrite + evaluate only newly added samples     | `leap push -o <name> -u samples`              |
 | Overwrite + interactive prompt for what changed   | `leap push -o <name> -e`                      |
 | Overwrite + force full re-eval                    | `leap push -o <name> -u metric`               |

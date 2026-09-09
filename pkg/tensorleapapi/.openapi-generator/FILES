@@ -22,7 +22,15 @@ docs/AddSecretManagerResponse.md
 docs/AggregationMethod.md
 docs/Aggregations.md
 docs/AggressorFixing.md
+docs/Alive200Response.md
 docs/AllSessionsTestResults.md
+docs/AnalysisInsight.md
+docs/AnalysisInsightStatus.md
+docs/AnalysisSampleAssets.md
+docs/AnalysisSampleFile.md
+docs/AnalysisTargetProject.md
+docs/AnalysisTargetVersion.md
+docs/AnalysisVisualizerInfo.md
 docs/AnalyticsDashlet.md
 docs/AnalyticsDashletData.md
 docs/AnalyticsDashletType.md
@@ -140,6 +148,9 @@ docs/EvaluateExistingVersionParams.md
 docs/EvaluateNewVersionParams.md
 docs/EvaluateParams.md
 docs/EventsSnapshot.md
+docs/ExportAnalysisParams.md
+docs/ExportAnalysisResponse.md
+docs/ExportAnalysisResponseVersion.md
 docs/ExportModelParams.md
 docs/ExportModelTypeEnum.md
 docs/ExportOptions.md
@@ -176,6 +187,8 @@ docs/GenericDataItem.md
 docs/GenericDataQueryParams.md
 docs/GenericDataResponse.md
 docs/GetAllProjectSessionTestsRequest.md
+docs/GetAnalysisSampleAssetsParams.md
+docs/GetAnalysisSampleAssetsResponse.md
 docs/GetApiKeyByCodeRequest.md
 docs/GetAuthProviderResponse.md
 docs/GetAuthStatusResponse.md
@@ -270,6 +283,7 @@ docs/GetUploadModelSignedUrlRequest.md
 docs/GetUploadSignedUrlParams.md
 docs/GetUserUiStateResponse.md
 docs/GetVersionEpochsResponse.md
+docs/GetVersionJobsParams.md
 docs/GetVersionSampleOrderParams.md
 docs/GetVersionSampleOrderResponse.md
 docs/GetVersionSamplesMetadataParams.md
@@ -345,6 +359,9 @@ docs/LeapDataType.md
 docs/LicenseMetadata.md
 docs/LicenseType.md
 docs/LinkedProject.md
+docs/ListAnalysisTargetsParams.md
+docs/ListAnalysisTargetsResponse.md
+docs/ListAnalysisTargetsResponseMe.md
 docs/LoadModelParams.md
 docs/LoadModelResponse.md
 docs/LoadVersionParams.md
@@ -568,7 +585,15 @@ model_add_secret_manager_response.go
 model_aggregation_method.go
 model_aggregations.go
 model_aggressor_fixing.go
+model_alive_200_response.go
 model_all_sessions_test_results.go
+model_analysis_insight.go
+model_analysis_insight_status.go
+model_analysis_sample_assets.go
+model_analysis_sample_file.go
+model_analysis_target_project.go
+model_analysis_target_version.go
+model_analysis_visualizer_info.go
 model_analytics_dashlet.go
 model_analytics_dashlet_data.go
 model_analytics_dashlet_type.go
@@ -685,6 +710,9 @@ model_evaluate_existing_version_params.go
 model_evaluate_new_version_params.go
 model_evaluate_params.go
 model_events_snapshot.go
+model_export_analysis_params.go
+model_export_analysis_response.go
+model_export_analysis_response_version.go
 model_export_model_params.go
 model_export_model_type_enum.go
 model_export_options.go
@@ -721,6 +749,8 @@ model_generic_data_item.go
 model_generic_data_query_params.go
 model_generic_data_response.go
 model_get_all_project_session_tests_request.go
+model_get_analysis_sample_assets_params.go
+model_get_analysis_sample_assets_response.go
 model_get_api_key_by_code_request.go
 model_get_auth_provider_response.go
 model_get_auth_status_response.go
@@ -815,6 +845,7 @@ model_get_upload_model_signed_url_request.go
 model_get_upload_signed_url_params.go
 model_get_user_ui_state_response.go
 model_get_version_epochs_response.go
+model_get_version_jobs_params.go
 model_get_version_sample_order_params.go
 model_get_version_sample_order_response.go
 model_get_version_samples_metadata_params.go
@@ -890,6 +921,9 @@ model_leap_data_type.go
 model_license_metadata.go
 model_license_type.go
 model_linked_project.go
+model_list_analysis_targets_params.go
+model_list_analysis_targets_response.go
+model_list_analysis_targets_response_me.go
 model_load_model_params.go
 model_load_model_response.go
 model_load_version_params.go
