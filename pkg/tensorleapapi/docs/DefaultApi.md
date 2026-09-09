@@ -34,6 +34,7 @@ Method | HTTP request | Description
 [**DeleteSessionTest**](DefaultAPI.md#DeleteSessionTest) | **Post** /sessions-tests/deleteSessionTest | 
 [**DeleteSyntheticData**](DefaultAPI.md#DeleteSyntheticData) | **Post** /datasetcuration/deleteSyntheticData | 
 [**DeleteTeam**](DefaultAPI.md#DeleteTeam) | **Post** /teams/deleteTeam | 
+[**DeleteUnlabeledAnalysis**](DefaultAPI.md#DeleteUnlabeledAnalysis) | **Post** /datasetcuration/deleteUnlabeledAnalysis | 
 [**DeleteUserById**](DefaultAPI.md#DeleteUserById) | **Post** /users/deleteUserById | 
 [**DeleteVersion**](DefaultAPI.md#DeleteVersion) | **Post** /versions/deleteVersion | 
 [**DeleteVisualizations**](DefaultAPI.md#DeleteVisualizations) | **Post** /visualizations/deleteVisualizations | 
@@ -52,6 +53,7 @@ Method | HTTP request | Description
 [**GenerateLabels**](DefaultAPI.md#GenerateLabels) | **Post** /datasetcuration/generateLabels | 
 [**GenerateStreamingSamplesVis**](DefaultAPI.md#GenerateStreamingSamplesVis) | **Post** /sample-collection/generateStreamingSamplesVis | 
 [**GenerateSyntheticData**](DefaultAPI.md#GenerateSyntheticData) | **Post** /datasetcuration/generateSyntheticData | 
+[**GenerateUnlabeledAnalysis**](DefaultAPI.md#GenerateUnlabeledAnalysis) | **Post** /datasetcuration/generateUnlabeledAnalysis | 
 [**GetAllProjectSessionTests**](DefaultAPI.md#GetAllProjectSessionTests) | **Post** /sessions-tests/getAllProjectSessionTests | 
 [**GetAllSlimUserData**](DefaultAPI.md#GetAllSlimUserData) | **Post** /users/getAllSlimUserData | 
 [**GetApiKeyByCode**](DefaultAPI.md#GetApiKeyByCode) | **Post** /auth/getApiKeyByCode | 
@@ -127,6 +129,7 @@ Method | HTTP request | Description
 [**GetTeamJobs**](DefaultAPI.md#GetTeamJobs) | **Post** /jobs/getTeamJobs | 
 [**GetTeamSlimUserData**](DefaultAPI.md#GetTeamSlimUserData) | **Post** /users/getTeamSlimUserData | 
 [**GetTeams**](DefaultAPI.md#GetTeams) | **Post** /teams/getTeams | 
+[**GetUnlabeledAnalysis**](DefaultAPI.md#GetUnlabeledAnalysis) | **Post** /datasetcuration/getUnlabeledAnalysis | 
 [**GetUploadModelSignedUrl**](DefaultAPI.md#GetUploadModelSignedUrl) | **Post** /versions/getUploadModelSignedUrl | 
 [**GetUploadSignedUrl**](DefaultAPI.md#GetUploadSignedUrl) | **Post** /versions/getUploadSignedUrl | 
 [**GetUserUiState**](DefaultAPI.md#GetUserUiState) | **Get** /users/getUiState | 
@@ -2076,6 +2079,68 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## DeleteUnlabeledAnalysis
+
+> DeleteUnlabeledAnalysis(ctx).DeleteUnlabeledAnalysisParams(deleteUnlabeledAnalysisParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	deleteUnlabeledAnalysisParams := *openapiclient.NewDeleteUnlabeledAnalysisParams("ProjectId_example", "UnlabeledAnalysisId_example") // DeleteUnlabeledAnalysisParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteUnlabeledAnalysis(context.Background()).DeleteUnlabeledAnalysisParams(deleteUnlabeledAnalysisParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteUnlabeledAnalysis``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteUnlabeledAnalysisRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **deleteUnlabeledAnalysisParams** | [**DeleteUnlabeledAnalysisParams**](DeleteUnlabeledAnalysisParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## DeleteUserById
 
 > DeleteUserById(ctx).DeleteUserByIdRequest(deleteUserByIdRequest).Execute()
@@ -3189,6 +3254,68 @@ Other parameters are passed through a pointer to a apiGenerateSyntheticDataReque
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **generateSyntheticDataParams** | [**GenerateSyntheticDataParams**](GenerateSyntheticDataParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GenerateUnlabeledAnalysis
+
+> GenerateUnlabeledAnalysis(ctx).GenerateUnlabeledAnalysisParams(generateUnlabeledAnalysisParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	generateUnlabeledAnalysisParams := *openapiclient.NewGenerateUnlabeledAnalysisParams("ProjectId_example", "VersionId_example") // GenerateUnlabeledAnalysisParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.GenerateUnlabeledAnalysis(context.Background()).GenerateUnlabeledAnalysisParams(generateUnlabeledAnalysisParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GenerateUnlabeledAnalysis``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGenerateUnlabeledAnalysisRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **generateUnlabeledAnalysisParams** | [**GenerateUnlabeledAnalysisParams**](GenerateUnlabeledAnalysisParams.md) |  | 
 
 ### Return type
 
@@ -7945,6 +8072,70 @@ Other parameters are passed through a pointer to a apiGetTeamsRequest struct via
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetUnlabeledAnalysis
+
+> UnlabeledAnalysisResponse GetUnlabeledAnalysis(ctx).GetUnlabeledAnalysisParams(getUnlabeledAnalysisParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getUnlabeledAnalysisParams := *openapiclient.NewGetUnlabeledAnalysisParams("ProjectId_example") // GetUnlabeledAnalysisParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetUnlabeledAnalysis(context.Background()).GetUnlabeledAnalysisParams(getUnlabeledAnalysisParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetUnlabeledAnalysis``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetUnlabeledAnalysis`: UnlabeledAnalysisResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetUnlabeledAnalysis`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetUnlabeledAnalysisRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getUnlabeledAnalysisParams** | [**GetUnlabeledAnalysisParams**](GetUnlabeledAnalysisParams.md) |  | 
+
+### Return type
+
+[**UnlabeledAnalysisResponse**](UnlabeledAnalysisResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

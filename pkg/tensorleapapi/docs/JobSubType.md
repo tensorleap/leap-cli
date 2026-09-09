@@ -17,6 +17,8 @@
 
 * `DOMAIN_GAP` (value: `"Domain Gap"`)
 
+* `UNLABELED_ANALYSIS` (value: `"Unlabeled Analysis"`)
+
 * `VISUALIZERS_CALCULATION` (value: `"Visualizers Calculation"`)
 
 * `SAMPLE_ANALYSIS` (value: `"Sample Analysis"`)

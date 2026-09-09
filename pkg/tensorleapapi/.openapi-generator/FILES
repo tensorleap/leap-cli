@@ -123,6 +123,7 @@ docs/DeleteSamplesAnalysisParams.md
 docs/DeleteSessionTestRequest.md
 docs/DeleteSyntheticDataParams.md
 docs/DeleteTeamRequest.md
+docs/DeleteUnlabeledAnalysisParams.md
 docs/DeleteUserByIdRequest.md
 docs/DeleteVersionParams.md
 docs/DeleteVisualizationsParams.md
@@ -180,6 +181,7 @@ docs/GenerateInsightsParams.md
 docs/GenerateLabelParams.md
 docs/GenerateStreamingSamplesVisParams.md
 docs/GenerateSyntheticDataParams.md
+docs/GenerateUnlabeledAnalysisParams.md
 docs/GeneratedLabel.md
 docs/GeneratedLabelsResponse.md
 docs/GenericBaseImage.md
@@ -279,6 +281,7 @@ docs/GetStatisticsResponse.md
 docs/GetSyntheticDataParams.md
 docs/GetTeamUsersResponse.md
 docs/GetTeamsResponse.md
+docs/GetUnlabeledAnalysisParams.md
 docs/GetUploadModelSignedUrlRequest.md
 docs/GetUploadSignedUrlParams.md
 docs/GetUserUiStateResponse.md
@@ -519,6 +522,9 @@ docs/TextData.md
 docs/TextViz.md
 docs/TrashSecretManagerParams.md
 docs/TrashSecretManagerResponse.md
+docs/UnlabeledAnalysis.md
+docs/UnlabeledAnalysisJobParams.md
+docs/UnlabeledAnalysisResponse.md
 docs/UpdateAction.md
 docs/UpdateDashboardParams.md
 docs/UpdateEvaluateArtifactParams.md
@@ -685,6 +691,7 @@ model_delete_samples_analysis_params.go
 model_delete_session_test_request.go
 model_delete_synthetic_data_params.go
 model_delete_team_request.go
+model_delete_unlabeled_analysis_params.go
 model_delete_user_by_id_request.go
 model_delete_version_params.go
 model_delete_visualizations_params.go
@@ -742,6 +749,7 @@ model_generate_insights_params.go
 model_generate_label_params.go
 model_generate_streaming_samples_vis_params.go
 model_generate_synthetic_data_params.go
+model_generate_unlabeled_analysis_params.go
 model_generated_label.go
 model_generated_labels_response.go
 model_generic_base_image.go
@@ -841,6 +849,7 @@ model_get_statistics_response.go
 model_get_synthetic_data_params.go
 model_get_team_users_response.go
 model_get_teams_response.go
+model_get_unlabeled_analysis_params.go
 model_get_upload_model_signed_url_request.go
 model_get_upload_signed_url_params.go
 model_get_user_ui_state_response.go
@@ -1081,6 +1090,9 @@ model_text_data.go
 model_text_viz.go
 model_trash_secret_manager_params.go
 model_trash_secret_manager_response.go
+model_unlabeled_analysis.go
+model_unlabeled_analysis_job_params.go
+model_unlabeled_analysis_response.go
 model_update_action.go
 model_update_dashboard_params.go
 model_update_evaluate_artifact_params.go
