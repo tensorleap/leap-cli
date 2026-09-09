@@ -106,6 +106,18 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService Alive", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.Alive(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService ApplyInsightsStatus", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -418,6 +430,18 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.Evaluate(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ExportAnalysis", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.ExportAnalysis(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1187,6 +1211,18 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService GetSampleAssets", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.GetSampleAssets(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService GetSampleCollections", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -1475,6 +1511,18 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService GetVersionJobs", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.GetVersionJobs(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService GetVersionSampleOrder", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -1588,6 +1636,18 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.KeyGen(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListTargets", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.ListTargets(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

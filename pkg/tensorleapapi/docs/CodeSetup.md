@@ -13,12 +13,13 @@ Name | Type | Description | Notes
 **CustomLosses** | [**[]CustomLossInstance**](CustomLossInstance.md) |  | 
 **Metrics** | [**[]MetricInstance**](MetricInstance.md) |  | 
 **Simulations** | [**[]SimulationInstance**](SimulationInstance.md) |  | 
+**HasElementInstances** | **bool** |  | 
 
 ## Methods
 
 ### NewCodeSetup
 
-`func NewCodeSetup(preprocess CodePreprocess, inputs []CodeInputInstance, metadata []CodeMetadataInstance, outputs []CodeOutputInstance, visualizers []VisualizerInstance, predictionTypes []PredictionTypeInstance, customLosses []CustomLossInstance, metrics []MetricInstance, simulations []SimulationInstance, ) *CodeSetup`
+`func NewCodeSetup(preprocess CodePreprocess, inputs []CodeInputInstance, metadata []CodeMetadataInstance, outputs []CodeOutputInstance, visualizers []VisualizerInstance, predictionTypes []PredictionTypeInstance, customLosses []CustomLossInstance, metrics []MetricInstance, simulations []SimulationInstance, hasElementInstances bool, ) *CodeSetup`
 
 NewCodeSetup instantiates a new CodeSetup object
 This constructor will assign default values to properties that have it defined,
@@ -211,6 +212,26 @@ and a boolean to check if the value has been set.
 `func (o *CodeSetup) SetSimulations(v []SimulationInstance)`
 
 SetSimulations sets Simulations field to given value.
+
+
+### GetHasElementInstances
+
+`func (o *CodeSetup) GetHasElementInstances() bool`
+
+GetHasElementInstances returns the HasElementInstances field if non-nil, zero value otherwise.
+
+### GetHasElementInstancesOk
+
+`func (o *CodeSetup) GetHasElementInstancesOk() (*bool, bool)`
+
+GetHasElementInstancesOk returns a tuple with the HasElementInstances field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHasElementInstances
+
+`func (o *CodeSetup) SetHasElementInstances(v bool)`
+
+SetHasElementInstances sets HasElementInstances field to given value.
 
 
 

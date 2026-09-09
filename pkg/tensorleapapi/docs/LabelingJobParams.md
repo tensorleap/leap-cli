@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**LatentSpaceType** | Pointer to **string** |  | [optional] 
 **UseCustomLatentSpace** | Pointer to **bool** |  | [optional] 
 **Digest** | **string** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
@@ -31,6 +32,31 @@ will change when the set of required properties is changed
 NewLabelingJobParamsWithDefaults instantiates a new LabelingJobParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetLatentSpaceType
+
+`func (o *LabelingJobParams) GetLatentSpaceType() string`
+
+GetLatentSpaceType returns the LatentSpaceType field if non-nil, zero value otherwise.
+
+### GetLatentSpaceTypeOk
+
+`func (o *LabelingJobParams) GetLatentSpaceTypeOk() (*string, bool)`
+
+GetLatentSpaceTypeOk returns a tuple with the LatentSpaceType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLatentSpaceType
+
+`func (o *LabelingJobParams) SetLatentSpaceType(v string)`
+
+SetLatentSpaceType sets LatentSpaceType field to given value.
+
+### HasLatentSpaceType
+
+`func (o *LabelingJobParams) HasLatentSpaceType() bool`
+
+HasLatentSpaceType returns a boolean if a field has been set.
 
 ### GetUseCustomLatentSpace
 

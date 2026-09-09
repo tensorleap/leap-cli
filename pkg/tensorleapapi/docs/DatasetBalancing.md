@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **CreatedBy** | **string** |  | 
 **FileUrl** | Pointer to **string** |  | [optional] 
 **FilterFileUrl** | Pointer to **string** |  | [optional] 
+**StatsFileUrl** | Pointer to **string** |  | [optional] 
 **Status** | [**JobStatus**](JobStatus.md) |  | 
 **IsDeleted** | **bool** |  | 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
@@ -208,6 +209,31 @@ SetFilterFileUrl sets FilterFileUrl field to given value.
 `func (o *DatasetBalancing) HasFilterFileUrl() bool`
 
 HasFilterFileUrl returns a boolean if a field has been set.
+
+### GetStatsFileUrl
+
+`func (o *DatasetBalancing) GetStatsFileUrl() string`
+
+GetStatsFileUrl returns the StatsFileUrl field if non-nil, zero value otherwise.
+
+### GetStatsFileUrlOk
+
+`func (o *DatasetBalancing) GetStatsFileUrlOk() (*string, bool)`
+
+GetStatsFileUrlOk returns a tuple with the StatsFileUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStatsFileUrl
+
+`func (o *DatasetBalancing) SetStatsFileUrl(v string)`
+
+SetStatsFileUrl sets StatsFileUrl field to given value.
+
+### HasStatsFileUrl
+
+`func (o *DatasetBalancing) HasStatsFileUrl() bool`
+
+HasStatsFileUrl returns a boolean if a field has been set.
 
 ### GetStatus
 

@@ -80,9 +80,10 @@ var updateActionAliases = map[string]tensorleapapi.UpdateAction{
 	"metric-config": tensorleapapi.UPDATEACTION_UPDATE_METRIC_CONFIG,
 	"visualization": tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
 	"viz":           tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
+	"samples":       tensorleapapi.UPDATEACTION_UPDATE_SAMPLES,
 }
 
-const updateActionAllowedHint = "metadata, metric, metric_config, visualization, viz"
+const updateActionAllowedHint = "metadata, metric, metric_config, visualization, viz, samples"
 
 func ParseUpdateActionsFromFlags(parts []string) ([]tensorleapapi.UpdateAction, error) {
 	if len(parts) == 0 {
@@ -136,6 +137,7 @@ const (
 	ChangeMetric
 	ChangeMetricConfig
 	ChangeVisualization
+	ChangeSamples
 )
 
 type changeOption struct {
@@ -169,6 +171,12 @@ var changeOptions = []changeOption{
 		label:  "Visualizations",
 		action: tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
 	},
+	{
+		key:    ChangeSamples,
+		label:  "Samples",
+		hint:   "evaluate newly added samples only",
+		action: tensorleapapi.UPDATEACTION_UPDATE_SAMPLES,
+	},
 }
 
 func triggersFullReeval(a tensorleapapi.UpdateAction) bool {
@@ -182,6 +190,18 @@ func PlanFromUpdateActions(actions []tensorleapapi.UpdateAction) EvaluatePlan {
 		}
 	}
 	return EvaluatePlan{Kind: EvaluatePlanUpdate, UpdateActions: actions}
+}
+
+// PlanEvaluatesNewSamples reports whether the plan includes the Samples update.
+// Choosing it only makes sense to run the evaluation, so callers skip the
+// "run it after push?" prompt instead of offering to merely record the intent.
+func PlanEvaluatesNewSamples(plan EvaluatePlan) bool {
+	for _, a := range plan.UpdateActions {
+		if a == tensorleapapi.UPDATEACTION_UPDATE_SAMPLES {
+			return true
+		}
+	}
+	return false
 }
 
 func planUpdateEvaluate(selected map[ChangeKey]bool) EvaluatePlan {
@@ -277,6 +297,8 @@ func FormatEvaluatePlan(plan EvaluatePlan) []string {
 			out = append(out, "Update metric config", "Regenerate insights")
 		case tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION:
 			out = append(out, "Regenerate visualizations")
+		case tensorleapapi.UPDATEACTION_UPDATE_SAMPLES:
+			out = append(out, "Evaluate newly added samples")
 		default:
 			out = append(out, string(a))
 		}
