@@ -26,9 +26,9 @@ if ! docker image inspect "${IMAGE}" >/dev/null 2>&1; then
     # The builder image is never published; build it from a node-server checkout.
     echo "Building node server builder image: ${IMAGE} (branch ${NODE_SERVER_BRANCH})";
     SRC_DIR=$(mktemp -d)
+    trap 'rm -rf "${SRC_DIR}"' EXIT
     git clone --quiet --depth 1 --branch "${NODE_SERVER_BRANCH}" git@github.com:tensorleap/node-server.git "${SRC_DIR}"
     docker build --target builder --build-arg NPM_TOKEN="${NPM_TOKEN:?set NPM_TOKEN to build the node-server builder image}" -t "${IMAGE}" "${SRC_DIR}"
-    rm -rf "${SRC_DIR}"
 fi
 
 echo "Removing old server api...";
