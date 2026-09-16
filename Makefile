@@ -51,7 +51,7 @@ test:
 
 .PHONY: update-server-api
 update-server-api:
-	@./scripts/update_server_api.sh ${NODE_SERVER_BUILDER_IMAGE} ${NODE_SERVER_BRANCH} 
+	@./scripts/update_server_api.sh "${NODE_SERVER_BUILDER_IMAGE}" "${NODE_SERVER_BRANCH}"
 
 .PHONY: build-shellcheck-image
 build-shellcheck-image:
