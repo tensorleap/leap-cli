@@ -23,7 +23,6 @@ Manage project
 ### SEE ALSO
 
 * [leap](leap.md)	 - Leap - Deepbug your models!
-* [leap projects copy](leap_projects_copy.md)	 - Copy a project
 * [leap projects create](leap_projects_create.md)	 - Create new project
 * [leap projects delete](leap_projects_delete.md)	 - Delete project
 * [leap projects export](leap_projects_export.md)	 - Export project to file

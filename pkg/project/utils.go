@@ -6,13 +6,10 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"time"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
-	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/entity"
 	"github.com/tensorleap/leap-cli/pkg/hub"
-	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
 func BuildProjectContext(ctx context.Context, projectEntity *ProjectEntity, schemaVersion int) (*hub.ProjectContext, error) {
@@ -49,98 +46,6 @@ func BuildProjectContext(ctx context.Context, projectEntity *ProjectEntity, sche
 			Name:   *projectEntity.BgImagePath,
 			Buffer: bgImageBytes,
 		},
-	}, nil
-}
-
-func CopyProject(
-	sourceCtx context.Context, sourceProject *ProjectEntity,
-	targetCtx context.Context, targetProjectName string,
-	exportOptions ExportProjectParams,
-	waitForImport bool,
-) error {
-
-	sourceUrl, _ := api.GetAuthFromContext(sourceCtx)
-	targetUrl, _ := api.GetAuthFromContext(targetCtx)
-
-	copyTo, err := getCopyToSignedUrl(sourceCtx, targetCtx, targetProjectName)
-	if err != nil {
-		return err
-	}
-	var copyToUrl string
-	if copyTo != nil {
-		copyToUrl = copyTo.Put
-	}
-
-	log.Infof("Copying project\n\tfrom: %s:%s\n\tto:   %s:%s", sourceProject.GetName(), sourceUrl, targetProjectName, targetUrl)
-
-	exportJob, err := ExportProject(sourceCtx, sourceProject.Cid, copyToUrl, exportOptions)
-	if err != nil {
-		return err
-	}
-
-	targetProjectMeta := &hub.ProjectMeta{
-		Name:            targetProjectName,
-		Description:     sourceProject.GetDescription(),
-		Tags:            sourceProject.Tags,
-		Categories:      sourceProject.Categories,
-		BgImagePath:     sourceProject.GetBgImagePath(),
-		SourceProjectId: sourceProject.Cid,
-	}
-
-	var copyFromUrl string
-	if copyTo != nil {
-		copyFromUrl = copyTo.Get
-	} else {
-		exportUrl := exportJob.Params.ExportProjectParams.GetExportUrl()
-		var origin *string
-		isCopyFromLocalToLocal := auth.IsLocalUrl(sourceUrl)
-		if isCopyFromLocalToLocal {
-			emptyOriginUseServerStorageUrl := ""
-			origin = &emptyOriginUseServerStorageUrl
-		}
-
-		copyFromUrl, err = api.GetSignedUrl(sourceCtx, exportUrl, http.MethodGet, time.Hour*24, origin)
-		if err != nil {
-			return fmt.Errorf("failed to get signed url for exported project file : %v", err)
-		}
-	}
-
-	err = ImportProject(targetCtx, targetProjectName, copyFromUrl, targetProjectMeta, waitForImport)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-func getCopyToSignedUrl(sourceCtx, targetCtx context.Context, fileName string) (*hub.FileAccessBySignedUrl, error) {
-	sourceUrl, _ := api.GetAuthFromContext(sourceCtx)
-	targetUrl, _ := api.GetAuthFromContext(targetCtx)
-
-	isSourceLocal := auth.IsLocalUrl(sourceUrl)
-
-	isSameEnv := sourceUrl == targetUrl
-
-	if !isSourceLocal || isSameEnv {
-		return nil, nil
-	}
-
-	ctx := targetCtx
-
-	res, err := api.GetUploadSignedUrl(ctx, fileName)
-	if err != nil {
-		return nil, fmt.Errorf("failed to get signed url for the uploaded project: %v", err)
-	}
-	signedUploadUrl := res.GetUrl()
-	url := res.GetFileName()
-
-	signedGetUrl, err := api.GetSignedUrl(ctx, url, http.MethodGet, time.Hour*24, nil)
-	if err != nil {
-		return nil, fmt.Errorf("failed to get singed url for the uploaded project: %v", err)
-	}
-
-	return &hub.FileAccessBySignedUrl{
-		Put: signedUploadUrl,
-		Get: signedGetUrl,
 	}, nil
 }
 
