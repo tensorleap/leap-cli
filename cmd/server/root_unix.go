@@ -19,4 +19,5 @@ func init() {
 	RootCommand.AddCommand(server.NewRunCmd())
 	RootCommand.AddCommand(server.NewStopCmd())
 	RootCommand.AddCommand(server.NewToolCmd())
+	RootCommand.AddCommand(server.NewResetPasswordCmd())
 }
