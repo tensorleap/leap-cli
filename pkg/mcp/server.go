@@ -56,6 +56,7 @@ func NewServer(client *Client, version string) *sdk.Server {
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_list_projects", Description: "List the Tensorleap projects you can access.", Annotations: ro("List projects")}, s.listProjects)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_list_versions", Description: "List a project's model versions with their evaluation state and whether insights exist.", Annotations: ro("List versions")}, s.listVersions)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_get_insights", Description: "The platform's insights for one evaluated model version (Failure Mode, Out of Distribution, Duplication, Data Leakage, Domain Gap, Mislabeled), each with the failing group's size, split, over-represented metadata vs all data, metric contrast, latent space meaning and a link that opens it in the UI.", Annotations: ro("Get insights")}, s.getInsights)
+	sdk.AddTool(srv, &sdk.Tool{Name: "tl_view_samples", Description: "Look at samples: returns their rendered visualizations (images as thumbnails, other types as data) so you can judge what the failing samples have in common. At most 6 per call.", Annotations: ro("View samples")}, s.viewSamples)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_describe_fields", Description: "The metric and metadata fields recorded for an evaluated version, with types. Call before tl_query to get exact field names.", Annotations: ro("Describe fields")}, s.describeFields)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_query", Description: "Aggregate metrics over the whole evaluated population, grouped by up to 2 fields (e.g. average loss per class per split), optionally filtered and compared across versions. Every row includes the sample count n.", Annotations: ro("Query metrics")}, s.query)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_list_jobs", Description: "Jobs (Evaluate, Push, Population Exploration, ...) for a project or version, newest first. Check here before starting work again so nothing runs twice.", Annotations: ro("List jobs")}, s.listJobs)
@@ -259,6 +260,7 @@ type Insight struct {
 	Composition  []Composition  `json:"composition,omitempty"`
 	Contrast     []Contrast     `json:"contrast,omitempty"`
 	Remedy       *Remedy        `json:"remedy,omitempty"`
+	TopSamples   []SampleRef    `json:"topSamples,omitempty" jsonschema:"most representative failing samples (ranked by affinity or loss), rendered ones first; pass to tl_view_samples"`
 	HasTests     bool           `json:"hasSuggestedTests"`
 	Link         string         `json:"link"`
 	CreateTest   string         `json:"createTestLink,omitempty"`
@@ -291,6 +293,8 @@ func (s *Server) getInsights(ctx context.Context, _ *sdk.CallToolRequest, in Ver
 			byID[id] = int(raw.Index)
 		}
 	}
+	ranked := map[int][]string{}
+	var candidates []string
 	for _, raw := range e.Insights {
 		t := raw.InsightType
 		typ := str(t["type"])
@@ -335,12 +339,21 @@ func (s *Server) getInsights(ctx context.Context, _ *sdk.CallToolRequest, in Ver
 			} else {
 				ins.GroupSize, ins.GroupMeaning = sum.GroupSize, sum.GroupDefinition
 				ins.Split, ins.Composition, ins.Contrast = sum.Split, sum.Composition, sum.Contrast
+				ranked[len(out.Insights)] = sum.RankedIDs
+				candidates = append(candidates, sum.RankedIDs...)
 			}
 		}
 		if popErr != nil && ins.Warning == "" {
 			ins.Warning = "no all-data baseline: " + popErr.Error()
 		}
 		out.Insights = append(out.Insights, ins)
+	}
+	if len(candidates) > 0 {
+		if rendered, err := s.sampleAssets(ctx, in.ProjectID, in.VersionID, unique(candidates)); err == nil {
+			for i, ids := range ranked {
+				out.Insights[i].TopSamples = renderedFirst(ids, rendered, maxViewSamples)
+			}
+		}
 	}
 	sort.SliceStable(out.Insights, func(i, j int) bool { return out.Insights[i].Severity > out.Insights[j].Severity })
 	return nil, out, nil
@@ -383,4 +396,16 @@ func num(v any) int {
 func list(v any) []any {
 	l, _ := v.([]any)
 	return l
+}
+
+func unique(ids []string) []string {
+	seen := map[string]bool{}
+	out := ids[:0:0]
+	for _, id := range ids {
+		if !seen[id] {
+			seen[id] = true
+			out = append(out, id)
+		}
+	}
+	return out
 }

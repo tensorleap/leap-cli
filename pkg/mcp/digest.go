@@ -155,7 +155,8 @@ type GroupSummary struct {
 	Split           map[string]int `json:"split"`
 	Composition     []Composition  `json:"composition"`
 	Contrast        []Contrast     `json:"contrast"`
-	MemberSampleIDs []string       `json:"-"`
+	RankedIDs       []string       `json:"-"`
+	RankedBy        string         `json:"rankedBy,omitempty"`
 }
 
 func Summarize(csvBytes []byte, pop *Population) (*GroupSummary, error) {
@@ -193,10 +194,8 @@ func Summarize(csvBytes []byte, pop *Population) (*GroupSummary, error) {
 			state = "unknown"
 		}
 		s.Split[state]++
-		if idCol >= 0 && idCol < len(r) {
-			s.MemberSampleIDs = append(s.MemberSampleIDs, r[idCol])
-		}
 	}
+	s.RankedIDs, s.RankedBy = rankSamples(t, group, 24)
 	gstats := statsFor(t, group)
 	names := make([]string, 0, len(gstats))
 	for n := range gstats {
@@ -264,4 +263,49 @@ func Summarize(csvBytes []byte, pop *Population) (*GroupSummary, error) {
 
 func round4(f float64) float64 {
 	return math.Round(f*10000) / 10000
+}
+
+func rankSamples(t *table, group [][]string, k int) ([]string, string) {
+	idCol := t.col("sample_id")
+	if idCol < 0 {
+		return nil, ""
+	}
+	rankCol, name := -1, ""
+	for i, h := range t.header {
+		if strings.HasSuffix(h, "aggressor_affinity_score") {
+			rankCol, name = i, h
+			break
+		}
+	}
+	if rankCol < 0 {
+		for i, h := range t.header {
+			low := strings.ToLower(h)
+			if strings.HasPrefix(h, "metrics.") && (strings.Contains(low, "loss") || strings.Contains(low, "entropy")) {
+				rankCol, name = i, h
+				break
+			}
+		}
+	}
+	rows := append([][]string(nil), group...)
+	if rankCol >= 0 {
+		val := func(r []string) float64 {
+			if rankCol < len(r) {
+				if f, err := strconv.ParseFloat(r[rankCol], 64); err == nil && !math.IsNaN(f) {
+					return f
+				}
+			}
+			return math.Inf(-1)
+		}
+		sort.SliceStable(rows, func(i, j int) bool { return val(rows[i]) > val(rows[j]) })
+	}
+	ids := make([]string, 0, k)
+	for _, r := range rows {
+		if len(ids) == k {
+			break
+		}
+		if idCol < len(r) && r[idCol] != "" {
+			ids = append(ids, r[idCol])
+		}
+	}
+	return ids, name
 }

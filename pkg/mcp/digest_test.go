@@ -81,3 +81,20 @@ func TestSummarizeSuppressesSmallCells(t *testing.T) {
 		}
 	}
 }
+
+func TestVisualizationIDMatchesSkillHash(t *testing.T) {
+	if got := visualizationID("training_4821"); got != "training_o4j1YuKG_fKJhvklNXn00A" {
+		t.Fatalf("got %s", got)
+	}
+}
+
+func TestRankSamplesByAffinityWithinGroup(t *testing.T) {
+	csv := []byte("sample_id,aggressor_affinity_score,is_low_perf_root_member\ntraining_1,0.2,True\ntraining_2,0.9,True\ntraining_3,0.99,False\ntraining_4,0.5,True\n")
+	s, err := Summarize(csv, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.Join(s.RankedIDs, ",") != "training_2,training_4,training_1" || s.RankedBy != "aggressor_affinity_score" {
+		t.Fatalf("ranked %v by %s; a healthy neighbour must never be ranked", s.RankedIDs, s.RankedBy)
+	}
+}
