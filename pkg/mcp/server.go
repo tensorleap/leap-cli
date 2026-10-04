@@ -40,13 +40,15 @@ var latentMeanings = map[string]string{
 }
 
 type Server struct {
-	client *Client
-	mu     sync.Mutex
-	pops   map[string]*Population
+	client      *Client
+	allowLegacy bool
+	mu          sync.Mutex
+	pops        map[string]*Population
+	policies    policyCache
 }
 
-func NewServer(client *Client, version string) *sdk.Server {
-	s := &Server{client: client, pops: map[string]*Population{}}
+func NewServer(client *Client, version string, allowLegacy bool) *sdk.Server {
+	s := &Server{client: client, allowLegacy: allowLegacy, pops: map[string]*Population{}, policies: policyCache{entries: map[string]policyEntry{}}}
 	srv := sdk.NewServer(&sdk.Implementation{Name: "tensorleap", Title: "Tensorleap", Version: version},
 		&sdk.ServerOptions{Instructions: instructions})
 	closed := false
@@ -68,7 +70,8 @@ func NewServer(client *Client, version string) *sdk.Server {
 }
 
 type targetsResponse struct {
-	ContractVersion int `json:"contractVersion"`
+	ContractVersion int       `json:"contractVersion"`
+	AiAccess        *AiAccess `json:"aiAccess"`
 	Me              struct {
 		Email, Name, TeamID, Role string
 	} `json:"me"`
@@ -108,7 +111,7 @@ func explain(err error) error {
 		case 401:
 			return errors.New("the server rejected your API key; run `leap auth login` (or `leap auth select <env>`)")
 		case 403:
-			return fmt.Errorf("not allowed for this user: %s", apiErr.Body)
+			return errors.New(serverMessage(apiErr.Body))
 		case 404:
 			if strings.Contains(apiErr.Body, "Cannot POST") {
 				return errors.New("this Tensorleap server has no analysis-export API; upgrade the server")
@@ -122,10 +125,12 @@ func explain(err error) error {
 type Empty struct{}
 
 type StatusOut struct {
-	Server          string `json:"server"`
-	User            string `json:"user"`
-	Role            string `json:"role"`
-	ContractVersion int    `json:"contractVersion"`
+	Server          string    `json:"server"`
+	User            string    `json:"user"`
+	Role            string    `json:"role"`
+	ContractVersion int       `json:"contractVersion"`
+	AiAccess        *AiAccess `json:"aiAccess,omitempty" jsonschema:"install-wide default of what this assistant may receive; projects can override it"`
+	Note            string    `json:"note,omitempty"`
 }
 
 func (s *Server) status(ctx context.Context, _ *sdk.CallToolRequest, _ Empty) (*sdk.CallToolResult, StatusOut, error) {
@@ -133,7 +138,17 @@ func (s *Server) status(ctx context.Context, _ *sdk.CallToolRequest, _ Empty) (*
 	if err != nil {
 		return nil, StatusOut{}, err
 	}
-	return nil, StatusOut{Server: s.client.UIBase(), User: t.Me.Email, Role: t.Me.Role, ContractVersion: t.ContractVersion}, nil
+	out := StatusOut{Server: s.client.UIBase(), User: t.Me.Email, Role: t.Me.Role, ContractVersion: t.ContractVersion, AiAccess: t.AiAccess}
+	if t.AiAccess == nil {
+		if !s.allowLegacy {
+			out.Note = errLegacyServer.Error()
+		} else {
+			out.Note = "this server predates AI access controls; running with --allow-legacy-server"
+		}
+	} else if !t.AiAccess.Stats {
+		out.Note = "AI access is off by default on this server; projects may override it. An admin can enable it in Settings > AI access"
+	}
+	return nil, out, nil
 }
 
 type Project struct {
@@ -279,6 +294,10 @@ type InsightsOut struct {
 }
 
 func (s *Server) getInsights(ctx context.Context, _ *sdk.CallToolRequest, in VersionIn) (*sdk.CallToolResult, InsightsOut, error) {
+	access, err := s.policy(ctx, in.ProjectID)
+	if err != nil {
+		return nil, InsightsOut{}, err
+	}
 	var e exportResponse
 	if err := s.client.Post(ctx, "analysis-export/exportAnalysis", map[string]any{"projectId": in.ProjectID, "versionId": in.VersionID}, &e); err != nil {
 		return nil, InsightsOut{}, explain(err)
@@ -331,6 +350,9 @@ func (s *Server) getInsights(ctx context.Context, _ *sdk.CallToolRequest, in Ver
 			}
 			ins.CreateTest = ins.Link + sep + "addTestFromInsight=" + raw.Cid
 		}
+		if raw.CsvURL == "" && !access.SampleRows {
+			ins.Warning = "per-sample data is off for this project, so groupSize is the platform's cluster size (it includes healthy neighbours) and composition is unavailable"
+		}
 		if raw.CsvURL != "" {
 			if b, err := s.client.Download(ctx, raw.CsvURL); err != nil {
 				ins.Warning = err.Error()
@@ -345,7 +367,7 @@ func (s *Server) getInsights(ctx context.Context, _ *sdk.CallToolRequest, in Ver
 				candidates = append(candidates, sum.RankedIDs...)
 			}
 		}
-		if popErr != nil && ins.Warning == "" {
+		if popErr != nil && ins.Warning == "" && access.SampleRows {
 			ins.Warning = "no all-data baseline: " + popErr.Error()
 		}
 		out.Insights = append(out.Insights, ins)

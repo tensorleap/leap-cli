@@ -50,6 +50,9 @@ type FieldsOut struct {
 }
 
 func (s *Server) describeFields(ctx context.Context, _ *sdk.CallToolRequest, in VersionIn) (*sdk.CallToolResult, FieldsOut, error) {
+	if err := s.requireStats(ctx, in.ProjectID); err != nil {
+		return nil, FieldsOut{}, err
+	}
 	v, err := s.slimVersion(ctx, in.ProjectID, in.VersionID)
 	if err != nil {
 		return nil, FieldsOut{}, err
@@ -147,6 +150,9 @@ func (s *Server) query(ctx context.Context, _ *sdk.CallToolRequest, in QueryIn) 
 	if len(in.VersionIDs) == 0 || len(in.Measures) == 0 {
 		return nil, QueryOut{}, errors.New("versionIds and measures are required")
 	}
+	if err := s.requireStats(ctx, in.ProjectID); err != nil {
+		return nil, QueryOut{}, err
+	}
 	if len(in.GroupBy) > 2 {
 		return nil, QueryOut{}, errors.New("groupBy supports at most 2 fields")
 	}
@@ -169,6 +175,10 @@ func (s *Server) query(ctx context.Context, _ *sdk.CallToolRequest, in QueryIn) 
 	buckets := make([]map[string]any, 0, len(in.GroupBy))
 	for _, f := range in.GroupBy {
 		buckets = append(buckets, map[string]any{"field": f, "distribution": "distinct", "order": "desc", "limit": limit})
+	}
+	if len(buckets) == 0 {
+		// table charts return nothing without a bucket; the model id has one value per version
+		buckets = append(buckets, map[string]any{"field": "model.extId.keyword", "distribution": "distinct", "order": "desc", "limit": 1})
 	}
 	batches := measureBatches(append([]Measure{{Field: "sample_id", Aggregation: "Count"}}, in.Measures...))
 	out := QueryOut{Server: s.client.UIBase(), Rows: []Row{}}

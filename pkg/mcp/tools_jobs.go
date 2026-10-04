@@ -211,7 +211,18 @@ func (s *Server) getJobLogs(ctx context.Context, _ *sdk.CallToolRequest, in Logs
 			Logs string `json:"logs"`
 		} `json:"podsLogs"`
 	}
-	if err := s.client.Post(ctx, "jobs/getJobLogs", map[string]any{"jobId": in.JobID}, &resp); err != nil {
+	access, err := s.policy(ctx, job.ProjectID)
+	if err != nil {
+		return nil, LogsOut{}, err
+	}
+	if !access.JobLogs {
+		return nil, LogsOut{}, disabled("job logs")
+	}
+	path, body := "analysis-export/getJobLogs", map[string]any{"projectId": job.ProjectID, "jobId": in.JobID}
+	if access.legacy {
+		path, body = "jobs/getJobLogs", map[string]any{"jobId": in.JobID}
+	}
+	if err := s.client.Post(ctx, path, body, &resp); err != nil {
 		return nil, LogsOut{}, explain(err)
 	}
 	out := LogsOut{Job: *job, Errors: []string{}, Pods: []PodLog{}, Redacted: "credentials, tokens and signed-URL parameters are removed"}
