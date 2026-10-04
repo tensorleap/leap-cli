@@ -53,3 +53,16 @@ func TestErrorLinesIgnoreRoutineShutdown(t *testing.T) {
 		}
 	}
 }
+
+func TestScrubRemovesUserContactDetailsFromEngineLogs(t *testing.T) {
+	line := `{"user.id": "6a9f", "user.email": "dana@acme.com", "user.full_name": "Dana Levi", "user.phone_number": "+972500000000", "team.name": "Vision"}`
+	out := Scrub(line)
+	for _, v := range []string{"dana@acme.com", "Dana Levi", "+972500000000", "Vision"} {
+		if strings.Contains(out, v) {
+			t.Fatalf("%q leaked: %s", v, out)
+		}
+	}
+	if !strings.Contains(out, `"user.id": "6a9f"`) {
+		t.Fatalf("ids are not personal data: %s", out)
+	}
+}

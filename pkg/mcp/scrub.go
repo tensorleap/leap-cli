@@ -9,6 +9,8 @@ var secretPatterns = []*regexp.Regexp{
 	regexp.MustCompile(`\beyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\b`),
 	regexp.MustCompile(`-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?-----END [A-Z ]*PRIVATE KEY-----`),
 	regexp.MustCompile(`(?i)(X-Amz-Credential|X-Amz-Signature|X-Amz-Security-Token)=[^&\s"]+`),
+	// engine log lines carry the requesting user's contact details
+	regexp.MustCompile(`("(?:user\.(?:email|full_name|first_name|last_name|phone_number|company)|team\.name)"\s*:\s*)"[^"]*"`),
 }
 
 func Scrub(s string) string {
@@ -20,6 +22,8 @@ func Scrub(s string) string {
 			s = re.ReplaceAllString(s, "${1} [redacted]")
 		case 5:
 			s = re.ReplaceAllString(s, "${1}=[redacted]")
+		case 6:
+			s = re.ReplaceAllString(s, `${1}"[redacted]"`)
 		default:
 			s = re.ReplaceAllString(s, "[redacted]")
 		}

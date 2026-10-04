@@ -94,7 +94,7 @@ func (s *Server) describeFields(ctx context.Context, _ *sdk.CallToolRequest, in 
 	if err := s.resolve(ctx, &in.ProjectID, &in.VersionID); err != nil {
 		return nil, FieldsOut{}, err
 	}
-	if err := s.requireStats(ctx, in.ProjectID); err != nil {
+	if _, err := s.allowed(ctx, in.ProjectID, statsClass); err != nil {
 		return nil, FieldsOut{}, err
 	}
 	mapping, err := s.fieldMapping(ctx, in.ProjectID, in.VersionID)
@@ -198,12 +198,9 @@ func (s *Server) query(ctx context.Context, _ *sdk.CallToolRequest, in QueryIn) 
 	if err := s.resolve(ctx, &in.ProjectID, refs...); err != nil {
 		return nil, QueryOut{}, err
 	}
-	access, err := s.policy(ctx, in.ProjectID)
+	access, err := s.allowed(ctx, in.ProjectID, statsClass)
 	if err != nil {
 		return nil, QueryOut{}, err
-	}
-	if !access.Stats {
-		return nil, QueryOut{}, disabled("statistics and insights")
 	}
 	if len(in.GroupBy) > 2 {
 		return nil, QueryOut{}, errors.New("groupBy supports at most 2 fields")
@@ -289,6 +286,21 @@ func (s *Server) query(ctx context.Context, _ *sdk.CallToolRequest, in QueryIn) 
 		}
 		for _, k := range order {
 			out.Rows = append(out.Rows, *rows[k])
+		}
+	}
+	if !access.SampleRows {
+		kept, hidden := out.Rows[:0], 0
+		for _, r := range out.Rows {
+			if r.N != nil && *r.N < minCellSize {
+				hidden++
+				continue
+			}
+			kept = append(kept, r)
+		}
+		out.Rows = kept
+		if hidden > 0 {
+			// with per-sample data off, tiny groups would leak individual samples' values
+			out.Notes = append(out.Notes, fmt.Sprintf("%d group(s) with fewer than %d samples are hidden because per-sample data is turned off for this project", hidden, minCellSize))
 		}
 	}
 	sort.SliceStable(out.Rows, func(i, j int) bool { return out.Rows[i].Version < out.Rows[j].Version })

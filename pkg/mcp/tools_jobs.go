@@ -214,12 +214,9 @@ func (s *Server) getJobLogs(ctx context.Context, _ *sdk.CallToolRequest, in Logs
 			Logs string `json:"logs"`
 		} `json:"podsLogs"`
 	}
-	access, err := s.policy(ctx, job.ProjectID)
+	access, err := s.allowed(ctx, job.ProjectID, jobLogsClass)
 	if err != nil {
 		return nil, LogsOut{}, err
-	}
-	if !access.JobLogs {
-		return nil, LogsOut{}, disabled("job logs")
 	}
 	path, body := "analysis-export/getJobLogs", map[string]any{"projectId": job.ProjectID, "jobId": in.JobID}
 	if access.legacy {

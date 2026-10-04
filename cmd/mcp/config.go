@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
+	mcpPkg "github.com/tensorleap/leap-cli/pkg/mcp"
 )
 
 var clientNames = []string{"claude-code", "claude-desktop", "cursor", "vscode", "codex", "windsurf"}
@@ -50,6 +51,13 @@ func newConfigCmd() *cobra.Command {
 				serverArgs = append(serverArgs, "--env", envName)
 			}
 			printConfig(cmd.OutOrStdout(), args[0], bin, serverArgs)
+			if env, err := chooseEnv(envName); err != nil {
+				fmt.Fprintln(cmd.OutOrStdout(), err.Error())
+			} else {
+				for _, l := range liveStatus(cmd.Context(), mcpPkg.NewClient(env.ApiUrl, env.ApiKey)) {
+					fmt.Fprintln(cmd.OutOrStdout(), l)
+				}
+			}
 			return nil
 		},
 	}
@@ -93,8 +101,8 @@ func printConfig(w io.Writer, client, bin string, args []string) {
 	case "claude-code":
 		p("Claude Code: run this once to add Tensorleap to all your projects:\n")
 		p("  claude mcp add --scope user tensorleap -- %s %s\n", shellQuote(bin), strings.Join(args, " "))
-		p("To share it with your team instead, commit this as .mcp.json in the repository:\n")
-		p("%s", mustJSON(servers))
+		p("To share it with your team instead, commit this as .mcp.json in the repository (it expects leap on everyone's PATH):\n")
+		p("%s", mustJSON(map[string]any{"mcpServers": map[string]any{"tensorleap": serverEntry{Command: "leap", Args: args}}}))
 	case "claude-desktop":
 		p("Claude Desktop: open Settings > Developer > Edit Config (%s) and merge in:\n", desktopConfigPath())
 		p("%s", mustJSON(servers))
@@ -117,8 +125,7 @@ func printConfig(w io.Writer, client, bin string, args []string) {
 		p("Windsurf: add to ~/.codeium/windsurf/mcp_config.json:\n")
 		p("%s", mustJSON(servers))
 	}
-	p("\nThen restart %s and ask, for example: \"What is my model's biggest weakness in project <name>?\"", clientTitles[client])
-	p("Tensorleap shares nothing with assistants until an admin turns on AI access (gear menu > AI access).")
+	p("\nThen restart %s and ask, for example: \"What is my model's biggest weakness in project <name>?\"\n", clientTitles[client])
 }
 
 func desktopConfigPath() string {

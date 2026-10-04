@@ -20,10 +20,17 @@ type Client struct {
 	BaseURL string
 	apiKey  string
 	http    *http.Client
+	failure error
 }
 
 func NewClient(baseURL, apiKey string) *Client {
 	return &Client{BaseURL: strings.TrimRight(baseURL, "/"), apiKey: apiKey, http: api.NewDefaultClient()}
+}
+
+// NewFailedClient answers every call with a startup problem, so the assistant can tell the
+// user why instead of only showing that the server failed to start
+func NewFailedClient(err error) *Client {
+	return &Client{failure: err}
 }
 
 func (c *Client) UIBase() string {
@@ -40,6 +47,9 @@ func (e *APIError) Error() string {
 }
 
 func (c *Client) Post(ctx context.Context, path string, body, out any) error {
+	if c.failure != nil {
+		return c.failure
+	}
 	payload, err := json.Marshal(body)
 	if err != nil {
 		return err

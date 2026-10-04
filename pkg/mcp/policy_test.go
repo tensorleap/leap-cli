@@ -3,6 +3,7 @@ package mcp
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -55,7 +56,7 @@ func TestStatsOffBlocksQueriesWithoutCallingTheServer(t *testing.T) {
 	s, calls := fakeServer(t, &AiAccess{}, nil)
 	in := QueryIn{ProjectID: projectHex, VersionIDs: []string{versionHex}, Measures: []Measure{{"metrics.loss", "Average"}}}
 	_, _, err := s.query(context.Background(), nil, in)
-	if err == nil || !strings.Contains(err.Error(), "turned off AI access to statistics") {
+	if err == nil || !strings.Contains(err.Error(), "AI access to statistics and insights is turned off") {
 		t.Fatalf("expected a policy refusal, got %v", err)
 	}
 	if *calls != 1 {
@@ -91,7 +92,7 @@ func TestInsightsWithoutSampleRowsExplainGroupSize(t *testing.T) {
 		t.Fatal(err)
 	}
 	ins := out.Insights[0]
-	if ins.Name != "Failure Mode" || ins.ClusterSize != 500 || !strings.Contains(out.Note, "turned off per-sample data") {
+	if ins.Name != "Failure Mode" || ins.ClusterSize != 500 || !strings.Contains(out.Note, "per-sample data is turned off") || ins.GroupSize != nil {
 		t.Fatalf("got note %q, insight %+v", out.Note, ins)
 	}
 }
@@ -122,5 +123,51 @@ func TestQueryWithoutGroupByCoversWholePopulation(t *testing.T) {
 	}
 	if b := sent["buckets"].([]any); len(b) != 1 || b[0].(map[string]any)["field"] != "model.extId.keyword" {
 		t.Fatalf("request buckets: %v", sent["buckets"])
+	}
+}
+
+func TestRefusalIsRecheckedAfterAnAdminTurnsAccessOn(t *testing.T) {
+	lookups := 0
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch {
+		case strings.HasSuffix(r.URL.Path, "listTargets"):
+			lookups++
+			stats := lookups > 1
+			_, _ = fmt.Fprintf(w, `{"contractVersion":1,"aiAccess":{"stats":%v},"me":{"role":"user"}}`, stats)
+		case strings.HasSuffix(r.URL.Path, "getProjectSlimVersions"):
+			_, _ = w.Write([]byte(`{"versions":[{"cid":"` + versionHex + `"}]}`))
+		default:
+			_, _ = w.Write([]byte(`{"charts":[]}`))
+		}
+	}))
+	defer ts.Close()
+	s := &Server{client: NewClient(ts.URL+"/api/v2", "k"), pops: map[string]*Population{}, fields: map[string]map[string]bool{}, policies: policyCache{entries: map[string]policyEntry{}}}
+	if _, err := s.policy(context.Background(), projectHex); err != nil {
+		t.Fatal(err)
+	}
+	in := QueryIn{ProjectID: projectHex, VersionIDs: []string{versionHex}, Measures: []Measure{{"metrics.loss", "Average"}}}
+	if _, _, err := s.query(context.Background(), nil, in); err != nil {
+		t.Fatalf("a cached refusal must be rechecked, got %v", err)
+	}
+}
+
+func TestTinyGroupsAreHiddenWithoutPerSampleData(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch {
+		case strings.HasSuffix(r.URL.Path, "listTargets"):
+			_, _ = w.Write([]byte(`{"contractVersion":1,"aiAccess":{"stats":true,"sampleRows":false},"me":{}}`))
+		case strings.HasSuffix(r.URL.Path, "getProjectSlimVersions"):
+			_, _ = w.Write([]byte(`{"versions":[{"cid":"` + versionHex + `"}]}`))
+		default:
+			_, _ = w.Write([]byte(`{"charts":[{"data":{"data":[
+				{"data":{"metadata.label":"2","metrics.loss":0.3,"sample_id":500}},
+				{"data":{"metadata.label":"7","metrics.loss":6.4,"sample_id":1}}]}}]}`))
+		}
+	}))
+	defer ts.Close()
+	s := &Server{client: NewClient(ts.URL+"/api/v2", "k"), pops: map[string]*Population{}, fields: map[string]map[string]bool{}, policies: policyCache{entries: map[string]policyEntry{}}}
+	_, out, err := s.query(context.Background(), nil, QueryIn{ProjectID: projectHex, VersionIDs: []string{versionHex}, GroupBy: []string{"metadata.label"}, Measures: []Measure{{"metrics.loss", "Average"}}})
+	if err != nil || len(out.Rows) != 1 || *out.Rows[0].N != 500 || !strings.Contains(strings.Join(out.Notes, " "), "fewer than 10 samples are hidden") {
+		t.Fatalf("got %v %+v", err, out)
 	}
 }
