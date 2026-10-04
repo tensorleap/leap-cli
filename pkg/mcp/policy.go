@@ -82,10 +82,11 @@ type aiClass struct {
 }
 
 var (
-	statsClass   = aiClass{"statistics and insights", "Statistics and insights", func(a *AiAccess) bool { return a.Stats }}
-	jobLogsClass = aiClass{"job logs", "Job logs", func(a *AiAccess) bool { return a.JobLogs }}
-	allClasses   = []aiClass{statsClass,
-		{"per-sample data", "Per-sample data", func(a *AiAccess) bool { return a.SampleRows }},
+	statsClass      = aiClass{"statistics and insights", "Statistics and insights", func(a *AiAccess) bool { return a.Stats }}
+	jobLogsClass    = aiClass{"job logs", "Job logs", func(a *AiAccess) bool { return a.JobLogs }}
+	sampleRowsClass = aiClass{"per-sample data", "Per-sample data", func(a *AiAccess) bool { return a.SampleRows }}
+	allClasses      = []aiClass{statsClass,
+		sampleRowsClass,
 		{"sample visualizations", "Sample visualizations", func(a *AiAccess) bool { return a.Visuals }},
 		jobLogsClass,
 		{"integration code", "Integration code", func(a *AiAccess) bool { return a.Code }},

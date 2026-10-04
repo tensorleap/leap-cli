@@ -420,3 +420,134 @@ func toEsFilters(fs []Filter) ([]map[string]any, error) {
 	}
 	return out, nil
 }
+
+type ListSamplesIn struct {
+	ProjectID string   `json:"projectId" jsonschema:"project id or name"`
+	VersionID string   `json:"versionId" jsonschema:"evaluated version id or name, or \"latest\""`
+	Filters   []Filter `json:"filters,omitempty" jsonschema:"which samples, e.g. a label equal to 2 and a prediction equal to 7"`
+	SortBy    string   `json:"sortBy,omitempty" jsonschema:"field to rank by, e.g. metrics.loss (default: sample id)"`
+	Ascending bool     `json:"ascending,omitempty" jsonschema:"lowest first instead of highest first"`
+	Fields    []string `json:"fields,omitempty" jsonschema:"fields to return per sample (default: the sort and filter fields)"`
+	Limit     int      `json:"limit,omitempty" jsonschema:"max samples (default 20, max 100)"`
+}
+
+type ListedSample struct {
+	ID     string         `json:"id" jsonschema:"pass to tl_view_samples"`
+	Values map[string]any `json:"values"`
+}
+
+type ListSamplesOut struct {
+	Server   string         `json:"server"`
+	Matching int            `json:"matching" jsonschema:"how many samples match the filters"`
+	Samples  []ListedSample `json:"samples"`
+	Reason   string         `json:"reason,omitempty"`
+	NextStep string         `json:"nextStep,omitempty"`
+}
+
+func (s *Server) listSamples(ctx context.Context, _ *sdk.CallToolRequest, in ListSamplesIn) (*sdk.CallToolResult, ListSamplesOut, error) {
+	if err := s.resolve(ctx, &in.ProjectID, &in.VersionID); err != nil {
+		return nil, ListSamplesOut{}, err
+	}
+	if _, err := s.allowed(ctx, in.ProjectID, sampleRowsClass); err != nil {
+		return nil, ListSamplesOut{}, err
+	}
+	fields := append([]string{}, in.Fields...)
+	if len(fields) == 0 {
+		if in.SortBy != "" {
+			fields = append(fields, in.SortBy)
+		}
+		for _, f := range in.Filters {
+			fields = appendOnce(fields, f.Field)
+		}
+	}
+	names := append([]string{}, fields...)
+	if in.SortBy != "" {
+		names = appendOnce(names, in.SortBy)
+	}
+	if err := s.checkFields(ctx, QueryIn{ProjectID: in.ProjectID, VersionIDs: []string{in.VersionID}, GroupBy: names, Filters: in.Filters}); err != nil {
+		return nil, ListSamplesOut{}, err
+	}
+	limit := in.Limit
+	if limit <= 0 {
+		limit = 20
+	}
+	if limit > 100 {
+		limit = 100
+	}
+	filters, kept, err := toSampleFilters(in.Filters)
+	if err != nil {
+		return nil, ListSamplesOut{}, err
+	}
+	body := map[string]any{"projectId": in.ProjectID, "versionId": in.VersionID, "filters": filters, "pageSize": limit}
+	if in.SortBy != "" {
+		dir := "desc"
+		if in.Ascending {
+			dir = "asc"
+		}
+		body["sort"] = map[string]any{"field": in.SortBy, "dir": dir}
+	}
+	var resp struct {
+		Rows  []map[string]any `json:"rows"`
+		Total int              `json:"total"`
+	}
+	if err := s.client.Post(ctx, "sample-collection/getVersionSampleOrder", body, &resp); err != nil {
+		return nil, ListSamplesOut{}, explain(err)
+	}
+	out := ListSamplesOut{Server: s.client.UIBase(), Matching: resp.Total, Samples: []ListedSample{}}
+	for _, row := range resp.Rows {
+		for field, values := range kept {
+			if !values[fmt.Sprint(row[field])] {
+				// servers without include filters return every sample; never pass that off as the case
+				return nil, ListSamplesOut{}, errors.New("this Tensorleap server can't list samples by value yet; upgrade it, or filter with greater-than / less-than / between")
+			}
+		}
+		smp := ListedSample{ID: fmt.Sprintf("%v_%v", row["state"], row["index"]), Values: map[string]any{}}
+		for _, f := range fields {
+			smp.Values[f] = row[f]
+		}
+		out.Samples = append(out.Samples, smp)
+	}
+	if len(out.Samples) == 0 {
+		out.Reason, out.NextStep = "no-matching-samples", "loosen the filters, or check values with tl_query grouped by the same fields"
+	}
+	return nil, out, nil
+}
+
+// toSampleFilters maps tl_query-style filters onto the sample list API; kept holds the values an
+// include filter must match, to detect servers that ignore them
+func toSampleFilters(fs []Filter) ([]map[string]any, map[string]map[string]bool, error) {
+	out := make([]map[string]any, 0, len(fs))
+	kept := map[string]map[string]bool{}
+	for _, f := range fs {
+		spec := map[string]any{"field": f.Field}
+		switch f.Operator {
+		case "equal", "in":
+			values := f.Values
+			if f.Operator == "equal" {
+				values = []any{f.Value}
+			}
+			spec["values"] = values
+			kept[f.Field] = map[string]bool{}
+			for _, v := range values {
+				kept[f.Field][fmt.Sprint(v)] = true
+			}
+		case "not-equal":
+			spec["hiddenValues"] = []any{f.Value}
+		case "not-in":
+			spec["hiddenValues"] = f.Values
+		case "greater-than":
+			spec["range"] = map[string]any{"min": f.Value}
+		case "less-than":
+			spec["range"] = map[string]any{"max": f.Value}
+		case "between":
+			if f.Min == nil || f.Max == nil {
+				return nil, nil, fmt.Errorf("filter on %s: between needs min and max", f.Field)
+			}
+			spec["range"] = map[string]any{"min": *f.Min, "max": *f.Max}
+		default:
+			return nil, nil, fmt.Errorf("filter on %s: unsupported operator %q", f.Field, f.Operator)
+		}
+		out = append(out, spec)
+	}
+	return out, kept, nil
+}
