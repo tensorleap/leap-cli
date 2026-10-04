@@ -21,13 +21,15 @@ Name | Type | Description | Notes
 **IsAuto** | Pointer to **bool** |  | [optional] 
 **SimulationNames** | Pointer to **[]string** |  | [optional] 
 **InitialSimulationFilters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
+**CanContinue** | **bool** | Server-derived: an auto job in FAILED | STOPPED | TERMINATED with no synthetic job active on its version. Same rule the continue endpoint enforces. | 
+**ContinuedFromJobId** | Pointer to **string** | Set on jobs created via continueAutoSyntheticData — the immediate predecessor. | [optional] 
 **RunProcess** | Pointer to [**RunProcess**](RunProcess.md) |  | [optional] 
 
 ## Methods
 
 ### NewSyntheticData
 
-`func NewSyntheticData(id string, jobId string, versionId string, versionName string, createdAt time.Time, createdBy string, status JobStatus, sources []SyntheticDataJobParamsSourcesInner, targetFilters []ESFilter, ) *SyntheticData`
+`func NewSyntheticData(id string, jobId string, versionId string, versionName string, createdAt time.Time, createdBy string, status JobStatus, sources []SyntheticDataJobParamsSourcesInner, targetFilters []ESFilter, canContinue bool, ) *SyntheticData`
 
 NewSyntheticData instantiates a new SyntheticData object
 This constructor will assign default values to properties that have it defined,
@@ -421,6 +423,51 @@ SetInitialSimulationFilters sets InitialSimulationFilters field to given value.
 `func (o *SyntheticData) HasInitialSimulationFilters() bool`
 
 HasInitialSimulationFilters returns a boolean if a field has been set.
+
+### GetCanContinue
+
+`func (o *SyntheticData) GetCanContinue() bool`
+
+GetCanContinue returns the CanContinue field if non-nil, zero value otherwise.
+
+### GetCanContinueOk
+
+`func (o *SyntheticData) GetCanContinueOk() (*bool, bool)`
+
+GetCanContinueOk returns a tuple with the CanContinue field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCanContinue
+
+`func (o *SyntheticData) SetCanContinue(v bool)`
+
+SetCanContinue sets CanContinue field to given value.
+
+
+### GetContinuedFromJobId
+
+`func (o *SyntheticData) GetContinuedFromJobId() string`
+
+GetContinuedFromJobId returns the ContinuedFromJobId field if non-nil, zero value otherwise.
+
+### GetContinuedFromJobIdOk
+
+`func (o *SyntheticData) GetContinuedFromJobIdOk() (*string, bool)`
+
+GetContinuedFromJobIdOk returns a tuple with the ContinuedFromJobId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetContinuedFromJobId
+
+`func (o *SyntheticData) SetContinuedFromJobId(v string)`
+
+SetContinuedFromJobId sets ContinuedFromJobId field to given value.
+
+### HasContinuedFromJobId
+
+`func (o *SyntheticData) HasContinuedFromJobId() bool`
+
+HasContinuedFromJobId returns a boolean if a field has been set.
 
 ### GetRunProcess
 

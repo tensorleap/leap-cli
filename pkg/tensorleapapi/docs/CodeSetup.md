@@ -13,13 +13,13 @@ Name | Type | Description | Notes
 **CustomLosses** | [**[]CustomLossInstance**](CustomLossInstance.md) |  | 
 **Metrics** | [**[]MetricInstance**](MetricInstance.md) |  | 
 **Simulations** | [**[]SimulationInstance**](SimulationInstance.md) |  | 
-**HasElementInstances** | **bool** |  | 
+**HasElementInstances** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
 ### NewCodeSetup
 
-`func NewCodeSetup(preprocess CodePreprocess, inputs []CodeInputInstance, metadata []CodeMetadataInstance, outputs []CodeOutputInstance, visualizers []VisualizerInstance, predictionTypes []PredictionTypeInstance, customLosses []CustomLossInstance, metrics []MetricInstance, simulations []SimulationInstance, hasElementInstances bool, ) *CodeSetup`
+`func NewCodeSetup(preprocess CodePreprocess, inputs []CodeInputInstance, metadata []CodeMetadataInstance, outputs []CodeOutputInstance, visualizers []VisualizerInstance, predictionTypes []PredictionTypeInstance, customLosses []CustomLossInstance, metrics []MetricInstance, simulations []SimulationInstance, ) *CodeSetup`
 
 NewCodeSetup instantiates a new CodeSetup object
 This constructor will assign default values to properties that have it defined,
@@ -233,6 +233,11 @@ and a boolean to check if the value has been set.
 
 SetHasElementInstances sets HasElementInstances field to given value.
 
+### HasHasElementInstances
+
+`func (o *CodeSetup) HasHasElementInstances() bool`
+
+HasHasElementInstances returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

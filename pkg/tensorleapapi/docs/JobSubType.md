@@ -27,12 +27,6 @@
 
 * `FETCH_SIMILAR` (value: `"Fetch Similar"`)
 
-* `EXPORT_PROJECT` (value: `"Export Project"`)
-
-* `COPY_PROJECT` (value: `"Copy Project"`)
-
-* `IMPORT_PROJECT` (value: `"Import Project"`)
-
 * `CODE_PARSE` (value: `"Code Parse"`)
 
 * `IMPORT_MODEL` (value: `"Import Model"`)

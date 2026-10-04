@@ -37,6 +37,7 @@ Name | Type | Description | Notes
 **NumOfSamplesToLabel** | Pointer to **float64** |  | [optional] 
 **TargetFilters** | [**[]ESFilter**](ESFilter.md) |  | 
 **Sources** | [**[]SyntheticDataJobParamsSourcesInner**](SyntheticDataJobParamsSourcesInner.md) |  | 
+**ContinuedFromJobId** | Pointer to **string** |  | [optional] 
 **InitialSimulationFilters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **SimulationNames** | **[]string** |  | 
 **PercentageOfSamplesToPrune** | Pointer to **float64** |  | [optional] 
@@ -48,14 +49,7 @@ Name | Type | Description | Notes
 **GroupBFilters** | [**[]ESFilter**](ESFilter.md) |  | 
 **GroupAFilters** | [**[]ESFilter**](ESFilter.md) |  | 
 **VisArtifactId** | **string** |  | 
-**ExportUrl** | **string** |  | 
-**ProjectVersion** | **float64** |  | 
-**ExportOptions** | [**ExportOptions**](ExportOptions.md) |  | 
-**AlreadyExported** | **bool** |  | 
-**ProjectExportMeta** | [**ExportProjectMeta**](ExportProjectMeta.md) |  | 
-**CopyToUrl** | Pointer to **string** |  | [optional] 
-**ImportUrl** | **string** |  | 
-**ProjectMeta** | [**ProjectMeta**](ProjectMeta.md) |  | 
+**ParentInsightId** | Pointer to **string** |  | [optional] 
 **SecretManagerId** | Pointer to **string** |  | [optional] 
 **CodeUrl** | **string** |  | 
 **CodeEntryFile** | **string** |  | 
@@ -72,7 +66,7 @@ Name | Type | Description | Notes
 
 ### NewJobParams
 
-`func NewJobParams(versionId string, inferenceArtifactId string, projectId string, batchSize float64, evaluatedEpoch float64, type_ ExportModelTypeEnum, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, labelingAlgorithm LabelingAlgorithm, targetFilters []ESFilter, sources []SyntheticDataJobParamsSourcesInner, simulationNames []string, metadataTags []string, splitAcrossMetadata []string, keepTogetherMetadata []string, splitsToResplit []SplitSubset, groupBFilters []ESFilter, groupAFilters []ESFilter, visArtifactId string, exportUrl string, projectVersion float64, exportOptions ExportOptions, alreadyExported bool, projectExportMeta ExportProjectMeta, importUrl string, projectMeta ProjectMeta, codeUrl string, codeEntryFile string, versionName string, updateActions []UpdateAction, ) *JobParams`
+`func NewJobParams(versionId string, inferenceArtifactId string, projectId string, batchSize float64, evaluatedEpoch float64, type_ ExportModelTypeEnum, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, labelingAlgorithm LabelingAlgorithm, targetFilters []ESFilter, sources []SyntheticDataJobParamsSourcesInner, simulationNames []string, metadataTags []string, splitAcrossMetadata []string, keepTogetherMetadata []string, splitsToResplit []SplitSubset, groupBFilters []ESFilter, groupAFilters []ESFilter, visArtifactId string, codeUrl string, codeEntryFile string, versionName string, updateActions []UpdateAction, ) *JobParams`
 
 NewJobParams instantiates a new JobParams object
 This constructor will assign default values to properties that have it defined,
@@ -817,6 +811,31 @@ and a boolean to check if the value has been set.
 SetSources sets Sources field to given value.
 
 
+### GetContinuedFromJobId
+
+`func (o *JobParams) GetContinuedFromJobId() string`
+
+GetContinuedFromJobId returns the ContinuedFromJobId field if non-nil, zero value otherwise.
+
+### GetContinuedFromJobIdOk
+
+`func (o *JobParams) GetContinuedFromJobIdOk() (*string, bool)`
+
+GetContinuedFromJobIdOk returns a tuple with the ContinuedFromJobId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetContinuedFromJobId
+
+`func (o *JobParams) SetContinuedFromJobId(v string)`
+
+SetContinuedFromJobId sets ContinuedFromJobId field to given value.
+
+### HasContinuedFromJobId
+
+`func (o *JobParams) HasContinuedFromJobId() bool`
+
+HasContinuedFromJobId returns a boolean if a field has been set.
+
 ### GetInitialSimulationFilters
 
 `func (o *JobParams) GetInitialSimulationFilters() []ESFilter`
@@ -1052,170 +1071,30 @@ and a boolean to check if the value has been set.
 SetVisArtifactId sets VisArtifactId field to given value.
 
 
-### GetExportUrl
+### GetParentInsightId
 
-`func (o *JobParams) GetExportUrl() string`
+`func (o *JobParams) GetParentInsightId() string`
 
-GetExportUrl returns the ExportUrl field if non-nil, zero value otherwise.
+GetParentInsightId returns the ParentInsightId field if non-nil, zero value otherwise.
 
-### GetExportUrlOk
+### GetParentInsightIdOk
 
-`func (o *JobParams) GetExportUrlOk() (*string, bool)`
+`func (o *JobParams) GetParentInsightIdOk() (*string, bool)`
 
-GetExportUrlOk returns a tuple with the ExportUrl field if it's non-nil, zero value otherwise
+GetParentInsightIdOk returns a tuple with the ParentInsightId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetExportUrl
+### SetParentInsightId
 
-`func (o *JobParams) SetExportUrl(v string)`
+`func (o *JobParams) SetParentInsightId(v string)`
 
-SetExportUrl sets ExportUrl field to given value.
+SetParentInsightId sets ParentInsightId field to given value.
 
+### HasParentInsightId
 
-### GetProjectVersion
+`func (o *JobParams) HasParentInsightId() bool`
 
-`func (o *JobParams) GetProjectVersion() float64`
-
-GetProjectVersion returns the ProjectVersion field if non-nil, zero value otherwise.
-
-### GetProjectVersionOk
-
-`func (o *JobParams) GetProjectVersionOk() (*float64, bool)`
-
-GetProjectVersionOk returns a tuple with the ProjectVersion field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetProjectVersion
-
-`func (o *JobParams) SetProjectVersion(v float64)`
-
-SetProjectVersion sets ProjectVersion field to given value.
-
-
-### GetExportOptions
-
-`func (o *JobParams) GetExportOptions() ExportOptions`
-
-GetExportOptions returns the ExportOptions field if non-nil, zero value otherwise.
-
-### GetExportOptionsOk
-
-`func (o *JobParams) GetExportOptionsOk() (*ExportOptions, bool)`
-
-GetExportOptionsOk returns a tuple with the ExportOptions field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetExportOptions
-
-`func (o *JobParams) SetExportOptions(v ExportOptions)`
-
-SetExportOptions sets ExportOptions field to given value.
-
-
-### GetAlreadyExported
-
-`func (o *JobParams) GetAlreadyExported() bool`
-
-GetAlreadyExported returns the AlreadyExported field if non-nil, zero value otherwise.
-
-### GetAlreadyExportedOk
-
-`func (o *JobParams) GetAlreadyExportedOk() (*bool, bool)`
-
-GetAlreadyExportedOk returns a tuple with the AlreadyExported field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAlreadyExported
-
-`func (o *JobParams) SetAlreadyExported(v bool)`
-
-SetAlreadyExported sets AlreadyExported field to given value.
-
-
-### GetProjectExportMeta
-
-`func (o *JobParams) GetProjectExportMeta() ExportProjectMeta`
-
-GetProjectExportMeta returns the ProjectExportMeta field if non-nil, zero value otherwise.
-
-### GetProjectExportMetaOk
-
-`func (o *JobParams) GetProjectExportMetaOk() (*ExportProjectMeta, bool)`
-
-GetProjectExportMetaOk returns a tuple with the ProjectExportMeta field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetProjectExportMeta
-
-`func (o *JobParams) SetProjectExportMeta(v ExportProjectMeta)`
-
-SetProjectExportMeta sets ProjectExportMeta field to given value.
-
-
-### GetCopyToUrl
-
-`func (o *JobParams) GetCopyToUrl() string`
-
-GetCopyToUrl returns the CopyToUrl field if non-nil, zero value otherwise.
-
-### GetCopyToUrlOk
-
-`func (o *JobParams) GetCopyToUrlOk() (*string, bool)`
-
-GetCopyToUrlOk returns a tuple with the CopyToUrl field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCopyToUrl
-
-`func (o *JobParams) SetCopyToUrl(v string)`
-
-SetCopyToUrl sets CopyToUrl field to given value.
-
-### HasCopyToUrl
-
-`func (o *JobParams) HasCopyToUrl() bool`
-
-HasCopyToUrl returns a boolean if a field has been set.
-
-### GetImportUrl
-
-`func (o *JobParams) GetImportUrl() string`
-
-GetImportUrl returns the ImportUrl field if non-nil, zero value otherwise.
-
-### GetImportUrlOk
-
-`func (o *JobParams) GetImportUrlOk() (*string, bool)`
-
-GetImportUrlOk returns a tuple with the ImportUrl field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetImportUrl
-
-`func (o *JobParams) SetImportUrl(v string)`
-
-SetImportUrl sets ImportUrl field to given value.
-
-
-### GetProjectMeta
-
-`func (o *JobParams) GetProjectMeta() ProjectMeta`
-
-GetProjectMeta returns the ProjectMeta field if non-nil, zero value otherwise.
-
-### GetProjectMetaOk
-
-`func (o *JobParams) GetProjectMetaOk() (*ProjectMeta, bool)`
-
-GetProjectMetaOk returns a tuple with the ProjectMeta field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetProjectMeta
-
-`func (o *JobParams) SetProjectMeta(v ProjectMeta)`
-
-SetProjectMeta sets ProjectMeta field to given value.
-
+HasParentInsightId returns a boolean if a field has been set.
 
 ### GetSecretManagerId
 

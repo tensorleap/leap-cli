@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**ParentInsightId** | Pointer to **string** |  | [optional] 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **InferenceArtifactId** | Pointer to **string** |  | [optional] 
 **VersionId** | Pointer to **string** |  | [optional] 
@@ -27,6 +28,31 @@ will change when the set of required properties is changed
 NewInsightsJobParamsWithDefaults instantiates a new InsightsJobParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetParentInsightId
+
+`func (o *InsightsJobParams) GetParentInsightId() string`
+
+GetParentInsightId returns the ParentInsightId field if non-nil, zero value otherwise.
+
+### GetParentInsightIdOk
+
+`func (o *InsightsJobParams) GetParentInsightIdOk() (*string, bool)`
+
+GetParentInsightIdOk returns a tuple with the ParentInsightId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetParentInsightId
+
+`func (o *InsightsJobParams) SetParentInsightId(v string)`
+
+SetParentInsightId sets ParentInsightId field to given value.
+
+### HasParentInsightId
+
+`func (o *InsightsJobParams) HasParentInsightId() bool`
+
+HasParentInsightId returns a boolean if a field has been set.
 
 ### GetFilters
 

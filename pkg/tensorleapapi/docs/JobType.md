@@ -33,10 +33,6 @@
 
 * `SYNTHETIC` (value: `"SYNTHETIC"`)
 
-* `EXPORT_PROJECT` (value: `"EXPORT_PROJECT"`)
-
-* `IMPORT_PROJECT` (value: `"IMPORT_PROJECT"`)
-
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

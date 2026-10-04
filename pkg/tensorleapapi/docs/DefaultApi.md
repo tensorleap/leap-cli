@@ -16,6 +16,7 @@ Method | HTTP request | Description
 [**CalcPopulationExplorationDigest**](DefaultAPI.md#CalcPopulationExplorationDigest) | **Post** /dashboards/calcPopulationExplorationDigest | 
 [**ClearUserJobs**](DefaultAPI.md#ClearUserJobs) | **Post** /users/clearUserJobs | 
 [**ClearUserNotifications**](DefaultAPI.md#ClearUserNotifications) | **Post** /users/clearUserNotifications | 
+[**ContinueAutoSyntheticData**](DefaultAPI.md#ContinueAutoSyntheticData) | **Post** /datasetcuration/continueAutoSyntheticData | 
 [**ContinueEvaluate**](DefaultAPI.md#ContinueEvaluate) | **Post** /evaluate/continueEvaluate | 
 [**ContinueUpdateEvaluate**](DefaultAPI.md#ContinueUpdateEvaluate) | **Post** /evaluate/continueUpdateEvaluate | 
 [**CreateSamplesVisualizations**](DefaultAPI.md#CreateSamplesVisualizations) | **Post** /visualizations/createSamplesVisualizations | 
@@ -38,11 +39,9 @@ Method | HTTP request | Description
 [**DeleteUserById**](DefaultAPI.md#DeleteUserById) | **Post** /users/deleteUserById | 
 [**DeleteVersion**](DefaultAPI.md#DeleteVersion) | **Post** /versions/deleteVersion | 
 [**DeleteVisualizations**](DefaultAPI.md#DeleteVisualizations) | **Post** /visualizations/deleteVisualizations | 
-[**DownloadProject**](DefaultAPI.md#DownloadProject) | **Get** /projects/downloadProject/{projectId} | 
 [**EnsureCollectionIndex**](DefaultAPI.md#EnsureCollectionIndex) | **Post** /sample-collection/ensureCollectionIndex | 
 [**Evaluate**](DefaultAPI.md#Evaluate) | **Post** /evaluate/evaluate | 
 [**ExportAnalysis**](DefaultAPI.md#ExportAnalysis) | **Post** /analysis-export/exportAnalysis | 
-[**ExportProject**](DefaultAPI.md#ExportProject) | **Post** /projects/exportProject | 
 [**ExtendTrial**](DefaultAPI.md#ExtendTrial) | **Post** /auth/extendTrial | 
 [**FetchSimilar**](DefaultAPI.md#FetchSimilar) | **Post** /visualizations/fetchSimilar | 
 [**GenerateAutoSyntheticData**](DefaultAPI.md#GenerateAutoSyntheticData) | **Post** /datasetcuration/generateAutoSyntheticData | 
@@ -92,7 +91,6 @@ Method | HTTP request | Description
 [**GetInsightsSettings**](DefaultAPI.md#GetInsightsSettings) | **Post** /insightsSettings/getInsightsSettings | 
 [**GetIssueFileUploadSignedUrl**](DefaultAPI.md#GetIssueFileUploadSignedUrl) | **Post** /issues/getIssueFileUploadSignedUrl | 
 [**GetJobLogs**](DefaultAPI.md#GetJobLogs) | **Post** /jobs/getJobLogs | 
-[**GetLatestExportedProject**](DefaultAPI.md#GetLatestExportedProject) | **Post** /projects/getLatestExportedProject | 
 [**GetMachineTypes**](DefaultAPI.md#GetMachineTypes) | **Post** /teams/getMachineTypes | 
 [**GetMaxActiveUsers**](DefaultAPI.md#GetMaxActiveUsers) | **Post** /metadata/getMaxActiveUsers | 
 [**GetMeanAveragePrecision**](DefaultAPI.md#GetMeanAveragePrecision) | **Post** /sessionmetrics/getMeanAveragePrecision | 
@@ -134,6 +132,7 @@ Method | HTTP request | Description
 [**GetUploadSignedUrl**](DefaultAPI.md#GetUploadSignedUrl) | **Post** /versions/getUploadSignedUrl | 
 [**GetUserUiState**](DefaultAPI.md#GetUserUiState) | **Get** /users/getUiState | 
 [**GetVersionJobs**](DefaultAPI.md#GetVersionJobs) | **Post** /jobs/getVersionJobs | 
+[**GetVersionModelGraph**](DefaultAPI.md#GetVersionModelGraph) | **Post** /versions/getVersionModelGraph | 
 [**GetVersionSampleOrder**](DefaultAPI.md#GetVersionSampleOrder) | **Post** /sample-collection/getVersionSampleOrder | 
 [**GetVersionSamplesMetadata**](DefaultAPI.md#GetVersionSamplesMetadata) | **Post** /sample-collection/getVersionSamplesMetadata | 
 [**GetVersionsEpochs**](DefaultAPI.md#GetVersionsEpochs) | **Post** /versions/getVersionsEpochs | 
@@ -141,7 +140,6 @@ Method | HTTP request | Description
 [**GetVisualization**](DefaultAPI.md#GetVisualization) | **Post** /visualizations/getVisualization | 
 [**GetXYChart**](DefaultAPI.md#GetXYChart) | **Post** /sessionmetrics/getXYChart | 
 [**HealthCheck**](DefaultAPI.md#HealthCheck) | **Get** /monitor/healthCheck | 
-[**ImportProject**](DefaultAPI.md#ImportProject) | **Post** /projects/importProject | 
 [**InitExperiment**](DefaultAPI.md#InitExperiment) | **Post** /versions/initExperiment | 
 [**KeyGen**](DefaultAPI.md#KeyGen) | **Post** /auth/keygen | 
 [**ListTargets**](DefaultAPI.md#ListTargets) | **Post** /analysis-export/listTargets | 
@@ -196,8 +194,6 @@ Method | HTTP request | Description
 [**UpdateUserRole**](DefaultAPI.md#UpdateUserRole) | **Post** /users/updateUserRole | 
 [**UpdateUserStatus**](DefaultAPI.md#UpdateUserStatus) | **Post** /users/updateUserStatus | 
 [**UpdateUserTeam**](DefaultAPI.md#UpdateUserTeam) | **Post** /users/updateUserTeam | 
-[**UpdateVersion**](DefaultAPI.md#UpdateVersion) | **Post** /versions/updateVersion | 
-[**UploadProject**](DefaultAPI.md#UploadProject) | **Put** /projects/uploadProject/{projectName} | 
 [**UpsertState**](DefaultAPI.md#UpsertState) | **Post** /projectstate/upsertState | 
 [**Warmup**](DefaultAPI.md#Warmup) | **Post** /jobs/warmup | 
 [**WhoAmI**](DefaultAPI.md#WhoAmI) | **Post** /auth/whoAmI | 
@@ -730,7 +726,7 @@ import (
 )
 
 func main() {
-	applyInsightsStatusParams := *openapiclient.NewApplyInsightsStatusParams("InsightId_example", openapiclient.InsightStatus("InReview"), "ProjectId_example") // ApplyInsightsStatusParams | 
+	applyInsightsStatusParams := *openapiclient.NewApplyInsightsStatusParams([]string{"InsightIds_example"}, openapiclient.InsightStatus("InReview"), "ProjectId_example") // ApplyInsightsStatusParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -945,6 +941,70 @@ Other parameters are passed through a pointer to a apiClearUserNotificationsRequ
 
 - **Content-Type**: Not defined
 - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ContinueAutoSyntheticData
+
+> Job ContinueAutoSyntheticData(ctx).ContinueSyntheticDataParams(continueSyntheticDataParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	continueSyntheticDataParams := *openapiclient.NewContinueSyntheticDataParams("ProjectId_example", "JobId_example") // ContinueSyntheticDataParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ContinueAutoSyntheticData(context.Background()).ContinueSyntheticDataParams(continueSyntheticDataParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ContinueAutoSyntheticData``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ContinueAutoSyntheticData`: Job
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ContinueAutoSyntheticData`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiContinueAutoSyntheticDataRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **continueSyntheticDataParams** | [**ContinueSyntheticDataParams**](ContinueSyntheticDataParams.md) |  | 
+
+### Return type
+
+[**Job**](Job.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -2327,72 +2387,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## DownloadProject
-
-> DownloadProject(ctx, projectId).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-	projectId := "projectId_example" // string | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.DefaultAPI.DownloadProject(context.Background(), projectId).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DownloadProject``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**projectId** | **string** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiDownloadProjectRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-### Return type
-
- (empty response body)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## EnsureCollectionIndex
 
 > EnsureCollectionIndexResponse EnsureCollectionIndex(ctx).EnsureCollectionIndexParams(ensureCollectionIndexParams).Execute()
@@ -2570,70 +2564,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ExportAnalysisResponse**](ExportAnalysisResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## ExportProject
-
-> ExportProjectResponse ExportProject(ctx).ExportProjectRequest(exportProjectRequest).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-	exportProjectRequest := *openapiclient.NewExportProjectRequest("ProjectId_example") // ExportProjectRequest | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DefaultAPI.ExportProject(context.Background()).ExportProjectRequest(exportProjectRequest).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ExportProject``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `ExportProject`: ExportProjectResponse
-	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ExportProject`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiExportProjectRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **exportProjectRequest** | [**ExportProjectRequest**](ExportProjectRequest.md) |  | 
-
-### Return type
-
-[**ExportProjectResponse**](ExportProjectResponse.md)
 
 ### Authorization
 
@@ -5746,70 +5676,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetLatestExportedProject
-
-> LatestExportedProject GetLatestExportedProject(ctx).GetLatestExportedProjectParams(getLatestExportedProjectParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-	getLatestExportedProjectParams := *openapiclient.NewGetLatestExportedProjectParams("ProjectId_example") // GetLatestExportedProjectParams | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DefaultAPI.GetLatestExportedProject(context.Background()).GetLatestExportedProjectParams(getLatestExportedProjectParams).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetLatestExportedProject``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `GetLatestExportedProject`: LatestExportedProject
-	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetLatestExportedProject`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetLatestExportedProjectRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **getLatestExportedProjectParams** | [**GetLatestExportedProjectParams**](GetLatestExportedProjectParams.md) |  | 
-
-### Return type
-
-[**LatestExportedProject**](LatestExportedProject.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## GetMachineTypes
 
 > GetMachineTypesResponse GetMachineTypes(ctx).Execute()
@@ -8394,6 +8260,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetVersionModelGraph
+
+> GetVersionModelGraphResponse GetVersionModelGraph(ctx).GetVersionModelGraphParams(getVersionModelGraphParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getVersionModelGraphParams := *openapiclient.NewGetVersionModelGraphParams("VersionId_example", "ProjectId_example") // GetVersionModelGraphParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetVersionModelGraph(context.Background()).GetVersionModelGraphParams(getVersionModelGraphParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetVersionModelGraph``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetVersionModelGraph`: GetVersionModelGraphResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetVersionModelGraph`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetVersionModelGraphRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getVersionModelGraphParams** | [**GetVersionModelGraphParams**](GetVersionModelGraphParams.md) |  | 
+
+### Return type
+
+[**GetVersionModelGraphResponse**](GetVersionModelGraphResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetVersionSampleOrder
 
 > GetVersionSampleOrderResponse GetVersionSampleOrder(ctx).GetVersionSampleOrderParams(getVersionSampleOrderParams).Execute()
@@ -8830,70 +8760,6 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## ImportProject
-
-> ImportProjectResponse ImportProject(ctx).ImportProjectRequest(importProjectRequest).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-	importProjectRequest := *openapiclient.NewImportProjectRequest("Name_example", "Description_example", []string{"Tags_example"}, openapiclient.HubPublishPolicy("public"), "ImportUrl_example") // ImportProjectRequest | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DefaultAPI.ImportProject(context.Background()).ImportProjectRequest(importProjectRequest).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ImportProject``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `ImportProject`: ImportProjectResponse
-	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ImportProject`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiImportProjectRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **importProjectRequest** | [**ImportProjectRequest**](ImportProjectRequest.md) |  | 
-
-### Return type
-
-[**ImportProjectResponse**](ImportProjectResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -12282,138 +12148,6 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## UpdateVersion
-
-> UpdateVersionResponse UpdateVersion(ctx).UpdateVersionParams(updateVersionParams).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-	updateVersionParams := *openapiclient.NewUpdateVersionParams("VersionId_example", "ProjectId_example", *openapiclient.NewModelGraph("Id_example", map[string]interface{}(123))) // UpdateVersionParams | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DefaultAPI.UpdateVersion(context.Background()).UpdateVersionParams(updateVersionParams).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateVersion``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `UpdateVersion`: UpdateVersionResponse
-	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.UpdateVersion`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiUpdateVersionRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **updateVersionParams** | [**UpdateVersionParams**](UpdateVersionParams.md) |  | 
-
-### Return type
-
-[**UpdateVersionResponse**](UpdateVersionResponse.md)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## UploadProject
-
-> UploadProject(ctx, projectName).Description(description).Execute()
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
-)
-
-func main() {
-	projectName := "projectName_example" // string | 
-	description := "description_example" // string |  (optional) (default to "")
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.DefaultAPI.UploadProject(context.Background(), projectName).Description(description).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UploadProject``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**projectName** | **string** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiUploadProjectRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
- **description** | **string** |  | [default to &quot;&quot;]
-
-### Return type
-
- (empty response body)
-
-### Authorization
-
-[jwt](../README.md#jwt)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

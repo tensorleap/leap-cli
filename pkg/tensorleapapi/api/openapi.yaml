@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.151
+  version: 11.0.161
 servers:
 - url: /api/v2
 paths:
@@ -416,6 +416,25 @@ paths:
       responses:
         "204":
           description: No content
+      security:
+      - jwt: []
+  /datasetcuration/continueAutoSyntheticData:
+    post:
+      operationId: ContinueAutoSyntheticData
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContinueSyntheticDataParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+          description: Ok
       security:
       - jwt: []
   /datasetcuration/getSyntheticData:
@@ -1704,25 +1723,6 @@ paths:
           description: No content
       security:
       - jwt: []
-  /projects/importProject:
-    post:
-      operationId: ImportProject
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ImportProjectRequest"
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ImportProjectResponse"
-          description: Ok
-      security:
-      - jwt: []
   /projects/getProjects:
     post:
       operationId: GetProjects
@@ -1789,25 +1789,6 @@ paths:
           description: Ok
       security:
       - jwt: []
-  /projects/getLatestExportedProject:
-    post:
-      operationId: GetLatestExportedProject
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/GetLatestExportedProjectParams"
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/LatestExportedProject"
-          description: Ok
-      security:
-      - jwt: []
   /projects/getColorSupplierData/{projectId}:
     get:
       operationId: GetColorSupplierData
@@ -1826,65 +1807,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/GetColorSupplierDataResponse"
           description: Ok
-      security:
-      - jwt: []
-  /projects/exportProject:
-    post:
-      operationId: ExportProject
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ExportProjectRequest"
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ExportProjectResponse"
-          description: Ok
-      security:
-      - jwt: []
-  /projects/downloadProject/{projectId}:
-    get:
-      operationId: DownloadProject
-      parameters:
-      - explode: false
-        in: path
-        name: projectId
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "204":
-          description: No content
-      security:
-      - jwt: []
-  /projects/uploadProject/{projectName}:
-    put:
-      operationId: UploadProject
-      parameters:
-      - explode: false
-        in: path
-        name: projectName
-        required: true
-        schema:
-          type: string
-        style: simple
-      - explode: true
-        in: query
-        name: description
-        required: false
-        schema:
-          default: ""
-          type: string
-        style: form
-      responses:
-        "204":
-          description: No content
       security:
       - jwt: []
   /sample-collection/getSampleCollections:
@@ -2680,6 +2602,25 @@ paths:
           description: Ok
       security:
       - jwt: []
+  /versions/getVersionModelGraph:
+    post:
+      operationId: GetVersionModelGraph
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetVersionModelGraphParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetVersionModelGraphResponse"
+          description: Ok
+      security:
+      - jwt: []
   /versions/deleteVersion:
     post:
       operationId: DeleteVersion
@@ -2693,25 +2634,6 @@ paths:
       responses:
         "204":
           description: No content
-      security:
-      - jwt: []
-  /versions/updateVersion:
-    post:
-      operationId: UpdateVersion
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UpdateVersionParams"
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UpdateVersionResponse"
-          description: Ok
       security:
       - jwt: []
   /versions/setVersionUpdateActions:
@@ -13901,7 +13823,11 @@ components:
       type: object
     AutoSyntheticDataJobParams:
       properties:
+        continuedFromJobId:
+          type: string
         digest:
+          description: "Lineage key: a continuation reuses its predecessor's digest\
+            \ (engine state lives under it)."
           type: string
         initialSimulationFilters:
           items:
@@ -14065,6 +13991,8 @@ components:
       type: object
     InsightsJobParams:
       properties:
+        parentInsightId:
+          type: string
         filters:
           items:
             $ref: "#/components/schemas/ESFilter"
@@ -14080,121 +14008,6 @@ components:
           type: string
       required:
       - type
-      type: object
-    ExportOptions:
-      example:
-        excludeCalculatedFiles: true
-      properties:
-        excludeCalculatedFiles:
-          type: boolean
-      type: object
-    Record_string.string-or-string-Array_:
-      description: Construct a type with a set of properties K of type T
-      properties: {}
-      type: object
-    ExportProjectMeta:
-      additionalProperties: true
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        tags:
-          items:
-            type: string
-          type: array
-        categories:
-          description: Construct a type with a set of properties K of type T
-          properties: {}
-          type: object
-        bgImagePath:
-          type: string
-        schemaVersion:
-          format: double
-          type: number
-        sourceProjectId:
-          type: string
-      required:
-      - bgImagePath
-      - categories
-      - name
-      - schemaVersion
-      - sourceProjectId
-      - tags
-      type: object
-    ExportProjectParams:
-      additionalProperties: true
-      properties:
-        exportUrl:
-          type: string
-        projectVersion:
-          format: double
-          type: number
-        exportOptions:
-          $ref: "#/components/schemas/ExportOptions"
-        alreadyExported:
-          type: boolean
-        projectExportMeta:
-          $ref: "#/components/schemas/ExportProjectMeta"
-        copyToUrl:
-          type: string
-      required:
-      - alreadyExported
-      - exportOptions
-      - exportUrl
-      - projectExportMeta
-      - projectVersion
-      type: object
-    HubPublishPolicy:
-      enum:
-      - public
-      - alpha
-      - no_publish
-      type: string
-    ProjectMeta:
-      additionalProperties: true
-      example:
-        hubPublishPolicy: public
-        name: name
-        description: description
-        bgImageUrl: bgImageUrl
-        categories: "{}"
-        tags:
-        - tags
-        - tags
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        tags:
-          items:
-            type: string
-          type: array
-        hubPublishPolicy:
-          $ref: "#/components/schemas/HubPublishPolicy"
-        bgImageUrl:
-          type: string
-        categories:
-          description: Construct a type with a set of properties K of type T
-          properties: {}
-          type: object
-      required:
-      - description
-      - hubPublishPolicy
-      - name
-      - tags
-      type: object
-    ImportProjectParams:
-      additionalProperties: true
-      properties:
-        importUrl:
-          type: string
-        projectMeta:
-          $ref: "#/components/schemas/ProjectMeta"
-      required:
-      - importUrl
-      - projectMeta
       type: object
     ParesCodeSnapshotParams:
       additionalProperties: true
@@ -14311,8 +14124,6 @@ components:
       - $ref: "#/components/schemas/DomainGapJobParams"
       - $ref: "#/components/schemas/UnlabeledAnalysisJobParams"
       - $ref: "#/components/schemas/InsightsJobParams"
-      - $ref: "#/components/schemas/ExportProjectParams"
-      - $ref: "#/components/schemas/ImportProjectParams"
       - $ref: "#/components/schemas/ParesCodeSnapshotParams"
       - $ref: "#/components/schemas/PushCodeSnapshotParams"
       - $ref: "#/components/schemas/UpdateEvaluateArtifactParams"
@@ -14742,8 +14553,6 @@ components:
       - STREAMING_SAMPLES_VIS
       - PUSH
       - SYNTHETIC
-      - EXPORT_PROJECT
-      - IMPORT_PROJECT
       type: string
     JobSubType:
       enum:
@@ -14759,9 +14568,6 @@ components:
       - Sample Analysis
       - Graph Validate
       - Fetch Similar
-      - Export Project
-      - Copy Project
-      - Import Project
       - Code Parse
       - Import Model
       - Push
@@ -14919,22 +14725,6 @@ components:
       - sample
       - versionId
       type: object
-    JobNotificationProjectContext:
-      additionalProperties: true
-      properties:
-        jobId:
-          type: string
-        jobType:
-          $ref: "#/components/schemas/JobType"
-        jobSubType:
-          $ref: "#/components/schemas/JobSubType"
-        projectName:
-          type: string
-      required:
-      - jobId
-      - jobType
-      - projectName
-      type: object
     JobNotificationContext:
       anyOf:
       - $ref: "#/components/schemas/JobNotificationBaseContext"
@@ -14942,7 +14732,6 @@ components:
       - $ref: "#/components/schemas/JobNotificationModelContext"
       - $ref: "#/components/schemas/JobNotificationAnalyzeContext"
       - $ref: "#/components/schemas/JobNotificationSampleContext"
-      - $ref: "#/components/schemas/JobNotificationProjectContext"
     Notification:
       additionalProperties: true
       example:
@@ -19187,6 +18976,141 @@ components:
       - targetFilters
       - versionId
       type: object
+    EventsSnapshot:
+      additionalProperties: true
+      example:
+        events:
+        - name: name
+          progress:
+            total: 6.027456183070403
+            current: 1.4658129805029452
+          id: id
+          status: UNSTARTED
+        - name: name
+          progress:
+            total: 6.027456183070403
+            current: 1.4658129805029452
+          id: id
+          status: UNSTARTED
+        snapshotIndex: 0.8008281904610115
+      properties:
+        events:
+          items:
+            $ref: "#/components/schemas/JobEvent"
+          type: array
+        snapshotIndex:
+          format: double
+          type: number
+      required:
+      - events
+      - snapshotIndex
+      type: object
+    Job:
+      additionalProperties: true
+      example:
+        eventsSnapshot:
+          events:
+          - name: name
+            progress:
+              total: 6.027456183070403
+              current: 1.4658129805029452
+            id: id
+            status: UNSTARTED
+          - name: name
+            progress:
+              total: 6.027456183070403
+              current: 1.4658129805029452
+            id: id
+            status: UNSTARTED
+          snapshotIndex: 0.8008281904610115
+        type: STREAMING_HANDLER
+        params:
+          inferenceArtifactId: inferenceArtifactId
+          versionId: versionId
+          noVisualization: true
+          monitor: true
+          batchSize: 5.962133916683182
+          projectId: projectId
+        version: version
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        versionId: versionId
+        createdBy: createdBy
+        chainedEvaluate:
+          jobId: jobId
+          error: error
+          status: pending
+        teamId: teamId
+        subType: Evaluate
+        experimentId: experimentId
+        projectId: projectId
+        cid: cid
+        status: UNSTARTED
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+        codeSnapshotInfo:
+          name: name
+          codeSnapshotId: codeSnapshotId
+        logsBlobName: logsBlobName
+      properties:
+        projectId:
+          type: string
+        cid:
+          type: string
+        createdBy:
+          type: string
+        version:
+          type: string
+        type:
+          $ref: "#/components/schemas/JobType"
+        subType:
+          $ref: "#/components/schemas/JobSubType"
+        status:
+          $ref: "#/components/schemas/JobStatus"
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        params:
+          $ref: "#/components/schemas/JobParams"
+        versionId:
+          type: string
+        experimentId:
+          type: string
+        teamId:
+          type: string
+        codeSnapshotInfo:
+          $ref: "#/components/schemas/CodeSnapshotInfo"
+        eventsSnapshot:
+          $ref: "#/components/schemas/EventsSnapshot"
+        logsBlobName:
+          type: string
+        chainedEvaluate:
+          $ref: "#/components/schemas/ChainedEvaluateInfo"
+      required:
+      - cid
+      - createdAt
+      - createdBy
+      - status
+      - teamId
+      - type
+      - updatedAt
+      type: object
+    ContinueSyntheticDataParams:
+      additionalProperties: true
+      example:
+        jobId: jobId
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        jobId:
+          description: The failed/stopped/terminated automatic synthetic job to continue.
+          type: string
+      required:
+      - jobId
+      - projectId
+      type: object
     SyntheticData:
       additionalProperties: true
       example:
@@ -21075,9 +20999,11 @@ components:
             - null
             gt: 5.637376656633329
           operator: between
+        canContinue: true
         simulationNames:
         - simulationNames
         - simulationNames
+        continuedFromJobId: continuedFromJobId
         jobId: jobId
         createdAt: 2000-01-23T04:56:07.000+00:00
         versionId: versionId
@@ -21132,9 +21058,19 @@ components:
           items:
             $ref: "#/components/schemas/ESFilter"
           type: array
+        canContinue:
+          description: |-
+            Server-derived: an auto job in FAILED | STOPPED | TERMINATED with no
+            synthetic job active on its version. Same rule the continue endpoint enforces.
+          type: boolean
+        continuedFromJobId:
+          description: Set on jobs created via continueAutoSyntheticData — the immediate
+            predecessor.
+          type: string
         runProcess:
           $ref: "#/components/schemas/RunProcess"
       required:
+      - canContinue
       - createdAt
       - createdBy
       - id
@@ -23034,9 +22970,11 @@ components:
               - null
               gt: 5.637376656633329
             operator: between
+          canContinue: true
           simulationNames:
           - simulationNames
           - simulationNames
+          continuedFromJobId: continuedFromJobId
           jobId: jobId
           createdAt: 2000-01-23T04:56:07.000+00:00
           versionId: versionId
@@ -24932,9 +24870,11 @@ components:
               - null
               gt: 5.637376656633329
             operator: between
+          canContinue: true
           simulationNames:
           - simulationNames
           - simulationNames
+          continuedFromJobId: continuedFromJobId
           jobId: jobId
           createdAt: 2000-01-23T04:56:07.000+00:00
           versionId: versionId
@@ -33744,126 +33684,6 @@ components:
       - projectId
       - unlabeledAnalysisId
       type: object
-    EventsSnapshot:
-      additionalProperties: true
-      example:
-        events:
-        - name: name
-          progress:
-            total: 6.027456183070403
-            current: 1.4658129805029452
-          id: id
-          status: UNSTARTED
-        - name: name
-          progress:
-            total: 6.027456183070403
-            current: 1.4658129805029452
-          id: id
-          status: UNSTARTED
-        snapshotIndex: 0.8008281904610115
-      properties:
-        events:
-          items:
-            $ref: "#/components/schemas/JobEvent"
-          type: array
-        snapshotIndex:
-          format: double
-          type: number
-      required:
-      - events
-      - snapshotIndex
-      type: object
-    Job:
-      additionalProperties: true
-      example:
-        eventsSnapshot:
-          events:
-          - name: name
-            progress:
-              total: 6.027456183070403
-              current: 1.4658129805029452
-            id: id
-            status: UNSTARTED
-          - name: name
-            progress:
-              total: 6.027456183070403
-              current: 1.4658129805029452
-            id: id
-            status: UNSTARTED
-          snapshotIndex: 0.8008281904610115
-        type: STREAMING_HANDLER
-        params:
-          inferenceArtifactId: inferenceArtifactId
-          versionId: versionId
-          noVisualization: true
-          monitor: true
-          batchSize: 5.962133916683182
-          projectId: projectId
-        version: version
-        createdAt: 2000-01-23T04:56:07.000+00:00
-        versionId: versionId
-        createdBy: createdBy
-        chainedEvaluate:
-          jobId: jobId
-          error: error
-          status: pending
-        teamId: teamId
-        subType: Evaluate
-        experimentId: experimentId
-        projectId: projectId
-        cid: cid
-        status: UNSTARTED
-        updatedAt: 2000-01-23T04:56:07.000+00:00
-        codeSnapshotInfo:
-          name: name
-          codeSnapshotId: codeSnapshotId
-        logsBlobName: logsBlobName
-      properties:
-        projectId:
-          type: string
-        cid:
-          type: string
-        createdBy:
-          type: string
-        version:
-          type: string
-        type:
-          $ref: "#/components/schemas/JobType"
-        subType:
-          $ref: "#/components/schemas/JobSubType"
-        status:
-          $ref: "#/components/schemas/JobStatus"
-        createdAt:
-          format: date-time
-          type: string
-        updatedAt:
-          format: date-time
-          type: string
-        params:
-          $ref: "#/components/schemas/JobParams"
-        versionId:
-          type: string
-        experimentId:
-          type: string
-        teamId:
-          type: string
-        codeSnapshotInfo:
-          $ref: "#/components/schemas/CodeSnapshotInfo"
-        eventsSnapshot:
-          $ref: "#/components/schemas/EventsSnapshot"
-        logsBlobName:
-          type: string
-        chainedEvaluate:
-          $ref: "#/components/schemas/ChainedEvaluateInfo"
-      required:
-      - cid
-      - createdAt
-      - createdBy
-      - status
-      - teamId
-      - type
-      - updatedAt
-      type: object
     ContinueEvaluateParams:
       additionalProperties: true
       description: |-
@@ -34537,18 +34357,22 @@ components:
     ApplyInsightsStatusParams:
       additionalProperties: true
       example:
-        insightId: insightId
         projectId: projectId
+        insightIds:
+        - insightIds
+        - insightIds
         status: InReview
       properties:
-        insightId:
-          type: string
+        insightIds:
+          items:
+            type: string
+          type: array
         status:
           $ref: "#/components/schemas/InsightStatus"
         projectId:
           type: string
       required:
-      - insightId
+      - insightIds
       - projectId
       - status
       type: object
@@ -34573,6 +34397,7 @@ components:
       additionalProperties: true
       example:
         versionId: versionId
+        parentInsightId: parentInsightId
         refresh: true
         filters:
         - field: field
@@ -35035,6 +34860,8 @@ components:
           type: array
         refresh:
           type: boolean
+        parentInsightId:
+          type: string
       required:
       - projectId
       type: object
@@ -36346,8 +36173,6 @@ components:
         isCloud: true
         disableDatadogMetrics: true
         proxyUrl: proxyUrl
-        hubDefaultNamespace: hubDefaultNamespace
-        hubUrl: hubUrl
         clientStoragePrefixUrl: clientStoragePrefixUrl
       properties:
         clientStoragePrefixUrl:
@@ -36355,10 +36180,6 @@ components:
         schemaVersion:
           format: double
           type: number
-        hubDefaultNamespace:
-          type: string
-        hubUrl:
-          type: string
         disableDatadogMetrics:
           type: boolean
         isCloud:
@@ -36375,8 +36196,6 @@ components:
       - clientStoragePrefixUrl
       - disableDatadogMetrics
       - gatewayUrl
-      - hubDefaultNamespace
-      - hubUrl
       - isCloud
       - proxyUrl
       - schemaVersion
@@ -41438,13 +41257,22 @@ components:
       enum:
       - visible
       - trash
-      - importing
       type: string
     ProjectAccess:
       enum:
       - public
       - local
       type: string
+    HubPublishPolicy:
+      enum:
+      - public
+      - alpha
+      - no_publish
+      type: string
+    Record_string.string-or-string-Array_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
     Project:
       additionalProperties: true
       example:
@@ -41541,6 +41369,40 @@ components:
       required:
       - project
       type: object
+    ProjectMeta:
+      additionalProperties: true
+      example:
+        hubPublishPolicy: public
+        name: name
+        description: description
+        bgImageUrl: bgImageUrl
+        categories: "{}"
+        tags:
+        - tags
+        - tags
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        hubPublishPolicy:
+          $ref: "#/components/schemas/HubPublishPolicy"
+        bgImageUrl:
+          type: string
+        categories:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+      required:
+      - description
+      - hubPublishPolicy
+      - name
+      - tags
+      type: object
     UpdateProjectMetaRequest:
       additionalProperties: true
       example:
@@ -41577,54 +41439,6 @@ components:
       - hubPublishPolicy
       - name
       - projectId
-      - tags
-      type: object
-    ImportProjectResponse:
-      additionalProperties: true
-      example:
-        jobId: jobId
-      properties:
-        jobId:
-          type: string
-      required:
-      - jobId
-      type: object
-    ImportProjectRequest:
-      additionalProperties: true
-      example:
-        hubPublishPolicy: public
-        name: name
-        description: description
-        bgImageUrl: bgImageUrl
-        categories: "{}"
-        importUrl: importUrl
-        tags:
-        - tags
-        - tags
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        tags:
-          items:
-            type: string
-          type: array
-        hubPublishPolicy:
-          $ref: "#/components/schemas/HubPublishPolicy"
-        bgImageUrl:
-          type: string
-        categories:
-          description: Construct a type with a set of properties K of type T
-          properties: {}
-          type: object
-        importUrl:
-          type: string
-      required:
-      - description
-      - hubPublishPolicy
-      - importUrl
-      - name
       - tags
       type: object
     GetProjectsResponse:
@@ -41769,53 +41583,6 @@ components:
       required:
       - projectId
       type: object
-    LatestExportedProjectItem:
-      additionalProperties: true
-      example:
-        date: 0.8008281904610115
-        filePath: filePath
-        projectId: projectId
-      properties:
-        projectId:
-          type: string
-        date:
-          format: double
-          type: number
-        filePath:
-          type: string
-      required:
-      - date
-      - filePath
-      - projectId
-      type: object
-    LatestExportedProject:
-      additionalProperties: true
-      example:
-        latest:
-        - date: 0.8008281904610115
-          filePath: filePath
-          projectId: projectId
-        - date: 0.8008281904610115
-          filePath: filePath
-          projectId: projectId
-      properties:
-        latest:
-          items:
-            $ref: "#/components/schemas/LatestExportedProjectItem"
-          type: array
-      required:
-      - latest
-      type: object
-    GetLatestExportedProjectParams:
-      additionalProperties: true
-      example:
-        projectId: projectId
-      properties:
-        projectId:
-          type: string
-      required:
-      - projectId
-      type: object
     ColorLabelIndexMap:
       additionalProperties:
         format: double
@@ -41838,36 +41605,6 @@ components:
           nullable: true
       required:
       - data
-      type: object
-    ExportProjectResponse:
-      additionalProperties: true
-      example:
-        jobId: jobId
-      properties:
-        jobId:
-          type: string
-      required:
-      - jobId
-      type: object
-    ExportProjectRequest:
-      additionalProperties: true
-      example:
-        noCache: true
-        options:
-          excludeCalculatedFiles: true
-        projectId: projectId
-        copyToUrl: copyToUrl
-      properties:
-        projectId:
-          type: string
-        copyToUrl:
-          type: string
-        noCache:
-          type: boolean
-        options:
-          $ref: "#/components/schemas/ExportOptions"
-      required:
-      - projectId
       type: object
     CollectionPopulationStatus:
       description: |-
@@ -45770,26 +45507,6 @@ components:
       - blobPath
       - data
       type: object
-    Record_string.Node_:
-      description: Construct a type with a set of properties K of type T
-      properties: {}
-      type: object
-    ModelGraph:
-      additionalProperties: true
-      example:
-        nodes: "{}"
-        id: id
-      properties:
-        id:
-          type: string
-        nodes:
-          description: Construct a type with a set of properties K of type T
-          properties: {}
-          type: object
-      required:
-      - id
-      - nodes
-      type: object
     VersionStatus:
       enum:
       - draft
@@ -46086,18 +45803,40 @@ components:
     Version:
       additionalProperties: true
       example:
+        updateActions:
+        - update_metadata
+        - update_metadata
         notes: notes
+        serialNumber: 1.4658129805029452
         color: color
-        data:
-          nodes: "{}"
-          id: id
         modelId: modelId
+        resources:
+          overrided_version_id: overrided_version_id
+          inference_resources:
+            metric_compute_insights: metric_compute_insights
+            metadata: metadata
+            metric_directions: metric_directions
+          es_model_id: es_model_id
+          population_exploration_digest_seed_count: 6.027456183070403
+          inference_artifact_id: inference_artifact_id
+          es_inspection_index: es_inspection_index
+          vis_resources:
+            insights_revision: insights_revision
+            sample_visualizers_revision: sample_visualizers_revision
+          csv_blob_path: csv_blob_path
+          vis_artifact_id: vis_artifact_id
+          es_metrics_index: es_metrics_index
+        epochTags:
+          key: 0.8008281904610115
         isActive: true
         branch: branch
+        codeSnapshotId: codeSnapshotId
         createdAt: 2000-01-23T04:56:07.000+00:00
+        createdBy: createdBy
         uploadedModel:
           transformInputs: true
           blobPath: blobPath
+        teamId: teamId
         graphValidationData:
           metadata:
           - connection_name: connection_name
@@ -46183,37 +45922,12 @@ components:
             node_id: node_id
         experimentId: experimentId
         tag: tag
-        isFavourite: true
-        updatedAt: 2000-01-23T04:56:07.000+00:00
-        parentVersionId: parentVersionId
-        updateActions:
-        - update_metadata
-        - update_metadata
-        serialNumber: 1.4658129805029452
-        resources:
-          overrided_version_id: overrided_version_id
-          inference_resources:
-            metric_compute_insights: metric_compute_insights
-            metadata: metadata
-            metric_directions: metric_directions
-          es_model_id: es_model_id
-          population_exploration_digest_seed_count: 6.027456183070403
-          inference_artifact_id: inference_artifact_id
-          es_inspection_index: es_inspection_index
-          vis_resources:
-            insights_revision: insights_revision
-            sample_visualizers_revision: sample_visualizers_revision
-          csv_blob_path: csv_blob_path
-          vis_artifact_id: vis_artifact_id
-          es_metrics_index: es_metrics_index
-        epochTags:
-          key: 0.8008281904610115
-        codeSnapshotId: codeSnapshotId
-        createdBy: createdBy
-        teamId: teamId
         projectId: projectId
+        isFavourite: true
         hash: hash
         cid: cid
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+        parentVersionId: parentVersionId
         status: draft
       properties:
         cid:
@@ -46272,8 +45986,6 @@ components:
           type: number
         color:
           type: string
-        data:
-          $ref: "#/components/schemas/ModelGraph"
         status:
           $ref: "#/components/schemas/VersionStatus"
       required:
@@ -46311,18 +46023,40 @@ components:
           updatedAt: 2000-01-23T04:56:07.000+00:00
           status: visible
         version:
+          updateActions:
+          - update_metadata
+          - update_metadata
           notes: notes
+          serialNumber: 1.4658129805029452
           color: color
-          data:
-            nodes: "{}"
-            id: id
           modelId: modelId
+          resources:
+            overrided_version_id: overrided_version_id
+            inference_resources:
+              metric_compute_insights: metric_compute_insights
+              metadata: metadata
+              metric_directions: metric_directions
+            es_model_id: es_model_id
+            population_exploration_digest_seed_count: 6.027456183070403
+            inference_artifact_id: inference_artifact_id
+            es_inspection_index: es_inspection_index
+            vis_resources:
+              insights_revision: insights_revision
+              sample_visualizers_revision: sample_visualizers_revision
+            csv_blob_path: csv_blob_path
+            vis_artifact_id: vis_artifact_id
+            es_metrics_index: es_metrics_index
+          epochTags:
+            key: 0.8008281904610115
           isActive: true
           branch: branch
+          codeSnapshotId: codeSnapshotId
           createdAt: 2000-01-23T04:56:07.000+00:00
+          createdBy: createdBy
           uploadedModel:
             transformInputs: true
             blobPath: blobPath
+          teamId: teamId
           graphValidationData:
             metadata:
             - connection_name: connection_name
@@ -46408,37 +46142,12 @@ components:
               node_id: node_id
           experimentId: experimentId
           tag: tag
-          isFavourite: true
-          updatedAt: 2000-01-23T04:56:07.000+00:00
-          parentVersionId: parentVersionId
-          updateActions:
-          - update_metadata
-          - update_metadata
-          serialNumber: 1.4658129805029452
-          resources:
-            overrided_version_id: overrided_version_id
-            inference_resources:
-              metric_compute_insights: metric_compute_insights
-              metadata: metadata
-              metric_directions: metric_directions
-            es_model_id: es_model_id
-            population_exploration_digest_seed_count: 6.027456183070403
-            inference_artifact_id: inference_artifact_id
-            es_inspection_index: es_inspection_index
-            vis_resources:
-              insights_revision: insights_revision
-              sample_visualizers_revision: sample_visualizers_revision
-            csv_blob_path: csv_blob_path
-            vis_artifact_id: vis_artifact_id
-            es_metrics_index: es_metrics_index
-          epochTags:
-            key: 0.8008281904610115
-          codeSnapshotId: codeSnapshotId
-          createdBy: createdBy
-          teamId: teamId
           projectId: projectId
+          isFavourite: true
           hash: hash
           cid: cid
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          parentVersionId: parentVersionId
           status: draft
       properties:
         project:
@@ -46463,7 +46172,37 @@ components:
       - projectId
       - versionId
       type: object
-    DeleteVersionParams:
+    Record_string.Node_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
+    ModelGraph:
+      additionalProperties: true
+      example:
+        nodes: "{}"
+        id: id
+      properties:
+        id:
+          type: string
+        nodes:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+      required:
+      - id
+      - nodes
+      type: object
+    GetVersionModelGraphResponse:
+      additionalProperties: true
+      example:
+        modelGraph:
+          nodes: "{}"
+          id: id
+      properties:
+        modelGraph:
+          $ref: "#/components/schemas/ModelGraph"
+      type: object
+    GetVersionModelGraphParams:
       additionalProperties: true
       example:
         versionId: versionId
@@ -46477,39 +46216,17 @@ components:
       - projectId
       - versionId
       type: object
-    UpdateVersionResponse:
+    DeleteVersionParams:
       additionalProperties: true
       example:
         versionId: versionId
-      properties:
-        versionId:
-          type: string
-      required:
-      - versionId
-      type: object
-    UpdateVersionParams:
-      additionalProperties: true
-      example:
-        versionId: versionId
-        data:
-          nodes: "{}"
-          id: id
         projectId: projectId
-        codeSnapshotId: codeSnapshotId
-        hash: hash
       properties:
         versionId:
           type: string
         projectId:
           type: string
-        data:
-          $ref: "#/components/schemas/ModelGraph"
-        codeSnapshotId:
-          type: string
-        hash:
-          type: string
       required:
-      - data
       - projectId
       - versionId
       type: object
@@ -49450,7 +49167,6 @@ components:
           type: boolean
       required:
       - custom_losses
-      - has_element_instances
       - inputs
       - metadata
       - metrics
@@ -51562,11 +51278,18 @@ components:
       example:
         name: name
         type: type
+        labels:
+        - labels
+        - labels
       properties:
         name:
           type: string
         type:
           type: string
+        labels:
+          items:
+            type: string
+          type: array
       required:
       - name
       - type
@@ -51577,8 +51300,14 @@ components:
         visualizers:
         - name: name
           type: type
+          labels:
+          - labels
+          - labels
         - name: name
           type: type
+          labels:
+          - labels
+          - labels
       properties:
         visualizers:
           items:
