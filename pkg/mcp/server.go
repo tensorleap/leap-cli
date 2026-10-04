@@ -16,6 +16,7 @@ const supportedContract = 1
 const instructions = `Tensorleap MCP: read-only access to a Tensorleap server's model-analysis results.
 - Call tl_status first; it tells you which server answered and who you are.
 - Use tl_list_projects, then tl_list_versions to pick an evaluated version, then tl_get_insights.
+- Read the resource tensorleap://glossary for current insight names and how to read them.
 - For a Failure Mode insight, quote groupSize (samples that actually underperform), never the platform's clusterSize/n_samples.
 - composition entries mean "over-represented in the group", not "the group's defining trait".
 - An empty result always carries a reason and a nextStep; act on them instead of guessing.
@@ -62,6 +63,7 @@ func NewServer(client *Client, version string) *sdk.Server {
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_list_jobs", Description: "Jobs (Evaluate, Push, Population Exploration, ...) for a project or version, newest first. Check here before starting work again so nothing runs twice.", Annotations: ro("List jobs")}, s.listJobs)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_wait_for_job", Description: "Wait (up to 5 minutes) until a job changes status or finishes, instead of polling. Evaluations can run for hours; call again later if it is still running.", Annotations: ro("Wait for job")}, s.waitForJob)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_get_job_logs", Description: "Why a job failed: likely error lines plus the last lines of each pod's log, with credentials removed.", Annotations: ro("Get job logs")}, s.getJobLogs)
+	registerKnowledge(srv)
 	return srv
 }
 

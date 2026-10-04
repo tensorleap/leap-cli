@@ -39,5 +39,6 @@ The server is chosen from, in order: TL_API_URL/TL_API_KEY, --env <name>, the cu
 		},
 	}
 	cmd.Flags().StringVar(&envName, "env", "", "Name of the 'leap auth' environment to serve (default: the current one)")
+	cmd.AddCommand(newConfigCmd())
 	return cmd
 }
