@@ -40,3 +40,23 @@ func TestAssetKind(t *testing.T) {
 		t.Fatalf("got %s %s", dt, vis)
 	}
 }
+
+func TestPrepareImageEnlargesTinySamples(t *testing.T) {
+	src := image.NewGray(image.Rect(0, 0, 28, 28))
+	src.SetGray(0, 0, color.Gray{255})
+	var buf bytes.Buffer
+	if err := png.Encode(&buf, src); err != nil {
+		t.Fatal(err)
+	}
+	out, _, err := prepareImage(buf.Bytes(), true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	img, _, _ := image.Decode(bytes.NewReader(out))
+	if b := img.Bounds(); b.Dx() != 224 || b.Dy() != 224 {
+		t.Fatalf("got %dx%d, want 224x224 (8x nearest neighbour)", b.Dx(), b.Dy())
+	}
+	if r, _, _, _ := img.At(7, 7).RGBA(); r>>8 < 200 {
+		t.Fatal("the bright source pixel must cover the first 8x8 block")
+	}
+}

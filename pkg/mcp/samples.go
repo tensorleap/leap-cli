@@ -22,6 +22,7 @@ import (
 const (
 	maxViewSamples  = 6
 	thumbSize       = 640
+	minViewSize     = 224
 	defaultHeatmaps = 3
 )
 
@@ -223,9 +224,7 @@ func (s *Server) heatmapOverlays(ctx context.Context, id, visualizer, payloadURL
 			if base, _, err = image.Decode(bytes.NewReader(rawImg)); err != nil {
 				continue
 			}
-			if b := base.Bounds(); !in.Full && (b.Dx() > thumbSize || b.Dy() > thumbSize) {
-				base = downscale(base, thumbSize)
-			}
+			base = viewSize(base, in.Full)
 			bases[baseURL] = base
 		}
 		kind := "image_heatmap"
@@ -323,7 +322,8 @@ func prepareImage(raw []byte, full bool) ([]byte, string, error) {
 		return nil, "", err
 	}
 	b := img.Bounds()
-	if full || (b.Dx() <= thumbSize && b.Dy() <= thumbSize) {
+	small := max(b.Dx(), b.Dy()) < minViewSize
+	if !small && (full || (b.Dx() <= thumbSize && b.Dy() <= thumbSize)) {
 		mime := "image/jpeg"
 		if format == "png" {
 			mime = "image/png"
@@ -331,10 +331,34 @@ func prepareImage(raw []byte, full bool) ([]byte, string, error) {
 		return raw, mime, nil
 	}
 	var buf bytes.Buffer
-	if err := jpeg.Encode(&buf, downscale(img, thumbSize), &jpeg.Options{Quality: 85}); err != nil {
+	if err := jpeg.Encode(&buf, viewSize(img, full), &jpeg.Options{Quality: 85}); err != nil {
 		return nil, "", err
 	}
 	return buf.Bytes(), "image/jpeg", nil
+}
+
+func viewSize(img image.Image, full bool) image.Image {
+	b := img.Bounds()
+	if longest := max(b.Dx(), b.Dy()); longest > 0 && longest < minViewSize {
+		return upscale(img, (minViewSize+longest-1)/longest)
+	}
+	if !full && (b.Dx() > thumbSize || b.Dy() > thumbSize) {
+		return downscale(img, thumbSize)
+	}
+	return img
+}
+
+// upscale enlarges tiny samples (e.g. 28px MNIST digits) so a vision model can make them out;
+// nearest neighbour keeps the original pixels visible
+func upscale(src image.Image, k int) image.Image {
+	b := src.Bounds()
+	dst := image.NewRGBA(image.Rect(0, 0, b.Dx()*k, b.Dy()*k))
+	for y := 0; y < b.Dy()*k; y++ {
+		for x := 0; x < b.Dx()*k; x++ {
+			dst.Set(x, y, src.At(b.Min.X+x/k, b.Min.Y+y/k))
+		}
+	}
+	return dst
 }
 
 func downscale(src image.Image, max int) image.Image {
