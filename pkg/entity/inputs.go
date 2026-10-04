@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/tensorleap/leap-cli/pkg/log"
 )
 
 func AskUserIsCreatingNew[TEntity any](desc *EntityDescriptor[TEntity], defaultNew bool) (bool, error) {
@@ -29,39 +28,6 @@ func AskUserIsCreatingNew[TEntity any](desc *EntityDescriptor[TEntity], defaultN
 		return false, fmt.Errorf("no option selected: %v", err)
 	}
 	return response == 0, nil
-}
-
-func SelectEntityByNameOrAsk[TEntity any](name string, entities []TEntity, desc *EntityDescriptor[TEntity]) (*TEntity, error) {
-	if name != "" {
-		entity, err := GetEntityByDisplayName(name, entities, desc)
-		if err == nil {
-			return entity, nil
-		}
-		log.Warnf("%s", err)
-	}
-	return SelectEntity(entities, desc)
-}
-
-func SelectEntitiesByNamesOrAsk[TEntity any](names []string, entities []TEntity, desc *EntityDescriptor[TEntity]) ([]TEntity, error) {
-	var entitiesToSelect []TEntity
-	if len(names) > 0 {
-		for _, name := range names {
-			entity, err := GetEntityByDisplayName(name, entities, desc)
-			if err != nil {
-				log.Warnf("%s", err)
-				continue
-			}
-			entitiesToSelect = append(entitiesToSelect, *entity)
-		}
-	}
-	if len(entitiesToSelect) > 0 {
-		return entitiesToSelect, nil
-	}
-	entity, err := SelectEntity(entities, desc)
-	if err != nil {
-		return nil, err
-	}
-	return []TEntity{*entity}, nil
 }
 
 func SelectEntity[TEntity any](entities []TEntity, desc *EntityDescriptor[TEntity]) (*TEntity, error) {
