@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/base64"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"image"
@@ -19,8 +20,9 @@ import (
 )
 
 const (
-	maxViewSamples = 6
-	thumbSize      = 640
+	maxViewSamples  = 6
+	thumbSize       = 640
+	defaultHeatmaps = 3
 )
 
 func visualizationID(sampleID string) string {
@@ -86,6 +88,7 @@ type ViewIn struct {
 	SampleIDs  []string `json:"sampleIds" jsonschema:"sample ids such as training_123 (from tl_get_insights topSamples), at most 6"`
 	Visualizer string   `json:"visualizer,omitempty" jsonschema:"optional: only this visualizer (name as listed in the response)"`
 	Full       bool     `json:"fullResolution,omitempty" jsonschema:"original resolution instead of 640px thumbnails; use only when fine detail matters"`
+	Labels     []string `json:"heatmapLabels,omitempty" jsonschema:"heatmap labels (e.g. class names) to overlay; default: the first 3"`
 }
 
 type ViewedSample struct {
@@ -128,11 +131,19 @@ func (s *Server) viewSamples(ctx context.Context, _ *sdk.CallToolRequest, in Vie
 			}
 			ext := strings.ToLower(path.Ext(f.Path))
 			switch {
-			case dataType == "image_heatmap" || dataType == "video_heatmap":
+			case dataType == "image_heatmap" && path.Base(f.Path) == "payload.json":
+				content, err := s.heatmapOverlays(ctx, id, visualizer, f.URL, files, in)
+				if err != nil {
+					return nil, ViewOut{}, err
+				}
+				vs.Visualizers = appendOnce(vs.Visualizers, visualizer)
+				result.Content = append(result.Content, content...)
+			case dataType == "image_heatmap":
+			case dataType == "video_heatmap":
 				if !containsNote(result.Content, id, visualizer) {
 					vs.Visualizers = appendOnce(vs.Visualizers, visualizer)
 					result.Content = append(result.Content, &sdk.TextContent{Text: fmt.Sprintf(
-						"sample %s · %s (%s): the heatmap overlay is not available through the API yet; open the sample in the UI to see it", id, visualizer, dataType)})
+						"sample %s · %s (%s): video heatmaps are not available through the API yet; open the sample in the UI to see it", id, visualizer, dataType)})
 				}
 			case strings.Contains(f.Path, "/assets/") && (ext == ".jpg" || ext == ".jpeg" || ext == ".png"):
 				raw, err := s.client.Download(ctx, f.URL)
@@ -167,6 +178,124 @@ func (s *Server) viewSamples(ctx context.Context, _ *sdk.CallToolRequest, in Vie
 		result.Content = append(result.Content, &sdk.TextContent{Text: "no visualizations to show"})
 	}
 	return result, out, nil
+}
+
+type heatmapItem struct {
+	Label, Blob, HeatmapBlob string
+}
+
+func (s *Server) heatmapOverlays(ctx context.Context, id, visualizer, payloadURL string, files []assetFile, in ViewIn) ([]sdk.Content, error) {
+	raw, err := s.client.Download(ctx, payloadURL)
+	if err != nil {
+		return nil, err
+	}
+	var payload any
+	if err := json.Unmarshal(raw, &payload); err != nil {
+		return nil, fmt.Errorf("sample %s: unreadable heatmap payload: %w", id, err)
+	}
+	var items []heatmapItem
+	collectHeatmaps(payload, "", &items)
+	var chosen, skipped []heatmapItem
+	for _, it := range items {
+		wanted := len(in.Labels) == 0 && len(chosen) < defaultHeatmaps
+		for _, l := range in.Labels {
+			wanted = wanted || l == it.Label
+		}
+		if wanted {
+			chosen = append(chosen, it)
+		} else {
+			skipped = append(skipped, it)
+		}
+	}
+	var out []sdk.Content
+	bases := map[string]image.Image{}
+	for _, it := range chosen {
+		baseURL, heatURL := urlFor(files, it.Blob), urlFor(files, it.HeatmapBlob)
+		if baseURL == "" {
+			continue
+		}
+		base, ok := bases[baseURL]
+		if !ok {
+			rawImg, err := s.client.Download(ctx, baseURL)
+			if err != nil {
+				return nil, err
+			}
+			if base, _, err = image.Decode(bytes.NewReader(rawImg)); err != nil {
+				continue
+			}
+			if b := base.Bounds(); !in.Full && (b.Dx() > thumbSize || b.Dy() > thumbSize) {
+				base = downscale(base, thumbSize)
+			}
+			bases[baseURL] = base
+		}
+		kind := "image_heatmap"
+		if it.Label != "" {
+			kind += fmt.Sprintf(", label %q", it.Label)
+		}
+		caption := fmt.Sprintf("sample %s · %s (%s): heatmap over the image, turbo colormap (red = strongest attention, blue = weakest)", id, visualizer, kind)
+		img := base
+		if heatURL == "" {
+			caption = fmt.Sprintf("sample %s · %s (%s): base image only; this server does not return heatmap data, open the sample in the UI to see the overlay", id, visualizer, kind)
+		} else {
+			rawHeat, err := s.client.Download(ctx, heatURL)
+			if err != nil {
+				return nil, err
+			}
+			hm, err := parseHeatmap(rawHeat)
+			if err != nil {
+				return nil, fmt.Errorf("sample %s (%s): %w", id, kind, err)
+			}
+			img = overlay(base, hm)
+		}
+		var buf bytes.Buffer
+		if err := jpeg.Encode(&buf, img, &jpeg.Options{Quality: 85}); err != nil {
+			return nil, err
+		}
+		out = append(out, &sdk.TextContent{Text: caption}, &sdk.ImageContent{Data: buf.Bytes(), MIMEType: "image/jpeg"})
+	}
+	if len(skipped) > 0 {
+		labels := make([]string, 0, len(skipped))
+		for _, it := range skipped {
+			labels = append(labels, it.Label)
+		}
+		out = append(out, &sdk.TextContent{Text: fmt.Sprintf("sample %s · %s: %d more heatmap label(s) not shown (%s); pass heatmapLabels to choose", id, visualizer, len(skipped), truncate(strings.Join(labels, ", "), 300))})
+	}
+	return out, nil
+}
+
+// collectHeatmaps finds every {blob, heatmap_blob} pair, whatever the payload nesting,
+// labelled by the closest enclosing "label"
+func collectHeatmaps(v any, label string, out *[]heatmapItem) {
+	switch t := v.(type) {
+	case []any:
+		for _, x := range t {
+			collectHeatmaps(x, label, out)
+		}
+	case map[string]any:
+		if l, ok := t["label"].(string); ok && l != "" {
+			label = l
+		}
+		if hb, ok := t["heatmap_blob"].(string); ok {
+			blob, _ := t["blob"].(string)
+			*out = append(*out, heatmapItem{Label: label, Blob: blob, HeatmapBlob: hb})
+			return
+		}
+		for _, x := range t {
+			collectHeatmaps(x, label, out)
+		}
+	}
+}
+
+func urlFor(files []assetFile, rel string) string {
+	if rel == "" {
+		return ""
+	}
+	for _, f := range files {
+		if f.Path == rel || strings.HasSuffix(f.Path, "/"+rel) {
+			return f.URL
+		}
+	}
+	return ""
 }
 
 func assetKind(p string) (string, string) {
