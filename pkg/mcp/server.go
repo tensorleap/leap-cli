@@ -56,6 +56,11 @@ func NewServer(client *Client, version string) *sdk.Server {
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_list_projects", Description: "List the Tensorleap projects you can access.", Annotations: ro("List projects")}, s.listProjects)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_list_versions", Description: "List a project's model versions with their evaluation state and whether insights exist.", Annotations: ro("List versions")}, s.listVersions)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_get_insights", Description: "The platform's insights for one evaluated model version (Failure Mode, Out of Distribution, Duplication, Data Leakage, Domain Gap, Mislabeled), each with the failing group's size, split, over-represented metadata vs all data, metric contrast, latent space meaning and a link that opens it in the UI.", Annotations: ro("Get insights")}, s.getInsights)
+	sdk.AddTool(srv, &sdk.Tool{Name: "tl_describe_fields", Description: "The metric and metadata fields recorded for an evaluated version, with types. Call before tl_query to get exact field names.", Annotations: ro("Describe fields")}, s.describeFields)
+	sdk.AddTool(srv, &sdk.Tool{Name: "tl_query", Description: "Aggregate metrics over the whole evaluated population, grouped by up to 2 fields (e.g. average loss per class per split), optionally filtered and compared across versions. Every row includes the sample count n.", Annotations: ro("Query metrics")}, s.query)
+	sdk.AddTool(srv, &sdk.Tool{Name: "tl_list_jobs", Description: "Jobs (Evaluate, Push, Population Exploration, ...) for a project or version, newest first. Check here before starting work again so nothing runs twice.", Annotations: ro("List jobs")}, s.listJobs)
+	sdk.AddTool(srv, &sdk.Tool{Name: "tl_wait_for_job", Description: "Wait (up to 5 minutes) until a job changes status or finishes, instead of polling. Evaluations can run for hours; call again later if it is still running.", Annotations: ro("Wait for job")}, s.waitForJob)
+	sdk.AddTool(srv, &sdk.Tool{Name: "tl_get_job_logs", Description: "Why a job failed: likely error lines plus the last lines of each pod's log, with credentials removed.", Annotations: ro("Get job logs")}, s.getJobLogs)
 	return srv
 }
 
