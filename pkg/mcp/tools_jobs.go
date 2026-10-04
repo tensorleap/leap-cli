@@ -45,8 +45,8 @@ func toJob(r rawJob) Job {
 }
 
 type JobsIn struct {
-	ProjectID string `json:"projectId"`
-	VersionID string `json:"versionId,omitempty" jsonschema:"optional: only this version's jobs"`
+	ProjectID string `json:"projectId" jsonschema:"project id or name"`
+	VersionID string `json:"versionId,omitempty" jsonschema:"optional: only this version's jobs (id or name)"`
 	Status    string `json:"status,omitempty" jsonschema:"in-flight | failed | all (default all)"`
 	Limit     int    `json:"limit,omitempty" jsonschema:"max jobs, newest first (default 20)"`
 }
@@ -58,6 +58,9 @@ type JobsOut struct {
 }
 
 func (s *Server) listJobs(ctx context.Context, _ *sdk.CallToolRequest, in JobsIn) (*sdk.CallToolResult, JobsOut, error) {
+	if err := s.resolve(ctx, &in.ProjectID, &in.VersionID); err != nil {
+		return nil, JobsOut{}, err
+	}
 	var resp struct {
 		Jobs []rawJob `json:"jobs"`
 	}

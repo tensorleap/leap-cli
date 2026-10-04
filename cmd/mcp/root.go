@@ -16,7 +16,6 @@ import (
 
 func NewMcpCmd() *cobra.Command {
 	var envName string
-	var allowLegacy bool
 	cmd := &cobra.Command{
 		Use:   "mcp",
 		Short: "Let an AI assistant read your Tensorleap analysis results (MCP server)",
@@ -38,12 +37,11 @@ The server is chosen from, in order: TL_API_URL/TL_API_KEY, --env <name>, the cu
 					"To connect one, run: leap mcp config <%s>\n"+
 					"Serving %s on stdin/stdout anyway; press Ctrl-C to exit.\n", strings.Join(clientNames, "|"), strings.TrimSuffix(strings.TrimRight(env.ApiUrl, "/"), "/api/v2"))
 			}
-			server := mcpPkg.NewServer(mcpPkg.NewClient(env.ApiUrl, env.ApiKey), version.CliVersion, allowLegacy)
+			server := mcpPkg.NewServer(mcpPkg.NewClient(env.ApiUrl, env.ApiKey), version.CliVersion)
 			return server.Run(cmd.Context(), &sdk.StdioTransport{})
 		},
 	}
 	cmd.Flags().StringVar(&envName, "env", "", "Name of the 'leap auth' environment to serve (default: the current one)")
-	cmd.Flags().BoolVar(&allowLegacy, "allow-legacy-server", false, "Serve a Tensorleap server that predates AI access controls (nothing on the server limits what the assistant receives)")
 	cmd.AddCommand(newConfigCmd())
 	return cmd
 }

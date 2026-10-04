@@ -84,8 +84,8 @@ func renderedFirst(ids []string, rendered map[string][]assetFile, n int) []Sampl
 }
 
 type ViewIn struct {
-	ProjectID  string   `json:"projectId"`
-	VersionID  string   `json:"versionId"`
+	ProjectID  string   `json:"projectId" jsonschema:"project id or name"`
+	VersionID  string   `json:"versionId" jsonschema:"version id or name, or \"latest\""`
 	SampleIDs  []string `json:"sampleIds" jsonschema:"sample ids such as training_123 (from tl_get_insights topSamples), at most 6"`
 	Visualizer string   `json:"visualizer,omitempty" jsonschema:"optional: only this visualizer (name as listed in the response)"`
 	Full       bool     `json:"fullResolution,omitempty" jsonschema:"original resolution instead of 640px thumbnails; use only when fine detail matters"`
@@ -110,6 +110,9 @@ func (s *Server) viewSamples(ctx context.Context, _ *sdk.CallToolRequest, in Vie
 	}
 	if len(in.SampleIDs) > maxViewSamples {
 		return nil, ViewOut{}, fmt.Errorf("at most %d samples per call; page through the rest", maxViewSamples)
+	}
+	if err := s.resolve(ctx, &in.ProjectID, &in.VersionID); err != nil {
+		return nil, ViewOut{}, err
 	}
 	assets, err := s.sampleAssets(ctx, in.ProjectID, in.VersionID, in.SampleIDs)
 	if err != nil {

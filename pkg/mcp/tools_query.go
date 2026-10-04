@@ -49,27 +49,62 @@ type FieldsOut struct {
 	NextStep string  `json:"nextStep,omitempty"`
 }
 
+type fieldMapping struct {
+	Aggregatable []string `json:"aggregatableFields"`
+	Numeric      []string `json:"numericFields"`
+	Boolean      []string `json:"booleanFields"`
+}
+
+func (s *Server) fieldMapping(ctx context.Context, projectID, versionID string) (*fieldMapping, error) {
+	v, err := s.slimVersion(ctx, projectID, versionID)
+	if err != nil {
+		return nil, err
+	}
+	if v.Resources.EsMetricsIndex == "" {
+		return nil, nil
+	}
+	var m fieldMapping
+	body := map[string]any{"projectId": projectID, "versionIds": []string{versionID}, "inferenceArtifactIds": []string{v.Resources.InferenceArtifactID}}
+	if err := s.client.Post(ctx, "dashboards/getDashletFields", body, &m); err != nil {
+		return nil, explain(err)
+	}
+	return &m, nil
+}
+
+// knownFields caches a version's queryable field names; an evaluated version's fields don't change
+func (s *Server) knownFields(ctx context.Context, projectID, versionID string) (map[string]bool, error) {
+	s.mu.Lock()
+	known, ok := s.fields[versionID]
+	s.mu.Unlock()
+	if ok {
+		return known, nil
+	}
+	m, err := s.fieldMapping(ctx, projectID, versionID)
+	if err != nil || m == nil {
+		return nil, err
+	}
+	known = toSet(append(append(append([]string{}, m.Aggregatable...), m.Numeric...), m.Boolean...))
+	s.mu.Lock()
+	s.fields[versionID] = known
+	s.mu.Unlock()
+	return known, nil
+}
+
 func (s *Server) describeFields(ctx context.Context, _ *sdk.CallToolRequest, in VersionIn) (*sdk.CallToolResult, FieldsOut, error) {
+	if err := s.resolve(ctx, &in.ProjectID, &in.VersionID); err != nil {
+		return nil, FieldsOut{}, err
+	}
 	if err := s.requireStats(ctx, in.ProjectID); err != nil {
 		return nil, FieldsOut{}, err
 	}
-	v, err := s.slimVersion(ctx, in.ProjectID, in.VersionID)
+	mapping, err := s.fieldMapping(ctx, in.ProjectID, in.VersionID)
 	if err != nil {
 		return nil, FieldsOut{}, err
 	}
 	out := FieldsOut{Server: s.client.UIBase(), Fields: []Field{}}
-	if v.Resources.EsMetricsIndex == "" {
+	if mapping == nil {
 		out.Reason, out.NextStep = "no-evaluation", "evaluate this version before querying its metrics"
 		return nil, out, nil
-	}
-	var mapping struct {
-		Aggregatable []string `json:"aggregatableFields"`
-		Numeric      []string `json:"numericFields"`
-		Boolean      []string `json:"booleanFields"`
-	}
-	body := map[string]any{"projectId": in.ProjectID, "versionIds": []string{in.VersionID}, "inferenceArtifactIds": []string{v.Resources.InferenceArtifactID}}
-	if err := s.client.Post(ctx, "dashboards/getDashletFields", body, &mapping); err != nil {
-		return nil, FieldsOut{}, explain(err)
 	}
 	numeric, boolean := toSet(mapping.Numeric), toSet(mapping.Boolean)
 	for _, name := range mapping.Aggregatable {
@@ -121,8 +156,8 @@ type Filter struct {
 }
 
 type QueryIn struct {
-	ProjectID  string    `json:"projectId"`
-	VersionIDs []string  `json:"versionIds" jsonschema:"one or more evaluated version ids; several versions are compared row by row"`
+	ProjectID  string    `json:"projectId" jsonschema:"project id or name"`
+	VersionIDs []string  `json:"versionIds" jsonschema:"one or more evaluated version ids or names (or \"latest\"); several versions are compared row by row"`
 	GroupBy    []string  `json:"groupBy,omitempty" jsonschema:"up to 2 field names to group by (empty = whole population)"`
 	Measures   []Measure `json:"measures" jsonschema:"what to compute per group; a sample count n is always included"`
 	Filters    []Filter  `json:"filters,omitempty"`
@@ -144,22 +179,44 @@ type QueryOut struct {
 	NextStep string   `json:"nextStep,omitempty"`
 }
 
-var aggregations = map[string]bool{"Average": true, "Min": true, "Max": true, "Median": true, "Count": true}
+var aggregations = map[string]string{
+	"average": "Average", "avg": "Average", "mean": "Average",
+	"min": "Min", "minimum": "Min",
+	"max": "Max", "maximum": "Max",
+	"median": "Median", "p50": "Median",
+	"count": "Count",
+}
 
 func (s *Server) query(ctx context.Context, _ *sdk.CallToolRequest, in QueryIn) (*sdk.CallToolResult, QueryOut, error) {
 	if len(in.VersionIDs) == 0 || len(in.Measures) == 0 {
 		return nil, QueryOut{}, errors.New("versionIds and measures are required")
 	}
-	if err := s.requireStats(ctx, in.ProjectID); err != nil {
+	refs := make([]*string, len(in.VersionIDs))
+	for i := range in.VersionIDs {
+		refs[i] = &in.VersionIDs[i]
+	}
+	if err := s.resolve(ctx, &in.ProjectID, refs...); err != nil {
 		return nil, QueryOut{}, err
+	}
+	access, err := s.policy(ctx, in.ProjectID)
+	if err != nil {
+		return nil, QueryOut{}, err
+	}
+	if !access.Stats {
+		return nil, QueryOut{}, disabled("statistics and insights")
 	}
 	if len(in.GroupBy) > 2 {
 		return nil, QueryOut{}, errors.New("groupBy supports at most 2 fields")
 	}
-	for _, m := range in.Measures {
-		if !aggregations[m.Aggregation] {
+	for i, m := range in.Measures {
+		canonical, ok := aggregations[strings.ToLower(m.Aggregation)]
+		if !ok {
 			return nil, QueryOut{}, fmt.Errorf("unsupported aggregation %q; use Average, Min, Max, Median or Count", m.Aggregation)
 		}
+		in.Measures[i].Aggregation = canonical
+	}
+	if err := s.checkFields(ctx, in); err != nil {
+		return nil, QueryOut{}, err
 	}
 	limit := in.Limit
 	if limit <= 0 {
@@ -236,12 +293,56 @@ func (s *Server) query(ctx context.Context, _ *sdk.CallToolRequest, in QueryIn) 
 	}
 	sort.SliceStable(out.Rows, func(i, j int) bool { return out.Rows[i].Version < out.Rows[j].Version })
 	if sawEmpty {
-		out.Notes = append(out.Notes, "null values mean no data for that group, or exactly 0 on servers that render zero as empty")
+		note := "null means the group has no values for that field (e.g. unlabeled samples have no loss)"
+		if access.legacy {
+			note += ", or exactly 0 on this older server"
+		}
+		out.Notes = append(out.Notes, note)
 	}
 	if len(out.Rows) == 0 {
 		out.Reason, out.NextStep = "no-rows", "check field names with tl_describe_fields, loosen the filters, or confirm the versions are evaluated (tl_list_versions)"
 	}
 	return nil, out, nil
+}
+
+// checkFields rejects unknown field names up front; the metrics API would silently return nulls
+func (s *Server) checkFields(ctx context.Context, in QueryIn) error {
+	known, err := s.knownFields(ctx, in.ProjectID, in.VersionIDs[0])
+	if err != nil || known == nil {
+		return err
+	}
+	names := append([]string{}, in.GroupBy...)
+	for _, m := range in.Measures {
+		names = append(names, m.Field)
+	}
+	for _, f := range in.Filters {
+		names = append(names, f.Field)
+	}
+	for _, n := range names {
+		if !known[n] && n != "sample_id" {
+			return fmt.Errorf("unknown field %q for this version%s; tl_describe_fields lists the exact names", n, suggest(n, known))
+		}
+	}
+	return nil
+}
+
+func suggest(name string, known map[string]bool) string {
+	leaf := strings.ToLower(name[strings.LastIndex(name, ".")+1:])
+	var close []string
+	for k := range known {
+		kl := strings.ToLower(k)
+		if strings.Contains(kl, leaf) || strings.Contains(leaf, kl[strings.LastIndex(kl, ".")+1:]) {
+			close = append(close, k)
+		}
+	}
+	if len(close) == 0 {
+		return ""
+	}
+	sort.Strings(close)
+	if len(close) > 5 {
+		close = close[:5]
+	}
+	return " (did you mean " + strings.Join(close, ", ") + "?)"
 }
 
 func measureBatches(ms []Measure) [][]Measure {

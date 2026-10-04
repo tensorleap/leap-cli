@@ -9,6 +9,8 @@ import (
 	"testing"
 )
 
+const projectHex, versionHex = "6a9fee75d433e82f58aa610e", "6a9fee8cd433e82f58aa6116"
+
 func fakeServer(t *testing.T, aiAccess *AiAccess, routes map[string]func(w http.ResponseWriter)) (*Server, *int) {
 	t.Helper()
 	calls := 0
@@ -30,36 +32,36 @@ func fakeServer(t *testing.T, aiAccess *AiAccess, routes map[string]func(w http.
 		t.Fatalf("unexpected call to %s", path)
 	}))
 	t.Cleanup(ts.Close)
-	s := &Server{client: NewClient(ts.URL+"/api/v2", "key"), pops: map[string]*Population{}, policies: policyCache{entries: map[string]policyEntry{}}}
+	s := &Server{client: NewClient(ts.URL+"/api/v2", "key"), pops: map[string]*Population{}, fields: map[string]map[string]bool{}, policies: policyCache{entries: map[string]policyEntry{}}}
 	return s, &calls
 }
 
-func TestLegacyServerRefusedUnlessAllowed(t *testing.T) {
+func TestLegacyServerIsServedAsUnrestricted(t *testing.T) {
 	s, _ := fakeServer(t, nil, map[string]func(http.ResponseWriter){
-		"sessionmetrics/getTableChart": func(w http.ResponseWriter) { _, _ = w.Write([]byte(`{"charts":[]}`)) },
+		"sessionmetrics/getTableChart":    func(w http.ResponseWriter) { _, _ = w.Write([]byte(`{"charts":[]}`)) },
+		"versions/getProjectSlimVersions": func(w http.ResponseWriter) { _, _ = w.Write([]byte(`{"versions":[{"cid":"` + versionHex + `"}]}`)) },
 	})
-	in := QueryIn{ProjectID: "p", VersionIDs: []string{"v"}, Measures: []Measure{{"metrics.loss", "Average"}}}
-	if _, _, err := s.query(context.Background(), nil, in); err == nil || !strings.Contains(err.Error(), "predates AI access controls") {
-		t.Fatalf("expected the legacy-server refusal, got %v", err)
-	}
-	s.allowLegacy = true
-	s.policies.entries = map[string]policyEntry{}
+	in := QueryIn{ProjectID: projectHex, VersionIDs: []string{versionHex}, Measures: []Measure{{"metrics.loss", "Average"}}}
 	if _, out, err := s.query(context.Background(), nil, in); err != nil || out.Reason != "no-rows" {
-		t.Fatalf("allowed legacy server should answer: %v %+v", err, out)
+		t.Fatalf("a pre-policy server should be served: %v %+v", err, out)
+	}
+	_, st, err := s.status(context.Background(), nil, Empty{})
+	if err != nil || !st.AiAccess.Visuals || !strings.Contains(st.Note, "predates AI access controls") {
+		t.Fatalf("status should explain the old server: %v %+v", err, st)
 	}
 }
 
 func TestStatsOffBlocksQueriesWithoutCallingTheServer(t *testing.T) {
 	s, calls := fakeServer(t, &AiAccess{}, nil)
-	in := QueryIn{ProjectID: "p", VersionIDs: []string{"v"}, Measures: []Measure{{"metrics.loss", "Average"}}}
+	in := QueryIn{ProjectID: projectHex, VersionIDs: []string{versionHex}, Measures: []Measure{{"metrics.loss", "Average"}}}
 	_, _, err := s.query(context.Background(), nil, in)
-	if err == nil || !strings.Contains(err.Error(), "turned off for this project") {
+	if err == nil || !strings.Contains(err.Error(), "turned off AI access to statistics") {
 		t.Fatalf("expected a policy refusal, got %v", err)
 	}
 	if *calls != 1 {
 		t.Fatalf("only the policy lookup may reach the server, got %d calls", *calls)
 	}
-	if _, _, err := s.describeFields(context.Background(), nil, VersionIn{ProjectID: "p", VersionID: "v"}); err == nil {
+	if _, _, err := s.describeFields(context.Background(), nil, VersionIn{ProjectID: projectHex, VersionID: versionHex}); err == nil {
 		t.Fatal("describe_fields must be refused too")
 	}
 }
@@ -71,7 +73,7 @@ func TestServerRefusalMessageIsSurfaced(t *testing.T) {
 			_, _ = w.Write([]byte(`{"error":"AI access to statistics and insights is turned off for this project.","code":"AI_ACCESS_DISABLED"}`))
 		},
 	})
-	_, _, err := s.getInsights(context.Background(), nil, VersionIn{ProjectID: "p", VersionID: "v"})
+	_, _, err := s.getInsights(context.Background(), nil, VersionIn{ProjectID: projectHex, VersionID: versionHex})
 	if err == nil || err.Error() != "AI access to statistics and insights is turned off for this project." {
 		t.Fatalf("got %v", err)
 	}
@@ -84,13 +86,13 @@ func TestInsightsWithoutSampleRowsExplainGroupSize(t *testing.T) {
 				"insightType":{"type":"low_performance","severity":2,"n_samples":500}}]}`))
 		},
 	})
-	_, out, err := s.getInsights(context.Background(), nil, VersionIn{ProjectID: "p", VersionID: "v"})
+	_, out, err := s.getInsights(context.Background(), nil, VersionIn{ProjectID: projectHex, VersionID: versionHex})
 	if err != nil {
 		t.Fatal(err)
 	}
 	ins := out.Insights[0]
-	if ins.Name != "Failure Mode" || ins.ClusterSize != 500 || !strings.Contains(ins.Warning, "per-sample data is off") {
-		t.Fatalf("got %+v", ins)
+	if ins.Name != "Failure Mode" || ins.ClusterSize != 500 || !strings.Contains(out.Note, "turned off per-sample data") {
+		t.Fatalf("got note %q, insight %+v", out.Note, ins)
 	}
 }
 
@@ -102,12 +104,16 @@ func TestQueryWithoutGroupByCoversWholePopulation(t *testing.T) {
 			_, _ = w.Write([]byte(`{"contractVersion":1,"aiAccess":{"stats":true},"me":{}}`))
 			return
 		}
+		if strings.HasSuffix(r.URL.Path, "getProjectSlimVersions") {
+			_, _ = w.Write([]byte(`{"versions":[{"cid":"` + versionHex + `"}]}`))
+			return
+		}
 		_ = json.NewDecoder(r.Body).Decode(&sent)
 		_, _ = w.Write([]byte(`{"charts":[{"data":{"data":[{"data":{"model.extId.keyword":"m","metrics.loss":0.5,"sample_id":70000}}]}}]}`))
 	}))
 	defer ts.Close()
 	s.client = NewClient(ts.URL+"/api/v2", "key")
-	_, out, err := s.query(context.Background(), nil, QueryIn{ProjectID: "p", VersionIDs: []string{"v"}, Measures: []Measure{{"metrics.loss", "Average"}}})
+	_, out, err := s.query(context.Background(), nil, QueryIn{ProjectID: projectHex, VersionIDs: []string{versionHex}, Measures: []Measure{{"metrics.loss", "Average"}}})
 	if err != nil {
 		t.Fatal(err)
 	}
