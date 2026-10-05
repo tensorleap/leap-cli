@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/viper"
 	"github.com/tensorleap/leap-cli/cmd/auth"
 	"github.com/tensorleap/leap-cli/cmd/cli"
+	"github.com/tensorleap/leap-cli/cmd/mcp"
 	"github.com/tensorleap/leap-cli/cmd/projects"
 	"github.com/tensorleap/leap-cli/cmd/root_cmd"
 	"github.com/tensorleap/leap-cli/cmd/run"
@@ -69,6 +70,7 @@ func init() {
 	RootCommand.AddCommand(cli.RootCommand)
 	RootCommand.AddCommand(projects.RootCommand)
 	RootCommand.AddCommand(run.RootCommand)
+	RootCommand.AddCommand(mcp.NewMcpCmd())
 
 	initConfig()
 }
