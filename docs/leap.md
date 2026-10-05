@@ -26,7 +26,6 @@ leap [flags]
 * [leap auth](leap_auth.md)	 - auth commands
 * [leap cli](leap_cli.md)	 - Manage leap cli
 * [leap code](leap_code.md)	 - Manage tensorleap code integration
-* [leap hub](leap_hub.md)	 - Manage tensorleap hub
 * [leap models](leap_models.md)	 - Manage tensorleap models
 * [leap projects](leap_projects.md)	 - Manage project
 * [leap secrets](leap_secrets.md)	 - Manage secrets

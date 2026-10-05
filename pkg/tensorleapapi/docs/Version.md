@@ -27,7 +27,6 @@ Name | Type | Description | Notes
 **UpdateActions** | Pointer to [**[]UpdateAction**](UpdateAction.md) |  | [optional] 
 **SerialNumber** | Pointer to **float64** |  | [optional] 
 **Color** | Pointer to **string** |  | [optional] 
-**Data** | Pointer to [**ModelGraph**](ModelGraph.md) |  | [optional] 
 **Status** | [**VersionStatus**](VersionStatus.md) |  | 
 
 ## Methods
@@ -578,31 +577,6 @@ SetColor sets Color field to given value.
 `func (o *Version) HasColor() bool`
 
 HasColor returns a boolean if a field has been set.
-
-### GetData
-
-`func (o *Version) GetData() ModelGraph`
-
-GetData returns the Data field if non-nil, zero value otherwise.
-
-### GetDataOk
-
-`func (o *Version) GetDataOk() (*ModelGraph, bool)`
-
-GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetData
-
-`func (o *Version) SetData(v ModelGraph)`
-
-SetData sets Data field to given value.
-
-### HasData
-
-`func (o *Version) HasData() bool`
-
-HasData returns a boolean if a field has been set.
 
 ### GetStatus
 

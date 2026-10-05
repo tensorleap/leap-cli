@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**InsightId** | **string** |  | 
+**InsightIds** | **[]string** |  | 
 **Status** | [**InsightStatus**](InsightStatus.md) |  | 
 **ProjectId** | **string** |  | 
 
@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 
 ### NewApplyInsightsStatusParams
 
-`func NewApplyInsightsStatusParams(insightId string, status InsightStatus, projectId string, ) *ApplyInsightsStatusParams`
+`func NewApplyInsightsStatusParams(insightIds []string, status InsightStatus, projectId string, ) *ApplyInsightsStatusParams`
 
 NewApplyInsightsStatusParams instantiates a new ApplyInsightsStatusParams object
 This constructor will assign default values to properties that have it defined,
@@ -27,24 +27,24 @@ NewApplyInsightsStatusParamsWithDefaults instantiates a new ApplyInsightsStatusP
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetInsightId
+### GetInsightIds
 
-`func (o *ApplyInsightsStatusParams) GetInsightId() string`
+`func (o *ApplyInsightsStatusParams) GetInsightIds() []string`
 
-GetInsightId returns the InsightId field if non-nil, zero value otherwise.
+GetInsightIds returns the InsightIds field if non-nil, zero value otherwise.
 
-### GetInsightIdOk
+### GetInsightIdsOk
 
-`func (o *ApplyInsightsStatusParams) GetInsightIdOk() (*string, bool)`
+`func (o *ApplyInsightsStatusParams) GetInsightIdsOk() (*[]string, bool)`
 
-GetInsightIdOk returns a tuple with the InsightId field if it's non-nil, zero value otherwise
+GetInsightIdsOk returns a tuple with the InsightIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetInsightId
+### SetInsightIds
 
-`func (o *ApplyInsightsStatusParams) SetInsightId(v string)`
+`func (o *ApplyInsightsStatusParams) SetInsightIds(v []string)`
 
-SetInsightId sets InsightId field to given value.
+SetInsightIds sets InsightIds field to given value.
 
 
 ### GetStatus

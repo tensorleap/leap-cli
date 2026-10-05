@@ -87,6 +87,7 @@ docs/ConfusionMatrixTableParams.md
 docs/ConfusionMetricNamesParams.md
 docs/ConfusionMetricNamesResponse.md
 docs/ContinueEvaluateParams.md
+docs/ContinueSyntheticDataParams.md
 docs/ContinueUpdateEvaluateParams.md
 docs/ContinuesAgg.md
 docs/CreateSampleVisualizationsParams.md
@@ -154,11 +155,6 @@ docs/ExportAnalysisResponse.md
 docs/ExportAnalysisResponseVersion.md
 docs/ExportModelParams.md
 docs/ExportModelTypeEnum.md
-docs/ExportOptions.md
-docs/ExportProjectMeta.md
-docs/ExportProjectParams.md
-docs/ExportProjectRequest.md
-docs/ExportProjectResponse.md
 docs/ExportedModelData.md
 docs/ExtendTrialParams.md
 docs/ExtendTrialResponse.md
@@ -238,7 +234,6 @@ docs/GetJobLogsParams.md
 docs/GetJobLogsResponse.md
 docs/GetJobsFilterParams.md
 docs/GetJobsResponse.md
-docs/GetLatestExportedProjectParams.md
 docs/GetMachineTypesResponse.md
 docs/GetMaxActiveUsersResponse.md
 docs/GetNotificationsByFilterParams.md
@@ -287,6 +282,8 @@ docs/GetUploadSignedUrlParams.md
 docs/GetUserUiStateResponse.md
 docs/GetVersionEpochsResponse.md
 docs/GetVersionJobsParams.md
+docs/GetVersionModelGraphParams.md
+docs/GetVersionModelGraphResponse.md
 docs/GetVersionSampleOrderParams.md
 docs/GetVersionSampleOrderResponse.md
 docs/GetVersionSamplesMetadataParams.md
@@ -313,9 +310,6 @@ docs/ImageHeatmapData.md
 docs/ImageViz.md
 docs/ImportModelInfo.md
 docs/ImportModelType.md
-docs/ImportProjectParams.md
-docs/ImportProjectRequest.md
-docs/ImportProjectResponse.md
 docs/InferenceArtifactResources.md
 docs/InitExperimentRequest.md
 docs/InitExperimentResponse.md
@@ -344,7 +338,6 @@ docs/JobNotificationBaseContext.md
 docs/JobNotificationContext.md
 docs/JobNotificationLeepScriptContext.md
 docs/JobNotificationModelContext.md
-docs/JobNotificationProjectContext.md
 docs/JobNotificationSampleContext.md
 docs/JobParams.md
 docs/JobStatus.md
@@ -355,8 +348,6 @@ docs/JobTypeEnum.md
 docs/LabelingAlgorithm.md
 docs/LabelingJobParams.md
 docs/LatentSpaceDefault.md
-docs/LatestExportedProject.md
-docs/LatestExportedProjectItem.md
 docs/Layout.md
 docs/LeapDataType.md
 docs/LicenseMetadata.md
@@ -541,8 +532,6 @@ docs/UpdateUserNameRequest.md
 docs/UpdateUserRoleRequest.md
 docs/UpdateUserStatusRequest.md
 docs/UpdateUserTeamRequest.md
-docs/UpdateVersionParams.md
-docs/UpdateVersionResponse.md
 docs/UploadModelFileType.md
 docs/UploadedModel.md
 docs/UpsertStateParams.md
@@ -656,6 +645,7 @@ model_confusion_matrix_table_params.go
 model_confusion_metric_names_params.go
 model_confusion_metric_names_response.go
 model_continue_evaluate_params.go
+model_continue_synthetic_data_params.go
 model_continue_update_evaluate_params.go
 model_continues_agg.go
 model_create_sample_visualizations_params.go
@@ -722,11 +712,6 @@ model_export_analysis_response.go
 model_export_analysis_response_version.go
 model_export_model_params.go
 model_export_model_type_enum.go
-model_export_options.go
-model_export_project_meta.go
-model_export_project_params.go
-model_export_project_request.go
-model_export_project_response.go
 model_exported_model_data.go
 model_extend_trial_params.go
 model_extend_trial_response.go
@@ -806,7 +791,6 @@ model_get_job_logs_params.go
 model_get_job_logs_response.go
 model_get_jobs_filter_params.go
 model_get_jobs_response.go
-model_get_latest_exported_project_params.go
 model_get_machine_types_response.go
 model_get_max_active_users_response.go
 model_get_notifications_by_filter_params.go
@@ -855,6 +839,8 @@ model_get_upload_signed_url_params.go
 model_get_user_ui_state_response.go
 model_get_version_epochs_response.go
 model_get_version_jobs_params.go
+model_get_version_model_graph_params.go
+model_get_version_model_graph_response.go
 model_get_version_sample_order_params.go
 model_get_version_sample_order_response.go
 model_get_version_samples_metadata_params.go
@@ -881,9 +867,6 @@ model_image_heatmap_data.go
 model_image_viz.go
 model_import_model_info.go
 model_import_model_type.go
-model_import_project_params.go
-model_import_project_request.go
-model_import_project_response.go
 model_inference_artifact_resources.go
 model_init_experiment_request.go
 model_init_experiment_response.go
@@ -912,7 +895,6 @@ model_job_notification_base_context.go
 model_job_notification_context.go
 model_job_notification_leep_script_context.go
 model_job_notification_model_context.go
-model_job_notification_project_context.go
 model_job_notification_sample_context.go
 model_job_params.go
 model_job_status.go
@@ -923,8 +905,6 @@ model_job_type_enum.go
 model_labeling_algorithm.go
 model_labeling_job_params.go
 model_latent_space_default.go
-model_latest_exported_project.go
-model_latest_exported_project_item.go
 model_layout.go
 model_leap_data_type.go
 model_license_metadata.go
@@ -1109,8 +1089,6 @@ model_update_user_name_request.go
 model_update_user_role_request.go
 model_update_user_status_request.go
 model_update_user_team_request.go
-model_update_version_params.go
-model_update_version_response.go
 model_upload_model_file_type.go
 model_uploaded_model.go
 model_upsert_state_params.go

@@ -6,8 +6,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ClientStoragePrefixUrl** | **string** |  | 
 **SchemaVersion** | **float64** |  | 
-**HubDefaultNamespace** | **string** |  | 
-**HubUrl** | **string** |  | 
 **DisableDatadogMetrics** | **bool** |  | 
 **IsCloud** | **bool** |  | 
 **GatewayUrl** | **string** |  | 
@@ -19,7 +17,7 @@ Name | Type | Description | Notes
 
 ### NewGetEnvironmentInfoResponse
 
-`func NewGetEnvironmentInfoResponse(clientStoragePrefixUrl string, schemaVersion float64, hubDefaultNamespace string, hubUrl string, disableDatadogMetrics bool, isCloud bool, gatewayUrl string, proxyUrl string, ) *GetEnvironmentInfoResponse`
+`func NewGetEnvironmentInfoResponse(clientStoragePrefixUrl string, schemaVersion float64, disableDatadogMetrics bool, isCloud bool, gatewayUrl string, proxyUrl string, ) *GetEnvironmentInfoResponse`
 
 NewGetEnvironmentInfoResponse instantiates a new GetEnvironmentInfoResponse object
 This constructor will assign default values to properties that have it defined,
@@ -72,46 +70,6 @@ and a boolean to check if the value has been set.
 `func (o *GetEnvironmentInfoResponse) SetSchemaVersion(v float64)`
 
 SetSchemaVersion sets SchemaVersion field to given value.
-
-
-### GetHubDefaultNamespace
-
-`func (o *GetEnvironmentInfoResponse) GetHubDefaultNamespace() string`
-
-GetHubDefaultNamespace returns the HubDefaultNamespace field if non-nil, zero value otherwise.
-
-### GetHubDefaultNamespaceOk
-
-`func (o *GetEnvironmentInfoResponse) GetHubDefaultNamespaceOk() (*string, bool)`
-
-GetHubDefaultNamespaceOk returns a tuple with the HubDefaultNamespace field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetHubDefaultNamespace
-
-`func (o *GetEnvironmentInfoResponse) SetHubDefaultNamespace(v string)`
-
-SetHubDefaultNamespace sets HubDefaultNamespace field to given value.
-
-
-### GetHubUrl
-
-`func (o *GetEnvironmentInfoResponse) GetHubUrl() string`
-
-GetHubUrl returns the HubUrl field if non-nil, zero value otherwise.
-
-### GetHubUrlOk
-
-`func (o *GetEnvironmentInfoResponse) GetHubUrlOk() (*string, bool)`
-
-GetHubUrlOk returns a tuple with the HubUrl field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetHubUrl
-
-`func (o *GetEnvironmentInfoResponse) SetHubUrl(v string)`
-
-SetHubUrl sets HubUrl field to given value.
 
 
 ### GetDisableDatadogMetrics

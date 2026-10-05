@@ -4,7 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Digest** | **string** |  | 
+**ContinuedFromJobId** | Pointer to **string** |  | [optional] 
+**Digest** | **string** | Lineage key: a continuation reuses its predecessor&#39;s digest (engine state lives under it). | 
 **InitialSimulationFilters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **TargetFilters** | [**[]ESFilter**](ESFilter.md) |  | 
 **SimulationNames** | **[]string** |  | 
@@ -30,6 +31,31 @@ will change when the set of required properties is changed
 NewAutoSyntheticDataJobParamsWithDefaults instantiates a new AutoSyntheticDataJobParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetContinuedFromJobId
+
+`func (o *AutoSyntheticDataJobParams) GetContinuedFromJobId() string`
+
+GetContinuedFromJobId returns the ContinuedFromJobId field if non-nil, zero value otherwise.
+
+### GetContinuedFromJobIdOk
+
+`func (o *AutoSyntheticDataJobParams) GetContinuedFromJobIdOk() (*string, bool)`
+
+GetContinuedFromJobIdOk returns a tuple with the ContinuedFromJobId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetContinuedFromJobId
+
+`func (o *AutoSyntheticDataJobParams) SetContinuedFromJobId(v string)`
+
+SetContinuedFromJobId sets ContinuedFromJobId field to given value.
+
+### HasContinuedFromJobId
+
+`func (o *AutoSyntheticDataJobParams) HasContinuedFromJobId() bool`
+
+HasContinuedFromJobId returns a boolean if a field has been set.
 
 ### GetDigest
 

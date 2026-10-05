@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **VersionId** | Pointer to **string** |  | [optional] 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **Refresh** | Pointer to **bool** |  | [optional] 
+**ParentInsightId** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -122,6 +123,31 @@ SetRefresh sets Refresh field to given value.
 `func (o *GenerateInsightsParams) HasRefresh() bool`
 
 HasRefresh returns a boolean if a field has been set.
+
+### GetParentInsightId
+
+`func (o *GenerateInsightsParams) GetParentInsightId() string`
+
+GetParentInsightId returns the ParentInsightId field if non-nil, zero value otherwise.
+
+### GetParentInsightIdOk
+
+`func (o *GenerateInsightsParams) GetParentInsightIdOk() (*string, bool)`
+
+GetParentInsightIdOk returns a tuple with the ParentInsightId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetParentInsightId
+
+`func (o *GenerateInsightsParams) SetParentInsightId(v string)`
+
+SetParentInsightId sets ParentInsightId field to given value.
+
+### HasParentInsightId
+
+`func (o *GenerateInsightsParams) HasParentInsightId() bool`
+
+HasParentInsightId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
