@@ -37,3 +37,13 @@ func TestShellQuoteOnlyWhenNeeded(t *testing.T) {
 		t.Fatal("quoting")
 	}
 }
+
+func TestTeamSnippetDoesNotPinAPersonalEnvironment(t *testing.T) {
+	var buf bytes.Buffer
+	printConfig(&buf, "claude-code", "/usr/local/bin/leap", []string{"mcp", "--env", "local"})
+	out := buf.String()
+	team := out[strings.Index(out, "{"):]
+	if strings.Contains(team, "--env") || !strings.Contains(out, "mcp --env local") {
+		t.Fatalf("personal command keeps --env, team file must not:\n%s", out)
+	}
+}

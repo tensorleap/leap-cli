@@ -101,8 +101,9 @@ func printConfig(w io.Writer, client, bin string, args []string) {
 	case "claude-code":
 		p("Claude Code: run this once to add Tensorleap to all your projects:\n")
 		p("  claude mcp add --scope user tensorleap -- %s %s\n", shellQuote(bin), strings.Join(args, " "))
-		p("To share it with your team instead, commit this as .mcp.json in the repository (it expects leap on everyone's PATH):\n")
-		p("%s", mustJSON(map[string]any{"mcpServers": map[string]any{"tensorleap": serverEntry{Command: "leap", Args: args}}}))
+		// --env names are personal leap auth settings, so the shared file follows each user's current one
+		p("To share it with your team instead, commit this as .mcp.json in the repository (it expects leap on everyone's PATH and uses each person's current leap auth environment):\n")
+		p("%s", mustJSON(map[string]any{"mcpServers": map[string]any{"tensorleap": serverEntry{Command: "leap", Args: []string{"mcp"}}}}))
 	case "claude-desktop":
 		p("Claude Desktop: open Settings > Developer > Edit Config (%s) and merge in:\n", desktopConfigPath())
 		p("%s", mustJSON(servers))
