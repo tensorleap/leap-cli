@@ -432,8 +432,9 @@ type ListSamplesIn struct {
 }
 
 type ListedSample struct {
-	ID     string         `json:"id" jsonschema:"pass to tl_view_samples"`
-	Values map[string]any `json:"values"`
+	ID       string         `json:"id" jsonschema:"pass to tl_view_samples"`
+	Rendered *bool          `json:"rendered,omitempty" jsonschema:"whether tl_view_samples can show it; unrendered samples need Visualize in the UI first"`
+	Values   map[string]any `json:"values"`
 }
 
 type ListSamplesOut struct {
@@ -448,7 +449,8 @@ func (s *Server) listSamples(ctx context.Context, _ *sdk.CallToolRequest, in Lis
 	if err := s.resolve(ctx, &in.ProjectID, &in.VersionID); err != nil {
 		return nil, ListSamplesOut{}, err
 	}
-	if _, err := s.allowed(ctx, in.ProjectID, sampleRowsClass); err != nil {
+	access, err := s.allowed(ctx, in.ProjectID, sampleRowsClass)
+	if err != nil {
 		return nil, ListSamplesOut{}, err
 	}
 	fields := append([]string{}, in.Fields...)
@@ -509,6 +511,19 @@ func (s *Server) listSamples(ctx context.Context, _ *sdk.CallToolRequest, in Lis
 	}
 	if len(out.Samples) == 0 {
 		out.Reason, out.NextStep = "no-matching-samples", "loosen the filters, or check values with tl_query grouped by the same fields"
+	}
+	if access.Visuals && len(out.Samples) > 0 {
+		// saves the assistant from probing tl_view_samples sample by sample for one it can see
+		ids := make([]string, len(out.Samples))
+		for i, smp := range out.Samples {
+			ids[i] = smp.ID
+		}
+		if rendered, err := s.sampleAssets(ctx, in.ProjectID, in.VersionID, ids); err == nil {
+			for i := range out.Samples {
+				r := len(rendered[out.Samples[i].ID]) > 0
+				out.Samples[i].Rendered = &r
+			}
+		}
 	}
 	return nil, out, nil
 }

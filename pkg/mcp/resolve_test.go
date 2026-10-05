@@ -69,11 +69,13 @@ func listServer(t *testing.T, sampleRows bool, honourValues bool) (*Server, *map
 		path := strings.TrimPrefix(r.URL.Path, "/api/v2/")
 		switch path {
 		case "analysis-export/listTargets":
-			_, _ = fmt.Fprintf(w, `{"contractVersion":1,"aiAccess":{"stats":true,"sampleRows":%v},"me":{}}`, sampleRows)
+			_, _ = fmt.Fprintf(w, `{"contractVersion":1,"aiAccess":{"stats":true,"sampleRows":%v,"visuals":true},"me":{}}`, sampleRows)
 		case "versions/getProjectSlimVersions":
 			_, _ = w.Write([]byte(`{"versions":[{"cid":"` + versionHex + `","resources":{"inference_artifact_id":"ia","es_metrics_index":"idx"}}]}`))
 		case "dashboards/getDashletFields":
 			_, _ = w.Write([]byte(`{"aggregatableFields":["metrics.loss","metadata.label","metrics.pred"],"numericFields":["metrics.loss","metrics.pred"]}`))
+		case "analysis-export/getSampleAssets":
+			_, _ = w.Write([]byte(`{"samples":[{"sampleId":"` + visualizationID("training_4821") + `","files":[{"path":"p/image/assets/data.jpg","url":"u"}]}]}`))
 		case "sample-collection/getVersionSampleOrder":
 			_ = json.NewDecoder(r.Body).Decode(&sent)
 			label := "2"
@@ -94,7 +96,7 @@ func TestListSamplesFindsANamedCase(t *testing.T) {
 	in := ListSamplesIn{ProjectID: projectHex, VersionID: versionHex, SortBy: "metrics.loss",
 		Filters: []Filter{{Field: "metadata.label", Operator: "equal", Value: "2"}, {Field: "metrics.pred", Operator: "equal", Value: 7}}}
 	_, out, err := s.listSamples(context.Background(), nil, in)
-	if err != nil || out.Matching != 36 || len(out.Samples) != 1 || out.Samples[0].ID != "training_4821" || out.Samples[0].Values["metrics.loss"] != 6.4 {
+	if err != nil || out.Matching != 36 || len(out.Samples) != 1 || out.Samples[0].ID != "training_4821" || out.Samples[0].Values["metrics.loss"] != 6.4 || out.Samples[0].Rendered == nil || !*out.Samples[0].Rendered {
 		t.Fatalf("got %v %+v", err, out)
 	}
 	if f := (*sent)["filters"].([]any)[0].(map[string]any); f["values"].([]any)[0] != "2" {
