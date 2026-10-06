@@ -188,30 +188,38 @@ type heatmapItem struct {
 	Label, Blob, HeatmapBlob string
 }
 
-func (s *Server) heatmapOverlays(ctx context.Context, id, visualizer, payloadURL string, files []assetFile, in ViewIn) ([]sdk.Content, error) {
+type renderedOverlay struct {
+	label      string
+	jpeg       []byte
+	hasHeatmap bool
+}
+
+// renderOverlays draws the chosen heatmap labels over the sample image; limit 0 means every label
+func (s *Server) renderOverlays(ctx context.Context, payloadURL string, files []assetFile, labels []string, limit int, full bool) ([]renderedOverlay, []string, error) {
 	raw, err := s.client.Download(ctx, payloadURL)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	var payload any
 	if err := json.Unmarshal(raw, &payload); err != nil {
-		return nil, fmt.Errorf("sample %s: unreadable heatmap payload: %w", id, err)
+		return nil, nil, fmt.Errorf("unreadable heatmap payload: %w", err)
 	}
 	var items []heatmapItem
 	collectHeatmaps(payload, "", &items)
-	var chosen, skipped []heatmapItem
+	var chosen []heatmapItem
+	var skipped []string
 	for _, it := range items {
-		wanted := len(in.Labels) == 0 && len(chosen) < defaultHeatmaps
-		for _, l := range in.Labels {
+		wanted := len(labels) == 0 && (limit == 0 || len(chosen) < limit)
+		for _, l := range labels {
 			wanted = wanted || l == it.Label
 		}
 		if wanted {
 			chosen = append(chosen, it)
 		} else {
-			skipped = append(skipped, it)
+			skipped = append(skipped, it.Label)
 		}
 	}
-	var out []sdk.Content
+	var out []renderedOverlay
 	bases := map[string]image.Image{}
 	for _, it := range chosen {
 		baseURL, heatURL := urlFor(files, it.Blob), urlFor(files, it.HeatmapBlob)
@@ -222,45 +230,54 @@ func (s *Server) heatmapOverlays(ctx context.Context, id, visualizer, payloadURL
 		if !ok {
 			rawImg, err := s.client.Download(ctx, baseURL)
 			if err != nil {
-				return nil, err
+				return nil, nil, err
 			}
 			if base, _, err = image.Decode(bytes.NewReader(rawImg)); err != nil {
 				continue
 			}
-			base = viewSize(base, in.Full)
+			base = viewSize(base, full)
 			bases[baseURL] = base
 		}
-		kind := "image_heatmap"
-		if it.Label != "" {
-			kind += fmt.Sprintf(", label %q", it.Label)
-		}
-		caption := fmt.Sprintf("sample %s · %s (%s): heatmap over the image, turbo colormap (red = strongest attention, blue = weakest)", id, visualizer, kind)
-		img := base
-		if heatURL == "" {
-			caption = fmt.Sprintf("sample %s · %s (%s): base image only; this server does not return heatmap data, open the sample in the UI to see the overlay", id, visualizer, kind)
-		} else {
+		img, hasHeatmap := base, false
+		if heatURL != "" {
 			rawHeat, err := s.client.Download(ctx, heatURL)
 			if err != nil {
-				return nil, err
+				return nil, nil, err
 			}
 			hm, err := parseHeatmap(rawHeat)
 			if err != nil {
-				return nil, fmt.Errorf("sample %s (%s): %w", id, kind, err)
+				return nil, nil, fmt.Errorf("label %q: %w", it.Label, err)
 			}
-			img = overlay(base, hm)
+			img, hasHeatmap = overlay(base, hm), true
 		}
 		var buf bytes.Buffer
 		if err := jpeg.Encode(&buf, img, &jpeg.Options{Quality: 85}); err != nil {
-			return nil, err
+			return nil, nil, err
 		}
-		out = append(out, &sdk.TextContent{Text: caption}, &sdk.ImageContent{Data: buf.Bytes(), MIMEType: "image/jpeg"})
+		out = append(out, renderedOverlay{label: it.Label, jpeg: buf.Bytes(), hasHeatmap: hasHeatmap})
+	}
+	return out, skipped, nil
+}
+
+func (s *Server) heatmapOverlays(ctx context.Context, id, visualizer, payloadURL string, files []assetFile, in ViewIn) ([]sdk.Content, error) {
+	overlays, skipped, err := s.renderOverlays(ctx, payloadURL, files, in.Labels, defaultHeatmaps, in.Full)
+	if err != nil {
+		return nil, fmt.Errorf("sample %s: %w", id, err)
+	}
+	var out []sdk.Content
+	for _, o := range overlays {
+		kind := "image_heatmap"
+		if o.label != "" {
+			kind += fmt.Sprintf(", label %q", o.label)
+		}
+		caption := fmt.Sprintf("sample %s · %s (%s): heatmap over the image, turbo colormap (red = strongest attention, blue = weakest)", id, visualizer, kind)
+		if !o.hasHeatmap {
+			caption = fmt.Sprintf("sample %s · %s (%s): base image only; this server does not return heatmap data, open the sample in the UI to see the overlay", id, visualizer, kind)
+		}
+		out = append(out, &sdk.TextContent{Text: caption}, &sdk.ImageContent{Data: o.jpeg, MIMEType: "image/jpeg"})
 	}
 	if len(skipped) > 0 {
-		labels := make([]string, 0, len(skipped))
-		for _, it := range skipped {
-			labels = append(labels, it.Label)
-		}
-		out = append(out, &sdk.TextContent{Text: fmt.Sprintf("sample %s · %s: %d more heatmap label(s) not shown (%s); pass heatmapLabels to choose", id, visualizer, len(skipped), truncate(strings.Join(labels, ", "), 300))})
+		out = append(out, &sdk.TextContent{Text: fmt.Sprintf("sample %s · %s: %d more heatmap label(s) not shown (%s); pass heatmapLabels to choose", id, visualizer, len(skipped), truncate(strings.Join(skipped, ", "), 300))})
 	}
 	return out, nil
 }
