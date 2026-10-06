@@ -33,8 +33,10 @@ func NewFailedClient(err error) *Client {
 	return &Client{failure: err}
 }
 
+// UIBase is where the web UI lives: hosted installs serve the API from api.<tenant>.tensorleap.ai
+// and the UI from <tenant>.tensorleap.ai
 func (c *Client) UIBase() string {
-	return strings.TrimSuffix(c.BaseURL, "/api/v2")
+	return strings.TrimSuffix(api.ChangeToUIUrl(c.BaseURL), "/")
 }
 
 type APIError struct {

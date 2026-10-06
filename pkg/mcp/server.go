@@ -17,9 +17,12 @@ const instructions = `Tensorleap MCP: read-only access to a Tensorleap server's 
 - Call tl_status first; it tells you which server answered and who you are.
 - Use tl_list_projects, then tl_list_versions to pick an evaluated version, then tl_get_insights. Tools accept a project or version name instead of its id, and "latest" for the newest evaluated version.
 - tl_list_projects shows what each project lets you read. If something you need is turned off, tell the user which setting an admin must turn back on (gear menu > AI access) and don't try to reconstruct that data another way.
-- Read the resource tensorleap://glossary for current insight names and how to read them.
+- Read the resource tensorleap://glossary for current insight names, the engine fields and how to read them.
 - For a Failure Mode insight, quote groupSize (samples that actually underperform), never the platform's clusterSize/n_samples.
 - composition entries mean "over-represented in the group", not "the group's defining trait".
+- Each insight's engine object is the platform's own analysis; for a Failure Mode, read is_train_aggressor and overfitting_metrics before recommending a fix (the glossary says how). Quote aggressor_fixing counts instead of inventing your own.
+- Prediction fields (e.g. metrics.*_prd_idx) hold class indices; name them with classLabels from tl_get_insights.
+- tl_get_integration_code tells you what each visualizer shows and what metadata means; read it before interpreting samples.
 - If a Failure Mode has no groupSize, the failing count is unavailable (per-sample data is off); say so and never substitute clusterSize.
 - If a tool says AI access is turned off, quote that message to the user and continue with what is allowed; never retry it or get the same data another way.
 - An empty result always carries a reason and a nextStep; act on them instead of guessing.
@@ -49,11 +52,12 @@ type Server struct {
 	mu       sync.Mutex
 	pops     map[string]*Population
 	fields   map[string]map[string]bool
+	code     map[string]*codeArchive
 	policies policyCache
 }
 
 func NewServer(client *Client, version string) *sdk.Server {
-	s := &Server{client: client, pops: map[string]*Population{}, fields: map[string]map[string]bool{}, policies: policyCache{entries: map[string]policyEntry{}}}
+	s := newServer(client)
 	srv := sdk.NewServer(&sdk.Implementation{Name: "tensorleap", Title: "Tensorleap", Version: version},
 		&sdk.ServerOptions{Instructions: instructions})
 	closed := false
@@ -67,6 +71,7 @@ func NewServer(client *Client, version string) *sdk.Server {
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_view_samples", Description: "Look at samples: returns their rendered visualizations (images as thumbnails, other types as data) so you can judge what the failing samples have in common. At most 6 per call.", Annotations: ro("View samples")}, s.viewSamples)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_describe_fields", Description: "The metric and metadata fields recorded for an evaluated version, with types. Call before tl_query to get exact field names.", Annotations: ro("Describe fields")}, s.describeFields)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_query", Description: "Aggregate metrics over the whole evaluated population, grouped by up to 2 fields (e.g. average loss per class per split, or label x prediction for confusions), optionally filtered and compared across versions. Every row includes the sample count n.", Annotations: ro("Query metrics")}, s.query)
+	sdk.AddTool(srv, &sdk.Tool{Name: "tl_get_integration_code", Description: "The integration code pushed with a version: the file list and one file's text (the entry file by default). Read it to learn what each visualizer renders, how metadata is derived and what the loss and metrics measure.", Annotations: ro("Get integration code")}, s.getIntegrationCode)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_list_samples", Description: "List individual samples that match conditions (e.g. label 2 predicted as 7), ranked by a field such as loss, with their values; pass the ids to tl_view_samples. Use it when the user names a failing case. greater-than / less-than are inclusive here.", Annotations: ro("List samples")}, s.listSamples)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_list_jobs", Description: "Jobs (Evaluate, Push, Population Exploration, ...) for a project or version, newest first. Check here before starting work again so nothing runs twice.", Annotations: ro("List jobs")}, s.listJobs)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_wait_for_job", Description: "Wait (up to 5 minutes) until a job changes status or finishes, instead of polling. Evaluations can run for hours; call again later if it is still running.", Annotations: ro("Wait for job")}, s.waitForJob)
@@ -94,6 +99,10 @@ type targetsResponse struct {
 		Evaluated    bool     `json:"evaluated"`
 		HasInsights  bool     `json:"hasInsights"`
 	} `json:"versions"`
+}
+
+func newServer(client *Client) *Server {
+	return &Server{client: client, pops: map[string]*Population{}, fields: map[string]map[string]bool{}, code: map[string]*codeArchive{}, policies: policyCache{entries: map[string]policyEntry{}}}
 }
 
 func (s *Server) targets(ctx context.Context, projectID string) (*targetsResponse, error) {
@@ -256,24 +265,79 @@ func anyEvaluated(vs []Version) bool {
 	return false
 }
 
+type Visualizer struct {
+	Name     string   `json:"name"`
+	Type     string   `json:"type"`
+	ArgNames []string `json:"argNames"`
+}
+
+type exportedInsight struct {
+	Cid             string         `json:"cid"`
+	Index           float64        `json:"index"`
+	Status          string         `json:"status"`
+	Description     string         `json:"description"`
+	InsightType     map[string]any `json:"insightType"`
+	CsvURL          string         `json:"csvUrl"`
+	ClusterBlobURL  string         `json:"clusterBlobUrl"`
+	TopPanelURL     string         `json:"topPanelUrl"`
+	FixingCsvURL    string         `json:"fixingCsvUrl"`
+	AnalyzeLinkPath string         `json:"analyzeLinkPath"`
+}
+
 type exportResponse struct {
-	ContractVersion  int    `json:"contractVersion"`
-	DeepLinkPath     string `json:"deepLinkPath"`
-	PopulationCsvURL string `json:"populationCsvUrl"`
-	Version          struct {
+	ContractVersion      int                 `json:"contractVersion"`
+	DeepLinkPath         string              `json:"deepLinkPath"`
+	PopulationCsvURL     string              `json:"populationCsvUrl"`
+	IntegrationCodeURL   string              `json:"integrationCodeUrl"`
+	IntegrationEntryFile string              `json:"integrationEntryFile"`
+	PredictionLabels     map[string][]string `json:"predictionLabels"`
+	Visualizers          []Visualizer        `json:"visualizers"`
+	Version              struct {
 		Name         string   `json:"name"`
 		SerialNumber *float64 `json:"serialNumber"`
 	} `json:"version"`
-	Insights []struct {
-		Cid             string         `json:"cid"`
-		Index           float64        `json:"index"`
-		Status          string         `json:"status"`
-		Description     string         `json:"description"`
-		InsightType     map[string]any `json:"insightType"`
-		CsvURL          string         `json:"csvUrl"`
-		FixingCsvURL    string         `json:"fixingCsvUrl"`
-		AnalyzeLinkPath string         `json:"analyzeLinkPath"`
-	} `json:"insights"`
+	Insights []exportedInsight `json:"insights"`
+}
+
+func (s *Server) export(ctx context.Context, projectID, versionID string) (*exportResponse, error) {
+	var e exportResponse
+	if err := s.client.Post(ctx, "analysis-export/exportAnalysis", map[string]any{"projectId": projectID, "versionId": versionID}, &e); err != nil {
+		return nil, explain(err)
+	}
+	return &e, nil
+}
+
+// internal storage paths and UI filter state; everything else the engine computed is worth reading
+var engineInternalKeys = map[string]bool{"min_hash": true, "display_filters": true, "csv_path": true, "blob_path": true,
+	"top_panel_path": true, "id_": true, "parent_id": true, "type": true, "es_filters_used_in_analysis": true}
+
+func enginePayload(t map[string]any) map[string]any {
+	out := map[string]any{}
+	for k, v := range t {
+		if engineInternalKeys[k] {
+			continue
+		}
+		out[k] = v
+	}
+	if fix, ok := t["aggressor_fixing"].(map[string]any); ok {
+		clean := map[string]any{}
+		for k, v := range fix {
+			if k != "csv_path" {
+				clean[k] = v
+			}
+		}
+		out["aggressor_fixing"] = clean
+	}
+	if tests := list(t["automatic_tests"]); len(tests) > 0 {
+		clean := make([]any, 0, len(tests))
+		for _, x := range tests {
+			if m, ok := x.(map[string]any); ok {
+				clean = append(clean, map[string]any{"test_name": m["test_name"], "metric_name": m["metric_name"], "metric_value": m["metric_value"], "operator": m["operator"]})
+			}
+		}
+		out["automatic_tests"] = clean
+	}
+	return out
 }
 
 type VersionIn struct {
@@ -308,6 +372,8 @@ type Insight struct {
 	Contrast     []Contrast     `json:"contrast,omitempty"`
 	Remedy       *Remedy        `json:"remedy,omitempty"`
 	TopSamples   []SampleRef    `json:"topSamples,omitempty" jsonschema:"most representative failing samples (ranked by affinity or loss), rendered ones first; pass to tl_view_samples"`
+	RankedBy     string         `json:"rankedBy,omitempty" jsonschema:"what topSamples are ordered by"`
+	Engine       map[string]any `json:"engine,omitempty" jsonschema:"the platform's own analysis of this insight: metrics_info, mutual_info_elements, is_train_aggressor, overfitting_metrics/evidence, cluster_extended_stats, severity_metrics, automatic_tests (see the glossary)"`
 	HasTests     bool           `json:"hasSuggestedTests"`
 	Link         string         `json:"link"`
 	CreateTest   string         `json:"createTestLink,omitempty"`
@@ -315,13 +381,15 @@ type Insight struct {
 }
 
 type InsightsOut struct {
-	Server   string    `json:"server"`
-	Version  string    `json:"version"`
-	Note     string    `json:"note,omitempty"`
-	Insights []Insight `json:"insights"`
-	Link     string    `json:"insightsPanelLink"`
-	Reason   string    `json:"reason,omitempty"`
-	NextStep string    `json:"nextStep,omitempty"`
+	Server      string              `json:"server"`
+	Version     string              `json:"version"`
+	Note        string              `json:"note,omitempty"`
+	ClassLabels map[string][]string `json:"classLabels,omitempty" jsonschema:"per prediction type, the class name at each index; prediction fields such as *_prd_idx hold the index"`
+	Visualizers []Visualizer        `json:"visualizers,omitempty" jsonschema:"the visualizers the integration declared; tl_get_integration_code explains what each renders"`
+	Insights    []Insight           `json:"insights"`
+	Link        string              `json:"insightsPanelLink"`
+	Reason      string              `json:"reason,omitempty"`
+	NextStep    string              `json:"nextStep,omitempty"`
 }
 
 func (s *Server) getInsights(ctx context.Context, _ *sdk.CallToolRequest, in VersionIn) (*sdk.CallToolResult, InsightsOut, error) {
@@ -332,11 +400,12 @@ func (s *Server) getInsights(ctx context.Context, _ *sdk.CallToolRequest, in Ver
 	if err != nil {
 		return nil, InsightsOut{}, err
 	}
-	var e exportResponse
-	if err := s.client.Post(ctx, "analysis-export/exportAnalysis", map[string]any{"projectId": in.ProjectID, "versionId": in.VersionID}, &e); err != nil {
-		return nil, InsightsOut{}, explain(err)
+	e, err := s.export(ctx, in.ProjectID, in.VersionID)
+	if err != nil {
+		return nil, InsightsOut{}, err
 	}
-	out := InsightsOut{Server: s.client.UIBase(), Version: e.Version.Name, Insights: []Insight{}, Link: s.client.UIBase() + e.DeepLinkPath}
+	out := InsightsOut{Server: s.client.UIBase(), Version: e.Version.Name, Insights: []Insight{}, Link: s.client.UIBase() + e.DeepLinkPath,
+		ClassLabels: e.PredictionLabels, Visualizers: e.Visualizers}
 	if !access.SampleRows {
 		out.Note = "per-sample data is turned off for this project, so Failure Mode sizes, composition, metric contrast and representative samples are unavailable"
 	}
@@ -357,7 +426,8 @@ func (s *Server) getInsights(ctx context.Context, _ *sdk.CallToolRequest, in Ver
 		t := raw.InsightType
 		typ := str(t["type"])
 		ins := Insight{Index: int(raw.Index), Type: typ, Name: displayNames[typ], Severity: num(t["severity"]), Status: raw.Status,
-			Description: raw.Description, ClusterSize: num(t["n_samples"]), GroupMeaning: "platform sample count", HasTests: len(list(t["automatic_tests"])) > 0}
+			Description: raw.Description, ClusterSize: num(t["n_samples"]), GroupMeaning: "platform sample count", HasTests: len(list(t["automatic_tests"])) > 0,
+			Engine: enginePayload(t)}
 		if typ == "low_performance" {
 			// n_samples counts healthy latent neighbours too; only the sample list gives the failing count
 			ins.GroupMeaning = "unavailable without per-sample data"
@@ -403,7 +473,7 @@ func (s *Server) getInsights(ctx context.Context, _ *sdk.CallToolRequest, in Ver
 			} else {
 				size := sum.GroupSize
 				ins.GroupSize, ins.GroupMeaning = &size, sum.GroupDefinition
-				ins.Split, ins.Composition, ins.Contrast = sum.Split, sum.Composition, sum.Contrast
+				ins.Split, ins.Composition, ins.Contrast, ins.RankedBy = sum.Split, sum.Composition, sum.Contrast, sum.RankedBy
 				ranked[len(out.Insights)] = sum.RankedIDs
 				candidates = append(candidates, sum.RankedIDs...)
 			}

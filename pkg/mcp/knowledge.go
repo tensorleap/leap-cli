@@ -34,6 +34,27 @@ Sub-insights refine a parent insight (parentIndex). Statuses: InReview, Approved
 - remedy: the platform's selection of samples to label or acquire for a Failure Mode.
 - topSamples: the most representative failing samples (by affinity score, else by loss), not a random draw.
 
+## The engine object on each insight (the platform's own analysis)
+- metrics_info: per metric, the cluster's median/average against the data outside the cluster.
+- severity_metrics: the metrics that made the insight severe, with their values.
+- mutual_info_elements: the features that separate the group from the rest, with the value inside and outside
+  the cluster and a score; direction says whether the feature is higher ("up") or lower in the group.
+- is_train_aggressor (Failure Mode): true when the failing group is dominated by training samples. Then more
+  data will not help: review the top samples' labels, then look at model-side fixes (targeted loss term,
+  loss weighting or oversampling of these samples).
+- overfitting_metrics / overfitting_evidence (Failure Mode): set when the cluster's training samples do far
+  better than its failing samples (robust contrast above 2.0). Then recommend rebalancing the dataset, e.g.
+  moving samples from test to train for this population.
+- aggressor_fixing (Failure Mode): num_of_samples_to_label chosen by similarity search near the cluster and
+  num_of_samples_to_acquire; when present it is the platform's suggestion and must be surfaced with its
+  numbers (tl_export_analysis writes the selected list).
+- cluster_extended_stats: metric values for the wider cluster (the failing group plus its latent
+  neighbourhood) next to the group's own, with the direction of the difference.
+- automatic_tests: a regression test the platform suggests (metric, threshold, operator); create it through
+  createTestLink.
+- Type-specific: subset (Out of Distribution, Duplication, Mislabeled), first_subset/second_subset (Data
+  Leakage), metadata_name/domain_a/domain_b/domain_gap_score (Domain Gap).
+
 ## Latent spaces (what "similar" means for a group)
 - classification-semantic: similar in the features that drive the model's class decision; clusters here are
   about how the model reasons (confusions, label boundaries).
@@ -49,7 +70,8 @@ training, validation, test, unlabeled, additional (field dataset_state.keyword).
 ## What this server cannot do
 It does not change anything in Tensorleap. Creating tests, approving or archiving insights and running
 evaluations happen through the links it returns or through the leap CLI (leap push --eval, leap run).
-It does not read integration code or model weights.`
+It does not read model weights. Integration code is available through tl_get_integration_code when the
+project allows it.`
 
 func registerKnowledge(srv *sdk.Server) {
 	srv.AddResource(&sdk.Resource{URI: glossaryURI, Name: "glossary", Title: "Tensorleap glossary",

@@ -85,12 +85,9 @@ var (
 	statsClass      = aiClass{"statistics and insights", "Statistics and insights", func(a *AiAccess) bool { return a.Stats }}
 	jobLogsClass    = aiClass{"job logs", "Job logs", func(a *AiAccess) bool { return a.JobLogs }}
 	sampleRowsClass = aiClass{"per-sample data", "Per-sample data", func(a *AiAccess) bool { return a.SampleRows }}
-	allClasses      = []aiClass{statsClass,
-		sampleRowsClass,
-		{"sample visualizations", "Sample visualizations", func(a *AiAccess) bool { return a.Visuals }},
-		jobLogsClass,
-		{"integration code", "Integration code", func(a *AiAccess) bool { return a.Code }},
-	}
+	visualsClass    = aiClass{"sample visualizations", "Sample visualizations", func(a *AiAccess) bool { return a.Visuals }}
+	codeClass       = aiClass{"integration code", "Integration code", func(a *AiAccess) bool { return a.Code }}
+	allClasses      = []aiClass{statsClass, sampleRowsClass, visualsClass, jobLogsClass, codeClass}
 )
 
 // refusal matches the server's wording so assistants see one message whichever side refused
