@@ -42,14 +42,21 @@ Sub-insights refine a parent insight (parentIndex). Statuses: InReview, Approved
 - is_train_aggressor (Failure Mode): true when the failing group is dominated by training samples. Then more
   data will not help: review the top samples' labels, then look at model-side fixes (targeted loss term,
   loss weighting or oversampling of these samples).
-- overfitting_metrics / overfitting_evidence (Failure Mode): set when the cluster's training samples do far
-  better than its failing samples (robust contrast above 2.0). Then recommend rebalancing the dataset, e.g.
-  moving samples from test to train for this population.
+- overfitting_metrics / overfitting_evidence (Failure Mode): the metrics on which the cluster's training samples
+  do far better than its failing samples. overfitting_evidence has one row per flagged metric: score (a
+  MAD-normalised gap between the two medians, weighted by support), the threshold it exceeded (2.0),
+  cluster_median (the failing group), extended_train_median (training samples in the wider cluster), n_cluster
+  and n_extended_train (samples behind each median), support (how train-heavy the wider cluster is relative
+  to the dataset) and direction. When flagged, recommend rebalancing the dataset, e.g. moving samples from
+  test to train for this population.
 - aggressor_fixing (Failure Mode): num_of_samples_to_label chosen by similarity search near the cluster and
   num_of_samples_to_acquire; when present it is the platform's suggestion and must be surfaced with its
   numbers (tl_export_analysis writes the selected list).
-- cluster_extended_stats: metric values for the wider cluster (the failing group plus its latent
-  neighbourhood) next to the group's own, with the direction of the difference.
+- cluster_extended_stats: per metric, the median over the failing group (cluster_value) next to the median
+  over the wider cluster, the group plus its latent neighbourhood (extended_value), with the metric's
+  direction so you can tell which side is worse.
+- direction (in the fields above): the metric's preferred direction as the integration declared it:
+  Downward means lower is better (a loss), Upward means higher is better (an accuracy).
 - automatic_tests: a regression test the platform suggests (metric, threshold, operator); create it through
   createTestLink.
 - Type-specific: subset (Out of Distribution, Duplication, Mislabeled), first_subset/second_subset (Data
