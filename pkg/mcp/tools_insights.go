@@ -170,8 +170,12 @@ func (s *Server) getInsights(ctx context.Context, _ *sdk.CallToolRequest, in Ver
 				size := sum.GroupSize
 				ins.GroupSize, ins.GroupMeaning = &size, sum.GroupDefinition
 				ins.Split, ins.Composition, ins.Contrast, ins.RankedBy = sum.Split, sum.Composition, sum.Contrast, sum.RankedBy
-				ranked[len(out.Insights)] = sum.RankedIDs
-				candidates = append(candidates, sum.RankedIDs...)
+				ids := sum.RankedIDs
+				if len(ids) > 24 {
+					ids = ids[:24]
+				}
+				ranked[len(out.Insights)] = ids
+				candidates = append(candidates, ids...)
 			}
 		}
 		if popErr != nil && ins.Warning == "" && access.SampleRows {
@@ -181,9 +185,13 @@ func (s *Server) getInsights(ctx context.Context, _ *sdk.CallToolRequest, in Ver
 	}
 	if len(candidates) > 0 {
 		// with visualizations turned off the ids are still worth returning, just not viewable
-		rendered, err := s.sampleAssets(ctx, in.ProjectID, in.VersionID, unique(candidates))
-		if err != nil {
-			rendered = nil
+		var rendered map[string][]assetFile
+		if access.Visuals {
+			if rendered, err = s.sampleAssets(ctx, in.ProjectID, in.VersionID, unique(candidates)); err != nil {
+				rendered = nil
+			}
+		} else if out.Note == "" {
+			out.Note = "sample visualizations are turned off for this project, so topSamples cannot be viewed here"
 		}
 		for i, ids := range ranked {
 			out.Insights[i].TopSamples = renderedFirst(ids, rendered, maxViewSamples)

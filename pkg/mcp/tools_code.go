@@ -46,7 +46,7 @@ type codeArchive struct {
 	files map[string][]byte
 }
 
-func (s *Server) integrationCode(ctx context.Context, projectID, versionID string) (*codeArchive, error) {
+func (s *Server) integrationCode(ctx context.Context, projectID, versionID string, admin bool) (*codeArchive, error) {
 	s.mu.Lock()
 	cached, ok := s.code[versionID]
 	s.mu.Unlock()
@@ -57,8 +57,12 @@ func (s *Server) integrationCode(ctx context.Context, projectID, versionID strin
 	if err != nil {
 		return nil, err
 	}
+	if e.IntegrationCodeURL == "" && e.IntegrationEntryFile != "" {
+		// the server withheld the URL: the policy changed since this process last read it
+		return nil, codeClass.refusal(admin)
+	}
 	if e.IntegrationCodeURL == "" {
-		return nil, errors.New("this version has no integration code on the server (it may predate code snapshots); read the project's leap_integration.py from the repository instead")
+		return nil, errors.New("this version has no integration code on the server (it predates code snapshots)")
 	}
 	raw, err := s.client.Download(ctx, e.IntegrationCodeURL)
 	if err != nil {
@@ -85,6 +89,7 @@ func readCodeArchive(raw []byte) (*codeArchive, error) {
 	}
 	arc := &codeArchive{files: map[string][]byte{}}
 	tr := tar.NewReader(r)
+	total := 0
 	for {
 		h, err := tr.Next()
 		if err == io.EOF {
@@ -95,12 +100,15 @@ func readCodeArchive(raw []byte) (*codeArchive, error) {
 		}
 		name := path.Clean(h.Name)
 		// an archive is customer-controlled input: keep every member inside its own tree
-		if h.Typeflag != tar.TypeReg || path.IsAbs(name) || name == "." || strings.HasPrefix(name, "../") {
+		if h.Typeflag != tar.TypeReg || path.IsAbs(name) || name == "." || name == ".." || strings.HasPrefix(name, "../") || strings.ContainsRune(name, '\\') {
 			continue
 		}
-		b, err := io.ReadAll(io.LimitReader(tr, maxCodeArchive))
+		b, err := io.ReadAll(io.LimitReader(tr, int64(maxCodeArchive-total)))
 		if err != nil {
 			return nil, err
+		}
+		if total += len(b); total >= maxCodeArchive {
+			return nil, fmt.Errorf("archive expands beyond the %d MB limit", maxCodeArchive>>20)
 		}
 		arc.files[name] = b
 	}
@@ -114,10 +122,11 @@ func (s *Server) getIntegrationCode(ctx context.Context, _ *sdk.CallToolRequest,
 	if err := s.resolve(ctx, &in.ProjectID, &in.VersionID); err != nil {
 		return nil, CodeOut{}, err
 	}
-	if _, err := s.allowed(ctx, in.ProjectID, codeClass); err != nil {
+	access, err := s.allowed(ctx, in.ProjectID, codeClass)
+	if err != nil {
 		return nil, CodeOut{}, err
 	}
-	arc, err := s.integrationCode(ctx, in.ProjectID, in.VersionID)
+	arc, err := s.integrationCode(ctx, in.ProjectID, in.VersionID, access.admin)
 	if err != nil {
 		return nil, CodeOut{}, err
 	}

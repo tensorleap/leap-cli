@@ -195,7 +195,7 @@ func Summarize(csvBytes []byte, pop *Population) (*GroupSummary, error) {
 		}
 		s.Split[state]++
 	}
-	s.RankedIDs, s.RankedBy = rankSamples(t, group, 24)
+	s.RankedIDs, s.RankedBy = rankSamples(t, group, maxExportTopK)
 	gstats := statsFor(t, group)
 	names := make([]string, 0, len(gstats))
 	for n := range gstats {

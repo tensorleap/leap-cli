@@ -128,6 +128,11 @@ func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in 
 	if err := os.MkdirAll(in.Dir, 0o755); err != nil {
 		return nil, ExportOut{}, err
 	}
+	if entries, err := os.ReadDir(in.Dir); err == nil && len(entries) > 0 {
+		if _, err := os.Stat(filepath.Join(in.Dir, "manifest.json")); err != nil {
+			return nil, ExportOut{}, fmt.Errorf("%s is not empty and is not a previous export; choose an empty directory", in.Dir)
+		}
+	}
 	w := &exportWriter{dir: in.Dir}
 	out := ExportOut{Dir: in.Dir, ProjectID: in.ProjectID, VersionID: in.VersionID, Version: e.Version.Name, InsightsPanel: s.client.UIBase() + e.DeepLinkPath,
 		ClassLabels: e.PredictionLabels, Visualizers: e.Visualizers, Insights: []ExportedInsight{}}
@@ -166,17 +171,17 @@ func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in 
 	}
 
 	switch {
-	case !access.Code:
+	case !access.Code || e.IntegrationCodeURL == "" && e.IntegrationEntryFile != "":
 		skip("integration code", codeClass)
 	case e.IntegrationCodeURL == "":
 		out.Skipped = append(out.Skipped, "integration code: this version has no code snapshot on the server")
 	default:
-		arc, err := s.integrationCode(ctx, in.ProjectID, in.VersionID)
+		arc, err := s.integrationCode(ctx, in.ProjectID, in.VersionID, access.admin)
 		if err != nil {
 			note("integration code: %v", err)
 		} else {
 			for name, b := range arc.files {
-				if _, err := w.write(path.Join("integration", name), b); err != nil {
+				if _, err := w.write(path.Join("integration", name), []byte(Scrub(string(b)))); err != nil {
 					return nil, ExportOut{}, err
 				}
 			}
@@ -304,7 +309,10 @@ func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in 
 				mu.Unlock()
 				note("sample %s: %v", smp.ID, err)
 			}
-			smp.Dir, smp.Files = filepath.Join(job.insight.Dir, "samples", smp.ID), files
+			smp.Files = files
+			if len(files) > 0 {
+				smp.Dir = filepath.Join(job.insight.Dir, "samples", smp.ID)
+			}
 		}(job)
 	}
 	wg.Wait()
@@ -313,12 +321,11 @@ func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in 
 	}
 
 	out.FilesWritten, out.BytesWritten = w.files, w.bytes
+	out.Manifest = filepath.Join(in.Dir, "manifest.json")
 	manifest, _ := json.MarshalIndent(out, "", "  ")
-	p, err := w.write("manifest.json", manifest)
-	if err != nil {
+	if _, err := w.write("manifest.json", manifest); err != nil {
 		return nil, ExportOut{}, err
 	}
-	out.Manifest, out.FilesWritten = p, w.files
 	return nil, out, nil
 }
 
@@ -336,7 +343,10 @@ func (s *Server) writeSample(ctx context.Context, w *exportWriter, insightDir, i
 		if i < 0 {
 			continue
 		}
-		suffix := f.Path[i+len(hashed):]
+		suffix := path.Clean(f.Path[i+len(hashed):])
+		if suffix == ".." || strings.HasPrefix(suffix, "../") || path.IsAbs(suffix) || strings.ContainsRune(suffix, '\\') {
+			continue
+		}
 		dataType, visualizer := assetKind(f.Path)
 		if dataType == "image_heatmap" && path.Base(f.Path) == "payload.json" {
 			overlays, _, err := s.renderOverlays(ctx, f.URL, files, labels, defaultHeatmaps, true)
@@ -362,6 +372,9 @@ func (s *Server) writeSample(ctx context.Context, w *exportWriter, insightDir, i
 			}
 			continue
 		}
+		if path.Base(suffix) == "payload.json" {
+			b = []byte(Scrub(string(b)))
+		}
 		if p, err := w.write(filepath.Join(base, filepath.FromSlash(suffix)), b); err == nil {
 			written = append(written, p)
 		} else if firstErr == nil {
@@ -380,5 +393,9 @@ func safeName(s string) string {
 		}
 		b.WriteRune(r)
 	}
-	return truncate(b.String(), 80)
+	r := []rune(b.String())
+	if len(r) > 80 {
+		r = r[:80]
+	}
+	return string(r)
 }

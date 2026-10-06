@@ -38,13 +38,15 @@ func exportServer(t *testing.T, access AiAccess) *Server {
 		case strings.HasSuffix(p, "/blob/fix.csv"):
 			_, _ = w.Write([]byte("sample_id\nunlabeled_7\n"))
 		case strings.HasSuffix(p, "/blob/code.tar.gz"):
-			_, _ = w.Write(codeTarGz(t, map[string]string{"leap_integration.py": "print('hi')\n"}))
+			_, _ = w.Write(codeTarGz(t, map[string]string{"leap_integration.py": "api_key = \"AKIAABCDEFGHIJKLMNOP\"\n"}))
 		case strings.HasSuffix(p, "/assets/data.png"):
 			_, _ = w.Write(pngBuf.Bytes())
 		case strings.HasSuffix(p, "/image/vis/payload.json"):
 			_, _ = w.Write([]byte(`{"data":{"blob":"x"}}`))
 		case strings.HasSuffix(p, "/hbar/bars/payload.json"):
 			_, _ = w.Write([]byte(`{"data":{"body":[1,2]}}`))
+		case strings.HasSuffix(p, "/s/escaped.txt"):
+			_, _ = w.Write([]byte("escaped"))
 		}
 		switch strings.TrimPrefix(p, "/api/v2/") {
 		case "analysis-export/listTargets":
@@ -80,6 +82,8 @@ func exportServer(t *testing.T, access AiAccess) *Server {
 				{"path": prefix + "image/vis/payload.json", "url": ts.URL + "/s/image/vis/payload.json"},
 				{"path": prefix + "hbar/bars/payload.json", "url": ts.URL + "/s/hbar/bars/payload.json"},
 				{"path": "org/projects/p/vis/a/../../../escape/payload.json", "url": ts.URL + "/s/hbar/bars/payload.json"},
+				{"path": prefix + "../../../../integration/leap_integration.py", "url": ts.URL + "/s/escaped.txt"},
+				{"path": prefix + "../../population.csv", "url": ts.URL + "/s/escaped.txt"},
 			}}}})
 			_, _ = w.Write(b)
 		}
@@ -157,5 +161,58 @@ func TestExportRequiresAnAbsoluteDirAndStatistics(t *testing.T) {
 	s = exportServer(t, AiAccess{})
 	if _, _, err := s.exportAnalysis(context.Background(), nil, ExportIn{ProjectID: projectHex, VersionID: versionHex, Dir: t.TempDir()}); err == nil || !strings.Contains(err.Error(), `"Statistics and insights"`) {
 		t.Fatalf("got %v", err)
+	}
+}
+
+func TestExportKeepsServerPathsInsideTheSampleDirAndScrubsText(t *testing.T) {
+	s := exportServer(t, AiAccess{Stats: true, SampleRows: true, Visuals: true, Code: true})
+	dir := t.TempDir()
+	_, out, err := s.exportAnalysis(context.Background(), nil, ExportIn{ProjectID: projectHex, VersionID: versionHex, Dir: dir})
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, p := range []string{filepath.Join(dir, "integration", "leap_integration.py"), filepath.Join(dir, "population.csv")} {
+		b, _ := os.ReadFile(p)
+		if strings.Contains(string(b), "AKIAABCDEFGHIJKLMNOP") || strings.Contains(string(b), "escaped") {
+			t.Fatalf("%s was overwritten or unscrubbed: %q", p, b)
+		}
+	}
+	for _, f := range out.Insights[0].Samples[0].Files {
+		if strings.Contains(f, "escape") {
+			t.Fatalf("escaping asset path written: %s", f)
+		}
+	}
+	busy := t.TempDir()
+	_ = os.WriteFile(filepath.Join(busy, "notes.txt"), []byte("mine"), 0o644)
+	if _, _, err := s.exportAnalysis(context.Background(), nil, ExportIn{ProjectID: projectHex, VersionID: versionHex, Dir: busy}); err == nil || !strings.Contains(err.Error(), "not empty") {
+		t.Fatalf("a non-empty non-export dir must be refused, got %v", err)
+	}
+}
+
+func TestCodeWithheldByTheServerIsReportedAsThePolicy(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch strings.TrimPrefix(r.URL.Path, "/api/v2/") {
+		case "analysis-export/listTargets":
+			_, _ = w.Write([]byte(`{"contractVersion":1,"aiAccess":{"stats":true,"code":true},"me":{"role":"admin"}}`))
+		case "analysis-export/exportAnalysis":
+			_, _ = w.Write([]byte(`{"contractVersion":1,"deepLinkPath":"/p","insights":[],"integrationEntryFile":"leap_integration.py"}`))
+		}
+	}))
+	defer ts.Close()
+	s := newServer(NewClient(ts.URL+"/api/v2", "k"))
+	_, _, err := s.getIntegrationCode(context.Background(), nil, CodeIn{ProjectID: projectHex, VersionID: versionHex})
+	if err == nil || !strings.Contains(err.Error(), `"Integration code"`) || strings.Contains(err.Error(), "repository") {
+		t.Fatalf("got %v", err)
+	}
+}
+
+func TestCodeArchiveSkipsDotDotAndBoundsTheTotal(t *testing.T) {
+	arc, err := readCodeArchive(codeTarGz(t, map[string]string{"..": "x", "a.py": "ok", `..\\b.py`: "x"}))
+	if err != nil || len(arc.files) != 1 || arc.files["a.py"] == nil {
+		t.Fatalf("got %v %v", err, arc)
+	}
+	big := codeTarGz(t, map[string]string{"zeros.bin": strings.Repeat("\x00", maxCodeArchive)})
+	if _, err := readCodeArchive(big); err == nil || !strings.Contains(err.Error(), "limit") {
+		t.Fatalf("expanded archive over the limit must be refused, got %v", err)
 	}
 }
