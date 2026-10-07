@@ -48,7 +48,6 @@ var latentMeanings = map[string]string{
 type Server struct {
 	client   *Client
 	mu       sync.Mutex
-	pops     map[string]*Population
 	fields   map[string]map[string]bool
 	code     map[string]*codeArchive
 	policies policyCache
@@ -80,7 +79,7 @@ func NewServer(client *Client, version string) *sdk.Server {
 }
 
 func newServer(client *Client) *Server {
-	return &Server{client: client, pops: map[string]*Population{}, fields: map[string]map[string]bool{}, code: map[string]*codeArchive{}, policies: policyCache{entries: map[string]policyEntry{}}}
+	return &Server{client: client, fields: map[string]map[string]bool{}, code: map[string]*codeArchive{}, policies: policyCache{entries: map[string]policyEntry{}}}
 }
 
 type Empty struct{}

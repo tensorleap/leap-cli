@@ -189,7 +189,7 @@ func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in 
 	if err != nil {
 		return nil, ExportResult{}, err
 	}
-	e, err := s.export(ctx, in.ProjectID, in.VersionID)
+	e, err := s.export(ctx, in.ProjectID, in.VersionID, true)
 	if err != nil {
 		return nil, ExportResult{}, err
 	}
@@ -225,19 +225,20 @@ func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in 
 		out.Skipped = append(out.Skipped, fmt.Sprintf("%s: %s", what, class.refusal(access.admin)))
 	}
 
-	popBytes, pop, popErr := s.populationWithBytes(ctx, in.VersionID, e.PopulationCsvURL, true)
 	switch {
 	case e.PopulationCsvURL == "" && !access.SampleRows:
 		skip("population csv", sampleRowsClass)
-	case popBytes != nil:
-		p, err := w.write("population.csv", popBytes)
+	case e.PopulationCsvURL != "":
+		b, err := s.download(ctx, e.PopulationCsvURL)
+		if err != nil {
+			note("population csv: %v", err)
+			break
+		}
+		p, err := w.write("population.csv", b)
 		if err != nil {
 			return nil, ExportResult{}, err
 		}
 		out.PopulationCsv = p
-	}
-	if popErr != nil && access.SampleRows {
-		note("no all-data baseline for composition: %v", popErr)
 	}
 
 	switch {
@@ -284,7 +285,7 @@ func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in 
 		t := raw.InsightType
 		typ := str(t["type"])
 		ins := ExportedInsight{Index: int(raw.Index), Type: typ, Name: displayNames[typ], Status: raw.Status, Description: raw.Description,
-			Dir: dirOf(raw), Engine: enginePayload(t), HasTests: len(list(t["automatic_tests"])) > 0, Samples: []ExportedSample{}}
+			Dir: dirOf(raw), Engine: raw.Engine, HasTests: len(list(t["automatic_tests"])) > 0, Samples: []ExportedSample{}}
 		if ins.Name == "" {
 			ins.Name = typ
 		}
@@ -306,9 +307,27 @@ func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in 
 		if raw.CsvURL == "" && !access.SampleRows && len(out.Insights) == 0 {
 			skip("insight sample lists, cluster membership and the fixing-samples list", sampleRowsClass)
 		}
-		var members map[string]bool
-		// cluster.json first: it narrows a sample list that duplication-type insights share
-		for _, f := range []struct{ name, url string }{{"cluster.json", raw.ClusterBlobURL}, {"samples.csv", raw.CsvURL}, {"fixing_samples.csv", raw.FixingCsvURL}, {"top_panel.json", raw.TopPanelURL}} {
+		switch d := raw.Digest; {
+		case d != nil:
+			ins.Summary = &d.GroupSummary
+			ids := d.RankedSampleIDs
+			if len(ids) > k {
+				ids = ids[:k]
+			}
+			ranked[len(out.Insights)] = ids
+			candidates = append(candidates, ids...)
+		case raw.DigestError != "":
+			note("insight %d: %s", ins.Index, raw.DigestError)
+		case raw.CsvURL != "":
+			note("insight %d: %s", ins.Index, olderServer)
+		}
+		if raw.TopPanel != nil {
+			b, _ := json.MarshalIndent(raw.TopPanel, "", "  ")
+			if ins.TopPanelJson, err = w.write(path.Join(ins.Dir, "top_panel.json"), b); err != nil {
+				return nil, ExportResult{}, err
+			}
+		}
+		for _, f := range []struct{ name, url string }{{"samples.csv", raw.CsvURL}, {"cluster.json", raw.ClusterBlobURL}, {"fixing_samples.csv", raw.FixingCsvURL}} {
 			if f.url == "" {
 				continue
 			}
@@ -317,40 +336,17 @@ func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in 
 				note("insight %d %s: %v", ins.Index, f.name, err)
 				continue
 			}
-			if f.name == "top_panel.json" {
-				var v any
-				if json.Unmarshal(b, &v) == nil {
-					b, _ = json.MarshalIndent(stripInternal(v), "", "  ")
-				}
-			}
 			p, err := w.write(path.Join(ins.Dir, f.name), b)
 			if err != nil {
 				return nil, ExportResult{}, err
 			}
 			switch f.name {
-			case "cluster.json":
-				ins.ClusterJson = p
-				if typ != "low_performance" {
-					members = clusterMembers(b)
-				}
 			case "samples.csv":
 				ins.SamplesCsv = p
-				sum, err := Summarize(b, pop, members)
-				if err != nil {
-					note("insight %d sample list unreadable: %v", ins.Index, err)
-					break
-				}
-				ins.Summary = sum
-				ids := sum.RankedIDs
-				if len(ids) > k {
-					ids = ids[:k]
-				}
-				ranked[len(out.Insights)] = ids
-				candidates = append(candidates, ids...)
+			case "cluster.json":
+				ins.ClusterJson = p
 			case "fixing_samples.csv":
 				ins.FixingCsv = p
-			case "top_panel.json":
-				ins.TopPanelJson = p
 			}
 		}
 		out.Insights = append(out.Insights, ins)

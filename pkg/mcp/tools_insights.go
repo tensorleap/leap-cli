@@ -8,62 +8,6 @@ import (
 	sdk "github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
-var engineInternalKeys = map[string]bool{"min_hash": true, "display_filters": true, "csv_path": true, "blob_path": true,
-	"top_panel_path": true, "id_": true, "parent_id": true, "type": true, "es_filters_used_in_analysis": true}
-
-// top_panel.json nests the same storage paths and ES filters, at any depth
-var panelInternalKeys = map[string]bool{"filters": true, "csv_path": true, "blob_path": true, "blob_paths": true,
-	"top_panel_path": true, "display_filters": true, "es_filters_used_in_analysis": true, "min_hash": true}
-
-func stripInternal(v any) any {
-	switch x := v.(type) {
-	case map[string]any:
-		out := make(map[string]any, len(x))
-		for k, e := range x {
-			if !panelInternalKeys[k] {
-				out[k] = stripInternal(e)
-			}
-		}
-		return out
-	case []any:
-		out := make([]any, len(x))
-		for i, e := range x {
-			out[i] = stripInternal(e)
-		}
-		return out
-	}
-	return v
-}
-
-func enginePayload(t map[string]any) map[string]any {
-	out := map[string]any{}
-	for k, v := range t {
-		if engineInternalKeys[k] {
-			continue
-		}
-		out[k] = v
-	}
-	if fix, ok := t["aggressor_fixing"].(map[string]any); ok {
-		clean := map[string]any{}
-		for k, v := range fix {
-			if k != "csv_path" {
-				clean[k] = v
-			}
-		}
-		out["aggressor_fixing"] = clean
-	}
-	if tests := list(t["automatic_tests"]); len(tests) > 0 {
-		clean := make([]any, 0, len(tests))
-		for _, x := range tests {
-			if m, ok := x.(map[string]any); ok {
-				clean = append(clean, map[string]any{"test_name": m["test_name"], "metric_name": m["metric_name"], "metric_value": m["metric_value"], "operator": m["operator"]})
-			}
-		}
-		out["automatic_tests"] = clean
-	}
-	return out
-}
-
 type VersionIn struct {
 	ProjectID string `json:"projectId" jsonschema:"project id or name from tl_list_projects"`
 	VersionID string `json:"versionId" jsonschema:"evaluated version id or name from tl_list_versions, or \"latest\""`
@@ -124,7 +68,7 @@ func (s *Server) getInsights(ctx context.Context, _ *sdk.CallToolRequest, in Ver
 	if err != nil {
 		return nil, InsightsOut{}, err
 	}
-	e, err := s.export(ctx, in.ProjectID, in.VersionID)
+	e, err := s.export(ctx, in.ProjectID, in.VersionID, true)
 	if err != nil {
 		return nil, InsightsOut{}, err
 	}
@@ -137,7 +81,6 @@ func (s *Server) getInsights(ctx context.Context, _ *sdk.CallToolRequest, in Ver
 		out.Reason, out.NextStep = "no-insights", "check tl_list_versions: the version must be evaluated; then generate insights from the Insights panel"
 		return nil, out, nil
 	}
-	pop, popErr := s.population(ctx, in.VersionID, e.PopulationCsvURL)
 	byID := map[string]int{}
 	for _, raw := range e.Insights {
 		if id, ok := raw.InsightType["id_"].(string); ok {
@@ -151,7 +94,7 @@ func (s *Server) getInsights(ctx context.Context, _ *sdk.CallToolRequest, in Ver
 		typ := str(t["type"])
 		ins := Insight{Index: int(raw.Index), Type: typ, Name: displayNames[typ], Severity: num(t["severity"]), Status: raw.Status,
 			Description: raw.Description, ClusterSize: num(t["n_samples"]), GroupMeaning: "platform sample count", HasTests: len(list(t["automatic_tests"])) > 0,
-			Engine: enginePayload(t)}
+			Engine: raw.Engine}
 		if typ == "low_performance" {
 			// n_samples counts healthy latent neighbours too; only the sample list gives the failing count
 			ins.GroupMeaning = "unavailable without per-sample data"
@@ -183,31 +126,20 @@ func (s *Server) getInsights(ctx context.Context, _ *sdk.CallToolRequest, in Ver
 		if ins.HasTests {
 			ins.CreateTest = createTestLink(ins.Link, raw.Cid)
 		}
-		if raw.CsvURL != "" {
-			var members map[string]bool
-			if typ != "low_performance" && raw.ClusterBlobURL != "" {
-				if b, err := s.download(ctx, raw.ClusterBlobURL); err == nil {
-					members = clusterMembers(b)
-				}
+		if d := raw.Digest; d != nil {
+			size := d.GroupSize
+			ins.GroupSize, ins.GroupMeaning = &size, d.GroupDefinition
+			ins.Split, ins.Composition, ins.Contrast, ins.RankedBy = d.Split, d.Composition, d.Contrast, d.RankedBy
+			ids := d.RankedSampleIDs
+			if len(ids) > 24 {
+				ids = ids[:24]
 			}
-			if b, err := s.download(ctx, raw.CsvURL); err != nil {
-				ins.Warning = err.Error()
-			} else if sum, err := Summarize(b, pop, members); err != nil {
-				ins.Warning = "insight sample list unreadable: " + err.Error()
-			} else {
-				size := sum.GroupSize
-				ins.GroupSize, ins.GroupMeaning = &size, sum.GroupDefinition
-				ins.Split, ins.Composition, ins.Contrast, ins.RankedBy = sum.Split, sum.Composition, sum.Contrast, sum.RankedBy
-				ids := sum.RankedIDs
-				if len(ids) > 24 {
-					ids = ids[:24]
-				}
-				ranked[len(out.Insights)] = ids
-				candidates = append(candidates, ids...)
-			}
-		}
-		if popErr != nil && ins.Warning == "" && access.SampleRows {
-			ins.Warning = "no all-data baseline: " + popErr.Error()
+			ranked[len(out.Insights)] = ids
+			candidates = append(candidates, ids...)
+		} else if raw.DigestError != "" {
+			ins.Warning = raw.DigestError
+		} else if raw.CsvURL != "" {
+			ins.Warning = olderServer
 		}
 		out.Insights = append(out.Insights, ins)
 	}

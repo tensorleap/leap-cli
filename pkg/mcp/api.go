@@ -70,12 +70,18 @@ type Visualizer struct {
 	ArgNames []string `json:"argNames"`
 }
 
+const olderServer = "this Tensorleap server predates server-side insight digests; upgrade it to see group sizes, composition and representative samples"
+
 type exportedInsight struct {
 	Cid             string         `json:"cid"`
 	Index           float64        `json:"index"`
 	Status          string         `json:"status"`
 	Description     string         `json:"description"`
 	InsightType     map[string]any `json:"insightType"`
+	Engine          map[string]any `json:"engine"`
+	Digest          *insightDigest `json:"digest"`
+	DigestError     string         `json:"digestError"`
+	TopPanel        map[string]any `json:"topPanel"`
 	CsvURL          string         `json:"csvUrl"`
 	ClusterBlobURL  string         `json:"clusterBlobUrl"`
 	TopPanelURL     string         `json:"topPanelUrl"`
@@ -98,9 +104,10 @@ type exportResponse struct {
 	Insights []exportedInsight `json:"insights"`
 }
 
-func (s *Server) export(ctx context.Context, projectID, versionID string) (*exportResponse, error) {
+// export asks for the version's analysis; withDigest false skips the per-insight digest the server computes
+func (s *Server) export(ctx context.Context, projectID, versionID string, withDigest bool) (*exportResponse, error) {
 	var e exportResponse
-	if err := s.client.Post(ctx, "analysis-export/exportAnalysis", map[string]any{"projectId": projectID, "versionId": versionID}, &e); err != nil {
+	if err := s.client.Post(ctx, "analysis-export/exportAnalysis", map[string]any{"projectId": projectID, "versionId": versionID, "withDigest": withDigest}, &e); err != nil {
 		return nil, explain(err)
 	}
 	return &e, nil
@@ -112,45 +119,6 @@ func (s *Server) download(ctx context.Context, url string) ([]byte, error) {
 		return nil, err
 	}
 	return decompress(b)
-}
-
-func (s *Server) population(ctx context.Context, versionID, url string) (*Population, error) {
-	_, p, err := s.populationWithBytes(ctx, versionID, url, false)
-	return p, err
-}
-
-// populationWithBytes downloads outside s.mu; raw is only returned (and downloaded on a cache hit) when wantRaw
-func (s *Server) populationWithBytes(ctx context.Context, versionID, url string, wantRaw bool) ([]byte, *Population, error) {
-	if url == "" {
-		return nil, nil, errors.New("the version has no population file")
-	}
-	s.mu.Lock()
-	p, ok := s.pops[versionID]
-	s.mu.Unlock()
-	if ok && !wantRaw {
-		return nil, p, nil
-	}
-	b, err := s.client.Download(ctx, url)
-	if err != nil {
-		return nil, p, err
-	}
-	if b, err = decompress(b); err != nil {
-		return nil, p, err
-	}
-	if ok {
-		return b, p, nil
-	}
-	if p, err = NewPopulation(b); err != nil {
-		return b, nil, err
-	}
-	s.mu.Lock()
-	// ponytail: keep the last few versions only; a long session walking many versions would otherwise hold them all
-	if len(s.pops) >= 3 {
-		s.pops = map[string]*Population{}
-	}
-	s.pops[versionID] = p
-	s.mu.Unlock()
-	return b, p, nil
 }
 
 // StatusLines is the one-glance state printed by `leap mcp config` and by a terminal run of `leap mcp`

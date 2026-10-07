@@ -26,16 +26,15 @@ func TestUIBaseStripsTheCloudAPIHost(t *testing.T) {
 
 const engineInsight = `{"contractVersion":1,"deepLinkPath":"/p","predictionLabels":{"classes":["cat","dog"]},
  "visualizers":[{"name":"Image","type":"Image","argNames":["data"]}],
- "insights":[{"cid":"c1","index":1,"status":"InReview","insightType":{"id_":"i1","type":"low_performance","severity":2,"n_samples":500,
-   "min_hash":[1,2],"display_filters":[{"metric":"x"}],"csv_path":"vis/a.csv","blob_path":"vis/b.json","top_panel_path":"vis/t.json",
-   "metrics_info":[{"metric_name":"metrics.loss","metric_statistics":[{"name":"Cluster Average","value":0.9}]}],
-   "is_train_aggressor":true,"overfitting_metrics":["metrics.loss"],"overfitting_evidence":[{"metric":"metrics.loss","contrast":2.4}],
-   "mutual_info_elements":[{"features":[{"feature_name":"metadata.fog","feature_value":"yes","direction":"up","is_categorical":true}],"score":0.8}],
-   "aggressor_fixing":{"num_of_samples_to_label":40,"num_of_samples_to_acquire":10,"csv_path":"vis/fix.csv"},
-   "automatic_tests":[{"test_name":"Bad loss","filter":{"operator":"cluster","value":{"blob_paths":["organizations/x"]}},"metric_name":"metrics.loss","metric_value":0.5,"operator":"less_than"}]}}]}`
+ "insights":[{"cid":"c1","index":1,"status":"InReview","csvUrl":"http://x/blob",
+   "insightType":{"id_":"i1","type":"low_performance","severity":2,"n_samples":500,"csv_path":"vis/a.csv"},
+   "engine":{"n_samples":500,"is_train_aggressor":true,"metrics_info":[{"metric_name":"metrics.loss"}],"overfitting_evidence":[{"metric_name":"metrics.loss","score":2.4}]},
+   "digest":{"groupSize":120,"groupDefinition":"root members","csvRows":500,"split":{"training":120},"composition":[],
+     "contrast":[{"metric":"metrics.loss","groupMedian":0.9,"groupMean":1,"baselineMedian":0.1,"baselineMean":0.2,"baseline":"all data"}],
+     "rankedBy":"aggressor_affinity_score","rankedSampleIds":["training_1"]}}]}`
 
-func TestInsightsCarryTheEnginePayloadLabelsAndVisualizers(t *testing.T) {
-	s, _ := fakeServer(t, &AiAccess{Stats: true}, map[string]func(http.ResponseWriter){
+func TestInsightsReadTheServerDigestAndEnginePayload(t *testing.T) {
+	s, _ := fakeServer(t, &AiAccess{Stats: true, SampleRows: true}, map[string]func(http.ResponseWriter){
 		"analysis-export/exportAnalysis": func(w http.ResponseWriter) { _, _ = w.Write([]byte(engineInsight)) },
 	})
 	_, out, err := s.getInsights(context.Background(), nil, VersionIn{ProjectID: projectHex, VersionID: versionHex})
@@ -45,22 +44,15 @@ func TestInsightsCarryTheEnginePayloadLabelsAndVisualizers(t *testing.T) {
 	if out.ClassLabels["classes"][1] != "dog" || len(out.Visualizers) != 1 || out.Visualizers[0].Name != "Image" {
 		t.Fatalf("labels/visualizers missing: %+v", out)
 	}
-	eng := out.Insights[0].Engine
-	if eng["is_train_aggressor"] != true || eng["metrics_info"] == nil || eng["overfitting_evidence"] == nil || eng["mutual_info_elements"] == nil {
-		t.Fatalf("engine fields missing: %v", eng)
+	ins := out.Insights[0]
+	if ins.Engine["is_train_aggressor"] != true || ins.Engine["overfitting_evidence"] == nil || ins.Engine["csv_path"] != nil {
+		t.Fatalf("the engine object is the server's stripped payload: %v", ins.Engine)
 	}
-	for _, k := range []string{"min_hash", "display_filters", "csv_path", "blob_path", "top_panel_path", "id_", "type"} {
-		if _, ok := eng[k]; ok {
-			t.Fatalf("internal key %q leaked", k)
-		}
+	if ins.GroupSize == nil || *ins.GroupSize != 120 || ins.RankedBy != "aggressor_affinity_score" || *ins.Contrast[0].BaselineMedian != 0.1 {
+		t.Fatalf("group summary must come from the server digest: %+v", ins)
 	}
-	fix := eng["aggressor_fixing"].(map[string]any)
-	if _, ok := fix["csv_path"]; ok || fix["num_of_samples_to_label"] != 40.0 {
-		t.Fatalf("aggressor_fixing: %v", fix)
-	}
-	test := eng["automatic_tests"].([]any)[0].(map[string]any)
-	if _, ok := test["filter"]; ok || test["metric_name"] != "metrics.loss" {
-		t.Fatalf("automatic_tests should keep the condition and drop the filter: %v", test)
+	if len(ins.TopSamples) != 1 || ins.TopSamples[0].ID != "training_1" {
+		t.Fatalf("top samples come from the digest's ranking: %+v", ins.TopSamples)
 	}
 }
 

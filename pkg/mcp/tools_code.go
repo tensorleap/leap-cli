@@ -123,7 +123,7 @@ func (s *Server) getIntegrationCode(ctx context.Context, _ *sdk.CallToolRequest,
 	if err != nil {
 		return nil, CodeOut{}, err
 	}
-	e, err := s.export(ctx, in.ProjectID, in.VersionID)
+	e, err := s.export(ctx, in.ProjectID, in.VersionID, false)
 	if err != nil {
 		return nil, CodeOut{}, err
 	}

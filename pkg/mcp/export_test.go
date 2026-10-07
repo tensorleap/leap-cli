@@ -37,8 +37,6 @@ func exportServer(t *testing.T, access AiAccess) *Server {
 			_, _ = w.Write([]byte(populationCsv))
 		case strings.HasSuffix(p, "/blob/cluster.json"):
 			_, _ = w.Write([]byte(`{"samples_index":{"training_1":0,"training_2":1}}`))
-		case strings.HasSuffix(p, "/blob/top.json"):
-			_, _ = w.Write([]byte(`{"title":"t","summary":{"csv_path":"vis/x.csv"},"correlated_metadata":[{"population_a":{"filters":[{"value":{"blob_paths":["organizations/x"]}}],"n":3}}]}`))
 		case strings.HasSuffix(p, "/blob/fix.csv"):
 			_, _ = w.Write([]byte("sample_id\nunlabeled_7\n"))
 		case strings.HasSuffix(p, "/blob/code.tar.gz"):
@@ -63,13 +61,25 @@ func exportServer(t *testing.T, access AiAccess) *Server {
 				}
 				return ts.URL + "/blob/" + name
 			}
+			digest := func(size int) any {
+				if !access.SampleRows {
+					return nil
+				}
+				return map[string]any{"groupSize": size, "groupDefinition": "root members", "csvRows": 3, "split": map[string]int{"training": size},
+					"composition": []any{}, "contrast": []any{}, "rankedBy": "metrics.loss", "rankedSampleIds": []string{"training_1", "training_2"}[:size]}
+			}
+			var topPanel any
+			if access.SampleRows {
+				topPanel = map[string]any{"title": "t"}
+			}
 			resp := map[string]any{"contractVersion": 1, "deepLinkPath": "/p", "version": map[string]any{"name": "v1"},
 				"populationCsvUrl": u("population.csv"), "integrationCodeUrl": u("code.tar.gz"), "integrationEntryFile": "leap_integration.py",
 				"predictionLabels": map[string][]string{"classes": {"cat", "dog"}},
 				"insights": []map[string]any{
-					{"cid": "c1", "index": 1, "status": "InReview", "csvUrl": u("samples.csv"), "clusterBlobUrl": u("cluster.json"), "fixingCsvUrl": u("fix.csv"), "topPanelUrl": u("top.json"),
+					{"cid": "c1", "index": 1, "status": "InReview", "csvUrl": u("samples.csv"), "clusterBlobUrl": u("cluster.json"), "fixingCsvUrl": u("fix.csv"), "topPanel": topPanel, "digest": digest(2),
+						"engine":      map[string]any{"n_samples": 3, "aggressor_fixing": map[string]any{"num_of_samples_to_label": 1}},
 						"insightType": map[string]any{"id_": "i1", "type": "low_performance", "severity": 2, "n_samples": 3, "aggressor_fixing": map[string]any{"num_of_samples_to_label": 1, "csv_path": "vis/fix.csv"}}},
-					{"cid": "c2", "index": 2, "status": "InReview", "csvUrl": u("samples.csv"),
+					{"cid": "c2", "index": 2, "status": "InReview", "csvUrl": u("samples.csv"), "digest": digest(1), "engine": map[string]any{"n_samples": 2},
 						"insightType": map[string]any{"id_": "i2", "parent_id": "i1", "type": "low_performance", "severity": 1, "n_samples": 2}},
 				}}
 			b, _ := json.Marshal(resp)
@@ -145,8 +155,8 @@ func TestExportWritesEverythingAllowed(t *testing.T) {
 		t.Fatal("a traversal path from the server must not be written")
 	}
 	panel, _ := os.ReadFile(filepath.Join(dir, out.Insights[0].TopPanelJson))
-	if strings.Contains(string(panel), "organizations/") || strings.Contains(string(panel), "csv_path") || !strings.Contains(string(panel), `"title"`) {
-		t.Fatalf("top_panel.json must keep its content and drop storage internals: %s", panel)
+	if !strings.Contains(string(panel), `"title"`) {
+		t.Fatalf("top_panel.json is the server's top panel: %s", panel)
 	}
 	if len(out.Insights) != 2 || out.Insights[0].Engine["n_samples"] != 3.0 {
 		t.Fatalf("manifest insights: %+v", out.Insights)
