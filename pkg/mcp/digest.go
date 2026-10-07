@@ -3,6 +3,7 @@ package mcp
 import (
 	"bytes"
 	"encoding/csv"
+	"encoding/json"
 	"io"
 	"math"
 	"sort"
@@ -159,13 +160,42 @@ type GroupSummary struct {
 	RankedBy        string         `json:"rankedBy,omitempty"`
 }
 
-func Summarize(csvBytes []byte, pop *Population) (*GroupSummary, error) {
+// clusterMembers reads cluster.json's samples_index ({state: [index, ...]}) as sample ids
+func clusterMembers(b []byte) map[string]bool {
+	var c struct {
+		SamplesIndex map[string][]int `json:"samples_index"`
+	}
+	if json.Unmarshal(b, &c) != nil {
+		return nil
+	}
+	ids := map[string]bool{}
+	for state, idx := range c.SamplesIndex {
+		for _, i := range idx {
+			ids[state+"_"+strconv.Itoa(i)] = true
+		}
+	}
+	return ids
+}
+
+// members, when known, narrows a sample list that several insights share (duplication, data leakage) to this insight's own
+func Summarize(csvBytes []byte, pop *Population, members map[string]bool) (*GroupSummary, error) {
 	t, err := parseCSV(csvBytes)
 	if err != nil {
 		return nil, err
 	}
 	group := t.rows
 	definition := "every row of the insight's sample list"
+	if idCol := t.col("sample_id"); len(members) > 0 && idCol >= 0 && t.col("is_low_perf_root_member") < 0 {
+		var own [][]string
+		for _, r := range t.rows {
+			if idCol < len(r) && members[r[idCol]] {
+				own = append(own, r)
+			}
+		}
+		if len(own) > 0 {
+			group, definition = own, "the insight's own members (cluster.json); the sample list is shared with related insights"
+		}
+	}
 	if rc := t.col("is_low_perf_root_member"); rc >= 0 {
 		var root [][]string
 		for _, r := range t.rows {
@@ -175,7 +205,7 @@ func Summarize(csvBytes []byte, pop *Population) (*GroupSummary, error) {
 		}
 		if len(root) > 0 {
 			group = root
-			definition = "samples that actually underperform (root members); the platform's n_samples also counts healthy latent neighbours"
+			definition = "the cluster's root members, the group the platform flagged (n_samples adds latent neighbours); how much worse they do is in contrast"
 		}
 	}
 	s := &GroupSummary{GroupSize: len(group), GroupDefinition: definition, CsvRows: len(t.rows), Split: map[string]int{}}
@@ -195,7 +225,7 @@ func Summarize(csvBytes []byte, pop *Population) (*GroupSummary, error) {
 		}
 		s.Split[state]++
 	}
-	s.RankedIDs, s.RankedBy = rankSamples(t, group, 24)
+	s.RankedIDs, s.RankedBy = rankSamples(t, group, maxExportTopK)
 	gstats := statsFor(t, group)
 	names := make([]string, 0, len(gstats))
 	for n := range gstats {
@@ -265,6 +295,49 @@ func round4(f float64) float64 {
 	return math.Round(f*10000) / 10000
 }
 
+func dupColumn(t *table) int {
+	for i, h := range t.header {
+		if strings.HasPrefix(h, "duplication_ids") {
+			return i
+		}
+	}
+	return -1
+}
+
+// pairsFirst keeps each duplicate group together, biggest groups first, training before other splits inside a group
+func pairsFirst(rows [][]string, dup, idCol, k int) []string {
+	cell := func(r []string, c int) string {
+		if c < len(r) {
+			return r[c]
+		}
+		return ""
+	}
+	size := map[string]int{}
+	for _, r := range rows {
+		size[cell(r, dup)]++
+	}
+	sort.SliceStable(rows, func(i, j int) bool {
+		gi, gj := cell(rows[i], dup), cell(rows[j], dup)
+		if size[gi] != size[gj] {
+			return size[gi] > size[gj]
+		}
+		if gi != gj {
+			return gi < gj
+		}
+		return strings.HasPrefix(cell(rows[i], idCol), "training_") && !strings.HasPrefix(cell(rows[j], idCol), "training_")
+	})
+	ids := make([]string, 0, k)
+	for _, r := range rows {
+		if len(ids) == k {
+			break
+		}
+		if id := cell(r, idCol); id != "" {
+			ids = append(ids, id)
+		}
+	}
+	return ids
+}
+
 func rankSamples(t *table, group [][]string, k int) ([]string, string) {
 	idCol := t.col("sample_id")
 	if idCol < 0 {
@@ -287,6 +360,9 @@ func rankSamples(t *table, group [][]string, k int) ([]string, string) {
 		}
 	}
 	rows := append([][]string(nil), group...)
+	if dup := dupColumn(t); dup >= 0 && !strings.HasSuffix(name, "aggressor_affinity_score") {
+		return pairsFirst(rows, dup, idCol, k), t.header[dup]
+	}
 	if rankCol >= 0 {
 		val := func(r []string) float64 {
 			if rankCol < len(r) {

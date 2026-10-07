@@ -52,6 +52,13 @@ func (s *Server) policy(ctx context.Context, projectID string) (*AiAccess, error
 	return access, nil
 }
 
+// fresh drops the cached policy so a long, multi-class call (an export) decides from the server's current answer
+func (s *Server) fresh(projectID string) {
+	s.policies.mu.Lock()
+	delete(s.policies.entries, projectID)
+	s.policies.mu.Unlock()
+}
+
 // allowed never refuses from the cache: right after an admin turns a class on, the retry must see it
 func (s *Server) allowed(ctx context.Context, projectID string, class aiClass) (*AiAccess, error) {
 	s.policies.mu.Lock()
@@ -85,12 +92,9 @@ var (
 	statsClass      = aiClass{"statistics and insights", "Statistics and insights", func(a *AiAccess) bool { return a.Stats }}
 	jobLogsClass    = aiClass{"job logs", "Job logs", func(a *AiAccess) bool { return a.JobLogs }}
 	sampleRowsClass = aiClass{"per-sample data", "Per-sample data", func(a *AiAccess) bool { return a.SampleRows }}
-	allClasses      = []aiClass{statsClass,
-		sampleRowsClass,
-		{"sample visualizations", "Sample visualizations", func(a *AiAccess) bool { return a.Visuals }},
-		jobLogsClass,
-		{"integration code", "Integration code", func(a *AiAccess) bool { return a.Code }},
-	}
+	visualsClass    = aiClass{"sample visualizations", "Sample visualizations", func(a *AiAccess) bool { return a.Visuals }}
+	codeClass       = aiClass{"integration code", "Integration code", func(a *AiAccess) bool { return a.Code }}
+	allClasses      = []aiClass{statsClass, sampleRowsClass, visualsClass, jobLogsClass, codeClass}
 )
 
 // refusal matches the server's wording so assistants see one message whichever side refused

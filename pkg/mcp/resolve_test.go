@@ -34,7 +34,7 @@ func catalogServer(t *testing.T) *Server {
 		}
 	}))
 	t.Cleanup(ts.Close)
-	return &Server{client: NewClient(ts.URL+"/api/v2", "k"), pops: map[string]*Population{}, fields: map[string]map[string]bool{}, policies: policyCache{entries: map[string]policyEntry{}}}
+	return newServer(NewClient(ts.URL+"/api/v2", "k"))
 }
 
 func TestResolveAcceptsNamesAndLatest(t *testing.T) {
@@ -88,7 +88,7 @@ func listServer(t *testing.T, sampleRows bool, honourValues bool) (*Server, *map
 		}
 	}))
 	t.Cleanup(ts.Close)
-	return &Server{client: NewClient(ts.URL+"/api/v2", "k"), pops: map[string]*Population{}, fields: map[string]map[string]bool{}, policies: policyCache{entries: map[string]policyEntry{}}}, &sent
+	return newServer(NewClient(ts.URL+"/api/v2", "k")), &sent
 }
 
 func TestListSamplesFindsANamedCase(t *testing.T) {

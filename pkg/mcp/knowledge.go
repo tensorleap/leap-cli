@@ -18,8 +18,9 @@ samples found in those latent spaces.
 
 ## Insight types (names as shown in the Insights panel)
 - Failure Mode (low_performance): a group of samples where the model underperforms. Its sample list also holds
-  healthy latent neighbours; the failing group is the root members only (groupSize). Never quote clusterSize /
-  n_samples as the number of failing samples.
+  healthy latent neighbours; the group is the root members only (groupSize). Never quote clusterSize /
+  n_samples as the number of failing samples. Check contrast before calling it a failure: a group whose loss or
+  error is within ~1.2x of all data is not a real failure mode, whatever the insight's title says.
 - Out of Distribution: samples in one subset unlike anything in the rest of the data.
 - Duplication: near-identical samples within a subset.
 - Data Leakage: near-identical samples on both sides of a split; evaluation metrics may be optimistic.
@@ -33,6 +34,34 @@ Sub-insights refine a parent insight (parentIndex). Statuses: InReview, Approved
 - contrast: the group's metric median/mean against all data.
 - remedy: the platform's selection of samples to label or acquire for a Failure Mode.
 - topSamples: the most representative failing samples (by affinity score, else by loss), not a random draw.
+
+## The engine object on each insight (the platform's own analysis)
+- metrics_info: per metric, the cluster's median/average against the data outside the cluster.
+- severity_metrics: the metrics that made the insight severe, with their values.
+- mutual_info_elements: the features that separate the group from the rest, with the value inside and outside
+  the cluster and a score; direction says whether the feature is higher ("up") or lower in the group.
+- is_train_aggressor (Failure Mode): true when the failing group is dominated by training samples. Then more
+  data will not help: review the top samples' labels, then look at model-side fixes (targeted loss term,
+  loss weighting or oversampling of these samples).
+- overfitting_metrics / overfitting_evidence (Failure Mode): the metrics on which the cluster's training samples
+  do far better than its failing samples. overfitting_evidence has one row per flagged metric: score (a
+  MAD-normalised gap between the two medians, weighted by support), the threshold it exceeded (2.0),
+  cluster_median (the failing group), extended_train_median (training samples in the wider cluster), n_cluster
+  and n_extended_train (samples behind each median), support (how train-heavy the wider cluster is relative
+  to the dataset) and direction. When flagged, recommend rebalancing the dataset, e.g. moving samples from
+  test to train for this population.
+- aggressor_fixing (Failure Mode): num_of_samples_to_label chosen by similarity search near the cluster and
+  num_of_samples_to_acquire; when present it is the platform's suggestion and must be surfaced with its
+  numbers (tl_export_analysis writes the selected list).
+- cluster_extended_stats: per metric, the median over the failing group (cluster_value) next to the median
+  over the wider cluster, the group plus its latent neighbourhood (extended_value), with the metric's
+  direction so you can tell which side is worse.
+- direction (in the fields above): the metric's preferred direction as the integration declared it:
+  Downward means lower is better (a loss), Upward means higher is better (an accuracy).
+- automatic_tests: a regression test the platform suggests (metric, threshold, operator); create it through
+  createTestLink.
+- Type-specific: subset (Out of Distribution, Duplication, Mislabeled), first_subset/second_subset (Data
+  Leakage), metadata_name/domain_a/domain_b/domain_gap_score (Domain Gap).
 
 ## Latent spaces (what "similar" means for a group)
 - classification-semantic: similar in the features that drive the model's class decision; clusters here are
@@ -48,8 +77,10 @@ training, validation, test, unlabeled, additional (field dataset_state.keyword).
 
 ## What this server cannot do
 It does not change anything in Tensorleap. Creating tests, approving or archiving insights and running
-evaluations happen through the links it returns or through the leap CLI (leap push --eval, leap run).
-It does not read integration code or model weights.`
+evaluations happen through the links it returns or through the leap CLI (leap push --eval, or leap push -o <version> --eval to re-evaluate an existing version;
+leap run list/logs only inspect jobs).
+It does not read model weights. Integration code is available through tl_get_integration_code when the
+project allows it.`
 
 func registerKnowledge(srv *sdk.Server) {
 	srv.AddResource(&sdk.Resource{URI: glossaryURI, Name: "glossary", Title: "Tensorleap glossary",
@@ -95,11 +126,13 @@ func renderPrompt(body string, args map[string]string) string {
 var prompts = []promptDef{
 	{name: "analyze_version", title: "Analyze a model version",
 		description: "Explain where and why an evaluated model version fails, with evidence and concrete next steps.",
-		body: `1. Pick the version with tl_list_versions (it must be evaluated) and call tl_get_insights.
+		body: `1. Pick the version with tl_list_versions (it must be evaluated) and call tl_get_insights. Call
+   tl_get_integration_code (entry file) to learn what each visualizer renders and how metadata is derived.
 2. For each insight, worst first: say what fails in plain ML terms, how big the failing group is (groupSize), how it
    splits across training/validation, which metadata is over-represented (composition, with the all-data share
    beside it) and how its metrics compare with all data (contrast). Name the latent space and what "similar" means there.
-3. Look at the evidence yourself: call tl_view_samples on 3-6 rendered topSamples and say what they visibly share,
+3. Look at the evidence yourself: call tl_view_samples on 3-6 rendered topSamples (for more, or when the user wants
+   files, use tl_export_analysis) and say what they visibly share,
    including patterns no metadata field captures (suggest such a field). Treat what you see as the most
    representative samples, not a random draw.
 4. Use tl_query to confirm or refute a hypothesis over the whole population (e.g. the metric by the over-represented field).
@@ -120,8 +153,8 @@ Keep platform evidence and your own observations clearly apart.`},
 		args:        []*sdk.PromptArgument{{Name: "budget", Description: "labeling budget in samples (optional)"}},
 		body: `1. Call tl_get_insights for the version. For each Failure Mode: is the group mostly training data (a model-side
    problem more data will not fix) or not (a data gap)? Use the split and contrast.
-2. Where the platform offers a remedy, quote its numbers (samples to label / to acquire) and give the insight link
-   so the selection can be downloaded in the UI.
+2. Where the platform offers a remedy, quote its numbers (samples to label / to acquire). To hand the list over,
+   call tl_export_analysis: it writes fixing_samples.csv per Failure Mode; the insight link opens the same selection in the UI.
 3. Describe the data to collect in domain terms from the over-represented metadata and what tl_view_samples shows.
 4. If a budget is given, split it across insights by severity and group size, and say why.`},
 	{name: "debug_failed_job", title: "Debug a failed job",

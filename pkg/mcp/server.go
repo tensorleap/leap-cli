@@ -2,9 +2,6 @@ package mcp
 
 import (
 	"context"
-	"errors"
-	"fmt"
-	"sort"
 	"strings"
 	"sync"
 
@@ -17,9 +14,13 @@ const instructions = `Tensorleap MCP: read-only access to a Tensorleap server's 
 - Call tl_status first; it tells you which server answered and who you are.
 - Use tl_list_projects, then tl_list_versions to pick an evaluated version, then tl_get_insights. Tools accept a project or version name instead of its id, and "latest" for the newest evaluated version.
 - tl_list_projects shows what each project lets you read. If something you need is turned off, tell the user which setting an admin must turn back on (gear menu > AI access) and don't try to reconstruct that data another way.
-- Read the resource tensorleap://glossary for current insight names and how to read them.
-- For a Failure Mode insight, quote groupSize (samples that actually underperform), never the platform's clusterSize/n_samples.
+- Read the resource tensorleap://glossary for current insight names, the engine fields and how to read them.
+- For a Failure Mode insight, quote groupSize (the root members the platform flagged), never the platform's clusterSize/n_samples. How much worse they do is in contrast: when the group's loss or error is close to all data (under ~1.2x), say it is not a real failure mode instead of describing it.
 - composition entries mean "over-represented in the group", not "the group's defining trait".
+- Each insight's engine object is the platform's own analysis; for a Failure Mode, read is_train_aggressor and overfitting_metrics before recommending a fix (the glossary says how). Quote aggressor_fixing counts instead of inventing your own.
+- classLabels maps each prediction type to its class names; fields ending in _prd_idx hold an index into that list (name = labels[index]). With one prediction type every such field uses it; with several, tl_get_integration_code shows which prediction each metric reads.
+- tl_get_integration_code tells you what each visualizer shows and what metadata means; read it before interpreting samples.
+- For a written report, or to look at many samples, tl_export_analysis writes everything to a directory; tl_view_samples is for a quick look at a few.
 - If a Failure Mode has no groupSize, the failing count is unavailable (per-sample data is off); say so and never substitute clusterSize.
 - If a tool says AI access is turned off, quote that message to the user and continue with what is allowed; never retry it or get the same data another way.
 - An empty result always carries a reason and a nextStep; act on them instead of guessing.
@@ -49,11 +50,12 @@ type Server struct {
 	mu       sync.Mutex
 	pops     map[string]*Population
 	fields   map[string]map[string]bool
+	code     map[string]*codeArchive
 	policies policyCache
 }
 
 func NewServer(client *Client, version string) *sdk.Server {
-	s := &Server{client: client, pops: map[string]*Population{}, fields: map[string]map[string]bool{}, policies: policyCache{entries: map[string]policyEntry{}}}
+	s := newServer(client)
 	srv := sdk.NewServer(&sdk.Implementation{Name: "tensorleap", Title: "Tensorleap", Version: version},
 		&sdk.ServerOptions{Instructions: instructions})
 	closed := false
@@ -67,6 +69,8 @@ func NewServer(client *Client, version string) *sdk.Server {
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_view_samples", Description: "Look at samples: returns their rendered visualizations (images as thumbnails, other types as data) so you can judge what the failing samples have in common. At most 6 per call.", Annotations: ro("View samples")}, s.viewSamples)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_describe_fields", Description: "The metric and metadata fields recorded for an evaluated version, with types. Call before tl_query to get exact field names.", Annotations: ro("Describe fields")}, s.describeFields)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_query", Description: "Aggregate metrics over the whole evaluated population, grouped by up to 2 fields (e.g. average loss per class per split, or label x prediction for confusions), optionally filtered and compared across versions. Every row includes the sample count n.", Annotations: ro("Query metrics")}, s.query)
+	sdk.AddTool(srv, &sdk.Tool{Name: "tl_get_integration_code", Description: "The integration code pushed with a version: the file list and one file's text (the entry file by default). Read it to learn what each visualizer renders, how metadata is derived and what the loss and metrics measure.", Annotations: ro("Get integration code")}, s.getIntegrationCode)
+	sdk.AddTool(srv, &sdk.Tool{Name: "tl_export_analysis", Description: "Write a version's analysis to a local directory for a report: per-insight sample lists (CSV), cluster membership, the platform's fixing-samples list, the population CSV, the integration code, and each insight's top samples (payloads, images, rendered heatmap overlays). Returns a short summary and the path of manifest.json, which lists every file written (paths relative to dir). Use it instead of tl_view_samples when you need files or more than a handful of samples.", Annotations: &sdk.ToolAnnotations{Title: "Export analysis", ReadOnlyHint: false, IdempotentHint: true, OpenWorldHint: &closed}}, s.exportAnalysis)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_list_samples", Description: "List individual samples that match conditions (e.g. label 2 predicted as 7), ranked by a field such as loss, with their values; pass the ids to tl_view_samples. Use it when the user names a failing case. greater-than / less-than are inclusive here.", Annotations: ro("List samples")}, s.listSamples)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_list_jobs", Description: "Jobs (Evaluate, Push, Population Exploration, ...) for a project or version, newest first. Check here before starting work again so nothing runs twice.", Annotations: ro("List jobs")}, s.listJobs)
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_wait_for_job", Description: "Wait (up to 5 minutes) until a job changes status or finishes, instead of polling. Evaluations can run for hours; call again later if it is still running.", Annotations: ro("Wait for job")}, s.waitForJob)
@@ -75,61 +79,8 @@ func NewServer(client *Client, version string) *sdk.Server {
 	return srv
 }
 
-type targetsResponse struct {
-	ContractVersion int       `json:"contractVersion"`
-	AiAccess        *AiAccess `json:"aiAccess"`
-	Me              struct {
-		Email, Name, TeamID, Role string
-	} `json:"me"`
-	Projects []struct {
-		Cid      string    `json:"cid"`
-		Name     string    `json:"name"`
-		AiAccess *AiAccess `json:"aiAccess"`
-	} `json:"projects"`
-	Versions []struct {
-		Cid          string   `json:"cid"`
-		Name         string   `json:"name"`
-		SerialNumber *float64 `json:"serialNumber"`
-		CreatedAt    string   `json:"createdAt"`
-		Evaluated    bool     `json:"evaluated"`
-		HasInsights  bool     `json:"hasInsights"`
-	} `json:"versions"`
-}
-
-func (s *Server) targets(ctx context.Context, projectID string) (*targetsResponse, error) {
-	body := map[string]any{}
-	if projectID != "" {
-		body["projectId"] = projectID
-	}
-	var out targetsResponse
-	if err := s.client.Post(ctx, "analysis-export/listTargets", body, &out); err != nil {
-		return nil, explain(err)
-	}
-	if out.ContractVersion != supportedContract {
-		return nil, fmt.Errorf("this server speaks analysis-export contract v%d but this leap CLI expects v%d; upgrade whichever side is older", out.ContractVersion, supportedContract)
-	}
-	return &out, nil
-}
-
-func explain(err error) error {
-	var apiErr *APIError
-	if errors.As(err, &apiErr) {
-		switch apiErr.Status {
-		case 401:
-			return errors.New("the server rejected your API key; run `leap auth login` (or `leap auth select <env>`)")
-		case 400, 403:
-			return errors.New(serverMessage(apiErr.Body))
-		case 404:
-			if strings.Contains(apiErr.Body, "Cannot POST") {
-				return errors.New("this Tensorleap server has no analysis-export API; upgrade the server")
-			}
-			return fmt.Errorf("%s Check the ids with tl_list_projects / tl_list_versions.", strings.TrimSpace(serverMessage(apiErr.Body)))
-		}
-		if apiErr.Status >= 500 {
-			return fmt.Errorf("the Tensorleap server failed on this request (%d): %s", apiErr.Status, serverMessage(apiErr.Body))
-		}
-	}
-	return err
+func newServer(client *Client) *Server {
+	return &Server{client: client, pops: map[string]*Population{}, fields: map[string]map[string]bool{}, code: map[string]*codeArchive{}, policies: policyCache{entries: map[string]policyEntry{}}}
 }
 
 type Empty struct{}
@@ -256,201 +207,6 @@ func anyEvaluated(vs []Version) bool {
 	return false
 }
 
-type exportResponse struct {
-	ContractVersion  int    `json:"contractVersion"`
-	DeepLinkPath     string `json:"deepLinkPath"`
-	PopulationCsvURL string `json:"populationCsvUrl"`
-	Version          struct {
-		Name         string   `json:"name"`
-		SerialNumber *float64 `json:"serialNumber"`
-	} `json:"version"`
-	Insights []struct {
-		Cid             string         `json:"cid"`
-		Index           float64        `json:"index"`
-		Status          string         `json:"status"`
-		Description     string         `json:"description"`
-		InsightType     map[string]any `json:"insightType"`
-		CsvURL          string         `json:"csvUrl"`
-		FixingCsvURL    string         `json:"fixingCsvUrl"`
-		AnalyzeLinkPath string         `json:"analyzeLinkPath"`
-	} `json:"insights"`
-}
-
-type VersionIn struct {
-	ProjectID string `json:"projectId" jsonschema:"project id or name from tl_list_projects"`
-	VersionID string `json:"versionId" jsonschema:"evaluated version id or name from tl_list_versions, or \"latest\""`
-}
-
-type LatentSpace struct {
-	Name  string `json:"name"`
-	Means string `json:"means"`
-}
-
-type Remedy struct {
-	SamplesToLabel   int `json:"samplesToLabel"`
-	SamplesToAcquire int `json:"samplesToAcquire"`
-}
-
-type Insight struct {
-	Index        int            `json:"index"`
-	Type         string         `json:"type"`
-	Name         string         `json:"name"`
-	Severity     int            `json:"severity"`
-	Status       string         `json:"status"`
-	Description  string         `json:"description,omitempty"`
-	ParentIndex  int            `json:"parentIndex,omitempty"`
-	LatentSpace  *LatentSpace   `json:"latentSpace,omitempty"`
-	GroupSize    *int           `json:"groupSize,omitempty"`
-	GroupMeaning string         `json:"groupMeaning"`
-	ClusterSize  int            `json:"clusterSize" jsonschema:"platform n_samples; for Failure Mode it includes healthy neighbours, do not quote as the failing group"`
-	Split        map[string]int `json:"split,omitempty"`
-	Composition  []Composition  `json:"composition,omitempty"`
-	Contrast     []Contrast     `json:"contrast,omitempty"`
-	Remedy       *Remedy        `json:"remedy,omitempty"`
-	TopSamples   []SampleRef    `json:"topSamples,omitempty" jsonschema:"most representative failing samples (ranked by affinity or loss), rendered ones first; pass to tl_view_samples"`
-	HasTests     bool           `json:"hasSuggestedTests"`
-	Link         string         `json:"link"`
-	CreateTest   string         `json:"createTestLink,omitempty"`
-	Warning      string         `json:"warning,omitempty"`
-}
-
-type InsightsOut struct {
-	Server   string    `json:"server"`
-	Version  string    `json:"version"`
-	Note     string    `json:"note,omitempty"`
-	Insights []Insight `json:"insights"`
-	Link     string    `json:"insightsPanelLink"`
-	Reason   string    `json:"reason,omitempty"`
-	NextStep string    `json:"nextStep,omitempty"`
-}
-
-func (s *Server) getInsights(ctx context.Context, _ *sdk.CallToolRequest, in VersionIn) (*sdk.CallToolResult, InsightsOut, error) {
-	if err := s.resolve(ctx, &in.ProjectID, &in.VersionID); err != nil {
-		return nil, InsightsOut{}, err
-	}
-	access, err := s.policy(ctx, in.ProjectID)
-	if err != nil {
-		return nil, InsightsOut{}, err
-	}
-	var e exportResponse
-	if err := s.client.Post(ctx, "analysis-export/exportAnalysis", map[string]any{"projectId": in.ProjectID, "versionId": in.VersionID}, &e); err != nil {
-		return nil, InsightsOut{}, explain(err)
-	}
-	out := InsightsOut{Server: s.client.UIBase(), Version: e.Version.Name, Insights: []Insight{}, Link: s.client.UIBase() + e.DeepLinkPath}
-	if !access.SampleRows {
-		out.Note = "per-sample data is turned off for this project, so Failure Mode sizes, composition, metric contrast and representative samples are unavailable"
-	}
-	if len(e.Insights) == 0 {
-		out.Reason, out.NextStep = "no-insights", "check tl_list_versions: the version must be evaluated; then generate insights from the Insights panel"
-		return nil, out, nil
-	}
-	pop, popErr := s.population(ctx, in.VersionID, e.PopulationCsvURL)
-	byID := map[string]int{}
-	for _, raw := range e.Insights {
-		if id, ok := raw.InsightType["id_"].(string); ok {
-			byID[id] = int(raw.Index)
-		}
-	}
-	ranked := map[int][]string{}
-	var candidates []string
-	for _, raw := range e.Insights {
-		t := raw.InsightType
-		typ := str(t["type"])
-		ins := Insight{Index: int(raw.Index), Type: typ, Name: displayNames[typ], Severity: num(t["severity"]), Status: raw.Status,
-			Description: raw.Description, ClusterSize: num(t["n_samples"]), GroupMeaning: "platform sample count", HasTests: len(list(t["automatic_tests"])) > 0}
-		if typ == "low_performance" {
-			// n_samples counts healthy latent neighbours too; only the sample list gives the failing count
-			ins.GroupMeaning = "unavailable without per-sample data"
-		} else {
-			n := ins.ClusterSize
-			ins.GroupSize = &n
-		}
-		if ins.Name == "" {
-			ins.Name = typ
-		}
-		if pid := str(t["parent_id"]); pid != "" {
-			ins.ParentIndex = byID[pid]
-		}
-		if ls := str(t["latent_space"]); ls != "" {
-			meaning := latentMeanings[ls]
-			if meaning == "" {
-				meaning = "grouped in the project's '" + ls + "' representation"
-			}
-			ins.LatentSpace = &LatentSpace{Name: ls, Means: meaning}
-		}
-		if fix, ok := t["aggressor_fixing"].(map[string]any); ok {
-			ins.Remedy = &Remedy{SamplesToLabel: num(fix["num_of_samples_to_label"]), SamplesToAcquire: num(fix["num_of_samples_to_acquire"])}
-		}
-		link := raw.AnalyzeLinkPath
-		if link == "" {
-			link = e.DeepLinkPath
-		}
-		ins.Link = s.client.UIBase() + link
-		if ins.HasTests {
-			sep := "?"
-			if strings.Contains(ins.Link, "?") {
-				sep = "&"
-			}
-			ins.CreateTest = ins.Link + sep + "addTestFromInsight=" + raw.Cid
-		}
-		if raw.CsvURL != "" {
-			if b, err := s.client.Download(ctx, raw.CsvURL); err != nil {
-				ins.Warning = err.Error()
-			} else if b, err = decompress(b); err != nil {
-				ins.Warning = "insight sample list unreadable: " + err.Error()
-			} else if sum, err := Summarize(b, pop); err != nil {
-				ins.Warning = "insight sample list unreadable: " + err.Error()
-			} else {
-				size := sum.GroupSize
-				ins.GroupSize, ins.GroupMeaning = &size, sum.GroupDefinition
-				ins.Split, ins.Composition, ins.Contrast = sum.Split, sum.Composition, sum.Contrast
-				ranked[len(out.Insights)] = sum.RankedIDs
-				candidates = append(candidates, sum.RankedIDs...)
-			}
-		}
-		if popErr != nil && ins.Warning == "" && access.SampleRows {
-			ins.Warning = "no all-data baseline: " + popErr.Error()
-		}
-		out.Insights = append(out.Insights, ins)
-	}
-	if len(candidates) > 0 {
-		// with visualizations turned off the ids are still worth returning, just not viewable
-		rendered, err := s.sampleAssets(ctx, in.ProjectID, in.VersionID, unique(candidates))
-		if err != nil {
-			rendered = nil
-		}
-		for i, ids := range ranked {
-			out.Insights[i].TopSamples = renderedFirst(ids, rendered, maxViewSamples)
-		}
-	}
-	sort.SliceStable(out.Insights, func(i, j int) bool { return out.Insights[i].Severity > out.Insights[j].Severity })
-	return nil, out, nil
-}
-
-func (s *Server) population(ctx context.Context, versionID, url string) (*Population, error) {
-	if url == "" {
-		return nil, errors.New("the version has no population file")
-	}
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	if p, ok := s.pops[versionID]; ok {
-		return p, nil
-	}
-	b, err := s.client.Download(ctx, url)
-	if err != nil {
-		return nil, err
-	}
-	if b, err = decompress(b); err != nil {
-		return nil, err
-	}
-	p, err := NewPopulation(b)
-	if err != nil {
-		return nil, err
-	}
-	s.pops[versionID] = p
-	return p, nil
-}
-
 func str(v any) string {
 	s, _ := v.(string)
 	return s
@@ -476,31 +232,4 @@ func unique(ids []string) []string {
 		}
 	}
 	return out
-}
-
-// StatusLines is the one-glance state printed by `leap mcp config` and by a terminal run of `leap mcp`
-func StatusLines(ctx context.Context, c *Client) []string {
-	s := &Server{client: c}
-	t, err := s.targets(ctx, "")
-	if err != nil {
-		return []string{fmt.Sprintf("Server: %s, not reachable right now: %v", c.UIBase(), err)}
-	}
-	lines := []string{fmt.Sprintf("Server: %s (%s)", c.UIBase(), t.Me.Email)}
-	if t.AiAccess == nil {
-		return append(lines, "AI access: this server predates AI access controls; assistants can read everything")
-	}
-	custom := 0
-	for _, p := range t.Projects {
-		if p.AiAccess != nil && *p.AiAccess != *t.AiAccess {
-			custom++
-		}
-	}
-	access := "everything is on"
-	if off := t.AiAccess.blocked(); len(off) > 0 {
-		access = "turned off by default: " + strings.Join(off, ", ")
-	}
-	if custom > 0 {
-		access += fmt.Sprintf("; %d project(s) have their own settings", custom)
-	}
-	return append(lines, "AI access: "+access+" (admins: gear icon > AI ACCESS)")
 }

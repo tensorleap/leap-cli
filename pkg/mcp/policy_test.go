@@ -33,7 +33,7 @@ func fakeServer(t *testing.T, aiAccess *AiAccess, routes map[string]func(w http.
 		t.Fatalf("unexpected call to %s", path)
 	}))
 	t.Cleanup(ts.Close)
-	s := &Server{client: NewClient(ts.URL+"/api/v2", "key"), pops: map[string]*Population{}, fields: map[string]map[string]bool{}, policies: policyCache{entries: map[string]policyEntry{}}}
+	s := newServer(NewClient(ts.URL+"/api/v2", "key"))
 	return s, &calls
 }
 
@@ -141,7 +141,7 @@ func TestRefusalIsRecheckedAfterAnAdminTurnsAccessOn(t *testing.T) {
 		}
 	}))
 	defer ts.Close()
-	s := &Server{client: NewClient(ts.URL+"/api/v2", "k"), pops: map[string]*Population{}, fields: map[string]map[string]bool{}, policies: policyCache{entries: map[string]policyEntry{}}}
+	s := newServer(NewClient(ts.URL+"/api/v2", "k"))
 	if _, err := s.policy(context.Background(), projectHex); err != nil {
 		t.Fatal(err)
 	}
@@ -165,7 +165,7 @@ func TestTinyGroupsAreHiddenWithoutPerSampleData(t *testing.T) {
 		}
 	}))
 	defer ts.Close()
-	s := &Server{client: NewClient(ts.URL+"/api/v2", "k"), pops: map[string]*Population{}, fields: map[string]map[string]bool{}, policies: policyCache{entries: map[string]policyEntry{}}}
+	s := newServer(NewClient(ts.URL+"/api/v2", "k"))
 	_, out, err := s.query(context.Background(), nil, QueryIn{ProjectID: projectHex, VersionIDs: []string{versionHex}, GroupBy: []string{"metadata.label"}, Measures: []Measure{{"metrics.loss", "Average"}}})
 	if err != nil || len(out.Rows) != 1 || *out.Rows[0].N != 500 || !strings.Contains(strings.Join(out.Notes, " "), "fewer than 10 samples are hidden") {
 		t.Fatalf("got %v %+v", err, out)
