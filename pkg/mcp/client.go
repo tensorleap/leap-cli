@@ -1,9 +1,7 @@
 package mcp
 
 import (
-	"archive/zip"
 	"bytes"
-	"compress/gzip"
 	"context"
 	"encoding/json"
 	"errors"
@@ -48,34 +46,63 @@ func (e *APIError) Error() string {
 	return fmt.Sprintf("tensorleap API returned %d: %s", e.Status, e.Body)
 }
 
-func (c *Client) Post(ctx context.Context, path string, body, out any) error {
+// authTransport signs every request as the user's leap API key and marks it as leap mcp's
+type authTransport struct {
+	key  string
+	next http.RoundTripper
+}
+
+func (t authTransport) RoundTrip(r *http.Request) (*http.Response, error) {
+	r = r.Clone(r.Context())
+	r.Header.Set("X-TL-Client", "leap-mcp")
+	if t.key != "" {
+		r.Header.Set("Authorization", "Bearer "+t.key)
+	}
+	return t.next.RoundTrip(r)
+}
+
+func (c *Client) authed() *http.Client {
+	next := c.http.Transport
+	if next == nil {
+		next = http.DefaultTransport
+	}
+	return &http.Client{Transport: authTransport{key: c.apiKey, next: next}}
+}
+
+func (c *Client) do(ctx context.Context, path string, body any) (*http.Response, error) {
 	if c.failure != nil {
-		return c.failure
+		return nil, c.failure
 	}
 	payload, err := json.Marshal(body)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.BaseURL+"/"+path, bytes.NewReader(payload))
 	if err != nil {
-		return err
+		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-TL-Client", "leap-mcp")
-	if c.apiKey != "" {
-		req.Header.Set("Authorization", "Bearer "+c.apiKey)
-	}
-	resp, err := c.http.Do(req)
+	resp, err := c.authed().Do(req)
 	if err != nil {
-		return describeTransportError(c.BaseURL, err)
+		return nil, describeTransportError(c.BaseURL, err)
+	}
+	if resp.StatusCode >= 300 {
+		defer resp.Body.Close()
+		raw, _ := io.ReadAll(io.LimitReader(resp.Body, 4096))
+		return nil, &APIError{Status: resp.StatusCode, Body: truncate(string(raw), 300)}
+	}
+	return resp, nil
+}
+
+func (c *Client) Post(ctx context.Context, path string, body, out any) error {
+	resp, err := c.do(ctx, path, body)
+	if err != nil {
+		return err
 	}
 	defer resp.Body.Close()
 	raw, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return err
-	}
-	if resp.StatusCode >= 300 {
-		return &APIError{Status: resp.StatusCode, Body: truncate(string(raw), 300)}
 	}
 	if out == nil || len(bytes.TrimSpace(raw)) == 0 {
 		return nil
@@ -83,53 +110,19 @@ func (c *Client) Post(ctx context.Context, path string, body, out any) error {
 	return json.Unmarshal(raw, out)
 }
 
-func (c *Client) Download(ctx context.Context, url string) ([]byte, error) {
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+// PostStream returns the response body unread, for large downloads such as the export bundle
+func (c *Client) PostStream(ctx context.Context, path string, body any) (io.ReadCloser, error) {
+	resp, err := c.do(ctx, path, body)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := c.http.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("cannot download a stored artifact (%v); signed URLs point at the server's storage path, so point `leap auth` at the ingress URL (port 4589), not at node-server directly", err)
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode >= 300 {
-		return nil, fmt.Errorf("artifact download returned %d", resp.StatusCode)
-	}
-	return io.ReadAll(resp.Body)
-}
-
-func decompress(b []byte) ([]byte, error) {
-	switch {
-	case bytes.HasPrefix(b, []byte("PK")):
-		zr, err := zip.NewReader(bytes.NewReader(b), int64(len(b)))
-		if err != nil {
-			return nil, err
-		}
-		for _, f := range zr.File {
-			if f.FileInfo().IsDir() {
-				continue
-			}
-			rc, err := f.Open()
-			if err != nil {
-				return nil, err
-			}
-			defer rc.Close()
-			return io.ReadAll(rc)
-		}
-		return nil, errors.New("empty zip archive")
-	case bytes.HasPrefix(b, []byte{0x1f, 0x8b}):
-		gr, err := gzip.NewReader(bytes.NewReader(b))
-		if err != nil {
-			return nil, err
-		}
-		defer gr.Close()
-		return io.ReadAll(gr)
-	}
-	return b, nil
+	return resp.Body, nil
 }
 
 func describeTransportError(base string, err error) error {
+	if errors.Is(err, api.ErrAuth) {
+		return errors.New("the server rejected your API key; run `leap auth login` (or `leap auth select <env>`)")
+	}
 	var netErr net.Error
 	if errors.As(err, &netErr) || strings.Contains(err.Error(), "connection refused") {
 		return fmt.Errorf("cannot reach the Tensorleap server at %s: is the server running and, if it is remote, is your SSH/SSM tunnel or VPN up? (%v)", base, err)
