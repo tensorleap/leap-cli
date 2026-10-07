@@ -6,13 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Unset** | Pointer to **[]string** |  | [optional] 
 **Set** | Pointer to [**[]ValueWithKey**](ValueWithKey.md) |  | [optional] 
-**ProjectId** | **string** |  | 
+**ProjectId** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewSetSettingValueWrapper
 
-`func NewSetSettingValueWrapper(projectId string, ) *SetSettingValueWrapper`
+`func NewSetSettingValueWrapper() *SetSettingValueWrapper`
 
 NewSetSettingValueWrapper instantiates a new SetSettingValueWrapper object
 This constructor will assign default values to properties that have it defined,
@@ -96,6 +96,11 @@ and a boolean to check if the value has been set.
 
 SetProjectId sets ProjectId field to given value.
 
+### HasProjectId
+
+`func (o *SetSettingValueWrapper) HasProjectId() bool`
+
+HasProjectId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

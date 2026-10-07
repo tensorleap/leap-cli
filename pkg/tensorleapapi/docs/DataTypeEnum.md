@@ -27,6 +27,8 @@
 
 * `AUDIO` (value: `"audio"`)
 
+* `POINT_CLOUD` (value: `"point_cloud"`)
+
 * `GRAD_ANALYSIS` (value: `"grad_analysis"`)
 
 * `COMPOSITE_VISUALIZATION` (value: `"composite_visualization"`)

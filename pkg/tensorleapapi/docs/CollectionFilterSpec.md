@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Range** | Pointer to [**CollectionFilterSpecRange**](CollectionFilterSpecRange.md) |  | [optional] 
 **HiddenValues** | Pointer to [**[]CollectionFilterSpecHiddenValuesInner**](CollectionFilterSpecHiddenValuesInner.md) |  | [optional] 
+**Values** | Pointer to [**[]CollectionFilterSpecHiddenValuesInner**](CollectionFilterSpecHiddenValuesInner.md) |  | [optional] 
 **Field** | **string** |  | 
 
 ## Methods
@@ -76,6 +77,31 @@ SetHiddenValues sets HiddenValues field to given value.
 `func (o *CollectionFilterSpec) HasHiddenValues() bool`
 
 HasHiddenValues returns a boolean if a field has been set.
+
+### GetValues
+
+`func (o *CollectionFilterSpec) GetValues() []CollectionFilterSpecHiddenValuesInner`
+
+GetValues returns the Values field if non-nil, zero value otherwise.
+
+### GetValuesOk
+
+`func (o *CollectionFilterSpec) GetValuesOk() (*[]CollectionFilterSpecHiddenValuesInner, bool)`
+
+GetValuesOk returns a tuple with the Values field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetValues
+
+`func (o *CollectionFilterSpec) SetValues(v []CollectionFilterSpecHiddenValuesInner)`
+
+SetValues sets Values field to given value.
+
+### HasValues
+
+`func (o *CollectionFilterSpec) HasValues() bool`
+
+HasValues returns a boolean if a field has been set.
 
 ### GetField
 

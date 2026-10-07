@@ -23,6 +23,13 @@ Name | Type | Description | Notes
 **AudioBlob** | **string** |  | 
 **Visual** | [**AudioDataVisual**](AudioDataVisual.md) |  | 
 **SampleRate** | **float64** |  | 
+**PointsBlob** | **string** |  | 
+**NumPoints** | **float64** |  | 
+**Bounds** | **[]float64** |  | 
+**PreviewBlob** | **string** |  | 
+**IntensityBlob** | Pointer to **string** |  | [optional] 
+**IntensityRange** | Pointer to **[]float64** |  | [optional] 
+**BoundingBoxes** | [**[]BoundingBox3D**](BoundingBox3D.md) |  | 
 **Data** | [**[]CompositeVizItem**](CompositeVizItem.md) |  | 
 **Algo** | Pointer to [**SampleAnalysisAlgo**](SampleAnalysisAlgo.md) |  | [optional] 
 
@@ -30,7 +37,7 @@ Name | Type | Description | Notes
 
 ### NewVisualizedItemData
 
-`func NewVisualizedItemData(blob string, type_ DataTypeEnum, heatmapBlob string, body [][]float64, labels []string, boundingBox []BoundingBox, maskBlob string, text []string, mask []float64, videoBlob string, audioBlob string, visual AudioDataVisual, sampleRate float64, data []CompositeVizItem, ) *VisualizedItemData`
+`func NewVisualizedItemData(blob string, type_ DataTypeEnum, heatmapBlob string, body [][]float64, labels []string, boundingBox []BoundingBox, maskBlob string, text []string, mask []float64, videoBlob string, audioBlob string, visual AudioDataVisual, sampleRate float64, pointsBlob string, numPoints float64, bounds []float64, previewBlob string, boundingBoxes []BoundingBox3D, data []CompositeVizItem, ) *VisualizedItemData`
 
 NewVisualizedItemData instantiates a new VisualizedItemData object
 This constructor will assign default values to properties that have it defined,
@@ -453,6 +460,156 @@ and a boolean to check if the value has been set.
 `func (o *VisualizedItemData) SetSampleRate(v float64)`
 
 SetSampleRate sets SampleRate field to given value.
+
+
+### GetPointsBlob
+
+`func (o *VisualizedItemData) GetPointsBlob() string`
+
+GetPointsBlob returns the PointsBlob field if non-nil, zero value otherwise.
+
+### GetPointsBlobOk
+
+`func (o *VisualizedItemData) GetPointsBlobOk() (*string, bool)`
+
+GetPointsBlobOk returns a tuple with the PointsBlob field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPointsBlob
+
+`func (o *VisualizedItemData) SetPointsBlob(v string)`
+
+SetPointsBlob sets PointsBlob field to given value.
+
+
+### GetNumPoints
+
+`func (o *VisualizedItemData) GetNumPoints() float64`
+
+GetNumPoints returns the NumPoints field if non-nil, zero value otherwise.
+
+### GetNumPointsOk
+
+`func (o *VisualizedItemData) GetNumPointsOk() (*float64, bool)`
+
+GetNumPointsOk returns a tuple with the NumPoints field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNumPoints
+
+`func (o *VisualizedItemData) SetNumPoints(v float64)`
+
+SetNumPoints sets NumPoints field to given value.
+
+
+### GetBounds
+
+`func (o *VisualizedItemData) GetBounds() []float64`
+
+GetBounds returns the Bounds field if non-nil, zero value otherwise.
+
+### GetBoundsOk
+
+`func (o *VisualizedItemData) GetBoundsOk() (*[]float64, bool)`
+
+GetBoundsOk returns a tuple with the Bounds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBounds
+
+`func (o *VisualizedItemData) SetBounds(v []float64)`
+
+SetBounds sets Bounds field to given value.
+
+
+### GetPreviewBlob
+
+`func (o *VisualizedItemData) GetPreviewBlob() string`
+
+GetPreviewBlob returns the PreviewBlob field if non-nil, zero value otherwise.
+
+### GetPreviewBlobOk
+
+`func (o *VisualizedItemData) GetPreviewBlobOk() (*string, bool)`
+
+GetPreviewBlobOk returns a tuple with the PreviewBlob field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPreviewBlob
+
+`func (o *VisualizedItemData) SetPreviewBlob(v string)`
+
+SetPreviewBlob sets PreviewBlob field to given value.
+
+
+### GetIntensityBlob
+
+`func (o *VisualizedItemData) GetIntensityBlob() string`
+
+GetIntensityBlob returns the IntensityBlob field if non-nil, zero value otherwise.
+
+### GetIntensityBlobOk
+
+`func (o *VisualizedItemData) GetIntensityBlobOk() (*string, bool)`
+
+GetIntensityBlobOk returns a tuple with the IntensityBlob field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIntensityBlob
+
+`func (o *VisualizedItemData) SetIntensityBlob(v string)`
+
+SetIntensityBlob sets IntensityBlob field to given value.
+
+### HasIntensityBlob
+
+`func (o *VisualizedItemData) HasIntensityBlob() bool`
+
+HasIntensityBlob returns a boolean if a field has been set.
+
+### GetIntensityRange
+
+`func (o *VisualizedItemData) GetIntensityRange() []float64`
+
+GetIntensityRange returns the IntensityRange field if non-nil, zero value otherwise.
+
+### GetIntensityRangeOk
+
+`func (o *VisualizedItemData) GetIntensityRangeOk() (*[]float64, bool)`
+
+GetIntensityRangeOk returns a tuple with the IntensityRange field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIntensityRange
+
+`func (o *VisualizedItemData) SetIntensityRange(v []float64)`
+
+SetIntensityRange sets IntensityRange field to given value.
+
+### HasIntensityRange
+
+`func (o *VisualizedItemData) HasIntensityRange() bool`
+
+HasIntensityRange returns a boolean if a field has been set.
+
+### GetBoundingBoxes
+
+`func (o *VisualizedItemData) GetBoundingBoxes() []BoundingBox3D`
+
+GetBoundingBoxes returns the BoundingBoxes field if non-nil, zero value otherwise.
+
+### GetBoundingBoxesOk
+
+`func (o *VisualizedItemData) GetBoundingBoxesOk() (*[]BoundingBox3D, bool)`
+
+GetBoundingBoxesOk returns a tuple with the BoundingBoxes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBoundingBoxes
+
+`func (o *VisualizedItemData) SetBoundingBoxes(v []BoundingBox3D)`
+
+SetBoundingBoxes sets BoundingBoxes field to given value.
 
 
 ### GetData

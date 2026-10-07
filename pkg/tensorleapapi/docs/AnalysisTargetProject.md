@@ -6,12 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Cid** | **string** |  | 
 **Name** | **string** |  | 
+**AiAccess** | [**AiAccessClasses**](AiAccessClasses.md) |  | 
 
 ## Methods
 
 ### NewAnalysisTargetProject
 
-`func NewAnalysisTargetProject(cid string, name string, ) *AnalysisTargetProject`
+`func NewAnalysisTargetProject(cid string, name string, aiAccess AiAccessClasses, ) *AnalysisTargetProject`
 
 NewAnalysisTargetProject instantiates a new AnalysisTargetProject object
 This constructor will assign default values to properties that have it defined,
@@ -64,6 +65,26 @@ and a boolean to check if the value has been set.
 `func (o *AnalysisTargetProject) SetName(v string)`
 
 SetName sets Name field to given value.
+
+
+### GetAiAccess
+
+`func (o *AnalysisTargetProject) GetAiAccess() AiAccessClasses`
+
+GetAiAccess returns the AiAccess field if non-nil, zero value otherwise.
+
+### GetAiAccessOk
+
+`func (o *AnalysisTargetProject) GetAiAccessOk() (*AiAccessClasses, bool)`
+
+GetAiAccessOk returns a tuple with the AiAccess field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAiAccess
+
+`func (o *AnalysisTargetProject) SetAiAccess(v AiAccessClasses)`
+
+SetAiAccess sets AiAccess field to given value.
 
 
 

@@ -15,13 +15,17 @@ Name | Type | Description | Notes
 **ClusterBlobUrl** | Pointer to **string** |  | [optional] 
 **TopPanelUrl** | Pointer to **string** |  | [optional] 
 **FixingCsvUrl** | Pointer to **string** |  | [optional] 
+**Engine** | **map[string]interface{}** | Construct a type with a set of properties K of type T | 
+**Digest** | Pointer to [**AnalysisInsightDigest**](AnalysisInsightDigest.md) |  | [optional] 
+**DigestError** | Pointer to **string** |  | [optional] 
+**TopPanel** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
 **AnalyzeLinkPath** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewAnalysisInsight
 
-`func NewAnalysisInsight(cid string, index float64, status AnalysisInsightStatus, createdAt time.Time, updatedAt time.Time, insightType InsightType, ) *AnalysisInsight`
+`func NewAnalysisInsight(cid string, index float64, status AnalysisInsightStatus, createdAt time.Time, updatedAt time.Time, insightType InsightType, engine map[string]interface{}, ) *AnalysisInsight`
 
 NewAnalysisInsight instantiates a new AnalysisInsight object
 This constructor will assign default values to properties that have it defined,
@@ -280,6 +284,101 @@ SetFixingCsvUrl sets FixingCsvUrl field to given value.
 `func (o *AnalysisInsight) HasFixingCsvUrl() bool`
 
 HasFixingCsvUrl returns a boolean if a field has been set.
+
+### GetEngine
+
+`func (o *AnalysisInsight) GetEngine() map[string]interface{}`
+
+GetEngine returns the Engine field if non-nil, zero value otherwise.
+
+### GetEngineOk
+
+`func (o *AnalysisInsight) GetEngineOk() (*map[string]interface{}, bool)`
+
+GetEngineOk returns a tuple with the Engine field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEngine
+
+`func (o *AnalysisInsight) SetEngine(v map[string]interface{})`
+
+SetEngine sets Engine field to given value.
+
+
+### GetDigest
+
+`func (o *AnalysisInsight) GetDigest() AnalysisInsightDigest`
+
+GetDigest returns the Digest field if non-nil, zero value otherwise.
+
+### GetDigestOk
+
+`func (o *AnalysisInsight) GetDigestOk() (*AnalysisInsightDigest, bool)`
+
+GetDigestOk returns a tuple with the Digest field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDigest
+
+`func (o *AnalysisInsight) SetDigest(v AnalysisInsightDigest)`
+
+SetDigest sets Digest field to given value.
+
+### HasDigest
+
+`func (o *AnalysisInsight) HasDigest() bool`
+
+HasDigest returns a boolean if a field has been set.
+
+### GetDigestError
+
+`func (o *AnalysisInsight) GetDigestError() string`
+
+GetDigestError returns the DigestError field if non-nil, zero value otherwise.
+
+### GetDigestErrorOk
+
+`func (o *AnalysisInsight) GetDigestErrorOk() (*string, bool)`
+
+GetDigestErrorOk returns a tuple with the DigestError field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDigestError
+
+`func (o *AnalysisInsight) SetDigestError(v string)`
+
+SetDigestError sets DigestError field to given value.
+
+### HasDigestError
+
+`func (o *AnalysisInsight) HasDigestError() bool`
+
+HasDigestError returns a boolean if a field has been set.
+
+### GetTopPanel
+
+`func (o *AnalysisInsight) GetTopPanel() map[string]interface{}`
+
+GetTopPanel returns the TopPanel field if non-nil, zero value otherwise.
+
+### GetTopPanelOk
+
+`func (o *AnalysisInsight) GetTopPanelOk() (*map[string]interface{}, bool)`
+
+GetTopPanelOk returns a tuple with the TopPanel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTopPanel
+
+`func (o *AnalysisInsight) SetTopPanel(v map[string]interface{})`
+
+SetTopPanel sets TopPanel field to given value.
+
+### HasTopPanel
+
+`func (o *AnalysisInsight) HasTopPanel() bool`
+
+HasTopPanel returns a boolean if a field has been set.
 
 ### GetAnalyzeLinkPath
 

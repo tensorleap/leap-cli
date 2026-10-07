@@ -22,10 +22,16 @@ docs/AddSecretManagerResponse.md
 docs/AggregationMethod.md
 docs/Aggregations.md
 docs/AggressorFixing.md
+docs/AiAccessClasses.md
+docs/AiAccessResponse.md
 docs/Alive200Response.md
 docs/AllSessionsTestResults.md
+docs/AnalysisComposition.md
+docs/AnalysisContrast.md
 docs/AnalysisInsight.md
+docs/AnalysisInsightDigest.md
 docs/AnalysisInsightStatus.md
+docs/AnalysisPodLogs.md
 docs/AnalysisSampleAssets.md
 docs/AnalysisSampleFile.md
 docs/AnalysisTargetProject.md
@@ -49,6 +55,7 @@ docs/BaseSplitAgg.md
 docs/BasicVisualizationInfo.md
 docs/BoolSchema.md
 docs/BoundingBox.md
+docs/BoundingBox3D.md
 docs/CalcPopulationExplorationDigestParams.md
 docs/CalcPopulationExplorationDigestResponse.md
 docs/ChainedEvaluateInfo.md
@@ -153,6 +160,7 @@ docs/EventsSnapshot.md
 docs/ExportAnalysisParams.md
 docs/ExportAnalysisResponse.md
 docs/ExportAnalysisResponseVersion.md
+docs/ExportBundleParams.md
 docs/ExportModelParams.md
 docs/ExportModelTypeEnum.md
 docs/ExportedModelData.md
@@ -184,7 +192,10 @@ docs/GenericBaseImage.md
 docs/GenericDataItem.md
 docs/GenericDataQueryParams.md
 docs/GenericDataResponse.md
+docs/GetAiAccessParams.md
 docs/GetAllProjectSessionTestsRequest.md
+docs/GetAnalysisJobLogsParams.md
+docs/GetAnalysisJobLogsResponse.md
 docs/GetAnalysisSampleAssetsParams.md
 docs/GetAnalysisSampleAssetsResponse.md
 docs/GetApiKeyByCodeRequest.md
@@ -405,6 +416,7 @@ docs/ParesCodeSnapshotParams.md
 docs/PartialPopulationExplorationArtifacts.md
 docs/PickPopulationExplorationParamsExcludeKeyofPopulationExplorationParamsDigestOrReRunAfterFail.md
 docs/PodLogs.md
+docs/PointCloudData.md
 docs/PopExploreInfo.md
 docs/PopulateCollectionFromFiltersParams.md
 docs/PopulateCollectionFromFiltersResponse.md
@@ -468,6 +480,7 @@ docs/SessionTestResultNotFound.md
 docs/SessionTestResultSuccess.md
 docs/SetActiveVersionParams.md
 docs/SetActiveVersionResponse.md
+docs/SetAiAccessParams.md
 docs/SetCodeChallengeRequest.md
 docs/SetContainerLabelParams.md
 docs/SetDefaultTeamRequest.md
@@ -580,10 +593,16 @@ model_add_secret_manager_response.go
 model_aggregation_method.go
 model_aggregations.go
 model_aggressor_fixing.go
+model_ai_access_classes.go
+model_ai_access_response.go
 model_alive_200_response.go
 model_all_sessions_test_results.go
+model_analysis_composition.go
+model_analysis_contrast.go
 model_analysis_insight.go
+model_analysis_insight_digest.go
 model_analysis_insight_status.go
+model_analysis_pod_logs.go
 model_analysis_sample_assets.go
 model_analysis_sample_file.go
 model_analysis_target_project.go
@@ -607,6 +626,7 @@ model_base_split_agg.go
 model_basic_visualization_info.go
 model_bool_schema.go
 model_bounding_box.go
+model_bounding_box3_d.go
 model_calc_population_exploration_digest_params.go
 model_calc_population_exploration_digest_response.go
 model_chained_evaluate_info.go
@@ -710,6 +730,7 @@ model_events_snapshot.go
 model_export_analysis_params.go
 model_export_analysis_response.go
 model_export_analysis_response_version.go
+model_export_bundle_params.go
 model_export_model_params.go
 model_export_model_type_enum.go
 model_exported_model_data.go
@@ -741,7 +762,10 @@ model_generic_base_image.go
 model_generic_data_item.go
 model_generic_data_query_params.go
 model_generic_data_response.go
+model_get_ai_access_params.go
 model_get_all_project_session_tests_request.go
+model_get_analysis_job_logs_params.go
+model_get_analysis_job_logs_response.go
 model_get_analysis_sample_assets_params.go
 model_get_analysis_sample_assets_response.go
 model_get_api_key_by_code_request.go
@@ -962,6 +986,7 @@ model_pares_code_snapshot_params.go
 model_partial_population_exploration_artifacts_.go
 model_pick_population_exploration_params_exclude_keyof_population_exploration_params_digest_or_re_run_after_fail__.go
 model_pod_logs.go
+model_point_cloud_data.go
 model_pop_explore_info.go
 model_populate_collection_from_filters_params.go
 model_populate_collection_from_filters_response.go
@@ -1025,6 +1050,7 @@ model_session_test_result_not_found.go
 model_session_test_result_success.go
 model_set_active_version_params.go
 model_set_active_version_response.go
+model_set_ai_access_params.go
 model_set_code_challenge_request.go
 model_set_container_label_params.go
 model_set_default_team_request.go

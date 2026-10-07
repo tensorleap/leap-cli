@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **CreatedBy** | **string** |  | 
 **FileUrl** | Pointer to **string** |  | [optional] 
 **FilterFileUrl** | Pointer to **string** |  | [optional] 
+**StatsFileUrl** | Pointer to **string** |  | [optional] 
 **Status** | [**JobStatus**](JobStatus.md) |  | 
 **IsDeleted** | **bool** |  | 
 **SplitsToResplit** | [**[]SplitSubset**](SplitSubset.md) |  | 
@@ -207,6 +208,31 @@ SetFilterFileUrl sets FilterFileUrl field to given value.
 `func (o *DatasetSplitting) HasFilterFileUrl() bool`
 
 HasFilterFileUrl returns a boolean if a field has been set.
+
+### GetStatsFileUrl
+
+`func (o *DatasetSplitting) GetStatsFileUrl() string`
+
+GetStatsFileUrl returns the StatsFileUrl field if non-nil, zero value otherwise.
+
+### GetStatsFileUrlOk
+
+`func (o *DatasetSplitting) GetStatsFileUrlOk() (*string, bool)`
+
+GetStatsFileUrlOk returns a tuple with the StatsFileUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStatsFileUrl
+
+`func (o *DatasetSplitting) SetStatsFileUrl(v string)`
+
+SetStatsFileUrl sets StatsFileUrl field to given value.
+
+### HasStatsFileUrl
+
+`func (o *DatasetSplitting) HasStatsFileUrl() bool`
+
+HasStatsFileUrl returns a boolean if a field has been set.
 
 ### GetStatus
 

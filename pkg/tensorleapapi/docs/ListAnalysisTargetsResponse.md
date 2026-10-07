@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ContractVersion** | **float64** |  | 
 **Me** | [**ListAnalysisTargetsResponseMe**](ListAnalysisTargetsResponseMe.md) |  | 
+**AiAccess** | [**AiAccessClasses**](AiAccessClasses.md) |  | 
 **Projects** | Pointer to [**[]AnalysisTargetProject**](AnalysisTargetProject.md) |  | [optional] 
 **Versions** | Pointer to [**[]AnalysisTargetVersion**](AnalysisTargetVersion.md) |  | [optional] 
 
@@ -13,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewListAnalysisTargetsResponse
 
-`func NewListAnalysisTargetsResponse(contractVersion float64, me ListAnalysisTargetsResponseMe, ) *ListAnalysisTargetsResponse`
+`func NewListAnalysisTargetsResponse(contractVersion float64, me ListAnalysisTargetsResponseMe, aiAccess AiAccessClasses, ) *ListAnalysisTargetsResponse`
 
 NewListAnalysisTargetsResponse instantiates a new ListAnalysisTargetsResponse object
 This constructor will assign default values to properties that have it defined,
@@ -66,6 +67,26 @@ and a boolean to check if the value has been set.
 `func (o *ListAnalysisTargetsResponse) SetMe(v ListAnalysisTargetsResponseMe)`
 
 SetMe sets Me field to given value.
+
+
+### GetAiAccess
+
+`func (o *ListAnalysisTargetsResponse) GetAiAccess() AiAccessClasses`
+
+GetAiAccess returns the AiAccess field if non-nil, zero value otherwise.
+
+### GetAiAccessOk
+
+`func (o *ListAnalysisTargetsResponse) GetAiAccessOk() (*AiAccessClasses, bool)`
+
+GetAiAccessOk returns a tuple with the AiAccess field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAiAccess
+
+`func (o *ListAnalysisTargetsResponse) SetAiAccess(v AiAccessClasses)`
+
+SetAiAccess sets AiAccess field to given value.
 
 
 ### GetProjects
