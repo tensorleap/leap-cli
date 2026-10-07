@@ -20,7 +20,7 @@ require (
 	github.com/spf13/cobra v1.10.1
 	github.com/spf13/viper v1.18.2
 	github.com/stretchr/testify v1.11.1
-	github.com/tensorleap/helm-charts v0.10.20
+	github.com/tensorleap/helm-charts v0.10.21
 	github.com/tensorleap/leap-cli/pkg/tensorleapapi v0.0.0-00010101000000-000000000000
 	gopkg.in/yaml.v3 v3.0.1
 	k8s.io/kubectl v0.34.0
