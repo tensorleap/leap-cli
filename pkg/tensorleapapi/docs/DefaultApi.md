@@ -42,6 +42,7 @@ Method | HTTP request | Description
 [**EnsureCollectionIndex**](DefaultAPI.md#EnsureCollectionIndex) | **Post** /sample-collection/ensureCollectionIndex | 
 [**Evaluate**](DefaultAPI.md#Evaluate) | **Post** /evaluate/evaluate | 
 [**ExportAnalysis**](DefaultAPI.md#ExportAnalysis) | **Post** /analysis-export/exportAnalysis | 
+[**ExportBundle**](DefaultAPI.md#ExportBundle) | **Post** /analysis-export/exportBundle | 
 [**ExtendTrial**](DefaultAPI.md#ExtendTrial) | **Post** /auth/extendTrial | 
 [**FetchSimilar**](DefaultAPI.md#FetchSimilar) | **Post** /visualizations/fetchSimilar | 
 [**GenerateAutoSyntheticData**](DefaultAPI.md#GenerateAutoSyntheticData) | **Post** /datasetcuration/generateAutoSyntheticData | 
@@ -53,8 +54,10 @@ Method | HTTP request | Description
 [**GenerateStreamingSamplesVis**](DefaultAPI.md#GenerateStreamingSamplesVis) | **Post** /sample-collection/generateStreamingSamplesVis | 
 [**GenerateSyntheticData**](DefaultAPI.md#GenerateSyntheticData) | **Post** /datasetcuration/generateSyntheticData | 
 [**GenerateUnlabeledAnalysis**](DefaultAPI.md#GenerateUnlabeledAnalysis) | **Post** /datasetcuration/generateUnlabeledAnalysis | 
+[**GetAiAccess**](DefaultAPI.md#GetAiAccess) | **Post** /ai-access/getAiAccess | 
 [**GetAllProjectSessionTests**](DefaultAPI.md#GetAllProjectSessionTests) | **Post** /sessions-tests/getAllProjectSessionTests | 
 [**GetAllSlimUserData**](DefaultAPI.md#GetAllSlimUserData) | **Post** /users/getAllSlimUserData | 
+[**GetAnalysisJobLogs**](DefaultAPI.md#GetAnalysisJobLogs) | **Post** /analysis-export/getJobLogs | 
 [**GetApiKeyByCode**](DefaultAPI.md#GetApiKeyByCode) | **Post** /auth/getApiKeyByCode | 
 [**GetAuthProvider**](DefaultAPI.md#GetAuthProvider) | **Post** /auth/getAuthProvider | 
 [**GetAuthStatus**](DefaultAPI.md#GetAuthStatus) | **Post** /auth/getAuthStatus | 
@@ -166,6 +169,7 @@ Method | HTTP request | Description
 [**SaveInsightsSettings**](DefaultAPI.md#SaveInsightsSettings) | **Post** /insightsSettings/saveInsightsSettings | 
 [**SendUserMessage**](DefaultAPI.md#SendUserMessage) | **Post** /users/sendUserMessage | 
 [**SetActiveVersion**](DefaultAPI.md#SetActiveVersion) | **Post** /versions/setActiveVersion | 
+[**SetAiAccess**](DefaultAPI.md#SetAiAccess) | **Post** /ai-access/setAiAccess | 
 [**SetCodeChallenge**](DefaultAPI.md#SetCodeChallenge) | **Post** /auth/setCodeChallenge | 
 [**SetContainerLabel**](DefaultAPI.md#SetContainerLabel) | **Post** /insightContainerLabels/setContainerLabel | 
 [**SetDefaultTeam**](DefaultAPI.md#SetDefaultTeam) | **Post** /teams/setDefaultTeam | 
@@ -2579,6 +2583,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ExportBundle
+
+> string ExportBundle(ctx).ExportBundleParams(exportBundleParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	exportBundleParams := *openapiclient.NewExportBundleParams("ProjectId_example", "VersionId_example") // ExportBundleParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ExportBundle(context.Background()).ExportBundleParams(exportBundleParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ExportBundle``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ExportBundle`: string
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ExportBundle`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiExportBundleRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **exportBundleParams** | [**ExportBundleParams**](ExportBundleParams.md) |  | 
+
+### Return type
+
+**string**
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/gzip
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ExtendTrial
 
 > ExtendTrialResponse ExtendTrial(ctx).ExtendTrialParams(extendTrialParams).Execute()
@@ -3265,6 +3333,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetAiAccess
+
+> AiAccessResponse GetAiAccess(ctx).GetAiAccessParams(getAiAccessParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getAiAccessParams := *openapiclient.NewGetAiAccessParams() // GetAiAccessParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetAiAccess(context.Background()).GetAiAccessParams(getAiAccessParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetAiAccess``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAiAccess`: AiAccessResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetAiAccess`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAiAccessRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getAiAccessParams** | [**GetAiAccessParams**](GetAiAccessParams.md) |  | 
+
+### Return type
+
+[**AiAccessResponse**](AiAccessResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetAllProjectSessionTests
 
 > []SessionTest GetAllProjectSessionTests(ctx).GetAllProjectSessionTestsRequest(getAllProjectSessionTestsRequest).Execute()
@@ -3381,6 +3513,70 @@ Other parameters are passed through a pointer to a apiGetAllSlimUserDataRequest 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetAnalysisJobLogs
+
+> GetAnalysisJobLogsResponse GetAnalysisJobLogs(ctx).GetAnalysisJobLogsParams(getAnalysisJobLogsParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getAnalysisJobLogsParams := *openapiclient.NewGetAnalysisJobLogsParams("ProjectId_example", "JobId_example") // GetAnalysisJobLogsParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetAnalysisJobLogs(context.Background()).GetAnalysisJobLogsParams(getAnalysisJobLogsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetAnalysisJobLogs``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAnalysisJobLogs`: GetAnalysisJobLogsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetAnalysisJobLogs`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAnalysisJobLogsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getAnalysisJobLogsParams** | [**GetAnalysisJobLogsParams**](GetAnalysisJobLogsParams.md) |  | 
+
+### Return type
+
+[**GetAnalysisJobLogsResponse**](GetAnalysisJobLogsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -4809,7 +5005,7 @@ import (
 )
 
 func main() {
-	getEngineSettingsParams := *openapiclient.NewGetEngineSettingsParams("ProjectId_example") // GetEngineSettingsParams | 
+	getEngineSettingsParams := *openapiclient.NewGetEngineSettingsParams() // GetEngineSettingsParams | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -10393,6 +10589,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## SetAiAccess
+
+> AiAccessResponse SetAiAccess(ctx).SetAiAccessParams(setAiAccessParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	setAiAccessParams := *openapiclient.NewSetAiAccessParams("TODO") // SetAiAccessParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.SetAiAccess(context.Background()).SetAiAccessParams(setAiAccessParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SetAiAccess``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SetAiAccess`: AiAccessResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.SetAiAccess`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSetAiAccessRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **setAiAccessParams** | [**SetAiAccessParams**](SetAiAccessParams.md) |  | 
+
+### Return type
+
+[**AiAccessResponse**](AiAccessResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## SetCodeChallenge
 
 > SetCodeChallenge(ctx).SetCodeChallengeRequest(setCodeChallengeRequest).Execute()
@@ -11351,7 +11611,7 @@ import (
 )
 
 func main() {
-	setSettingValueWrapper := *openapiclient.NewSetSettingValueWrapper("ProjectId_example") // SetSettingValueWrapper | 
+	setSettingValueWrapper := *openapiclient.NewSetSettingValueWrapper() // SetSettingValueWrapper | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

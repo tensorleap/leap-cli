@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectId** | **string** |  | 
 **VersionId** | **string** |  | 
+**WithDigest** | Pointer to **bool** |  | [optional] 
 **Origin** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -66,6 +67,31 @@ and a boolean to check if the value has been set.
 
 SetVersionId sets VersionId field to given value.
 
+
+### GetWithDigest
+
+`func (o *ExportAnalysisParams) GetWithDigest() bool`
+
+GetWithDigest returns the WithDigest field if non-nil, zero value otherwise.
+
+### GetWithDigestOk
+
+`func (o *ExportAnalysisParams) GetWithDigestOk() (*bool, bool)`
+
+GetWithDigestOk returns a tuple with the WithDigest field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWithDigest
+
+`func (o *ExportAnalysisParams) SetWithDigest(v bool)`
+
+SetWithDigest sets WithDigest field to given value.
+
+### HasWithDigest
+
+`func (o *ExportAnalysisParams) HasWithDigest() bool`
+
+HasWithDigest returns a boolean if a field has been set.
 
 ### GetOrigin
 

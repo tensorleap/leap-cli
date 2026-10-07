@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Title** | Pointer to **string** |  | [optional] 
 **Description** | Pointer to **string** |  | [optional] 
 **Category** | [**SettingsCategory**](SettingsCategory.md) |  | 
+**Disabled** | Pointer to **bool** |  | [optional] 
 **Type** | **string** |  | 
 **Def** | Pointer to **bool** |  | [optional] 
 
@@ -98,6 +99,31 @@ and a boolean to check if the value has been set.
 
 SetCategory sets Category field to given value.
 
+
+### GetDisabled
+
+`func (o *BoolSchema) GetDisabled() bool`
+
+GetDisabled returns the Disabled field if non-nil, zero value otherwise.
+
+### GetDisabledOk
+
+`func (o *BoolSchema) GetDisabledOk() (*bool, bool)`
+
+GetDisabledOk returns a tuple with the Disabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDisabled
+
+`func (o *BoolSchema) SetDisabled(v bool)`
+
+SetDisabled sets Disabled field to given value.
+
+### HasDisabled
+
+`func (o *BoolSchema) HasDisabled() bool`
+
+HasDisabled returns a boolean if a field has been set.
 
 ### GetType
 

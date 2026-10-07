@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.161
+  version: 11.0.172
 servers:
 - url: /api/v2
 paths:
@@ -212,6 +212,45 @@ paths:
           description: No content
       security:
       - jwt: []
+  /ai-access/getAiAccess:
+    post:
+      operationId: GetAiAccess
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetAiAccessParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AiAccessResponse"
+          description: Ok
+      security:
+      - jwt: []
+  /ai-access/setAiAccess:
+    post:
+      operationId: SetAiAccess
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetAiAccessParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AiAccessResponse"
+          description: Ok
+      security:
+      - jwt:
+        - admin-only
   /dashboards/getProjectDashboards:
     post:
       operationId: GetProjectDashboards
@@ -3381,6 +3420,27 @@ paths:
       security:
       - jwt:
         - not-demo
+  /analysis-export/exportBundle:
+    post:
+      operationId: ExportBundle
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExportBundleParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/gzip:
+              schema:
+                format: byte
+                type: string
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
   /analysis-export/getSampleAssets:
     post:
       operationId: GetSampleAssets
@@ -3397,6 +3457,26 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetAnalysisSampleAssetsResponse"
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /analysis-export/getJobLogs:
+    post:
+      operationId: GetAnalysisJobLogs
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetAnalysisJobLogsParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetAnalysisJobLogsResponse"
           description: Ok
       security:
       - jwt:
@@ -3721,6 +3801,93 @@ components:
           type: string
       required:
       - token
+      type: object
+    AiAccessClasses:
+      additionalProperties: true
+      example:
+        code: true
+        sampleRows: true
+        visuals: true
+        stats: true
+        jobLogs: true
+      properties:
+        stats:
+          type: boolean
+        sampleRows:
+          type: boolean
+        visuals:
+          type: boolean
+        jobLogs:
+          type: boolean
+        code:
+          type: boolean
+      required:
+      - code
+      - jobLogs
+      - sampleRows
+      - stats
+      - visuals
+      type: object
+    Record_string.AiAccessClasses_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
+    AiAccessResponse:
+      additionalProperties: true
+      example:
+        projectOverrides: "{}"
+        effective:
+          code: true
+          sampleRows: true
+          visuals: true
+          stats: true
+          jobLogs: true
+        install:
+          code: true
+          sampleRows: true
+          visuals: true
+          stats: true
+          jobLogs: true
+        project: ""
+      properties:
+        install:
+          $ref: "#/components/schemas/AiAccessClasses"
+        project:
+          allOf:
+          - $ref: "#/components/schemas/AiAccessClasses"
+          nullable: true
+        effective:
+          $ref: "#/components/schemas/AiAccessClasses"
+        projectOverrides:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+      required:
+      - effective
+      - install
+      type: object
+    GetAiAccessParams:
+      additionalProperties: true
+      example:
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+      type: object
+    SetAiAccessParams:
+      additionalProperties: true
+      example:
+        classes: ""
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        classes:
+          allOf:
+          - $ref: "#/components/schemas/AiAccessClasses"
+          nullable: true
+      required:
+      - classes
       type: object
     AnalyticsDashletType:
       enum:
@@ -27268,6 +27435,7 @@ components:
         versionId: versionId
         isDeleted: true
         createdBy: createdBy
+        statsFileUrl: statsFileUrl
         fileUrl: fileUrl
         id: id
         status: UNSTARTED
@@ -27288,6 +27456,8 @@ components:
         fileUrl:
           type: string
         filterFileUrl:
+          type: string
+        statsFileUrl:
           type: string
         status:
           $ref: "#/components/schemas/JobStatus"
@@ -27419,6 +27589,7 @@ components:
           versionId: versionId
           isDeleted: true
           createdBy: createdBy
+          statsFileUrl: statsFileUrl
           fileUrl: fileUrl
           id: id
           status: UNSTARTED
@@ -27517,6 +27688,7 @@ components:
           versionId: versionId
           isDeleted: true
           createdBy: createdBy
+          statsFileUrl: statsFileUrl
           fileUrl: fileUrl
           id: id
           status: UNSTARTED
@@ -41729,6 +41901,9 @@ components:
     CollectionFilterSpec:
       example:
         field: field
+        values:
+        - null
+        - null
         range:
           min: 6.027456183070403
           max: 0.8008281904610115
@@ -41739,6 +41914,10 @@ components:
         range:
           $ref: "#/components/schemas/CollectionFilterSpec_range"
         hiddenValues:
+          items:
+            $ref: "#/components/schemas/CollectionFilterSpec_hiddenValues_inner"
+          type: array
+        values:
           items:
             $ref: "#/components/schemas/CollectionFilterSpec_hiddenValues_inner"
           type: array
@@ -41761,6 +41940,9 @@ components:
         description: description
         filters:
         - field: field
+          values:
+          - null
+          - null
           range:
             min: 6.027456183070403
             max: 0.8008281904610115
@@ -41768,6 +41950,9 @@ components:
           - CollectionFilterSpec_hiddenValues_inner
           - CollectionFilterSpec_hiddenValues_inner
         - field: field
+          values:
+          - null
+          - null
           range:
             min: 6.027456183070403
             max: 0.8008281904610115
@@ -41851,6 +42036,9 @@ components:
         description: description
         filters:
         - field: field
+          values:
+          - null
+          - null
           range:
             min: 6.027456183070403
             max: 0.8008281904610115
@@ -41858,6 +42046,9 @@ components:
           - CollectionFilterSpec_hiddenValues_inner
           - CollectionFilterSpec_hiddenValues_inner
         - field: field
+          values:
+          - null
+          - null
           range:
             min: 6.027456183070403
             max: 0.8008281904610115
@@ -41922,6 +42113,9 @@ components:
         versionId: versionId
         filters:
         - field: field
+          values:
+          - null
+          - null
           range:
             min: 6.027456183070403
             max: 0.8008281904610115
@@ -41929,6 +42123,9 @@ components:
           - CollectionFilterSpec_hiddenValues_inner
           - CollectionFilterSpec_hiddenValues_inner
         - field: field
+          values:
+          - null
+          - null
           range:
             min: 6.027456183070403
             max: 0.8008281904610115
@@ -42671,6 +42868,9 @@ components:
         versionId: versionId
         filters:
         - field: field
+          values:
+          - null
+          - null
           range:
             min: 6.027456183070403
             max: 0.8008281904610115
@@ -42678,6 +42878,9 @@ components:
           - CollectionFilterSpec_hiddenValues_inner
           - CollectionFilterSpec_hiddenValues_inner
         - field: field
+          values:
+          - null
+          - null
           range:
             min: 6.027456183070403
             max: 0.8008281904610115
@@ -42870,6 +43073,9 @@ components:
         pageSize: 0.8008281904610115
         filters:
         - field: field
+          values:
+          - null
+          - null
           range:
             min: 6.027456183070403
             max: 0.8008281904610115
@@ -42877,6 +43083,9 @@ components:
           - CollectionFilterSpec_hiddenValues_inner
           - CollectionFilterSpec_hiddenValues_inner
         - field: field
+          values:
+          - null
+          - null
           range:
             min: 6.027456183070403
             max: 0.8008281904610115
@@ -42955,6 +43164,9 @@ components:
         pageSize: 0.8008281904610115
         filters:
         - field: field
+          values:
+          - null
+          - null
           range:
             min: 6.027456183070403
             max: 0.8008281904610115
@@ -42962,6 +43174,9 @@ components:
           - CollectionFilterSpec_hiddenValues_inner
           - CollectionFilterSpec_hiddenValues_inner
         - field: field
+          values:
+          - null
+          - null
           range:
             min: 6.027456183070403
             max: 0.8008281904610115
@@ -43036,6 +43251,9 @@ components:
         versionId: versionId
         filters:
         - field: field
+          values:
+          - null
+          - null
           range:
             min: 6.027456183070403
             max: 0.8008281904610115
@@ -43043,6 +43261,9 @@ components:
           - CollectionFilterSpec_hiddenValues_inner
           - CollectionFilterSpec_hiddenValues_inner
         - field: field
+          values:
+          - null
+          - null
           range:
             min: 6.027456183070403
             max: 0.8008281904610115
@@ -44884,6 +45105,7 @@ components:
       - REDIS
       - STREAMING_HANDLER
       - GENERAL
+      - PROJECT
       nullable: false
       type: string
     StringSchema:
@@ -44896,6 +45118,7 @@ components:
         - options
         pattern: pattern
         description: description
+        disabled: true
         placeholder: placeholder
         title: title
         category: EVALUATION_MAIN
@@ -44909,6 +45132,8 @@ components:
           type: string
         category:
           $ref: "#/components/schemas/SettingsCategory"
+        disabled:
+          type: boolean
         type:
           enum:
           - string
@@ -44946,6 +45171,8 @@ components:
           type: string
         category:
           $ref: "#/components/schemas/SettingsCategory"
+        disabled:
+          type: boolean
         type:
           enum:
           - boolean
@@ -44966,6 +45193,8 @@ components:
           type: string
         category:
           $ref: "#/components/schemas/SettingsCategory"
+        disabled:
+          type: boolean
         type:
           enum:
           - number
@@ -45017,6 +45246,7 @@ components:
           - options
           pattern: pattern
           description: description
+          disabled: true
           placeholder: placeholder
           title: title
           category: EVALUATION_MAIN
@@ -45066,6 +45296,7 @@ components:
             - options
             pattern: pattern
             description: description
+            disabled: true
             placeholder: placeholder
             title: title
             category: EVALUATION_MAIN
@@ -45081,6 +45312,7 @@ components:
             - options
             pattern: pattern
             description: description
+            disabled: true
             placeholder: placeholder
             title: title
             category: EVALUATION_MAIN
@@ -45112,8 +45344,6 @@ components:
       properties:
         projectId:
           type: string
-      required:
-      - projectId
       type: object
     SetSettingValueWrapper:
       example:
@@ -45137,8 +45367,6 @@ components:
           type: array
         projectId:
           type: string
-      required:
-      - projectId
       type: object
     SlimTeam:
       additionalProperties: true
@@ -48935,6 +49163,7 @@ components:
       - ImageWithBBox
       - ImageWithHeatmap
       - Audio
+      - PointCloud
       type: string
     VisualizerInstance:
       additionalProperties: true
@@ -50408,6 +50637,7 @@ components:
       - image_heatmap
       - video_heatmap
       - audio
+      - point_cloud
       - grad_analysis
       - composite_visualization
       type: string
@@ -50608,6 +50838,89 @@ components:
       - type
       - visual
       type: object
+    BoundingBox3D:
+      additionalProperties: true
+      properties:
+        x:
+          format: double
+          type: number
+        "y":
+          format: double
+          type: number
+        z:
+          format: double
+          type: number
+        width:
+          format: double
+          type: number
+        length:
+          format: double
+          type: number
+        height:
+          format: double
+          type: number
+        yaw:
+          format: double
+          type: number
+        label:
+          type: string
+        confidence:
+          format: double
+          type: number
+        is_ground_truth:
+          type: boolean
+        metadata:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+      required:
+      - confidence
+      - height
+      - is_ground_truth
+      - label
+      - length
+      - width
+      - x
+      - "y"
+      - yaw
+      - z
+      type: object
+    PointCloudData:
+      additionalProperties: true
+      properties:
+        points_blob:
+          type: string
+        num_points:
+          format: double
+          type: number
+        bounds:
+          items:
+            format: double
+            type: number
+          type: array
+        preview_blob:
+          type: string
+        intensity_blob:
+          type: string
+        intensity_range:
+          items:
+            format: double
+            type: number
+          type: array
+        bounding_boxes:
+          items:
+            $ref: "#/components/schemas/BoundingBox3D"
+          type: array
+        type:
+          $ref: "#/components/schemas/DataTypeEnum"
+      required:
+      - bounding_boxes
+      - bounds
+      - num_points
+      - points_blob
+      - preview_blob
+      - type
+      type: object
     VisData:
       anyOf:
       - $ref: "#/components/schemas/ImageData"
@@ -50621,6 +50934,7 @@ components:
       - $ref: "#/components/schemas/VideoData"
       - $ref: "#/components/schemas/VideoHeatmapData"
       - $ref: "#/components/schemas/AudioData"
+      - $ref: "#/components/schemas/PointCloudData"
     GradsItem:
       additionalProperties: true
       properties:
@@ -52814,6 +53128,12 @@ components:
     AnalysisTargetProject:
       additionalProperties: true
       example:
+        aiAccess:
+          code: true
+          sampleRows: true
+          visuals: true
+          stats: true
+          jobLogs: true
         name: name
         cid: cid
       properties:
@@ -52821,7 +53141,10 @@ components:
           type: string
         name:
           type: string
+        aiAccess:
+          $ref: "#/components/schemas/AiAccessClasses"
       required:
+      - aiAccess
       - cid
       - name
       type: object
@@ -52859,10 +53182,28 @@ components:
     ListAnalysisTargetsResponse:
       additionalProperties: true
       example:
+        aiAccess:
+          code: true
+          sampleRows: true
+          visuals: true
+          stats: true
+          jobLogs: true
         projects:
-        - name: name
+        - aiAccess:
+            code: true
+            sampleRows: true
+            visuals: true
+            stats: true
+            jobLogs: true
+          name: name
           cid: cid
-        - name: name
+        - aiAccess:
+            code: true
+            sampleRows: true
+            visuals: true
+            stats: true
+            jobLogs: true
+          name: name
           cid: cid
         versions:
         - createdAt: 2000-01-23T04:56:07.000+00:00
@@ -52889,6 +53230,8 @@ components:
           type: number
         me:
           $ref: "#/components/schemas/ListAnalysisTargetsResponse_me"
+        aiAccess:
+          $ref: "#/components/schemas/AiAccessClasses"
         projects:
           items:
             $ref: "#/components/schemas/AnalysisTargetProject"
@@ -52898,6 +53241,7 @@ components:
             $ref: "#/components/schemas/AnalysisTargetVersion"
           type: array
       required:
+      - aiAccess
       - contractVersion
       - me
       type: object
@@ -52915,15 +53259,163 @@ components:
       - Approved
       - Archived
       type: string
+    Record_string.number_:
+      description: Construct a type with a set of properties K of type T
+      properties: {}
+      type: object
+    AnalysisComposition:
+      additionalProperties: true
+      example:
+        field: field
+        kind: share
+        inBaseline: 7.061401241503109
+        inGroup: 2.3021358869347655
+        semantics: semantics
+        value: value
+        ratio: 9.301444243932576
+      properties:
+        field:
+          type: string
+        value:
+          type: string
+        inGroup:
+          format: double
+          type: number
+        inBaseline:
+          format: double
+          type: number
+        ratio:
+          format: double
+          type: number
+        kind:
+          enum:
+          - share
+          - mean
+          type: string
+        semantics:
+          type: string
+      required:
+      - field
+      - inBaseline
+      - inGroup
+      - kind
+      - ratio
+      - semantics
+      type: object
+    AnalysisContrast:
+      additionalProperties: true
+      example:
+        groupMedian: 3.616076749251911
+        baselineMedian: 4.145608029883936
+        metric: metric
+        baselineMean: 7.386281948385884
+        baseline: baseline
+        groupMean: 2.027123023002322
+      properties:
+        metric:
+          type: string
+        groupMedian:
+          format: double
+          type: number
+        groupMean:
+          format: double
+          type: number
+        baselineMedian:
+          format: double
+          type: number
+        baselineMean:
+          format: double
+          type: number
+        baseline:
+          type: string
+      required:
+      - baseline
+      - groupMean
+      - groupMedian
+      - metric
+      type: object
+    AnalysisInsightDigest:
+      additionalProperties: true
+      example:
+        csvRows: 5.637376656633329
+        split: "{}"
+        composition:
+        - field: field
+          kind: share
+          inBaseline: 7.061401241503109
+          inGroup: 2.3021358869347655
+          semantics: semantics
+          value: value
+          ratio: 9.301444243932576
+        - field: field
+          kind: share
+          inBaseline: 7.061401241503109
+          inGroup: 2.3021358869347655
+          semantics: semantics
+          value: value
+          ratio: 9.301444243932576
+        groupDefinition: groupDefinition
+        contrast:
+        - groupMedian: 3.616076749251911
+          baselineMedian: 4.145608029883936
+          metric: metric
+          baselineMean: 7.386281948385884
+          baseline: baseline
+          groupMean: 2.027123023002322
+        - groupMedian: 3.616076749251911
+          baselineMedian: 4.145608029883936
+          metric: metric
+          baselineMean: 7.386281948385884
+          baseline: baseline
+          groupMean: 2.027123023002322
+        rankedBy: rankedBy
+        groupSize: 5.962133916683182
+        rankedSampleIds:
+        - rankedSampleIds
+        - rankedSampleIds
+      properties:
+        groupSize:
+          format: double
+          type: number
+        groupDefinition:
+          type: string
+        csvRows:
+          format: double
+          type: number
+        split:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+        composition:
+          items:
+            $ref: "#/components/schemas/AnalysisComposition"
+          type: array
+        contrast:
+          items:
+            $ref: "#/components/schemas/AnalysisContrast"
+          type: array
+        rankedBy:
+          type: string
+        rankedSampleIds:
+          items:
+            type: string
+          type: array
+      required:
+      - composition
+      - contrast
+      - csvRows
+      - groupDefinition
+      - groupSize
+      - rankedSampleIds
+      - split
+      type: object
     AnalysisInsight:
       additionalProperties: true
       example:
-        createdAt: 2000-01-23T04:56:07.000+00:00
+        topPanel: "{}"
         fixingCsvUrl: fixingCsvUrl
-        csvUrl: csvUrl
         index: 1.4658129805029452
         description: description
-        topPanelUrl: topPanelUrl
         insightType:
           severity: 4.145608029883936
           overfitting_evidence:
@@ -53025,6 +53517,48 @@ components:
           is_train_aggressor: true
         clusterBlobUrl: clusterBlobUrl
         analyzeLinkPath: analyzeLinkPath
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        digestError: digestError
+        csvUrl: csvUrl
+        engine: "{}"
+        digest:
+          csvRows: 5.637376656633329
+          split: "{}"
+          composition:
+          - field: field
+            kind: share
+            inBaseline: 7.061401241503109
+            inGroup: 2.3021358869347655
+            semantics: semantics
+            value: value
+            ratio: 9.301444243932576
+          - field: field
+            kind: share
+            inBaseline: 7.061401241503109
+            inGroup: 2.3021358869347655
+            semantics: semantics
+            value: value
+            ratio: 9.301444243932576
+          groupDefinition: groupDefinition
+          contrast:
+          - groupMedian: 3.616076749251911
+            baselineMedian: 4.145608029883936
+            metric: metric
+            baselineMean: 7.386281948385884
+            baseline: baseline
+            groupMean: 2.027123023002322
+          - groupMedian: 3.616076749251911
+            baselineMedian: 4.145608029883936
+            metric: metric
+            baselineMean: 7.386281948385884
+            baseline: baseline
+            groupMean: 2.027123023002322
+          rankedBy: rankedBy
+          groupSize: 5.962133916683182
+          rankedSampleIds:
+          - rankedSampleIds
+          - rankedSampleIds
+        topPanelUrl: topPanelUrl
         cid: cid
         status: InReview
         updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -53054,11 +53588,24 @@ components:
           type: string
         fixingCsvUrl:
           type: string
+        engine:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+        digest:
+          $ref: "#/components/schemas/AnalysisInsightDigest"
+        digestError:
+          type: string
+        topPanel:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
         analyzeLinkPath:
           type: string
       required:
       - cid
       - createdAt
+      - engine
       - index
       - insightType
       - status
@@ -53097,12 +53644,10 @@ components:
         integrationCodeUrl: integrationCodeUrl
         deepLinkPath: deepLinkPath
         insights:
-        - createdAt: 2000-01-23T04:56:07.000+00:00
+        - topPanel: "{}"
           fixingCsvUrl: fixingCsvUrl
-          csvUrl: csvUrl
           index: 1.4658129805029452
           description: description
-          topPanelUrl: topPanelUrl
           insightType:
             severity: 4.145608029883936
             overfitting_evidence:
@@ -53204,15 +53749,55 @@ components:
             is_train_aggressor: true
           clusterBlobUrl: clusterBlobUrl
           analyzeLinkPath: analyzeLinkPath
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          digestError: digestError
+          csvUrl: csvUrl
+          engine: "{}"
+          digest:
+            csvRows: 5.637376656633329
+            split: "{}"
+            composition:
+            - field: field
+              kind: share
+              inBaseline: 7.061401241503109
+              inGroup: 2.3021358869347655
+              semantics: semantics
+              value: value
+              ratio: 9.301444243932576
+            - field: field
+              kind: share
+              inBaseline: 7.061401241503109
+              inGroup: 2.3021358869347655
+              semantics: semantics
+              value: value
+              ratio: 9.301444243932576
+            groupDefinition: groupDefinition
+            contrast:
+            - groupMedian: 3.616076749251911
+              baselineMedian: 4.145608029883936
+              metric: metric
+              baselineMean: 7.386281948385884
+              baseline: baseline
+              groupMean: 2.027123023002322
+            - groupMedian: 3.616076749251911
+              baselineMedian: 4.145608029883936
+              metric: metric
+              baselineMean: 7.386281948385884
+              baseline: baseline
+              groupMean: 2.027123023002322
+            rankedBy: rankedBy
+            groupSize: 5.962133916683182
+            rankedSampleIds:
+            - rankedSampleIds
+            - rankedSampleIds
+          topPanelUrl: topPanelUrl
           cid: cid
           status: InReview
           updatedAt: 2000-01-23T04:56:07.000+00:00
-        - createdAt: 2000-01-23T04:56:07.000+00:00
+        - topPanel: "{}"
           fixingCsvUrl: fixingCsvUrl
-          csvUrl: csvUrl
           index: 1.4658129805029452
           description: description
-          topPanelUrl: topPanelUrl
           insightType:
             severity: 4.145608029883936
             overfitting_evidence:
@@ -53314,6 +53899,48 @@ components:
             is_train_aggressor: true
           clusterBlobUrl: clusterBlobUrl
           analyzeLinkPath: analyzeLinkPath
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          digestError: digestError
+          csvUrl: csvUrl
+          engine: "{}"
+          digest:
+            csvRows: 5.637376656633329
+            split: "{}"
+            composition:
+            - field: field
+              kind: share
+              inBaseline: 7.061401241503109
+              inGroup: 2.3021358869347655
+              semantics: semantics
+              value: value
+              ratio: 9.301444243932576
+            - field: field
+              kind: share
+              inBaseline: 7.061401241503109
+              inGroup: 2.3021358869347655
+              semantics: semantics
+              value: value
+              ratio: 9.301444243932576
+            groupDefinition: groupDefinition
+            contrast:
+            - groupMedian: 3.616076749251911
+              baselineMedian: 4.145608029883936
+              metric: metric
+              baselineMean: 7.386281948385884
+              baseline: baseline
+              groupMean: 2.027123023002322
+            - groupMedian: 3.616076749251911
+              baselineMedian: 4.145608029883936
+              metric: metric
+              baselineMean: 7.386281948385884
+              baseline: baseline
+              groupMean: 2.027123023002322
+            rankedBy: rankedBy
+            groupSize: 5.962133916683182
+            rankedSampleIds:
+            - rankedSampleIds
+            - rankedSampleIds
+          topPanelUrl: topPanelUrl
           cid: cid
           status: InReview
           updatedAt: 2000-01-23T04:56:07.000+00:00
@@ -53383,13 +54010,41 @@ components:
         versionId: versionId
         origin: origin
         projectId: projectId
+        withDigest: true
       properties:
         projectId:
           type: string
         versionId:
           type: string
+        withDigest:
+          type: boolean
         origin:
           type: string
+      required:
+      - projectId
+      - versionId
+      type: object
+    ExportBundleParams:
+      additionalProperties: true
+      example:
+        topK: 0.8008281904610115
+        versionId: versionId
+        projectId: projectId
+        heatmapLabels:
+        - heatmapLabels
+        - heatmapLabels
+      properties:
+        projectId:
+          type: string
+        versionId:
+          type: string
+        topK:
+          format: double
+          type: number
+        heatmapLabels:
+          items:
+            type: string
+          type: array
       required:
       - projectId
       - versionId
@@ -53481,6 +54136,55 @@ components:
       - projectId
       - sampleIds
       - versionId
+      type: object
+    AnalysisPodLogs:
+      additionalProperties: true
+      example:
+        name: name
+        logs: logs
+      properties:
+        name:
+          type: string
+        logs:
+          type: string
+      required:
+      - logs
+      - name
+      type: object
+    GetAnalysisJobLogsResponse:
+      additionalProperties: true
+      example:
+        podsLogs:
+        - name: name
+          logs: logs
+        - name: name
+          logs: logs
+        contractVersion: 0.8008281904610115
+      properties:
+        contractVersion:
+          format: double
+          type: number
+        podsLogs:
+          items:
+            $ref: "#/components/schemas/AnalysisPodLogs"
+          type: array
+      required:
+      - contractVersion
+      - podsLogs
+      type: object
+    GetAnalysisJobLogsParams:
+      additionalProperties: true
+      example:
+        jobId: jobId
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        jobId:
+          type: string
+      required:
+      - jobId
+      - projectId
       type: object
     Alive_200_response:
       example:

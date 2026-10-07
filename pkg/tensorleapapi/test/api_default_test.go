@@ -459,6 +459,18 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService ExportBundle", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.ExportBundle(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService ExtendTrial", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -582,6 +594,18 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService GetAiAccess", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.GetAiAccess(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService GetAllProjectSessionTests", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test
@@ -599,6 +623,18 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.GetAllSlimUserData(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetAnalysisJobLogs", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.GetAnalysisJobLogs(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1924,6 +1960,18 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.SetActiveVersion(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService SetAiAccess", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.SetAiAccess(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
