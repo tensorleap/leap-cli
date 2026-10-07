@@ -11,6 +11,30 @@ import (
 var engineInternalKeys = map[string]bool{"min_hash": true, "display_filters": true, "csv_path": true, "blob_path": true,
 	"top_panel_path": true, "id_": true, "parent_id": true, "type": true, "es_filters_used_in_analysis": true}
 
+// top_panel.json nests the same storage paths and ES filters, at any depth
+var panelInternalKeys = map[string]bool{"filters": true, "csv_path": true, "blob_path": true, "blob_paths": true,
+	"top_panel_path": true, "display_filters": true, "es_filters_used_in_analysis": true, "min_hash": true}
+
+func stripInternal(v any) any {
+	switch x := v.(type) {
+	case map[string]any:
+		out := make(map[string]any, len(x))
+		for k, e := range x {
+			if !panelInternalKeys[k] {
+				out[k] = stripInternal(e)
+			}
+		}
+		return out
+	case []any:
+		out := make([]any, len(x))
+		for i, e := range x {
+			out[i] = stripInternal(e)
+		}
+		return out
+	}
+	return v
+}
+
 func enginePayload(t map[string]any) map[string]any {
 	out := map[string]any{}
 	for k, v := range t {
@@ -84,7 +108,7 @@ type InsightsOut struct {
 	Server      string              `json:"server"`
 	Version     string              `json:"version"`
 	Note        string              `json:"note,omitempty"`
-	ClassLabels map[string][]string `json:"classLabels,omitempty" jsonschema:"per prediction type, the class name at each index; prediction fields such as *_prd_idx hold the index"`
+	ClassLabels map[string][]string `json:"classLabels,omitempty" jsonschema:"per prediction type, the class name at each index; fields ending in _prd_idx hold an index into that list (with one prediction type every such field uses it)"`
 	Visualizers []Visualizer        `json:"visualizers,omitempty" jsonschema:"the visualizers the integration declared; tl_get_integration_code explains what each renders"`
 	Insights    []Insight           `json:"insights"`
 	Link        string              `json:"insightsPanelLink"`
@@ -160,11 +184,15 @@ func (s *Server) getInsights(ctx context.Context, _ *sdk.CallToolRequest, in Ver
 			ins.CreateTest = createTestLink(ins.Link, raw.Cid)
 		}
 		if raw.CsvURL != "" {
-			if b, err := s.client.Download(ctx, raw.CsvURL); err != nil {
+			var members map[string]bool
+			if typ != "low_performance" && raw.ClusterBlobURL != "" {
+				if b, err := s.download(ctx, raw.ClusterBlobURL); err == nil {
+					members = clusterMembers(b)
+				}
+			}
+			if b, err := s.download(ctx, raw.CsvURL); err != nil {
 				ins.Warning = err.Error()
-			} else if b, err = decompress(b); err != nil {
-				ins.Warning = "insight sample list unreadable: " + err.Error()
-			} else if sum, err := Summarize(b, pop); err != nil {
+			} else if sum, err := Summarize(b, pop, members); err != nil {
 				ins.Warning = "insight sample list unreadable: " + err.Error()
 			} else {
 				size := sum.GroupSize

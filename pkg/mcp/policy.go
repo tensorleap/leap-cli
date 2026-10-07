@@ -52,6 +52,13 @@ func (s *Server) policy(ctx context.Context, projectID string) (*AiAccess, error
 	return access, nil
 }
 
+// fresh drops the cached policy so a long, multi-class call (an export) decides from the server's current answer
+func (s *Server) fresh(projectID string) {
+	s.policies.mu.Lock()
+	delete(s.policies.entries, projectID)
+	s.policies.mu.Unlock()
+}
+
 // allowed never refuses from the cache: right after an admin turns a class on, the retry must see it
 func (s *Server) allowed(ctx context.Context, projectID string, class aiClass) (*AiAccess, error) {
 	s.policies.mu.Lock()

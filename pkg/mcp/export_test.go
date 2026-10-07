@@ -10,9 +10,11 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
 const exportCsv = "sample_id,is_low_perf_root_member,metrics.loss,metadata.fog\ntraining_1,true,2.5,yes\ntraining_2,true,1.5,yes\ntraining_3,false,0.1,no\n"
@@ -35,6 +37,8 @@ func exportServer(t *testing.T, access AiAccess) *Server {
 			_, _ = w.Write([]byte(populationCsv))
 		case strings.HasSuffix(p, "/blob/cluster.json"):
 			_, _ = w.Write([]byte(`{"samples_index":{"training_1":0,"training_2":1}}`))
+		case strings.HasSuffix(p, "/blob/top.json"):
+			_, _ = w.Write([]byte(`{"title":"t","summary":{"csv_path":"vis/x.csv"},"correlated_metadata":[{"population_a":{"filters":[{"value":{"blob_paths":["organizations/x"]}}],"n":3}}]}`))
 		case strings.HasSuffix(p, "/blob/fix.csv"):
 			_, _ = w.Write([]byte("sample_id\nunlabeled_7\n"))
 		case strings.HasSuffix(p, "/blob/code.tar.gz"):
@@ -63,7 +67,7 @@ func exportServer(t *testing.T, access AiAccess) *Server {
 				"populationCsvUrl": u("population.csv"), "integrationCodeUrl": u("code.tar.gz"), "integrationEntryFile": "leap_integration.py",
 				"predictionLabels": map[string][]string{"classes": {"cat", "dog"}},
 				"insights": []map[string]any{
-					{"cid": "c1", "index": 1, "status": "InReview", "csvUrl": u("samples.csv"), "clusterBlobUrl": u("cluster.json"), "fixingCsvUrl": u("fix.csv"),
+					{"cid": "c1", "index": 1, "status": "InReview", "csvUrl": u("samples.csv"), "clusterBlobUrl": u("cluster.json"), "fixingCsvUrl": u("fix.csv"), "topPanelUrl": u("top.json"),
 						"insightType": map[string]any{"id_": "i1", "type": "low_performance", "severity": 2, "n_samples": 3, "aggressor_fixing": map[string]any{"num_of_samples_to_label": 1, "csv_path": "vis/fix.csv"}}},
 					{"cid": "c2", "index": 2, "status": "InReview", "csvUrl": u("samples.csv"),
 						"insightType": map[string]any{"id_": "i2", "parent_id": "i1", "type": "low_performance", "severity": 1, "n_samples": 2}},
@@ -92,64 +96,123 @@ func exportServer(t *testing.T, access AiAccess) *Server {
 	return newServer(NewClient(ts.URL+"/api/v2", "k"))
 }
 
+func readManifest(t *testing.T, res ExportResult) ExportOut {
+	t.Helper()
+	var m ExportOut
+	b, err := os.ReadFile(res.Manifest)
+	if err != nil || json.Unmarshal(b, &m) != nil {
+		t.Fatalf("manifest unreadable: %v", err)
+	}
+	return m
+}
+
 func TestExportWritesEverythingAllowed(t *testing.T) {
 	s := exportServer(t, AiAccess{Stats: true, SampleRows: true, Visuals: true, Code: true})
 	dir := t.TempDir()
-	_, out, err := s.exportAnalysis(context.Background(), nil, ExportIn{ProjectID: projectHex, VersionID: versionHex, Dir: dir})
+	_, res, err := s.exportAnalysis(context.Background(), nil, ExportIn{ProjectID: projectHex, VersionID: versionHex, Dir: dir})
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, p := range []string{out.PopulationCsv, out.Manifest, filepath.Join(out.IntegrationDir, "leap_integration.py"),
-		out.Insights[0].SamplesCsv, out.Insights[0].ClusterJson, out.Insights[0].FixingCsv} {
-		if p == "" {
-			t.Fatalf("missing path in %+v", out)
+	out := readManifest(t, res)
+	for _, p := range []string{out.PopulationCsv, path.Join(out.IntegrationDir, "leap_integration.py"),
+		out.Insights[0].SamplesCsv, out.Insights[0].ClusterJson, out.Insights[0].FixingCsv, out.Insights[0].TopPanelJson} {
+		if p == "" || filepath.IsAbs(p) {
+			t.Fatalf("manifest paths must be relative and present: %q in %+v", p, out)
 		}
-		if _, err := os.Stat(p); err != nil {
+		if _, err := os.Stat(filepath.Join(dir, p)); err != nil {
 			t.Fatalf("%s not written: %v", p, err)
 		}
 	}
 	if out.Insights[0].Summary == nil || out.Insights[0].Summary.GroupSize != 2 || out.ClassLabels["classes"][0] != "cat" {
 		t.Fatalf("summary/labels: %+v", out.Insights[0].Summary)
 	}
-	if !strings.HasPrefix(out.Insights[1].Dir, filepath.Join(dir, "insight_1_low_performance", "sub_2_low_performance")) {
+	if out.Insights[1].Dir != "insight_1_low_performance/sub_2_low_performance" {
 		t.Fatalf("sub-insight dir: %s", out.Insights[1].Dir)
 	}
 	smp := out.Insights[0].Samples[0]
-	if smp.ID != "training_1" || !smp.Rendered || len(smp.Files) != 3 {
+	if smp.ID != "training_1" || smp.Rank != 1 || !smp.Rendered || len(smp.Files) != 3 {
 		t.Fatalf("rendered sample files: %+v", smp)
 	}
+	if second := out.Insights[0].Samples[1]; second.ID != "training_2" || second.Rank != 2 || second.Rendered {
+		t.Fatalf("samples keep their rank order whether or not they are rendered: %+v", out.Insights[0].Samples)
+	}
 	for _, f := range smp.Files {
-		if !strings.HasPrefix(f, filepath.Join(out.Insights[0].Dir, "samples", "training_1")) {
+		if !strings.HasPrefix(f, "insight_1_low_performance/samples/training_1/") {
 			t.Fatalf("file outside the sample dir: %s", f)
 		}
 	}
 	if _, err := os.Stat(filepath.Join(dir, "escape")); err == nil {
 		t.Fatal("a traversal path from the server must not be written")
 	}
-	var manifest ExportOut
-	b, _ := os.ReadFile(out.Manifest)
-	if err := json.Unmarshal(b, &manifest); err != nil || len(manifest.Insights) != 2 || manifest.Insights[0].Engine["n_samples"] != 3.0 {
-		t.Fatalf("manifest: %v %+v", err, manifest.Insights)
+	panel, _ := os.ReadFile(filepath.Join(dir, out.Insights[0].TopPanelJson))
+	if strings.Contains(string(panel), "organizations/") || strings.Contains(string(panel), "csv_path") || !strings.Contains(string(panel), `"title"`) {
+		t.Fatalf("top_panel.json must keep its content and drop storage internals: %s", panel)
 	}
-	if len(out.Skipped) != 0 || out.FilesWritten < 8 {
-		t.Fatalf("skipped=%v files=%d", out.Skipped, out.FilesWritten)
+	if len(out.Insights) != 2 || out.Insights[0].Engine["n_samples"] != 3.0 {
+		t.Fatalf("manifest insights: %+v", out.Insights)
+	}
+	if len(res.Skipped) != 0 || res.FilesWritten < 8 || len(res.Insights) != 2 || res.Insights[0].Rendered != 1 || res.Insights[0].GroupSize != 2 {
+		t.Fatalf("result: %+v", res)
+	}
+	if b, _ := json.Marshal(res); strings.Contains(string(b), "payload.json") {
+		t.Fatalf("the tool result must stay short; per-file paths belong in manifest.json: %s", b)
 	}
 }
 
 func TestExportExplainsWhatThePolicyWithheld(t *testing.T) {
 	s := exportServer(t, AiAccess{Stats: true})
-	_, out, err := s.exportAnalysis(context.Background(), nil, ExportIn{ProjectID: projectHex, VersionID: versionHex, Dir: t.TempDir()})
+	_, res, err := s.exportAnalysis(context.Background(), nil, ExportIn{ProjectID: projectHex, VersionID: versionHex, Dir: t.TempDir()})
 	if err != nil {
 		t.Fatal(err)
 	}
-	joined := strings.Join(out.Skipped, "\n")
+	joined := strings.Join(res.Skipped, "\n")
 	for _, want := range []string{"population csv", "integration code", "insight sample lists"} {
 		if !strings.Contains(joined, want) {
-			t.Fatalf("skipped should mention %q: %v", want, out.Skipped)
+			t.Fatalf("skipped should mention %q: %v", want, res.Skipped)
 		}
 	}
+	out := readManifest(t, res)
 	if out.PopulationCsv != "" || out.IntegrationDir != "" || out.Insights[0].SamplesCsv != "" || out.Insights[0].Engine["n_samples"] != 3.0 {
 		t.Fatalf("got %+v", out)
+	}
+}
+
+func TestExportDecidesFromTheCurrentPolicyNotTheCache(t *testing.T) {
+	s := exportServer(t, AiAccess{Stats: true, SampleRows: true, Visuals: true, Code: true})
+	s.policies.entries[projectHex] = policyEntry{access: &AiAccess{Stats: true, SampleRows: true}, at: time.Now()}
+	_, res, err := s.exportAnalysis(context.Background(), nil, ExportIn{ProjectID: projectHex, VersionID: versionHex, Dir: t.TempDir()})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(res.Skipped) != 0 || res.Insights[0].Rendered != 1 {
+		t.Fatalf("an admin just turned visuals and code on; the export must see it: %+v", res)
+	}
+}
+
+func TestReExportReplacesThePreviousOneAndGuardsOtherDirs(t *testing.T) {
+	s := exportServer(t, AiAccess{Stats: true, SampleRows: true, Visuals: true, Code: true})
+	dir := t.TempDir()
+	stale := filepath.Join(dir, "insight_9_duplication", "samples.csv")
+	_ = os.MkdirAll(filepath.Dir(stale), 0o755)
+	_ = os.WriteFile(stale, []byte("old"), 0o644)
+	_ = os.WriteFile(filepath.Join(dir, "insights.json"), []byte("{}"), 0o644)
+	if _, _, err := s.exportAnalysis(context.Background(), nil, ExportIn{ProjectID: projectHex, VersionID: versionHex, Dir: dir}); err != nil {
+		t.Fatalf("the pre-MCP skill's output dir must be accepted: %v", err)
+	}
+	if _, err := os.Stat(stale); err == nil {
+		t.Fatal("stale insight dirs from an earlier export must be removed")
+	}
+	if _, _, err := s.exportAnalysis(context.Background(), nil, ExportIn{ProjectID: projectHex, VersionID: versionHex, Dir: dir}); err != nil {
+		t.Fatalf("re-export of the same version: %v", err)
+	}
+	other := strings.Replace(versionHex, "1", "2", 1)
+	if _, _, err := s.exportAnalysis(context.Background(), nil, ExportIn{ProjectID: projectHex, VersionID: other, Dir: dir}); err == nil || !strings.Contains(err.Error(), "another version") {
+		t.Fatalf("another version's export must not be overwritten, got %v", err)
+	}
+	web := t.TempDir()
+	_ = os.WriteFile(filepath.Join(web, "manifest.json"), []byte(`{"name":"my pwa"}`), 0o644)
+	if _, _, err := s.exportAnalysis(context.Background(), nil, ExportIn{ProjectID: projectHex, VersionID: versionHex, Dir: web}); err == nil || !strings.Contains(err.Error(), "not empty") {
+		t.Fatalf("a foreign manifest.json must not pass as a previous export, got %v", err)
 	}
 }
 
@@ -167,10 +230,11 @@ func TestExportRequiresAnAbsoluteDirAndStatistics(t *testing.T) {
 func TestExportKeepsServerPathsInsideTheSampleDirAndScrubsText(t *testing.T) {
 	s := exportServer(t, AiAccess{Stats: true, SampleRows: true, Visuals: true, Code: true})
 	dir := t.TempDir()
-	_, out, err := s.exportAnalysis(context.Background(), nil, ExportIn{ProjectID: projectHex, VersionID: versionHex, Dir: dir})
+	_, res, err := s.exportAnalysis(context.Background(), nil, ExportIn{ProjectID: projectHex, VersionID: versionHex, Dir: dir})
 	if err != nil {
 		t.Fatal(err)
 	}
+	out := readManifest(t, res)
 	for _, p := range []string{filepath.Join(dir, "integration", "leap_integration.py"), filepath.Join(dir, "population.csv")} {
 		b, _ := os.ReadFile(p)
 		if strings.Contains(string(b), "AKIAABCDEFGHIJKLMNOP") || strings.Contains(string(b), "escaped") {

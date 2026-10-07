@@ -5,12 +5,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io/fs"
 	"os"
 	"path"
 	"path/filepath"
 	"sort"
 	"strings"
 	"sync"
+	"unicode/utf8"
 
 	sdk "github.com/modelcontextprotocol/go-sdk/mcp"
 )
@@ -25,14 +27,15 @@ const (
 type ExportIn struct {
 	ProjectID     string   `json:"projectId" jsonschema:"project id or name"`
 	VersionID     string   `json:"versionId" jsonschema:"version id or name, or \"latest\""`
-	Dir           string   `json:"dir" jsonschema:"absolute path of the directory to write into (created if missing)"`
+	Dir           string   `json:"dir" jsonschema:"absolute path of an empty directory, or of a previous export of the same version to refresh (created if missing); e.g. <cwd>/tensorleap-analysis/<version>"`
 	TopK          int      `json:"topK,omitempty" jsonschema:"samples per insight (default 24, max 100; sub-insights get at most 6)"`
 	HeatmapLabels []string `json:"heatmapLabels,omitempty" jsonschema:"heatmap labels to render as overlays (default: the first 3 per sample)"`
 }
 
 type ExportedSample struct {
 	ID       string   `json:"id"`
-	Rendered bool     `json:"rendered"`
+	Rank     int      `json:"rank" jsonschema:"1 = most representative, in the insight's ranking (summary.rankedBy)"`
+	Rendered bool     `json:"rendered" jsonschema:"true when files holds its visualizations"`
 	Dir      string   `json:"dir,omitempty"`
 	Files    []string `json:"files,omitempty"`
 }
@@ -57,9 +60,9 @@ type ExportedInsight struct {
 	Samples      []ExportedSample `json:"samples"`
 }
 
+// ExportOut is manifest.json; every path in it except dir is relative to dir
 type ExportOut struct {
 	Dir            string              `json:"dir"`
-	Manifest       string              `json:"manifest"`
 	ProjectID      string              `json:"projectId"`
 	VersionID      string              `json:"versionId"`
 	Version        string              `json:"version"`
@@ -72,9 +75,35 @@ type ExportOut struct {
 	Insights       []ExportedInsight   `json:"insights"`
 	FilesWritten   int                 `json:"filesWritten"`
 	BytesWritten   int64               `json:"bytesWritten"`
-	Skipped        []string            `json:"skipped,omitempty" jsonschema:"what could not be exported and why"`
+	Skipped        []string            `json:"skipped,omitempty"`
 	Notes          []string            `json:"notes,omitempty"`
 }
+
+type ExportedBrief struct {
+	Index       int    `json:"index"`
+	Type        string `json:"type"`
+	Name        string `json:"name"`
+	ParentIndex int    `json:"parentIndex,omitempty"`
+	Dir         string `json:"dir"`
+	GroupSize   int    `json:"groupSize,omitempty"`
+	Exported    int    `json:"samplesExported"`
+	Rendered    int    `json:"samplesRendered"`
+}
+
+// ExportResult is what the assistant sees; the full detail stays in manifest.json
+type ExportResult struct {
+	Dir           string          `json:"dir"`
+	Manifest      string          `json:"manifest"`
+	Version       string          `json:"version"`
+	InsightsPanel string          `json:"insightsPanelLink"`
+	Insights      []ExportedBrief `json:"insights"`
+	FilesWritten  int             `json:"filesWritten"`
+	BytesWritten  int64           `json:"bytesWritten"`
+	Skipped       []string        `json:"skipped,omitempty" jsonschema:"what could not be exported and why"`
+	Notes         []string        `json:"notes,omitempty"`
+}
+
+const maxResultNotes = 10
 
 type exportWriter struct {
 	dir   string
@@ -83,10 +112,10 @@ type exportWriter struct {
 	bytes int64
 }
 
-// write keeps every file under dir; names come from the server, so they are treated as untrusted
+// write keeps every file under dir and returns its slash-separated path relative to dir; names come from the server
 func (w *exportWriter) write(rel string, b []byte) (string, error) {
-	rel = filepath.FromSlash(path.Clean("/" + filepath.ToSlash(rel)))[1:]
-	full := filepath.Join(w.dir, rel)
+	rel = path.Clean("/" + filepath.ToSlash(rel))[1:]
+	full := filepath.Join(w.dir, filepath.FromSlash(rel))
 	if r, err := filepath.Rel(w.dir, full); err != nil || r == "." || strings.HasPrefix(r, "..") {
 		return "", fmt.Errorf("refusing to write outside %s: %q", w.dir, rel)
 	}
@@ -100,23 +129,69 @@ func (w *exportWriter) write(rel string, b []byte) (string, error) {
 	w.files++
 	w.bytes += int64(len(b))
 	w.mu.Unlock()
-	return full, nil
+	return rel, nil
 }
 
-func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in ExportIn) (*sdk.CallToolResult, ExportOut, error) {
+// previousExport accepts a missing or empty dir, a manifest.json written by this tool, or the pre-MCP skill's output
+// (insights.json); anything else is a directory the user owns
+func previousExport(dir string) (projectID, versionID string, err error) {
+	entries, err := os.ReadDir(dir)
+	if errors.Is(err, fs.ErrNotExist) || err == nil && len(entries) == 0 {
+		return "", "", nil
+	}
+	if err != nil {
+		return "", "", err
+	}
+	var m ExportOut
+	if b, err := os.ReadFile(filepath.Join(dir, "manifest.json")); err == nil && json.Unmarshal(b, &m) == nil && m.ProjectID != "" && m.VersionID != "" {
+		return m.ProjectID, m.VersionID, nil
+	}
+	if _, err := os.Stat(filepath.Join(dir, "insights.json")); err == nil {
+		return "", "", nil
+	}
+	return "", "", fmt.Errorf("%s is not empty and is not a previous export; choose an empty directory (e.g. a new subdirectory)", dir)
+}
+
+// clearExport removes what a previous export wrote so a re-export never mixes old and new samples
+func clearExport(dir string) error {
+	entries, err := os.ReadDir(dir)
+	if err != nil {
+		return err
+	}
+	for _, e := range entries {
+		n := e.Name()
+		if strings.HasPrefix(n, "insight_") || n == "integration" || n == "population.csv" || n == "manifest.json" {
+			if err := os.RemoveAll(filepath.Join(dir, n)); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in ExportIn) (*sdk.CallToolResult, ExportResult, error) {
 	if !filepath.IsAbs(in.Dir) {
-		return nil, ExportOut{}, errors.New("dir must be an absolute path")
+		return nil, ExportResult{}, errors.New("dir must be an absolute path")
+	}
+	in.Dir = filepath.Clean(in.Dir)
+	prevProject, prevVersion, err := previousExport(in.Dir)
+	if err != nil {
+		return nil, ExportResult{}, err
 	}
 	if err := s.resolve(ctx, &in.ProjectID, &in.VersionID); err != nil {
-		return nil, ExportOut{}, err
+		return nil, ExportResult{}, err
 	}
+	if prevProject != "" && (prevProject != in.ProjectID || prevVersion != in.VersionID) {
+		return nil, ExportResult{}, fmt.Errorf("%s holds an export of another version; choose another directory", in.Dir)
+	}
+	s.fresh(in.ProjectID)
 	access, err := s.allowed(ctx, in.ProjectID, statsClass)
 	if err != nil {
-		return nil, ExportOut{}, err
+		return nil, ExportResult{}, err
 	}
 	e, err := s.export(ctx, in.ProjectID, in.VersionID)
 	if err != nil {
-		return nil, ExportOut{}, err
+		return nil, ExportResult{}, err
 	}
 	topK := in.TopK
 	if topK <= 0 {
@@ -126,16 +201,20 @@ func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in 
 		topK = maxExportTopK
 	}
 	if err := os.MkdirAll(in.Dir, 0o755); err != nil {
-		return nil, ExportOut{}, err
+		return nil, ExportResult{}, err
 	}
-	if entries, err := os.ReadDir(in.Dir); err == nil && len(entries) > 0 {
-		if _, err := os.Stat(filepath.Join(in.Dir, "manifest.json")); err != nil {
-			return nil, ExportOut{}, fmt.Errorf("%s is not empty and is not a previous export; choose an empty directory", in.Dir)
-		}
+	if err := clearExport(in.Dir); err != nil {
+		return nil, ExportResult{}, err
 	}
 	w := &exportWriter{dir: in.Dir}
 	out := ExportOut{Dir: in.Dir, ProjectID: in.ProjectID, VersionID: in.VersionID, Version: e.Version.Name, InsightsPanel: s.client.UIBase() + e.DeepLinkPath,
-		ClassLabels: e.PredictionLabels, Visualizers: e.Visualizers, Insights: []ExportedInsight{}}
+		ClassLabels: e.PredictionLabels, Visualizers: e.Visualizers, Insights: []ExportedInsight{}, Notes: []string{"export did not finish; run tl_export_analysis again"}}
+	// a stub first, so an interrupted export still marks the directory as ours
+	stub, _ := json.Marshal(out)
+	if _, err := w.write("manifest.json", stub); err != nil {
+		return nil, ExportResult{}, err
+	}
+	out.Notes = nil
 	var mu sync.Mutex
 	note := func(format string, a ...any) {
 		mu.Lock()
@@ -145,48 +224,42 @@ func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in 
 	skip := func(what string, class aiClass) {
 		out.Skipped = append(out.Skipped, fmt.Sprintf("%s: %s", what, class.refusal(access.admin)))
 	}
-	fetch := func(url string) ([]byte, error) {
-		b, err := s.client.Download(ctx, url)
-		if err != nil {
-			return nil, err
-		}
-		return decompress(b)
-	}
 
-	pop, popErr := s.population(ctx, in.VersionID, e.PopulationCsvURL)
+	popBytes, pop, popErr := s.populationWithBytes(ctx, in.VersionID, e.PopulationCsvURL, true)
 	switch {
 	case e.PopulationCsvURL == "" && !access.SampleRows:
 		skip("population csv", sampleRowsClass)
-	case e.PopulationCsvURL != "":
-		if b, err := fetch(e.PopulationCsvURL); err != nil {
-			note("population csv: %v", err)
-		} else if p, err := w.write("population.csv", b); err != nil {
-			return nil, ExportOut{}, err
-		} else {
-			out.PopulationCsv = p
+	case popBytes != nil:
+		p, err := w.write("population.csv", popBytes)
+		if err != nil {
+			return nil, ExportResult{}, err
 		}
+		out.PopulationCsv = p
 	}
 	if popErr != nil && access.SampleRows {
 		note("no all-data baseline for composition: %v", popErr)
 	}
 
 	switch {
-	case !access.Code || e.IntegrationCodeURL == "" && e.IntegrationEntryFile != "":
+	case e.IntegrationCodeURL == "" && e.IntegrationEntryFile != "":
 		skip("integration code", codeClass)
 	case e.IntegrationCodeURL == "":
 		out.Skipped = append(out.Skipped, "integration code: this version has no code snapshot on the server")
 	default:
-		arc, err := s.integrationCode(ctx, in.ProjectID, in.VersionID, access.admin)
+		arc, err := s.integrationCode(ctx, e, in.VersionID, access.admin)
 		if err != nil {
 			note("integration code: %v", err)
-		} else {
-			for name, b := range arc.files {
-				if _, err := w.write(path.Join("integration", name), []byte(Scrub(string(b)))); err != nil {
-					return nil, ExportOut{}, err
-				}
-			}
-			out.IntegrationDir, out.EntryFile = filepath.Join(in.Dir, "integration"), arc.entry
+			break
 		}
+		for name, b := range arc.files {
+			if utf8.Valid(b) {
+				b = []byte(Scrub(string(b)))
+			}
+			if _, err := w.write(path.Join("integration", name), b); err != nil {
+				note("integration %s: %v", name, err)
+			}
+		}
+		out.IntegrationDir, out.EntryFile = "integration", arc.entry
 	}
 
 	byID := map[string]*exportedInsight{}
@@ -195,18 +268,15 @@ func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in 
 			byID[id] = &e.Insights[i]
 		}
 	}
+	dirName := func(raw *exportedInsight) string {
+		return fmt.Sprintf("insight_%d_%s", int(raw.Index), safeName(str(raw.InsightType["type"])))
+	}
 	dirOf := func(raw *exportedInsight) string {
-		own := fmt.Sprintf("insight_%d_%s", int(raw.Index), str(raw.InsightType["type"]))
 		if parent, ok := byID[str(raw.InsightType["parent_id"])]; ok && parent != raw {
-			return path.Join(fmt.Sprintf("insight_%d_%s", int(parent.Index), str(parent.InsightType["type"])), "sub_"+strings.TrimPrefix(own, "insight_"))
+			return path.Join(dirName(parent), "sub_"+strings.TrimPrefix(dirName(raw), "insight_"))
 		}
-		return own
+		return dirName(raw)
 	}
-	type sampleJob struct {
-		insight *ExportedInsight
-		pos     int
-	}
-	var jobs []sampleJob
 	var candidates []string
 	ranked := map[int][]string{}
 	for i := range e.Insights {
@@ -214,12 +284,16 @@ func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in 
 		t := raw.InsightType
 		typ := str(t["type"])
 		ins := ExportedInsight{Index: int(raw.Index), Type: typ, Name: displayNames[typ], Status: raw.Status, Description: raw.Description,
-			Dir: filepath.Join(in.Dir, filepath.FromSlash(dirOf(raw))), Engine: enginePayload(t), HasTests: len(list(t["automatic_tests"])) > 0, Samples: []ExportedSample{}}
+			Dir: dirOf(raw), Engine: enginePayload(t), HasTests: len(list(t["automatic_tests"])) > 0, Samples: []ExportedSample{}}
 		if ins.Name == "" {
 			ins.Name = typ
 		}
 		if parent, ok := byID[str(t["parent_id"])]; ok {
 			ins.ParentIndex = int(parent.Index)
+		}
+		k := topK
+		if ins.ParentIndex != 0 && k > subInsightTopK {
+			k = subInsightTopK
 		}
 		link := raw.AnalyzeLinkPath
 		if link == "" {
@@ -229,35 +303,50 @@ func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in 
 		if ins.HasTests {
 			ins.CreateTest = createTestLink(ins.Link, raw.Cid)
 		}
-		rel := dirOf(raw)
 		if raw.CsvURL == "" && !access.SampleRows && len(out.Insights) == 0 {
 			skip("insight sample lists, cluster membership and the fixing-samples list", sampleRowsClass)
 		}
-		for name, url := range map[string]string{"samples.csv": raw.CsvURL, "cluster.json": raw.ClusterBlobURL, "fixing_samples.csv": raw.FixingCsvURL, "top_panel.json": raw.TopPanelURL} {
-			if url == "" {
+		var members map[string]bool
+		// cluster.json first: it narrows a sample list that duplication-type insights share
+		for _, f := range []struct{ name, url string }{{"cluster.json", raw.ClusterBlobURL}, {"samples.csv", raw.CsvURL}, {"fixing_samples.csv", raw.FixingCsvURL}, {"top_panel.json", raw.TopPanelURL}} {
+			if f.url == "" {
 				continue
 			}
-			b, err := fetch(url)
+			b, err := s.download(ctx, f.url)
 			if err != nil {
-				note("insight %d %s: %v", ins.Index, name, err)
+				note("insight %d %s: %v", ins.Index, f.name, err)
 				continue
 			}
-			p, err := w.write(path.Join(rel, name), b)
-			if err != nil {
-				return nil, ExportOut{}, err
-			}
-			switch name {
-			case "samples.csv":
-				ins.SamplesCsv = p
-				if sum, err := Summarize(b, pop); err != nil {
-					note("insight %d sample list unreadable: %v", ins.Index, err)
-				} else {
-					ins.Summary = sum
-					ranked[len(out.Insights)] = sum.RankedIDs
-					candidates = append(candidates, sum.RankedIDs...)
+			if f.name == "top_panel.json" {
+				var v any
+				if json.Unmarshal(b, &v) == nil {
+					b, _ = json.MarshalIndent(stripInternal(v), "", "  ")
 				}
+			}
+			p, err := w.write(path.Join(ins.Dir, f.name), b)
+			if err != nil {
+				return nil, ExportResult{}, err
+			}
+			switch f.name {
 			case "cluster.json":
 				ins.ClusterJson = p
+				if typ != "low_performance" {
+					members = clusterMembers(b)
+				}
+			case "samples.csv":
+				ins.SamplesCsv = p
+				sum, err := Summarize(b, pop, members)
+				if err != nil {
+					note("insight %d sample list unreadable: %v", ins.Index, err)
+					break
+				}
+				ins.Summary = sum
+				ids := sum.RankedIDs
+				if len(ids) > k {
+					ids = ids[:k]
+				}
+				ranked[len(out.Insights)] = ids
+				candidates = append(candidates, ids...)
 			case "fixing_samples.csv":
 				ins.FixingCsv = p
 			case "top_panel.json":
@@ -276,15 +365,16 @@ func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in 
 			rendered = map[string][]assetFile{}
 		}
 	}
+	type sampleJob struct {
+		insight *ExportedInsight
+		pos     int
+	}
+	var jobs []sampleJob
 	for i := range out.Insights {
 		ins := &out.Insights[i]
-		k := topK
-		if ins.ParentIndex != 0 && k > subInsightTopK {
-			k = subInsightTopK
-		}
-		for _, ref := range renderedFirst(ranked[i], rendered, k) {
-			ins.Samples = append(ins.Samples, ExportedSample{ID: ref.ID, Rendered: ref.Rendered})
-			if ref.Rendered {
+		for r, id := range ranked[i] {
+			ins.Samples = append(ins.Samples, ExportedSample{ID: id, Rank: r + 1})
+			if len(rendered[id]) > 0 {
 				jobs = append(jobs, sampleJob{insight: ins, pos: len(ins.Samples) - 1})
 			}
 		}
@@ -292,7 +382,6 @@ func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in 
 
 	sem := make(chan struct{}, exportWorkers)
 	var wg sync.WaitGroup
-	var firstErr error
 	for _, job := range jobs {
 		wg.Add(1)
 		sem <- struct{}{}
@@ -300,42 +389,51 @@ func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in 
 			defer wg.Done()
 			defer func() { <-sem }()
 			smp := &job.insight.Samples[job.pos]
-			files, err := s.writeSample(ctx, w, job.insight.Dir, smp.ID, rendered[smp.ID], in.HeatmapLabels)
+			dir := path.Join(job.insight.Dir, "samples", safeName(smp.ID))
+			files, err := s.writeSample(ctx, w, dir, smp.ID, rendered[smp.ID], in.HeatmapLabels)
 			if err != nil {
-				mu.Lock()
-				if firstErr == nil {
-					firstErr = err
-				}
-				mu.Unlock()
 				note("sample %s: %v", smp.ID, err)
 			}
-			smp.Files = files
-			if len(files) > 0 {
-				smp.Dir = filepath.Join(job.insight.Dir, "samples", smp.ID)
+			smp.Files, smp.Rendered = files, len(files) > 0
+			if smp.Rendered {
+				smp.Dir = dir
 			}
 		}(job)
 	}
 	wg.Wait()
-	if firstErr != nil && w.files == 0 {
-		return nil, ExportOut{}, firstErr
+	if err := ctx.Err(); err != nil {
+		return nil, ExportResult{}, err
 	}
 
 	out.FilesWritten, out.BytesWritten = w.files, w.bytes
-	out.Manifest = filepath.Join(in.Dir, "manifest.json")
 	manifest, _ := json.MarshalIndent(out, "", "  ")
 	if _, err := w.write("manifest.json", manifest); err != nil {
-		return nil, ExportOut{}, err
+		return nil, ExportResult{}, err
 	}
-	return nil, out, nil
+	res := ExportResult{Dir: in.Dir, Manifest: filepath.Join(in.Dir, "manifest.json"), Version: out.Version, InsightsPanel: out.InsightsPanel,
+		Insights: []ExportedBrief{}, FilesWritten: out.FilesWritten, BytesWritten: out.BytesWritten, Skipped: out.Skipped, Notes: out.Notes}
+	if len(res.Notes) > maxResultNotes {
+		res.Notes = append(res.Notes[:maxResultNotes:maxResultNotes], fmt.Sprintf("%d more notes in manifest.json", len(out.Notes)-maxResultNotes))
+	}
+	for _, ins := range out.Insights {
+		b := ExportedBrief{Index: ins.Index, Type: ins.Type, Name: ins.Name, ParentIndex: ins.ParentIndex, Dir: ins.Dir, Exported: len(ins.Samples)}
+		if ins.Summary != nil {
+			b.GroupSize = ins.Summary.GroupSize
+		}
+		for _, smp := range ins.Samples {
+			if smp.Rendered {
+				b.Rendered++
+			}
+		}
+		res.Insights = append(res.Insights, b)
+	}
+	return nil, res, nil
 }
 
-// writeSample stores a sample's payloads and assets under samples/<id>/<dataType>/<visualizer>/...
+// writeSample stores a sample's payloads and assets under base/<dataType>/<visualizer>/...
 // and renders heatmap overlays beside them
-func (s *Server) writeSample(ctx context.Context, w *exportWriter, insightDir, id string, files []assetFile, labels []string) ([]string, error) {
+func (s *Server) writeSample(ctx context.Context, w *exportWriter, base, id string, files []assetFile, labels []string) ([]string, error) {
 	hashed := "/" + visualizationID(id) + "/"
-	base := filepath.Join("samples", id)
-	rel, _ := filepath.Rel(w.dir, insightDir)
-	base = filepath.Join(rel, base)
 	var written []string
 	var firstErr error
 	for _, f := range files {
@@ -358,7 +456,7 @@ func (s *Server) writeSample(ctx context.Context, w *exportWriter, insightDir, i
 				if o.label != "" {
 					name = "overlay_" + safeName(o.label) + ".jpg"
 				}
-				if p, err := w.write(filepath.Join(base, dataType, visualizer, name), o.jpeg); err == nil {
+				if p, err := w.write(path.Join(base, dataType, visualizer, name), o.jpeg); err == nil {
 					written = append(written, p)
 				} else if firstErr == nil {
 					firstErr = err
@@ -375,7 +473,7 @@ func (s *Server) writeSample(ctx context.Context, w *exportWriter, insightDir, i
 		if path.Base(suffix) == "payload.json" {
 			b = []byte(Scrub(string(b)))
 		}
-		if p, err := w.write(filepath.Join(base, filepath.FromSlash(suffix)), b); err == nil {
+		if p, err := w.write(path.Join(base, suffix), b); err == nil {
 			written = append(written, p)
 		} else if firstErr == nil {
 			firstErr = err

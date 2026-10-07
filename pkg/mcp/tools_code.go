@@ -46,23 +46,19 @@ type codeArchive struct {
 	files map[string][]byte
 }
 
-func (s *Server) integrationCode(ctx context.Context, projectID, versionID string, admin bool) (*codeArchive, error) {
+// integrationCode always asks the server first: a withheld URL means the policy changed, and the cache must not outlive that
+func (s *Server) integrationCode(ctx context.Context, e *exportResponse, versionID string, admin bool) (*codeArchive, error) {
+	if e.IntegrationCodeURL == "" && e.IntegrationEntryFile != "" {
+		return nil, codeClass.refusal(admin)
+	}
+	if e.IntegrationCodeURL == "" {
+		return nil, errors.New("this version has no integration code on the server (it predates code snapshots)")
+	}
 	s.mu.Lock()
 	cached, ok := s.code[versionID]
 	s.mu.Unlock()
 	if ok {
 		return cached, nil
-	}
-	e, err := s.export(ctx, projectID, versionID)
-	if err != nil {
-		return nil, err
-	}
-	if e.IntegrationCodeURL == "" && e.IntegrationEntryFile != "" {
-		// the server withheld the URL: the policy changed since this process last read it
-		return nil, codeClass.refusal(admin)
-	}
-	if e.IntegrationCodeURL == "" {
-		return nil, errors.New("this version has no integration code on the server (it predates code snapshots)")
 	}
 	raw, err := s.client.Download(ctx, e.IntegrationCodeURL)
 	if err != nil {
@@ -74,7 +70,8 @@ func (s *Server) integrationCode(ctx context.Context, projectID, versionID strin
 	}
 	arc.entry = e.IntegrationEntryFile
 	s.mu.Lock()
-	s.code[versionID] = arc
+	// ponytail: one archive cached (up to 32MB); a session that hops versions re-downloads
+	s.code = map[string]*codeArchive{versionID: arc}
 	s.mu.Unlock()
 	return arc, nil
 }
@@ -126,7 +123,11 @@ func (s *Server) getIntegrationCode(ctx context.Context, _ *sdk.CallToolRequest,
 	if err != nil {
 		return nil, CodeOut{}, err
 	}
-	arc, err := s.integrationCode(ctx, in.ProjectID, in.VersionID, access.admin)
+	e, err := s.export(ctx, in.ProjectID, in.VersionID)
+	if err != nil {
+		return nil, CodeOut{}, err
+	}
+	arc, err := s.integrationCode(ctx, e, in.VersionID, access.admin)
 	if err != nil {
 		return nil, CodeOut{}, err
 	}
@@ -145,10 +146,12 @@ func (s *Server) getIntegrationCode(ctx context.Context, _ *sdk.CallToolRequest,
 		return nil, out, nil
 	}
 	out.File = path.Clean(want)
-	if len(b) > maxCodeFile {
-		b = b[:maxCodeFile]
-		out.Note = fmt.Sprintf("showing the first %d KB of %d KB", maxCodeFile>>10, len(arc.files[out.File])>>10)
+	// scrub before truncating so a secret cut at the boundary cannot escape its pattern
+	text := Scrub(string(b))
+	if len(text) > maxCodeFile {
+		out.Note = fmt.Sprintf("showing the first %d KB of %d KB", maxCodeFile>>10, len(text)>>10)
+		text = strings.ToValidUTF8(text[:maxCodeFile], "")
 	}
-	out.Content = Scrub(string(b))
+	out.Content = text
 	return nil, out, nil
 }

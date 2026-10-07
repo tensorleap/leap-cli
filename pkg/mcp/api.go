@@ -106,29 +106,51 @@ func (s *Server) export(ctx context.Context, projectID, versionID string) (*expo
 	return &e, nil
 }
 
-// internal storage paths and UI filter state; everything else the engine computed is worth reading
-func (s *Server) population(ctx context.Context, versionID, url string) (*Population, error) {
-	if url == "" {
-		return nil, errors.New("the version has no population file")
-	}
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	if p, ok := s.pops[versionID]; ok {
-		return p, nil
-	}
+func (s *Server) download(ctx context.Context, url string) ([]byte, error) {
 	b, err := s.client.Download(ctx, url)
 	if err != nil {
 		return nil, err
 	}
-	if b, err = decompress(b); err != nil {
-		return nil, err
+	return decompress(b)
+}
+
+func (s *Server) population(ctx context.Context, versionID, url string) (*Population, error) {
+	_, p, err := s.populationWithBytes(ctx, versionID, url, false)
+	return p, err
+}
+
+// populationWithBytes downloads outside s.mu; raw is only returned (and downloaded on a cache hit) when wantRaw
+func (s *Server) populationWithBytes(ctx context.Context, versionID, url string, wantRaw bool) ([]byte, *Population, error) {
+	if url == "" {
+		return nil, nil, errors.New("the version has no population file")
 	}
-	p, err := NewPopulation(b)
+	s.mu.Lock()
+	p, ok := s.pops[versionID]
+	s.mu.Unlock()
+	if ok && !wantRaw {
+		return nil, p, nil
+	}
+	b, err := s.client.Download(ctx, url)
 	if err != nil {
-		return nil, err
+		return nil, p, err
+	}
+	if b, err = decompress(b); err != nil {
+		return nil, p, err
+	}
+	if ok {
+		return b, p, nil
+	}
+	if p, err = NewPopulation(b); err != nil {
+		return b, nil, err
+	}
+	s.mu.Lock()
+	// ponytail: keep the last few versions only; a long session walking many versions would otherwise hold them all
+	if len(s.pops) >= 3 {
+		s.pops = map[string]*Population{}
 	}
 	s.pops[versionID] = p
-	return p, nil
+	s.mu.Unlock()
+	return b, p, nil
 }
 
 // StatusLines is the one-glance state printed by `leap mcp config` and by a terminal run of `leap mcp`

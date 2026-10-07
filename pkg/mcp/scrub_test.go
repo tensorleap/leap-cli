@@ -13,6 +13,9 @@ func TestScrubRemovesSecrets(t *testing.T) {
 		"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0In0.c2lnbmF0dXJlc2lnbmF0dXJl",
 		"sk-test-0123456789abcdef0123",
 		"Zm9vYmFyYmF6c2lnbmF0dXJl",
+		"S3cretPass",
+		"hf_AbCdEfGhIjKlMnOpQrStUv",
+		"ghp_0123456789abcdefABCDEF0123",
 	}
 	log := strings.Join([]string{
 		"export AWS_ACCESS_KEY_ID=" + secrets[0],
@@ -21,6 +24,9 @@ func TestScrubRemovesSecrets(t *testing.T) {
 		"Authorization: Bearer " + secrets[3],
 		`{"api_key": "` + secrets[4] + `"}`,
 		"GET /session/x.png?X-Amz-Signature=" + secrets[5] + "&X-Amz-Expires=3600",
+		`MONGO_URI = "mongodb://admin:` + secrets[6] + `@db.internal:27017/x"`,
+		`login("` + secrets[7] + `")`,
+		`os.environ["GITHUB_PAT"] = "` + secrets[8] + `"`,
 		"ValueError: expected float32, got int64",
 	}, "\n")
 	got := Scrub(log)

@@ -36,7 +36,7 @@ func TestSummarizeUsesRootMembersAndBaseline(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	s, err := Summarize(insight, pop)
+	s, err := Summarize(insight, pop, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -71,7 +71,7 @@ func TestSummarizeSuppressesSmallCells(t *testing.T) {
 		return fmt.Sprintf("training_%d,%s,True", i, site)
 	}, header)
 	pop, _ := NewPopulation(population)
-	s, err := Summarize(insight, pop)
+	s, err := Summarize(insight, pop, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -90,11 +90,26 @@ func TestVisualizationIDMatchesSkillHash(t *testing.T) {
 
 func TestRankSamplesByAffinityWithinGroup(t *testing.T) {
 	csv := []byte("sample_id,aggressor_affinity_score,is_low_perf_root_member\ntraining_1,0.2,True\ntraining_2,0.9,True\ntraining_3,0.99,False\ntraining_4,0.5,True\n")
-	s, err := Summarize(csv, nil)
+	s, err := Summarize(csv, nil, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 	if strings.Join(s.RankedIDs, ",") != "training_2,training_4,training_1" || s.RankedBy != "aggressor_affinity_score" {
 		t.Fatalf("ranked %v by %s; a healthy neighbour must never be ranked", s.RankedIDs, s.RankedBy)
+	}
+}
+
+func TestDuplicateInsightsUseTheirOwnMembersAndKeepPairsTogether(t *testing.T) {
+	shared := "sample_id,metrics.loss,duplication_ids_x\ntraining_1,0,7\ntraining_2,0,9\nvalidation_5,0,7\ntraining_3,0,9\nunlabeled_4,0,4\n"
+	members := clusterMembers([]byte(`{"samples_index":{"training":[1,3],"validation":[5]}}`))
+	s, err := Summarize([]byte(shared), nil, members)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if s.GroupSize != 3 || s.Split["unlabeled"] != 0 || !strings.Contains(s.GroupDefinition, "own members") {
+		t.Fatalf("leakage must describe its own members, not the shared list: %+v", s)
+	}
+	if strings.Join(s.RankedIDs, ",") != "training_1,validation_5,training_3" {
+		t.Fatalf("pairs must stay adjacent, training first: %v", s.RankedIDs)
 	}
 }

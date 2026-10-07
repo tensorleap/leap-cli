@@ -80,7 +80,7 @@ func codeTarGz(t *testing.T, files map[string]string) []byte {
 	return buf.Bytes()
 }
 
-func codeServer(t *testing.T, code bool) *Server {
+func codeServer(t *testing.T, code *bool) *Server {
 	t.Helper()
 	archive := codeTarGz(t, map[string]string{
 		"leap_integration.py": "def preprocess():\n    api_key = \"AKIAABCDEFGHIJKLMNOP\"\n    return []\n",
@@ -95,9 +95,13 @@ func codeServer(t *testing.T, code bool) *Server {
 		}
 		switch strings.TrimPrefix(r.URL.Path, "/api/v2/") {
 		case "analysis-export/listTargets":
-			_, _ = w.Write([]byte(`{"contractVersion":1,"aiAccess":{"stats":true,"code":` + map[bool]string{true: "true", false: "false"}[code] + `},"me":{}}`))
+			_, _ = w.Write([]byte(`{"contractVersion":1,"aiAccess":{"stats":true,"code":` + map[bool]string{true: "true", false: "false"}[*code] + `},"me":{}}`))
 		case "analysis-export/exportAnalysis":
-			_, _ = w.Write([]byte(`{"contractVersion":1,"deepLinkPath":"/p","insights":[],"integrationEntryFile":"leap_integration.py","integrationCodeUrl":"` + ts.URL + `/blob/code.tar.gz"}`))
+			url := ""
+			if *code {
+				url = ts.URL + "/blob/code.tar.gz"
+			}
+			_, _ = w.Write([]byte(`{"contractVersion":1,"deepLinkPath":"/p","insights":[],"integrationEntryFile":"leap_integration.py","integrationCodeUrl":"` + url + `"}`))
 		default:
 			t.Fatalf("unexpected call %s", r.URL.Path)
 		}
@@ -107,7 +111,8 @@ func codeServer(t *testing.T, code bool) *Server {
 }
 
 func TestIntegrationCodeToolReadsTheEntryFileAndScrubs(t *testing.T) {
-	s := codeServer(t, true)
+	on := true
+	s := codeServer(t, &on)
 	_, out, err := s.getIntegrationCode(context.Background(), nil, CodeIn{ProjectID: projectHex, VersionID: versionHex})
 	if err != nil {
 		t.Fatal(err)
@@ -136,9 +141,23 @@ func TestIntegrationCodeToolReadsTheEntryFileAndScrubs(t *testing.T) {
 }
 
 func TestIntegrationCodeToolRespectsTheCodeClass(t *testing.T) {
-	s := codeServer(t, false)
+	off := false
+	s := codeServer(t, &off)
 	_, _, err := s.getIntegrationCode(context.Background(), nil, CodeIn{ProjectID: projectHex, VersionID: versionHex})
 	if err == nil || !strings.Contains(err.Error(), `"Integration code"`) {
 		t.Fatalf("got %v", err)
+	}
+}
+
+func TestCachedCodeIsNotServedAfterAnAdminTurnsCodeOff(t *testing.T) {
+	code := true
+	s := codeServer(t, &code)
+	if _, _, err := s.getIntegrationCode(context.Background(), nil, CodeIn{ProjectID: projectHex, VersionID: versionHex}); err != nil {
+		t.Fatal(err)
+	}
+	code = false
+	_, _, err := s.getIntegrationCode(context.Background(), nil, CodeIn{ProjectID: projectHex, VersionID: versionHex})
+	if err == nil || !strings.Contains(err.Error(), `"Integration code"`) {
+		t.Fatalf("the cached archive must not outlive the policy, got %v", err)
 	}
 }
