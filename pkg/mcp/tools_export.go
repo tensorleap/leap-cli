@@ -189,8 +189,14 @@ func (s *Server) exportAnalysis(ctx context.Context, _ *sdk.CallToolRequest, in 
 	}
 	defer os.RemoveAll(staging)
 
-	body, err := s.client.PostStream(ctx, "analysis-export/exportBundle", map[string]any{
-		"projectId": in.ProjectID, "versionId": in.VersionID, "topK": in.TopK, "heatmapLabels": in.HeatmapLabels})
+	req := map[string]any{"projectId": in.ProjectID, "versionId": in.VersionID}
+	if in.TopK > 0 {
+		req["topK"] = in.TopK
+	}
+	if len(in.HeatmapLabels) > 0 {
+		req["heatmapLabels"] = in.HeatmapLabels
+	}
+	body, err := s.client.PostStream(ctx, "analysis-export/exportBundle", req)
 	if err != nil {
 		return nil, ExportResult{}, explain(err)
 	}

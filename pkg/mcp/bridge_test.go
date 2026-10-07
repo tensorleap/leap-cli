@@ -67,6 +67,13 @@ func (f *fakeTensorleap) start(t *testing.T) *httptest.Server {
 		case "/api/v2/analysis-export/listTargets":
 			_, _ = w.Write([]byte(f.targets))
 		case "/api/v2/analysis-export/exportBundle":
+			var body map[string]any
+			_ = json.NewDecoder(r.Body).Decode(&body)
+			if _, sent := body["heatmapLabels"]; sent {
+				// tsoa rejects null for an optional field, so unset options must be omitted
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
 			_, _ = w.Write(f.bundle)
 		default:
 			w.WriteHeader(http.StatusNotFound)
