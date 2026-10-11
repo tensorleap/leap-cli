@@ -13,7 +13,10 @@ import (
 // relays them to an assistant over stdio, signed with the user's leap login. It adds the one tool a
 // server cannot offer, tl_export_analysis, which writes the analysis to the user's disk.
 
-const connectTimeout = 20 * time.Second
+const (
+	connectTimeout = 20 * time.Second
+	progressGrace  = 5 * time.Second
+)
 
 type Server struct {
 	client   *Client
@@ -37,16 +40,9 @@ func (s *Server) bridge(ctx context.Context, version string) (*sdk.Server, error
 	if s.client.failure != nil {
 		return nil, s.client.failure
 	}
-	c := sdk.NewClient(&sdk.Implementation{Name: "leap-mcp", Version: version}, &sdk.ClientOptions{
-		ProgressNotificationHandler: s.relayProgress,
-	})
-	remote, err := c.Connect(ctx, &sdk.StreamableClientTransport{
-		Endpoint:             s.client.BaseURL + "/mcp",
-		HTTPClient:           s.client.authed(),
-		DisableStandaloneSSE: true,
-	}, nil)
+	remote, err := s.client.connect(ctx, version, &sdk.ClientOptions{ProgressNotificationHandler: s.relayProgress})
 	if err != nil {
-		return nil, s.connectError(ctx, err)
+		return nil, connectError(ctx, s.client, err)
 	}
 	s.remote = remote
 	init := remote.InitializeResult()
@@ -86,11 +82,12 @@ func (s *Server) relayTool(name string) sdk.ToolHandler {
 			s.mu.Lock()
 			s.progress[token] = req.Session
 			s.mu.Unlock()
-			defer func() {
+			// progress can arrive just after the result, so the route outlives the call briefly
+			defer time.AfterFunc(progressGrace, func() {
 				s.mu.Lock()
 				delete(s.progress, token)
 				s.mu.Unlock()
-			}()
+			})
 		}
 		res, err := s.remote.CallTool(ctx, params)
 		if err != nil {
@@ -110,13 +107,41 @@ func (s *Server) relayProgress(ctx context.Context, req *sdk.ProgressNotificatio
 	}
 }
 
+func (c *Client) connect(ctx context.Context, version string, opts *sdk.ClientOptions) (*sdk.ClientSession, error) {
+	return sdk.NewClient(&sdk.Implementation{Name: "leap-mcp", Version: version}, opts).Connect(ctx, &sdk.StreamableClientTransport{
+		Endpoint:             c.BaseURL + "/mcp",
+		HTTPClient:           c.authed(),
+		DisableStandaloneSSE: true,
+	}, nil)
+}
+
 // connectError names the fix: a REST call says whether the key, the network or the server's age is the problem
-func (s *Server) connectError(ctx context.Context, err error) error {
+func connectError(ctx context.Context, c *Client, err error) error {
+	if c.failure != nil {
+		return c.failure
+	}
 	var t targetsResponse
-	if restErr := s.client.Post(ctx, "analysis-export/listTargets", map[string]any{}, &t); restErr != nil {
+	if restErr := c.Post(ctx, "analysis-export/listTargets", map[string]any{}, &t); restErr != nil {
 		return explain(restErr)
 	}
-	return fmt.Errorf("this Tensorleap server (%s) has no MCP endpoint yet; upgrade the server (%v)", s.client.UIBase(), err)
+	return fmt.Errorf("this Tensorleap server (%s) has no MCP endpoint yet; upgrade the server (%v)", c.UIBase(), err)
+}
+
+// Probe connects the way an assistant will and counts the tools it would see; leap's own export tool included
+func Probe(ctx context.Context, c *Client) (int, error) {
+	remote, err := c.connect(ctx, "probe", nil)
+	if err != nil {
+		return 0, connectError(ctx, c, err)
+	}
+	defer remote.Close()
+	n := 1
+	for _, err := range remote.Tools(ctx, nil) {
+		if err != nil {
+			return 0, err
+		}
+		n++
+	}
+	return n, nil
 }
 
 // unavailable still starts, so the assistant can tell the user what is wrong instead of only

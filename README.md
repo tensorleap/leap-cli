@@ -22,6 +22,19 @@ with `wget`:
 wget -q -O - https://raw.githubusercontent.com/tensorleap/leap-cli/master/install.sh | bash
 ```
 
+## Connect an AI assistant (MCP)
+
+After `leap auth login`, run:
+
+```sh
+leap mcp config
+```
+
+It asks which assistant (Claude Code, Cursor, VS Code/Copilot, Codex, Windsurf, Claude Desktop)
+and sets it up to read your Tensorleap analysis: the Tensorleap MCP server plus the
+[Tensorleap skills](https://github.com/tensorleap/skills#connect-your-ai-assistant-to-tensorleap-mcp-server--skills)
+where the assistant supports them. Run `leap mcp` in a terminal to check the connection.
+
 ### Manually
 
 1. Download the binary from the [releases page](https://github.com/tensorleap/leap-cli/releases) that matches your OS and machine architecture.

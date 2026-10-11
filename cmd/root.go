@@ -77,7 +77,9 @@ func init() {
 
 func Execute() {
 	if err := RootCommand.Execute(); err != nil {
-		log.Error(api.HintVersionMismatch(err))
+		if err != mcp.ErrShown {
+			log.Error(api.HintVersionMismatch(err))
+		}
 		os.Exit(1)
 	}
 }
