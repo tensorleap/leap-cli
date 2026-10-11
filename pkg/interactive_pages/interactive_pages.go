@@ -6,8 +6,8 @@ import (
 	"os"
 	"strings"
 
+	tea "charm.land/bubbletea/v2"
 	"github.com/atotto/clipboard"
-	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"golang.org/x/term"
 )
@@ -82,8 +82,12 @@ type WrappedLine struct {
 	SegmentStart int
 }
 
+type PageContent interface {
+	View() string
+}
+
 type ScrollableContent struct {
-	innerContent  tea.Model
+	innerContent  PageContent
 	wrappedLines  []string
 	lineMapping   []WrappedLine
 	scrollOffset  int
@@ -92,39 +96,23 @@ type ScrollableContent struct {
 	isInitialized bool
 }
 
-func NewScrollableContent(content tea.Model) *ScrollableContent {
+func NewScrollableContent(content PageContent) *ScrollableContent {
 	return &ScrollableContent{
 		innerContent: content,
 		scrollOffset: 0,
 	}
 }
 
-func (s *ScrollableContent) Init() tea.Cmd {
-	if s.innerContent != nil {
-		return s.innerContent.Init()
-	}
-	return nil
-}
-
-func (s *ScrollableContent) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (s *ScrollableContent) Update(msg tea.Msg) {
 	switch msg := msg.(type) {
-	case tea.KeyMsg:
-		return s.handleKeyPress(msg)
-	case tea.MouseMsg:
-		return s.handleMouseEvent(msg)
+	case tea.KeyPressMsg:
+		s.handleKeyPress(msg)
+	case tea.MouseWheelMsg:
+		s.handleMouseEvent(msg)
 	}
-
-	if s.innerContent != nil {
-		var cmd tea.Cmd
-		s.innerContent, cmd = s.innerContent.Update(msg)
-		s.rebuildWrappedContent()
-		return s, cmd
-	}
-
-	return s, nil
 }
 
-func (s *ScrollableContent) handleKeyPress(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
+func (s *ScrollableContent) handleKeyPress(msg tea.KeyPressMsg) {
 	switch msg.String() {
 	case "up", "k":
 		s.scrollUp(1)
@@ -139,17 +127,15 @@ func (s *ScrollableContent) handleKeyPress(msg tea.KeyMsg) (tea.Model, tea.Cmd) 
 	case "end", "G":
 		s.scrollToBottom()
 	}
-	return s, nil
 }
 
-func (s *ScrollableContent) handleMouseEvent(msg tea.MouseMsg) (tea.Model, tea.Cmd) {
+func (s *ScrollableContent) handleMouseEvent(msg tea.MouseWheelMsg) {
 	switch msg.Button {
-	case tea.MouseButtonWheelUp:
+	case tea.MouseWheelUp:
 		s.scrollUp(3)
-	case tea.MouseButtonWheelDown:
+	case tea.MouseWheelDown:
 		s.scrollDown(3)
 	}
-	return s, nil
 }
 
 func (s *ScrollableContent) scrollUp(lines int) {
@@ -388,7 +374,7 @@ func (s *ScrollableContent) clampScrollOffset() {
 type Page struct {
 	ID      string `json:"id"`
 	Name    string `json:"name"`
-	Content tea.Model
+	Content PageContent
 }
 
 type TabbedReport struct {
@@ -407,13 +393,7 @@ type TabbedReport struct {
 
 func (r *TabbedReport) Init() tea.Cmd {
 	r.initializeScrollablePages()
-	var cmds []tea.Cmd
-	for _, page := range r.scrollablePages {
-		if page != nil {
-			cmds = append(cmds, page.Init())
-		}
-	}
-	return tea.Batch(cmds...)
+	return nil
 }
 
 func (r *TabbedReport) initializeScrollablePages() {
@@ -427,9 +407,7 @@ func (r *TabbedReport) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
 		return r.handleWindowResize(msg)
-	case tea.MouseMsg:
-		return r.forwardToActiveScrollable(msg)
-	case tea.KeyMsg:
+	case tea.KeyPressMsg:
 		return r.handleKeyPress(msg)
 	}
 
@@ -451,23 +429,16 @@ func (r *TabbedReport) handleWindowResize(msg tea.WindowSizeMsg) (tea.Model, tea
 		contentWidth = defaultWidth
 	}
 
-	var cmds []tea.Cmd
-	for i, scrollable := range r.scrollablePages {
+	for _, scrollable := range r.scrollablePages {
 		if scrollable != nil {
 			scrollable.SetDimensions(contentWidth, contentHeight)
-			if scrollable.innerContent != nil {
-				var cmd tea.Cmd
-				scrollable.innerContent, cmd = scrollable.innerContent.Update(msg)
-				cmds = append(cmds, cmd)
-			}
-			r.scrollablePages[i] = scrollable
 		}
 	}
 
-	return r, tea.Batch(cmds...)
+	return r, nil
 }
 
-func (r *TabbedReport) handleKeyPress(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
+func (r *TabbedReport) handleKeyPress(msg tea.KeyPressMsg) (tea.Model, tea.Cmd) {
 	switch msg.String() {
 	case "ctrl+c", "q", "esc":
 		r.isQuitting = true
@@ -539,9 +510,8 @@ func (r *TabbedReport) forwardToActiveScrollable(msg tea.Msg) (tea.Model, tea.Cm
 		return r, nil
 	}
 
-	updatedModel, cmd := activeScrollable.Update(msg)
-	r.scrollablePages[r.activeTabIndex] = updatedModel.(*ScrollableContent)
-	return r, cmd
+	activeScrollable.Update(msg)
+	return r, nil
 }
 
 func (r *TabbedReport) getActiveScrollable() *ScrollableContent {
@@ -567,7 +537,13 @@ func (r *TabbedReport) fixedHeaderHeight() int {
 	return height
 }
 
-func (r *TabbedReport) View() string {
+func (r *TabbedReport) View() tea.View {
+	v := tea.NewView(r.render())
+	v.AltScreen = true
+	return v
+}
+
+func (r *TabbedReport) render() string {
 	if r.isQuitting {
 		return ""
 	}
@@ -791,10 +767,7 @@ func RunInteractivePages(report *TabbedReport) error {
 }
 
 func runInteractiveTUI(report *TabbedReport) error {
-	program := tea.NewProgram(
-		report,
-		tea.WithAltScreen(),
-	)
+	program := tea.NewProgram(report)
 	_, err := program.Run()
 	if err != nil {
 		return fmt.Errorf("cancelled")
@@ -806,10 +779,7 @@ func runInteractiveTUI(report *TabbedReport) error {
 }
 
 func RunInteractivePagesWithoutPrint(report *TabbedReport) error {
-	program := tea.NewProgram(
-		report,
-		tea.WithAltScreen(),
-	)
+	program := tea.NewProgram(report)
 	_, err := program.Run()
 	if err != nil {
 		return fmt.Errorf("cancelled")
