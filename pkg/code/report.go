@@ -7,7 +7,6 @@ import (
 	"strings"
 	"time"
 
-	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/samber/lo"
 	"github.com/tensorleap/leap-cli/pkg/interactive_pages"
@@ -55,14 +54,6 @@ type CodeSnapshotParserErr struct {
 	notifications          *notification.JobFailureNotificationReport
 	codeSnapshotParserErrs *CodeSnapshotParserErrs
 	TopLogs                []run.LogLine
-}
-
-func (r *CodeSnapshotParserErr) Init() tea.Cmd {
-	return nil
-}
-
-func (r *CodeSnapshotParserErr) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	return r, nil
 }
 
 func (r *CodeSnapshotParserErr) View() string {
@@ -186,12 +177,6 @@ var (
 // ---------------------------
 type ParserErrorsPageContent struct {
 	parserErrs *CodeSnapshotParserErrs
-}
-
-func (p *ParserErrorsPageContent) Init() tea.Cmd { return nil }
-
-func (p *ParserErrorsPageContent) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	return p, nil
 }
 
 func (p *ParserErrorsPageContent) View() string {
@@ -318,12 +303,6 @@ func (r *CodeSnapshotParserErr) ToReportPages() *interactive_pages.ReportPages {
 // ---------------------------
 type EmptyPageContent struct {
 	message string
-}
-
-func (e *EmptyPageContent) Init() tea.Cmd { return nil }
-
-func (e *EmptyPageContent) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	return e, nil
 }
 
 func (e *EmptyPageContent) View() string {

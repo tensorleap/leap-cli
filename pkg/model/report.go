@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strings"
 
-	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/tensorleap/leap-cli/pkg/interactive_pages"
 	"github.com/tensorleap/leap-cli/pkg/notification"
@@ -106,12 +105,6 @@ type ValidationErrorsPageContent struct {
 	report *ValidateAssetReport
 }
 
-func (v *ValidationErrorsPageContent) Init() tea.Cmd { return nil }
-
-func (v *ValidationErrorsPageContent) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	return v, nil
-}
-
 func (v *ValidationErrorsPageContent) View() string {
 	if v.report == nil {
 		return pageDimStyle.Render("No validation errors")
@@ -176,12 +169,6 @@ func (v *ValidationErrorsPageContent) View() string {
 // ---------------------------
 type EmptyPageContent struct {
 	message string
-}
-
-func (e *EmptyPageContent) Init() tea.Cmd { return nil }
-
-func (e *EmptyPageContent) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	return e, nil
 }
 
 func (e *EmptyPageContent) View() string {

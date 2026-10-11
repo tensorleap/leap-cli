@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strings"
 
-	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
 
@@ -19,12 +18,6 @@ var (
 
 type LogsPageContent struct {
 	Logs []LogLine
-}
-
-func (l *LogsPageContent) Init() tea.Cmd { return nil }
-
-func (l *LogsPageContent) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	return l, nil
 }
 
 func (l *LogsPageContent) View() string {

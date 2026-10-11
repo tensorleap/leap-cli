@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strings"
 
-	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
 
@@ -77,12 +76,6 @@ var (
 // ---------------------------
 type NotificationsPageContent struct {
 	Notifications *JobFailureNotificationReport
-}
-
-func (n *NotificationsPageContent) Init() tea.Cmd { return nil }
-
-func (n *NotificationsPageContent) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	return n, nil
 }
 
 func (n *NotificationsPageContent) View() string {
