@@ -126,41 +126,119 @@ func configFile(id string) (path, key string) {
 
 var errUnchanged = errors.New("already set up")
 
-// upsertJSON sets <key>.tensorleap in a JSON config, keeping every other server and setting as written.
+// upsertJSON sets <key>.tensorleap in a JSON config by editing only that entry's text, so every
+// other server and setting keeps its formatting and order.
 // A file it cannot parse (VS Code allows comments) is left alone.
 func upsertJSON(path, key string, entry serverEntry) (backup string, err error) {
-	doc := map[string]json.RawMessage{}
 	old, err := os.ReadFile(path)
 	if err != nil && !errors.Is(err, os.ErrNotExist) {
 		return "", err
 	}
-	if len(bytes.TrimSpace(old)) > 0 {
-		if err := json.Unmarshal(old, &doc); err != nil {
-			return "", fmt.Errorf("%s is not plain JSON (%v), so it was left as is", tilde(path), err)
-		}
+	if len(bytes.TrimSpace(old)) == 0 {
+		out, _ := json.MarshalIndent(map[string]any{key: map[string]any{"tensorleap": entry}}, "", "  ")
+		return writeWithBackup(path, old, append(out, '\n'))
 	}
-	servers := map[string]json.RawMessage{}
-	if raw, ok := doc[key]; ok {
-		if err := json.Unmarshal(raw, &servers); err != nil {
-			return "", fmt.Errorf("%s: %q is not an object, so it was left as is", tilde(path), key)
-		}
+	if !json.Valid(old) {
+		return "", fmt.Errorf("%s is not plain JSON, so it was left as is", tilde(path))
 	}
-	want, _ := json.Marshal(entry)
-	if have, ok := servers["tensorleap"]; ok {
-		var a, b any
-		_ = json.Unmarshal(have, &a)
-		_ = json.Unmarshal(want, &b)
-		if fmt.Sprint(a) == fmt.Sprint(b) {
-			return "", errUnchanged
-		}
-	}
-	servers["tensorleap"] = want
-	doc[key], _ = json.Marshal(servers)
-	out, err := json.MarshalIndent(doc, "", "  ")
+	out, err := patchJSON(old, key, "tensorleap", entry)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("%s: %v, so it was left as is", tilde(path), err)
 	}
-	return writeWithBackup(path, old, append(out, '\n'))
+	if bytes.Equal(out, old) {
+		return "", errUnchanged
+	}
+	return writeWithBackup(path, old, out)
+}
+
+// patchJSON returns src with obj[key][name] = value, touching no other bytes
+func patchJSON(src []byte, key, name string, value any) ([]byte, error) {
+	dec := json.NewDecoder(bytes.NewReader(src))
+	if t, err := dec.Token(); err != nil || t != json.Delim('{') {
+		return nil, errors.New("the top level is not an object")
+	}
+	topLast := -1
+	for dec.More() {
+		kt, err := dec.Token()
+		if err != nil {
+			return nil, err
+		}
+		if kt != key {
+			var raw json.RawMessage
+			if err := dec.Decode(&raw); err != nil {
+				return nil, err
+			}
+			topLast = int(dec.InputOffset())
+			continue
+		}
+		if t, err := dec.Token(); err != nil || t != json.Delim('{') {
+			return nil, fmt.Errorf("%q is not an object", key)
+		}
+		open := int(dec.InputOffset()) - 1
+		last, count := -1, 0
+		for dec.More() {
+			nt, err := dec.Token()
+			if err != nil {
+				return nil, err
+			}
+			keyEnd := int(dec.InputOffset())
+			var raw json.RawMessage
+			if err := dec.Decode(&raw); err != nil {
+				return nil, err
+			}
+			end := int(dec.InputOffset())
+			if nt == name {
+				start := keyEnd + bytes.IndexFunc(src[keyEnd:], func(r rune) bool { return r != ' ' && r != '\t' && r != '\n' && r != '\r' && r != ':' })
+				var have, want any
+				_ = json.Unmarshal(raw, &have)
+				b, _ := json.Marshal(value)
+				_ = json.Unmarshal(b, &want)
+				if fmt.Sprint(have) == fmt.Sprint(want) {
+					return src, nil
+				}
+				return splice(src, start, end, indented(value, lineIndent(src, start))), nil
+			}
+			last, count = end, count+1
+		}
+		inner := lineIndent(src, open) + "  "
+		if count > 0 {
+			inner = lineIndent(src, last)
+		}
+		entry := fmt.Sprintf("%q: %s", name, indented(value, inner))
+		if count == 0 {
+			close := open + 1 + bytes.IndexByte(src[open+1:], '}')
+			return splice(src, open+1, close, "\n"+inner+entry+"\n"+lineIndent(src, open)), nil
+		}
+		return splice(src, last, last, ",\n"+inner+entry), nil
+	}
+	block := map[string]any{name: value}
+	if topLast < 0 {
+		open := bytes.IndexByte(src, '{')
+		close := bytes.LastIndexByte(src, '}')
+		return splice(src, open+1, close, fmt.Sprintf("\n  %q: %s\n", key, indented(block, "  "))), nil
+	}
+	return splice(src, topLast, topLast, fmt.Sprintf(",\n%s%q: %s", lineIndent(src, topLast), key, indented(block, lineIndent(src, topLast)))), nil
+}
+
+func splice(src []byte, from, to int, text string) []byte {
+	out := append([]byte{}, src[:from]...)
+	out = append(out, text...)
+	return append(out, src[to:]...)
+}
+
+// lineIndent is the leading whitespace of the line containing offset
+func lineIndent(src []byte, offset int) string {
+	start := bytes.LastIndexByte(src[:offset], '\n') + 1
+	end := start
+	for end < len(src) && (src[end] == ' ' || src[end] == '\t') {
+		end++
+	}
+	return string(src[start:end])
+}
+
+func indented(v any, indent string) string {
+	b, _ := json.MarshalIndent(v, indent, "  ")
+	return string(b)
 }
 
 // upsertCodexTOML replaces or appends the [mcp_servers.tensorleap] table in Codex's config.toml

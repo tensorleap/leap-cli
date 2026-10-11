@@ -52,7 +52,7 @@ func TestTeamSnippetDoesNotPinAPersonalEnvironment(t *testing.T) {
 	}
 }
 
-func TestUpsertJSONKeepsOtherServersAsWritten(t *testing.T) {
+func TestUpsertJSONKeepsOtherServersByteForByte(t *testing.T) {
 	path := filepath.Join(t.TempDir(), "mcp.json")
 	_ = os.WriteFile(path, []byte(`{"theme":"dark","mcpServers":{"github":{"command":"gh-mcp","args":["--x"]}}}`), 0o644)
 	entry := serverEntry{Command: "/usr/local/bin/leap", Args: []string{"mcp"}}
@@ -61,11 +61,8 @@ func TestUpsertJSONKeepsOtherServersAsWritten(t *testing.T) {
 		t.Fatalf("first write: %v %q", err, backup)
 	}
 	b, _ := os.ReadFile(path)
-	if !strings.Contains(string(b), `"command": "gh-mcp",`) || strings.Index(string(b), `"command": "gh-mcp"`) > strings.Index(string(b), `"--x"`) || !strings.Contains(string(b), `"theme": "dark"`) {
-		t.Fatalf("other servers and settings must survive in their own key order:\n%s", b)
-	}
-	if strings.Index(string(b), `"command": "/usr/local/bin/leap"`) > strings.Index(string(b), `"mcp"`) {
-		t.Fatalf("our entry reads command first:\n%s", b)
+	if !strings.HasPrefix(string(b), `{"theme":"dark","mcpServers":{"github":{"command":"gh-mcp","args":["--x"]}`) || !json.Valid(b) || !strings.Contains(string(b), `"tensorleap"`) {
+		t.Fatalf("other servers and settings must survive byte for byte:\n%s", b)
 	}
 	if _, err := upsertJSON(path, "mcpServers", entry); !errors.Is(err, errUnchanged) {
 		t.Fatalf("a second run must report no change, got %v", err)
@@ -110,5 +107,41 @@ func TestUpsertCodexTOMLAddsOrReplacesOnlyOurTable(t *testing.T) {
 func TestUnknownAssistantNamesTheChoices(t *testing.T) {
 	if _, err := pickAssistant(ui{w: io.Discard}, []string{"cursr"}); err == nil || !strings.Contains(err.Error(), "cursor") {
 		t.Fatalf("got %v", err)
+	}
+}
+
+func TestUpsertJSONTouchesNothingButOurEntry(t *testing.T) {
+	entry := serverEntry{Command: "/usr/local/bin/leap", Args: []string{"mcp"}}
+	cases := map[string]struct{ before, after string }{
+		"append after other servers": {
+			"{\n  \"mcpServers\": {\n    \"zeta\": {\"command\": \"z\", \"args\": [\"a\", \"b\"]},\n    \"alpha\": {\n      \"command\": \"a\"\n    }\n  },\n  \"theme\": 1\n}\n",
+			"{\n  \"mcpServers\": {\n    \"zeta\": {\"command\": \"z\", \"args\": [\"a\", \"b\"]},\n    \"alpha\": {\n      \"command\": \"a\"\n    },\n    \"tensorleap\": {\n      \"command\": \"/usr/local/bin/leap\",\n      \"args\": [\n        \"mcp\"\n      ]\n    }\n  },\n  \"theme\": 1\n}\n",
+		},
+		"replace our own entry in place": {
+			"{\"mcpServers\": {\"a\": {\"command\": \"a\"}, \"tensorleap\": {\"command\": \"old\"}, \"b\": {\"command\": \"b\"}}}",
+			"{\"mcpServers\": {\"a\": {\"command\": \"a\"}, \"tensorleap\": {\n  \"command\": \"/usr/local/bin/leap\",\n  \"args\": [\n    \"mcp\"\n  ]\n}, \"b\": {\"command\": \"b\"}}}",
+		},
+		"empty servers object": {
+			"{\n  \"mcpServers\": {}\n}\n",
+			"{\n  \"mcpServers\": {\n    \"tensorleap\": {\n      \"command\": \"/usr/local/bin/leap\",\n      \"args\": [\n        \"mcp\"\n      ]\n    }\n  }\n}\n",
+		},
+		"no servers key yet": {
+			"{\n  \"theme\": \"dark\"\n}\n",
+			"{\n  \"theme\": \"dark\",\n  \"mcpServers\": {\n    \"tensorleap\": {\n      \"command\": \"/usr/local/bin/leap\",\n      \"args\": [\n        \"mcp\"\n      ]\n    }\n  }\n}\n",
+		},
+	}
+	for name, c := range cases {
+		t.Run(name, func(t *testing.T) {
+			got, err := patchJSON([]byte(c.before), "mcpServers", "tensorleap", entry)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if string(got) != c.after {
+				t.Fatalf("got:\n%s\nwant:\n%s", got, c.after)
+			}
+			if !json.Valid(got) {
+				t.Fatal("result is not valid JSON")
+			}
+		})
 	}
 }
