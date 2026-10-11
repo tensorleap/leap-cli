@@ -65,28 +65,35 @@ func serverMessage(body string) string {
 	return body
 }
 
-// StatusLines is the one-glance state printed by `leap mcp config` and by a terminal run of `leap mcp`
-func StatusLines(ctx context.Context, c *Client) []string {
-	var t targetsResponse
+// ServerStatus is what `leap mcp config` shows about the server before connecting an assistant
+type ServerStatus struct {
+	UI             string
+	Email          string
+	Off            []string
+	CustomProjects int
+	Projects       []string
+}
+
+func Status(ctx context.Context, c *Client) (*ServerStatus, error) {
+	var t struct {
+		targetsResponse
+		Projects []struct {
+			Name     string    `json:"name"`
+			AiAccess *AiAccess `json:"aiAccess"`
+		} `json:"projects"`
+	}
 	if err := c.Post(ctx, "analysis-export/listTargets", map[string]any{}, &t); err != nil {
-		return []string{fmt.Sprintf("Server: %s, not reachable right now: %v", c.UIBase(), explain(err))}
+		return nil, explain(err)
 	}
-	lines := []string{fmt.Sprintf("Server: %s (%s)", c.UIBase(), t.Me.Email)}
-	if t.AiAccess == nil {
-		return append(lines, "AI access: this server is too old for AI assistants; upgrade it")
-	}
-	custom := 0
+	st := &ServerStatus{UI: c.UIBase(), Email: t.Me.Email}
 	for _, p := range t.Projects {
-		if p.AiAccess != nil && *p.AiAccess != *t.AiAccess {
-			custom++
+		st.Projects = append(st.Projects, p.Name)
+		if t.AiAccess != nil && p.AiAccess != nil && *p.AiAccess != *t.AiAccess {
+			st.CustomProjects++
 		}
 	}
-	access := "everything is on"
-	if off := t.AiAccess.blocked(); len(off) > 0 {
-		access = "turned off by default: " + strings.Join(off, ", ")
+	if t.AiAccess != nil {
+		st.Off = t.AiAccess.blocked()
 	}
-	if custom > 0 {
-		access += fmt.Sprintf("; %d project(s) have their own settings", custom)
-	}
-	return append(lines, "AI access: "+access+" (admins: gear icon > AI ACCESS)")
+	return st, nil
 }

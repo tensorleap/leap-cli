@@ -74,6 +74,17 @@ func SelectAndSetEnv(envName string) error {
 	return nil
 }
 
+// UseEnv makes name the current environment, as `leap auth select <name>` does, without prompting or printing
+func UseEnv(name string) error {
+	for _, env := range GetEnvs() {
+		if env.Name == name {
+			setCurrentEnv(&env)
+			return config.Save()
+		}
+	}
+	return fmt.Errorf("no 'leap auth' environment named %q", name)
+}
+
 func SelectEnv(msg string, envName string) (*Env, error) {
 	currentAuth := GetCurrentEnv().Name
 	envs := GetEnvs()
