@@ -21,10 +21,11 @@ func NewMcpCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "mcp",
 		Short: "Let an AI assistant read your Tensorleap analysis results (MCP server)",
-		Long: `Runs a read-only Model Context Protocol server on stdin/stdout so an AI assistant
-(Claude Code, Claude Desktop, Cursor, VS Code/Copilot, Codex, Windsurf) can read this
-Tensorleap server's insights, metrics and samples. Your assistant starts it; you don't
-run it yourself. To connect an assistant: leap mcp config <assistant>
+		Long: `Runs the Tensorleap MCP server for an AI assistant (Claude Code, Claude Desktop, Cursor,
+VS Code/Copilot, Codex, Windsurf), so it can read this Tensorleap server's insights, metrics
+and samples. Your assistant starts it; to connect one, run: leap mcp config
+Run in a terminal, it checks the connection instead: who you are signed in as, whether the
+MCP server answers, and what AI access withholds.
 
 The server is chosen from, in order: --env <name>, TL_API_URL/TL_API_KEY, the current 'leap auth' environment.`,
 		SilenceUsage:  true,
