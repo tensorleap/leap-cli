@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	tea "github.com/charmbracelet/bubbletea"
+	tea "charm.land/bubbletea/v2"
 	"github.com/charmbracelet/lipgloss"
 	"golang.org/x/term"
 )
@@ -35,7 +35,7 @@ type chooser struct {
 func (m *chooser) Init() tea.Cmd { return nil }
 
 func (m *chooser) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	if k, ok := msg.(tea.KeyMsg); ok {
+	if k, ok := msg.(tea.KeyPressMsg); ok {
 		switch k.String() {
 		case "up", "k", "shift+tab":
 			m.cursor = (m.cursor + len(m.choices) - 1) % len(m.choices)
@@ -58,9 +58,9 @@ func (m *chooser) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m *chooser) View() string {
+func (m *chooser) View() tea.View {
 	if m.picked || m.quit {
-		return ""
+		return tea.NewView("")
 	}
 	width := 0
 	for _, c := range m.choices {
@@ -82,7 +82,7 @@ func (m *chooser) View() string {
 		b.WriteString(line + "\n")
 	}
 	b.WriteString("\n  " + dimStyle.Render("↑/↓ move · enter select · esc cancel") + "\n")
-	return b.String()
+	return tea.NewView(b.String())
 }
 
 // choose asks one question in the terminal and leaves a one-line answer behind
