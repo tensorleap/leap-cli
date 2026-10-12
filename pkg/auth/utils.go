@@ -154,6 +154,11 @@ func PrintWhoami(ctx context.Context) error {
 
 	fmt.Println("User email: " + userData.Local.Email)
 	fmt.Println("Team name: " + userData.TeamName)
+	if envInfo, _, err := api.ApiClient.GetEnvironmentInfo(ctx).Execute(); err == nil {
+		if line := LicenseLine(envInfo); line != "" {
+			fmt.Println(line)
+		}
+	}
 	return nil
 }
 
