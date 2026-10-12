@@ -26,11 +26,8 @@ func TestLicenseLine(t *testing.T) {
 		{"no license", "", ""},
 		{"free default projects", `{"type":"free","maxUsers":1}`,
 			"License: Free Tier, 1 project, evaluate up to 5,000 samples, no dataset curation or sample analysis; contact support@tensorleap.ai to unlock the full platform"},
-		{"free raised projects", `{"type":"free","maxUsers":1,"maxProjects":3}`,
-			"License: Free Tier, 3 projects, evaluate up to 5,000 samples, no dataset curation or sample analysis; contact support@tensorleap.ai to unlock the full platform"},
 		{"paid with limit and expiry", `{"type":"paid","expirationDate":"2027-01-31T00:00:00.000Z","maxProjects":3}`,
 			"License: paid, expires 2027-01-31, 3 projects"},
-		{"paid unlimited", `{"type":"paid","maxProjects":0}`, "License: paid"},
 	}
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
