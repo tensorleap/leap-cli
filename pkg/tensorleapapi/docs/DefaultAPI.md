@@ -16,6 +16,7 @@ Method | HTTP request | Description
 [**CalcPopulationExplorationDigest**](DefaultAPI.md#CalcPopulationExplorationDigest) | **Post** /dashboards/calcPopulationExplorationDigest | 
 [**ClearUserJobs**](DefaultAPI.md#ClearUserJobs) | **Post** /users/clearUserJobs | 
 [**ClearUserNotifications**](DefaultAPI.md#ClearUserNotifications) | **Post** /users/clearUserNotifications | 
+[**ConfirmPasswordReset**](DefaultAPI.md#ConfirmPasswordReset) | **Post** /auth/confirmPasswordReset | 
 [**ContinueAutoSyntheticData**](DefaultAPI.md#ContinueAutoSyntheticData) | **Post** /datasetcuration/continueAutoSyntheticData | 
 [**ContinueEvaluate**](DefaultAPI.md#ContinueEvaluate) | **Post** /evaluate/continueEvaluate | 
 [**ContinueUpdateEvaluate**](DefaultAPI.md#ContinueUpdateEvaluate) | **Post** /evaluate/continueUpdateEvaluate | 
@@ -30,6 +31,7 @@ Method | HTTP request | Description
 [**DeleteDomainGap**](DefaultAPI.md#DeleteDomainGap) | **Post** /datasetcuration/deleteDomainGap | 
 [**DeleteGeneratedLabel**](DefaultAPI.md#DeleteGeneratedLabel) | **Post** /datasetcuration/deleteGeneratedLabel | 
 [**DeleteIssue**](DefaultAPI.md#DeleteIssue) | **Post** /issues/deleteIssue | 
+[**DeleteManualInsight**](DefaultAPI.md#DeleteManualInsight) | **Post** /datasetcuration/deleteManualInsight | 
 [**DeleteProject**](DefaultAPI.md#DeleteProject) | **Post** /projects/deleteProject | 
 [**DeleteSampleAnalysis**](DefaultAPI.md#DeleteSampleAnalysis) | **Post** /visualizations/deleteSampleAnalysis | 
 [**DeleteSessionTest**](DefaultAPI.md#DeleteSessionTest) | **Post** /sessions-tests/deleteSessionTest | 
@@ -51,6 +53,7 @@ Method | HTTP request | Description
 [**GenerateDomainGap**](DefaultAPI.md#GenerateDomainGap) | **Post** /datasetcuration/generateDomainGap | 
 [**GenerateInsights**](DefaultAPI.md#GenerateInsights) | **Post** /insights/generateInsights | 
 [**GenerateLabels**](DefaultAPI.md#GenerateLabels) | **Post** /datasetcuration/generateLabels | 
+[**GenerateManualInsight**](DefaultAPI.md#GenerateManualInsight) | **Post** /datasetcuration/generateManualInsight | 
 [**GenerateStreamingSamplesVis**](DefaultAPI.md#GenerateStreamingSamplesVis) | **Post** /sample-collection/generateStreamingSamplesVis | 
 [**GenerateSyntheticData**](DefaultAPI.md#GenerateSyntheticData) | **Post** /datasetcuration/generateSyntheticData | 
 [**GenerateUnlabeledAnalysis**](DefaultAPI.md#GenerateUnlabeledAnalysis) | **Post** /datasetcuration/generateUnlabeledAnalysis | 
@@ -95,6 +98,7 @@ Method | HTTP request | Description
 [**GetIssueFileUploadSignedUrl**](DefaultAPI.md#GetIssueFileUploadSignedUrl) | **Post** /issues/getIssueFileUploadSignedUrl | 
 [**GetJobLogs**](DefaultAPI.md#GetJobLogs) | **Post** /jobs/getJobLogs | 
 [**GetMachineTypes**](DefaultAPI.md#GetMachineTypes) | **Post** /teams/getMachineTypes | 
+[**GetManualInsights**](DefaultAPI.md#GetManualInsights) | **Post** /datasetcuration/getManualInsights | 
 [**GetMaxActiveUsers**](DefaultAPI.md#GetMaxActiveUsers) | **Post** /metadata/getMaxActiveUsers | 
 [**GetMeanAveragePrecision**](DefaultAPI.md#GetMeanAveragePrecision) | **Post** /sessionmetrics/getMeanAveragePrecision | 
 [**GetNotifications**](DefaultAPI.md#GetNotifications) | **Post** /notifications/getNotifications | 
@@ -161,6 +165,7 @@ Method | HTTP request | Description
 [**RemoveSamplesCollection**](DefaultAPI.md#RemoveSamplesCollection) | **Post** /sample-collection/removeSampleCollections | 
 [**RemoveSamplesFromCollection**](DefaultAPI.md#RemoveSamplesFromCollection) | **Post** /sample-collection/removeSamplesFromCollection | 
 [**RenameExperiment**](DefaultAPI.md#RenameExperiment) | **Post** /versions/renameExperiment | 
+[**RequestPasswordReset**](DefaultAPI.md#RequestPasswordReset) | **Post** /auth/requestPasswordReset | 
 [**ResetEvaluate**](DefaultAPI.md#ResetEvaluate) | **Post** /evaluate/resetEvaluate | 
 [**ResolveConcurrentUsersConflict**](DefaultAPI.md#ResolveConcurrentUsersConflict) | **Post** /auth/resolveConcurrentUsersConflict | 
 [**SampleAnalysis**](DefaultAPI.md#SampleAnalysis) | **Post** /visualizations/sampleAnalysis | 
@@ -944,6 +949,68 @@ Other parameters are passed through a pointer to a apiClearUserNotificationsRequ
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ConfirmPasswordReset
+
+> ConfirmPasswordReset(ctx).ConfirmPasswordResetParams(confirmPasswordResetParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	confirmPasswordResetParams := *openapiclient.NewConfirmPasswordResetParams("Email_example", "Code_example", "NewPassword_example") // ConfirmPasswordResetParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.ConfirmPasswordReset(context.Background()).ConfirmPasswordResetParams(confirmPasswordResetParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ConfirmPasswordReset``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiConfirmPasswordResetRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **confirmPasswordResetParams** | [**ConfirmPasswordResetParams**](ConfirmPasswordResetParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1814,6 +1881,68 @@ Other parameters are passed through a pointer to a apiDeleteIssueRequest struct 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **deleteIssueParams** | [**DeleteIssueParams**](DeleteIssueParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteManualInsight
+
+> DeleteManualInsight(ctx).DeleteManualInsightParams(deleteManualInsightParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	deleteManualInsightParams := *openapiclient.NewDeleteManualInsightParams("ProjectId_example", "ManualInsightId_example") // DeleteManualInsightParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteManualInsight(context.Background()).DeleteManualInsightParams(deleteManualInsightParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteManualInsight``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteManualInsightRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **deleteManualInsightParams** | [**DeleteManualInsightParams**](DeleteManualInsightParams.md) |  | 
 
 ### Return type
 
@@ -3128,6 +3257,68 @@ Other parameters are passed through a pointer to a apiGenerateLabelsRequest stru
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **generateLabelParams** | [**GenerateLabelParams**](GenerateLabelParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GenerateManualInsight
+
+> GenerateManualInsight(ctx).GenerateManualInsightParams(generateManualInsightParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	generateManualInsightParams := *openapiclient.NewGenerateManualInsightParams("ProjectId_example", "VersionId_example", []openapiclient.ESFilter{*openapiclient.NewESFilter(openapiclient.FilterOperatorType("between"), "Field_example", *openapiclient.NewESFilterValue())}) // GenerateManualInsightParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.GenerateManualInsight(context.Background()).GenerateManualInsightParams(generateManualInsightParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GenerateManualInsight``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGenerateManualInsightRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **generateManualInsightParams** | [**GenerateManualInsightParams**](GenerateManualInsightParams.md) |  | 
 
 ### Return type
 
@@ -5924,6 +6115,70 @@ Other parameters are passed through a pointer to a apiGetMachineTypesRequest str
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetManualInsights
+
+> ManualInsightRunsResponse GetManualInsights(ctx).GetManualInsightsParams(getManualInsightsParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getManualInsightsParams := *openapiclient.NewGetManualInsightsParams("ProjectId_example") // GetManualInsightsParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetManualInsights(context.Background()).GetManualInsightsParams(getManualInsightsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetManualInsights``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetManualInsights`: ManualInsightRunsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetManualInsights`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetManualInsightsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getManualInsightsParams** | [**GetManualInsightsParams**](GetManualInsightsParams.md) |  | 
+
+### Return type
+
+[**ManualInsightRunsResponse**](ManualInsightRunsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -10079,6 +10334,68 @@ Name | Type | Description  | Notes
 ### Authorization
 
 [jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RequestPasswordReset
+
+> RequestPasswordReset(ctx).RequestPasswordResetParams(requestPasswordResetParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	requestPasswordResetParams := *openapiclient.NewRequestPasswordResetParams("Email_example") // RequestPasswordResetParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.RequestPasswordReset(context.Background()).RequestPasswordResetParams(requestPasswordResetParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.RequestPasswordReset``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRequestPasswordResetRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **requestPasswordResetParams** | [**RequestPasswordResetParams**](RequestPasswordResetParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 

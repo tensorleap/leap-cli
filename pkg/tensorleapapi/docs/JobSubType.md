@@ -19,6 +19,8 @@
 
 * `UNLABELED_ANALYSIS` (value: `"Unlabeled Analysis"`)
 
+* `FIX_AGGRESSOR` (value: `"Fix Aggressor"`)
+
 * `VISUALIZERS_CALCULATION` (value: `"Visualizers Calculation"`)
 
 * `SAMPLE_ANALYSIS` (value: `"Sample Analysis"`)

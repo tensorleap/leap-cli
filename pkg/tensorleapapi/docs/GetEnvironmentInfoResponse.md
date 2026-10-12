@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **ProxyUrl** | **string** |  | 
 **LicenseMetadata** | Pointer to [**LicenseMetadata**](LicenseMetadata.md) |  | [optional] 
 **LocalBucketPath** | Pointer to **string** |  | [optional] 
+**InstalledServerVersion** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -201,6 +202,31 @@ SetLocalBucketPath sets LocalBucketPath field to given value.
 `func (o *GetEnvironmentInfoResponse) HasLocalBucketPath() bool`
 
 HasLocalBucketPath returns a boolean if a field has been set.
+
+### GetInstalledServerVersion
+
+`func (o *GetEnvironmentInfoResponse) GetInstalledServerVersion() string`
+
+GetInstalledServerVersion returns the InstalledServerVersion field if non-nil, zero value otherwise.
+
+### GetInstalledServerVersionOk
+
+`func (o *GetEnvironmentInfoResponse) GetInstalledServerVersionOk() (*string, bool)`
+
+GetInstalledServerVersionOk returns a tuple with the InstalledServerVersion field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInstalledServerVersion
+
+`func (o *GetEnvironmentInfoResponse) SetInstalledServerVersion(v string)`
+
+SetInstalledServerVersion sets InstalledServerVersion field to given value.
+
+### HasInstalledServerVersion
+
+`func (o *GetEnvironmentInfoResponse) HasInstalledServerVersion() bool`
+
+HasInstalledServerVersion returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

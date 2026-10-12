@@ -88,6 +88,7 @@ docs/CollectionSampleRowValue.md
 docs/CollectionSortSpec.md
 docs/CompositeVizData.md
 docs/CompositeVizItem.md
+docs/ConfirmPasswordResetParams.md
 docs/ConfusionMatrixLabelsResponse.md
 docs/ConfusionMatrixParams.md
 docs/ConfusionMatrixTableParams.md
@@ -126,6 +127,7 @@ docs/DeleteDatasetSplittingParams.md
 docs/DeleteDomainGapParams.md
 docs/DeleteGeneratedLabelParams.md
 docs/DeleteIssueParams.md
+docs/DeleteManualInsightParams.md
 docs/DeleteProjectParams.md
 docs/DeleteSamplesAnalysisParams.md
 docs/DeleteSessionTestRequest.md
@@ -183,6 +185,7 @@ docs/GenerateDatasetSplittingParams.md
 docs/GenerateDomainGapParams.md
 docs/GenerateInsightsParams.md
 docs/GenerateLabelParams.md
+docs/GenerateManualInsightParams.md
 docs/GenerateStreamingSamplesVisParams.md
 docs/GenerateSyntheticDataParams.md
 docs/GenerateUnlabeledAnalysisParams.md
@@ -246,6 +249,7 @@ docs/GetJobLogsResponse.md
 docs/GetJobsFilterParams.md
 docs/GetJobsResponse.md
 docs/GetMachineTypesResponse.md
+docs/GetManualInsightsParams.md
 docs/GetMaxActiveUsersResponse.md
 docs/GetNotificationsByFilterParams.md
 docs/GetNotificationsByFilterResponse.md
@@ -378,6 +382,9 @@ docs/LoginParams.md
 docs/LossMessageParams.md
 docs/LowPerformanceInsight.md
 docs/MachineTypeOption.md
+docs/ManualInsightJobParams.md
+docs/ManualInsightRun.md
+docs/ManualInsightRunsResponse.md
 docs/MaskImageData.md
 docs/MaskTextData.md
 docs/MessageLevel.md
@@ -443,6 +450,7 @@ docs/RemoveSampleCollectionParams.md
 docs/RemoveSamplesFromCollectionParams.md
 docs/RemoveSamplesFromCollectionResponse.md
 docs/RenameExperimentParams.md
+docs/RequestPasswordResetParams.md
 docs/ResetEvaluateParams.md
 docs/RocConfusionMatrixParams.md
 docs/RotateApiKeyResponse.md
@@ -659,6 +667,7 @@ model_collection_sample_row_value.go
 model_collection_sort_spec.go
 model_composite_viz_data.go
 model_composite_viz_item.go
+model_confirm_password_reset_params.go
 model_confusion_matrix_labels_response.go
 model_confusion_matrix_params.go
 model_confusion_matrix_table_params.go
@@ -696,6 +705,7 @@ model_delete_dataset_splitting_params.go
 model_delete_domain_gap_params.go
 model_delete_generated_label_params.go
 model_delete_issue_params.go
+model_delete_manual_insight_params.go
 model_delete_project_params.go
 model_delete_samples_analysis_params.go
 model_delete_session_test_request.go
@@ -753,6 +763,7 @@ model_generate_dataset_splitting_params.go
 model_generate_domain_gap_params.go
 model_generate_insights_params.go
 model_generate_label_params.go
+model_generate_manual_insight_params.go
 model_generate_streaming_samples_vis_params.go
 model_generate_synthetic_data_params.go
 model_generate_unlabeled_analysis_params.go
@@ -816,6 +827,7 @@ model_get_job_logs_response.go
 model_get_jobs_filter_params.go
 model_get_jobs_response.go
 model_get_machine_types_response.go
+model_get_manual_insights_params.go
 model_get_max_active_users_response.go
 model_get_notifications_by_filter_params.go
 model_get_notifications_by_filter_response.go
@@ -948,6 +960,9 @@ model_login_params.go
 model_loss_message_params.go
 model_low_performance_insight.go
 model_machine_type_option.go
+model_manual_insight_job_params.go
+model_manual_insight_run.go
+model_manual_insight_runs_response.go
 model_mask_image_data.go
 model_mask_text_data.go
 model_message_level.go
@@ -1013,6 +1028,7 @@ model_remove_sample_collection_params.go
 model_remove_samples_from_collection_params.go
 model_remove_samples_from_collection_response.go
 model_rename_experiment_params.go
+model_request_password_reset_params.go
 model_reset_evaluate_params.go
 model_roc_confusion_matrix_params.go
 model_rotate_api_key_response.go

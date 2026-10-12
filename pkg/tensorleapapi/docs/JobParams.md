@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 **Epoch** | **float64** |  | 
 **LatentSpaceType** | Pointer to **string** |  | [optional] 
 **Digest** | **string** |  | 
-**Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
+**Filters** | [**[]ESFilter**](ESFilter.md) |  | 
 **SampleIds** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
 **Limit** | **float64** |  | 
 **ForceExecute** | Pointer to **bool** |  | [optional] 
@@ -66,7 +66,7 @@ Name | Type | Description | Notes
 
 ### NewJobParams
 
-`func NewJobParams(versionId string, inferenceArtifactId string, projectId string, batchSize float64, evaluatedEpoch float64, type_ ExportModelTypeEnum, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, labelingAlgorithm LabelingAlgorithm, targetFilters []ESFilter, sources []SyntheticDataJobParamsSourcesInner, simulationNames []string, metadataTags []string, splitAcrossMetadata []string, keepTogetherMetadata []string, splitsToResplit []SplitSubset, groupBFilters []ESFilter, groupAFilters []ESFilter, visArtifactId string, codeUrl string, codeEntryFile string, versionName string, updateActions []UpdateAction, ) *JobParams`
+`func NewJobParams(versionId string, inferenceArtifactId string, projectId string, batchSize float64, evaluatedEpoch float64, type_ ExportModelTypeEnum, extId string, title string, epoch float64, digest string, filters []ESFilter, sampleIds []SampleIdentity, limit float64, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, labelingAlgorithm LabelingAlgorithm, targetFilters []ESFilter, sources []SyntheticDataJobParamsSourcesInner, simulationNames []string, metadataTags []string, splitAcrossMetadata []string, keepTogetherMetadata []string, splitsToResplit []SplitSubset, groupBFilters []ESFilter, groupAFilters []ESFilter, visArtifactId string, codeUrl string, codeEntryFile string, versionName string, updateActions []UpdateAction, ) *JobParams`
 
 NewJobParams instantiates a new JobParams object
 This constructor will assign default values to properties that have it defined,
@@ -450,11 +450,6 @@ and a boolean to check if the value has been set.
 
 SetFilters sets Filters field to given value.
 
-### HasFilters
-
-`func (o *JobParams) HasFilters() bool`
-
-HasFilters returns a boolean if a field has been set.
 
 ### GetSampleIds
 
