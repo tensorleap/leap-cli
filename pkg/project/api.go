@@ -32,14 +32,14 @@ type AddProjectDetails struct {
 }
 
 func AddProject(ctx context.Context, projectDetails *AddProjectDetails) (*ProjectEntity, error) {
-	res, _, err := api.ApiClient.AddProject(ctx).ProjectMeta(*tensorleapapi.NewProjectMeta(
+	res, response, err := api.ApiClient.AddProject(ctx).ProjectMeta(*tensorleapapi.NewProjectMeta(
 		projectDetails.Name,
 		projectDetails.Description,
 		[]string{},
 		tensorleapapi.HUBPUBLISHPOLICY_NO_PUBLISH,
 	)).Execute()
 
-	if err != nil {
+	if err = api.CheckRes(response, err); err != nil {
 		return nil, err
 	}
 	newProject := &res.Project
