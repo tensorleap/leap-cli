@@ -26,6 +26,7 @@ type Server struct {
 }
 
 func NewServer(client *Client, version string) *sdk.Server {
+	client.version = headerValue(version)
 	s := &Server{client: client, progress: map[any]*sdk.ServerSession{}}
 	ctx, cancel := context.WithTimeout(context.Background(), connectTimeout)
 	defer cancel()
@@ -47,7 +48,15 @@ func (s *Server) bridge(ctx context.Context, version string) (*sdk.Server, error
 	s.remote = remote
 	init := remote.InitializeResult()
 	srv := sdk.NewServer(&sdk.Implementation{Name: "tensorleap", Title: "Tensorleap", Version: version},
-		&sdk.ServerOptions{Instructions: init.Instructions})
+		&sdk.ServerOptions{
+			Instructions: init.Instructions,
+			// the server was connected before the assistant said who it is, so it's told on every later request
+			InitializedHandler: func(_ context.Context, req *sdk.InitializedRequest) {
+				if info := req.Session.InitializeParams().ClientInfo; info != nil {
+					s.client.setAssistant(info.Name, info.Version)
+				}
+			},
+		})
 
 	for tool, err := range remote.Tools(ctx, nil) {
 		if err != nil {

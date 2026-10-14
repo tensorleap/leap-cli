@@ -18,6 +18,7 @@ import (
 
 type fakeTensorleap struct {
 	auth    []string
+	who     []string
 	bundle  []byte
 	noMCP   bool
 	badKey  bool
@@ -52,6 +53,7 @@ func (f *fakeTensorleap) start(t *testing.T) *httptest.Server {
 	mcpHandler := sdk.NewStreamableHTTPHandler(func(*http.Request) *sdk.Server { return remote }, &sdk.StreamableHTTPOptions{Stateless: true})
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		f.auth = append(f.auth, r.Header.Get("Authorization")+"|"+r.Header.Get("X-TL-Client"))
+		f.who = append(f.who, r.Header.Get("X-TL-Client-Version")+"|"+r.Header.Get("X-TL-Assistant")+"|"+r.Header.Get("X-TL-Assistant-Version"))
 		if f.badKey {
 			w.WriteHeader(http.StatusUnauthorized)
 			return
@@ -140,6 +142,31 @@ func TestBridgeRelaysTheServersToolsResourcesAndPrompts(t *testing.T) {
 		if a != "Bearer key-1|leap-mcp" {
 			t.Fatalf("every request must carry the user's key and mark leap mcp, got %q", a)
 		}
+	}
+}
+
+func TestBridgeTellsTheServerWhoIsCalling(t *testing.T) {
+	f := &fakeTensorleap{}
+	ts := f.start(t)
+	srv := NewServer(NewClient(ts.URL+"/api/v2", "k"), "1.2.3")
+	a, b := sdk.NewInMemoryTransports()
+	if _, err := srv.Connect(context.Background(), a, nil); err != nil {
+		t.Fatal(err)
+	}
+	// an assistant's self-reported version goes into a header, so control characters are dropped
+	session, err := sdk.NewClient(&sdk.Implementation{Name: "claude-code", Version: "2.1.3\n"}, nil).Connect(context.Background(), b, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer session.Close()
+	if _, err := session.CallTool(context.Background(), &sdk.CallToolParams{Name: "tl_status", Arguments: map[string]any{}}); err != nil {
+		t.Fatal(err)
+	}
+	if first := f.who[0]; first != "1.2.3||" {
+		t.Fatalf("leap mcp connects before the assistant names itself, so only its version is known: %q", first)
+	}
+	if last := f.who[len(f.who)-1]; last != "1.2.3|claude-code|2.1.3" {
+		t.Fatalf("a tool call must name leap mcp's version and the assistant: %q", last)
 	}
 }
 

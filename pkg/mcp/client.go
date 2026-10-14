@@ -10,6 +10,7 @@ import (
 	"net"
 	"net/http"
 	"strings"
+	"sync"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
 )
@@ -19,6 +20,36 @@ type Client struct {
 	apiKey  string
 	http    *http.Client
 	failure error
+
+	// who is calling, told to the server with every request (see authTransport)
+	version          string
+	mu               sync.Mutex
+	assistant        string
+	assistantVersion string
+}
+
+// setAssistant records the assistant leap mcp serves; it names itself when its session starts
+func (c *Client) setAssistant(name, version string) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.assistant, c.assistantVersion = headerValue(name), headerValue(version)
+}
+
+const headerValueMax = 64
+
+// headerValue keeps a client-supplied name safe to send as a header: printable ASCII, trimmed, capped
+func headerValue(s string) string {
+	s = strings.Map(func(r rune) rune {
+		if r < 0x20 || r > 0x7e {
+			return -1
+		}
+		return r
+	}, s)
+	s = strings.TrimSpace(s)
+	if len(s) > headerValueMax {
+		s = s[:headerValueMax]
+	}
+	return s
 }
 
 func NewClient(baseURL, apiKey string) *Client {
@@ -46,17 +77,30 @@ func (e *APIError) Error() string {
 	return fmt.Sprintf("tensorleap API returned %d: %s", e.Status, e.Body)
 }
 
-// authTransport signs every request as the user's leap API key and marks it as leap mcp's
+// authTransport signs every request as the user's leap API key and marks it as leap mcp's, with
+// its version and, once the assistant has named itself, which assistant is driving it
 type authTransport struct {
-	key  string
-	next http.RoundTripper
+	client *Client
+	next   http.RoundTripper
 }
 
 func (t authTransport) RoundTrip(r *http.Request) (*http.Response, error) {
 	r = r.Clone(r.Context())
+	c := t.client
 	r.Header.Set("X-TL-Client", "leap-mcp")
-	if t.key != "" {
-		r.Header.Set("Authorization", "Bearer "+t.key)
+	c.mu.Lock()
+	for header, value := range map[string]string{
+		"X-TL-Client-Version":    c.version,
+		"X-TL-Assistant":         c.assistant,
+		"X-TL-Assistant-Version": c.assistantVersion,
+	} {
+		if value != "" {
+			r.Header.Set(header, value)
+		}
+	}
+	c.mu.Unlock()
+	if c.apiKey != "" {
+		r.Header.Set("Authorization", "Bearer "+c.apiKey)
 	}
 	return t.next.RoundTrip(r)
 }
@@ -66,7 +110,7 @@ func (c *Client) authed() *http.Client {
 	if next == nil {
 		next = http.DefaultTransport
 	}
-	return &http.Client{Transport: authTransport{key: c.apiKey, next: next}}
+	return &http.Client{Transport: authTransport{client: c, next: next}}
 }
 
 func (c *Client) do(ctx context.Context, path string, body any) (*http.Response, error) {
