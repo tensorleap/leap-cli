@@ -189,6 +189,7 @@ func addValidationError(name string, nodes []ValidatedNode, report *ValidateAsse
 // the standalone import-model wait.
 func WaitForPushJob(ctx context.Context, projectId, versionId, jobId string) error {
 	commandStartTime := time.Now()
+	log.Infof("Push job %s started, stop it with: leap run stop %s", jobId, jobId)
 	okStatus, _, err := waitForImportModelJob(ctx, projectId, jobId, "push")
 	if err == ErrImportModelTimeout {
 		return fmt.Errorf("timeout: push job did not complete within the allowed time (job may still be running on the server), job id: %s", jobId)

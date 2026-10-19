@@ -10,6 +10,7 @@ import (
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/run"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
@@ -458,7 +459,7 @@ func handleConcurrentEvaluateLimit(
 
 		chosen := byLabel[selected]
 		log.Infof("Terminating job %s ...", chosen.JobId)
-		if err := terminateJob(ctx, chosen.JobId); err != nil {
+		if err := run.StopRun(ctx, chosen.JobId); err != nil {
 			return nil, fmt.Errorf("failed to terminate job %s: %w", chosen.JobId, err)
 		}
 
@@ -511,12 +512,6 @@ func buildEvaluateJobOptions(
 		byLabel[label] = j
 	}
 	return options, byLabel
-}
-
-func terminateJob(ctx context.Context, jobId string) error {
-	params := tensorleapapi.NewTerminateJobParams(jobId)
-	_, res, err := api.ApiClient.TerminateJob(ctx).TerminateJobParams(*params).Execute()
-	return api.CheckRes(res, err)
 }
 
 func RunUpdateEvaluateArtifact(ctx context.Context, projectId, versionId string, updateActions []tensorleapapi.UpdateAction) error {
