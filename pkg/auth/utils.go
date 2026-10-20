@@ -44,12 +44,15 @@ func Login(env *Env) (err error) {
 	// Create a context with the API URL for the whoami call
 	ctx := api.CreateAuthenticatedContext(context.Background(), env.ApiKey, env.ApiUrl)
 	if userData, err := GetWhoami(ctx); err == nil {
-		properties["user_email"] = userData.Local.Email
+		properties["email"] = userData.Local.Email
 		properties["user_name"] = userData.Local.Name
 		properties["team_name"] = userData.TeamName
 		properties["team_id"] = userData.Local.TeamId
-		properties["user_role"] = string(userData.Role)
+		properties["role"] = string(userData.Role)
 		properties["user_id"] = userData.Cid
+		if envInfo, _, err := api.ApiClient.GetEnvironmentInfo(ctx).Execute(); err == nil && envInfo.LicenseMetadata != nil {
+			properties["license_type"] = string(envInfo.LicenseMetadata.Type)
+		}
 	} else {
 		// Log warning but don't fail the tracking
 		log.Warnf("Failed to get user data for analytics: %v", err)

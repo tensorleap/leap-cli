@@ -16,7 +16,8 @@ import (
 const (
 	MixpanelEndpoint = "https://api.mixpanel.com/track"
 	MixpanelToken    = "0c1710c9656bbfb1056bb46093e23ca1"
-	TRACKING_VERSION = 1
+	// 2: login events carry email, role and license_type (2026-10-20)
+	TRACKING_VERSION = 2
 )
 
 // EventType represents the type of event to track
