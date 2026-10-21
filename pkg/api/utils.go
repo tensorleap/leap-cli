@@ -1,6 +1,7 @@
 package api
 
 import (
+	"bytes"
 	"crypto/tls"
 	"encoding/json"
 	"errors"
@@ -111,6 +112,13 @@ func (c *CustomRoundTripper) RoundTrip(req *http.Request) (*http.Response, error
 	}
 	if res.StatusCode == 401 {
 		return res, ErrAuth
+	}
+	if res.StatusCode == 403 {
+		// The generated client reports a failed call by its Status text, so carry the server's message there.
+		body, _ := io.ReadAll(res.Body)
+		_ = res.Body.Close()
+		res.Body = io.NopCloser(bytes.NewReader(body))
+		res.Status = extractServerMessage(string(body))
 	}
 	return res, nil
 }

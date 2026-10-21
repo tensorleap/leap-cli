@@ -203,10 +203,10 @@ func GetCodeSnapshotUploadUrl(ctx context.Context, projectId string) (string, er
 	baseURL := api.GetBaseUrlFromContext(ctx)
 	params := *tensorleapapi.NewGetCodeSnapshotUploadUrlParams(projectId)
 	params.SetOrigin(baseURL)
-	data, response, err := api.ApiClient.GetCodeSnapshotUploadUrl(ctx).
+	data, _, err := api.ApiClient.GetCodeSnapshotUploadUrl(ctx).
 		GetCodeSnapshotUploadUrlParams(params).
 		Execute()
-	if err = api.CheckRes(response, err); err != nil {
+	if err != nil {
 		return "", err
 	}
 	return data.GetUrl(), nil
