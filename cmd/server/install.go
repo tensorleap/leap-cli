@@ -26,6 +26,7 @@ func NewInstallCmd() *cobra.Command {
 			}
 
 			logCurrentServerVersion(cmd.Context(), "Current server version")
+			email := licenseTokenEmail(licenseFlag)
 
 			// Track installation started
 			startProperties := map[string]interface{}{
@@ -45,7 +46,7 @@ func NewInstallCmd() *cobra.Command {
 			}
 			isInternetAvailable := checkInternetAvailability(len(flags.AirGapInstallationFilePath) > 0)
 
-			analytics.SendEvent(analytics.EventServerInstallStarted, startProperties)
+			sendServerEvent(analytics.EventServerInstallStarted, startProperties, email)
 
 			_, err := initDataDir(cmd.Context(), flags.DataDir)
 			if err != nil {
@@ -56,7 +57,7 @@ func NewInstallCmd() *cobra.Command {
 					"error":       err.Error(),
 					"stage":       "init_data_dir",
 				}
-				analytics.SendEvent(analytics.EventServerInstallFailed, failProperties)
+				sendServerEvent(analytics.EventServerInstallFailed, failProperties, email)
 				return err
 			}
 
@@ -69,7 +70,7 @@ func NewInstallCmd() *cobra.Command {
 					"error":       err.Error(),
 					"stage":       "run_install_cmd",
 				}
-				analytics.SendEvent(analytics.EventServerInstallFailed, failProperties)
+				sendServerEvent(analytics.EventServerInstallFailed, failProperties, email)
 				return mapInstallationErr(err)
 			}
 
@@ -91,7 +92,7 @@ func NewInstallCmd() *cobra.Command {
 				"airgap_install":  len(flags.AirGapInstallationFilePath) > 0,
 			}
 
-			analytics.SendEvent(analytics.EventServerInstallSuccess, successProperties)
+			sendServerEvent(analytics.EventServerInstallSuccess, successProperties, email)
 
 			if isInternetAvailable {
 				recommendCliUpgradeMessage()

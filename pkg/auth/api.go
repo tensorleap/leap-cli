@@ -26,5 +26,19 @@ func SetLicense(ctx context.Context, licenseToken string) error {
 		return fmt.Errorf("failed to set license")
 	}
 	log.Info("License set successfully")
+	if email := registeredUserEmail(result); email != "" {
+		log.Infof("Open %s and register with %s to finish setup", api.GetBaseUrlFromContext(ctx), email)
+	}
+	if p := DecodeLicenseToken(licenseToken); p.Activated != nil && !*p.Activated {
+		log.Warn("License installed but not activated. Apply the key from your Tensorleap email with `leap auth license -t <key>` or in the UI (Manage License)")
+	}
 	return nil
+}
+
+func registeredUserEmail(r *tensorleapapi.ExtendTrialResponse) string {
+	if u, ok := r.AdditionalProperties["registeredUser"].(map[string]interface{}); ok {
+		email, _ := u["email"].(string)
+		return email
+	}
+	return ""
 }

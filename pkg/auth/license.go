@@ -22,16 +22,20 @@ func LicenseLine(info *tensorleapapi.GetEnvironmentInfoResponse) string {
 		return ""
 	}
 	maxProjects := licenseMaxProjects(lic)
+	notActivated := ""
+	if v, ok := lic.AdditionalProperties["activated"].(bool); ok && !v {
+		notActivated = ", not activated"
+	}
 	if lic.GetType() == tensorleapapi.LICENSETYPE_FREE {
 		if maxProjects == 0 {
 			maxProjects = freeTierDefaultMaxProjects
 		}
 		return fmt.Sprintf(
-			"License: Free Tier, %s, evaluate up to %s samples, no dataset curation or sample analysis; contact %s to unlock the full platform",
-			projectsPhrase(maxProjects), formatThousands(FreeTierMaxEvaluateSamples), LicenseContact,
+			"License: Free Tier%s, %s, evaluate up to %s samples, no dataset curation or sample analysis; contact %s to unlock the full platform",
+			notActivated, projectsPhrase(maxProjects), formatThousands(FreeTierMaxEvaluateSamples), LicenseContact,
 		)
 	}
-	parts := []string{string(lic.GetType())}
+	parts := []string{string(lic.GetType()) + notActivated}
 	if exp, ok := lic.GetExpirationDateOk(); ok && exp != nil {
 		parts = append(parts, "expires "+exp.Format("2006-01-02"))
 	}

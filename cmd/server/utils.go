@@ -148,16 +148,32 @@ func handleLicenseAfterInstall(cmd *cobra.Command, licenseFlag *auth.LicenseFlag
 	if err != nil {
 		return err
 	}
-	baseUrl := installationParams.CalcUrl()
-	var ctx context.Context
-	ctx, err = auth.InitMaybeUnauthedContext(cmd.Context(), baseUrl)
+	baseUrl, err := api.NormalizeAPIUrl(installationParams.CalcUrl())
 	if err != nil {
 		return err
 	}
-	var licenseToken string
-	licenseToken, err = licenseFlag.PrepareLicenseToken()
+	ctx := api.CreateAuthenticatedContext(cmd.Context(), "", baseUrl)
+	licenseToken, err := licenseFlag.PrepareLicenseToken()
 	if err != nil {
 		return err
 	}
 	return auth.SetLicense(ctx, licenseToken)
+}
+
+func licenseTokenEmail(licenseFlag *auth.LicenseFlag) string {
+	if !licenseFlag.HasLicense() {
+		return ""
+	}
+	token, err := licenseFlag.PrepareLicenseToken()
+	if err != nil {
+		return ""
+	}
+	return auth.DecodeLicenseToken(token).User.Email
+}
+
+func sendServerEvent(event analytics.EventType, props map[string]interface{}, email string) {
+	if email != "" {
+		props["email"] = email
+	}
+	analytics.SendEvent(event, props)
 }
