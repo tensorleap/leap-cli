@@ -91,6 +91,14 @@ func extractServerMessage(body string) string {
 			return parsed.Message
 		}
 	}
+	var rpc struct {
+		Error struct {
+			Message string `json:"message"`
+		} `json:"error"`
+	}
+	if err := json.Unmarshal([]byte(body), &rpc); err == nil && rpc.Error.Message != "" {
+		return rpc.Error.Message
+	}
 	if body != "" {
 		return body
 	}

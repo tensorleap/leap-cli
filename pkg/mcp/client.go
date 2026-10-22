@@ -102,7 +102,13 @@ func (t authTransport) RoundTrip(r *http.Request) (*http.Response, error) {
 	if c.apiKey != "" {
 		r.Header.Set("Authorization", "Bearer "+c.apiKey)
 	}
-	return t.next.RoundTrip(r)
+	resp, err := t.next.RoundTrip(r)
+	if err == nil && resp.StatusCode == http.StatusForbidden && strings.HasSuffix(r.URL.Path, "/mcp") {
+		// the MCP SDK reports only the status text; the shared transport put the server's message in Status
+		_ = resp.Body.Close()
+		return nil, errors.New(resp.Status)
+	}
+	return resp, err
 }
 
 func (c *Client) authed() *http.Client {
