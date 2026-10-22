@@ -26,6 +26,7 @@ func NewReinstallCmd() *cobra.Command {
 			}
 
 			logCurrentServerVersion(cmd.Context(), "Current server version")
+			email := licenseTokenEmail(licenseFlag)
 
 			startProperties := map[string]interface{}{
 				"cli_version":     version.CliVersion,
@@ -44,7 +45,7 @@ func NewReinstallCmd() *cobra.Command {
 			}
 			isInternetAvailable := checkInternetAvailability(len(flags.AirGapInstallationFilePath) > 0)
 
-			analytics.SendEvent(analytics.EventServerReinstallStarted, startProperties)
+			sendServerEvent(analytics.EventServerReinstallStarted, startProperties, email)
 
 			isReinstalled, err := initDataDir(cmd.Context(), "")
 			if err != nil {
@@ -54,7 +55,7 @@ func NewReinstallCmd() *cobra.Command {
 					"error":       err.Error(),
 					"stage":       "init_data_dir",
 				}
-				analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties)
+				sendServerEvent(analytics.EventServerReinstallFailed, failProperties, email)
 				return err
 			}
 			_, err = servercmd.RunReinstallCmd(cmd, flags, isReinstalled)
@@ -65,7 +66,7 @@ func NewReinstallCmd() *cobra.Command {
 					"error":       err.Error(),
 					"stage":       "run_reinstall_cmd",
 				}
-				analytics.SendEvent(analytics.EventServerReinstallFailed, failProperties)
+				sendServerEvent(analytics.EventServerReinstallFailed, failProperties, email)
 				return mapInstallationErr(err)
 			}
 
@@ -87,7 +88,7 @@ func NewReinstallCmd() *cobra.Command {
 				"airgap_install":  len(flags.AirGapInstallationFilePath) > 0,
 			}
 
-			analytics.SendEvent(analytics.EventServerReinstallSuccess, successProperties)
+			sendServerEvent(analytics.EventServerReinstallSuccess, successProperties, email)
 			if isInternetAvailable {
 				recommendCliUpgradeMessage()
 			}

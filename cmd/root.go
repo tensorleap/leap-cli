@@ -32,6 +32,8 @@ var RootCommand = &cobra.Command{
 	Short: "Leap - Deepbug your models!",
 	Long: `A debugger and analyzer for your DNNs.
 Complete documentation is available at https://docs.tensorleap.ai`,
+	SilenceUsage:  true,
+	SilenceErrors: true,
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
 		env := authPkg.GetCurrentEnv()
 		authCtx := env.AuthContext(

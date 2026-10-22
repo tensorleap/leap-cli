@@ -11,6 +11,13 @@ const LicenseContact = "support@tensorleap.ai"
 const FreeTierMaxEvaluateSamples = 5000
 const freeTierDefaultMaxProjects = 1
 
+// LicenseActivated is false only for a colored (not yet activated) license; the
+// generated client keeps the server's `activated` field in AdditionalProperties.
+func LicenseActivated(lic *tensorleapapi.LicenseMetadata) bool {
+	v, ok := lic.AdditionalProperties["activated"].(bool)
+	return !ok || v
+}
+
 // LicenseLine renders the server's license for `leap auth whoami`; "" when the
 // server reports no license.
 func LicenseLine(info *tensorleapapi.GetEnvironmentInfoResponse) string {
@@ -22,16 +29,20 @@ func LicenseLine(info *tensorleapapi.GetEnvironmentInfoResponse) string {
 		return ""
 	}
 	maxProjects := licenseMaxProjects(lic)
+	notActivated := ""
+	if !LicenseActivated(lic) {
+		notActivated = ", not activated"
+	}
 	if lic.GetType() == tensorleapapi.LICENSETYPE_FREE {
 		if maxProjects == 0 {
 			maxProjects = freeTierDefaultMaxProjects
 		}
 		return fmt.Sprintf(
-			"License: Free Tier, %s, evaluate up to %s samples, no dataset curation or sample analysis; contact %s to unlock the full platform",
-			projectsPhrase(maxProjects), formatThousands(FreeTierMaxEvaluateSamples), LicenseContact,
+			"License: Free Tier%s, %s, evaluate up to %s samples, no dataset curation or sample analysis; contact %s to unlock the full platform",
+			notActivated, projectsPhrase(maxProjects), formatThousands(FreeTierMaxEvaluateSamples), LicenseContact,
 		)
 	}
-	parts := []string{string(lic.GetType())}
+	parts := []string{string(lic.GetType()) + notActivated}
 	if exp, ok := lic.GetExpirationDateOk(); ok && exp != nil {
 		parts = append(parts, "expires "+exp.Format("2006-01-02"))
 	}
