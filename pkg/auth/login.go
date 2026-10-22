@@ -6,6 +6,7 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -201,6 +202,8 @@ func LoginAndGetAuthToken(apiUrl, username, password string) (string, error) {
 	return apiKey.ApiKey, nil
 }
 
+var ErrInvalidCredentials = errors.New("invalid username or password")
+
 type TokenResponse struct {
 	AccessToken  string `json:"access_token"`
 	TokenType    string `json:"token_type"`
@@ -218,11 +221,18 @@ func loginToKeycloak(clientID, username, password, realm, keycloakURL string) (*
 	tokenURL := fmt.Sprintf("%s/realms/%s/protocol/openid-connect/token", keycloakURL, realm)
 
 	resp, err := http.Post(tokenURL, "application/x-www-form-urlencoded", strings.NewReader(data.Encode()))
+	// Keycloak answers a wrong username or password with 401, which the CLI's transport turns into ErrAuth
+	if errors.Is(err, api.ErrAuth) {
+		return nil, ErrInvalidCredentials
+	}
 	if err != nil {
 		return nil, err
 	}
 	defer func() { _ = resp.Body.Close() }()
 
+	if resp.StatusCode == http.StatusUnauthorized {
+		return nil, ErrInvalidCredentials
+	}
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("failed to login: %s", resp.Status)
 	}

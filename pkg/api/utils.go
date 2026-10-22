@@ -119,7 +119,9 @@ func (c *CustomRoundTripper) RoundTrip(req *http.Request) (*http.Response, error
 		return res, err
 	}
 	if res.StatusCode == 401 {
-		return res, ErrAuth
+		// net/http drops a response returned with an error (and logs that it did), so close it here
+		_ = res.Body.Close()
+		return nil, ErrAuth
 	}
 	if res.StatusCode == 403 {
 		// The generated client reports a failed call by its Status text, so carry the server's message there.
