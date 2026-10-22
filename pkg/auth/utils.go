@@ -52,6 +52,7 @@ func Login(env *Env) (err error) {
 		properties["user_id"] = userData.Cid
 		if envInfo, _, err := api.ApiClient.GetEnvironmentInfo(ctx).Execute(); err == nil && envInfo.LicenseMetadata != nil {
 			properties["license_type"] = string(envInfo.LicenseMetadata.Type)
+			properties["license_activated"] = LicenseActivated(envInfo.LicenseMetadata)
 		}
 	} else {
 		// Log warning but don't fail the tracking

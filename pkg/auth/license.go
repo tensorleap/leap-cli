@@ -11,6 +11,13 @@ const LicenseContact = "support@tensorleap.ai"
 const FreeTierMaxEvaluateSamples = 5000
 const freeTierDefaultMaxProjects = 1
 
+// LicenseActivated is false only for a colored (not yet activated) license; the
+// generated client keeps the server's `activated` field in AdditionalProperties.
+func LicenseActivated(lic *tensorleapapi.LicenseMetadata) bool {
+	v, ok := lic.AdditionalProperties["activated"].(bool)
+	return !ok || v
+}
+
 // LicenseLine renders the server's license for `leap auth whoami`; "" when the
 // server reports no license.
 func LicenseLine(info *tensorleapapi.GetEnvironmentInfoResponse) string {
@@ -23,7 +30,7 @@ func LicenseLine(info *tensorleapapi.GetEnvironmentInfoResponse) string {
 	}
 	maxProjects := licenseMaxProjects(lic)
 	notActivated := ""
-	if v, ok := lic.AdditionalProperties["activated"].(bool); ok && !v {
+	if !LicenseActivated(lic) {
 		notActivated = ", not activated"
 	}
 	if lic.GetType() == tensorleapapi.LICENSETYPE_FREE {
