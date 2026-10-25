@@ -204,6 +204,7 @@ func (s *pushState) runOverridePush(dispatch evalDispatch) (versionId, codeSnaps
 		s.ctx, tarGzFile, fileStat.Size(),
 		s.workspaceConfig.EntryFile, in.secretId, in.pythonVersion,
 		s.projectId(), in.branch, s.overwriteVersion.VersionId,
+		code.GitOriginURL("."),
 		s.chainedEvaluateRequest(dispatch),
 	)
 	if err != nil {
@@ -253,6 +254,7 @@ func (s *pushState) runCombinedPush(dispatch evalDispatch) (versionId, codeSnaps
 		s.ctx, tarGzFile, fileStat.Size(),
 		s.workspaceConfig.EntryFile, in.secretId, in.pythonVersion,
 		in.modelVersionName, s.projectId(), in.branch, overwriteVersionId,
+		code.GitOriginURL("."),
 		*modelInfo,
 		s.chainedEvaluateRequest(dispatch),
 	)
