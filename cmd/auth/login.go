@@ -7,6 +7,7 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/auth"
+	"github.com/tensorleap/leap-cli/pkg/hint"
 )
 
 func NewLoginCmd() *cobra.Command {
@@ -178,7 +179,11 @@ func NewLoginCmd() *cobra.Command {
 				return err
 			}
 
-			return auth.Login(env)
+			if err := auth.Login(env); err != nil {
+				return err
+			}
+			hint.Show(cmd.OutOrStdout(), "Next", hint.Integrate)
+			return nil
 
 		},
 	}

@@ -15,6 +15,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/auth"
+	"github.com/tensorleap/leap-cli/pkg/hint"
 	mcpPkg "github.com/tensorleap/leap-cli/pkg/mcp"
 )
 
@@ -46,8 +47,9 @@ func newConfigCmd() *cobra.Command {
 		Long: `Sets up an AI assistant for Tensorleap: registers the Tensorleap MCP server in the
 assistant's configuration, installs every Tensorleap skill where the assistant supports them,
 and, once you are signed in, checks that the server answers. Run it right after installing
-leap, before you have a Tensorleap server; it ends with what to ask the assistant next:
-install Tensorleap, integrate your model, then analyze it.
+leap, before you have a Tensorleap server. It ends with the next thing to ask the assistant:
+install Tensorleap, integrate your model, or analyze it, depending on where you are; leap
+server install, leap auth login and leap push --eval suggest the steps after it, once each.
 
 Claude Code gets the 'analysis' (MCP server and skill), 'installer', 'integration' and
 'optimization' plugins. Skills already installed are left alone; each keeps itself up to date.
@@ -212,20 +214,16 @@ func setup(ctx context.Context, out ui, a *assistant, bin string, serverArgs []s
 
 	showAccess(out, st)
 
-	project := "<project>"
-	if st != nil && len(st.Projects) > 0 {
-		project = st.Projects[0]
-	}
-	out.text("\n%s %s, then ask, one step at a time:", okStyle.Render("Done."), a.restart)
-	for i, ask := range []string{
-		"Install Tensorleap on this machine",
-		"Write a Tensorleap integration for my model",
-		"Write a Tensorleap analysis report for project " + project,
-	} {
-		out.text("  %d. %s", i+1, codeStyle.Render(ask))
-	}
-	if !signedIn {
-		out.detail("Already have a Tensorleap server? Instead of step 1, sign in: leap auth login")
+	hint.SetAssistant(a.title)
+	out.text("\n%s %s.", okStyle.Render("Done."), a.restart)
+	// the first step that fits; later ones come from leap server install, leap auth login and leap push --eval
+	switch {
+	case st != nil && len(st.Projects) > 0:
+		hint.Show(out.w, "Then", hint.Report, st.Projects[0])
+	case signedIn:
+		hint.Show(out.w, "Then", hint.Integrate)
+	case hint.Show(out.w, "Then", hint.Install):
+		out.detail("Already have a Tensorleap server? Sign in instead: leap auth login")
 	}
 	out.text("")
 	return nil

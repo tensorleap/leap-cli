@@ -33,8 +33,10 @@ leap mcp config
 It asks which assistant (Claude Code, Cursor, VS Code/Copilot, Codex, Windsurf, Claude Desktop),
 registers the Tensorleap MCP server and installs every
 [Tensorleap skill](https://github.com/tensorleap/skills) the assistant supports. Skills already
-installed are left alone; each keeps itself up to date. It ends with what to ask the assistant
-next: install Tensorleap, write the integration for your model, then the analysis report.
+installed are left alone; each keeps itself up to date. It ends with the next thing to ask the
+assistant, and leap suggests each step after it once, when it becomes possible: install
+Tensorleap (after `leap mcp config`), write the integration for your model (after
+`leap server install` or `leap auth login`), then the analysis report (after `leap push --eval`).
 Run `leap mcp` in a terminal to check the connection once you are signed in.
 
 ### Manually

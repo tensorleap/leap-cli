@@ -7,8 +7,9 @@ Connect an AI assistant to Tensorleap (MCP server and skills)
 Sets up an AI assistant for Tensorleap: registers the Tensorleap MCP server in the
 assistant's configuration, installs every Tensorleap skill where the assistant supports them,
 and, once you are signed in, checks that the server answers. Run it right after installing
-leap, before you have a Tensorleap server; it ends with what to ask the assistant next:
-install Tensorleap, integrate your model, then analyze it.
+leap, before you have a Tensorleap server. It ends with the next thing to ask the assistant:
+install Tensorleap, integrate your model, or analyze it, depending on where you are; leap
+server install, leap auth login and leap push --eval suggest the steps after it, once each.
 
 Claude Code gets the 'analysis' (MCP server and skill), 'installer', 'integration' and
 'optimization' plugins. Skills already installed are left alone; each keeps itself up to date.

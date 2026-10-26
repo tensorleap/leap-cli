@@ -12,6 +12,7 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/code"
+	"github.com/tensorleap/leap-cli/pkg/hint"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/model"
 	"github.com/tensorleap/leap-cli/pkg/project"
@@ -172,7 +173,13 @@ func runPush(cmdCtx context.Context, in *pushInputs) error {
 
 	s.sendSuccessEvent(versionId, codeSnapshotCid, codePushed)
 
-	return s.triggerEvaluate(versionId, dispatch)
+	if err := s.triggerEvaluate(versionId, dispatch); err != nil {
+		return err
+	}
+	if s.inputs.runEval {
+		hint.Show(os.Stdout, "When the evaluation finishes", hint.Report, s.project.GetName())
+	}
+	return nil
 }
 
 // runPushFlow pushes the version and returns its id and code-snapshot id.
