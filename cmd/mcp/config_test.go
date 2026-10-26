@@ -145,3 +145,31 @@ func TestUpsertJSONTouchesNothingButOurEntry(t *testing.T) {
 		})
 	}
 }
+
+func TestOnlyMissingSkillsAndPluginsAreInstalled(t *testing.T) {
+	dir := t.TempDir()
+	t.Setenv("HOME", dir)
+	t.Setenv("CLAUDE_CONFIG_DIR", filepath.Join(dir, ".claude"))
+	codex := findAssistant("codex")
+	addSkill := func(name string) {
+		_ = os.MkdirAll(filepath.Join(dir, ".agents", "skills", name), 0o755)
+		_ = os.WriteFile(filepath.Join(dir, ".agents", "skills", name, "SKILL.md"), nil, 0o644)
+	}
+	for _, s := range skillNames[1:] {
+		addSkill(s)
+	}
+	if hasSkills(codex) {
+		t.Fatal("one skill is missing, so the skills must be installed")
+	}
+	addSkill(skillNames[0])
+	if !hasSkills(codex) {
+		t.Fatal("every skill is there, so nothing should be installed")
+	}
+
+	_ = os.MkdirAll(filepath.Join(dir, ".claude", "plugins"), 0o755)
+	_ = os.WriteFile(filepath.Join(dir, ".claude", "plugins", "installed_plugins.json"),
+		[]byte(`{"version":2,"plugins":{"analysis@tensorleap":[{"version":"0.3.1"}]}}`), 0o644)
+	if got := strings.Join(missingClaudePlugins(), ","); got != "installer@tensorleap,integration@tensorleap,optimization@tensorleap" {
+		t.Fatalf("missing plugins: %s", got)
+	}
+}
