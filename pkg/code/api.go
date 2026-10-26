@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"os/exec"
+	"strings"
 	"time"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
@@ -33,6 +35,7 @@ func PushCodeAndModel(
 	entryFile, secretId, pythonVersion,
 	versionName, projectId, branch string,
 	overwriteVersionId string,
+	gitOrigin string,
 	modelInfo tensorleapapi.ImportModelInfo,
 	evaluateOnSuccess *tensorleapapi.ChainedEvaluateRequest,
 ) (*tensorleapapi.PushResponse, error) {
@@ -74,6 +77,8 @@ func PushCodeAndModel(
 		pushParams.SetEvaluateOnSuccess(*evaluateOnSuccess)
 	}
 
+	setGitOrigin(&pushParams.AdditionalProperties, gitOrigin)
+
 	log.Info("Pushing code and model...")
 	result, response, err := api.ApiClient.Push(ctx).
 		PushParams(pushParams).
@@ -92,6 +97,7 @@ func PushOverride(
 	ctx context.Context, tarGzFile io.Reader, fileSize int64,
 	entryFile, secretId, pythonVersion, projectId, branch string,
 	overwriteVersionId string,
+	gitOrigin string,
 	evaluateOnSuccess *tensorleapapi.ChainedEvaluateRequest,
 ) (*tensorleapapi.PushResponse, error) {
 
@@ -127,6 +133,8 @@ func PushOverride(
 		params.SetEvaluateOnSuccess(*evaluateOnSuccess)
 	}
 
+	setGitOrigin(&params.AdditionalProperties, gitOrigin)
+
 	log.Info("Pushing code (override)...")
 	result, response, err := api.ApiClient.PushOverride(ctx).
 		PushOverrideParams(params).
@@ -136,6 +144,29 @@ func PushOverride(
 	}
 
 	return result, nil
+}
+
+// ponytail: sent via AdditionalProperties until the generated client is
+// regenerated from a server with gitOrigin in its push params.
+func setGitOrigin(additionalProperties *map[string]interface{}, gitOrigin string) {
+	if gitOrigin == "" {
+		return
+	}
+	if *additionalProperties == nil {
+		*additionalProperties = map[string]interface{}{}
+	}
+	(*additionalProperties)["gitOrigin"] = gitOrigin
+}
+
+// GitOriginURL returns the git origin remote URL of the repository containing
+// dir, or "" when dir is not in a git repository or has no origin remote.
+func GitOriginURL(dir string) string {
+	cmd := exec.Command("git", "-C", dir, "remote", "get-url", "origin")
+	out, err := cmd.Output()
+	if err != nil {
+		return ""
+	}
+	return strings.TrimSpace(string(out))
 }
 
 const TIMEOUT_FOR_CODE_INTEGRATION_STATUS = 90 * time.Minute
