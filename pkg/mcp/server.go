@@ -81,6 +81,7 @@ func (s *Server) bridge(ctx context.Context, version string) (*sdk.Server, error
 		})
 	}
 	s.addExportTool(srv)
+	s.addPublishTool(srv)
 	return srv, nil
 }
 
