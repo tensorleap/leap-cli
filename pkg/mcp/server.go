@@ -143,6 +143,7 @@ func (s *Server) addTo(srv *sdk.Server, b *bridged) {
 		})
 	}
 	s.addExportTool(srv)
+	s.addPublishTool(srv)
 }
 
 func (s *Server) connected() bool {
