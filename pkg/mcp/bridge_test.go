@@ -6,6 +6,7 @@ import (
 	"compress/gzip"
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -23,6 +24,8 @@ type fakeTensorleap struct {
 	noMCP   bool
 	badKey  bool
 	targets string
+	// the body of the last analysis-reports/publish call
+	published map[string]any
 }
 
 // a node-server stand-in: the MCP endpoint served by go-sdk's own stateless handler, plus the REST calls leap mcp makes
@@ -66,6 +69,10 @@ func (f *fakeTensorleap) start(t *testing.T) *httptest.Server {
 				return
 			}
 			mcpHandler.ServeHTTP(w, r)
+		case "/api/v2/analysis-reports/publish":
+			f.published = map[string]any{}
+			_ = json.NewDecoder(r.Body).Decode(&f.published)
+			_, _ = fmt.Fprintf(w, `{"report":{"cid":"r1","title":%q},"replaced":true,"linkPath":"/project/p1/dashboard?report=r1"}`, f.published["title"])
 		case "/api/v2/analysis-export/listTargets":
 			_, _ = w.Write([]byte(f.targets))
 		case "/api/v2/analysis-export/exportBundle":
@@ -123,7 +130,7 @@ func TestBridgeRelaysTheServersToolsResourcesAndPrompts(t *testing.T) {
 		}
 		names = append(names, tool.Name)
 	}
-	if strings.Join(names, ",") != "tl_export_analysis,tl_status,tl_wait_for_job" {
+	if strings.Join(names, ",") != "tl_export_analysis,tl_publish_report,tl_status,tl_wait_for_job" {
 		t.Fatalf("tools: %v", names)
 	}
 	res, err := session.CallTool(context.Background(), &sdk.CallToolParams{Name: "tl_status", Arguments: map[string]any{}})
