@@ -2,6 +2,7 @@ package root_cmd
 
 import (
 	"bytes"
+	"errors"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -94,7 +95,7 @@ func TestValidatePushInputsTrimsProjectName(t *testing.T) {
 	}
 }
 
-func TestReportHintIsUsedUpOnlyByAPushThatWaited(t *testing.T) {
+func TestReportHintIsUsedUpOnlyByAPushThatSucceeded(t *testing.T) {
 	viper.Reset()
 	t.Cleanup(viper.Reset)
 	if err := config.InitConfig(filepath.Join(t.TempDir(), "config.yaml")); err != nil {
@@ -102,25 +103,19 @@ func TestReportHintIsUsedUpOnlyByAPushThatWaited(t *testing.T) {
 	}
 	hint.SetAssistant("Claude Code")
 	var out bytes.Buffer
-	showReportHint(&out, true, "http://localhost:4589", "mnist")
-	if !strings.Contains(out.String(), "Write a Tensorleap analysis report for project mnist") {
-		t.Fatalf("--no-wait still shows the hint:\n%s", out.String())
-	}
-	// the --no-wait push failed on the server; the re-push shows the hint again
-	out.Reset()
-	showReportHint(&out, true, "http://localhost:4589", "mnist")
-	if out.Len() == 0 {
-		t.Fatal("a --no-wait push must not use the hint up")
-	}
-	out.Reset()
-	showReportHint(&out, false, "http://localhost:4589", "mnist")
-	if out.Len() == 0 {
-		t.Fatal("still due")
-	}
-	out.Reset()
-	showReportHint(&out, true, "http://localhost:4589", "mnist")
+	showReportHint(&out, errors.New("push rejected"), "http://localhost:4589", "mnist")
 	if out.Len() > 0 {
-		t.Fatalf("a push that waited and succeeded uses it up:\n%s", out.String())
+		t.Fatalf("a failed push shows no hint:\n%s", out.String())
+	}
+	// the failed push left it due; the next push that the server accepts shows it and uses it up
+	showReportHint(&out, nil, "http://localhost:4589", "mnist")
+	if !strings.Contains(out.String(), "Write a Tensorleap analysis report for project mnist") {
+		t.Fatalf("got:\n%s", out.String())
+	}
+	out.Reset()
+	showReportHint(&out, nil, "http://localhost:4589", "mnist")
+	if out.Len() > 0 {
+		t.Fatalf("shown twice:\n%s", out.String())
 	}
 }
 
@@ -131,7 +126,7 @@ func TestReportHintWithoutAnAssistantPointsToTheResults(t *testing.T) {
 		t.Fatal(err)
 	}
 	var out bytes.Buffer
-	showReportHint(&out, false, "http://localhost:4589", "mnist")
+	showReportHint(&out, nil, "http://localhost:4589", "mnist")
 	if out.String() != "\nWhen the evaluation finishes, see the results at http://localhost:4589\nPrefer an AI assistant to do this? Run leap mcp config.\n" {
 		t.Fatalf("got %q", out.String())
 	}

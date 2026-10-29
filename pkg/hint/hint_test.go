@@ -83,20 +83,3 @@ func TestWithoutAnAssistantEachCommandNamesTheNextStepByHand(t *testing.T) {
 		t.Fatalf("helper mode after leap mcp config:\n%s", out.String())
 	}
 }
-
-func TestOfferLeavesTheStepDueUntilItSucceeds(t *testing.T) {
-	freshConfig(t)
-	SetAssistant("Claude Code")
-	var out bytes.Buffer
-	if Offer(&out, "When the evaluation finishes", Report, Manual{}, "mnist") != "report" || !strings.Contains(out.String(), "Write a Tensorleap analysis report for project mnist") {
-		t.Fatalf("got:\n%s", out.String())
-	}
-	out.Reset()
-	if !Show(&out, "When the evaluation finishes", Report, Manual{}, "mnist") {
-		t.Fatal("an offered hint must still be due")
-	}
-	out.Reset()
-	if Offer(&out, "When the evaluation finishes", Report, Manual{}, "mnist") != "" || out.Len() > 0 {
-		t.Fatalf("shown after success, so never again:\n%s", out.String())
-	}
-}

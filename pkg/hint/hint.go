@@ -52,36 +52,28 @@ func SetAssistant(title string) {
 }
 
 // Show prints the next step and marks it shown, unless it was already suggested. Call it once the step it
-// follows has succeeded.
+// follows has succeeded, so a failed step leaves the hint due.
 func Show(w io.Writer, lead string, s Step, m Manual, args ...any) bool {
-	key := Offer(w, lead, s, m, args...)
-	if key != "" {
-		markShown(key)
-	}
-	return key != ""
-}
-
-// Offer prints the next step like Show but leaves it due, for when the step it follows may still fail
-// out of sight (leap push --no-wait). It returns the key it printed, or "".
-func Offer(w io.Writer, lead string, s Step, m Manual, args ...any) string {
 	assistant := viper.GetString(assistantKey)
 	shown := viper.GetStringSlice(shownKey)
 	switch {
 	case assistant != "":
 		if slices.Contains(shown, s.key) {
-			return ""
+			return false
 		}
 		if s.where != "" {
 			fmt.Fprintf(w, "\n%s, open %s in %s and ask:\n    %s\n", lead, assistant, s.where, fmt.Sprintf(s.ask, args...))
 		} else {
 			fmt.Fprintf(w, "\n%s, ask %s:\n    %s\n", lead, assistant, fmt.Sprintf(s.ask, args...))
 		}
-		return s.key
+		markShown(s.key)
+		return true
 	case m.key != "" && !slices.Contains(shown, m.key):
 		fmt.Fprintf(w, "\n%s, %s\n%s\n", lead, m.do, mcpConfigLine)
-		return m.key
+		markShown(m.key)
+		return true
 	}
-	return ""
+	return false
 }
 
 func markShown(key string) {
