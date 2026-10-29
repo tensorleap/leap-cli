@@ -41,6 +41,7 @@ var errShown = ErrShown
 func newConfigCmd() *cobra.Command {
 	var envName string
 	var printOnly, noSkills bool
+	licenseFlag := auth.NewLicenseFlag()
 	cmd := &cobra.Command{
 		Use:   "config [" + strings.Join(clientNames, "|") + "]",
 		Short: "Connect an AI assistant to Tensorleap (MCP server and skills)",
@@ -51,10 +52,17 @@ leap, before you have a Tensorleap server. It ends with the next thing to ask th
 install Tensorleap, integrate your model, or analyze it, depending on where you are; leap
 server install, leap auth login and leap push --eval suggest the steps after it, once each.
 
+With --license-token (or --license-file), it also saves the license from the Tensorleap
+signup page, and leap server install applies it, so you never paste the token into the
+assistant's chat:
+
+  leap mcp config --license-token <token from the signup page>
+
 Claude Code gets the 'analysis' (MCP server and skill), 'installer', 'integration' and
 'optimization' plugins. Skills already installed are left alone; each keeps itself up to date.
 Use --print to see the configuration without changing anything.`,
 		Example: "  leap mcp config\n" +
+			"  leap mcp config --license-token <token>\n" +
 			"  leap mcp config cursor\n" +
 			"  leap mcp config vscode --env prod\n" +
 			"  leap mcp config codex --print",
@@ -62,8 +70,20 @@ Use --print to see the configuration without changing anything.`,
 		Args:          cobra.MaximumNArgs(1),
 		SilenceUsage:  true,
 		SilenceErrors: true,
-		RunE: func(cmd *cobra.Command, args []string) error {
+		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			out := ui{w: cmd.OutOrStdout()}
+			// checked before anything changes, so a bad token leaves nothing saved or configured
+			var license, licenseEmail string
+			if licenseFlag.HasLicense() {
+				if license, err = licenseFlag.PrepareLicenseToken(); err != nil {
+					out.text("Could not read the license file: %v", err)
+					return errShown
+				}
+				if licenseEmail, err = auth.LicenseEmail(license); err != nil {
+					out.text("%s", err.Error())
+					return errShown
+				}
+			}
 			asking := len(args) == 0 && interactive()
 			if asking {
 				out.title("Connect an AI assistant to Tensorleap")
@@ -93,10 +113,20 @@ Use --print to see the configuration without changing anything.`,
 			}
 			if printOnly {
 				printConfig(cmd.OutOrStdout(), a.id, bin, serverArgs)
+				if license != "" {
+					out.text("\nYour license was not saved (--print changes nothing); run the command again without --print to save it.")
+				}
 				return nil
 			}
 			if !asking {
 				out.title("Connecting " + a.title + " to Tensorleap")
+			}
+			if license != "" {
+				if err = auth.SaveLicense(license); err != nil {
+					out.fail("Could not save your Tensorleap license: %v", err)
+					return errShown
+				}
+				out.ok("Saved your Tensorleap license (%s); leap server install will use it.", licenseEmail)
 			}
 			return setup(cmd.Context(), out, a, bin, serverArgs, envName, !noSkills)
 		},
@@ -104,6 +134,7 @@ Use --print to see the configuration without changing anything.`,
 	cmd.Flags().StringVar(&envName, "env", "", "Pin a 'leap auth' environment instead of following the current one")
 	cmd.Flags().BoolVar(&printOnly, "print", false, "Print the configuration to add by hand; change nothing")
 	cmd.Flags().BoolVar(&noSkills, "no-skills", false, "Register the MCP server only, without the Tensorleap skills")
+	licenseFlag.AddFlags(cmd)
 	cmd.SetFlagErrorFunc(func(c *cobra.Command, err error) error {
 		fmt.Fprintf(c.OutOrStdout(), "%s\nRun 'leap mcp config --help' for usage.\n", err)
 		return errShown

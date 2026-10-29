@@ -26,6 +26,8 @@ func NewReinstallCmd() *cobra.Command {
 			}
 
 			logCurrentServerVersion(cmd.Context(), "Current server version")
+			// before the first event, so a saved license gives the same events as --license-token
+			licenseFlag.ResolveWithSaved()
 			email := licenseTokenEmail(licenseFlag)
 
 			startProperties := map[string]interface{}{
@@ -58,7 +60,7 @@ func NewReinstallCmd() *cobra.Command {
 				sendServerEvent(analytics.EventServerReinstallFailed, failProperties, email)
 				return err
 			}
-			_, err = servercmd.RunReinstallCmd(cmd, flags, isReinstalled)
+			_, err = runReinstall(cmd, flags, isReinstalled)
 			if err != nil {
 				failProperties := map[string]interface{}{
 					"cli_version": version.CliVersion,
@@ -93,7 +95,7 @@ func NewReinstallCmd() *cobra.Command {
 				recommendCliUpgradeMessage()
 			}
 
-			err = handleLicenseAfterInstall(cmd, licenseFlag)
+			err = applyLicense(cmd, licenseFlag)
 			if err != nil {
 				return err
 			}

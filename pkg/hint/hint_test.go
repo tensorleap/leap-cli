@@ -42,7 +42,7 @@ func TestEachStepIsSuggestedOnceAndOnlyWithAnAssistant(t *testing.T) {
 	if Show(&out, "Next", Install) || Show(&out, "Next", Report, "mnist") {
 		t.Fatalf("a later leap run repeated a hint:\n%s", out.String())
 	}
-	if !Show(&out, "Next", Integrate) || !strings.Contains(out.String(), "ask Cursor") {
+	if !Show(&out, "Next", Integrate) || !strings.Contains(out.String(), "Next, open Cursor in the repo you want to integrate and ask:\n    Write a Tensorleap integration") {
 		t.Fatalf("the assistant should persist too:\n%s", out.String())
 	}
 }

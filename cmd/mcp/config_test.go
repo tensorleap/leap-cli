@@ -2,6 +2,7 @@ package mcp
 
 import (
 	"bytes"
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"io"
@@ -9,6 +10,9 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/spf13/viper"
+	"github.com/tensorleap/leap-cli/pkg/config"
 )
 
 func TestEverySnippetIsValidAndCopilotNoteOnlyForVSCode(t *testing.T) {
@@ -171,5 +175,44 @@ func TestOnlyMissingSkillsAndPluginsAreInstalled(t *testing.T) {
 		[]byte(`{"version":2,"plugins":{"analysis@tensorleap":[{"version":"0.3.1"}]}}`), 0o644)
 	if got := strings.Join(missingClaudePlugins(), ","); got != "installer@tensorleap,integration@tensorleap,optimization@tensorleap" {
 		t.Fatalf("missing plugins: %s", got)
+	}
+}
+
+func TestLicenseIsCheckedFirstAndNotSavedWithPrint(t *testing.T) {
+	dir := t.TempDir()
+	t.Setenv("HOME", dir)
+	viper.Reset()
+	t.Cleanup(viper.Reset)
+	if err := config.InitConfig(filepath.Join(dir, "config.yaml")); err != nil {
+		t.Fatal(err)
+	}
+	enc := base64.RawURLEncoding.EncodeToString
+	noEmail := enc([]byte(`{}`)) + "." + enc([]byte(`{"activated":false}`)) + ".sig"
+	good := enc([]byte(`{}`)) + "." + enc([]byte(`{"activated":false,"user":{"email":"a@b.c"}}`)) + ".sig"
+	run := func(args ...string) (string, error) {
+		var out bytes.Buffer
+		cmd := newConfigCmd()
+		cmd.SetOut(&out)
+		cmd.SetArgs(args)
+		err := cmd.Execute()
+		return out.String(), err
+	}
+
+	for _, bad := range []string{"garbage", noEmail} {
+		out, err := run("codex", "--license-token", bad)
+		if err == nil || !strings.Contains(out, "not a Tensorleap license token") || strings.Contains(out, bad) {
+			t.Fatalf("a bad token must fail without echoing it: %v\n%s", err, out)
+		}
+	}
+	if _, err := os.Stat(filepath.Join(dir, ".codex")); !os.IsNotExist(err) {
+		t.Fatal("a bad token must leave the assistant unconfigured")
+	}
+
+	out, err := run("codex", "--print", "--license-token", good)
+	if err != nil || !strings.Contains(out, "license was not saved") || strings.Contains(out, good) {
+		t.Fatalf("--print: %v\n%s", err, out)
+	}
+	if viper.IsSet("license.token") {
+		t.Fatal("--print must not save the license")
 	}
 }

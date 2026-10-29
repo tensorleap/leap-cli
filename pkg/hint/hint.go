@@ -11,12 +11,13 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/config"
 )
 
-type Step struct{ key, ask string }
+// where, if set, is where to open the assistant before asking
+type Step struct{ key, ask, where string }
 
 var (
-	Install   = Step{"install", "Install Tensorleap on this machine"}
-	Integrate = Step{"integrate", "Write a Tensorleap integration for my model"}
-	Report    = Step{"report", "Write a Tensorleap analysis report for project %s"}
+	Install   = Step{"install", "Install Tensorleap on this machine", ""}
+	Integrate = Step{"integrate", "Write a Tensorleap integration for my model", "the repo you want to integrate"}
+	Report    = Step{"report", "Write a Tensorleap analysis report for project %s", ""}
 )
 
 const (
@@ -37,7 +38,11 @@ func Show(w io.Writer, lead string, s Step, args ...any) bool {
 	if assistant == "" || slices.Contains(shown, s.key) {
 		return false
 	}
-	fmt.Fprintf(w, "\n%s, ask %s:\n    %s\n", lead, assistant, fmt.Sprintf(s.ask, args...))
+	if s.where != "" {
+		fmt.Fprintf(w, "\n%s, open %s in %s and ask:\n    %s\n", lead, assistant, s.where, fmt.Sprintf(s.ask, args...))
+	} else {
+		fmt.Fprintf(w, "\n%s, ask %s:\n    %s\n", lead, assistant, fmt.Sprintf(s.ask, args...))
+	}
 	viper.Set(shownKey, append(shown, s.key))
 	_ = config.Save()
 	return true

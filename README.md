@@ -30,6 +30,16 @@ Right after installing leap, before you have a Tensorleap server, run:
 leap mcp config
 ```
 
+New to Tensorleap? Install leap and save the license from the signup page in one go:
+
+```sh
+curl -sL https://raw.githubusercontent.com/tensorleap/leap-cli/master/install.sh | bash
+leap mcp config --license-token <token from the signup page>
+```
+
+Then open your assistant (e.g. Claude Code) and ask it to "Install Tensorleap on this machine". `leap server install` applies the saved license, so the token never goes into the
+assistant's chat.
+
 It asks which assistant (Claude Code, Cursor, VS Code/Copilot, Codex, Windsurf, Claude Desktop),
 registers the Tensorleap MCP server and installs every
 [Tensorleap skill](https://github.com/tensorleap/skills) the assistant supports. Skills already
