@@ -8,6 +8,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	servercmd "github.com/tensorleap/helm-charts/cmd/server"
 	"github.com/tensorleap/helm-charts/pkg/local"
 	"github.com/tensorleap/helm-charts/pkg/server"
 	"github.com/tensorleap/helm-charts/pkg/server/manifest"
@@ -54,7 +55,17 @@ func getConfigureDataDir() string {
 	return dataDir
 }
 
-func initDataDir(ctx context.Context, flag string) (bool, error) {
+// tests replace these to run install and reinstall without touching the machine or sending events
+var (
+	sendEvent        = analytics.SendEvent
+	initDataDir      = initLocalDataDir
+	runInstall       = servercmd.RunInstallCmd
+	runReinstall     = servercmd.RunReinstallCmd
+	applyLicense     = handleLicenseAfterInstall
+	installedVersion = getServerVersionSafe
+)
+
+func initLocalDataDir(ctx context.Context, flag string) (bool, error) {
 	configureDir := getConfigureDataDir()
 	previousDir := configureDir
 	if previousDir == "" {
@@ -132,7 +143,7 @@ func getServerVersionSafe(ctx context.Context) string {
 // so it is included in subsequent Mixpanel events. No-op when no installation
 // is found (e.g. fresh install).
 func logCurrentServerVersion(ctx context.Context, label string) {
-	v := getServerVersionSafe(ctx)
+	v := installedVersion(ctx)
 	if v == "" {
 		return
 	}
@@ -175,5 +186,5 @@ func sendServerEvent(event analytics.EventType, props map[string]interface{}, em
 	if email != "" {
 		props["email"] = email
 	}
-	analytics.SendEvent(event, props)
+	sendEvent(event, props)
 }

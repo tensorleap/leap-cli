@@ -27,6 +27,8 @@ func NewInstallCmd() *cobra.Command {
 			}
 
 			logCurrentServerVersion(cmd.Context(), "Current server version")
+			// before the first event, so a saved license gives the same events as --license-token
+			licenseFlag.ResolveWithSaved()
 			email := licenseTokenEmail(licenseFlag)
 
 			// Track installation started
@@ -62,7 +64,7 @@ func NewInstallCmd() *cobra.Command {
 				return err
 			}
 
-			_, err = servercmd.RunInstallCmd(cmd, flags)
+			_, err = runInstall(cmd, flags)
 			if err != nil {
 				// Track installation failed
 				failProperties := map[string]interface{}{
@@ -99,7 +101,7 @@ func NewInstallCmd() *cobra.Command {
 				recommendCliUpgradeMessage()
 			}
 
-			err = handleLicenseAfterInstall(cmd, licenseFlag)
+			err = applyLicense(cmd, licenseFlag)
 			if err != nil {
 				return err
 			}
