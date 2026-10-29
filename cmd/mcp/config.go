@@ -250,10 +250,10 @@ func setup(ctx context.Context, out ui, a *assistant, bin string, serverArgs []s
 	// the first step that fits; later ones come from leap server install, leap auth login and leap push --eval
 	switch {
 	case st != nil && len(st.Projects) > 0:
-		hint.Show(out.w, "Then", hint.Report, st.Projects[0])
+		hint.Show(out.w, "Then", hint.Report, hint.Manual{}, st.Projects[0])
 	case signedIn:
-		hint.Show(out.w, "Then", hint.Integrate)
-	case hint.Show(out.w, "Then", hint.Install):
+		hint.Show(out.w, "Then", hint.Integrate, hint.Manual{})
+	case hint.Show(out.w, "Then", hint.Install, hint.Manual{}):
 		out.detail("Already have a Tensorleap server? Sign in instead: leap auth login")
 	}
 	out.text("")

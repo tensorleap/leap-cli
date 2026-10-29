@@ -48,6 +48,7 @@ func NewUpgradeCmd() *cobra.Command {
 				return err
 			}
 			_, err = server.RunUpgradeCmd(cmd, flags)
+			ensureNotes()
 			if err != nil {
 				// Track upgrade failed
 				failProperties := map[string]interface{}{

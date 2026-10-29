@@ -1,6 +1,15 @@
 package root_cmd
 
-import "testing"
+import (
+	"bytes"
+	"path/filepath"
+	"strings"
+	"testing"
+
+	"github.com/spf13/viper"
+	"github.com/tensorleap/leap-cli/pkg/config"
+	"github.com/tensorleap/leap-cli/pkg/hint"
+)
 
 func TestValidatePushInputs(t *testing.T) {
 	const interactive, headless = true, false
@@ -82,5 +91,48 @@ func TestValidatePushInputsTrimsProjectName(t *testing.T) {
 	}
 	if in.projectName != "My Project" {
 		t.Fatalf("projectName not trimmed, got %q", in.projectName)
+	}
+}
+
+func TestReportHintIsUsedUpOnlyByAPushThatWaited(t *testing.T) {
+	viper.Reset()
+	t.Cleanup(viper.Reset)
+	if err := config.InitConfig(filepath.Join(t.TempDir(), "config.yaml")); err != nil {
+		t.Fatal(err)
+	}
+	hint.SetAssistant("Claude Code")
+	var out bytes.Buffer
+	showReportHint(&out, true, "http://localhost:4589", "mnist")
+	if !strings.Contains(out.String(), "Write a Tensorleap analysis report for project mnist") {
+		t.Fatalf("--no-wait still shows the hint:\n%s", out.String())
+	}
+	// the --no-wait push failed on the server; the re-push shows the hint again
+	out.Reset()
+	showReportHint(&out, true, "http://localhost:4589", "mnist")
+	if out.Len() == 0 {
+		t.Fatal("a --no-wait push must not use the hint up")
+	}
+	out.Reset()
+	showReportHint(&out, false, "http://localhost:4589", "mnist")
+	if out.Len() == 0 {
+		t.Fatal("still due")
+	}
+	out.Reset()
+	showReportHint(&out, true, "http://localhost:4589", "mnist")
+	if out.Len() > 0 {
+		t.Fatalf("a push that waited and succeeded uses it up:\n%s", out.String())
+	}
+}
+
+func TestReportHintWithoutAnAssistantPointsToTheResults(t *testing.T) {
+	viper.Reset()
+	t.Cleanup(viper.Reset)
+	if err := config.InitConfig(filepath.Join(t.TempDir(), "config.yaml")); err != nil {
+		t.Fatal(err)
+	}
+	var out bytes.Buffer
+	showReportHint(&out, false, "http://localhost:4589", "mnist")
+	if out.String() != "\nWhen the evaluation finishes, see the results at http://localhost:4589\nPrefer an AI assistant to do this? Run leap mcp config.\n" {
+		t.Fatalf("got %q", out.String())
 	}
 }

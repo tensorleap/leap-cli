@@ -4,12 +4,14 @@ import (
 	"bufio"
 	"context"
 	"fmt"
+	"io"
 	"os"
 	"strconv"
 	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
+	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/hint"
@@ -177,9 +179,19 @@ func runPush(cmdCtx context.Context, in *pushInputs) error {
 		return err
 	}
 	if s.inputs.runEval {
-		hint.Show(os.Stdout, "When the evaluation finishes", hint.Report, s.project.GetName())
+		showReportHint(os.Stdout, s.inputs.noWait, api.GetBaseUrlFromContext(s.ctx), s.project.GetName())
 	}
 	return nil
+}
+
+// showReportHint suggests the analysis report once. With --no-wait the push may still fail on the server,
+// so the hint stays due and the next push with --eval shows it again.
+func showReportHint(w io.Writer, noWait bool, uiUrl, project string) {
+	if noWait {
+		hint.Offer(w, "When the evaluation finishes", hint.Report, hint.Results(uiUrl), project)
+		return
+	}
+	hint.Show(w, "When the evaluation finishes", hint.Report, hint.Results(uiUrl), project)
 }
 
 // runPushFlow pushes the version and returns its id and code-snapshot id.
