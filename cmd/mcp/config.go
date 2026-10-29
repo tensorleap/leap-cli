@@ -15,13 +15,22 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/auth"
+	"github.com/tensorleap/leap-cli/pkg/hint"
 	mcpPkg "github.com/tensorleap/leap-cli/pkg/mcp"
 )
 
 const (
 	skillsInstaller   = "https://raw.githubusercontent.com/tensorleap/skills/main/install.sh"
 	skillsMarketplace = "tensorleap/skills"
+	marketplaceName   = "tensorleap"
 	analysisPlugin    = "analysis@tensorleap"
+)
+
+// ponytail: the skills leap knows by name. A skill added later reaches skill folders with the next
+// self-update (it reinstalls them all); Claude Code gets a new plugin only once it is listed here.
+var (
+	skillNames    = []string{"tensorleap-analysis", "tensorleap-install", "tensorleap-integration-creation", "tensorleap-runtime-optimization"}
+	claudePlugins = []string{analysisPlugin, "installer@tensorleap", "integration@tensorleap", "optimization@tensorleap"}
 )
 
 // ErrShown is returned after a failure was already printed, so the CLI exits 1 without a second message
@@ -35,11 +44,15 @@ func newConfigCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "config [" + strings.Join(clientNames, "|") + "]",
 		Short: "Connect an AI assistant to Tensorleap (MCP server and skills)",
-		Long: `Sets up an AI assistant to read your Tensorleap analysis: registers the Tensorleap MCP
-server in the assistant's configuration, installs the Tensorleap skills where the assistant
-supports them, and checks that the server answers. Run it without arguments to be asked.
+		Long: `Sets up an AI assistant for Tensorleap: registers the Tensorleap MCP server in the
+assistant's configuration, installs every Tensorleap skill where the assistant supports them,
+and, once you are signed in, checks that the server answers. Run it right after installing
+leap, before you have a Tensorleap server. It ends with the next thing to ask the assistant:
+install Tensorleap, integrate your model, or analyze it, depending on where you are; leap
+server install, leap auth login and leap push --eval suggest the steps after it, once each.
 
-Claude Code gets the 'analysis' plugin, which carries both the MCP server and the skills.
+Claude Code gets the 'analysis' (MCP server and skill), 'installer', 'integration' and
+'optimization' plugins. Skills already installed are left alone; each keeps itself up to date.
 Use --print to see the configuration without changing anything.`,
 		Example: "  leap mcp config\n" +
 			"  leap mcp config cursor\n" +
@@ -168,35 +181,32 @@ func pickEnv(out ui) (string, error) {
 
 func setup(ctx context.Context, out ui, a *assistant, bin string, serverArgs []string, envName string, withSkills bool) error {
 	env, err := chooseEnv(envName)
-	if errors.Is(err, auth.ErrNotLoggedIn) {
-		out.fail("You're not signed in to Tensorleap")
-		out.detail("Sign in, then run this again:")
-		out.command("leap auth login")
-		return errShown
-	}
-	if err != nil {
+	signedIn := err == nil
+	if err != nil && !errors.Is(err, auth.ErrNotLoggedIn) {
 		out.fail("%s", err)
 		return errShown
 	}
-	client := mcpPkg.NewClient(env.ApiUrl, env.ApiKey)
-	st, err := showStatus(ctx, out, client)
-	if err != nil {
-		return errShown
-	}
-	if st == nil {
-		out.detail("The assistant is still set up; it connects once the server is reachable.")
+	var st *mcpPkg.ServerStatus
+	if signedIn {
+		if st, err = showStatus(ctx, out, mcpPkg.NewClient(env.ApiUrl, env.ApiKey)); err != nil {
+			return errShown
+		}
+		if st == nil {
+			out.detail("The assistant is still set up; it connects once the server is reachable.")
+		}
+	} else {
+		out.skip("Not signed in to Tensorleap yet; the assistant connects once you are")
 	}
 
 	entry := serverEntry{Command: bin, Args: serverArgs}
-	skills := false
 	if a.id == "claude-code" {
-		if skills, err = setupClaudeCode(out, entry, envName, withSkills); err != nil {
+		if err = setupClaudeCode(out, entry, envName, withSkills); err != nil {
 			return err
 		}
 	} else {
 		configureFile(out, a, entry)
 		if withSkills {
-			skills = installSkills(out, a)
+			installSkills(out, a)
 		} else {
 			out.skip("Skills: skipped (--no-skills)")
 		}
@@ -204,14 +214,16 @@ func setup(ctx context.Context, out ui, a *assistant, bin string, serverArgs []s
 
 	showAccess(out, st)
 
-	project := "<project>"
-	if st != nil && len(st.Projects) > 0 {
-		project = st.Projects[0]
-	}
-	out.text("\n%s %s, then ask:", okStyle.Render("Done."), a.restart)
-	out.command(fmt.Sprintf("What is my model's biggest weakness in project %s?", project))
-	if skills {
-		out.command(fmt.Sprintf("Write a Tensorleap analysis report for project %s", project))
+	hint.SetAssistant(a.title)
+	out.text("\n%s %s.", okStyle.Render("Done."), a.restart)
+	// the first step that fits; later ones come from leap server install, leap auth login and leap push --eval
+	switch {
+	case st != nil && len(st.Projects) > 0:
+		hint.Show(out.w, "Then", hint.Report, st.Projects[0])
+	case signedIn:
+		hint.Show(out.w, "Then", hint.Integrate)
+	case hint.Show(out.w, "Then", hint.Install):
+		out.detail("Already have a Tensorleap server? Sign in instead: leap auth login")
 	}
 	out.text("")
 	return nil
@@ -249,16 +261,20 @@ func configureFile(out ui, a *assistant, entry serverEntry) {
 	}
 }
 
-func installSkills(out ui, a *assistant) bool {
+func installSkills(out ui, a *assistant) {
 	if a.skillsTool == "" {
-		out.skip("Skills: %s doesn't load skills; the MCP tools work on their own", a.title)
-		return false
+		out.skip("Skills: %s adds skills only through its own settings; the MCP tools work on their own", a.title)
+		return
+	}
+	if hasSkills(a) {
+		out.ok("%s already has the Tensorleap skills (%s); they keep themselves up to date", a.title, a.skillsDir)
+		return
 	}
 	cmdline := fmt.Sprintf("curl -fsSL %s | sh -s -- --tool %s --global", skillsInstaller, a.skillsTool)
 	if !onPath("curl") || !onPath("sh") {
 		out.warn("Skills not installed: this needs curl and sh. Install them with:")
 		out.command(cmdline)
-		return false
+		return
 	}
 	var res []byte
 	var err error
@@ -268,15 +284,24 @@ func installSkills(out ui, a *assistant) bool {
 		out.detail("%s", strings.TrimSpace(string(res)))
 		out.detail("Retry with:")
 		out.command(cmdline)
-		return false
+		return
 	}
-	out.ok("Installed the Tensorleap skills in %s (analysis, integration, install)", a.skillsDir)
+	out.ok("Installed the Tensorleap skills in %s (analysis, install, integration, optimization)", a.skillsDir)
+}
+
+func hasSkills(a *assistant) bool {
+	dir := home(strings.TrimPrefix(a.skillsDir, "~/"))
+	for _, s := range skillNames {
+		if !exists(filepath.Join(dir, s, "SKILL.md")) {
+			return false
+		}
+	}
 	return true
 }
 
-// Claude Code gets the analysis plugin: it carries the MCP server and the skills, and updates through the
-// marketplace. The plugin follows the current leap environment; another one is registered on its own.
-func setupClaudeCode(out ui, entry serverEntry, envName string, withSkills bool) (skills bool, err error) {
+// Claude Code gets the Tensorleap plugins, which update through the marketplace. The analysis plugin carries the
+// MCP server and follows the current leap environment; another environment is registered on its own.
+func setupClaudeCode(out ui, entry serverEntry, envName string, withSkills bool) error {
 	current := currentEnvName()
 	pinned := envName != "" && envName != current
 	if pinned && withSkills && interactive() {
@@ -287,12 +312,12 @@ func setupClaudeCode(out ui, entry serverEntry, envName string, withSkills bool)
 			}, 0)
 		if cerr != nil {
 			out.text("Cancelled; nothing was changed.")
-			return false, errShown
+			return errShown
 		}
 		if i == 0 {
 			if err := auth.UseEnv(envName); err != nil {
 				out.fail("%s", err)
-				return false, errShown
+				return errShown
 			}
 			out.ok("Current leap environment is now %s", envName)
 			pinned = false
@@ -301,50 +326,57 @@ func setupClaudeCode(out ui, entry serverEntry, envName string, withSkills bool)
 	if !onPath("claude") {
 		out.warn("The claude command is not on your PATH, so finish the setup inside Claude Code:")
 		if withSkills && !pinned {
-			out.command("/plugin marketplace add " + skillsMarketplace)
-			out.command("/plugin install " + analysisPlugin)
+			printPluginCommands(out, claudePlugins)
 		} else {
 			out.command(claudeAddLine(entry))
 		}
-		return false, nil
+		return nil
 	}
 	if withSkills && !pinned {
-		if hasClaudePlugin(analysisPlugin) {
-			out.ok("Claude Code already has the Tensorleap analysis plugin (MCP server and skills)")
+		if missing := missingClaudePlugins(); len(missing) == 0 {
+			out.ok("Claude Code already has the Tensorleap plugins; they keep themselves up to date")
 		} else {
 			var res []byte
 			var err error
-			spin(out.w, "Installing the Tensorleap plugin in Claude Code…", func() {
+			spin(out.w, "Installing the Tensorleap plugins in Claude Code…", func() {
 				res, err = exec.Command("claude", "plugin", "marketplace", "add", skillsMarketplace).CombinedOutput()
 				if err != nil && bytes.Contains(bytes.ToLower(res), []byte("already")) {
 					err = nil
 				}
+				// re-adding a known marketplace doesn't refresh it, and an old copy may predate some plugins
 				if err == nil {
-					res, err = exec.Command("claude", "plugin", "install", analysisPlugin).CombinedOutput()
+					res, err = exec.Command("claude", "plugin", "marketplace", "update", marketplaceName).CombinedOutput()
+				}
+				for _, p := range missing {
+					if err != nil {
+						break
+					}
+					res, err = exec.Command("claude", "plugin", "install", p).CombinedOutput()
 				}
 			})
 			if err != nil {
-				out.fail("Could not install the analysis plugin: %s", strings.TrimSpace(string(res)))
+				out.fail("Could not install the Tensorleap plugins: %s", strings.TrimSpace(string(res)))
 				out.detail("Inside Claude Code, run instead:")
-				out.command("/plugin marketplace add " + skillsMarketplace)
-				out.command("/plugin install " + analysisPlugin)
-				return false, errShown
+				printPluginCommands(out, missing)
+				return errShown
 			}
-			out.ok("Installed the Tensorleap analysis plugin in Claude Code (MCP server and skills)")
+			out.ok("Installed the Tensorleap plugins in Claude Code: %s", strings.Join(missing, ", "))
 		}
 		// an older stand-alone registration would show every tool twice
 		if exec.Command("claude", "mcp", "get", "tensorleap").Run() == nil {
 			_ = exec.Command("claude", "mcp", "remove", "tensorleap", "--scope", "user").Run()
 			out.detail("removed your earlier stand-alone 'tensorleap' entry; the plugin replaces it")
 		}
-		out.detail("follows your current leap environment (%s); change it with: leap auth select", currentEnvName())
-		return true, nil
+		if env := currentEnvName(); env != "" {
+			out.detail("the analysis plugin follows your current leap environment (%s); change it with: leap auth select", env)
+		}
+		return nil
 	}
 	_ = exec.Command("claude", "mcp", "remove", "tensorleap", "--scope", "user").Run()
 	args := append([]string{"mcp", "add", "--scope", "user", "tensorleap", "--", entry.Command}, entry.Args...)
 	if res, err := exec.Command("claude", args...).CombinedOutput(); err != nil {
 		out.fail("Could not register the MCP server: %s", strings.TrimSpace(string(res)))
-		return false, errShown
+		return errShown
 	}
 	out.ok("Registered the Tensorleap MCP server in Claude Code (all your projects)")
 	switch {
@@ -353,7 +385,25 @@ func setupClaudeCode(out ui, entry serverEntry, envName string, withSkills bool)
 	case pinned:
 		out.skip("Skills: not installed; the analysis plugin follows your current environment (%s)", current)
 	}
-	return false, nil
+	return nil
+}
+
+func printPluginCommands(out ui, plugins []string) {
+	out.command("/plugin marketplace add " + skillsMarketplace)
+	out.command("/plugin marketplace update " + marketplaceName)
+	for _, p := range plugins {
+		out.command("/plugin install " + p)
+	}
+}
+
+func missingClaudePlugins() []string {
+	var missing []string
+	for _, p := range claudePlugins {
+		if !hasClaudePlugin(p) {
+			missing = append(missing, p)
+		}
+	}
+	return missing
 }
 
 func claudeAddLine(entry serverEntry) string {

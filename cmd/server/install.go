@@ -7,6 +7,7 @@ import (
 	servercmd "github.com/tensorleap/helm-charts/cmd/server"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/auth"
+	"github.com/tensorleap/leap-cli/pkg/hint"
 	"github.com/tensorleap/leap-cli/pkg/version"
 )
 
@@ -103,6 +104,7 @@ func NewInstallCmd() *cobra.Command {
 				return err
 			}
 
+			hint.Show(cmd.OutOrStdout(), "Next", hint.Integrate)
 			return nil
 		},
 	}

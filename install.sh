@@ -178,7 +178,8 @@ testVersion() {
     echo "$APP_NAME not found. Is $BIN_DIR on your "'$PATH?'
     exit 1
   fi
-  echo "Run '$APP_NAME --help' to see what you can do with it."
+  echo "Next, connect your AI assistant to Tensorleap: $APP_NAME mcp config"
+  echo "Run '$APP_NAME --help' to see what else you can do with it."
 }
 
 # help provides possible cli installation arguments

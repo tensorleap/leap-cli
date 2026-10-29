@@ -24,16 +24,20 @@ wget -q -O - https://raw.githubusercontent.com/tensorleap/leap-cli/master/instal
 
 ## Connect an AI assistant (MCP)
 
-After `leap auth login`, run:
+Right after installing leap, before you have a Tensorleap server, run:
 
 ```sh
 leap mcp config
 ```
 
-It asks which assistant (Claude Code, Cursor, VS Code/Copilot, Codex, Windsurf, Claude Desktop)
-and sets it up to read your Tensorleap analysis: the Tensorleap MCP server plus the
-[Tensorleap skills](https://github.com/tensorleap/skills#connect-your-ai-assistant-to-tensorleap-mcp-server--skills)
-where the assistant supports them. Run `leap mcp` in a terminal to check the connection.
+It asks which assistant (Claude Code, Cursor, VS Code/Copilot, Codex, Windsurf, Claude Desktop),
+registers the Tensorleap MCP server and installs every
+[Tensorleap skill](https://github.com/tensorleap/skills) the assistant supports. Skills already
+installed are left alone; each keeps itself up to date. It ends with the next thing to ask the
+assistant, and leap suggests each step after it once, when it becomes possible: install
+Tensorleap (after `leap mcp config`), write the integration for your model (after
+`leap server install` or `leap auth login`), then the analysis report (after `leap push --eval`).
+Run `leap mcp` in a terminal to check the connection once you are signed in.
 
 ### Manually
 
