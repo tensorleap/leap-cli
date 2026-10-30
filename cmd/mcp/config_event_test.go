@@ -59,7 +59,7 @@ func TestConfigSendsOneEventWhetherItWorkedOrNot(t *testing.T) {
 		{[]string{"cursor", "--no-skills"},
 			map[string]interface{}{"assistant": "cursor", "success": true, "license_saved": false, "print_only": false}},
 		{[]string{"codex", "--print", "--license-token", token},
-			map[string]interface{}{"assistant": "codex", "success": true, "license_saved": false, "print_only": true, "email": "a+b@c.d"}},
+			map[string]interface{}{"assistant": "codex", "success": true, "license_saved": false, "print_only": true}},
 		{[]string{"codex", "--license-token", "garbage"},
 			map[string]interface{}{"success": false, "license_saved": false, "print_only": false}},
 		{[]string{"no-such-assistant"},
@@ -70,7 +70,19 @@ func TestConfigSendsOneEventWhetherItWorkedOrNot(t *testing.T) {
 			t.Errorf("%v:\ngot  %v\nwant %v", c.args, got, c.want)
 		}
 	}
+
+	// a run that fails inside setup, after the license was saved: an --env the user doesn't have
+	if err := os.WriteFile(filepath.Join(dir, "config.yaml"), []byte("envs:\n  local:\n    api_url: http://localhost:4589/api/v2\n    api_key: k\n"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if err := viper.ReadInConfig(); err != nil {
+		t.Fatal(err)
+	}
+	want := map[string]interface{}{"assistant": "codex", "success": false, "license_saved": true, "print_only": false, "email": "a+b@c.d"}
+	if got := run("codex", "--no-skills", "--env", "nope", "--license-token", token); !reflect.DeepEqual(got, want) {
+		t.Errorf("setup failure:\ngot  %v\nwant %v", got, want)
+	}
 	if viper.GetString("license.token") != token {
-		t.Fatal("the license was saved by the first run")
+		t.Fatal("the license was saved")
 	}
 }

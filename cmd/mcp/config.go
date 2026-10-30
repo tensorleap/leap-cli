@@ -86,7 +86,8 @@ Use --print to see the configuration without changing anything.`,
 				if a != nil {
 					props["assistant"] = a.id
 				}
-				if licenseEmail != "" {
+				// --print changes nothing, so the token's email isn't sent either: analytics would save it
+				if licenseEmail != "" && !printOnly {
 					props["email"] = licenseEmail
 				}
 				sendEvent(analytics.EventMcpConfig, props)

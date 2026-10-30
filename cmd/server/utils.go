@@ -190,13 +190,13 @@ func sendServerEvent(event analytics.EventType, props map[string]interface{}, em
 	sendEvent(event, props)
 }
 
-// sharedGroupReexecEnv is set by helm-charts (pkg/local/reexec_unix.go) when it re-runs the whole
+// helm-charts (pkg/local/reexec_unix.go) sets sharedGroupReexecEnv=1 when it re-runs the whole
 // command under `sg tensorleap`, the first time it adds the user to that group
 const sharedGroupReexecEnv = "TL_SHARED_GROUP_REEXEC"
 
 // sendStartedEvent counts a start once: the run that re-executed under sg already sent it
 func sendStartedEvent(event analytics.EventType, props map[string]interface{}, email string) {
-	if os.Getenv(sharedGroupReexecEnv) != "" {
+	if os.Getenv(sharedGroupReexecEnv) == "1" {
 		return
 	}
 	sendServerEvent(event, props, email)
