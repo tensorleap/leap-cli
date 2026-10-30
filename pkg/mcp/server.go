@@ -19,69 +19,136 @@ const (
 )
 
 type Server struct {
+	signin   func() (*Client, error)
+	version  string
 	client   *Client
 	remote   *sdk.ClientSession
 	mu       sync.Mutex
 	progress map[any]*sdk.ServerSession
+	// the assistant's name and version, once it said them; a client signed in later is told too
+	assistant [2]string
+	// one tl_status call at a time tries to connect while leap mcp is not connected
+	connecting sync.Mutex
 }
 
+// NewServer bridges the Tensorleap server client points at
 func NewServer(client *Client, version string) *sdk.Server {
-	client.version = headerValue(version)
-	s := &Server{client: client, progress: map[any]*sdk.ServerSession{}}
+	return NewSignedInServer(func() (*Client, error) { return client, nil }, version)
+}
+
+// NewSignedInServer bridges the server signin names. An assistant starts leap mcp once per session, often
+// before the user signed in or installed a server, so when that fails it still starts with tl_status alone,
+// and every tl_status call runs signin and connects again. Once one succeeds, the server's tools replace it
+// and the assistant is told the tool list changed: a later `leap auth login` needs no assistant restart.
+func NewSignedInServer(signin func() (*Client, error), version string) *sdk.Server {
+	s := &Server{signin: signin, version: version, progress: map[any]*sdk.ServerSession{}}
 	ctx, cancel := context.WithTimeout(context.Background(), connectTimeout)
 	defer cancel()
-	srv, err := s.bridge(ctx, version)
+	b, err := s.dial(ctx)
 	if err != nil {
-		return unavailable(version, err)
+		// the first tl_status call connects again and reports the problem as it is by then
+		return s.unavailable()
 	}
+	srv := sdk.NewServer(&sdk.Implementation{Name: "tensorleap", Title: "Tensorleap", Version: version},
+		&sdk.ServerOptions{Instructions: b.instructions, InitializedHandler: s.initialized})
+	s.addTo(srv, b)
 	return srv
 }
 
-func (s *Server) bridge(ctx context.Context, version string) (*sdk.Server, error) {
-	if s.client.failure != nil {
-		return nil, s.client.failure
+// the server was connected before the assistant said who it is, so it's told on every later request
+func (s *Server) initialized(_ context.Context, req *sdk.InitializedRequest) {
+	info := req.Session.InitializeParams().ClientInfo
+	if info == nil {
+		return
 	}
-	remote, err := s.client.connect(ctx, version, &sdk.ClientOptions{ProgressNotificationHandler: s.relayProgress})
-	if err != nil {
-		return nil, connectError(ctx, s.client, err)
+	s.mu.Lock()
+	s.assistant = [2]string{info.Name, info.Version}
+	client := s.client
+	s.mu.Unlock()
+	if client != nil {
+		client.setAssistant(info.Name, info.Version)
 	}
-	s.remote = remote
-	init := remote.InitializeResult()
-	srv := sdk.NewServer(&sdk.Implementation{Name: "tensorleap", Title: "Tensorleap", Version: version},
-		&sdk.ServerOptions{
-			Instructions: init.Instructions,
-			// the server was connected before the assistant said who it is, so it's told on every later request
-			InitializedHandler: func(_ context.Context, req *sdk.InitializedRequest) {
-				if info := req.Session.InitializeParams().ClientInfo; info != nil {
-					s.client.setAssistant(info.Name, info.Version)
-				}
-			},
-		})
+}
 
-	for tool, err := range remote.Tools(ctx, nil) {
+// bridged is what a connected server offers, read in full before any of it is served
+type bridged struct {
+	client       *Client
+	remote       *sdk.ClientSession
+	instructions string
+	tools        []*sdk.Tool
+	resources    []*sdk.Resource
+	prompts      []*sdk.Prompt
+}
+
+func (s *Server) dial(ctx context.Context) (*bridged, error) {
+	client, err := s.signin()
+	if err != nil {
+		return nil, err
+	}
+	if client.failure != nil {
+		return nil, client.failure
+	}
+	client.version = headerValue(s.version)
+	remote, err := client.connect(ctx, s.version, &sdk.ClientOptions{ProgressNotificationHandler: s.relayProgress})
+	if err != nil {
+		return nil, connectError(ctx, client, err)
+	}
+	b := &bridged{client: client, remote: remote, instructions: remote.InitializeResult().Instructions}
+	if err := b.list(ctx); err != nil {
+		_ = remote.Close()
+		return nil, err
+	}
+	return b, nil
+}
+
+func (b *bridged) list(ctx context.Context) error {
+	for tool, err := range b.remote.Tools(ctx, nil) {
 		if err != nil {
-			return nil, err
+			return err
 		}
+		b.tools = append(b.tools, tool)
+	}
+	for res, err := range b.remote.Resources(ctx, nil) {
+		if err != nil {
+			return err
+		}
+		b.resources = append(b.resources, res)
+	}
+	for p, err := range b.remote.Prompts(ctx, nil) {
+		if err != nil {
+			return err
+		}
+		b.prompts = append(b.prompts, p)
+	}
+	return nil
+}
+
+func (s *Server) addTo(srv *sdk.Server, b *bridged) {
+	s.mu.Lock()
+	s.client, s.remote = b.client, b.remote
+	b.client.setAssistant(s.assistant[0], s.assistant[1])
+	s.mu.Unlock()
+	remote := b.remote
+	for _, tool := range b.tools {
 		srv.AddTool(tool, s.relayTool(tool.Name))
 	}
-	for res, err := range remote.Resources(ctx, nil) {
-		if err != nil {
-			return nil, err
-		}
+	for _, res := range b.resources {
 		srv.AddResource(res, func(ctx context.Context, req *sdk.ReadResourceRequest) (*sdk.ReadResourceResult, error) {
 			return remote.ReadResource(ctx, req.Params)
 		})
 	}
-	for p, err := range remote.Prompts(ctx, nil) {
-		if err != nil {
-			return nil, err
-		}
+	for _, p := range b.prompts {
 		srv.AddPrompt(p, func(ctx context.Context, req *sdk.GetPromptRequest) (*sdk.GetPromptResult, error) {
 			return remote.GetPrompt(ctx, req.Params)
 		})
 	}
 	s.addExportTool(srv)
-	return srv, nil
+}
+
+func (s *Server) connected() bool {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	return s.remote != nil
 }
 
 func (s *Server) relayTool(name string) sdk.ToolHandler {
@@ -153,18 +220,46 @@ func Probe(ctx context.Context, c *Client) (int, error) {
 	return n, nil
 }
 
-// unavailable still starts, so the assistant can tell the user what is wrong instead of only
-// showing that the server failed to start
-func unavailable(version string, cause error) *sdk.Server {
-	srv := sdk.NewServer(&sdk.Implementation{Name: "tensorleap", Title: "Tensorleap", Version: version},
-		&sdk.ServerOptions{Instructions: "Tensorleap MCP is not connected. Call tl_status and relay its message to the user."})
+// unavailable still starts, so the assistant can tell the user what is wrong instead of only showing that
+// the server failed to start, and each tl_status call tries again, so fixing it needs no restart
+func (s *Server) unavailable() *sdk.Server {
+	srv := sdk.NewServer(&sdk.Implementation{Name: "tensorleap", Title: "Tensorleap", Version: s.version},
+		&sdk.ServerOptions{
+			Instructions:       "Tensorleap MCP is not connected yet. Call tl_status and relay its message to the user; once they fixed what it names, call tl_status again to connect.",
+			InitializedHandler: s.initialized,
+			// the server's resources and prompts arrive with its tools, once tl_status connects
+			Capabilities: &sdk.ServerCapabilities{Logging: &sdk.LoggingCapabilities{},
+				Tools: &sdk.ToolCapabilities{ListChanged: true}, Resources: &sdk.ResourceCapabilities{ListChanged: true}, Prompts: &sdk.PromptCapabilities{ListChanged: true}},
+		})
 	closed := false
-	srv.AddTool(&sdk.Tool{Name: "tl_status", Description: "Why the Tensorleap tools are unavailable and how to fix it.",
+	srv.AddTool(&sdk.Tool{Name: "tl_status", Description: "Why the Tensorleap tools are unavailable and how to fix it; connects once it is fixed.",
 		InputSchema: map[string]any{"type": "object"},
 		Annotations: &sdk.ToolAnnotations{Title: "Tensorleap status", ReadOnlyHint: true, OpenWorldHint: &closed}},
-		func(context.Context, *sdk.CallToolRequest) (*sdk.CallToolResult, error) {
-			return &sdk.CallToolResult{IsError: true, Content: []sdk.Content{&sdk.TextContent{
-				Text: fmt.Sprintf("leap mcp can't serve Tensorleap: %v. Fix it in a terminal, then restart the assistant.", cause)}}}, nil
+		func(ctx context.Context, req *sdk.CallToolRequest) (*sdk.CallToolResult, error) {
+			s.connecting.Lock()
+			defer s.connecting.Unlock()
+			if s.connected() {
+				return s.relayTool("tl_status")(ctx, req)
+			}
+			dialCtx, cancel := context.WithTimeout(ctx, connectTimeout)
+			b, err := s.dial(dialCtx)
+			cancel()
+			if err != nil {
+				return &sdk.CallToolResult{IsError: true, Content: []sdk.Content{&sdk.TextContent{
+					Text: fmt.Sprintf("leap mcp can't serve Tensorleap: %v. Once that is fixed, call tl_status again; leap mcp connects then, without restarting the assistant.", err)}}}, nil
+			}
+			// the server's own tl_status replaces this one, with the rest of its tools
+			s.addTo(srv, b)
+			res, err := s.relayTool("tl_status")(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+			note := "leap mcp is connected to Tensorleap now and its tools are available (if your assistant doesn't list them, restart it)."
+			if b.instructions != "" {
+				note += "\n\nServer instructions: " + b.instructions
+			}
+			res.Content = append([]sdk.Content{&sdk.TextContent{Text: note}}, res.Content...)
+			return res, nil
 		})
 	return srv
 }
