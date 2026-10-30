@@ -1,6 +1,16 @@
 package root_cmd
 
-import "testing"
+import (
+	"bytes"
+	"errors"
+	"path/filepath"
+	"strings"
+	"testing"
+
+	"github.com/spf13/viper"
+	"github.com/tensorleap/leap-cli/pkg/config"
+	"github.com/tensorleap/leap-cli/pkg/hint"
+)
 
 func TestValidatePushInputs(t *testing.T) {
 	const interactive, headless = true, false
@@ -82,5 +92,42 @@ func TestValidatePushInputsTrimsProjectName(t *testing.T) {
 	}
 	if in.projectName != "My Project" {
 		t.Fatalf("projectName not trimmed, got %q", in.projectName)
+	}
+}
+
+func TestReportHintIsUsedUpOnlyByAPushThatSucceeded(t *testing.T) {
+	viper.Reset()
+	t.Cleanup(viper.Reset)
+	if err := config.InitConfig(filepath.Join(t.TempDir(), "config.yaml")); err != nil {
+		t.Fatal(err)
+	}
+	hint.SetAssistant("Claude Code")
+	var out bytes.Buffer
+	showReportHint(&out, errors.New("push rejected"), "http://localhost:4589", "mnist")
+	if out.Len() > 0 {
+		t.Fatalf("a failed push shows no hint:\n%s", out.String())
+	}
+	// the failed push left it due; the next push that the server accepts shows it and uses it up
+	showReportHint(&out, nil, "http://localhost:4589", "mnist")
+	if !strings.Contains(out.String(), "Write a Tensorleap analysis report for project mnist") {
+		t.Fatalf("got:\n%s", out.String())
+	}
+	out.Reset()
+	showReportHint(&out, nil, "http://localhost:4589", "mnist")
+	if out.Len() > 0 {
+		t.Fatalf("shown twice:\n%s", out.String())
+	}
+}
+
+func TestReportHintWithoutAnAssistantPointsToTheResults(t *testing.T) {
+	viper.Reset()
+	t.Cleanup(viper.Reset)
+	if err := config.InitConfig(filepath.Join(t.TempDir(), "config.yaml")); err != nil {
+		t.Fatal(err)
+	}
+	var out bytes.Buffer
+	showReportHint(&out, nil, "http://localhost:4589", "mnist")
+	if out.String() != "\nWhen the evaluation finishes, see the results at http://localhost:4589\nPrefer an AI assistant to do this? Run leap mcp config.\n" {
+		t.Fatalf("got %q", out.String())
 	}
 }

@@ -47,7 +47,14 @@ installed are left alone; each keeps itself up to date. It ends with the next th
 assistant, and leap suggests each step after it once, when it becomes possible: install
 Tensorleap (after `leap mcp config`), write the integration for your model (after
 `leap server install` or `leap auth login`), then the analysis report (after `leap push --eval`).
+Without `leap mcp config`, the same commands print the next step to do by hand instead: register
+and sign in, push your integration, see the results. `leap push --eval --no-wait` keeps the report
+suggestion due, since the push may still fail on the server.
 Run `leap mcp` in a terminal to check the connection once you are signed in.
+
+An assistant (or a script) signs the CLI in without questions:
+`leap auth login http://localhost:4589 --non-interactive` prints a sign-in link to open in a
+browser and waits until you have signed in there.
 
 ### Manually
 

@@ -221,7 +221,7 @@ func InteractiveLogin(ctx context.Context) (context.Context, *tensorleapapi.User
 			return ctx, nil, err
 		}
 		if useBrowser {
-			apiKey, err = LoginAndGetAuthTokenWithBrowser(ctx, apiUrl)
+			apiKey, err = LoginAndGetAuthTokenWithBrowser(ctx, apiUrl, true)
 			if err != nil {
 				return ctx, nil, err
 			}

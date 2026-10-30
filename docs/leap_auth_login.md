@@ -4,10 +4,21 @@ Login using API key or username/password
 
 ### Synopsis
 
-Login to the system using either an API key or a username and password
+Login to the system using either an API key or a username and password.
+
+With --non-interactive it asks nothing, for scripts and AI assistants: it uses --api-key or
+--username/--password when given, otherwise it prints a sign-in link to open in a browser
+and waits until you have signed in there.
 
 ```
 leap auth login [environment url] [flags]
+```
+
+### Examples
+
+```
+  leap auth login http://localhost:4589
+  leap auth login http://localhost:4589 --non-interactive
 ```
 
 ### Options
@@ -16,6 +27,7 @@ leap auth login [environment url] [flags]
   -k, --api-key string    API key to login with
   -h, --help              help for login
   -n, --name string       Name of the environment to login to, by default parse the api url
+      --non-interactive   Ask nothing: use --api-key or --username/--password if given, otherwise print a browser sign-in link and wait for it
   -p, --password string   In case you want to login with username and password
   -u, --username string   In case you want to login with username and password
 ```

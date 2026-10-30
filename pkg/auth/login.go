@@ -59,7 +59,8 @@ type ApiKeyResponse struct {
 	ApiKey string `json:"apiKey"`
 }
 
-func LoginAndGetAuthTokenWithBrowser(ctx context.Context, apiUrl string) (string, error) {
+// LoginAndGetAuthTokenWithBrowser waits for the user to sign in through a link; openBrowser also opens it here
+func LoginAndGetAuthTokenWithBrowser(ctx context.Context, apiUrl string, openBrowser bool) (string, error) {
 	baseUrl := api.ChangeToUIUrl(apiUrl)
 	codeVerifier, err := generateCodeVerifier()
 	if err != nil {
@@ -68,12 +69,16 @@ func LoginAndGetAuthTokenWithBrowser(ctx context.Context, apiUrl string) (string
 	codeChallenge := generateCodeChallenge(codeVerifier)
 
 	url := fmt.Sprintf("%s/authorization-request?code_challenge=%s", baseUrl, codeChallenge)
-	err = local.OpenLink(url)
-	if err != nil {
-		log.Warnf("Failed to open browser: %v", err)
+	if !openBrowser {
+		log.Info("Open this link in your browser and sign in:")
+		log.Info(url)
+	} else {
+		if err = local.OpenLink(url); err != nil {
+			log.Warnf("Failed to open browser: %v", err)
+		}
+		log.Info("Please open the following link in your browser (if not opened automatically):")
+		log.Info(url)
 	}
-	log.Info("Please open the following link in your browser (if not opened automatically):")
-	log.Info(url)
 	var apiKey string
 
 	err = api.WaitForCondition(ctx, "Waiting for authentication...", func() (bool, error) {

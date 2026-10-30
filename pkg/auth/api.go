@@ -29,10 +29,30 @@ func SetLicense(ctx context.Context, licenseToken string) error {
 	if email := registeredUserEmail(result); email != "" {
 		log.Infof("Open %s and register with %s to finish setup", api.GetBaseUrlFromContext(ctx), email)
 	}
-	if p := DecodeLicenseToken(licenseToken); p.Activated != nil && !*p.Activated {
-		log.Warn("License installed but not activated. Apply the key from your Tensorleap email with `leap auth license -t <key>` or in the UI (Manage License)")
+	if msg, fallback := notActivatedMessage(DecodeLicenseToken(licenseToken)); msg != "" {
+		log.Warn(msg)
+		if fallback != "" {
+			log.Info(fallback)
+		}
 	}
 	return nil
+}
+
+// notActivatedMessage tells how to activate a colored (not yet activated) license; "" for any other.
+// A Free Tier signup activates with one press in its email, so the key is only the fallback there.
+func notActivatedMessage(p LicenseTokenPayload) (msg, fallback string) {
+	if p.Activated == nil || *p.Activated {
+		return "", ""
+	}
+	if p.LicenseType != freeLicenseType {
+		return "License installed but not activated. Apply the key from your Tensorleap email with `leap auth license -t <key>` or in the UI (Manage License)", ""
+	}
+	email := "the email we sent you"
+	if p.User.Email != "" {
+		email = "the email we sent to " + p.User.Email
+	}
+	return fmt.Sprintf("Press Activate my license in %s. Tensorleap unlocks by itself.", email),
+		"If the button doesn't work, apply the key from that email with `leap auth license -t <key>` or in the UI (Manage License)."
 }
 
 func registeredUserEmail(r *tensorleapapi.ExtendTrialResponse) string {

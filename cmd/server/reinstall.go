@@ -61,6 +61,7 @@ func NewReinstallCmd() *cobra.Command {
 				return err
 			}
 			_, err = runReinstall(cmd, flags, isReinstalled)
+			ensureNotes()
 			if err != nil {
 				failProperties := map[string]interface{}{
 					"cli_version": version.CliVersion,

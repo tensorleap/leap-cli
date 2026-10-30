@@ -63,7 +63,16 @@ var (
 	runReinstall     = servercmd.RunReinstallCmd
 	applyLicense     = handleLicenseAfterInstall
 	installedVersion = getServerVersionSafe
+	ensureNotes      = ensureInstallNotes
 )
+
+// serverURL is where the install serves Tensorleap; the default address when the installer didn't say
+func serverURL(res *server.InstallationResult) string {
+	if res != nil && res.ServerURL != "" {
+		return res.ServerURL
+	}
+	return fmt.Sprintf("http://localhost:%v", server.DefaultHttpPort)
+}
 
 func initLocalDataDir(ctx context.Context, flag string) (bool, error) {
 	configureDir := getConfigureDataDir()

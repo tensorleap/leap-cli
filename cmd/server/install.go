@@ -64,7 +64,9 @@ func NewInstallCmd() *cobra.Command {
 				return err
 			}
 
-			_, err = runInstall(cmd, flags)
+			res, err := runInstall(cmd, flags)
+			// also after a failed attempt: the install skill records what went wrong there too
+			ensureNotes()
 			if err != nil {
 				// Track installation failed
 				failProperties := map[string]interface{}{
@@ -106,7 +108,7 @@ func NewInstallCmd() *cobra.Command {
 				return err
 			}
 
-			hint.Show(cmd.OutOrStdout(), "Next", hint.Integrate)
+			hint.Show(cmd.OutOrStdout(), "Next", hint.Integrate, hint.Registered(serverURL(res)))
 			return nil
 		},
 	}

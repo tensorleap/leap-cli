@@ -4,12 +4,14 @@ import (
 	"bufio"
 	"context"
 	"fmt"
+	"io"
 	"os"
 	"strconv"
 	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/analytics"
+	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/code"
 	"github.com/tensorleap/leap-cli/pkg/hint"
@@ -173,13 +175,20 @@ func runPush(cmdCtx context.Context, in *pushInputs) error {
 
 	s.sendSuccessEvent(versionId, codeSnapshotCid, codePushed)
 
-	if err := s.triggerEvaluate(versionId, dispatch); err != nil {
-		return err
-	}
+	err = s.triggerEvaluate(versionId, dispatch)
 	if s.inputs.runEval {
-		hint.Show(os.Stdout, "When the evaluation finishes", hint.Report, s.project.GetName())
+		showReportHint(os.Stdout, err, api.GetBaseUrlFromContext(s.ctx), s.project.GetName())
 	}
-	return nil
+	return err
+}
+
+// showReportHint suggests the analysis report once the push succeeded as far as this run can see: with
+// --no-wait, the server accepted the push job; otherwise the push finished. A push that errors or is rejected
+// gets here with err, or returns earlier, and Ctrl+C ends the process first, so in all three the hint stays due.
+func showReportHint(w io.Writer, err error, uiUrl, project string) {
+	if err == nil {
+		hint.Show(w, "When the evaluation finishes", hint.Report, hint.Results(uiUrl), project)
+	}
 }
 
 // runPushFlow pushes the version and returns its id and code-snapshot id.

@@ -6,9 +6,13 @@ import (
 	"strings"
 )
 
+// freeLicenseType is the licenseType of a Free Tier signup's token
+const freeLicenseType = "free"
+
 type LicenseTokenPayload struct {
-	Activated *bool `json:"activated"`
-	User      struct {
+	Activated   *bool  `json:"activated"`
+	LicenseType string `json:"licenseType"`
+	User        struct {
 		Email string `json:"email"`
 	} `json:"user"`
 }

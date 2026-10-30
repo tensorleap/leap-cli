@@ -31,10 +31,11 @@ type sentEvent struct {
 func runWithStubs(t *testing.T, newCmd func() *cobra.Command, failAt string, args ...string) ([]sentEvent, string) {
 	var events []sentEvent
 	var applied string
-	oldSend, oldVersion, oldInit, oldInstall, oldReinstall, oldApply := sendEvent, installedVersion, initDataDir, runInstall, runReinstall, applyLicense
+	oldSend, oldVersion, oldInit, oldInstall, oldReinstall, oldApply, oldNotes := sendEvent, installedVersion, initDataDir, runInstall, runReinstall, applyLicense, ensureNotes
 	t.Cleanup(func() {
-		sendEvent, installedVersion, initDataDir, runInstall, runReinstall, applyLicense = oldSend, oldVersion, oldInit, oldInstall, oldReinstall, oldApply
+		sendEvent, installedVersion, initDataDir, runInstall, runReinstall, applyLicense, ensureNotes = oldSend, oldVersion, oldInit, oldInstall, oldReinstall, oldApply, oldNotes
 	})
+	ensureNotes = func() {}
 	sendEvent = func(e analytics.EventType, props map[string]interface{}) {
 		events = append(events, sentEvent{e, props})
 	}
