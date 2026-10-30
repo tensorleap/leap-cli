@@ -14,6 +14,7 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
+	"github.com/tensorleap/leap-cli/pkg/analytics"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/hint"
 	mcpPkg "github.com/tensorleap/leap-cli/pkg/mcp"
@@ -37,6 +38,9 @@ var (
 var ErrShown = errors.New("")
 
 var errShown = ErrShown
+
+// sendEvent is analytics.SendEvent; tests replace it
+var sendEvent = analytics.SendEvent
 
 func newConfigCmd() *cobra.Command {
 	var envName string
@@ -74,6 +78,19 @@ Use --print to see the configuration without changing anything.`,
 			out := ui{w: cmd.OutOrStdout()}
 			// checked before anything changes, so a bad token leaves nothing saved or configured
 			var license, licenseEmail string
+			var a *assistant
+			licenseSaved := false
+			// the first step after signup, so it is counted whether it worked or not
+			defer func() {
+				props := map[string]interface{}{"success": err == nil, "license_saved": licenseSaved, "print_only": printOnly}
+				if a != nil {
+					props["assistant"] = a.id
+				}
+				if licenseEmail != "" {
+					props["email"] = licenseEmail
+				}
+				sendEvent(analytics.EventMcpConfig, props)
+			}()
 			if licenseFlag.HasLicense() {
 				if license, err = licenseFlag.PrepareLicenseToken(); err != nil {
 					out.text("Could not read the license file: %v", err)
@@ -88,7 +105,7 @@ Use --print to see the configuration without changing anything.`,
 			if asking {
 				out.title("Connect an AI assistant to Tensorleap")
 			}
-			a, err := pickAssistant(out, args)
+			a, err = pickAssistant(out, args)
 			if errors.Is(err, errCancelled) {
 				out.text("Cancelled; nothing was changed.")
 				return errShown
@@ -126,6 +143,7 @@ Use --print to see the configuration without changing anything.`,
 					out.fail("Could not save your Tensorleap license: %v", err)
 					return errShown
 				}
+				licenseSaved = true
 				out.ok("Saved your Tensorleap license (%s); leap server install will use it.", licenseEmail)
 			}
 			return setup(cmd.Context(), out, a, bin, serverArgs, envName, !noSkills)
