@@ -10,6 +10,7 @@ import (
 
 	sdk "github.com/modelcontextprotocol/go-sdk/mcp"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"github.com/tensorleap/leap-cli/pkg/auth"
 	mcpPkg "github.com/tensorleap/leap-cli/pkg/mcp"
 	"github.com/tensorleap/leap-cli/pkg/version"
@@ -32,37 +33,44 @@ The server is chosen from, in order: --env <name>, TL_API_URL/TL_API_KEY, the cu
 		SilenceErrors: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			interactive := term.IsTerminal(int(os.Stdin.Fd()))
+			if !interactive {
+				// an assistant only shows "failed to start", so the server starts even when it can't connect yet and tells why
+				return mcpPkg.NewSignedInServer(signin(envName), version.CliVersion).Run(cmd.Context(), &sdk.StdioTransport{})
+			}
 			env, err := chooseEnv(envName)
-			if err != nil && interactive {
+			if err != nil {
 				return err
 			}
+			// a person ran it: there is nothing to serve on a terminal, so show the state and how to connect
+			out := ui{w: cmd.OutOrStdout()}
+			out.title("Tensorleap MCP server")
+			out.text("Your AI assistant starts this command itself. To connect one, run: %s", codeStyle.Render("leap mcp config"))
+			out.text("")
+			st, err := showStatus(cmd.Context(), out, mcpPkg.NewClient(env.ApiUrl, env.ApiKey))
+			showAccess(out, st)
+			out.text("")
 			if err != nil {
-				// an assistant only shows "failed to start"; serving the reason lets it tell the user
-				failed := fmt.Errorf("leap mcp can't reach Tensorleap: %v. Fix it in a terminal (leap auth login, or the --env in your assistant's MCP config), then restart the assistant", err)
-				return mcpPkg.NewServer(mcpPkg.NewFailedClient(failed), version.CliVersion).Run(cmd.Context(), &sdk.StdioTransport{})
+				return ErrShown
 			}
-			client := mcpPkg.NewClient(env.ApiUrl, env.ApiKey)
-			if interactive {
-				// a person ran it: there is nothing to serve on a terminal, so show the state and how to connect
-				out := ui{w: cmd.OutOrStdout()}
-				out.title("Tensorleap MCP server")
-				out.text("Your AI assistant starts this command itself. To connect one, run: %s", codeStyle.Render("leap mcp config"))
-				out.text("")
-				st, err := showStatus(cmd.Context(), out, client)
-				showAccess(out, st)
-				out.text("")
-				if err != nil {
-					return ErrShown
-				}
-				return nil
-			}
-			server := mcpPkg.NewServer(client, version.CliVersion)
-			return server.Run(cmd.Context(), &sdk.StdioTransport{})
+			return nil
 		},
 	}
 	cmd.Flags().StringVar(&envName, "env", "", "Name of the 'leap auth' environment to serve (default: the current one)")
 	cmd.AddCommand(newConfigCmd())
 	return cmd
+}
+
+// signin reads the sign-in from the config file on every call, so a leap auth login made after the
+// assistant started leap mcp reaches it without a restart
+func signin(envName string) func() (*mcpPkg.Client, error) {
+	return func() (*mcpPkg.Client, error) {
+		_ = viper.ReadInConfig()
+		env, err := chooseEnv(envName)
+		if err != nil {
+			return nil, fmt.Errorf("%v. Fix it in a terminal (leap auth login, or the --env in your assistant's MCP config)", err)
+		}
+		return mcpPkg.NewClient(env.ApiUrl, env.ApiKey), nil
+	}
 }
 
 // showStatus checks the server the way setup does: sign-in, the MCP endpoint, and what AI access withholds

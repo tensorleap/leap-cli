@@ -49,7 +49,7 @@ func NewInstallCmd() *cobra.Command {
 			}
 			isInternetAvailable := checkInternetAvailability(len(flags.AirGapInstallationFilePath) > 0)
 
-			sendServerEvent(analytics.EventServerInstallStarted, startProperties, email)
+			sendStartedEvent(analytics.EventServerInstallStarted, startProperties, email)
 
 			_, err := initDataDir(cmd.Context(), flags.DataDir)
 			if err != nil {

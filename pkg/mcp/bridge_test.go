@@ -6,6 +6,7 @@ import (
 	"compress/gzip"
 	"context"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -319,5 +320,79 @@ func TestExportRefusesDirectoriesItDidNotWrite(t *testing.T) {
 	}
 	if _, _, err := (&Server{client: NewClient("http://x", "k")}).exportAnalysis(context.Background(), nil, ExportIn{Dir: "relative"}); err == nil {
 		t.Fatal("a relative dir must be refused")
+	}
+}
+
+// The assistant starts leap mcp once per session, often before the user signs in: once they do, the next
+// tl_status call connects and the server's tools appear, without restarting the assistant.
+func TestBridgeConnectsOnceSignedInWithoutARestart(t *testing.T) {
+	f := &fakeTensorleap{}
+	ts := f.start(t)
+	signedIn := false
+	signin := func() (*Client, error) {
+		if !signedIn {
+			return nil, errors.New("not logged in to Tensorleap; run: leap auth login")
+		}
+		return NewClient(ts.URL+"/api/v2", "key-1"), nil
+	}
+	srv := NewSignedInServer(signin, "1.2.3")
+	a, b := sdk.NewInMemoryTransports()
+	if _, err := srv.Connect(context.Background(), a, nil); err != nil {
+		t.Fatal(err)
+	}
+	changed := make(chan struct{}, 10)
+	session, err := sdk.NewClient(&sdk.Implementation{Name: "claude-code", Version: "2.1.3"}, &sdk.ClientOptions{
+		ToolListChangedHandler: func(context.Context, *sdk.ToolListChangedRequest) { changed <- struct{}{} },
+	}).Connect(context.Background(), b, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer func() { _ = session.Close() }()
+	tools := func() string {
+		names := []string{}
+		for tool, err := range session.Tools(context.Background(), nil) {
+			if err != nil {
+				t.Fatal(err)
+			}
+			names = append(names, tool.Name)
+		}
+		return strings.Join(names, ",")
+	}
+	status := func() *sdk.CallToolResult {
+		res, err := session.CallTool(context.Background(), &sdk.CallToolParams{Name: "tl_status", Arguments: map[string]any{}})
+		if err != nil {
+			t.Fatal(err)
+		}
+		return res
+	}
+
+	if got := tools(); got != "tl_status" {
+		t.Fatalf("before sign-in: %s", got)
+	}
+	if res := status(); !res.IsError || !strings.Contains(textOf(res), "leap auth login") || !strings.Contains(textOf(res), "without restarting") {
+		t.Fatalf("before sign-in tl_status says what to do: %q", textOf(res))
+	}
+	if len(f.auth) != 0 {
+		t.Fatalf("nothing reaches the server before sign-in: %v", f.auth)
+	}
+
+	signedIn = true
+	res := status()
+	if res.IsError || !strings.Contains(textOf(res), "connected to Tensorleap now") || !strings.Contains(textOf(res), "a@b.c") ||
+		!strings.Contains(textOf(res), "Call tl_status first.") {
+		t.Fatalf("after sign-in tl_status connects and relays the server's answer and instructions: %q", textOf(res))
+	}
+	<-changed
+	if got := tools(); got != "tl_export_analysis,tl_status,tl_wait_for_job" {
+		t.Fatalf("after sign-in: %s", got)
+	}
+	if res := status(); res.IsError || strings.Contains(textOf(res), "connected to Tensorleap now") || !strings.Contains(textOf(res), "a@b.c") {
+		t.Fatalf("later tl_status calls go straight to the server: %q", textOf(res))
+	}
+	if g, err := session.ReadResource(context.Background(), &sdk.ReadResourceParams{URI: "tensorleap://glossary"}); err != nil || g.Contents[0].Text != "Failure Mode" {
+		t.Fatalf("glossary relayed: %v %+v", err, g)
+	}
+	if last := f.who[len(f.who)-1]; last != "1.2.3|claude-code|2.1.3" {
+		t.Fatalf("the assistant named itself before sign-in, and the server is still told: %q", last)
 	}
 }

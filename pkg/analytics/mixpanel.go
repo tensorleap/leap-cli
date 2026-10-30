@@ -1,15 +1,16 @@
 package analytics
 
 import (
-	"bytes"
 	"crypto/rand"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 	"time"
 )
 
@@ -18,8 +19,12 @@ const (
 	MixpanelToken    = "0c1710c9656bbfb1056bb46093e23ca1"
 	// 2: login events carry email, role and license_type (2026-10-20)
 	// 3: login events carry license_activated (2026-10-22)
-	TRACKING_VERSION = 3
+	// 4: every event carries the last known email; "+" in it no longer arrives as a space (2026-10-30)
+	TRACKING_VERSION = 4
 )
+
+// endpoint is MixpanelEndpoint; tests point it at a local server
+var endpoint = MixpanelEndpoint
 
 // EventType represents the type of event to track
 type EventType string
@@ -56,6 +61,7 @@ const (
 	EventServerUpgradeStarted   EventType = "server_upgrade_started"
 	EventServerUpgradeSuccess   EventType = "server_upgrade_success"
 	EventServerUpgradeFailed    EventType = "server_upgrade_failed"
+	EventMcpConfig              EventType = "mcp_config"
 )
 
 // userIDFile stores the path to the user ID file
@@ -63,6 +69,10 @@ var userIDFile string
 
 // deviceIDFile stores the path to the device ID file
 var deviceIDFile string
+
+// emailFile keeps the last email an event carried (from leap auth login or a license token), so
+// events that don't know it, such as push or a failed login, still name the user
+var emailFile string
 
 // init initializes the user ID file path
 func init() {
@@ -82,6 +92,7 @@ func init() {
 
 	userIDFile = filepath.Join(tensorleapDir, "user_id")
 	deviceIDFile = filepath.Join(tensorleapDir, "device_id")
+	emailFile = filepath.Join(tensorleapDir, "email")
 }
 
 func saveUserID(userID string) error {
@@ -102,6 +113,15 @@ func getUserID() string {
 
 	// No user ID found, return empty string
 	return ""
+}
+
+// SaveUserIDIfMissing links this device to a user before they sign in, e.g. with the id of the admin the
+// server registered when a license was applied. An id saved by leap auth login is kept.
+func SaveUserIDIfMissing(userID string) error {
+	if userID == "" || getUserID() != "" {
+		return nil
+	}
+	return saveUserID(userID)
 }
 
 // DeleteUserID removes the persistent user ID file
@@ -237,6 +257,14 @@ func SendEvent(eventType EventType, properties map[string]interface{}) {
 		}
 	}
 
+	if email, ok := properties["email"].(string); ok && email != "" {
+		if data, err := os.ReadFile(emailFile); err != nil || string(data) != email {
+			_ = os.WriteFile(emailFile, []byte(email), 0600)
+		}
+	} else if data, err := os.ReadFile(emailFile); err == nil && len(data) > 0 {
+		properties["email"] = string(data)
+	}
+
 	if username := os.Getenv("USER"); username != "" {
 		properties["os_username"] = username
 	}
@@ -251,15 +279,15 @@ func SendEvent(eventType EventType, properties map[string]interface{}) {
 		return
 	}
 
-	// Mixpanel expects the data to be base64 encoded
-	encodedData := []byte(fmt.Sprintf("data=%s", eventData))
+	// form-encoded, so a "+" in an email isn't read as a space
+	body := url.Values{"data": {string(eventData)}}.Encode()
 
 	// Create HTTP client with timeout
 	client := &http.Client{
 		Timeout: 10 * time.Second,
 	}
 
-	resp, err := client.Post(MixpanelEndpoint, "application/x-www-form-urlencoded", bytes.NewBuffer(encodedData))
+	resp, err := client.Post(endpoint, "application/x-www-form-urlencoded", strings.NewReader(body))
 	if err != nil {
 		return
 	}

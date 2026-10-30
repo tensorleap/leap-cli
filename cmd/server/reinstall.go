@@ -47,7 +47,7 @@ func NewReinstallCmd() *cobra.Command {
 			}
 			isInternetAvailable := checkInternetAvailability(len(flags.AirGapInstallationFilePath) > 0)
 
-			sendServerEvent(analytics.EventServerReinstallStarted, startProperties, email)
+			sendStartedEvent(analytics.EventServerReinstallStarted, startProperties, email)
 
 			isReinstalled, err := initDataDir(cmd.Context(), "")
 			if err != nil {
