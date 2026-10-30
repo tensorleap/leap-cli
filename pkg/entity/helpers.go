@@ -27,7 +27,7 @@ func GetEntityByDisplayName[TEntity any](entityName string, entities []TEntity, 
 			return &entity, nil
 		}
 	}
-	return nil, fmt.Errorf("not found %s name: %s", entityName, desc.Name)
+	return nil, fmt.Errorf("no %s found with name %q", desc.Name, entityName)
 }
 
 func GetNames[TEntity any](entities []TEntity, desc *EntityDescriptor[TEntity]) []string {
