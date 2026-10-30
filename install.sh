@@ -251,9 +251,10 @@ trackEvent() {
     
     event_data="$event_data}}"
     
-    # Send the event to Mixpanel (non-blocking)
+    # Send the event to Mixpanel (non-blocking). URL-encoded, as the CLI sends it: plain -d sends a "+"
+    # (in base64 or an email) as is, and a form decoder reads it as a space
     curl -s -X POST "https://api.mixpanel.com/track" \
-      -d "data=$(echo "$event_data" | base64)" \
+      --data-urlencode "data=$event_data" \
       --max-time 5 \
       --connect-timeout 3 \
       >/dev/null 2>&1 &
