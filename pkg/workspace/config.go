@@ -125,6 +125,28 @@ func GetWorkspaceConfig() (*WorkspaceConfig, error) {
 	return &workspaceConfig, err
 }
 
+// SetProjectIdIfMissing points ./leap.yaml at projectId when the file exists and names no project yet, so the
+// next leap push needs no project prompt. It returns the project the file already names, if any, and changes
+// nothing then. No leap.yaml here is not an error.
+func SetProjectIdIfMissing(projectId string) (written bool, existingProjectId string, err error) {
+	content, err := os.ReadFile(CONFIG_FILE_NAME)
+	if os.IsNotExist(err) {
+		return false, "", nil
+	}
+	if err != nil {
+		return false, "", err
+	}
+	workspaceConfig := WorkspaceConfig{}
+	if err := yaml.Unmarshal(content, &workspaceConfig); err != nil {
+		return false, "", fmt.Errorf("failed to read %s: %v", CONFIG_FILE_NAME, err)
+	}
+	if workspaceConfig.ProjectId != "" {
+		return false, workspaceConfig.ProjectId, nil
+	}
+	workspaceConfig.ProjectId = projectId
+	return true, "", SetWorkspaceConfig(&workspaceConfig, ".")
+}
+
 func SetWorkspaceConfig(workspaceConfig *WorkspaceConfig, outputDir string) error {
 	content, err := yaml.Marshal(&workspaceConfig)
 	if err != nil {
