@@ -7,7 +7,7 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
-const LicenseContact = "support@tensorleap.ai"
+const LicenseContact = "freetier@tensorleap.ai"
 const FreeTierMaxEvaluateSamples = 5000
 const freeTierDefaultMaxProjects = 1
 
