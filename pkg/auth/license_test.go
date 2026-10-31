@@ -80,3 +80,31 @@ func TestNotActivatedMessage(t *testing.T) {
 		}
 	}
 }
+
+func TestLicenseActivated(t *testing.T) {
+	f, tr := false, true
+	cases := []struct {
+		name string
+		lic  any
+		want bool
+	}{
+		// Today's generated client: the field lands in AdditionalProperties.
+		{"extra field false", &tensorleapapi.LicenseMetadata{Type: "free", AdditionalProperties: map[string]interface{}{"activated": false}}, false},
+		{"extra field true", &tensorleapapi.LicenseMetadata{Type: "free", AdditionalProperties: map[string]interface{}{"activated": true}}, true},
+		{"field missing", &tensorleapapi.LicenseMetadata{Type: "paid"}, true},
+		// A client regenerated after node-server's spec named the field: a typed pointer.
+		{"typed field false", &struct {
+			Activated *bool `json:"activated,omitempty"`
+		}{&f}, false},
+		{"typed field true", &struct {
+			Activated *bool `json:"activated,omitempty"`
+		}{&tr}, true},
+	}
+	for _, c := range cases {
+		t.Run(c.name, func(t *testing.T) {
+			if got := activatedField(c.lic); got != c.want {
+				t.Fatalf("got %v, want %v", got, c.want)
+			}
+		})
+	}
+}
