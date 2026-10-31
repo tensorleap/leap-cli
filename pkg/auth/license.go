@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -11,11 +12,27 @@ const LicenseContact = "support@tensorleap.ai"
 const FreeTierMaxEvaluateSamples = 5000
 const freeTierDefaultMaxProjects = 1
 
-// LicenseActivated is false only for a colored (not yet activated) license; the
-// generated client keeps the server's `activated` field in AdditionalProperties.
+// LicenseActivated is false only for a colored (not yet activated) license.
 func LicenseActivated(lic *tensorleapapi.LicenseMetadata) bool {
-	v, ok := lic.AdditionalProperties["activated"].(bool)
-	return !ok || v
+	return activatedField(lic)
+}
+
+// activatedField reads `activated` through the JSON form, so it works whether the
+// generated client keeps the field in AdditionalProperties (clients generated before
+// node-server's spec named it) or as a typed field (after the next regeneration).
+// A missing field means activated, as before.
+func activatedField(v any) bool {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return true
+	}
+	var f struct {
+		Activated *bool `json:"activated"`
+	}
+	if json.Unmarshal(b, &f) != nil || f.Activated == nil {
+		return true
+	}
+	return *f.Activated
 }
 
 // LicenseLine renders the server's license for `leap auth whoami`; "" when the
