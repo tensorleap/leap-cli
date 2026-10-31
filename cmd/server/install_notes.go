@@ -19,7 +19,9 @@ const installNotesFile = "install-notes.md"
 // ensureInstallNotes creates <data-dir>/install-notes.md owned by the user running leap. On Linux the data dir
 // belongs to the tensorleap group, and a user this install just added to it has a shell without the group
 // until they log in again; owning the file lets them (and their AI assistant) write it from that shell.
+// The data dir itself is handed to that user first, so they can also create and replace files next to it.
 func ensureInstallNotes() {
+	ensureDataDirOwner()
 	if err := createOwnedFile(filepath.Join(local.GetServerDataDir(), installNotesFile), invokingUID()); err != nil {
 		log.VerboseLogger.Warnf("Could not create %s: %v", installNotesFile, err)
 	}
