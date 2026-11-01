@@ -147,7 +147,8 @@ func runPush(cmdCtx context.Context, in *pushInputs) error {
 		return err
 	}
 
-	// before the code is bundled, so the buffered events never travel with it (the bundle skips .tensorleap anyway)
+	// before the code is bundled, so the buffered events never travel with it (the bundle skips .tensorleap anyway).
+	// "." is the project folder: push reads leap.yaml and bundles from the working directory only.
 	analytics.SendPendingEvents(ctx, ".")
 	analytics.SendEvent(analytics.EventCliProjectsPushStarted, s.properties)
 
