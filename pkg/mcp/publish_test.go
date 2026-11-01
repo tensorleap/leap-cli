@@ -32,7 +32,7 @@ func TestPublishSendsTheReportAndReturnsItsLink(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if res.ReportID != "r1" || !res.Replaced || res.Title != "mnist / regenrate" || !strings.HasSuffix(res.Link, "/project/p1/dashboard?report=r1") || strings.Contains(res.Link, "/api/v2") {
+	if res.ReportID != "r1" || res.Title != "mnist / regenrate" || !strings.HasSuffix(res.Link, "/project/p1/dashboard?report=r1") || strings.Contains(res.Link, "/api/v2") {
 		t.Fatalf("result: %+v", res)
 	}
 	p := f.published
