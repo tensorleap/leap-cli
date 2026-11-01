@@ -147,6 +147,8 @@ func runPush(cmdCtx context.Context, in *pushInputs) error {
 		return err
 	}
 
+	// before the code is bundled, so the buffered events never travel with it (the bundle skips .tensorleap anyway)
+	analytics.SendPendingEvents(ctx, ".")
 	analytics.SendEvent(analytics.EventCliProjectsPushStarted, s.properties)
 
 	if err := s.confirmInsightsSettingsOverrides(); err != nil {
