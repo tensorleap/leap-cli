@@ -24,7 +24,6 @@ type PublishResult struct {
 	Link     string `json:"link" jsonschema:"opens the report in the Tensorleap UI"`
 	ReportID string `json:"reportId"`
 	Title    string `json:"title"`
-	Replaced bool   `json:"replaced" jsonschema:"true when your previous report of this evaluation was replaced"`
 }
 
 // the report.json fields that name the report in the UI
@@ -90,7 +89,6 @@ func (s *Server) publishReport(ctx context.Context, _ *sdk.CallToolRequest, in P
 			Cid   string `json:"cid"`
 			Title string `json:"title"`
 		} `json:"report"`
-		Replaced bool   `json:"replaced"`
 		LinkPath string `json:"linkPath"`
 	}
 	if err := s.client.Post(ctx, "analysis-reports/publish", req, &out); err != nil {
@@ -100,7 +98,7 @@ func (s *Server) publishReport(ctx context.Context, _ *sdk.CallToolRequest, in P
 		}
 		return nil, PublishResult{}, explain(err)
 	}
-	return nil, PublishResult{Link: s.client.UIBase() + out.LinkPath, ReportID: out.Report.Cid, Title: out.Report.Title, Replaced: out.Replaced}, nil
+	return nil, PublishResult{Link: s.client.UIBase() + out.LinkPath, ReportID: out.Report.Cid, Title: out.Report.Title}, nil
 }
 
 // plainText flattens one of report.json's HTML fragments into one line of text
