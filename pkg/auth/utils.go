@@ -166,6 +166,33 @@ func PrintWhoami(ctx context.Context) error {
 	return nil
 }
 
+// installedServerUrl is the address of the server `leap server install` set up on this machine, "" when there is none
+var installedServerUrl = func() string {
+	params, err := server.LoadInstallationParamsFromPrevious()
+	if err != nil {
+		return ""
+	}
+	return params.CalcUrl()
+}
+
+// KnownServerUrl is the server the user most likely signs in to, from what this machine knows without network:
+// the configured API URL, else the local install's address; "" when neither is known
+func KnownServerUrl() string {
+	if url := GetCurrentEnv().ApiUrl; url != "" {
+		return api.ChangeToUIUrl(url)
+	}
+	return installedServerUrl()
+}
+
+// NotSignedInError tells how to sign in, naming the server when the CLI knows it
+func NotSignedInError() error {
+	url := KnownServerUrl()
+	if url == "" {
+		url = "<url>"
+	}
+	return fmt.Errorf("Not signed in. Run: leap auth login %s", url)
+}
+
 // RequireAuth checks if the user is authenticated and validates the credentials.
 // If authentication is missing or invalid, it automatically triggers the interactive login flow.
 // Returns the authenticated context and user data if successful.
