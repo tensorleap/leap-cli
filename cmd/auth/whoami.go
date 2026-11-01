@@ -3,7 +3,6 @@ package auth
 import (
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/leap-cli/pkg/auth"
-	"github.com/tensorleap/leap-cli/pkg/log"
 	"github.com/tensorleap/leap-cli/pkg/version"
 )
 
@@ -22,11 +21,10 @@ func NewWhoamiCmd() *cobra.Command {
 			if env.ApiUrl == "" || env.ApiKey == "" {
 				return auth.NotSignedInError()
 			}
-			ctx := env.AuthContext(cmd.Context())
-			if _, err := auth.GetWhoami(ctx); err != nil {
-				log.Warnf("Could not verify the saved sign-in for %s: %v", env.ApiUrl, err)
-				return auth.NotSignedInError()
+			if err := auth.CheckSignIn(cmd.Context(), env); err != nil {
+				return err
 			}
+			ctx := env.AuthContext(cmd.Context())
 			version.CheckServerCompatibility(ctx)
 			return auth.PrintWhoami(ctx)
 		},

@@ -2,8 +2,12 @@ package auth
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"net/http"
+	"net/url"
 	"strings"
+	"time"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/spf13/viper"
@@ -191,6 +195,39 @@ func NotSignedInError() error {
 		url = "<url>"
 	}
 	return fmt.Errorf("Not signed in. Run: leap auth login %s", url)
+}
+
+// signInCheckTimeout bounds CheckSignIn, so a server that never answers doesn't hang the command
+var signInCheckTimeout = 15 * time.Second
+
+// CheckSignIn asks the server whose key env holds. Only a key the server rejects means "not signed in";
+// a server that can't be reached is reported as such, since signing in again wouldn't help.
+func CheckSignIn(ctx context.Context, env *Env) error {
+	ctx, cancel := context.WithTimeout(env.AuthContext(ctx), signInCheckTimeout)
+	defer cancel()
+	_, resp, err := api.ApiClient.WhoAmI(ctx).Execute()
+	switch {
+	case err == nil:
+		return nil
+	// the API client turns a 401 into ErrAuth without a response
+	case errors.Is(err, api.ErrAuth), resp != nil && resp.StatusCode == http.StatusForbidden:
+		return NotSignedInError()
+	case resp == nil:
+		return fmt.Errorf("Can't reach the Tensorleap server at %s: %s", api.ChangeToUIUrl(env.ApiUrl), transportCause(err))
+	}
+	return fmt.Errorf("Could not check your sign-in at %s: %v", api.ChangeToUIUrl(env.ApiUrl), err)
+}
+
+// transportCause drops the request line Go puts in front of a network error (Get "<url>": ...)
+func transportCause(err error) string {
+	var urlErr *url.Error
+	if errors.As(err, &urlErr) {
+		err = urlErr.Err
+	}
+	if errors.Is(err, context.DeadlineExceeded) {
+		return "no answer in time"
+	}
+	return err.Error()
 }
 
 // RequireAuth checks if the user is authenticated and validates the credentials.
