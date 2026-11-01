@@ -44,7 +44,7 @@ var sendEvent = analytics.SendEvent
 
 func newConfigCmd() *cobra.Command {
 	var envName string
-	var printOnly, noSkills bool
+	var printOnly, noSkills, codexAllowLeap bool
 	licenseFlag := auth.NewLicenseFlag()
 	cmd := &cobra.Command{
 		Use:   "config [" + strings.Join(clientNames, "|") + "]",
@@ -64,7 +64,9 @@ assistant's chat:
 
 Claude Code gets the 'analysis' (MCP server and skill), 'installer', 'integration' and
 'optimization' plugins. Skills already installed are left alone; each keeps itself up to date.
-Use --print to see the configuration without changing anything.`,
+Codex runs commands in a sandbox without network, so it would ask before every leap command; in a
+terminal leap offers to let it run them without asking (--codex-allow-leap does it without the
+question). Use --print to see the configuration without changing anything.`,
 		Example: "  leap mcp config\n" +
 			"  leap mcp config --license-token <token>\n" +
 			"  leap mcp config cursor\n" +
@@ -85,6 +87,9 @@ Use --print to see the configuration without changing anything.`,
 				props := map[string]interface{}{"success": err == nil, "license_saved": licenseSaved, "print_only": printOnly}
 				if a != nil {
 					props["assistant"] = a.id
+					if a.id == "codex" && !printOnly {
+						props["codex_allow_leap"] = codexRulesInPlace()
+					}
 				}
 				// --print changes nothing, so the token's email isn't sent either: analytics would save it
 				if licenseEmail != "" && !printOnly {
@@ -147,12 +152,13 @@ Use --print to see the configuration without changing anything.`,
 				licenseSaved = true
 				out.ok("Saved your Tensorleap license (%s); leap server install will use it.", licenseEmail)
 			}
-			return setup(cmd.Context(), out, a, bin, serverArgs, envName, !noSkills)
+			return setup(cmd.Context(), out, a, bin, serverArgs, envName, !noSkills, codexAllowLeap)
 		},
 	}
 	cmd.Flags().StringVar(&envName, "env", "", "Pin a 'leap auth' environment instead of following the current one")
 	cmd.Flags().BoolVar(&printOnly, "print", false, "Print the configuration to add by hand; change nothing")
 	cmd.Flags().BoolVar(&noSkills, "no-skills", false, "Register the MCP server only, without the Tensorleap skills")
+	cmd.Flags().BoolVar(&codexAllowLeap, "codex-allow-leap", false, "Codex: let it run leap commands without asking each time, without the question (writes ~/.codex/rules/tensorleap.rules)")
 	licenseFlag.AddFlags(cmd)
 	cmd.SetFlagErrorFunc(func(c *cobra.Command, err error) error {
 		fmt.Fprintf(c.OutOrStdout(), "%s\nRun 'leap mcp config --help' for usage.\n", err)
@@ -229,7 +235,7 @@ func pickEnv(out ui) (string, error) {
 	return envs[i].Name, nil
 }
 
-func setup(ctx context.Context, out ui, a *assistant, bin string, serverArgs []string, envName string, withSkills bool) error {
+func setup(ctx context.Context, out ui, a *assistant, bin string, serverArgs []string, envName string, withSkills, codexAllowLeap bool) error {
 	env, err := chooseEnv(envName)
 	signedIn := err == nil
 	if err != nil && !errors.Is(err, auth.ErrNotLoggedIn) {
@@ -255,6 +261,9 @@ func setup(ctx context.Context, out ui, a *assistant, bin string, serverArgs []s
 		}
 	} else {
 		configureFile(out, a, entry)
+		if a.id == "codex" {
+			allowLeapInCodex(out, codexAllowLeap)
+		}
 		if withSkills {
 			installSkills(out, a)
 		} else {
@@ -527,6 +536,8 @@ func printConfig(w io.Writer, client, bin string, args []string) {
 		}
 		p("OpenAI Codex: add to %s:\n", tilde(path))
 		p("[mcp_servers.tensorleap]\ncommand = %q\nargs = [%s]", bin, strings.Join(quoted, ", "))
+		p("\nTo let Codex run leap commands without asking each time, save this as %s:\n", tilde(codexRulesPath()))
+		p("%s", strings.TrimSpace(codexRules))
 	default:
 		if client == "vscode" {
 			entry.Type = "stdio"
