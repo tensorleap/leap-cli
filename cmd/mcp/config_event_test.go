@@ -55,7 +55,7 @@ func TestConfigSendsOneEventWhetherItWorkedOrNot(t *testing.T) {
 		want map[string]interface{}
 	}{
 		{[]string{"codex", "--no-skills", "--license-token", token},
-			map[string]interface{}{"assistant": "codex", "success": true, "license_saved": true, "print_only": false, "email": "a+b@c.d"}},
+			map[string]interface{}{"assistant": "codex", "success": true, "license_saved": true, "print_only": false, "email": "a+b@c.d", "codex_allow_leap": false}},
 		{[]string{"cursor", "--no-skills"},
 			map[string]interface{}{"assistant": "cursor", "success": true, "license_saved": false, "print_only": false}},
 		{[]string{"codex", "--print", "--license-token", token},
@@ -78,7 +78,7 @@ func TestConfigSendsOneEventWhetherItWorkedOrNot(t *testing.T) {
 	if err := viper.ReadInConfig(); err != nil {
 		t.Fatal(err)
 	}
-	want := map[string]interface{}{"assistant": "codex", "success": false, "license_saved": true, "print_only": false, "email": "a+b@c.d"}
+	want := map[string]interface{}{"assistant": "codex", "success": false, "license_saved": true, "print_only": false, "email": "a+b@c.d", "codex_allow_leap": false}
 	if got := run("codex", "--no-skills", "--env", "nope", "--license-token", token); !reflect.DeepEqual(got, want) {
 		t.Errorf("setup failure:\ngot  %v\nwant %v", got, want)
 	}

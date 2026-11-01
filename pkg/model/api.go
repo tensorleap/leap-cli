@@ -194,13 +194,12 @@ func WaitForPushJob(ctx context.Context, projectId, versionId, jobId string) err
 	if err == ErrImportModelTimeout {
 		return fmt.Errorf("timeout: push job did not complete within the allowed time (job may still be running on the server), job id: %s", jobId)
 	}
+	if err == ErrJobStopped {
+		return fmt.Errorf("Push stopped, job id: %s", jobId)
+	}
 	if err == ErrJobFailed || !okStatus {
-		report, collectErr := CollectImportModelJobErrors(ctx, projectId, jobId, versionId, commandStartTime)
-		if collectErr != nil {
-			return collectErr
-		}
-		if runErr := interactive_pages.RunInteractivePages(report.ToPushReportPages()); runErr != nil {
-			return runErr
+		if showErr := showPushFailure(ctx, projectId, jobId, versionId, commandStartTime); showErr != nil {
+			return showErr
 		}
 		return fmt.Errorf("push failed see errors above, for more logs run: leap run logs %s", jobId)
 	}
@@ -209,6 +208,15 @@ func WaitForPushJob(ctx context.Context, projectId, versionId, jobId string) err
 	}
 	log.Println("Push completed successfully")
 	return nil
+}
+
+// showPushFailure collects why the push job failed and shows it as the push report. A seam for tests.
+var showPushFailure = func(ctx context.Context, projectId, jobId, versionId string, commandStartTime time.Time) error {
+	report, err := CollectImportModelJobErrors(ctx, projectId, jobId, versionId, commandStartTime)
+	if err != nil {
+		return err
+	}
+	return interactive_pages.RunInteractivePages(report.ToPushReportPages())
 }
 
 const TIMEOUT_FOR_IMPORT_MODEL_JOB = 60 * time.Minute
@@ -220,7 +228,17 @@ var maxWaitForImportModelJob = 6 * time.Hour
 // waitForSteps is a seam for tests to stub the underlying step-waiter.
 var waitForSteps = api.WaitForConditionWithSteps
 
+// getImportModelJob is a seam for tests to stub the job status lookup.
+var getImportModelJob = GetImportModelJob
+
 var ErrJobFailed = fmt.Errorf("import model job failed")
+
+// ErrJobStopped means someone stopped the job (leap run stop); api.IsJobFailed counts that as a failure too
+var ErrJobStopped = fmt.Errorf("import model job stopped")
+
+func isJobStopped(status tensorleapapi.JobStatus) bool {
+	return status == tensorleapapi.JOBSTATUS_TERMINATED || status == tensorleapapi.JOBSTATUS_STOPPED
+}
 
 var ErrImportModelTimeout = fmt.Errorf("timeout occurred while waiting for import model job status")
 
@@ -229,12 +247,14 @@ func waitForImportModelJob(ctx context.Context, projectId, importModelJobId, res
 	sleepDuration := 3 * time.Second
 
 	condition := func() (bool, []log.Step, error) {
-		job, err := GetImportModelJob(ctx, importModelJobId, projectId)
+		job, err := getImportModelJob(ctx, importModelJobId, projectId)
 		if err != nil {
 			return false, nil, fmt.Errorf("failed to wait for the import model job status: %v", err)
 		}
 		steps := api.StepsFromJob(job)
 		switch true {
+		case isJobStopped(job.Status):
+			return false, steps, ErrJobStopped
 		case api.IsJobFailed(job.Status):
 			return false, steps, ErrJobFailed
 		case api.IsJobFinished(job.Status):

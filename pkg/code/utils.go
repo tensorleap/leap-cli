@@ -501,9 +501,13 @@ func BundleCodeIntoTempFile(filesDir string, workspaceConfig *workspace.Workspac
 	return
 }
 
+// alwaysExcluded is never uploaded, whatever leap.yaml includes: .tensorleap/ holds local state such as the
+// analytics events code-loader could not send
+var alwaysExcluded = []string{".tensorleap/**"}
+
 func getCodeFiles(filesDir string, workspaceConfig *workspace.WorkspaceConfig) ([]string, error) {
 	includePatterns := workspaceConfig.IncludePatterns
-	excludePatterns := workspaceConfig.ExcludePatterns
+	excludePatterns := append(append([]string{}, workspaceConfig.ExcludePatterns...), alwaysExcluded...)
 
 	if len(includePatterns) == 0 {
 		includePatterns = []string{"**"}

@@ -19,7 +19,9 @@ assistant's chat:
 
 Claude Code gets the 'analysis' (MCP server and skill), 'installer', 'integration' and
 'optimization' plugins. Skills already installed are left alone; each keeps itself up to date.
-Use --print to see the configuration without changing anything.
+Codex runs commands in a sandbox without network, so it would ask before every leap command; in a
+terminal leap offers to let it run them without asking (--codex-allow-leap does it without the
+question). Use --print to see the configuration without changing anything.
 
 ```
 leap mcp config [claude-code|cursor|vscode|codex|windsurf|claude-desktop] [flags]
@@ -38,6 +40,7 @@ leap mcp config [claude-code|cursor|vscode|codex|windsurf|claude-desktop] [flags
 ### Options
 
 ```
+      --codex-allow-leap       Codex: let it run leap commands without asking each time, without the question (writes ~/.codex/rules/tensorleap.rules)
       --env string             Pin a 'leap auth' environment instead of following the current one
   -h, --help                   help for config
       --license-file string    Path to the license file
