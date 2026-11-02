@@ -44,7 +44,7 @@ var sendEvent = analytics.SendEvent
 
 func newConfigCmd() *cobra.Command {
 	var envName string
-	var printOnly, noSkills, codexAllowLeap bool
+	var printOnly, noSkills, codexAllowLeap, cursorAllowNotes bool
 	licenseFlag := auth.NewLicenseFlag()
 	cmd := &cobra.Command{
 		Use:   "config [" + strings.Join(clientNames, "|") + "]",
@@ -66,7 +66,9 @@ Claude Code gets the 'analysis' (MCP server and skill), 'installer', 'integratio
 'optimization' plugins. Skills already installed are left alone; each keeps itself up to date.
 Codex runs commands in a sandbox without network, so it would ask before every leap command; in a
 terminal leap offers to let it run them without asking (--codex-allow-leap does it without the
-question). Use --print to see the configuration without changing anything.`,
+question). Cursor asks before each write to the install skill's notes (<data dir>/install-notes.md);
+in a terminal leap offers to allow writing that one file (--cursor-allow-install-notes does it
+without the question). Use --print to see the configuration without changing anything.`,
 		Example: "  leap mcp config\n" +
 			"  leap mcp config --license-token <token>\n" +
 			"  leap mcp config cursor\n" +
@@ -89,6 +91,9 @@ question). Use --print to see the configuration without changing anything.`,
 					props["assistant"] = a.id
 					if a.id == "codex" && !printOnly {
 						props["codex_allow_leap"] = codexRulesInPlace()
+					}
+					if a.id == "cursor" && !printOnly {
+						props["cursor_allow_install_notes"] = cursorRuleInPlace(cursorInstallNotesRule())
 					}
 				}
 				// --print changes nothing, so the token's email isn't sent either: analytics would save it
@@ -152,13 +157,14 @@ question). Use --print to see the configuration without changing anything.`,
 				licenseSaved = true
 				out.ok("Saved your Tensorleap license (%s); leap server install will use it.", licenseEmail)
 			}
-			return setup(cmd.Context(), out, a, bin, serverArgs, envName, !noSkills, codexAllowLeap)
+			return setup(cmd.Context(), out, a, bin, serverArgs, envName, !noSkills, codexAllowLeap, cursorAllowNotes)
 		},
 	}
 	cmd.Flags().StringVar(&envName, "env", "", "Pin a 'leap auth' environment instead of following the current one")
 	cmd.Flags().BoolVar(&printOnly, "print", false, "Print the configuration to add by hand; change nothing")
 	cmd.Flags().BoolVar(&noSkills, "no-skills", false, "Register the MCP server only, without the Tensorleap skills")
 	cmd.Flags().BoolVar(&codexAllowLeap, "codex-allow-leap", false, "Codex: let it run leap commands without asking each time, without the question (writes ~/.codex/rules/tensorleap.rules)")
+	cmd.Flags().BoolVar(&cursorAllowNotes, "cursor-allow-install-notes", false, "Cursor: let it write the install notes (<data dir>/install-notes.md) without asking, without the question (adds one Write rule to ~/.cursor/cli-config.json)")
 	licenseFlag.AddFlags(cmd)
 	cmd.SetFlagErrorFunc(func(c *cobra.Command, err error) error {
 		fmt.Fprintf(c.OutOrStdout(), "%s\nRun 'leap mcp config --help' for usage.\n", err)
@@ -235,7 +241,7 @@ func pickEnv(out ui) (string, error) {
 	return envs[i].Name, nil
 }
 
-func setup(ctx context.Context, out ui, a *assistant, bin string, serverArgs []string, envName string, withSkills, codexAllowLeap bool) error {
+func setup(ctx context.Context, out ui, a *assistant, bin string, serverArgs []string, envName string, withSkills, codexAllowLeap, cursorAllowNotes bool) error {
 	env, err := chooseEnv(envName)
 	signedIn := err == nil
 	if err != nil && !errors.Is(err, auth.ErrNotLoggedIn) {
@@ -263,6 +269,9 @@ func setup(ctx context.Context, out ui, a *assistant, bin string, serverArgs []s
 		configureFile(out, a, entry)
 		if a.id == "codex" {
 			allowLeapInCodex(out, codexAllowLeap)
+		}
+		if a.id == "cursor" {
+			allowInstallNotesInCursor(out, cursorAllowNotes)
 		}
 		if withSkills {
 			installSkills(out, a)

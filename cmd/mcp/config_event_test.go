@@ -57,7 +57,7 @@ func TestConfigSendsOneEventWhetherItWorkedOrNot(t *testing.T) {
 		{[]string{"codex", "--no-skills", "--license-token", token},
 			map[string]interface{}{"assistant": "codex", "success": true, "license_saved": true, "print_only": false, "email": "a+b@c.d", "codex_allow_leap": false}},
 		{[]string{"cursor", "--no-skills"},
-			map[string]interface{}{"assistant": "cursor", "success": true, "license_saved": false, "print_only": false}},
+			map[string]interface{}{"assistant": "cursor", "success": true, "license_saved": false, "print_only": false, "cursor_allow_install_notes": false}},
 		{[]string{"codex", "--print", "--license-token", token},
 			map[string]interface{}{"assistant": "codex", "success": true, "license_saved": false, "print_only": true}},
 		{[]string{"codex", "--license-token", "garbage"},
