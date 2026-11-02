@@ -59,6 +59,24 @@ type ApiKeyResponse struct {
 	ApiKey string `json:"apiKey"`
 }
 
+// The CLI asks the server every loginPollEvery whether the link was authorized, for up to loginWait;
+// tests shorten the poll
+var (
+	loginPollEvery = 3 * time.Second
+	loginWait      = 5 * time.Minute
+)
+
+// ServerUnreachableError: the sign-in poll got no answer from the server. Signing in through the link
+// can't finish from this process then, so the CLI says where to run it instead.
+type ServerUnreachableError struct {
+	URL   string
+	Cause string
+}
+
+func (e *ServerUnreachableError) Error() string {
+	return fmt.Sprintf("Can't reach the Tensorleap server at %s from here (%s). If you're an AI assistant running in a sandbox, run this command outside it.", e.URL, e.Cause)
+}
+
 // LoginAndGetAuthTokenWithBrowser waits for the user to sign in through a link; openBrowser also opens it here
 func LoginAndGetAuthTokenWithBrowser(ctx context.Context, apiUrl string, openBrowser bool) (string, error) {
 	baseUrl := api.ChangeToUIUrl(apiUrl)
@@ -98,9 +116,14 @@ func LoginAndGetAuthTokenWithBrowser(ctx context.Context, apiUrl string, openBro
 		}
 		req.Header.Set("Content-Type", "application/json")
 		res, err := http.DefaultClient.Do(req)
+		if err != nil && !errors.Is(err, api.ErrAuth) {
+			// no answer at all, e.g. inside an AI assistant's sandbox that blocks the network
+			return false, &ServerUnreachableError{URL: api.ChangeToUIUrl(apiUrl), Cause: transportCause(err)}
+		}
 		if err != nil {
 			return false, err
 		}
+		defer func() { _ = res.Body.Close() }()
 
 		if res.StatusCode == http.StatusOK {
 			var r ApiKeyResponse
@@ -114,8 +137,12 @@ func LoginAndGetAuthTokenWithBrowser(ctx context.Context, apiUrl string, openBro
 		}
 		return false, nil
 
-	}, time.Second*3, time.Minute*5)
+	}, loginPollEvery, loginWait)
 
+	var unreachable *ServerUnreachableError
+	if errors.As(err, &unreachable) {
+		return "", err
+	}
 	if err != nil {
 		return "", fmt.Errorf("failed to get API key: %w", err)
 	}

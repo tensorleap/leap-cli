@@ -11,13 +11,32 @@ import (
 
 var ErrorTimeout = errors.New("timeout")
 
-func WaitForCondition(ctx context.Context, message string, condition func() (bool, error), sleepDuration time.Duration, timeoutDuration time.Duration) error {
-	startTime := time.Now()
+type waitSpinner interface {
+	Start()
+	Stop()
+	Abort()
+}
 
-	s := log.NewSpinner(message)
+// newWaitSpinner is log.NewSpinner; tests replace it to see how a wait ended
+var newWaitSpinner = func(message string) waitSpinner { return log.NewSpinner(message) }
+
+// WaitForCondition polls condition until it is done, errors, or timeoutDuration passes. The spinner line
+// says "Completed" only when the condition was met.
+func WaitForCondition(ctx context.Context, message string, condition func() (bool, error), sleepDuration time.Duration, timeoutDuration time.Duration) (err error) {
+	s := newWaitSpinner(message)
 	s.Start()
-	defer s.Stop()
+	defer func() {
+		if err == nil {
+			s.Stop()
+		} else {
+			s.Abort()
+		}
+	}()
+	return pollCondition(ctx, condition, sleepDuration, timeoutDuration)
+}
 
+func pollCondition(ctx context.Context, condition func() (bool, error), sleepDuration time.Duration, timeoutDuration time.Duration) error {
+	startTime := time.Now()
 	for time.Since(startTime) < timeoutDuration {
 		select {
 		case <-ctx.Done():
