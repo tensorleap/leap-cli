@@ -290,10 +290,27 @@ func (s *pushState) runCombinedPush(dispatch evalDispatch) (versionId, codeSnaps
 		return pushResp.VersionId, pushResp.CodeSnapshot.Cid, true, nil
 	}
 
-	if err := model.WaitForPushJob(s.ctx, s.projectId(), pushResp.VersionId, pushResp.JobId); err != nil {
+	if err := s.waitForModelPush(pushResp.VersionId, pushResp.JobId); err != nil {
 		return pushResp.VersionId, pushResp.CodeSnapshot.Cid, true, s.fail("push_job", err)
 	}
 	return pushResp.VersionId, pushResp.CodeSnapshot.Cid, true, nil
+}
+
+// waitForPushJob is model.WaitForPushJob; tests replace it to finish or fail a push without a server
+var waitForPushJob = model.WaitForPushJob
+
+// waitForModelPush waits for a push that uploaded a model file. When the push finished, the file is
+// remembered in .tensorleap/state.json so the next picker highlights it. A failed push, or one not waited
+// for (--no-wait), leaves the remembered file as it was: it may be the file that doesn't work.
+func (s *pushState) waitForModelPush(versionId, jobId string) error {
+	if err := waitForPushJob(s.ctx, s.projectId(), versionId, jobId); err != nil {
+		return err
+	}
+	// "." is the project folder, as for the bundle
+	if err := workspace.SaveLastPushedModelPath(".", s.inputs.modelPath); err != nil {
+		log.Warnf("Couldn't remember the model file for the next push: %v", err)
+	}
+	return nil
 }
 
 // wantsNewVersion reports whether the flags express an explicit intent to push a

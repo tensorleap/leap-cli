@@ -14,6 +14,7 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/log"
 	runPkg "github.com/tensorleap/leap-cli/pkg/run"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
+	"github.com/tensorleap/leap-cli/pkg/workspace"
 	"k8s.io/utils/strings/slices"
 )
 
@@ -308,10 +309,12 @@ func pickAmbiguousVersion(
 	return &infos[idx], nil
 }
 
+// AskUserForModelPath opens the model file picker on the working directory, with the model of the last
+// successful push from it highlighted first (when that file still exists)
 func AskUserForModelPath(ctx context.Context) (modelPath string, err error) {
 	allowedExt := []string{".h5", ".onnx"}
 	ignoredDirs := []string{".venv"}
-	return local.SelectFile(allowedExt, "Select model file", ignoredDirs)
+	return local.SelectFile(allowedExt, "Select model file", ignoredDirs, workspace.LastPushedModelPath("."))
 }
 
 func FormatVersionDisplayName(version *tensorleapapi.SlimVersion, status VersionStatus, maxLengthOfVersionName int) string {
