@@ -36,7 +36,7 @@ type reportSpec struct {
 func (s *Server) addPublishTool(srv *sdk.Server) {
 	closed := false
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_publish_report",
-		Description: "Publish the finished report of an analysis export (report.html, plus report.md and report.json when present) to the Tensorleap server: the team finds it in the project's Reports tab in the UI and the returned link opens it. Publishing the same evaluation again replaces your previous report. Call it after build-report and inline-html; dir is the export directory tl_export_analysis wrote.",
+		Description: "Publish the finished report of an analysis export (report.html, plus report.md and report.json when present) to the Tensorleap server: the team finds it in the project's Reports tab in the UI and the returned link opens it. Every publish adds a new report in that tab. Call it after build-report and inline-html; dir is the export directory tl_export_analysis wrote.",
 		Annotations: &sdk.ToolAnnotations{Title: "Publish report", ReadOnlyHint: false, IdempotentHint: true, OpenWorldHint: &closed}},
 		s.publishReport)
 }
