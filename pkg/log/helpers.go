@@ -82,6 +82,11 @@ func (sp *Spinner) Stop() {
 	Infof("%s - Completed\n", sp.message)
 }
 
+// Abort stops the spinner animation without the completion message, for work that failed or timed out
+func (sp *Spinner) Abort() {
+	sp.s.Stop()
+}
+
 // UpdateProgress updates the progress percentage displayed with the spinner.
 func (sp *Spinner) UpdateProgress(percent int) {
 	if percent > 100 {
