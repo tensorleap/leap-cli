@@ -151,3 +151,18 @@ func TestCursorAllowRuleLeavesAFileItCannotReadAlone(t *testing.T) {
 		}
 	}
 }
+
+// leap server install prefers $TL_DATA_DIR over the data dir it saved, so the rule does too
+func TestCursorRuleNamesTheDataDirInstallUses(t *testing.T) {
+	t.Setenv(local.DATA_DIR_ENV_NAME, "/from/env")
+	viper.Reset()
+	t.Cleanup(viper.Reset)
+	viper.Set(dataDirConfigKey, "/saved")
+	if got := cursorInstallNotesRule(); got != "Write(/from/env/install-notes.md)" {
+		t.Fatalf("with TL_DATA_DIR: %s", got)
+	}
+	t.Setenv(local.DATA_DIR_ENV_NAME, "")
+	if got := cursorInstallNotesRule(); got != "Write(/saved/install-notes.md)" {
+		t.Fatalf("with a saved data_dir: %s", got)
+	}
+}

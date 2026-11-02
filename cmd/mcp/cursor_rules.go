@@ -103,7 +103,7 @@ func addCursorAllowRule(rule string) error {
 	}
 	out, err := patchJSON(old, "permissions", "allow", append(allow, rule))
 	if err == nil && c.Permissions == nil {
-		// Cursor requires both lists once permissions exists
+		// a new permissions object gets both lists Cursor requires; an existing one keeps its own
 		out, err = patchJSON(out, "permissions", "deny", []string{})
 	}
 	if err != nil {
