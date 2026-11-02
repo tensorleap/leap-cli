@@ -43,13 +43,15 @@ type FileSelectSession struct {
 // ---------------------------
 //
 
-// SelectFile lets the user browse and select a file interactively.
-func SelectFile(allowedExt []string, title string, ignoredDirs []string) (string, error) {
+// SelectFile lets the user browse and select a file interactively. preferred (relative to the working
+// directory, may be "") is listed first, so it is the highlighted choice when the picker opens.
+func SelectFile(allowedExt []string, title string, ignoredDirs []string, preferred string) (string, error) {
 	cwd, _ := filepath.Abs(".")
 	allFiles, err := collectAllFiles(cwd, allowedExt, ignoredDirs)
 	if err != nil {
 		return "", err
 	}
+	allFiles = moveToFront(allFiles, preferred)
 
 	session := &FileSelectSession{
 		Title:       title,
@@ -319,6 +321,25 @@ func (s *FileSelectSession) loadDirFromCache(dir string) ([]string, error) {
 // Utility Functions
 // ---------------------------
 //
+
+// moveToFront returns files with the entry naming the same path as preferred first, the rest in their
+// order. files is unchanged when preferred is "" or not in it.
+func moveToFront(files []string, preferred string) []string {
+	if preferred == "" {
+		return files
+	}
+	want := filepath.Clean(preferred)
+	for i, f := range files {
+		if filepath.Clean(f) != want {
+			continue
+		}
+		ordered := make([]string, 0, len(files))
+		ordered = append(ordered, f)
+		ordered = append(ordered, files[:i]...)
+		return append(ordered, files[i+1:]...)
+	}
+	return files
+}
 
 // collectAllFiles recursively collects all files under root.
 func collectAllFiles(root string, allowedExt []string, ignoredDirs []string) ([]string, error) {
