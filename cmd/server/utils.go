@@ -56,12 +56,22 @@ func getConfigureDataDir() string {
 	return dataDir
 }
 
+// configuredOrDefaultDataDir is the data dir saved in the CLI config, or the default install location
+// when the config has none (config deleted, another local user, an install made under another account)
+func configuredOrDefaultDataDir() string {
+	if dir := getConfigureDataDir(); dir != "" {
+		return dir
+	}
+	return local.DEFAULT_DATA_DIR
+}
+
 // tests replace these to run install and reinstall without touching the machine or sending events
 var (
 	sendEvent        = analytics.SendEvent
 	initDataDir      = initLocalDataDir
 	runInstall       = servercmd.RunInstallCmd
 	runReinstall     = servercmd.RunReinstallCmd
+	runUninstall     = servercmd.RunUninstallCmd
 	applyLicense     = handleLicenseAfterInstall
 	installedVersion = getServerVersionSafe
 	ensureNotes      = ensureInstallNotes
@@ -77,10 +87,7 @@ func serverURL(res *server.InstallationResult) string {
 
 func initLocalDataDir(ctx context.Context, flag string) (bool, error) {
 	configureDir := getConfigureDataDir()
-	previousDir := configureDir
-	if previousDir == "" {
-		previousDir = local.DEFAULT_DATA_DIR
-	}
+	previousDir := configuredOrDefaultDataDir()
 	err := local.SetDataDir(previousDir, flag)
 	if err != nil {
 		return false, err
