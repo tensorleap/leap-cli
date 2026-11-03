@@ -198,8 +198,8 @@ func NotSignedInError() error {
 	}
 	if !stdinIsTerminal() {
 		return fmt.Errorf("Not signed in. Run: leap auth login %s\n"+
-			"AI assistant: start `leap auth login %s --non-interactive` in the background, send the user the sign-in link it prints "+
-			"in a message, and wait for that command to finish. Only the user can sign in: don't look for API keys or passwords.", url, url)
+			"AI assistant: start `leap auth login %s --non-interactive` in the background, put the sign-in link it prints "+
+			"in your reply to the user, and end your turn until that command finishes. Only the user can sign in: don't look for API keys or passwords.", url, url)
 	}
 	return fmt.Errorf("Not signed in. Run: leap auth login %s", url)
 }
