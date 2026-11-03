@@ -12,6 +12,8 @@ import (
 )
 
 func TestNotSignedInErrorNamesTheKnownServer(t *testing.T) {
+	origTTY := stdinIsTerminal
+	t.Cleanup(func() { stdinIsTerminal = origTTY })
 	cases := []struct {
 		name, apiUrl, installed, want string
 	}{
@@ -27,8 +29,14 @@ func TestNotSignedInErrorNamesTheKnownServer(t *testing.T) {
 			t.Cleanup(func() { installedServerUrl = orig })
 			installedServerUrl = func() string { return c.installed }
 
+			stdinIsTerminal = func() bool { return false }
 			if got := NotSignedInError().Error(); got != c.want {
-				t.Fatalf("got %q, want %q", got, c.want)
+				t.Fatalf("no terminal: got %q, want %q", got, c.want)
+			}
+			// a person at a terminal gets the first line only
+			stdinIsTerminal = func() bool { return true }
+			if got, want := NotSignedInError().Error(), strings.SplitN(c.want, "\n", 2)[0]; got != want {
+				t.Fatalf("terminal: got %q, want %q", got, want)
 			}
 		})
 	}

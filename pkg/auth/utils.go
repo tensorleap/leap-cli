@@ -196,10 +196,17 @@ func NotSignedInError() error {
 	if url == "" {
 		url = "<url>"
 	}
-	return fmt.Errorf("Not signed in. Run: leap auth login %s\n"+
-		"AI assistant: start `leap auth login %s --non-interactive` in the background, send the user the sign-in link it prints "+
-		"in a message, and wait for that command to finish. Only the user can sign in: don't look for API keys or passwords.", url, url)
+	if !stdinIsTerminal() {
+		return fmt.Errorf("Not signed in. Run: leap auth login %s\n"+
+			"AI assistant: start `leap auth login %s --non-interactive` in the background, send the user the sign-in link it prints "+
+			"in a message, and wait for that command to finish. Only the user can sign in: don't look for API keys or passwords.", url, url)
+	}
+	return fmt.Errorf("Not signed in. Run: leap auth login %s", url)
 }
+
+// stdinIsTerminal tells a person at a terminal from an AI assistant's or a script's shell, whose stdin never is one;
+// only the latter get the longer sign-in instructions
+var stdinIsTerminal = func() bool { return term.IsTerminal(int(os.Stdin.Fd())) }
 
 // signInCheckTimeout bounds CheckSignIn, so a server that never answers doesn't hang the command
 var signInCheckTimeout = 15 * time.Second
@@ -258,7 +265,7 @@ func RequireAuth(ctx context.Context) (context.Context, *tensorleapapi.UserData,
 // Returns the authenticated context and user data after successful login.
 func InteractiveLogin(ctx context.Context) (context.Context, *tensorleapapi.UserData, error) {
 	// without a terminal the prompts below would only fail with EOF
-	if !term.IsTerminal(int(os.Stdin.Fd())) {
+	if !stdinIsTerminal() {
 		return ctx, nil, NotSignedInError()
 	}
 	log.Info("Authentication required. Starting login flow...")
