@@ -25,7 +25,7 @@ func NewLoginCmd() *cobra.Command {
 		Long: `Login to the system using either an API key or a username and password.
 
 With --non-interactive it asks nothing, for scripts and AI assistants: it uses --api-key or
---username/--password when given, otherwise it prints a sign-in link to open in a browser
+--username/--password when given, otherwise it tries to open the sign-in page in your browser, prints its link too,
 and waits until you have signed in there.`,
 		Example: "  leap auth login http://localhost:4589\n" +
 			"  leap auth login http://localhost:4589 --non-interactive",
@@ -105,7 +105,7 @@ and waits until you have signed in there.`,
 				}
 				if useBrowser {
 					loginMethod = "browser_oauth"
-					apiKey, err = auth.LoginAndGetAuthTokenWithBrowser(cmd.Context(), apiUrl, !nonInteractive)
+					apiKey, err = auth.LoginAndGetAuthTokenWithBrowser(cmd.Context(), apiUrl, true)
 					if err != nil {
 						// Track failed login attempt
 						properties := map[string]interface{}{
@@ -208,7 +208,7 @@ and waits until you have signed in there.`,
 	cmd.Flags().StringVarP(&apiKey, "api-key", "k", "", "API key to login with")
 	cmd.Flags().StringVarP(&userName, "username", "u", "", "In case you want to login with username and password")
 	cmd.Flags().StringVarP(&password, "password", "p", "", "In case you want to login with username and password")
-	cmd.Flags().BoolVar(&nonInteractive, "non-interactive", false, "Ask nothing: use --api-key or --username/--password if given, otherwise print a browser sign-in link and wait for it")
+	cmd.Flags().BoolVar(&nonInteractive, "non-interactive", false, "Ask nothing: use --api-key or --username/--password if given, otherwise open the sign-in page in the browser, print its link and wait for it")
 	return cmd
 }
 

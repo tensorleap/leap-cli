@@ -77,7 +77,8 @@ func (e *ServerUnreachableError) Error() string {
 	return fmt.Sprintf("Can't reach the Tensorleap server at %s from here (%s). If you're an AI assistant running in a sandbox, run this command outside it.", e.URL, e.Cause)
 }
 
-// LoginAndGetAuthTokenWithBrowser waits for the user to sign in through a link; openBrowser also opens it here
+// LoginAndGetAuthTokenWithBrowser waits for the user to sign in through a link; openBrowser also tries to open it
+// here (tests pass false)
 func LoginAndGetAuthTokenWithBrowser(ctx context.Context, apiUrl string, openBrowser bool) (string, error) {
 	baseUrl := api.ChangeToUIUrl(apiUrl)
 	codeVerifier, err := generateCodeVerifier()
@@ -87,21 +88,27 @@ func LoginAndGetAuthTokenWithBrowser(ctx context.Context, apiUrl string, openBro
 	codeChallenge := generateCodeChallenge(codeVerifier)
 
 	url := fmt.Sprintf("%s/authorization-request?code_challenge=%s", baseUrl, codeChallenge)
-	if !openBrowser {
-		if stdinIsTerminal() {
-			log.Info("Open this link in your browser and sign in:")
-		} else {
-			log.Info("Open this link in your browser and sign in.")
-			log.Info("AI assistant: copy the next line into your reply to the user and end your turn. Only they can open it, in their own browser; opening it yourself (curl, fetch) does nothing. This command finishes by itself once they have signed in, and you'll be woken then.")
-		}
-		log.Info(url)
-	} else {
+	if openBrowser {
 		if err = local.OpenLink(url); err != nil {
 			log.Warnf("Failed to open browser: %v", err)
 		}
-		log.Info("Please open the following link in your browser (if not opened automatically):")
-		log.Info(url)
 	}
+	switch {
+	case !stdinIsTerminal():
+		// An AI assistant's shell. The browser may have opened where the user can't see it (another
+		// machine, a sandbox) or not at all, so the link always goes into the assistant's reply.
+		if openBrowser {
+			log.Info("Tried to open the sign-in page in your browser. If you don't see it, open this link and sign in.")
+		} else {
+			log.Info("Open this link in your browser and sign in.")
+		}
+		log.Info("AI assistant: always copy the next line into your reply to the user, with one sentence: I tried to open the sign-in page in your browser; if you don't see it, open this link. Do this even if the browser seemed to open. Then end your turn. Only the user can sign in, in their own browser; opening the link yourself (curl, fetch) does nothing. This command finishes by itself once they have signed in, and you'll be woken then.")
+	case openBrowser:
+		log.Info("Please open the following link in your browser (if not opened automatically):")
+	default:
+		log.Info("Open this link in your browser and sign in:")
+	}
+	log.Info(url)
 	var apiKey string
 
 	err = api.WaitForCondition(ctx, "Waiting for authentication...", func() (bool, error) {
