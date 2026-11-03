@@ -15,9 +15,9 @@ func TestNotSignedInErrorNamesTheKnownServer(t *testing.T) {
 	cases := []struct {
 		name, apiUrl, installed, want string
 	}{
-		{name: "configured api url", apiUrl: "https://api.acme.tensorleap.ai/api/v2", installed: "http://localhost:4589", want: "Not signed in. Run: leap auth login https://acme.tensorleap.ai"},
-		{name: "local install", installed: "http://localhost:4589", want: "Not signed in. Run: leap auth login http://localhost:4589"},
-		{name: "nothing known", want: "Not signed in. Run: leap auth login <url>"},
+		{name: "configured api url", apiUrl: "https://api.acme.tensorleap.ai/api/v2", installed: "http://localhost:4589", want: "Not signed in. Run: leap auth login https://acme.tensorleap.ai\nAI assistant: start `leap auth login https://acme.tensorleap.ai --non-interactive` in the background, send the user the sign-in link it prints in a message, and wait for that command to finish. Only the user can sign in: don't look for API keys or passwords."},
+		{name: "local install", installed: "http://localhost:4589", want: "Not signed in. Run: leap auth login http://localhost:4589\nAI assistant: start `leap auth login http://localhost:4589 --non-interactive` in the background, send the user the sign-in link it prints in a message, and wait for that command to finish. Only the user can sign in: don't look for API keys or passwords."},
+		{name: "nothing known", want: "Not signed in. Run: leap auth login <url>\nAI assistant: start `leap auth login <url> --non-interactive` in the background, send the user the sign-in link it prints in a message, and wait for that command to finish. Only the user can sign in: don't look for API keys or passwords."},
 	}
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {

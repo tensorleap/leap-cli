@@ -88,7 +88,7 @@ func LoginAndGetAuthTokenWithBrowser(ctx context.Context, apiUrl string, openBro
 
 	url := fmt.Sprintf("%s/authorization-request?code_challenge=%s", baseUrl, codeChallenge)
 	if !openBrowser {
-		log.Info("Open this link in your browser and sign in:")
+		log.Info("Open this link in your browser and sign in (AI assistant: send it to the user in a message; they open it in their own browser, and this command finishes once they have signed in):")
 		log.Info(url)
 	} else {
 		if err = local.OpenLink(url); err != nil {
