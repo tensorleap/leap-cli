@@ -91,7 +91,8 @@ func LoginAndGetAuthTokenWithBrowser(ctx context.Context, apiUrl string, openBro
 		if stdinIsTerminal() {
 			log.Info("Open this link in your browser and sign in:")
 		} else {
-			log.Info("Open this link in your browser and sign in (AI assistant: send it to the user in a message; they open it in their own browser, and this command finishes once they have signed in):")
+			log.Info("Open this link in your browser and sign in.")
+			log.Info("AI assistant: copy the next line into your reply to the user. Only they can open it, in their own browser; opening it yourself (curl, fetch) does nothing. This command finishes by itself once they have signed in.")
 		}
 		log.Info(url)
 	} else {
