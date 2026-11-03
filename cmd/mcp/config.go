@@ -326,8 +326,12 @@ func configureFile(out ui, a *assistant, entry serverEntry) {
 	}
 	if a.id == "vscode" {
 		out.detail("Copilot Business/Enterprise: an organization admin must allow 'MCP servers in Copilot'.")
+		out.detail("%s", copilotModelNote)
 	}
 }
+
+// copilotModelNote: Copilot's default (auto) model can be too weak for writing an integration and its report
+const copilotModelNote = "We recommend using Claude Sonnet or a more capable model to integrate with Tensorleap and analyze your models."
 
 func installSkills(out ui, a *assistant) {
 	if a.skillsTool == "" {
@@ -555,6 +559,7 @@ func printConfig(w io.Writer, client, bin string, args []string) {
 		p("%s", mustJSON(map[string]any{key: map[string]any{"tensorleap": entry}}))
 		if client == "vscode" {
 			p("\nCopilot Business/Enterprise: the 'MCP servers in Copilot' policy is off by default; an organization admin must enable it.")
+			p("%s", copilotModelNote)
 		}
 	}
 }
