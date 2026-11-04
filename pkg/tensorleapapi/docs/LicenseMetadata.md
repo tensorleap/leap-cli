@@ -8,6 +8,10 @@ Name | Type | Description | Notes
 **ExpirationDate** | Pointer to **time.Time** |  | [optional] 
 **MaxUsers** | Pointer to **float64** |  | [optional] 
 **MaxConcurrentEvaluateJobsPerUser** | Pointer to **float64** | Maximum number of concurrent Evaluate (or Continue-Evaluate) jobs a single user is allowed to have running at the same time. Undefined or 0 means unlimited. | [optional] 
+**MaxProjects** | Pointer to **float64** | Projects the team may own. Undefined or 0 means unlimited. | [optional] 
+**Activated** | Pointer to **bool** | False while a colored license waits for its activation key. getEnvironmentInfo always sends it to clients: true for every license not waiting for its key. | [optional] 
+**ActivationUrl** | Pointer to **string** | Asked for the key before a blocked action; answers { activated, licenseToken }. | [optional] 
+**Rid** | Pointer to **string** | Free Tier registration id; kept after activation to report milestones. Not for clients. | [optional] 
 
 ## Methods
 
@@ -122,6 +126,106 @@ SetMaxConcurrentEvaluateJobsPerUser sets MaxConcurrentEvaluateJobsPerUser field 
 `func (o *LicenseMetadata) HasMaxConcurrentEvaluateJobsPerUser() bool`
 
 HasMaxConcurrentEvaluateJobsPerUser returns a boolean if a field has been set.
+
+### GetMaxProjects
+
+`func (o *LicenseMetadata) GetMaxProjects() float64`
+
+GetMaxProjects returns the MaxProjects field if non-nil, zero value otherwise.
+
+### GetMaxProjectsOk
+
+`func (o *LicenseMetadata) GetMaxProjectsOk() (*float64, bool)`
+
+GetMaxProjectsOk returns a tuple with the MaxProjects field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMaxProjects
+
+`func (o *LicenseMetadata) SetMaxProjects(v float64)`
+
+SetMaxProjects sets MaxProjects field to given value.
+
+### HasMaxProjects
+
+`func (o *LicenseMetadata) HasMaxProjects() bool`
+
+HasMaxProjects returns a boolean if a field has been set.
+
+### GetActivated
+
+`func (o *LicenseMetadata) GetActivated() bool`
+
+GetActivated returns the Activated field if non-nil, zero value otherwise.
+
+### GetActivatedOk
+
+`func (o *LicenseMetadata) GetActivatedOk() (*bool, bool)`
+
+GetActivatedOk returns a tuple with the Activated field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetActivated
+
+`func (o *LicenseMetadata) SetActivated(v bool)`
+
+SetActivated sets Activated field to given value.
+
+### HasActivated
+
+`func (o *LicenseMetadata) HasActivated() bool`
+
+HasActivated returns a boolean if a field has been set.
+
+### GetActivationUrl
+
+`func (o *LicenseMetadata) GetActivationUrl() string`
+
+GetActivationUrl returns the ActivationUrl field if non-nil, zero value otherwise.
+
+### GetActivationUrlOk
+
+`func (o *LicenseMetadata) GetActivationUrlOk() (*string, bool)`
+
+GetActivationUrlOk returns a tuple with the ActivationUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetActivationUrl
+
+`func (o *LicenseMetadata) SetActivationUrl(v string)`
+
+SetActivationUrl sets ActivationUrl field to given value.
+
+### HasActivationUrl
+
+`func (o *LicenseMetadata) HasActivationUrl() bool`
+
+HasActivationUrl returns a boolean if a field has been set.
+
+### GetRid
+
+`func (o *LicenseMetadata) GetRid() string`
+
+GetRid returns the Rid field if non-nil, zero value otherwise.
+
+### GetRidOk
+
+`func (o *LicenseMetadata) GetRidOk() (*string, bool)`
+
+GetRidOk returns a tuple with the Rid field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRid
+
+`func (o *LicenseMetadata) SetRid(v string)`
+
+SetRid sets Rid field to given value.
+
+### HasRid
+
+`func (o *LicenseMetadata) HasRid() bool`
+
+HasRid returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

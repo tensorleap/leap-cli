@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **PopulationExplorationDigestSeedCount** | Pointer to **float64** |  | [optional] 
 **CsvBlobPath** | Pointer to **string** |  | [optional] 
 **OverridedVersionId** | Pointer to **string** |  | [optional] 
+**AvailableLatentSpaces** | Pointer to [**[]AvailableLatentSpace**](AvailableLatentSpace.md) |  | [optional] 
 
 ## Methods
 
@@ -263,6 +264,31 @@ SetOverridedVersionId sets OverridedVersionId field to given value.
 `func (o *VersionResources) HasOverridedVersionId() bool`
 
 HasOverridedVersionId returns a boolean if a field has been set.
+
+### GetAvailableLatentSpaces
+
+`func (o *VersionResources) GetAvailableLatentSpaces() []AvailableLatentSpace`
+
+GetAvailableLatentSpaces returns the AvailableLatentSpaces field if non-nil, zero value otherwise.
+
+### GetAvailableLatentSpacesOk
+
+`func (o *VersionResources) GetAvailableLatentSpacesOk() (*[]AvailableLatentSpace, bool)`
+
+GetAvailableLatentSpacesOk returns a tuple with the AvailableLatentSpaces field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAvailableLatentSpaces
+
+`func (o *VersionResources) SetAvailableLatentSpaces(v []AvailableLatentSpace)`
+
+SetAvailableLatentSpaces sets AvailableLatentSpaces field to given value.
+
+### HasAvailableLatentSpaces
+
+`func (o *VersionResources) HasAvailableLatentSpaces() bool`
+
+HasAvailableLatentSpaces returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

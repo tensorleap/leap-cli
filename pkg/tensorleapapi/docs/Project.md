@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **HubPublishPolicy** | [**HubPublishPolicy**](HubPublishPolicy.md) |  | 
 **Categories** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
 **Description** | Pointer to **string** |  | [optional] 
+**DefaultPopulation** | Pointer to [**ProjectPopulation**](ProjectPopulation.md) |  | [optional] 
 
 ## Methods
 
@@ -352,6 +353,31 @@ SetDescription sets Description field to given value.
 `func (o *Project) HasDescription() bool`
 
 HasDescription returns a boolean if a field has been set.
+
+### GetDefaultPopulation
+
+`func (o *Project) GetDefaultPopulation() ProjectPopulation`
+
+GetDefaultPopulation returns the DefaultPopulation field if non-nil, zero value otherwise.
+
+### GetDefaultPopulationOk
+
+`func (o *Project) GetDefaultPopulationOk() (*ProjectPopulation, bool)`
+
+GetDefaultPopulationOk returns a tuple with the DefaultPopulation field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDefaultPopulation
+
+`func (o *Project) SetDefaultPopulation(v ProjectPopulation)`
+
+SetDefaultPopulation sets DefaultPopulation field to given value.
+
+### HasDefaultPopulation
+
+`func (o *Project) HasDefaultPopulation() bool`
+
+HasDefaultPopulation returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

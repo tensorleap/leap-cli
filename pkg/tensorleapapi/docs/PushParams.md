@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **BranchName** | Pointer to **string** |  | [optional] 
 **OverwriteVersionId** | Pointer to **string** |  | [optional] 
 **EvaluateOnSuccess** | Pointer to [**ChainedEvaluateRequest**](ChainedEvaluateRequest.md) |  | [optional] 
+**GitOrigin** | Pointer to **string** |  | [optional] 
 **Model** | [**ImportModelInfo**](ImportModelInfo.md) |  | 
 
 ## Methods
@@ -238,6 +239,31 @@ SetEvaluateOnSuccess sets EvaluateOnSuccess field to given value.
 `func (o *PushParams) HasEvaluateOnSuccess() bool`
 
 HasEvaluateOnSuccess returns a boolean if a field has been set.
+
+### GetGitOrigin
+
+`func (o *PushParams) GetGitOrigin() string`
+
+GetGitOrigin returns the GitOrigin field if non-nil, zero value otherwise.
+
+### GetGitOriginOk
+
+`func (o *PushParams) GetGitOriginOk() (*string, bool)`
+
+GetGitOriginOk returns a tuple with the GitOrigin field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGitOrigin
+
+`func (o *PushParams) SetGitOrigin(v string)`
+
+SetGitOrigin sets GitOrigin field to given value.
+
+### HasGitOrigin
+
+`func (o *PushParams) HasGitOrigin() bool`
+
+HasGitOrigin returns a boolean if a field has been set.
 
 ### GetModel
 

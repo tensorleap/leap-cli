@@ -16,6 +16,7 @@ Method | HTTP request | Description
 [**CalcPopulationExplorationDigest**](DefaultAPI.md#CalcPopulationExplorationDigest) | **Post** /dashboards/calcPopulationExplorationDigest | 
 [**ClearUserJobs**](DefaultAPI.md#ClearUserJobs) | **Post** /users/clearUserJobs | 
 [**ClearUserNotifications**](DefaultAPI.md#ClearUserNotifications) | **Post** /users/clearUserNotifications | 
+[**ConfirmPasswordReset**](DefaultAPI.md#ConfirmPasswordReset) | **Post** /auth/confirmPasswordReset | 
 [**ContinueAutoSyntheticData**](DefaultAPI.md#ContinueAutoSyntheticData) | **Post** /datasetcuration/continueAutoSyntheticData | 
 [**ContinueEvaluate**](DefaultAPI.md#ContinueEvaluate) | **Post** /evaluate/continueEvaluate | 
 [**ContinueUpdateEvaluate**](DefaultAPI.md#ContinueUpdateEvaluate) | **Post** /evaluate/continueUpdateEvaluate | 
@@ -30,7 +31,9 @@ Method | HTTP request | Description
 [**DeleteDomainGap**](DefaultAPI.md#DeleteDomainGap) | **Post** /datasetcuration/deleteDomainGap | 
 [**DeleteGeneratedLabel**](DefaultAPI.md#DeleteGeneratedLabel) | **Post** /datasetcuration/deleteGeneratedLabel | 
 [**DeleteIssue**](DefaultAPI.md#DeleteIssue) | **Post** /issues/deleteIssue | 
+[**DeleteManualInsight**](DefaultAPI.md#DeleteManualInsight) | **Post** /datasetcuration/deleteManualInsight | 
 [**DeleteProject**](DefaultAPI.md#DeleteProject) | **Post** /projects/deleteProject | 
+[**DeleteReport**](DefaultAPI.md#DeleteReport) | **Post** /analysis-reports/deleteReport | 
 [**DeleteSampleAnalysis**](DefaultAPI.md#DeleteSampleAnalysis) | **Post** /visualizations/deleteSampleAnalysis | 
 [**DeleteSessionTest**](DefaultAPI.md#DeleteSessionTest) | **Post** /sessions-tests/deleteSessionTest | 
 [**DeleteSyntheticData**](DefaultAPI.md#DeleteSyntheticData) | **Post** /datasetcuration/deleteSyntheticData | 
@@ -43,6 +46,7 @@ Method | HTTP request | Description
 [**Evaluate**](DefaultAPI.md#Evaluate) | **Post** /evaluate/evaluate | 
 [**ExportAnalysis**](DefaultAPI.md#ExportAnalysis) | **Post** /analysis-export/exportAnalysis | 
 [**ExportBundle**](DefaultAPI.md#ExportBundle) | **Post** /analysis-export/exportBundle | 
+[**ExportSamplesCsv**](DefaultAPI.md#ExportSamplesCsv) | **Post** /sample-collection/exportSamplesCsv | 
 [**ExtendTrial**](DefaultAPI.md#ExtendTrial) | **Post** /auth/extendTrial | 
 [**FetchSimilar**](DefaultAPI.md#FetchSimilar) | **Post** /visualizations/fetchSimilar | 
 [**GenerateAutoSyntheticData**](DefaultAPI.md#GenerateAutoSyntheticData) | **Post** /datasetcuration/generateAutoSyntheticData | 
@@ -51,6 +55,7 @@ Method | HTTP request | Description
 [**GenerateDomainGap**](DefaultAPI.md#GenerateDomainGap) | **Post** /datasetcuration/generateDomainGap | 
 [**GenerateInsights**](DefaultAPI.md#GenerateInsights) | **Post** /insights/generateInsights | 
 [**GenerateLabels**](DefaultAPI.md#GenerateLabels) | **Post** /datasetcuration/generateLabels | 
+[**GenerateManualInsight**](DefaultAPI.md#GenerateManualInsight) | **Post** /datasetcuration/generateManualInsight | 
 [**GenerateStreamingSamplesVis**](DefaultAPI.md#GenerateStreamingSamplesVis) | **Post** /sample-collection/generateStreamingSamplesVis | 
 [**GenerateSyntheticData**](DefaultAPI.md#GenerateSyntheticData) | **Post** /datasetcuration/generateSyntheticData | 
 [**GenerateUnlabeledAnalysis**](DefaultAPI.md#GenerateUnlabeledAnalysis) | **Post** /datasetcuration/generateUnlabeledAnalysis | 
@@ -62,6 +67,7 @@ Method | HTTP request | Description
 [**GetAuthProvider**](DefaultAPI.md#GetAuthProvider) | **Post** /auth/getAuthProvider | 
 [**GetAuthStatus**](DefaultAPI.md#GetAuthStatus) | **Post** /auth/getAuthStatus | 
 [**GetBalancedAccuracy**](DefaultAPI.md#GetBalancedAccuracy) | **Post** /sessionmetrics/getBalancedAccuracy | 
+[**GetCodeChallengeStatus**](DefaultAPI.md#GetCodeChallengeStatus) | **Post** /auth/getCodeChallengeStatus | 
 [**GetCodeSnapshot**](DefaultAPI.md#GetCodeSnapshot) | **Post** /versions/getCodeSnapshot | 
 [**GetCodeSnapshotUploadUrl**](DefaultAPI.md#GetCodeSnapshotUploadUrl) | **Post** /versions/getCodeSnapshotUploadUrl | 
 [**GetCollectionDisplayData**](DefaultAPI.md#GetCollectionDisplayData) | **Post** /sample-collection/getCollectionDisplayData | 
@@ -94,7 +100,9 @@ Method | HTTP request | Description
 [**GetInsightsSettings**](DefaultAPI.md#GetInsightsSettings) | **Post** /insightsSettings/getInsightsSettings | 
 [**GetIssueFileUploadSignedUrl**](DefaultAPI.md#GetIssueFileUploadSignedUrl) | **Post** /issues/getIssueFileUploadSignedUrl | 
 [**GetJobLogs**](DefaultAPI.md#GetJobLogs) | **Post** /jobs/getJobLogs | 
+[**GetLatentSpacePath**](DefaultAPI.md#GetLatentSpacePath) | **Post** /visualizations/getLatentSpacePath | 
 [**GetMachineTypes**](DefaultAPI.md#GetMachineTypes) | **Post** /teams/getMachineTypes | 
+[**GetManualInsights**](DefaultAPI.md#GetManualInsights) | **Post** /datasetcuration/getManualInsights | 
 [**GetMaxActiveUsers**](DefaultAPI.md#GetMaxActiveUsers) | **Post** /metadata/getMaxActiveUsers | 
 [**GetMeanAveragePrecision**](DefaultAPI.md#GetMeanAveragePrecision) | **Post** /sessionmetrics/getMeanAveragePrecision | 
 [**GetNotifications**](DefaultAPI.md#GetNotifications) | **Post** /notifications/getNotifications | 
@@ -104,6 +112,7 @@ Method | HTTP request | Description
 [**GetPrecisionScore**](DefaultAPI.md#GetPrecisionScore) | **Post** /sessionmetrics/getPrecisionScore | 
 [**GetProjectDashboards**](DefaultAPI.md#GetProjectDashboards) | **Post** /dashboards/getProjectDashboards | 
 [**GetProjectIssues**](DefaultAPI.md#GetProjectIssues) | **Post** /issues/getProjectIssues | 
+[**GetProjectReports**](DefaultAPI.md#GetProjectReports) | **Post** /analysis-reports/getProjectReports | 
 [**GetProjectSlimVersions**](DefaultAPI.md#GetProjectSlimVersions) | **Post** /versions/getProjectSlimVersions | 
 [**GetProjects**](DefaultAPI.md#GetProjects) | **Post** /projects/getProjects | 
 [**GetRecallScore**](DefaultAPI.md#GetRecallScore) | **Post** /sessionmetrics/getRecallScore | 
@@ -154,6 +163,7 @@ Method | HTTP request | Description
 [**Logout**](DefaultAPI.md#Logout) | **Post** /auth/logout | 
 [**PopulateCollectionFromFilters**](DefaultAPI.md#PopulateCollectionFromFilters) | **Post** /sample-collection/populateCollectionFromFilters | 
 [**PopulationExploration**](DefaultAPI.md#PopulationExploration) | **Post** /visualizations/populationExploration | 
+[**Publish**](DefaultAPI.md#Publish) | **Post** /analysis-reports/publish | 
 [**Push**](DefaultAPI.md#Push) | **Post** /versions/push | 
 [**PushOverride**](DefaultAPI.md#PushOverride) | **Post** /versions/pushOverride | 
 [**RefreshLocalAuth**](DefaultAPI.md#RefreshLocalAuth) | **Post** /auth/refreshLocalAuth | 
@@ -161,12 +171,16 @@ Method | HTTP request | Description
 [**RemoveSamplesCollection**](DefaultAPI.md#RemoveSamplesCollection) | **Post** /sample-collection/removeSampleCollections | 
 [**RemoveSamplesFromCollection**](DefaultAPI.md#RemoveSamplesFromCollection) | **Post** /sample-collection/removeSamplesFromCollection | 
 [**RenameExperiment**](DefaultAPI.md#RenameExperiment) | **Post** /versions/renameExperiment | 
+[**ReportApproval**](DefaultAPI.md#ReportApproval) | **Post** /insights/reportApproval | 
+[**RequestPasswordReset**](DefaultAPI.md#RequestPasswordReset) | **Post** /auth/requestPasswordReset | 
 [**ResetEvaluate**](DefaultAPI.md#ResetEvaluate) | **Post** /evaluate/resetEvaluate | 
 [**ResolveConcurrentUsersConflict**](DefaultAPI.md#ResolveConcurrentUsersConflict) | **Post** /auth/resolveConcurrentUsersConflict | 
 [**SampleAnalysis**](DefaultAPI.md#SampleAnalysis) | **Post** /visualizations/sampleAnalysis | 
 [**SamplesVisualizationsRefresh**](DefaultAPI.md#SamplesVisualizationsRefresh) | **Post** /visualizations/samplesVisualizationsRefresh | 
 [**SaveAnalyzerLayout**](DefaultAPI.md#SaveAnalyzerLayout) | **Post** /visualizations/saveAnalyzerLayout | 
 [**SaveInsightsSettings**](DefaultAPI.md#SaveInsightsSettings) | **Post** /insightsSettings/saveInsightsSettings | 
+[**SendFreeTierRequest**](DefaultAPI.md#SendFreeTierRequest) | **Post** /users/sendFreeTierRequest | 
+[**SendSupportRequest**](DefaultAPI.md#SendSupportRequest) | **Post** /users/sendSupportRequest | 
 [**SendUserMessage**](DefaultAPI.md#SendUserMessage) | **Post** /users/sendUserMessage | 
 [**SetActiveVersion**](DefaultAPI.md#SetActiveVersion) | **Post** /versions/setActiveVersion | 
 [**SetAiAccess**](DefaultAPI.md#SetAiAccess) | **Post** /ai-access/setAiAccess | 
@@ -944,6 +958,68 @@ Other parameters are passed through a pointer to a apiClearUserNotificationsRequ
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ConfirmPasswordReset
+
+> ConfirmPasswordReset(ctx).ConfirmPasswordResetParams(confirmPasswordResetParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	confirmPasswordResetParams := *openapiclient.NewConfirmPasswordResetParams("Email_example", "Code_example", "NewPassword_example") // ConfirmPasswordResetParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.ConfirmPasswordReset(context.Background()).ConfirmPasswordResetParams(confirmPasswordResetParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ConfirmPasswordReset``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiConfirmPasswordResetRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **confirmPasswordResetParams** | [**ConfirmPasswordResetParams**](ConfirmPasswordResetParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -1833,6 +1909,68 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## DeleteManualInsight
+
+> DeleteManualInsight(ctx).DeleteManualInsightParams(deleteManualInsightParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	deleteManualInsightParams := *openapiclient.NewDeleteManualInsightParams("ProjectId_example", "ManualInsightId_example") // DeleteManualInsightParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteManualInsight(context.Background()).DeleteManualInsightParams(deleteManualInsightParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteManualInsight``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteManualInsightRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **deleteManualInsightParams** | [**DeleteManualInsightParams**](DeleteManualInsightParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## DeleteProject
 
 > DeleteProject(ctx).DeleteProjectParams(deleteProjectParams).Execute()
@@ -1876,6 +2014,68 @@ Other parameters are passed through a pointer to a apiDeleteProjectRequest struc
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **deleteProjectParams** | [**DeleteProjectParams**](DeleteProjectParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteReport
+
+> DeleteReport(ctx).DeleteAnalysisReportParams(deleteAnalysisReportParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	deleteAnalysisReportParams := *openapiclient.NewDeleteAnalysisReportParams("ProjectId_example", "ReportId_example") // DeleteAnalysisReportParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.DeleteReport(context.Background()).DeleteAnalysisReportParams(deleteAnalysisReportParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.DeleteReport``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteReportRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **deleteAnalysisReportParams** | [**DeleteAnalysisReportParams**](DeleteAnalysisReportParams.md) |  | 
 
 ### Return type
 
@@ -2647,6 +2847,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ExportSamplesCsv
+
+> string ExportSamplesCsv(ctx).ExportSamplesCsvParams(exportSamplesCsvParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	exportSamplesCsvParams := *openapiclient.NewExportSamplesCsvParams("ProjectId_example", []openapiclient.SampleCsvColumn{*openapiclient.NewSampleCsvColumn("HeaderName_example", "Field_example")}) // ExportSamplesCsvParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ExportSamplesCsv(context.Background()).ExportSamplesCsvParams(exportSamplesCsvParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ExportSamplesCsv``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ExportSamplesCsv`: string
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ExportSamplesCsv`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiExportSamplesCsvRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **exportSamplesCsvParams** | [**ExportSamplesCsvParams**](ExportSamplesCsvParams.md) |  | 
+
+### Return type
+
+**string**
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: text/csv
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ExtendTrial
 
 > ExtendTrialResponse ExtendTrial(ctx).ExtendTrialParams(extendTrialParams).Execute()
@@ -3128,6 +3392,68 @@ Other parameters are passed through a pointer to a apiGenerateLabelsRequest stru
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **generateLabelParams** | [**GenerateLabelParams**](GenerateLabelParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GenerateManualInsight
+
+> GenerateManualInsight(ctx).GenerateManualInsightParams(generateManualInsightParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	generateManualInsightParams := *openapiclient.NewGenerateManualInsightParams("ProjectId_example", "VersionId_example", []openapiclient.ESFilter{*openapiclient.NewESFilter(openapiclient.FilterOperatorType("between"), "Field_example", *openapiclient.NewESFilterValue())}) // GenerateManualInsightParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.GenerateManualInsight(context.Background()).GenerateManualInsightParams(generateManualInsightParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GenerateManualInsight``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGenerateManualInsightRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **generateManualInsightParams** | [**GenerateManualInsightParams**](GenerateManualInsightParams.md) |  | 
 
 ### Return type
 
@@ -3815,6 +4141,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**MultiChartsResponse**](MultiChartsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetCodeChallengeStatus
+
+> CodeChallengeStatusResponse GetCodeChallengeStatus(ctx).GetCodeChallengeStatusRequest(getCodeChallengeStatusRequest).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getCodeChallengeStatusRequest := *openapiclient.NewGetCodeChallengeStatusRequest("CodeChallenge_example") // GetCodeChallengeStatusRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetCodeChallengeStatus(context.Background()).GetCodeChallengeStatusRequest(getCodeChallengeStatusRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetCodeChallengeStatus``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetCodeChallengeStatus`: CodeChallengeStatusResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetCodeChallengeStatus`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetCodeChallengeStatusRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getCodeChallengeStatusRequest** | [**GetCodeChallengeStatusRequest**](GetCodeChallengeStatusRequest.md) |  | 
+
+### Return type
+
+[**CodeChallengeStatusResponse**](CodeChallengeStatusResponse.md)
 
 ### Authorization
 
@@ -5872,6 +6262,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetLatentSpacePath
+
+> GetLatentSpacePathResponse GetLatentSpacePath(ctx).GetLatentSpacePathParams(getLatentSpacePathParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getLatentSpacePathParams := *openapiclient.NewGetLatentSpacePathParams("VersionId_example", "ProjectId_example") // GetLatentSpacePathParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetLatentSpacePath(context.Background()).GetLatentSpacePathParams(getLatentSpacePathParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetLatentSpacePath``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetLatentSpacePath`: GetLatentSpacePathResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetLatentSpacePath`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetLatentSpacePathRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getLatentSpacePathParams** | [**GetLatentSpacePathParams**](GetLatentSpacePathParams.md) |  | 
+
+### Return type
+
+[**GetLatentSpacePathResponse**](GetLatentSpacePathResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetMachineTypes
 
 > GetMachineTypesResponse GetMachineTypes(ctx).Execute()
@@ -5924,6 +6378,70 @@ Other parameters are passed through a pointer to a apiGetMachineTypesRequest str
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetManualInsights
+
+> ManualInsightRunsResponse GetManualInsights(ctx).GetManualInsightsParams(getManualInsightsParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getManualInsightsParams := *openapiclient.NewGetManualInsightsParams("ProjectId_example") // GetManualInsightsParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetManualInsights(context.Background()).GetManualInsightsParams(getManualInsightsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetManualInsights``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetManualInsights`: ManualInsightRunsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetManualInsights`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetManualInsightsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getManualInsightsParams** | [**GetManualInsightsParams**](GetManualInsightsParams.md) |  | 
+
+### Return type
+
+[**ManualInsightRunsResponse**](ManualInsightRunsResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -6482,6 +7000,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetProjectIssuesResponse**](GetProjectIssuesResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetProjectReports
+
+> GetAnalysisReportsResponse GetProjectReports(ctx).GetAnalysisReportsParams(getAnalysisReportsParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	getAnalysisReportsParams := *openapiclient.NewGetAnalysisReportsParams("ProjectId_example") // GetAnalysisReportsParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.GetProjectReports(context.Background()).GetAnalysisReportsParams(getAnalysisReportsParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetProjectReports``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetProjectReports`: GetAnalysisReportsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.GetProjectReports`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetProjectReportsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getAnalysisReportsParams** | [**GetAnalysisReportsParams**](GetAnalysisReportsParams.md) |  | 
+
+### Return type
+
+[**GetAnalysisReportsResponse**](GetAnalysisReportsResponse.md)
 
 ### Authorization
 
@@ -9653,6 +10235,70 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## Publish
+
+> PublishAnalysisReportResponse Publish(ctx).PublishAnalysisReportParams(publishAnalysisReportParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	publishAnalysisReportParams := *openapiclient.NewPublishAnalysisReportParams("ProjectId_example", "VersionId_example", "Title_example", "Summary_example", "Html_example") // PublishAnalysisReportParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.Publish(context.Background()).PublishAnalysisReportParams(publishAnalysisReportParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.Publish``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `Publish`: PublishAnalysisReportResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.Publish`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPublishRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **publishAnalysisReportParams** | [**PublishAnalysisReportParams**](PublishAnalysisReportParams.md) |  | 
+
+### Return type
+
+[**PublishAnalysisReportResponse**](PublishAnalysisReportResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## Push
 
 > PushResponse Push(ctx).PushParams(pushParams).Execute()
@@ -10090,6 +10736,132 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ReportApproval
+
+> ReportApprovalResponse ReportApproval(ctx).ReportApprovalParams(reportApprovalParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	reportApprovalParams := *openapiclient.NewReportApprovalParams("ProjectId_example", "InsightId_example", openapiclient.ReportApprovalAction("approve")) // ReportApprovalParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ReportApproval(context.Background()).ReportApprovalParams(reportApprovalParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ReportApproval``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ReportApproval`: ReportApprovalResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ReportApproval`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiReportApprovalRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **reportApprovalParams** | [**ReportApprovalParams**](ReportApprovalParams.md) |  | 
+
+### Return type
+
+[**ReportApprovalResponse**](ReportApprovalResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RequestPasswordReset
+
+> RequestPasswordReset(ctx).RequestPasswordResetParams(requestPasswordResetParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	requestPasswordResetParams := *openapiclient.NewRequestPasswordResetParams("Email_example") // RequestPasswordResetParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.RequestPasswordReset(context.Background()).RequestPasswordResetParams(requestPasswordResetParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.RequestPasswordReset``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRequestPasswordResetRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **requestPasswordResetParams** | [**RequestPasswordResetParams**](RequestPasswordResetParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ResetEvaluate
 
 > Job ResetEvaluate(ctx).ResetEvaluateParams(resetEvaluateParams).Execute()
@@ -10455,6 +11227,134 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SendFreeTierRequest
+
+> SendUserMessageResponse SendFreeTierRequest(ctx).SendFreeTierRequestParams(sendFreeTierRequestParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	sendFreeTierRequestParams := *openapiclient.NewSendFreeTierRequestParams("Intent_example", "Feature_example") // SendFreeTierRequestParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.SendFreeTierRequest(context.Background()).SendFreeTierRequestParams(sendFreeTierRequestParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SendFreeTierRequest``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SendFreeTierRequest`: SendUserMessageResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.SendFreeTierRequest`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSendFreeTierRequestRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **sendFreeTierRequestParams** | [**SendFreeTierRequestParams**](SendFreeTierRequestParams.md) |  | 
+
+### Return type
+
+[**SendUserMessageResponse**](SendUserMessageResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SendSupportRequest
+
+> SendUserMessageResponse SendSupportRequest(ctx).SendSupportRequestParams(sendSupportRequestParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	sendSupportRequestParams := *openapiclient.NewSendSupportRequestParams("Message_example") // SendSupportRequestParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.SendSupportRequest(context.Background()).SendSupportRequestParams(sendSupportRequestParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.SendSupportRequest``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SendSupportRequest`: SendUserMessageResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.SendSupportRequest`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSendSupportRequestRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **sendSupportRequestParams** | [**SendSupportRequestParams**](SendSupportRequestParams.md) |  | 
+
+### Return type
+
+[**SendUserMessageResponse**](SendUserMessageResponse.md)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
