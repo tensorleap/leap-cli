@@ -331,7 +331,7 @@ func configureFile(out ui, a *assistant, entry serverEntry) {
 }
 
 // copilotModelNote: Copilot's default (auto) model can be too weak for writing an integration and its report
-const copilotModelNote = "We recommend using Claude Sonnet or a more capable model to integrate with Tensorleap and analyze your models."
+const copilotModelNote = "Choose Claude Sonnet or a more capable model in Copilot's model picker. Smaller models often can't finish a Tensorleap integration."
 
 func installSkills(out ui, a *assistant) {
 	if a.skillsTool == "" {
