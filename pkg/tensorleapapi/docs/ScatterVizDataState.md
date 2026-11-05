@@ -13,6 +13,8 @@ Name | Type | Description | Notes
 **DomainGapDist** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
 **HiddenMetadataKeys** | Pointer to **[]string** |  | [optional] 
 **AvailableLatentSpaces** | Pointer to **[]string** |  | [optional] 
+**AvailableLatentSpacePopulations** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
+**AvailableLatentSpaceDefaults** | Pointer to **map[string]interface{}** | Construct a type with a set of properties K of type T | [optional] 
 
 ## Methods
 
@@ -242,6 +244,56 @@ SetAvailableLatentSpaces sets AvailableLatentSpaces field to given value.
 `func (o *ScatterVizDataState) HasAvailableLatentSpaces() bool`
 
 HasAvailableLatentSpaces returns a boolean if a field has been set.
+
+### GetAvailableLatentSpacePopulations
+
+`func (o *ScatterVizDataState) GetAvailableLatentSpacePopulations() map[string]interface{}`
+
+GetAvailableLatentSpacePopulations returns the AvailableLatentSpacePopulations field if non-nil, zero value otherwise.
+
+### GetAvailableLatentSpacePopulationsOk
+
+`func (o *ScatterVizDataState) GetAvailableLatentSpacePopulationsOk() (*map[string]interface{}, bool)`
+
+GetAvailableLatentSpacePopulationsOk returns a tuple with the AvailableLatentSpacePopulations field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAvailableLatentSpacePopulations
+
+`func (o *ScatterVizDataState) SetAvailableLatentSpacePopulations(v map[string]interface{})`
+
+SetAvailableLatentSpacePopulations sets AvailableLatentSpacePopulations field to given value.
+
+### HasAvailableLatentSpacePopulations
+
+`func (o *ScatterVizDataState) HasAvailableLatentSpacePopulations() bool`
+
+HasAvailableLatentSpacePopulations returns a boolean if a field has been set.
+
+### GetAvailableLatentSpaceDefaults
+
+`func (o *ScatterVizDataState) GetAvailableLatentSpaceDefaults() map[string]interface{}`
+
+GetAvailableLatentSpaceDefaults returns the AvailableLatentSpaceDefaults field if non-nil, zero value otherwise.
+
+### GetAvailableLatentSpaceDefaultsOk
+
+`func (o *ScatterVizDataState) GetAvailableLatentSpaceDefaultsOk() (*map[string]interface{}, bool)`
+
+GetAvailableLatentSpaceDefaultsOk returns a tuple with the AvailableLatentSpaceDefaults field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAvailableLatentSpaceDefaults
+
+`func (o *ScatterVizDataState) SetAvailableLatentSpaceDefaults(v map[string]interface{})`
+
+SetAvailableLatentSpaceDefaults sets AvailableLatentSpaceDefaults field to given value.
+
+### HasAvailableLatentSpaceDefaults
+
+`func (o *ScatterVizDataState) HasAvailableLatentSpaceDefaults() bool`
+
+HasAvailableLatentSpaceDefaults returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

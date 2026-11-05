@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **BranchName** | Pointer to **string** |  | [optional] 
 **OverwriteVersionId** | Pointer to **string** |  | [optional] 
 **EvaluateOnSuccess** | Pointer to [**ChainedEvaluateRequest**](ChainedEvaluateRequest.md) |  | [optional] 
+**GitOrigin** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -237,6 +238,31 @@ SetEvaluateOnSuccess sets EvaluateOnSuccess field to given value.
 `func (o *PushCodeSnapshotParams) HasEvaluateOnSuccess() bool`
 
 HasEvaluateOnSuccess returns a boolean if a field has been set.
+
+### GetGitOrigin
+
+`func (o *PushCodeSnapshotParams) GetGitOrigin() string`
+
+GetGitOrigin returns the GitOrigin field if non-nil, zero value otherwise.
+
+### GetGitOriginOk
+
+`func (o *PushCodeSnapshotParams) GetGitOriginOk() (*string, bool)`
+
+GetGitOriginOk returns a tuple with the GitOrigin field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGitOrigin
+
+`func (o *PushCodeSnapshotParams) SetGitOrigin(v string)`
+
+SetGitOrigin sets GitOrigin field to given value.
+
+### HasGitOrigin
+
+`func (o *PushCodeSnapshotParams) HasGitOrigin() bool`
+
+HasGitOrigin returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

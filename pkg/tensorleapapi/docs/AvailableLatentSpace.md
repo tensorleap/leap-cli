@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **LatentSpaceId** | **string** |  | 
 **FriendlyName** | **string** |  | 
 **IgnoredByDefault** | Pointer to **bool** |  | [optional] 
+**Population** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -91,6 +92,31 @@ SetIgnoredByDefault sets IgnoredByDefault field to given value.
 `func (o *AvailableLatentSpace) HasIgnoredByDefault() bool`
 
 HasIgnoredByDefault returns a boolean if a field has been set.
+
+### GetPopulation
+
+`func (o *AvailableLatentSpace) GetPopulation() string`
+
+GetPopulation returns the Population field if non-nil, zero value otherwise.
+
+### GetPopulationOk
+
+`func (o *AvailableLatentSpace) GetPopulationOk() (*string, bool)`
+
+GetPopulationOk returns a tuple with the Population field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPopulation
+
+`func (o *AvailableLatentSpace) SetPopulation(v string)`
+
+SetPopulation sets Population field to given value.
+
+### HasPopulation
+
+`func (o *AvailableLatentSpace) HasPopulation() bool`
+
+HasPopulation returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

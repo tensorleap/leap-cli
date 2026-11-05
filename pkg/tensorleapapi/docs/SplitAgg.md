@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **Limit** | **NullableFloat64** |  | 
 **Order** | [**OrderType**](OrderType.md) |  | 
 **Field** | **string** |  | 
+**Offset** | Pointer to **float64** | Shift the bucket edges, which otherwise sit at multiples of the interval from 0, so they line up with bins computed elsewhere. | [optional] 
 **Interval** | **float64** |  | 
 **Distribution** | **string** |  | 
 
@@ -124,6 +125,31 @@ and a boolean to check if the value has been set.
 
 SetField sets Field field to given value.
 
+
+### GetOffset
+
+`func (o *SplitAgg) GetOffset() float64`
+
+GetOffset returns the Offset field if non-nil, zero value otherwise.
+
+### GetOffsetOk
+
+`func (o *SplitAgg) GetOffsetOk() (*float64, bool)`
+
+GetOffsetOk returns a tuple with the Offset field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOffset
+
+`func (o *SplitAgg) SetOffset(v float64)`
+
+SetOffset sets Offset field to given value.
+
+### HasOffset
+
+`func (o *SplitAgg) HasOffset() bool`
+
+HasOffset returns a boolean if a field has been set.
 
 ### GetInterval
 

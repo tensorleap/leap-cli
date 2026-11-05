@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** |  | 
 **JobId** | **string** |  | 
+**Digest** | **string** |  | 
 **VersionId** | **string** |  | 
 **VersionName** | **string** |  | 
 **CreatedAt** | **time.Time** |  | 
@@ -22,7 +23,7 @@ Name | Type | Description | Notes
 
 ### NewDomainGap
 
-`func NewDomainGap(id string, jobId string, versionId string, versionName string, createdAt time.Time, createdBy string, status JobStatus, isDeleted bool, groupAFilters []ESFilter, groupBFilters []ESFilter, ) *DomainGap`
+`func NewDomainGap(id string, jobId string, digest string, versionId string, versionName string, createdAt time.Time, createdBy string, status JobStatus, isDeleted bool, groupAFilters []ESFilter, groupBFilters []ESFilter, ) *DomainGap`
 
 NewDomainGap instantiates a new DomainGap object
 This constructor will assign default values to properties that have it defined,
@@ -75,6 +76,26 @@ and a boolean to check if the value has been set.
 `func (o *DomainGap) SetJobId(v string)`
 
 SetJobId sets JobId field to given value.
+
+
+### GetDigest
+
+`func (o *DomainGap) GetDigest() string`
+
+GetDigest returns the Digest field if non-nil, zero value otherwise.
+
+### GetDigestOk
+
+`func (o *DomainGap) GetDigestOk() (*string, bool)`
+
+GetDigestOk returns a tuple with the Digest field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDigest
+
+`func (o *DomainGap) SetDigest(v string)`
+
+SetDigest sets Digest field to given value.
 
 
 ### GetVersionId

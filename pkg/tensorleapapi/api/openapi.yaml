@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.172
+  version: 11.0.194
 servers:
 - url: /api/v2
 paths:
@@ -62,6 +62,34 @@ paths:
                 $ref: "#/components/schemas/GetAuthStatusResponse"
           description: Ok
       security: []
+  /auth/requestPasswordReset:
+    post:
+      operationId: RequestPasswordReset
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestPasswordResetParams"
+        required: true
+      responses:
+        "204":
+          description: No content
+      security: []
+  /auth/confirmPasswordReset:
+    post:
+      operationId: ConfirmPasswordReset
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConfirmPasswordResetParams"
+        required: true
+      responses:
+        "204":
+          description: No content
+      security: []
   /auth/login:
     post:
       operationId: Login
@@ -106,6 +134,25 @@ paths:
       responses:
         "204":
           description: No content
+      security:
+      - jwt: []
+  /auth/getCodeChallengeStatus:
+    post:
+      operationId: GetCodeChallengeStatus
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetCodeChallengeStatusRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CodeChallengeStatusResponse"
+          description: Ok
       security:
       - jwt: []
   /auth/getApiKeyByCode:
@@ -251,6 +298,61 @@ paths:
       security:
       - jwt:
         - admin-only
+  /analysis-reports/publish:
+    post:
+      operationId: Publish
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PublishAnalysisReportParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublishAnalysisReportResponse"
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
+  /analysis-reports/getProjectReports:
+    post:
+      operationId: GetProjectReports
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetAnalysisReportsParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetAnalysisReportsResponse"
+          description: Ok
+      security:
+      - jwt: []
+  /analysis-reports/deleteReport:
+    post:
+      operationId: DeleteReport
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteAnalysisReportParams"
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt:
+        - not-demo
   /dashboards/getProjectDashboards:
     post:
       operationId: GetProjectDashboards
@@ -706,6 +808,55 @@ paths:
           description: No content
       security:
       - jwt: []
+  /datasetcuration/generateManualInsight:
+    post:
+      operationId: GenerateManualInsight
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateManualInsightParams"
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
+  /datasetcuration/getManualInsights:
+    post:
+      operationId: GetManualInsights
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetManualInsightsParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ManualInsightRunsResponse"
+          description: Ok
+      security:
+      - jwt: []
+  /datasetcuration/deleteManualInsight:
+    post:
+      operationId: DeleteManualInsight
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteManualInsightParams"
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
   /evaluate/evaluate:
     post:
       operationId: Evaluate
@@ -913,6 +1064,24 @@ paths:
           description: No content
       security:
       - jwt: []
+  /insights/reportApproval:
+    post:
+      operationId: ReportApproval
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReportApprovalParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReportApprovalResponse"
+          description: Ok
+      security: []
   /insights/getInsights:
     post:
       operationId: GetInsights
@@ -2100,6 +2269,27 @@ paths:
       security:
       - jwt:
         - not-demo
+  /sample-collection/exportSamplesCsv:
+    post:
+      operationId: ExportSamplesCsv
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExportSamplesCsvParams"
+        required: true
+      responses:
+        "200":
+          content:
+            text/csv:
+              schema:
+                format: byte
+                type: string
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
   /sample-collection/getVersionSamplesMetadata:
     post:
       operationId: GetVersionSamplesMetadata
@@ -2581,6 +2771,44 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/SendUserMessageParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SendUserMessageResponse"
+          description: Ok
+      security:
+      - jwt: []
+  /users/sendFreeTierRequest:
+    post:
+      operationId: SendFreeTierRequest
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendFreeTierRequestParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SendUserMessageResponse"
+          description: Ok
+      security:
+      - jwt: []
+  /users/sendSupportRequest:
+    post:
+      operationId: SendSupportRequest
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendSupportRequestParams"
         required: true
       responses:
         "200":
@@ -3289,6 +3517,26 @@ paths:
       security:
       - jwt:
         - not-demo
+  /visualizations/getLatentSpacePath:
+    post:
+      operationId: GetLatentSpacePath
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetLatentSpacePathParams"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetLatentSpacePathResponse"
+          description: Ok
+      security:
+      - jwt:
+        - not-demo
   /visualizations/fetchSimilar:
     post:
       operationId: FetchSimilar
@@ -3682,16 +3930,69 @@ components:
       - logged-in
       - not-logged-in
       - no-users
+      - pending-registration
       type: string
+    RegistrationPrefill:
+      additionalProperties: true
+      example:
+        firstName: firstName
+        lastName: lastName
+        email: email
+      properties:
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+      required:
+      - email
+      - firstName
+      - lastName
+      type: object
     GetAuthStatusResponse:
       additionalProperties: true
       example:
+        registration:
+          firstName: firstName
+          lastName: lastName
+          email: email
         status: logged-in
       properties:
         status:
           $ref: "#/components/schemas/AuthStatus"
+        registration:
+          $ref: "#/components/schemas/RegistrationPrefill"
       required:
       - status
+      type: object
+    RequestPasswordResetParams:
+      additionalProperties: true
+      example:
+        email: email
+      properties:
+        email:
+          type: string
+      required:
+      - email
+      type: object
+    ConfirmPasswordResetParams:
+      additionalProperties: true
+      example:
+        code: code
+        newPassword: newPassword
+        email: email
+      properties:
+        email:
+          type: string
+        code:
+          type: string
+        newPassword:
+          type: string
+      required:
+      - code
+      - email
+      - newPassword
       type: object
     LoginParams:
       additionalProperties: true
@@ -3726,6 +4027,26 @@ components:
       - apiKey
       type: object
     SetCodeChallengeRequest:
+      additionalProperties: true
+      example:
+        codeChallenge: codeChallenge
+      properties:
+        codeChallenge:
+          type: string
+      required:
+      - codeChallenge
+      type: object
+    CodeChallengeStatusResponse:
+      additionalProperties: true
+      example:
+        used: true
+      properties:
+        used:
+          type: boolean
+      required:
+      - used
+      type: object
+    GetCodeChallengeStatusRequest:
       additionalProperties: true
       example:
         codeChallenge: codeChallenge
@@ -3785,10 +4106,15 @@ components:
     ExtendTrialResponse:
       additionalProperties: true
       example:
+        registeredUser:
+          id: id
+          email: email
         success: true
       properties:
         success:
           type: boolean
+        registeredUser:
+          $ref: "#/components/schemas/ExtendTrialResponse_registeredUser"
       required:
       - success
       type: object
@@ -3888,6 +4214,177 @@ components:
           nullable: true
       required:
       - classes
+      type: object
+    AnalysisReport:
+      additionalProperties: true
+      example:
+        inferenceArtifactId: inferenceArtifactId
+        summary: summary
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        versionId: versionId
+        markdownBlobPath: markdownBlobPath
+        createdBy: createdBy
+        jsonBlobPath: jsonBlobPath
+        title: title
+        projectId: projectId
+        htmlBlobPath: htmlBlobPath
+        cid: cid
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        cid:
+          type: string
+        projectId:
+          type: string
+        versionId:
+          type: string
+        inferenceArtifactId:
+          type: string
+        title:
+          type: string
+        summary:
+          type: string
+        htmlBlobPath:
+          type: string
+        markdownBlobPath:
+          type: string
+        jsonBlobPath:
+          type: string
+        createdBy:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - cid
+      - createdAt
+      - createdBy
+      - htmlBlobPath
+      - projectId
+      - summary
+      - title
+      - updatedAt
+      - versionId
+      type: object
+    PublishAnalysisReportResponse:
+      additionalProperties: true
+      example:
+        linkPath: linkPath
+        report:
+          inferenceArtifactId: inferenceArtifactId
+          summary: summary
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          versionId: versionId
+          markdownBlobPath: markdownBlobPath
+          createdBy: createdBy
+          jsonBlobPath: jsonBlobPath
+          title: title
+          projectId: projectId
+          htmlBlobPath: htmlBlobPath
+          cid: cid
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        report:
+          $ref: "#/components/schemas/AnalysisReport"
+        linkPath:
+          type: string
+      required:
+      - linkPath
+      - report
+      type: object
+    PublishAnalysisReportParams:
+      additionalProperties: true
+      example:
+        summary: summary
+        versionId: versionId
+        markdown: markdown
+        json: json
+        html: html
+        title: title
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        versionId:
+          type: string
+        title:
+          type: string
+        summary:
+          type: string
+        html:
+          type: string
+        markdown:
+          type: string
+        json:
+          type: string
+      required:
+      - html
+      - projectId
+      - summary
+      - title
+      - versionId
+      type: object
+    GetAnalysisReportsResponse:
+      additionalProperties: true
+      example:
+        reports:
+        - inferenceArtifactId: inferenceArtifactId
+          summary: summary
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          versionId: versionId
+          markdownBlobPath: markdownBlobPath
+          createdBy: createdBy
+          jsonBlobPath: jsonBlobPath
+          title: title
+          projectId: projectId
+          htmlBlobPath: htmlBlobPath
+          cid: cid
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - inferenceArtifactId: inferenceArtifactId
+          summary: summary
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          versionId: versionId
+          markdownBlobPath: markdownBlobPath
+          createdBy: createdBy
+          jsonBlobPath: jsonBlobPath
+          title: title
+          projectId: projectId
+          htmlBlobPath: htmlBlobPath
+          cid: cid
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        reports:
+          items:
+            $ref: "#/components/schemas/AnalysisReport"
+          type: array
+      required:
+      - reports
+      type: object
+    GetAnalysisReportsParams:
+      additionalProperties: true
+      example:
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+      required:
+      - projectId
+      type: object
+    DeleteAnalysisReportParams:
+      additionalProperties: true
+      example:
+        reportId: reportId
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        reportId:
+          type: string
+      required:
+      - projectId
+      - reportId
       type: object
     AnalyticsDashletType:
       enum:
@@ -11720,6 +12217,7 @@ components:
         inferenceArtifactIds:
         - inferenceArtifactIds
         - inferenceArtifactIds
+        latentSpaceOnly: true
         versionIds:
         - versionIds
         - versionIds
@@ -11735,6 +12233,8 @@ components:
           items:
             type: string
           type: array
+        latentSpaceOnly:
+          type: boolean
       required:
       - inferenceArtifactIds
       - projectId
@@ -13194,6 +13694,7 @@ components:
       additionalProperties: true
       example:
         versionId: versionId
+        elementInstance: true
         numOfSamplesToLabel: 0.8008281904610115
         latentSpaceType: latentSpaceType
         filters:
@@ -13662,6 +14163,8 @@ components:
           description: "Latent space friendly name, e.g. 'balanced'. Engine falls\
             \ back to default when unset."
           type: string
+        elementInstance:
+          type: boolean
       required:
       - projectId
       - versionId
@@ -13826,6 +14329,8 @@ components:
       type: object
     FetchSimilarJobParams:
       properties:
+        elementInstance:
+          type: boolean
         latentSpaceType:
           type: string
         digest:
@@ -13928,6 +14433,8 @@ components:
       type: string
     LabelingJobParams:
       properties:
+        elementInstance:
+          type: boolean
         latentSpaceType:
           type: string
         useCustomLatentSpace:
@@ -14102,6 +14609,8 @@ components:
       type: object
     DomainGapJobParams:
       properties:
+        elementInstance:
+          type: boolean
         digest:
           type: string
         groupBFilters:
@@ -14156,10 +14665,33 @@ components:
       - versionId
       - visArtifactId
       type: object
+    ManualInsightJobParams:
+      properties:
+        elementInstance:
+          type: boolean
+        digest:
+          type: string
+        filters:
+          items:
+            $ref: "#/components/schemas/ESFilter"
+          type: array
+        versionId:
+          type: string
+        type:
+          enum:
+          - manual_insight
+          nullable: false
+          type: string
+      required:
+      - digest
+      - filters
+      - type
+      - versionId
+      type: object
     InsightsJobParams:
       properties:
-        parentInsightId:
-          type: string
+        elementInstance:
+          type: boolean
         filters:
           items:
             $ref: "#/components/schemas/ESFilter"
@@ -14234,6 +14766,8 @@ components:
           type: string
         evaluateOnSuccess:
           $ref: "#/components/schemas/ChainedEvaluateRequest"
+        gitOrigin:
+          type: string
       required:
       - codeEntryFile
       - codeUrl
@@ -14290,6 +14824,7 @@ components:
       - $ref: "#/components/schemas/DatasetSplittingJobParams"
       - $ref: "#/components/schemas/DomainGapJobParams"
       - $ref: "#/components/schemas/UnlabeledAnalysisJobParams"
+      - $ref: "#/components/schemas/ManualInsightJobParams"
       - $ref: "#/components/schemas/InsightsJobParams"
       - $ref: "#/components/schemas/ParesCodeSnapshotParams"
       - $ref: "#/components/schemas/PushCodeSnapshotParams"
@@ -14651,6 +15186,7 @@ components:
       - STREAMING_BULK_SIZE
       - PIP_INDEX_URL
       - PIP_EXTRA_INDEX_URL
+      - PIP_NO_DEPS
       - WARMUP_TIMEOUT_MINUTES
       - WARMUP_MAX_JOBS
       nullable: false
@@ -14731,6 +15267,7 @@ components:
       - Splitting
       - Domain Gap
       - Unlabeled Analysis
+      - Fix Aggressor
       - Visualizers Calculation
       - Sample Analysis
       - Graph Validate
@@ -27728,6 +28265,7 @@ components:
       additionalProperties: true
       example:
         versionId: versionId
+        elementInstance: true
         groupAFilters:
         - field: field
           disable: true
@@ -28640,6 +29178,8 @@ components:
           items:
             $ref: "#/components/schemas/ESFilter"
           type: array
+        elementInstance:
+          type: boolean
       required:
       - groupAFilters
       - groupBFilters
@@ -29633,6 +30173,7 @@ components:
         versionId: versionId
         isDeleted: true
         createdBy: createdBy
+        digest: digest
         statsFileUrl: statsFileUrl
         id: id
         status: UNSTARTED
@@ -29640,6 +30181,8 @@ components:
         id:
           type: string
         jobId:
+          type: string
+        digest:
           type: string
         versionId:
           type: string
@@ -29671,6 +30214,7 @@ components:
       required:
       - createdAt
       - createdBy
+      - digest
       - groupAFilters
       - groupBFilters
       - id
@@ -30668,6 +31212,7 @@ components:
           versionId: versionId
           isDeleted: true
           createdBy: createdBy
+          digest: digest
           statsFileUrl: statsFileUrl
           id: id
           status: UNSTARTED
@@ -31655,6 +32200,7 @@ components:
           versionId: versionId
           isDeleted: true
           createdBy: createdBy
+          digest: digest
           statsFileUrl: statsFileUrl
           id: id
           status: UNSTARTED
@@ -33856,6 +34402,2163 @@ components:
       - projectId
       - unlabeledAnalysisId
       type: object
+    GenerateManualInsightParams:
+      additionalProperties: true
+      example:
+        versionId: versionId
+        elementInstance: true
+        filters:
+        - field: field
+          disable: true
+          displayData:
+            insights:
+            - index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                overfitting_evidence:
+                - ""
+                - ""
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                cluster_extended_stats:
+                - ""
+                - ""
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                latent_space: latent_space
+                overfitting_metrics:
+                - overfitting_metrics
+                - overfitting_metrics
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                top_panel_path: top_panel_path
+                container_label: container_label
+                auto_generated: true
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  rank_by: rank_by
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  rank_by: rank_by
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                aggressor_fixing:
+                  csv_path: csv_path
+                  num_of_samples_to_label: 7.457744773683766
+                  num_of_samples_to_acquire: 1.1730742509559433
+                is_train_aggressor: true
+              version:
+                name: name
+                id: id
+            - index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                overfitting_evidence:
+                - ""
+                - ""
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                cluster_extended_stats:
+                - ""
+                - ""
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                latent_space: latent_space
+                overfitting_metrics:
+                - overfitting_metrics
+                - overfitting_metrics
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                top_panel_path: top_panel_path
+                container_label: container_label
+                auto_generated: true
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  rank_by: rank_by
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  rank_by: rank_by
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                aggressor_fixing:
+                  csv_path: csv_path
+                  num_of_samples_to_label: 7.457744773683766
+                  num_of_samples_to_acquire: 1.1730742509559433
+                is_train_aggressor: true
+              version:
+                name: name
+                id: id
+            type: insight
+          value:
+            lt: null
+            gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
+            lte: null
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 5.637376656633329
+          operator: between
+        - field: field
+          disable: true
+          displayData:
+            insights:
+            - index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                overfitting_evidence:
+                - ""
+                - ""
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                cluster_extended_stats:
+                - ""
+                - ""
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                latent_space: latent_space
+                overfitting_metrics:
+                - overfitting_metrics
+                - overfitting_metrics
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                top_panel_path: top_panel_path
+                container_label: container_label
+                auto_generated: true
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  rank_by: rank_by
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  rank_by: rank_by
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                aggressor_fixing:
+                  csv_path: csv_path
+                  num_of_samples_to_label: 7.457744773683766
+                  num_of_samples_to_acquire: 1.1730742509559433
+                is_train_aggressor: true
+              version:
+                name: name
+                id: id
+            - index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                overfitting_evidence:
+                - ""
+                - ""
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                cluster_extended_stats:
+                - ""
+                - ""
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                latent_space: latent_space
+                overfitting_metrics:
+                - overfitting_metrics
+                - overfitting_metrics
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                top_panel_path: top_panel_path
+                container_label: container_label
+                auto_generated: true
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  rank_by: rank_by
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  rank_by: rank_by
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                aggressor_fixing:
+                  csv_path: csv_path
+                  num_of_samples_to_label: 7.457744773683766
+                  num_of_samples_to_acquire: 1.1730742509559433
+                is_train_aggressor: true
+              version:
+                name: name
+                id: id
+            type: insight
+          value:
+            lt: null
+            gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
+            lte: null
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 5.637376656633329
+          operator: between
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        versionId:
+          type: string
+        filters:
+          items:
+            $ref: "#/components/schemas/ESFilter"
+          type: array
+        elementInstance:
+          type: boolean
+      required:
+      - filters
+      - projectId
+      - versionId
+      type: object
+    ManualInsightRun:
+      additionalProperties: true
+      example:
+        jobId: jobId
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        versionId: versionId
+        isDeleted: true
+        createdBy: createdBy
+        runProcess:
+          datasetName: datasetName
+          versionName: versionName
+          params:
+            inferenceArtifactId: inferenceArtifactId
+            versionId: versionId
+            noVisualization: true
+            monitor: true
+            batchSize: 5.962133916683182
+            projectId: projectId
+          jobId: jobId
+          createdAt: createdAt
+          versionId: versionId
+          processId: processId
+          chainedEvaluate:
+            jobId: jobId
+            error: error
+            status: pending
+          projectName: projectName
+          jobType: jobType
+          batchSize: 5.637376656633329
+          projectId: projectId
+          events:
+          - name: name
+            progress:
+              total: 6.027456183070403
+              current: 1.4658129805029452
+            id: id
+            status: UNSTARTED
+          - name: name
+            progress:
+              total: 6.027456183070403
+              current: 1.4658129805029452
+            id: id
+            status: UNSTARTED
+          machineType: machineType
+          notifications:
+          - identifier: identifier
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            teamId: teamId
+            context:
+              jobId: jobId
+              jobType: STREAMING_HANDLER
+              jobSubType: Evaluate
+            isRead: true
+            title: title
+            projectId: projectId
+            user: user
+            cid: cid
+            messageData:
+              level: Error
+              params:
+                message_code: message_code
+                module: General
+                message: message
+          - identifier: identifier
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            teamId: teamId
+            context:
+              jobId: jobId
+              jobType: STREAMING_HANDLER
+              jobSubType: Evaluate
+            isRead: true
+            title: title
+            projectId: projectId
+            user: user
+            cid: cid
+            messageData:
+              level: Error
+              params:
+                message_code: message_code
+                module: General
+                message: message
+          status: null
+          updatedAt: updatedAt
+          codeSnapshotInfo:
+            name: name
+            codeSnapshotId: codeSnapshotId
+          logsBlobName: logsBlobName
+        insightFileUrl: insightFileUrl
+        id: id
+        filters:
+        - field: field
+          disable: true
+          displayData:
+            insights:
+            - index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                overfitting_evidence:
+                - ""
+                - ""
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                cluster_extended_stats:
+                - ""
+                - ""
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                latent_space: latent_space
+                overfitting_metrics:
+                - overfitting_metrics
+                - overfitting_metrics
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                top_panel_path: top_panel_path
+                container_label: container_label
+                auto_generated: true
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  rank_by: rank_by
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  rank_by: rank_by
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                aggressor_fixing:
+                  csv_path: csv_path
+                  num_of_samples_to_label: 7.457744773683766
+                  num_of_samples_to_acquire: 1.1730742509559433
+                is_train_aggressor: true
+              version:
+                name: name
+                id: id
+            - index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                overfitting_evidence:
+                - ""
+                - ""
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                cluster_extended_stats:
+                - ""
+                - ""
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                latent_space: latent_space
+                overfitting_metrics:
+                - overfitting_metrics
+                - overfitting_metrics
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                top_panel_path: top_panel_path
+                container_label: container_label
+                auto_generated: true
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  rank_by: rank_by
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  rank_by: rank_by
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                aggressor_fixing:
+                  csv_path: csv_path
+                  num_of_samples_to_label: 7.457744773683766
+                  num_of_samples_to_acquire: 1.1730742509559433
+                is_train_aggressor: true
+              version:
+                name: name
+                id: id
+            type: insight
+          value:
+            lt: null
+            gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
+            lte: null
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 5.637376656633329
+          operator: between
+        - field: field
+          disable: true
+          displayData:
+            insights:
+            - index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                overfitting_evidence:
+                - ""
+                - ""
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                cluster_extended_stats:
+                - ""
+                - ""
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                latent_space: latent_space
+                overfitting_metrics:
+                - overfitting_metrics
+                - overfitting_metrics
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                top_panel_path: top_panel_path
+                container_label: container_label
+                auto_generated: true
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  rank_by: rank_by
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  rank_by: rank_by
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                aggressor_fixing:
+                  csv_path: csv_path
+                  num_of_samples_to_label: 7.457744773683766
+                  num_of_samples_to_acquire: 1.1730742509559433
+                is_train_aggressor: true
+              version:
+                name: name
+                id: id
+            - index: 2.3021358869347655
+              insightType:
+                severity: 4.145608029883936
+                overfitting_evidence:
+                - ""
+                - ""
+                automatic_tests:
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                - filter: null
+                  metric_name: metric_name
+                  metric_value: 6.84685269835264
+                  test_name: test_name
+                  operator: equal
+                id_: id_
+                es_filters_used_in_analysis:
+                - null
+                - null
+                cluster_extended_stats:
+                - ""
+                - ""
+                n_samples: 7.061401241503109
+                metrics_info:
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                - metric_name: metric_name
+                  metric_statistics:
+                  - name: name
+                    value: 1.0246457001441578
+                  - name: name
+                    value: 1.0246457001441578
+                blob_path: blob_path
+                latent_space: latent_space
+                overfitting_metrics:
+                - overfitting_metrics
+                - overfitting_metrics
+                mutual_info_elements:
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                - features:
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  - feature_name: feature_name
+                    is_categorical: true
+                    feature_value: feature_value
+                    direction: up
+                  score: 2.027123023002322
+                  value_in_cluster: 9.301444243932576
+                  value_outside_cluster: 3.616076749251911
+                  is_unique: true
+                type: low_performance
+                top_panel_path: top_panel_path
+                container_label: container_label
+                auto_generated: true
+                severity_metrics:
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                - metric_name: metric_name
+                  value: 7.386281948385884
+                  normalized_value: 1.2315135367772556
+                min_hash:
+                - 1.4894159098541704
+                - 1.4894159098541704
+                csv_path: csv_path
+                parent_id: parent_id
+                display_filters:
+                - metric: metric
+                  rank_by: rank_by
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                - metric: metric
+                  rank_by: rank_by
+                  value: ScatterFilter_value
+                  operator: smaller_than
+                aggressor_fixing:
+                  csv_path: csv_path
+                  num_of_samples_to_label: 7.457744773683766
+                  num_of_samples_to_acquire: 1.1730742509559433
+                is_train_aggressor: true
+              version:
+                name: name
+                id: id
+            type: insight
+          value:
+            lt: null
+            gte: null
+            blob_paths:
+            - blob_paths
+            - blob_paths
+            lte: null
+            eq: null
+            lst:
+            - null
+            - null
+            gt: 5.637376656633329
+          operator: between
+        versionName: versionName
+        status: UNSTARTED
+      properties:
+        id:
+          type: string
+        jobId:
+          type: string
+        versionId:
+          type: string
+        versionName:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        createdBy:
+          type: string
+        status:
+          $ref: "#/components/schemas/JobStatus"
+        isDeleted:
+          type: boolean
+        filters:
+          items:
+            $ref: "#/components/schemas/ESFilter"
+          type: array
+        runProcess:
+          $ref: "#/components/schemas/RunProcess"
+        insightFileUrl:
+          type: string
+      required:
+      - createdAt
+      - createdBy
+      - id
+      - isDeleted
+      - jobId
+      - status
+      - versionId
+      - versionName
+      type: object
+    ManualInsightRunsResponse:
+      additionalProperties: true
+      example:
+        manualInsightList:
+        - jobId: jobId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          versionId: versionId
+          isDeleted: true
+          createdBy: createdBy
+          runProcess:
+            datasetName: datasetName
+            versionName: versionName
+            params:
+              inferenceArtifactId: inferenceArtifactId
+              versionId: versionId
+              noVisualization: true
+              monitor: true
+              batchSize: 5.962133916683182
+              projectId: projectId
+            jobId: jobId
+            createdAt: createdAt
+            versionId: versionId
+            processId: processId
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
+            projectName: projectName
+            jobType: jobType
+            batchSize: 5.637376656633329
+            projectId: projectId
+            events:
+            - name: name
+              progress:
+                total: 6.027456183070403
+                current: 1.4658129805029452
+              id: id
+              status: UNSTARTED
+            - name: name
+              progress:
+                total: 6.027456183070403
+                current: 1.4658129805029452
+              id: id
+              status: UNSTARTED
+            machineType: machineType
+            notifications:
+            - identifier: identifier
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              teamId: teamId
+              context:
+                jobId: jobId
+                jobType: STREAMING_HANDLER
+                jobSubType: Evaluate
+              isRead: true
+              title: title
+              projectId: projectId
+              user: user
+              cid: cid
+              messageData:
+                level: Error
+                params:
+                  message_code: message_code
+                  module: General
+                  message: message
+            - identifier: identifier
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              teamId: teamId
+              context:
+                jobId: jobId
+                jobType: STREAMING_HANDLER
+                jobSubType: Evaluate
+              isRead: true
+              title: title
+              projectId: projectId
+              user: user
+              cid: cid
+              messageData:
+                level: Error
+                params:
+                  message_code: message_code
+                  module: General
+                  message: message
+            status: null
+            updatedAt: updatedAt
+            codeSnapshotInfo:
+              name: name
+              codeSnapshotId: codeSnapshotId
+            logsBlobName: logsBlobName
+          insightFileUrl: insightFileUrl
+          id: id
+          filters:
+          - field: field
+            disable: true
+            displayData:
+              insights:
+              - index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  overfitting_evidence:
+                  - ""
+                  - ""
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  cluster_extended_stats:
+                  - ""
+                  - ""
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  latent_space: latent_space
+                  overfitting_metrics:
+                  - overfitting_metrics
+                  - overfitting_metrics
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  top_panel_path: top_panel_path
+                  container_label: container_label
+                  auto_generated: true
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    rank_by: rank_by
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    rank_by: rank_by
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  aggressor_fixing:
+                    csv_path: csv_path
+                    num_of_samples_to_label: 7.457744773683766
+                    num_of_samples_to_acquire: 1.1730742509559433
+                  is_train_aggressor: true
+                version:
+                  name: name
+                  id: id
+              - index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  overfitting_evidence:
+                  - ""
+                  - ""
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  cluster_extended_stats:
+                  - ""
+                  - ""
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  latent_space: latent_space
+                  overfitting_metrics:
+                  - overfitting_metrics
+                  - overfitting_metrics
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  top_panel_path: top_panel_path
+                  container_label: container_label
+                  auto_generated: true
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    rank_by: rank_by
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    rank_by: rank_by
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  aggressor_fixing:
+                    csv_path: csv_path
+                    num_of_samples_to_label: 7.457744773683766
+                    num_of_samples_to_acquire: 1.1730742509559433
+                  is_train_aggressor: true
+                version:
+                  name: name
+                  id: id
+              type: insight
+            value:
+              lt: null
+              gte: null
+              blob_paths:
+              - blob_paths
+              - blob_paths
+              lte: null
+              eq: null
+              lst:
+              - null
+              - null
+              gt: 5.637376656633329
+            operator: between
+          - field: field
+            disable: true
+            displayData:
+              insights:
+              - index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  overfitting_evidence:
+                  - ""
+                  - ""
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  cluster_extended_stats:
+                  - ""
+                  - ""
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  latent_space: latent_space
+                  overfitting_metrics:
+                  - overfitting_metrics
+                  - overfitting_metrics
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  top_panel_path: top_panel_path
+                  container_label: container_label
+                  auto_generated: true
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    rank_by: rank_by
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    rank_by: rank_by
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  aggressor_fixing:
+                    csv_path: csv_path
+                    num_of_samples_to_label: 7.457744773683766
+                    num_of_samples_to_acquire: 1.1730742509559433
+                  is_train_aggressor: true
+                version:
+                  name: name
+                  id: id
+              - index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  overfitting_evidence:
+                  - ""
+                  - ""
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  cluster_extended_stats:
+                  - ""
+                  - ""
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  latent_space: latent_space
+                  overfitting_metrics:
+                  - overfitting_metrics
+                  - overfitting_metrics
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  top_panel_path: top_panel_path
+                  container_label: container_label
+                  auto_generated: true
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    rank_by: rank_by
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    rank_by: rank_by
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  aggressor_fixing:
+                    csv_path: csv_path
+                    num_of_samples_to_label: 7.457744773683766
+                    num_of_samples_to_acquire: 1.1730742509559433
+                  is_train_aggressor: true
+                version:
+                  name: name
+                  id: id
+              type: insight
+            value:
+              lt: null
+              gte: null
+              blob_paths:
+              - blob_paths
+              - blob_paths
+              lte: null
+              eq: null
+              lst:
+              - null
+              - null
+              gt: 5.637376656633329
+            operator: between
+          versionName: versionName
+          status: UNSTARTED
+        - jobId: jobId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          versionId: versionId
+          isDeleted: true
+          createdBy: createdBy
+          runProcess:
+            datasetName: datasetName
+            versionName: versionName
+            params:
+              inferenceArtifactId: inferenceArtifactId
+              versionId: versionId
+              noVisualization: true
+              monitor: true
+              batchSize: 5.962133916683182
+              projectId: projectId
+            jobId: jobId
+            createdAt: createdAt
+            versionId: versionId
+            processId: processId
+            chainedEvaluate:
+              jobId: jobId
+              error: error
+              status: pending
+            projectName: projectName
+            jobType: jobType
+            batchSize: 5.637376656633329
+            projectId: projectId
+            events:
+            - name: name
+              progress:
+                total: 6.027456183070403
+                current: 1.4658129805029452
+              id: id
+              status: UNSTARTED
+            - name: name
+              progress:
+                total: 6.027456183070403
+                current: 1.4658129805029452
+              id: id
+              status: UNSTARTED
+            machineType: machineType
+            notifications:
+            - identifier: identifier
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              teamId: teamId
+              context:
+                jobId: jobId
+                jobType: STREAMING_HANDLER
+                jobSubType: Evaluate
+              isRead: true
+              title: title
+              projectId: projectId
+              user: user
+              cid: cid
+              messageData:
+                level: Error
+                params:
+                  message_code: message_code
+                  module: General
+                  message: message
+            - identifier: identifier
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              teamId: teamId
+              context:
+                jobId: jobId
+                jobType: STREAMING_HANDLER
+                jobSubType: Evaluate
+              isRead: true
+              title: title
+              projectId: projectId
+              user: user
+              cid: cid
+              messageData:
+                level: Error
+                params:
+                  message_code: message_code
+                  module: General
+                  message: message
+            status: null
+            updatedAt: updatedAt
+            codeSnapshotInfo:
+              name: name
+              codeSnapshotId: codeSnapshotId
+            logsBlobName: logsBlobName
+          insightFileUrl: insightFileUrl
+          id: id
+          filters:
+          - field: field
+            disable: true
+            displayData:
+              insights:
+              - index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  overfitting_evidence:
+                  - ""
+                  - ""
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  cluster_extended_stats:
+                  - ""
+                  - ""
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  latent_space: latent_space
+                  overfitting_metrics:
+                  - overfitting_metrics
+                  - overfitting_metrics
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  top_panel_path: top_panel_path
+                  container_label: container_label
+                  auto_generated: true
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    rank_by: rank_by
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    rank_by: rank_by
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  aggressor_fixing:
+                    csv_path: csv_path
+                    num_of_samples_to_label: 7.457744773683766
+                    num_of_samples_to_acquire: 1.1730742509559433
+                  is_train_aggressor: true
+                version:
+                  name: name
+                  id: id
+              - index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  overfitting_evidence:
+                  - ""
+                  - ""
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  cluster_extended_stats:
+                  - ""
+                  - ""
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  latent_space: latent_space
+                  overfitting_metrics:
+                  - overfitting_metrics
+                  - overfitting_metrics
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  top_panel_path: top_panel_path
+                  container_label: container_label
+                  auto_generated: true
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    rank_by: rank_by
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    rank_by: rank_by
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  aggressor_fixing:
+                    csv_path: csv_path
+                    num_of_samples_to_label: 7.457744773683766
+                    num_of_samples_to_acquire: 1.1730742509559433
+                  is_train_aggressor: true
+                version:
+                  name: name
+                  id: id
+              type: insight
+            value:
+              lt: null
+              gte: null
+              blob_paths:
+              - blob_paths
+              - blob_paths
+              lte: null
+              eq: null
+              lst:
+              - null
+              - null
+              gt: 5.637376656633329
+            operator: between
+          - field: field
+            disable: true
+            displayData:
+              insights:
+              - index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  overfitting_evidence:
+                  - ""
+                  - ""
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  cluster_extended_stats:
+                  - ""
+                  - ""
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  latent_space: latent_space
+                  overfitting_metrics:
+                  - overfitting_metrics
+                  - overfitting_metrics
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  top_panel_path: top_panel_path
+                  container_label: container_label
+                  auto_generated: true
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    rank_by: rank_by
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    rank_by: rank_by
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  aggressor_fixing:
+                    csv_path: csv_path
+                    num_of_samples_to_label: 7.457744773683766
+                    num_of_samples_to_acquire: 1.1730742509559433
+                  is_train_aggressor: true
+                version:
+                  name: name
+                  id: id
+              - index: 2.3021358869347655
+                insightType:
+                  severity: 4.145608029883936
+                  overfitting_evidence:
+                  - ""
+                  - ""
+                  automatic_tests:
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  - filter: null
+                    metric_name: metric_name
+                    metric_value: 6.84685269835264
+                    test_name: test_name
+                    operator: equal
+                  id_: id_
+                  es_filters_used_in_analysis:
+                  - null
+                  - null
+                  cluster_extended_stats:
+                  - ""
+                  - ""
+                  n_samples: 7.061401241503109
+                  metrics_info:
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  - metric_name: metric_name
+                    metric_statistics:
+                    - name: name
+                      value: 1.0246457001441578
+                    - name: name
+                      value: 1.0246457001441578
+                  blob_path: blob_path
+                  latent_space: latent_space
+                  overfitting_metrics:
+                  - overfitting_metrics
+                  - overfitting_metrics
+                  mutual_info_elements:
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  - features:
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    - feature_name: feature_name
+                      is_categorical: true
+                      feature_value: feature_value
+                      direction: up
+                    score: 2.027123023002322
+                    value_in_cluster: 9.301444243932576
+                    value_outside_cluster: 3.616076749251911
+                    is_unique: true
+                  type: low_performance
+                  top_panel_path: top_panel_path
+                  container_label: container_label
+                  auto_generated: true
+                  severity_metrics:
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  - metric_name: metric_name
+                    value: 7.386281948385884
+                    normalized_value: 1.2315135367772556
+                  min_hash:
+                  - 1.4894159098541704
+                  - 1.4894159098541704
+                  csv_path: csv_path
+                  parent_id: parent_id
+                  display_filters:
+                  - metric: metric
+                    rank_by: rank_by
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  - metric: metric
+                    rank_by: rank_by
+                    value: ScatterFilter_value
+                    operator: smaller_than
+                  aggressor_fixing:
+                    csv_path: csv_path
+                    num_of_samples_to_label: 7.457744773683766
+                    num_of_samples_to_acquire: 1.1730742509559433
+                  is_train_aggressor: true
+                version:
+                  name: name
+                  id: id
+              type: insight
+            value:
+              lt: null
+              gte: null
+              blob_paths:
+              - blob_paths
+              - blob_paths
+              lte: null
+              eq: null
+              lst:
+              - null
+              - null
+              gt: 5.637376656633329
+            operator: between
+          versionName: versionName
+          status: UNSTARTED
+      properties:
+        manualInsightList:
+          items:
+            $ref: "#/components/schemas/ManualInsightRun"
+          type: array
+      required:
+      - manualInsightList
+      type: object
+    GetManualInsightsParams:
+      additionalProperties: true
+      example:
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+      required:
+      - projectId
+      type: object
+    DeleteManualInsightParams:
+      additionalProperties: true
+      example:
+        manualInsightId: manualInsightId
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        manualInsightId:
+          type: string
+      required:
+      - manualInsightId
+      - projectId
+      type: object
     ContinueEvaluateParams:
       additionalProperties: true
       description: |-
@@ -34152,6 +36855,46 @@ components:
       - Approved
       - Archived
       type: string
+    ReportApprovalResponse:
+      additionalProperties: true
+      example:
+        applied: true
+        status: InReview
+      properties:
+        status:
+          $ref: "#/components/schemas/InsightStatus"
+        applied:
+          type: boolean
+      required:
+      - applied
+      - status
+      type: object
+    ReportApprovalAction:
+      enum:
+      - approve
+      - unapprove
+      type: string
+    ReportApprovalParams:
+      additionalProperties: true
+      example:
+        action: approve
+        insightId: insightId
+        title: title
+        projectId: projectId
+      properties:
+        projectId:
+          type: string
+        insightId:
+          type: string
+        action:
+          $ref: "#/components/schemas/ReportApprovalAction"
+        title:
+          type: string
+      required:
+      - action
+      - insightId
+      - projectId
+      type: object
     Insight:
       additionalProperties: true
       example:
@@ -34569,7 +37312,7 @@ components:
       additionalProperties: true
       example:
         versionId: versionId
-        parentInsightId: parentInsightId
+        elementInstance: true
         refresh: true
         filters:
         - field: field
@@ -35032,8 +37775,8 @@ components:
           type: array
         refresh:
           type: boolean
-        parentInsightId:
-          type: string
+        elementInstance:
+          type: boolean
       required:
       - projectId
       type: object
@@ -36309,9 +39052,13 @@ components:
       additionalProperties: true
       example:
         maxUsers: 6.027456183070403
+        maxProjects: 5.962133916683182
         maxConcurrentEvaluateJobsPerUser: 1.4658129805029452
         type: free
+        activationUrl: activationUrl
+        rid: rid
         expirationDate: 2000-01-23T04:56:07.000+00:00
+        activated: true
       properties:
         type:
           $ref: "#/components/schemas/LicenseType"
@@ -36328,6 +39075,23 @@ components:
             unlimited.
           format: double
           type: number
+        maxProjects:
+          description: Projects the team may own. Undefined or 0 means unlimited.
+          format: double
+          type: number
+        activated:
+          description: |-
+            False while a colored license waits for its activation key. getEnvironmentInfo
+            always sends it to clients: true for every license not waiting for its key.
+          type: boolean
+        activationUrl:
+          description: "Asked for the key before a blocked action; answers { activated,\
+            \ licenseToken }."
+          type: string
+        rid:
+          description: Free Tier registration id; kept after activation to report
+            milestones. Not for clients.
+          type: string
       required:
       - type
       type: object
@@ -36339,10 +39103,15 @@ components:
         gatewayUrl: gatewayUrl
         licenseMetadata:
           maxUsers: 6.027456183070403
+          maxProjects: 5.962133916683182
           maxConcurrentEvaluateJobsPerUser: 1.4658129805029452
           type: free
+          activationUrl: activationUrl
+          rid: rid
           expirationDate: 2000-01-23T04:56:07.000+00:00
+          activated: true
         isCloud: true
+        installedServerVersion: installedServerVersion
         disableDatadogMetrics: true
         proxyUrl: proxyUrl
         clientStoragePrefixUrl: clientStoragePrefixUrl
@@ -36363,6 +39132,8 @@ components:
         licenseMetadata:
           $ref: "#/components/schemas/LicenseMetadata"
         localBucketPath:
+          type: string
+        installedServerVersion:
           type: string
       required:
       - clientStoragePrefixUrl
@@ -36511,6 +39282,12 @@ components:
       allOf:
       - $ref: "#/components/schemas/BaseSplitAgg"
       - properties:
+          offset:
+            description: |-
+              Shift the bucket edges, which otherwise sit at multiples of the
+              interval from 0, so they line up with bins computed elsewhere.
+            format: double
+            type: number
           interval:
             format: double
             type: number
@@ -36525,8 +39302,9 @@ components:
         type: object
       example:
         field: field
+        offset: 6.027456183070403
         limit: 0.8008281904610115
-        interval: 6.027456183070403
+        interval: 1.4658129805029452
         orderField: orderField
         distribution: continuous
         order: desc
@@ -36577,8 +39355,9 @@ components:
         elementInstance: true
         x:
           field: field
+          offset: 6.027456183070403
           limit: 0.8008281904610115
-          interval: 6.027456183070403
+          interval: 1.4658129805029452
           orderField: orderField
           distribution: continuous
           order: desc
@@ -37083,8 +39862,9 @@ components:
           aggregation: Average
         x:
           field: field
+          offset: 6.027456183070403
           limit: 0.8008281904610115
-          interval: 6.027456183070403
+          interval: 1.4658129805029452
           orderField: orderField
           distribution: continuous
           order: desc
@@ -37591,8 +40371,9 @@ components:
         innerSplit: null
         verticalSplit:
           field: field
+          offset: 6.027456183070403
           limit: 0.8008281904610115
-          interval: 6.027456183070403
+          interval: 1.4658129805029452
           orderField: orderField
           distribution: continuous
           order: desc
@@ -38129,8 +40910,9 @@ components:
         - versionIds
         x:
           field: field
+          offset: 6.027456183070403
           limit: 0.8008281904610115
-          interval: 6.027456183070403
+          interval: 1.4658129805029452
           orderField: orderField
           distribution: continuous
           order: desc
@@ -38636,8 +41418,9 @@ components:
         - versionIds
         verticalSplit:
           field: field
+          offset: 6.027456183070403
           limit: 0.8008281904610115
-          interval: 6.027456183070403
+          interval: 1.4658129805029452
           orderField: orderField
           distribution: continuous
           order: desc
@@ -39129,8 +41912,9 @@ components:
         absAxis: true
         verticalSplit:
           field: field
+          offset: 6.027456183070403
           limit: 0.8008281904610115
-          interval: 6.027456183070403
+          interval: 1.4658129805029452
           orderField: orderField
           distribution: continuous
           order: desc
@@ -39644,8 +42428,9 @@ components:
         - versionIds
         verticalSplit:
           field: field
+          offset: 6.027456183070403
           limit: 0.8008281904610115
-          interval: 6.027456183070403
+          interval: 1.4658129805029452
           orderField: orderField
           distribution: continuous
           order: desc
@@ -40120,8 +42905,9 @@ components:
         - versionIds
         x:
           field: field
+          offset: 6.027456183070403
           limit: 0.8008281904610115
-          interval: 6.027456183070403
+          interval: 1.4658129805029452
           orderField: orderField
           distribution: continuous
           order: desc
@@ -41445,11 +44231,17 @@ components:
       description: Construct a type with a set of properties K of type T
       properties: {}
       type: object
+    ProjectPopulation:
+      enum:
+      - image
+      - instance
+      type: string
     Project:
       additionalProperties: true
       example:
         hubPublishPolicy: public
         access: public
+        defaultPopulation: image
         description: description
         bgImagePath: bgImagePath
         tags:
@@ -41502,6 +44294,8 @@ components:
           type: object
         description:
           type: string
+        defaultPopulation:
+          $ref: "#/components/schemas/ProjectPopulation"
       required:
       - access
       - cid
@@ -41521,6 +44315,7 @@ components:
         project:
           hubPublishPolicy: public
           access: public
+          defaultPopulation: image
           description: description
           bgImagePath: bgImagePath
           tags:
@@ -41619,6 +44414,7 @@ components:
         data:
         - hubPublishPolicy: public
           access: public
+          defaultPopulation: image
           description: description
           bgImagePath: bgImagePath
           tags:
@@ -41635,6 +44431,7 @@ components:
           status: visible
         - hubPublishPolicy: public
           access: public
+          defaultPopulation: image
           description: description
           bgImagePath: bgImagePath
           tags:
@@ -43207,6 +46004,99 @@ components:
       - projectId
       - versionId
       type: object
+    SamplesCsvExportViewParams:
+      description: |-
+        The rows the metadata table shows: a collection's (`collectionId` +
+        `inferenceArtifactId`) or a version's (`versionId`), with the table's sort
+        and filters.
+      properties:
+        filters:
+          items:
+            $ref: "#/components/schemas/CollectionFilterSpec"
+          type: array
+        sort:
+          $ref: "#/components/schemas/CollectionSortSpec"
+        versionId:
+          type: string
+        inferenceArtifactId:
+          type: string
+        collectionId:
+          type: string
+        projectId:
+          type: string
+      required:
+      - projectId
+      type: object
+    SampleCsvColumn:
+      description: A metadata table column as the CSV export writes it.
+      example:
+        headerName: headerName
+        field: field
+      properties:
+        headerName:
+          type: string
+        field:
+          description: "The row key, as in `CollectionSampleRow` (`state`, `metadata.x`,\
+            \ …)."
+          type: string
+      required:
+      - field
+      - headerName
+      type: object
+    ExportSamplesCsvParams:
+      allOf:
+      - $ref: "#/components/schemas/SamplesCsvExportViewParams"
+      - properties:
+          maxRows:
+            description: |-
+              Write at most this many rows: the first ones in sort order. The only
+              way to export a view bigger than the cap (`SAMPLES_CSV_EXPORT_MAX_ROWS`,
+              250,000 by default), and clamped to it.
+            format: double
+            type: number
+          columns:
+            items:
+              $ref: "#/components/schemas/SampleCsvColumn"
+            type: array
+        required:
+        - columns
+        type: object
+      description: "The view as a CSV file of `columns`, streamed."
+      example:
+        inferenceArtifactId: inferenceArtifactId
+        versionId: versionId
+        maxRows: 0.8008281904610115
+        columns:
+        - headerName: headerName
+          field: field
+        - headerName: headerName
+          field: field
+        filters:
+        - field: field
+          values:
+          - null
+          - null
+          range:
+            min: 6.027456183070403
+            max: 0.8008281904610115
+          hiddenValues:
+          - CollectionFilterSpec_hiddenValues_inner
+          - CollectionFilterSpec_hiddenValues_inner
+        - field: field
+          values:
+          - null
+          - null
+          range:
+            min: 6.027456183070403
+            max: 0.8008281904610115
+          hiddenValues:
+          - CollectionFilterSpec_hiddenValues_inner
+          - CollectionFilterSpec_hiddenValues_inner
+        sort:
+          field: field
+          dir: asc
+        collectionId: collectionId
+        projectId: projectId
     GetVersionSamplesMetadataResponse:
       example:
         filteredSamplesCount: 0.8008281904610115
@@ -45715,6 +48605,53 @@ components:
       - firstName
       - lastName
       type: object
+    SendFreeTierRequestParams:
+      additionalProperties: true
+      example:
+        featureLabel: featureLabel
+        feature: feature
+        meetingStart: meetingStart
+        message: message
+        intent: unlock
+      properties:
+        intent:
+          enum:
+          - unlock
+          - meeting
+          type: string
+        feature:
+          maxLength: 100
+          type: string
+        featureLabel:
+          maxLength: 150
+          type: string
+        message:
+          maxLength: 2000
+          type: string
+        meetingStart:
+          maxLength: 40
+          type: string
+      required:
+      - feature
+      - intent
+      type: object
+    SendSupportRequestParams:
+      additionalProperties: true
+      example:
+        pageUrl: pageUrl
+        message: message
+      properties:
+        message:
+          maxLength: 2000
+          minLength: 1
+          type: string
+        pageUrl:
+          description: The page the user was on when they wrote the message.
+          maxLength: 500
+          type: string
+      required:
+      - message
+      type: object
     UserUiState:
       additionalProperties: {}
       properties: {}
@@ -45791,6 +48728,7 @@ components:
         friendly_name: friendly_name
         ignored_by_default: true
         latent_space_id: latent_space_id
+        population: population
       properties:
         latent_space_id:
           type: string
@@ -45798,6 +48736,8 @@ components:
           type: string
         ignored_by_default:
           type: boolean
+        population:
+          type: string
       required:
       - friendly_name
       - latent_space_id
@@ -45836,9 +48776,11 @@ components:
         - friendly_name: friendly_name
           ignored_by_default: true
           latent_space_id: latent_space_id
+          population: population
         - friendly_name: friendly_name
           ignored_by_default: true
           latent_space_id: latent_space_id
+          population: population
         general_error: general_error
         ground_truths:
         - connection_name: connection_name
@@ -45992,6 +48934,15 @@ components:
           metric_directions: metric_directions
         es_model_id: es_model_id
         population_exploration_digest_seed_count: 6.027456183070403
+        available_latent_spaces:
+        - friendly_name: friendly_name
+          ignored_by_default: true
+          latent_space_id: latent_space_id
+          population: population
+        - friendly_name: friendly_name
+          ignored_by_default: true
+          latent_space_id: latent_space_id
+          population: population
         inference_artifact_id: inference_artifact_id
         es_inspection_index: es_inspection_index
         vis_resources:
@@ -46022,6 +48973,10 @@ components:
           type: string
         overrided_version_id:
           type: string
+        available_latent_spaces:
+          items:
+            $ref: "#/components/schemas/AvailableLatentSpace"
+          type: array
       required:
       - inference_artifact_id
       - inference_resources
@@ -46046,6 +49001,15 @@ components:
             metric_directions: metric_directions
           es_model_id: es_model_id
           population_exploration_digest_seed_count: 6.027456183070403
+          available_latent_spaces:
+          - friendly_name: friendly_name
+            ignored_by_default: true
+            latent_space_id: latent_space_id
+            population: population
+          - friendly_name: friendly_name
+            ignored_by_default: true
+            latent_space_id: latent_space_id
+            population: population
           inference_artifact_id: inference_artifact_id
           es_inspection_index: es_inspection_index
           vis_resources:
@@ -46097,9 +49061,11 @@ components:
           - friendly_name: friendly_name
             ignored_by_default: true
             latent_space_id: latent_space_id
+            population: population
           - friendly_name: friendly_name
             ignored_by_default: true
             latent_space_id: latent_space_id
+            population: population
           general_error: general_error
           ground_truths:
           - connection_name: connection_name
@@ -46236,6 +49202,7 @@ components:
         project:
           hubPublishPolicy: public
           access: public
+          defaultPopulation: image
           description: description
           bgImagePath: bgImagePath
           tags:
@@ -46266,6 +49233,15 @@ components:
               metric_directions: metric_directions
             es_model_id: es_model_id
             population_exploration_digest_seed_count: 6.027456183070403
+            available_latent_spaces:
+            - friendly_name: friendly_name
+              ignored_by_default: true
+              latent_space_id: latent_space_id
+              population: population
+            - friendly_name: friendly_name
+              ignored_by_default: true
+              latent_space_id: latent_space_id
+              population: population
             inference_artifact_id: inference_artifact_id
             es_inspection_index: es_inspection_index
             vis_resources:
@@ -46317,9 +49293,11 @@ components:
             - friendly_name: friendly_name
               ignored_by_default: true
               latent_space_id: latent_space_id
+              population: population
             - friendly_name: friendly_name
               ignored_by_default: true
               latent_space_id: latent_space_id
+              population: population
             general_error: general_error
             ground_truths:
             - connection_name: connection_name
@@ -46563,9 +49541,11 @@ components:
           - friendly_name: friendly_name
             ignored_by_default: true
             latent_space_id: latent_space_id
+            population: population
           - friendly_name: friendly_name
             ignored_by_default: true
             latent_space_id: latent_space_id
+            population: population
           general_error: general_error
           ground_truths:
           - connection_name: connection_name
@@ -46722,6 +49702,15 @@ components:
             metric_directions: metric_directions
           es_model_id: es_model_id
           population_exploration_digest_seed_count: 6.027456183070403
+          available_latent_spaces:
+          - friendly_name: friendly_name
+            ignored_by_default: true
+            latent_space_id: latent_space_id
+            population: population
+          - friendly_name: friendly_name
+            ignored_by_default: true
+            latent_space_id: latent_space_id
+            population: population
           inference_artifact_id: inference_artifact_id
           es_inspection_index: es_inspection_index
           vis_resources:
@@ -46876,9 +49865,11 @@ components:
             - friendly_name: friendly_name
               ignored_by_default: true
               latent_space_id: latent_space_id
+              population: population
             - friendly_name: friendly_name
               ignored_by_default: true
               latent_space_id: latent_space_id
+              population: population
             general_error: general_error
             ground_truths:
             - connection_name: connection_name
@@ -47035,6 +50026,15 @@ components:
               metric_directions: metric_directions
             es_model_id: es_model_id
             population_exploration_digest_seed_count: 6.027456183070403
+            available_latent_spaces:
+            - friendly_name: friendly_name
+              ignored_by_default: true
+              latent_space_id: latent_space_id
+              population: population
+            - friendly_name: friendly_name
+              ignored_by_default: true
+              latent_space_id: latent_space_id
+              population: population
             inference_artifact_id: inference_artifact_id
             es_inspection_index: es_inspection_index
             vis_resources:
@@ -47096,9 +50096,11 @@ components:
             - friendly_name: friendly_name
               ignored_by_default: true
               latent_space_id: latent_space_id
+              population: population
             - friendly_name: friendly_name
               ignored_by_default: true
               latent_space_id: latent_space_id
+              population: population
             general_error: general_error
             ground_truths:
             - connection_name: connection_name
@@ -47255,6 +50257,15 @@ components:
               metric_directions: metric_directions
             es_model_id: es_model_id
             population_exploration_digest_seed_count: 6.027456183070403
+            available_latent_spaces:
+            - friendly_name: friendly_name
+              ignored_by_default: true
+              latent_space_id: latent_space_id
+              population: population
+            - friendly_name: friendly_name
+              ignored_by_default: true
+              latent_space_id: latent_space_id
+              population: population
             inference_artifact_id: inference_artifact_id
             es_inspection_index: es_inspection_index
             vis_resources:
@@ -47338,9 +50349,11 @@ components:
             - friendly_name: friendly_name
               ignored_by_default: true
               latent_space_id: latent_space_id
+              population: population
             - friendly_name: friendly_name
               ignored_by_default: true
               latent_space_id: latent_space_id
+              population: population
             general_error: general_error
             ground_truths:
             - connection_name: connection_name
@@ -47497,6 +50510,15 @@ components:
               metric_directions: metric_directions
             es_model_id: es_model_id
             population_exploration_digest_seed_count: 6.027456183070403
+            available_latent_spaces:
+            - friendly_name: friendly_name
+              ignored_by_default: true
+              latent_space_id: latent_space_id
+              population: population
+            - friendly_name: friendly_name
+              ignored_by_default: true
+              latent_space_id: latent_space_id
+              population: population
             inference_artifact_id: inference_artifact_id
             es_inspection_index: es_inspection_index
             vis_resources:
@@ -47558,9 +50580,11 @@ components:
             - friendly_name: friendly_name
               ignored_by_default: true
               latent_space_id: latent_space_id
+              population: population
             - friendly_name: friendly_name
               ignored_by_default: true
               latent_space_id: latent_space_id
+              population: population
             general_error: general_error
             ground_truths:
             - connection_name: connection_name
@@ -47717,6 +50741,15 @@ components:
               metric_directions: metric_directions
             es_model_id: es_model_id
             population_exploration_digest_seed_count: 6.027456183070403
+            available_latent_spaces:
+            - friendly_name: friendly_name
+              ignored_by_default: true
+              latent_space_id: latent_space_id
+              population: population
+            - friendly_name: friendly_name
+              ignored_by_default: true
+              latent_space_id: latent_space_id
+              population: population
             inference_artifact_id: inference_artifact_id
             es_inspection_index: es_inspection_index
             vis_resources:
@@ -47800,9 +50833,11 @@ components:
             - friendly_name: friendly_name
               ignored_by_default: true
               latent_space_id: latent_space_id
+              population: population
             - friendly_name: friendly_name
               ignored_by_default: true
               latent_space_id: latent_space_id
+              population: population
             general_error: general_error
             ground_truths:
             - connection_name: connection_name
@@ -47959,6 +50994,15 @@ components:
               metric_directions: metric_directions
             es_model_id: es_model_id
             population_exploration_digest_seed_count: 6.027456183070403
+            available_latent_spaces:
+            - friendly_name: friendly_name
+              ignored_by_default: true
+              latent_space_id: latent_space_id
+              population: population
+            - friendly_name: friendly_name
+              ignored_by_default: true
+              latent_space_id: latent_space_id
+              population: population
             inference_artifact_id: inference_artifact_id
             es_inspection_index: es_inspection_index
             vis_resources:
@@ -48020,9 +51064,11 @@ components:
             - friendly_name: friendly_name
               ignored_by_default: true
               latent_space_id: latent_space_id
+              population: population
             - friendly_name: friendly_name
               ignored_by_default: true
               latent_space_id: latent_space_id
+              population: population
             general_error: general_error
             ground_truths:
             - connection_name: connection_name
@@ -48179,6 +51225,15 @@ components:
               metric_directions: metric_directions
             es_model_id: es_model_id
             population_exploration_digest_seed_count: 6.027456183070403
+            available_latent_spaces:
+            - friendly_name: friendly_name
+              ignored_by_default: true
+              latent_space_id: latent_space_id
+              population: population
+            - friendly_name: friendly_name
+              ignored_by_default: true
+              latent_space_id: latent_space_id
+              population: population
             inference_artifact_id: inference_artifact_id
             es_inspection_index: es_inspection_index
             vis_resources:
@@ -48397,9 +51452,11 @@ components:
             - friendly_name: friendly_name
               ignored_by_default: true
               latent_space_id: latent_space_id
+              population: population
             - friendly_name: friendly_name
               ignored_by_default: true
               latent_space_id: latent_space_id
+              population: population
             general_error: general_error
             ground_truths:
             - connection_name: connection_name
@@ -48556,6 +51613,15 @@ components:
               metric_directions: metric_directions
             es_model_id: es_model_id
             population_exploration_digest_seed_count: 6.027456183070403
+            available_latent_spaces:
+            - friendly_name: friendly_name
+              ignored_by_default: true
+              latent_space_id: latent_space_id
+              population: population
+            - friendly_name: friendly_name
+              ignored_by_default: true
+              latent_space_id: latent_space_id
+              population: population
             inference_artifact_id: inference_artifact_id
             es_inspection_index: es_inspection_index
             vis_resources:
@@ -48617,9 +51683,11 @@ components:
             - friendly_name: friendly_name
               ignored_by_default: true
               latent_space_id: latent_space_id
+              population: population
             - friendly_name: friendly_name
               ignored_by_default: true
               latent_space_id: latent_space_id
+              population: population
             general_error: general_error
             ground_truths:
             - connection_name: connection_name
@@ -48776,6 +51844,15 @@ components:
               metric_directions: metric_directions
             es_model_id: es_model_id
             population_exploration_digest_seed_count: 6.027456183070403
+            available_latent_spaces:
+            - friendly_name: friendly_name
+              ignored_by_default: true
+              latent_space_id: latent_space_id
+              population: population
+            - friendly_name: friendly_name
+              ignored_by_default: true
+              latent_space_id: latent_space_id
+              population: population
             inference_artifact_id: inference_artifact_id
             es_inspection_index: es_inspection_index
             vis_resources:
@@ -50027,6 +53104,7 @@ components:
         evaluateOnSuccess:
           noVisualization: true
           batchSize: 0.8008281904610115
+        gitOrigin: gitOrigin
         secretManagerId: secretManagerId
         branchName: branchName
         model:
@@ -50055,6 +53133,8 @@ components:
           type: string
         evaluateOnSuccess:
           $ref: "#/components/schemas/ChainedEvaluateRequest"
+        gitOrigin:
+          type: string
         model:
           $ref: "#/components/schemas/ImportModelInfo"
       required:
@@ -50073,6 +53153,7 @@ components:
         evaluateOnSuccess:
           noVisualization: true
           batchSize: 0.8008281904610115
+        gitOrigin: gitOrigin
         secretManagerId: secretManagerId
         branchName: branchName
         codeEntryFile: codeEntryFile
@@ -50094,6 +53175,8 @@ components:
           type: string
         evaluateOnSuccess:
           $ref: "#/components/schemas/ChainedEvaluateRequest"
+        gitOrigin:
+          type: string
       required:
       - codeEntryFile
       - codeUrl
@@ -50500,6 +53583,14 @@ components:
           items:
             type: string
           type: array
+        available_latent_space_populations:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
+        available_latent_space_defaults:
+          description: Construct a type with a set of properties K of type T
+          properties: {}
+          type: object
       required:
       - metadata
       - samples
@@ -52534,6 +55625,30 @@ components:
       - shouldFillRemainingWithUnbalanced
       - versionId
       type: object
+    GetLatentSpacePathResponse:
+      additionalProperties: true
+      example:
+        path: path
+      properties:
+        path:
+          type: string
+      required:
+      - path
+      type: object
+    GetLatentSpacePathParams:
+      additionalProperties: true
+      example:
+        versionId: versionId
+        projectId: projectId
+      properties:
+        versionId:
+          type: string
+        projectId:
+          type: string
+      required:
+      - projectId
+      - versionId
+      type: object
     FetchSimilarResponse:
       additionalProperties: true
       example:
@@ -52556,6 +55671,7 @@ components:
       additionalProperties: true
       example:
         versionId: versionId
+        elementInstance: true
         latentSpaceType: latentSpaceType
         limit: 0.8008281904610115
         sampleIds:
@@ -53036,6 +56152,8 @@ components:
           type: string
         latentSpaceType:
           type: string
+        elementInstance:
+          type: boolean
       required:
       - digest
       - limit
@@ -53964,6 +57082,9 @@ components:
           name: name
         contractVersion: 0.8008281904610115
         predictionLabels: "{}"
+        skipped:
+        - skipped
+        - skipped
       properties:
         contractVersion:
           format: double
@@ -53994,6 +57115,10 @@ components:
           type: array
         deepLinkPath:
           type: string
+        skipped:
+          items:
+            type: string
+          type: array
       required:
       - contractVersion
       - deepLinkPath
@@ -54204,6 +57329,20 @@ components:
           type: boolean
       required:
       - success
+      type: object
+    ExtendTrialResponse_registeredUser:
+      description: Set when the token pre-registered the install's admin; `id` is
+        their user id.
+      example:
+        id: id
+        email: email
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+      required:
+      - email
       type: object
     ScatterFilter_value:
       anyOf:

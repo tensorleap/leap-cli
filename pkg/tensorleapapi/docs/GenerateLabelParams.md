@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **NumOfSamplesToLabel** | Pointer to **float64** |  | [optional] 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **LatentSpaceType** | Pointer to **string** | Latent space friendly name, e.g. &#39;balanced&#39;. Engine falls back to default when unset. | [optional] 
+**ElementInstance** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -143,6 +144,31 @@ SetLatentSpaceType sets LatentSpaceType field to given value.
 `func (o *GenerateLabelParams) HasLatentSpaceType() bool`
 
 HasLatentSpaceType returns a boolean if a field has been set.
+
+### GetElementInstance
+
+`func (o *GenerateLabelParams) GetElementInstance() bool`
+
+GetElementInstance returns the ElementInstance field if non-nil, zero value otherwise.
+
+### GetElementInstanceOk
+
+`func (o *GenerateLabelParams) GetElementInstanceOk() (*bool, bool)`
+
+GetElementInstanceOk returns a tuple with the ElementInstance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetElementInstance
+
+`func (o *GenerateLabelParams) SetElementInstance(v bool)`
+
+SetElementInstance sets ElementInstance field to given value.
+
+### HasElementInstance
+
+`func (o *GenerateLabelParams) HasElementInstance() bool`
+
+HasElementInstance returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

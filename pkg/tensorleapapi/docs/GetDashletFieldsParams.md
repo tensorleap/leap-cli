@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **ProjectId** | **string** |  | 
 **VersionIds** | Pointer to **[]string** |  | [optional] 
 **InferenceArtifactIds** | **[]string** |  | 
+**LatentSpaceOnly** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -91,6 +92,31 @@ and a boolean to check if the value has been set.
 
 SetInferenceArtifactIds sets InferenceArtifactIds field to given value.
 
+
+### GetLatentSpaceOnly
+
+`func (o *GetDashletFieldsParams) GetLatentSpaceOnly() bool`
+
+GetLatentSpaceOnly returns the LatentSpaceOnly field if non-nil, zero value otherwise.
+
+### GetLatentSpaceOnlyOk
+
+`func (o *GetDashletFieldsParams) GetLatentSpaceOnlyOk() (*bool, bool)`
+
+GetLatentSpaceOnlyOk returns a tuple with the LatentSpaceOnly field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLatentSpaceOnly
+
+`func (o *GetDashletFieldsParams) SetLatentSpaceOnly(v bool)`
+
+SetLatentSpaceOnly sets LatentSpaceOnly field to given value.
+
+### HasLatentSpaceOnly
+
+`func (o *GetDashletFieldsParams) HasLatentSpaceOnly() bool`
+
+HasLatentSpaceOnly returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

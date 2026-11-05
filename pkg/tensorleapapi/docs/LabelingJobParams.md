@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**ElementInstance** | Pointer to **bool** |  | [optional] 
 **LatentSpaceType** | Pointer to **string** |  | [optional] 
 **UseCustomLatentSpace** | Pointer to **bool** |  | [optional] 
 **Digest** | **string** |  | 
@@ -32,6 +33,31 @@ will change when the set of required properties is changed
 NewLabelingJobParamsWithDefaults instantiates a new LabelingJobParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetElementInstance
+
+`func (o *LabelingJobParams) GetElementInstance() bool`
+
+GetElementInstance returns the ElementInstance field if non-nil, zero value otherwise.
+
+### GetElementInstanceOk
+
+`func (o *LabelingJobParams) GetElementInstanceOk() (*bool, bool)`
+
+GetElementInstanceOk returns a tuple with the ElementInstance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetElementInstance
+
+`func (o *LabelingJobParams) SetElementInstance(v bool)`
+
+SetElementInstance sets ElementInstance field to given value.
+
+### HasElementInstance
+
+`func (o *LabelingJobParams) HasElementInstance() bool`
+
+HasElementInstance returns a boolean if a field has been set.
 
 ### GetLatentSpaceType
 

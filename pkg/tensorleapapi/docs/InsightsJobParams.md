@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ParentInsightId** | Pointer to **string** |  | [optional] 
+**ElementInstance** | Pointer to **bool** |  | [optional] 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **InferenceArtifactId** | Pointer to **string** |  | [optional] 
 **VersionId** | Pointer to **string** |  | [optional] 
@@ -29,30 +29,30 @@ NewInsightsJobParamsWithDefaults instantiates a new InsightsJobParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetParentInsightId
+### GetElementInstance
 
-`func (o *InsightsJobParams) GetParentInsightId() string`
+`func (o *InsightsJobParams) GetElementInstance() bool`
 
-GetParentInsightId returns the ParentInsightId field if non-nil, zero value otherwise.
+GetElementInstance returns the ElementInstance field if non-nil, zero value otherwise.
 
-### GetParentInsightIdOk
+### GetElementInstanceOk
 
-`func (o *InsightsJobParams) GetParentInsightIdOk() (*string, bool)`
+`func (o *InsightsJobParams) GetElementInstanceOk() (*bool, bool)`
 
-GetParentInsightIdOk returns a tuple with the ParentInsightId field if it's non-nil, zero value otherwise
+GetElementInstanceOk returns a tuple with the ElementInstance field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetParentInsightId
+### SetElementInstance
 
-`func (o *InsightsJobParams) SetParentInsightId(v string)`
+`func (o *InsightsJobParams) SetElementInstance(v bool)`
 
-SetParentInsightId sets ParentInsightId field to given value.
+SetElementInstance sets ElementInstance field to given value.
 
-### HasParentInsightId
+### HasElementInstance
 
-`func (o *InsightsJobParams) HasParentInsightId() bool`
+`func (o *InsightsJobParams) HasElementInstance() bool`
 
-HasParentInsightId returns a boolean if a field has been set.
+HasElementInstance returns a boolean if a field has been set.
 
 ### GetFilters
 
