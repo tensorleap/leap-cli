@@ -49,6 +49,7 @@ func TestFoundationUpdateAction(t *testing.T) {
 		{[]string{" Foundation "}, EvaluatePlanUpdate, 1},
 		{[]string{"update_foundation"}, EvaluatePlanUpdate, 1},
 		{[]string{"foundation", "update_foundation"}, EvaluatePlanUpdate, 1},
+		{[]string{"foundation", "samples"}, EvaluatePlanUpdate, 2},
 		{[]string{"foundation", "metric"}, EvaluatePlanReset, 2},
 	}
 	for _, c := range cases {
@@ -77,5 +78,20 @@ func TestInvalidUpdateActionHintListsFoundation(t *testing.T) {
 	}
 	if !strings.HasSuffix(msg, "(allowed: "+updateActionAllowedHint+")") || !strings.Contains(updateActionAllowedHint, "foundation") {
 		t.Fatalf("allowed-values hint does not list foundation: %q", msg)
+	}
+}
+
+// Picking "Foundation embeddings" in the overwrite prompt plans an
+// update-evaluate with the foundation action and prints a human label.
+func TestFoundationChangeOption(t *testing.T) {
+	plan := planUpdateEvaluate(map[ChangeKey]bool{ChangeFoundation: true})
+	if plan.Kind != EvaluatePlanUpdate {
+		t.Fatalf("kind %v, want update", plan.Kind)
+	}
+	if len(plan.UpdateActions) != 1 || plan.UpdateActions[0] != tensorleapapi.UPDATEACTION_UPDATE_FOUNDATION {
+		t.Fatalf("actions %v, want [%s]", plan.UpdateActions, tensorleapapi.UPDATEACTION_UPDATE_FOUNDATION)
+	}
+	if got, want := FormatEvaluatePlan(plan), "Compute foundation-model embeddings for every sample missing them (GPU)"; len(got) != 1 || got[0] != want {
+		t.Fatalf("plan lines %q, want [%q]", got, want)
 	}
 }

@@ -93,6 +93,8 @@ Examples:
   leap push -o my-model -u viz
   leap push -o my-model -u metric_config
   leap push -o my-model -u metric          # triggers a full re-evaluation
+  leap push -o my-model -u foundation      # fill missing foundation-model embeddings (GPU evaluation)
+  leap push -o my-model -u samples -u foundation  # evaluate new samples and embed them in one job
 
   # Refresh multiple artifacts in one run
   leap push -o my-model -u visualization -u metric_config
@@ -126,7 +128,7 @@ Examples:
 	cmd.Flags().StringVarP(&in.overwriteVersionRef, "overwrite", "o", "", "Overwrite an existing version (id, or name — picker shown if name is ambiguous)")
 	cmd.Flags().StringVar(&in.overwriteVersionRef, "overwrite-version", "", "")
 	_ = cmd.Flags().MarkDeprecated("overwrite-version", "use --overwrite (-o) instead")
-	cmd.Flags().StringSliceVarP(&in.updateParts, "update", "u", nil, "What changed in the code on overwrite (repeatable; implies --eval; skips the prompt). Values: metadata, metric, metric_config, visualization (viz), samples. metric triggers a full re-evaluation; samples evaluates only the newly added samples.")
+	cmd.Flags().StringSliceVarP(&in.updateParts, "update", "u", nil, "What changed in the code on overwrite (repeatable; implies --eval; skips the prompt). Values: metadata, metric, metric_config, visualization (viz), samples, foundation. metric triggers a full re-evaluation; samples evaluates only the newly added samples with your model (it does not compute their foundation-model embeddings); foundation computes the foundation-model embeddings for every sample that doesn't have them yet, old and new, and needs a GPU evaluation. Pass both (-u samples -u foundation) to do both in one job.")
 	cmd.Flags().BoolVar(&in.noVisualization, "novis", false, "Skip the visualize_samples step on the subsequent evaluate (requires --eval / -u)")
 	cmd.Flags().BoolVar(&in.yes, "yes", false, "Acknowledge pre-push warnings and proceed without prompting")
 	return cmd

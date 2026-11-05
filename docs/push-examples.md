@@ -57,7 +57,8 @@ auto-detects, so you pick what to refresh:
   [ ] Metric — full re-eval
   [ ] Metric config — metric direction + insights
   [ ] Visualizations
-  [ ] Samples — evaluate newly added samples only
+  [ ] Samples — evaluate newly added samples with your model only
+  [ ] Foundation embeddings — embed every sample missing them, old and new (GPU)
 ```
 
 Then a plan summary:
@@ -86,6 +87,8 @@ leap push -o my-model -u metric                       # triggers a full re-evalu
 leap push -o my-model -u metadata                     # add new metadata
 leap push -o my-model -u samples                      # evaluate only the newly added samples
 leap push -o my-model -u samples -u metadata          # both, in one continue-evaluate
+leap push -o my-model -u foundation                   # fill missing foundation-model embeddings
+leap push -o my-model -u samples -u foundation        # new samples through your model and the foundation models, one job
 ```
 
 Accepted values (case-insensitive):
@@ -97,11 +100,27 @@ Accepted values (case-insensitive):
 | `metric_config` / `metric-config` | `update_metric_config` |
 | `visualization` / `viz`  | `update_visualization`    |
 | `samples`                | `update_samples`          |
+| `foundation`             | `update_foundation`       |
 
 `metric` always triggers a fresh evaluation. `samples` runs a
 continue-evaluate: only sample ids that are new since the last evaluation
 are evaluated and appended to the existing results (any dataset state —
 existing ids must stay stable; removing samples is rejected).
+
+`foundation` computes the foundation-model embeddings without re-running
+your model, for every sample that doesn't have them yet — old and new
+alike; samples already embedded are left as they are. It runs as a **GPU
+evaluation**: the engine fails the job when no GPU is available.
+
+Each flag fills one store. `samples` evaluates the new samples with your
+model only — it does **not** embed them in the foundation-model spaces, so
+on a project with foundation models the status table then reports how many
+new samples are not embedded yet (fill them with
+`leap push -o <version> -u foundation`). Pass `-u samples -u foundation`
+to do both in one job: the new samples are evaluated by your model, every
+sample missing foundation embeddings is filled, and the new samples are
+read once. Combined with `metric`, the foundation embeddings are rebuilt
+as part of the full re-evaluation.
 
 ## Overwrite without evaluating
 
@@ -122,8 +141,8 @@ NOTE: Overwriting replaces the version. Use the update-evaluate dialog
 Recorded update actions on version (no evaluation dispatched).
 ```
 
-The UI's update-evaluate dialog uses the same five-action prompt as
-the CLI's `--eval` flow.
+The UI's update-evaluate dialog uses the same action list as the
+CLI's `--eval` flow.
 
 ## Deprecated flag still works
 
@@ -145,5 +164,7 @@ and proceeds normally. Update your scripts at your leisure.
 | Overwrite + force-refresh viz                    | `leap push -o <name> -u viz`                  |
 | Overwrite + metric config patch                   | `leap push -o <name> -u metric_config`        |
 | Overwrite + evaluate only newly added samples     | `leap push -o <name> -u samples`              |
+| Overwrite + fill missing foundation embeddings (GPU) | `leap push -o <name> -u foundation`       |
+| Overwrite + new samples, model and foundation (GPU)  | `leap push -o <name> -u samples -u foundation` |
 | Overwrite + interactive prompt for what changed   | `leap push -o <name> -e`                      |
 | Overwrite + force full re-eval                    | `leap push -o <name> -u metric`               |
