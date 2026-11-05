@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**ElementInstance** | Pointer to **bool** |  | [optional] 
 **Digest** | **string** |  | 
 **GroupBFilters** | [**[]ESFilter**](ESFilter.md) |  | 
 **GroupAFilters** | [**[]ESFilter**](ESFilter.md) |  | 
@@ -29,6 +30,31 @@ will change when the set of required properties is changed
 NewDomainGapJobParamsWithDefaults instantiates a new DomainGapJobParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetElementInstance
+
+`func (o *DomainGapJobParams) GetElementInstance() bool`
+
+GetElementInstance returns the ElementInstance field if non-nil, zero value otherwise.
+
+### GetElementInstanceOk
+
+`func (o *DomainGapJobParams) GetElementInstanceOk() (*bool, bool)`
+
+GetElementInstanceOk returns a tuple with the ElementInstance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetElementInstance
+
+`func (o *DomainGapJobParams) SetElementInstance(v bool)`
+
+SetElementInstance sets ElementInstance field to given value.
+
+### HasElementInstance
+
+`func (o *DomainGapJobParams) HasElementInstance() bool`
+
+HasElementInstance returns a boolean if a field has been set.
 
 ### GetDigest
 

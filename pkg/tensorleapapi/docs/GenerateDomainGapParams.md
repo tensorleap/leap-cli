@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **VersionId** | **string** |  | 
 **GroupAFilters** | [**[]ESFilter**](ESFilter.md) |  | 
 **GroupBFilters** | [**[]ESFilter**](ESFilter.md) |  | 
+**ElementInstance** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -107,6 +108,31 @@ and a boolean to check if the value has been set.
 
 SetGroupBFilters sets GroupBFilters field to given value.
 
+
+### GetElementInstance
+
+`func (o *GenerateDomainGapParams) GetElementInstance() bool`
+
+GetElementInstance returns the ElementInstance field if non-nil, zero value otherwise.
+
+### GetElementInstanceOk
+
+`func (o *GenerateDomainGapParams) GetElementInstanceOk() (*bool, bool)`
+
+GetElementInstanceOk returns a tuple with the ElementInstance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetElementInstance
+
+`func (o *GenerateDomainGapParams) SetElementInstance(v bool)`
+
+SetElementInstance sets ElementInstance field to given value.
+
+### HasElementInstance
+
+`func (o *GenerateDomainGapParams) HasElementInstance() bool`
+
+HasElementInstance returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

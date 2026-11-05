@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Success** | **bool** |  | 
+**RegisteredUser** | Pointer to [**ExtendTrialResponseRegisteredUser**](ExtendTrialResponseRegisteredUser.md) |  | [optional] 
 
 ## Methods
 
@@ -44,6 +45,31 @@ and a boolean to check if the value has been set.
 
 SetSuccess sets Success field to given value.
 
+
+### GetRegisteredUser
+
+`func (o *ExtendTrialResponse) GetRegisteredUser() ExtendTrialResponseRegisteredUser`
+
+GetRegisteredUser returns the RegisteredUser field if non-nil, zero value otherwise.
+
+### GetRegisteredUserOk
+
+`func (o *ExtendTrialResponse) GetRegisteredUserOk() (*ExtendTrialResponseRegisteredUser, bool)`
+
+GetRegisteredUserOk returns a tuple with the RegisteredUser field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRegisteredUser
+
+`func (o *ExtendTrialResponse) SetRegisteredUser(v ExtendTrialResponseRegisteredUser)`
+
+SetRegisteredUser sets RegisteredUser field to given value.
+
+### HasRegisteredUser
+
+`func (o *ExtendTrialResponse) HasRegisteredUser() bool`
+
+HasRegisteredUser returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

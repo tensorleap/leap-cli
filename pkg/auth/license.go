@@ -45,7 +45,7 @@ func LicenseLine(info *tensorleapapi.GetEnvironmentInfoResponse) string {
 	if !ok || lic == nil {
 		return ""
 	}
-	maxProjects := licenseMaxProjects(lic)
+	maxProjects := int(lic.GetMaxProjects())
 	notActivated := ""
 	if !LicenseActivated(lic) {
 		notActivated = ", not activated"
@@ -67,17 +67,6 @@ func LicenseLine(info *tensorleapapi.GetEnvironmentInfoResponse) string {
 		parts = append(parts, projectsPhrase(maxProjects))
 	}
 	return "License: " + strings.Join(parts, ", ")
-}
-
-// maxProjects reaches the CLI through the generated model's additional
-// properties until the Go client is regenerated from a server that has it.
-func licenseMaxProjects(lic *tensorleapapi.LicenseMetadata) int {
-	if v, ok := lic.AdditionalProperties["maxProjects"]; ok {
-		if f, ok := v.(float64); ok && f > 0 {
-			return int(f)
-		}
-	}
-	return 0
 }
 
 func projectsPhrase(n int) string {

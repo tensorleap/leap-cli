@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **VersionId** | Pointer to **string** |  | [optional] 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **Refresh** | Pointer to **bool** |  | [optional] 
-**ParentInsightId** | Pointer to **string** |  | [optional] 
+**ElementInstance** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -124,30 +124,30 @@ SetRefresh sets Refresh field to given value.
 
 HasRefresh returns a boolean if a field has been set.
 
-### GetParentInsightId
+### GetElementInstance
 
-`func (o *GenerateInsightsParams) GetParentInsightId() string`
+`func (o *GenerateInsightsParams) GetElementInstance() bool`
 
-GetParentInsightId returns the ParentInsightId field if non-nil, zero value otherwise.
+GetElementInstance returns the ElementInstance field if non-nil, zero value otherwise.
 
-### GetParentInsightIdOk
+### GetElementInstanceOk
 
-`func (o *GenerateInsightsParams) GetParentInsightIdOk() (*string, bool)`
+`func (o *GenerateInsightsParams) GetElementInstanceOk() (*bool, bool)`
 
-GetParentInsightIdOk returns a tuple with the ParentInsightId field if it's non-nil, zero value otherwise
+GetElementInstanceOk returns a tuple with the ElementInstance field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetParentInsightId
+### SetElementInstance
 
-`func (o *GenerateInsightsParams) SetParentInsightId(v string)`
+`func (o *GenerateInsightsParams) SetElementInstance(v bool)`
 
-SetParentInsightId sets ParentInsightId field to given value.
+SetElementInstance sets ElementInstance field to given value.
 
-### HasParentInsightId
+### HasElementInstance
 
-`func (o *GenerateInsightsParams) HasParentInsightId() bool`
+`func (o *GenerateInsightsParams) HasElementInstance() bool`
 
-HasParentInsightId returns a boolean if a field has been set.
+HasElementInstance returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

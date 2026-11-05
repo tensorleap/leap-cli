@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **PredictionLabels** | **map[string]interface{}** | Construct a type with a set of properties K of type T | 
 **Visualizers** | [**[]AnalysisVisualizerInfo**](AnalysisVisualizerInfo.md) |  | 
 **DeepLinkPath** | **string** |  | 
+**Skipped** | Pointer to **[]string** |  | [optional] 
 
 ## Methods
 
@@ -269,6 +270,31 @@ and a boolean to check if the value has been set.
 
 SetDeepLinkPath sets DeepLinkPath field to given value.
 
+
+### GetSkipped
+
+`func (o *ExportAnalysisResponse) GetSkipped() []string`
+
+GetSkipped returns the Skipped field if non-nil, zero value otherwise.
+
+### GetSkippedOk
+
+`func (o *ExportAnalysisResponse) GetSkippedOk() (*[]string, bool)`
+
+GetSkippedOk returns a tuple with the Skipped field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSkipped
+
+`func (o *ExportAnalysisResponse) SetSkipped(v []string)`
+
+SetSkipped sets Skipped field to given value.
+
+### HasSkipped
+
+`func (o *ExportAnalysisResponse) HasSkipped() bool`
+
+HasSkipped returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

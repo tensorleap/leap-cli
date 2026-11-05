@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Status** | [**AuthStatus**](AuthStatus.md) |  | 
+**Registration** | Pointer to [**RegistrationPrefill**](RegistrationPrefill.md) |  | [optional] 
 
 ## Methods
 
@@ -44,6 +45,31 @@ and a boolean to check if the value has been set.
 
 SetStatus sets Status field to given value.
 
+
+### GetRegistration
+
+`func (o *GetAuthStatusResponse) GetRegistration() RegistrationPrefill`
+
+GetRegistration returns the Registration field if non-nil, zero value otherwise.
+
+### GetRegistrationOk
+
+`func (o *GetAuthStatusResponse) GetRegistrationOk() (*RegistrationPrefill, bool)`
+
+GetRegistrationOk returns a tuple with the Registration field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRegistration
+
+`func (o *GetAuthStatusResponse) SetRegistration(v RegistrationPrefill)`
+
+SetRegistration sets Registration field to given value.
+
+### HasRegistration
+
+`func (o *GetAuthStatusResponse) HasRegistration() bool`
+
+HasRegistration returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

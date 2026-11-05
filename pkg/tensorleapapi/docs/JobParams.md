@@ -18,13 +18,13 @@ Name | Type | Description | Notes
 **DomainGapId** | Pointer to **string** |  | [optional] 
 **Title** | **string** |  | 
 **Epoch** | **float64** |  | 
+**ElementInstance** | Pointer to **bool** |  | [optional] 
 **LatentSpaceType** | Pointer to **string** |  | [optional] 
 **Digest** | **string** |  | 
-**Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
+**Filters** | [**[]ESFilter**](ESFilter.md) |  | 
 **SampleIds** | [**[]SampleIdentity**](SampleIdentity.md) |  | 
 **Limit** | **float64** |  | 
 **ForceExecute** | Pointer to **bool** |  | [optional] 
-**ElementInstance** | Pointer to **bool** |  | [optional] 
 **UseCustomLatentSpace** | Pointer to **bool** |  | [optional] 
 **OptionalAnalysis** | Pointer to [**[]OptionalAnalysis**](OptionalAnalysis.md) |  | [optional] 
 **ReductionAlgorithm** | [**ReductionAlgorithm**](ReductionAlgorithm.md) |  | 
@@ -49,7 +49,6 @@ Name | Type | Description | Notes
 **GroupBFilters** | [**[]ESFilter**](ESFilter.md) |  | 
 **GroupAFilters** | [**[]ESFilter**](ESFilter.md) |  | 
 **VisArtifactId** | **string** |  | 
-**ParentInsightId** | Pointer to **string** |  | [optional] 
 **SecretManagerId** | Pointer to **string** |  | [optional] 
 **CodeUrl** | **string** |  | 
 **CodeEntryFile** | **string** |  | 
@@ -58,6 +57,7 @@ Name | Type | Description | Notes
 **BranchName** | Pointer to **string** |  | [optional] 
 **OverwriteVersionId** | Pointer to **string** |  | [optional] 
 **EvaluateOnSuccess** | Pointer to [**ChainedEvaluateRequest**](ChainedEvaluateRequest.md) |  | [optional] 
+**GitOrigin** | Pointer to **string** |  | [optional] 
 **UpdateActions** | [**[]UpdateAction**](UpdateAction.md) |  | 
 **CopyMode** | Pointer to **bool** |  | [optional] 
 **SourceVersionId** | Pointer to **string** |  | [optional] 
@@ -66,7 +66,7 @@ Name | Type | Description | Notes
 
 ### NewJobParams
 
-`func NewJobParams(versionId string, inferenceArtifactId string, projectId string, batchSize float64, evaluatedEpoch float64, type_ ExportModelTypeEnum, extId string, title string, epoch float64, digest string, sampleIds []SampleIdentity, limit float64, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, labelingAlgorithm LabelingAlgorithm, targetFilters []ESFilter, sources []SyntheticDataJobParamsSourcesInner, simulationNames []string, metadataTags []string, splitAcrossMetadata []string, keepTogetherMetadata []string, splitsToResplit []SplitSubset, groupBFilters []ESFilter, groupAFilters []ESFilter, visArtifactId string, codeUrl string, codeEntryFile string, versionName string, updateActions []UpdateAction, ) *JobParams`
+`func NewJobParams(versionId string, inferenceArtifactId string, projectId string, batchSize float64, evaluatedEpoch float64, type_ ExportModelTypeEnum, extId string, title string, epoch float64, digest string, filters []ESFilter, sampleIds []SampleIdentity, limit float64, reductionAlgorithm ReductionAlgorithm, shouldFillRemainingWithUnbalanced bool, balanceBy []string, numOfSamples float64, labelingAlgorithm LabelingAlgorithm, targetFilters []ESFilter, sources []SyntheticDataJobParamsSourcesInner, simulationNames []string, metadataTags []string, splitAcrossMetadata []string, keepTogetherMetadata []string, splitsToResplit []SplitSubset, groupBFilters []ESFilter, groupAFilters []ESFilter, visArtifactId string, codeUrl string, codeEntryFile string, versionName string, updateActions []UpdateAction, ) *JobParams`
 
 NewJobParams instantiates a new JobParams object
 This constructor will assign default values to properties that have it defined,
@@ -386,6 +386,31 @@ and a boolean to check if the value has been set.
 SetEpoch sets Epoch field to given value.
 
 
+### GetElementInstance
+
+`func (o *JobParams) GetElementInstance() bool`
+
+GetElementInstance returns the ElementInstance field if non-nil, zero value otherwise.
+
+### GetElementInstanceOk
+
+`func (o *JobParams) GetElementInstanceOk() (*bool, bool)`
+
+GetElementInstanceOk returns a tuple with the ElementInstance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetElementInstance
+
+`func (o *JobParams) SetElementInstance(v bool)`
+
+SetElementInstance sets ElementInstance field to given value.
+
+### HasElementInstance
+
+`func (o *JobParams) HasElementInstance() bool`
+
+HasElementInstance returns a boolean if a field has been set.
+
 ### GetLatentSpaceType
 
 `func (o *JobParams) GetLatentSpaceType() string`
@@ -450,11 +475,6 @@ and a boolean to check if the value has been set.
 
 SetFilters sets Filters field to given value.
 
-### HasFilters
-
-`func (o *JobParams) HasFilters() bool`
-
-HasFilters returns a boolean if a field has been set.
 
 ### GetSampleIds
 
@@ -520,31 +540,6 @@ SetForceExecute sets ForceExecute field to given value.
 `func (o *JobParams) HasForceExecute() bool`
 
 HasForceExecute returns a boolean if a field has been set.
-
-### GetElementInstance
-
-`func (o *JobParams) GetElementInstance() bool`
-
-GetElementInstance returns the ElementInstance field if non-nil, zero value otherwise.
-
-### GetElementInstanceOk
-
-`func (o *JobParams) GetElementInstanceOk() (*bool, bool)`
-
-GetElementInstanceOk returns a tuple with the ElementInstance field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetElementInstance
-
-`func (o *JobParams) SetElementInstance(v bool)`
-
-SetElementInstance sets ElementInstance field to given value.
-
-### HasElementInstance
-
-`func (o *JobParams) HasElementInstance() bool`
-
-HasElementInstance returns a boolean if a field has been set.
 
 ### GetUseCustomLatentSpace
 
@@ -1071,31 +1066,6 @@ and a boolean to check if the value has been set.
 SetVisArtifactId sets VisArtifactId field to given value.
 
 
-### GetParentInsightId
-
-`func (o *JobParams) GetParentInsightId() string`
-
-GetParentInsightId returns the ParentInsightId field if non-nil, zero value otherwise.
-
-### GetParentInsightIdOk
-
-`func (o *JobParams) GetParentInsightIdOk() (*string, bool)`
-
-GetParentInsightIdOk returns a tuple with the ParentInsightId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetParentInsightId
-
-`func (o *JobParams) SetParentInsightId(v string)`
-
-SetParentInsightId sets ParentInsightId field to given value.
-
-### HasParentInsightId
-
-`func (o *JobParams) HasParentInsightId() bool`
-
-HasParentInsightId returns a boolean if a field has been set.
-
 ### GetSecretManagerId
 
 `func (o *JobParams) GetSecretManagerId() string`
@@ -1280,6 +1250,31 @@ SetEvaluateOnSuccess sets EvaluateOnSuccess field to given value.
 `func (o *JobParams) HasEvaluateOnSuccess() bool`
 
 HasEvaluateOnSuccess returns a boolean if a field has been set.
+
+### GetGitOrigin
+
+`func (o *JobParams) GetGitOrigin() string`
+
+GetGitOrigin returns the GitOrigin field if non-nil, zero value otherwise.
+
+### GetGitOriginOk
+
+`func (o *JobParams) GetGitOriginOk() (*string, bool)`
+
+GetGitOriginOk returns a tuple with the GitOrigin field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGitOrigin
+
+`func (o *JobParams) SetGitOrigin(v string)`
+
+SetGitOrigin sets GitOrigin field to given value.
+
+### HasGitOrigin
+
+`func (o *JobParams) HasGitOrigin() bool`
+
+HasGitOrigin returns a boolean if a field has been set.
 
 ### GetUpdateActions
 
