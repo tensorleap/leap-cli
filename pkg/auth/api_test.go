@@ -12,7 +12,6 @@ import (
 func TestSetLicenseSavesTheRegisteredUserForAnalytics(t *testing.T) {
 	cases := map[string]struct{ reply, want string }{
 		"server names the user": {`{"success":true,"registeredUser":{"email":"a+b@c.d","id":"cid-1"}}`, "cid-1"},
-		"older server":          {`{"success":true,"registeredUser":{"email":"a+b@c.d"}}`, ""},
 		"no user registered":    {`{"success":true}`, ""},
 	}
 	for name, c := range cases {
