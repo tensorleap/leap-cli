@@ -23,6 +23,9 @@ func TestEverySnippetIsValidAndCopilotNoteOnlyForVSCode(t *testing.T) {
 		if strings.Contains(out, "Copilot Business") != (c == "vscode") {
 			t.Errorf("%s: Copilot note shown=%v", c, !(c == "vscode"))
 		}
+		if strings.Contains(out, copilotModelNote) != (c == "vscode") {
+			t.Errorf("%s: Copilot model note shown=%v", c, !(c == "vscode"))
+		}
 		if c == "codex" {
 			if !strings.Contains(out, "command = \"/usr/local/bin/leap\"\nargs = [\"mcp\"]") {
 				t.Errorf("codex snippet:\n%s", out)
@@ -214,5 +217,16 @@ func TestLicenseIsCheckedFirstAndNotSavedWithPrint(t *testing.T) {
 	}
 	if viper.IsSet("license.token") {
 		t.Fatal("--print must not save the license")
+	}
+}
+
+func TestConfigureFileRecommendsAModelOnlyForCopilot(t *testing.T) {
+	t.Setenv("HOME", t.TempDir())
+	for _, id := range []string{"vscode", "cursor"} {
+		var buf bytes.Buffer
+		configureFile(ui{w: &buf}, findAssistant(id), serverEntry{Command: "leap", Args: []string{"mcp"}})
+		if strings.Contains(buf.String(), copilotModelNote) != (id == "vscode") {
+			t.Errorf("%s: model note shown=%v\n%s", id, id != "vscode", buf.String())
+		}
 	}
 }

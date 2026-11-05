@@ -23,7 +23,11 @@ func TestGetCodeFiles(t *testing.T) {
 		"pyproject.toml",
 		"nested/file3.txt",
 		"nested/file4.log",
+		// local state, never uploaded even when leap.yaml includes everything
+		".tensorleap/pending_events.jsonl",
+		".tensorleap/.gitignore",
 	}
+	assert.NoError(t, os.Mkdir(filepath.Join(tempDir, ".tensorleap"), 0755))
 	for _, file := range files {
 		path := filepath.Join(tempDir, file)
 		err := os.WriteFile(path, []byte("content"), 0644)
@@ -76,6 +80,15 @@ func TestGetCodeFiles(t *testing.T) {
 			expectedFiles: []string{
 				"file1.txt",
 				"pyproject.toml",
+			},
+		},
+		{
+			name:            "Include .tensorleap explicitly",
+			includePatterns: []string{"**/*.txt", ".tensorleap/**", "**/.*"},
+			excludePatterns: nil,
+			expectedFiles: []string{
+				"file1.txt",
+				"nested/file3.txt",
 			},
 		},
 		{

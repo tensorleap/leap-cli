@@ -8,6 +8,7 @@ import (
 
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/log"
+	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
 func stubWaiter(calls *int, results ...error) func(context.Context, func() (bool, []log.Step, error), time.Duration, time.Duration, *api.LogTail) error {
@@ -96,5 +97,53 @@ func TestWaitForImportModelJobRespectsAbsoluteCap(t *testing.T) {
 	}
 	if calls != 1 {
 		t.Fatalf("expected exactly 1 waiter call at zero cap, got %d", calls)
+	}
+}
+
+// stubPushJob makes the push wait see a job in the given status and records whether the failure report was shown
+func stubPushJob(t *testing.T, status tensorleapapi.JobStatus) (reportShown *bool) {
+	t.Helper()
+	origWait, origGet, origShow := waitForSteps, getImportModelJob, showPushFailure
+	t.Cleanup(func() { waitForSteps, getImportModelJob, showPushFailure = origWait, origGet, origShow })
+
+	waitForSteps = func(_ context.Context, condition func() (bool, []log.Step, error), _ time.Duration, _ time.Duration, _ *api.LogTail) error {
+		_, _, err := condition()
+		return err
+	}
+	getImportModelJob = func(context.Context, string, string) (*tensorleapapi.Job, error) {
+		return &tensorleapapi.Job{Status: status}, nil
+	}
+	shown := false
+	showPushFailure = func(context.Context, string, string, string, time.Time) error {
+		shown = true
+		return nil
+	}
+	return &shown
+}
+
+// A push stopped with `leap run stop` says so, without the failure report meant for a real failure
+func TestWaitForPushJobStoppedIsNotAFailure(t *testing.T) {
+	for _, status := range []tensorleapapi.JobStatus{tensorleapapi.JOBSTATUS_STOPPED, tensorleapapi.JOBSTATUS_TERMINATED} {
+		t.Run(string(status), func(t *testing.T) {
+			reportShown := stubPushJob(t, status)
+			err := WaitForPushJob(context.Background(), "p", "v", "job-1")
+			if err == nil || err.Error() != "Push stopped, job id: job-1" {
+				t.Fatalf("got %v", err)
+			}
+			if *reportShown {
+				t.Fatal("the failure report was shown for a stopped push")
+			}
+		})
+	}
+}
+
+func TestWaitForPushJobFailureShowsTheReport(t *testing.T) {
+	reportShown := stubPushJob(t, tensorleapapi.JOBSTATUS_FAILED)
+	err := WaitForPushJob(context.Background(), "p", "v", "job-1")
+	if err == nil || err.Error() != "push failed see errors above, for more logs run: leap run logs job-1" {
+		t.Fatalf("got %v", err)
+	}
+	if !*reportShown {
+		t.Fatal("the failure report was not shown")
 	}
 }

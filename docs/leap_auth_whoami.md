@@ -4,7 +4,7 @@ Get information about the authenticated user
 
 ### Synopsis
 
-Get information about the authenticated user
+Get information about the authenticated user. When nobody is signed in it says how to sign in and exits with an error, without asking anything.
 
 ```
 leap auth whoami [flags]
