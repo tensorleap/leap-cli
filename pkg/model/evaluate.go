@@ -82,9 +82,10 @@ var updateActionAliases = map[string]tensorleapapi.UpdateAction{
 	"visualization": tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
 	"viz":           tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
 	"samples":       tensorleapapi.UPDATEACTION_UPDATE_SAMPLES,
+	"foundation":    tensorleapapi.UPDATEACTION_UPDATE_FOUNDATION,
 }
 
-const updateActionAllowedHint = "metadata, metric, metric_config, visualization, viz, samples"
+const updateActionAllowedHint = "metadata, metric, metric_config, visualization, viz, samples, foundation"
 
 func ParseUpdateActionsFromFlags(parts []string) ([]tensorleapapi.UpdateAction, error) {
 	if len(parts) == 0 {
