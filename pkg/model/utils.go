@@ -1,8 +1,14 @@
 package model
 
 import (
+	"archive/tar"
+	"bufio"
+	"compress/gzip"
 	"context"
 	"fmt"
+	"io"
+	"os"
+	"path"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -56,26 +62,19 @@ func InitMessage(msg *string, defaultMsg string) error {
 	return nil
 }
 
+// SelectModelType resolves the model type: an explicit, valid --type wins; otherwise it is
+// detected from the file (a tar archive is inspected: one holding a .onnx is an ONNX model with
+// external weight data, one holding saved_model.pb is a TF SavedModel); otherwise the user is asked.
 func SelectModelType(modelType *string, modelPath string) error {
-
-	ext := strings.ToLower(filepath.Ext(modelPath))
-
-	if len(*modelType) > 0 && !slices.Contains(MODEL_TYPES, *modelType) {
+	if len(*modelType) > 0 {
+		if slices.Contains(MODEL_TYPES, *modelType) {
+			return nil
+		}
 		log.Warn(fmt.Sprintf("Model type %s not supported. Supported types are: %s", *modelType, MODEL_TYPES))
 	}
 
-	switch ext {
-	case ".json":
-		*modelType = string(tensorleapapi.IMPORTMODELTYPE_JSON_TF2)
-		return nil
-	case ".h5":
-		*modelType = string(tensorleapapi.IMPORTMODELTYPE_H5_TF2)
-		return nil
-	case ".onnx":
-		*modelType = string(tensorleapapi.IMPORTMODELTYPE_ONNX)
-		return nil
-	case ".tar.gz":
-		*modelType = string(tensorleapapi.IMPORTMODELTYPE_PB_TF2)
+	if detected := DetectModelType(modelPath); detected != "" {
+		*modelType = detected
 		return nil
 	}
 
@@ -83,11 +82,66 @@ func SelectModelType(modelType *string, modelPath string) error {
 		Message: "Select model type?",
 		Options: MODEL_TYPES,
 	}
-	err := survey.AskOne(modelTypePrompt, modelType)
-	if err != nil {
-		return err
+	return survey.AskOne(modelTypePrompt, modelType)
+}
+
+// DetectModelType returns the model type implied by the file, or "" when it cannot tell.
+func DetectModelType(modelPath string) string {
+	lower := strings.ToLower(modelPath)
+	switch {
+	case strings.HasSuffix(lower, ".json"):
+		return string(tensorleapapi.IMPORTMODELTYPE_JSON_TF2)
+	case strings.HasSuffix(lower, ".h5"):
+		return string(tensorleapapi.IMPORTMODELTYPE_H5_TF2)
+	case strings.HasSuffix(lower, ".onnx"):
+		return string(tensorleapapi.IMPORTMODELTYPE_ONNX)
+	case strings.HasSuffix(lower, ".tar"), strings.HasSuffix(lower, ".tar.gz"), strings.HasSuffix(lower, ".tgz"):
+		return detectArchiveModelType(modelPath)
 	}
-	return nil
+	return ""
+}
+
+// detectArchiveModelType scans the archive's member names (stopping at the first decisive one).
+// An unreadable archive keeps the historical .tar.gz meaning (TF SavedModel); a plain .tar
+// with nothing recognisable returns "" so the user is asked.
+func detectArchiveModelType(modelPath string) string {
+	fallback := ""
+	if !strings.HasSuffix(strings.ToLower(modelPath), ".tar") {
+		fallback = string(tensorleapapi.IMPORTMODELTYPE_PB_TF2)
+	}
+	f, err := os.Open(modelPath)
+	if err != nil {
+		return fallback
+	}
+	defer func() { _ = f.Close() }()
+
+	br := bufio.NewReader(f)
+	var r io.Reader = br
+	if magic, err := br.Peek(2); err == nil && magic[0] == 0x1f && magic[1] == 0x8b {
+		gz, err := gzip.NewReader(br)
+		if err != nil {
+			return fallback
+		}
+		defer func() { _ = gz.Close() }()
+		r = gz
+	}
+	tr := tar.NewReader(r)
+	for {
+		hdr, err := tr.Next()
+		if err != nil {
+			return fallback
+		}
+		base := path.Base(hdr.Name)
+		if strings.HasPrefix(base, "._") || base == ".DS_Store" {
+			continue // macOS tar metadata
+		}
+		switch {
+		case strings.HasSuffix(strings.ToLower(base), ".onnx"):
+			return string(tensorleapapi.IMPORTMODELTYPE_ONNX)
+		case base == "saved_model.pb" || base == "saved_model.pbtxt":
+			return string(tensorleapapi.IMPORTMODELTYPE_PB_TF2)
+		}
+	}
 }
 
 type VersionStatus string
