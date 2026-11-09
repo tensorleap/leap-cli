@@ -20,7 +20,7 @@ var _ MappedNullable = &PopulationExplorationResponse{}
 
 // PopulationExplorationResponse struct for PopulationExplorationResponse
 type PopulationExplorationResponse struct {
-	Status               string                                `json:"status"`
+	Status               PopulationExplorationResponseStatus   `json:"status"`
 	JobId                *string                               `json:"jobId,omitempty"`
 	ReadyArtifacts       PartialPopulationExplorationArtifacts `json:"readyArtifacts"`
 	Digest               string                                `json:"digest"`
@@ -33,7 +33,7 @@ type _PopulationExplorationResponse PopulationExplorationResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPopulationExplorationResponse(status string, readyArtifacts PartialPopulationExplorationArtifacts, digest string) *PopulationExplorationResponse {
+func NewPopulationExplorationResponse(status PopulationExplorationResponseStatus, readyArtifacts PartialPopulationExplorationArtifacts, digest string) *PopulationExplorationResponse {
 	this := PopulationExplorationResponse{}
 	this.Status = status
 	this.ReadyArtifacts = readyArtifacts
@@ -50,9 +50,9 @@ func NewPopulationExplorationResponseWithDefaults() *PopulationExplorationRespon
 }
 
 // GetStatus returns the Status field value
-func (o *PopulationExplorationResponse) GetStatus() string {
+func (o *PopulationExplorationResponse) GetStatus() PopulationExplorationResponseStatus {
 	if o == nil {
-		var ret string
+		var ret PopulationExplorationResponseStatus
 		return ret
 	}
 
@@ -61,7 +61,7 @@ func (o *PopulationExplorationResponse) GetStatus() string {
 
 // GetStatusOk returns a tuple with the Status field value
 // and a boolean to check if the value has been set.
-func (o *PopulationExplorationResponse) GetStatusOk() (*string, bool) {
+func (o *PopulationExplorationResponse) GetStatusOk() (*PopulationExplorationResponseStatus, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -69,7 +69,7 @@ func (o *PopulationExplorationResponse) GetStatusOk() (*string, bool) {
 }
 
 // SetStatus sets field value
-func (o *PopulationExplorationResponse) SetStatus(v string) {
+func (o *PopulationExplorationResponse) SetStatus(v PopulationExplorationResponseStatus) {
 	o.Status = v
 }
 

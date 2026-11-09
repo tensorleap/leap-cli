@@ -442,6 +442,7 @@ docs/PopulationExplorationDashletData.md
 docs/PopulationExplorationJobParams.md
 docs/PopulationExplorationParams.md
 docs/PopulationExplorationResponse.md
+docs/PopulationExplorationResponseStatus.md
 docs/PredictionLabels.md
 docs/PredictionTypeInstance.md
 docs/Project.md
@@ -1040,6 +1041,7 @@ model_population_exploration_dashlet_data.go
 model_population_exploration_job_params.go
 model_population_exploration_params.go
 model_population_exploration_response.go
+model_population_exploration_response_status.go
 model_prediction_labels.go
 model_prediction_type_instance.go
 model_project.go
