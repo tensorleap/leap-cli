@@ -82,9 +82,10 @@ var updateActionAliases = map[string]tensorleapapi.UpdateAction{
 	"visualization": tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
 	"viz":           tensorleapapi.UPDATEACTION_UPDATE_VISUALIZATION,
 	"samples":       tensorleapapi.UPDATEACTION_UPDATE_SAMPLES,
+	"foundation":    tensorleapapi.UPDATEACTION_UPDATE_FOUNDATION,
 }
 
-const updateActionAllowedHint = "metadata, metric, metric_config, visualization, viz, samples"
+const updateActionAllowedHint = "metadata, metric, metric_config, visualization, viz, samples, foundation"
 
 func ParseUpdateActionsFromFlags(parts []string) ([]tensorleapapi.UpdateAction, error) {
 	if len(parts) == 0 {
@@ -139,6 +140,7 @@ const (
 	ChangeMetricConfig
 	ChangeVisualization
 	ChangeSamples
+	ChangeFoundation
 )
 
 type changeOption struct {
@@ -175,8 +177,14 @@ var changeOptions = []changeOption{
 	{
 		key:    ChangeSamples,
 		label:  "Samples",
-		hint:   "evaluate newly added samples only",
+		hint:   "evaluate newly added samples with your model only",
 		action: tensorleapapi.UPDATEACTION_UPDATE_SAMPLES,
+	},
+	{
+		key:    ChangeFoundation,
+		label:  "Foundation embeddings",
+		hint:   "embed every sample missing them, old and new (GPU)",
+		action: tensorleapapi.UPDATEACTION_UPDATE_FOUNDATION,
 	},
 }
 
@@ -300,6 +308,8 @@ func FormatEvaluatePlan(plan EvaluatePlan) []string {
 			out = append(out, "Regenerate visualizations")
 		case tensorleapapi.UPDATEACTION_UPDATE_SAMPLES:
 			out = append(out, "Evaluate newly added samples")
+		case tensorleapapi.UPDATEACTION_UPDATE_FOUNDATION:
+			out = append(out, "Compute foundation-model embeddings for every sample missing them (GPU)")
 		default:
 			out = append(out, string(a))
 		}
