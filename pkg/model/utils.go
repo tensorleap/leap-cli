@@ -105,6 +105,9 @@ type VersionInfo struct {
 	HasModel         bool
 	HasUploadedModel bool
 	Status           VersionStatus
+	// UpdateActions carries the update actions recorded on the version from
+	// its last update-evaluate, so a failed retry can re-select them by default.
+	UpdateActions []tensorleapapi.UpdateAction
 }
 
 func AskUserForModelPathOrOverwrite(ctx context.Context, projectId string, currentName *string) (isOverwrite bool, overwriteVersionInfo *VersionInfo, modelPath string, err error) {
@@ -172,6 +175,7 @@ func AskUserForNewVersionOrSelectExistingVersion(ctx context.Context, projectId 
 			HasModel:         hasModel,
 			HasUploadedModel: hasUploadedModel,
 			Status:           status,
+			UpdateActions:    version.GetUpdateActions(),
 		})
 	}
 
@@ -203,6 +207,7 @@ func versionInfoFromSlim(version *tensorleapapi.SlimVersion, runsStatusesPerVers
 		HasModel:         hasModel,
 		HasUploadedModel: hasUploadedModel,
 		Status:           status,
+		UpdateActions:    version.GetUpdateActions(),
 	}
 }
 
@@ -283,6 +288,7 @@ func pickAmbiguousVersion(
 			HasModel:         hasModel,
 			HasUploadedModel: hasUploadedModel,
 			Status:           status,
+			UpdateActions:    v.GetUpdateActions(),
 		}
 	}
 
