@@ -122,7 +122,7 @@ Examples:
 	cmd.Flags().StringVar(&in.secretId, "secretId", "", "Secret id")
 	cmd.Flags().BoolVar(&in.transformInput, "transform-input", false, "Transpose the input data to channel-last format")
 	cmd.Flags().BoolVar(&in.noWait, "no-wait", false, "Do not wait for push to complete. With --eval the server runs the evaluation itself once the push finishes; follow it with 'leap run info <jobId>'")
-	cmd.Flags().StringVarP(&in.modelPath, "model-path", "m", "", "Path to the model file")
+	cmd.Flags().StringVarP(&in.modelPath, "model-path", "m", "", "Path to the model file (.onnx; for an ONNX model with external weight data, a .tar/.tar.gz holding the .onnx and its data files)")
 	cmd.Flags().BoolVarP(&in.runEval, "eval", "e", false, "Run evaluation on the model after push completes")
 	cmd.Flags().StringVarP(&in.batch, "batch", "b", "", "Batch size for evaluation: a number or 'latest' (requires --eval; if omitted, prompts with the latest as default — and is required when stdin is not a terminal)")
 	cmd.Flags().StringVarP(&in.overwriteVersionRef, "overwrite", "o", "", "Overwrite an existing version (id, or name — picker shown if name is ambiguous)")
