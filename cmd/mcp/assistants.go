@@ -2,6 +2,7 @@ package mcp
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -10,6 +11,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"time"
 )
 
 type assistant struct {
@@ -28,7 +30,7 @@ var assistants = []assistant{
 		detect: func() bool { return onPath("claude") }},
 	{id: "cursor", title: "Cursor", restart: "Restart Cursor (or run Developer: Reload Window)", skillsTool: "cursor", skillsDir: "~/.cursor/skills",
 		detect: func() bool { return onPath("cursor") || exists(home(".cursor")) }},
-	{id: "vscode", title: "VS Code (GitHub Copilot)", restart: "Reload VS Code (Developer: Reload Window)", skillsTool: "copilot", skillsDir: "~/.copilot/skills",
+	{id: "vscode", title: "VS Code (GitHub Copilot)", restart: "Quit VS Code completely and reopen it (Reload Window is not enough)", skillsTool: "copilot", skillsDir: "~/.copilot/skills",
 		detect: func() bool { return onPath("code") || exists(filepath.Dir(vscodeConfigPath())) }},
 	{id: "codex", title: "OpenAI Codex", restart: "Restart Codex", skillsTool: "codex", skillsDir: "~/.agents/skills",
 		detect: func() bool { return onPath("codex") || exists(home(".codex")) }},
@@ -95,7 +97,66 @@ func vscodeConfigPath() string {
 	case "darwin":
 		return home("Library", "Application Support", "Code", "User", "mcp.json")
 	}
+	if inWSL() {
+		// VS Code runs on Windows and never reads ~/.config/Code inside WSL; a window connected to WSL
+		// reads its server's user file there, and starts leap inside WSL
+		return home(".vscode-server", "data", "User", "mcp.json")
+	}
 	return home(".config", "Code", "User", "mcp.json")
+}
+
+// inWSL reports a Linux that runs under Windows (WSL 1 or 2)
+func inWSL() bool {
+	if runtime.GOOS != "linux" {
+		return false
+	}
+	if os.Getenv("WSL_DISTRO_NAME") != "" {
+		return true
+	}
+	// sudo and ssh sessions drop the variable; the WSL kernel still names Microsoft in its release
+	b, _ := os.ReadFile("/proc/sys/kernel/osrelease")
+	return bytes.Contains(bytes.ToLower(b), []byte("microsoft"))
+}
+
+// Copilot's user-level MCP file. VS Code and Copilot CLI read it on the machine they run on, so it
+// also serves a window connected to WSL, SSH or a container.
+func copilotConfigPath() string {
+	if d := os.Getenv("COPILOT_HOME"); d != "" {
+		return filepath.Join(d, "mcp-config.json")
+	}
+	return home(".copilot", "mcp-config.json")
+}
+
+// vscodeVersion is the major and minor version of the VS Code that reads this machine's files,
+// 0 when unknown; tests replace it
+var vscodeVersion = func() (major, minor int) {
+	newest := func(version string) {
+		var ma, mi int
+		if n, _ := fmt.Sscanf(version, "%d.%d", &ma, &mi); n == 2 && (ma > major || ma == major && mi > minor) {
+			major, minor = ma, mi
+		}
+	}
+	// under WSL, code is the Windows launcher: it starts Windows processes and the WSL extension's script
+	if !inWSL() {
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		// outside a VS Code terminal, a remote machine's code exits 0 with a message instead of a version
+		out, _ := exec.CommandContext(ctx, "code", "--version").Output()
+		if newest(string(out)); major > 0 {
+			return
+		}
+	}
+	// the servers VS Code installed here: all there is under WSL and on a machine it only connects to
+	for _, pattern := range []string{home(".vscode-server", "bin", "*", "product.json"), home(".vscode-server", "cli", "servers", "*", "server", "product.json")} {
+		paths, _ := filepath.Glob(pattern)
+		for _, p := range paths {
+			var product struct{ Version string }
+			b, _ := os.ReadFile(p)
+			_ = json.Unmarshal(b, &product)
+			newest(product.Version)
+		}
+	}
+	return
 }
 
 // tilde shortens a path under the home directory for display
@@ -117,6 +178,11 @@ func configFile(id string) (path, key string) {
 	case "claude-desktop":
 		return desktopConfigPath(), "mcpServers"
 	case "vscode":
+		// From 1.142 VS Code reads Copilot's file by default, and by 1.146 it marks entries in its own
+		// mcp.json "Migration available"; older versions read only that mcp.json
+		if major, minor := vscodeVersion(); major > 1 || major == 1 && minor >= 142 {
+			return copilotConfigPath(), "mcpServers"
+		}
 		return vscodeConfigPath(), "servers"
 	case "codex":
 		return home(".codex", "config.toml"), "mcp_servers"

@@ -299,8 +299,9 @@ func setup(ctx context.Context, out ui, a *assistant, bin string, serverArgs []s
 
 func configureFile(out ui, a *assistant, entry serverEntry) {
 	path, key := configFile(a.id)
+	plain := entry
 	if a.id == "vscode" {
-		entry.Type = "stdio"
+		entry = vscodeEntry(entry, key)
 	}
 	var backup string
 	var err error
@@ -325,6 +326,18 @@ func configureFile(out ui, a *assistant, entry serverEntry) {
 		}
 	}
 	if a.id == "vscode" {
+		if old := vscodeConfigPath(); old != path && hasServer(old, "servers") {
+			// VS Code keeps using an earlier entry and disables the one in Copilot's file, so both must
+			// start the same leap; its Migrate also refuses entries that differ
+			_, _ = upsertJSON(old, "servers", vscodeEntry(plain, "servers"))
+			out.detail("An earlier entry is still in %s. VS Code marks it 'Migration available': choose Migrate there, which only removes it.", tilde(old))
+		}
+		if inWSL() {
+			out.detail("%s", wslVSCodeNote)
+		}
+		if key == "mcpServers" {
+			out.detail("VS Code asks once whether to trust the tensorleap server: choose Trust.")
+		}
 		out.detail("Copilot Business/Enterprise: an organization admin must allow 'MCP servers in Copilot'.")
 		out.detail("%s", copilotModelNote)
 	}
@@ -332,6 +345,25 @@ func configureFile(out ui, a *assistant, entry serverEntry) {
 
 // copilotModelNote: Copilot's default (auto) model can be too weak for writing an integration and its report
 const copilotModelNote = "Choose Claude Sonnet or a more capable model in Copilot's model picker. Smaller models often can't finish a Tensorleap integration."
+
+// vscodeEntry adds what VS Code's files require: both name the transport, Copilot's also lists the tools
+func vscodeEntry(entry serverEntry, key string) serverEntry {
+	entry.Type = "stdio"
+	if key == "mcpServers" {
+		entry.Tools = []string{"*"}
+	}
+	return entry
+}
+
+// hasServer reports whether a JSON config has <key>.tensorleap
+func hasServer(path, key string) bool {
+	var doc, servers map[string]json.RawMessage
+	b, _ := os.ReadFile(path)
+	return json.Unmarshal(b, &doc) == nil && json.Unmarshal(doc[key], &servers) == nil && servers["tensorleap"] != nil
+}
+
+// wslVSCodeNote: a VS Code window opened on the Windows side never loads what leap writes inside WSL
+const wslVSCodeNote = "WSL: only a VS Code window connected to WSL reads this file (open your folder with 'code .' from WSL); it starts leap inside WSL."
 
 func installSkills(out ui, a *assistant) {
 	if a.skillsTool == "" {
@@ -528,6 +560,7 @@ type serverEntry struct {
 	Type    string   `json:"type,omitempty"`
 	Command string   `json:"command"`
 	Args    []string `json:"args"`
+	Tools   []string `json:"tools,omitempty"`
 }
 
 // printConfig is --print: the configuration to add by hand, changing nothing
@@ -553,11 +586,14 @@ func printConfig(w io.Writer, client, bin string, args []string) {
 		p("%s", strings.TrimSpace(codexRules))
 	default:
 		if client == "vscode" {
-			entry.Type = "stdio"
+			entry = vscodeEntry(entry, key)
 		}
 		p("%s: add to %s:\n", findAssistant(client).title, tilde(path))
 		p("%s", mustJSON(map[string]any{key: map[string]any{"tensorleap": entry}}))
 		if client == "vscode" {
+			if inWSL() {
+				p("\n%s", wslVSCodeNote)
+			}
 			p("\nCopilot Business/Enterprise: the 'MCP servers in Copilot' policy is off by default; an organization admin must enable it.")
 			p("%s", copilotModelNote)
 		}
