@@ -28,7 +28,7 @@ var assistants = []assistant{
 		detect: func() bool { return onPath("claude") }},
 	{id: "cursor", title: "Cursor", restart: "Restart Cursor (or run Developer: Reload Window)", skillsTool: "cursor", skillsDir: "~/.cursor/skills",
 		detect: func() bool { return onPath("cursor") || exists(home(".cursor")) }},
-	{id: "vscode", title: "VS Code (GitHub Copilot)", restart: "Reload VS Code (Developer: Reload Window)", skillsTool: "copilot", skillsDir: "~/.copilot/skills",
+	{id: "vscode", title: "VS Code (GitHub Copilot)", restart: "Quit VS Code completely and reopen it (Reload Window is not enough)", skillsTool: "copilot", skillsDir: "~/.copilot/skills",
 		detect: func() bool { return onPath("code") || exists(filepath.Dir(vscodeConfigPath())) }},
 	{id: "codex", title: "OpenAI Codex", restart: "Restart Codex", skillsTool: "codex", skillsDir: "~/.agents/skills",
 		detect: func() bool { return onPath("codex") || exists(home(".codex")) }},
@@ -95,7 +95,25 @@ func vscodeConfigPath() string {
 	case "darwin":
 		return home("Library", "Application Support", "Code", "User", "mcp.json")
 	}
+	if inWSL() {
+		// VS Code runs on Windows and never reads ~/.config/Code inside WSL; a window connected to WSL
+		// reads its server's user file there, and starts leap inside WSL
+		return home(".vscode-server", "data", "User", "mcp.json")
+	}
 	return home(".config", "Code", "User", "mcp.json")
+}
+
+// inWSL reports a Linux that runs under Windows (WSL 1 or 2)
+func inWSL() bool {
+	if runtime.GOOS != "linux" {
+		return false
+	}
+	if os.Getenv("WSL_DISTRO_NAME") != "" {
+		return true
+	}
+	// sudo and ssh sessions drop the variable; the WSL kernel still names Microsoft in its release
+	b, _ := os.ReadFile("/proc/sys/kernel/osrelease")
+	return bytes.Contains(bytes.ToLower(b), []byte("microsoft"))
 }
 
 // tilde shortens a path under the home directory for display

@@ -325,6 +325,9 @@ func configureFile(out ui, a *assistant, entry serverEntry) {
 		}
 	}
 	if a.id == "vscode" {
+		if inWSL() {
+			out.detail("%s", wslVSCodeNote)
+		}
 		out.detail("Copilot Business/Enterprise: an organization admin must allow 'MCP servers in Copilot'.")
 		out.detail("%s", copilotModelNote)
 	}
@@ -332,6 +335,9 @@ func configureFile(out ui, a *assistant, entry serverEntry) {
 
 // copilotModelNote: Copilot's default (auto) model can be too weak for writing an integration and its report
 const copilotModelNote = "Choose Claude Sonnet or a more capable model in Copilot's model picker. Smaller models often can't finish a Tensorleap integration."
+
+// wslVSCodeNote: a VS Code window opened on the Windows side never loads what leap writes inside WSL
+const wslVSCodeNote = "WSL: only a VS Code window connected to WSL reads this file (open your folder with 'code .' from WSL); it starts leap inside WSL."
 
 func installSkills(out ui, a *assistant) {
 	if a.skillsTool == "" {
@@ -558,6 +564,9 @@ func printConfig(w io.Writer, client, bin string, args []string) {
 		p("%s: add to %s:\n", findAssistant(client).title, tilde(path))
 		p("%s", mustJSON(map[string]any{key: map[string]any{"tensorleap": entry}}))
 		if client == "vscode" {
+			if inWSL() {
+				p("\n%s", wslVSCodeNote)
+			}
 			p("\nCopilot Business/Enterprise: the 'MCP servers in Copilot' policy is off by default; an organization admin must enable it.")
 			p("%s", copilotModelNote)
 		}
