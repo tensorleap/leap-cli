@@ -13,9 +13,10 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/config"
 )
 
-// no test in this package sends a real Mixpanel event
+// no test in this package sends a real Mixpanel event or runs this machine's VS Code
 func TestMain(m *testing.M) {
 	sendEvent = func(analytics.EventType, map[string]interface{}) {}
+	vscodeVersion = func() (int, int) { return 0, 0 }
 	os.Exit(m.Run())
 }
 
