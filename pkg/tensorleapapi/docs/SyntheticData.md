@@ -24,6 +24,7 @@ Name | Type | Description | Notes
 **CanContinue** | **bool** | Server-derived: an auto job in FAILED | STOPPED | TERMINATED with no synthetic job active on its version. Same rule the continue endpoint enforces. | 
 **ContinuedFromJobId** | Pointer to **string** | Set on jobs created via continueAutoSyntheticData — the immediate predecessor. | [optional] 
 **RunProcess** | Pointer to [**RunProcess**](RunProcess.md) |  | [optional] 
+**Description** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -493,6 +494,31 @@ SetRunProcess sets RunProcess field to given value.
 `func (o *SyntheticData) HasRunProcess() bool`
 
 HasRunProcess returns a boolean if a field has been set.
+
+### GetDescription
+
+`func (o *SyntheticData) GetDescription() string`
+
+GetDescription returns the Description field if non-nil, zero value otherwise.
+
+### GetDescriptionOk
+
+`func (o *SyntheticData) GetDescriptionOk() (*string, bool)`
+
+GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDescription
+
+`func (o *SyntheticData) SetDescription(v string)`
+
+SetDescription sets Description field to given value.
+
+### HasDescription
+
+`func (o *SyntheticData) HasDescription() bool`
+
+HasDescription returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

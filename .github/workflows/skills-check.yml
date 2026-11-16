@@ -1,0 +1,49 @@
+name: Skills check
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  skills:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: ./go.mod
+
+      - name: Fetch the skills (the linked skills PR, or main)
+        env:
+          BODY: ${{ github.event.pull_request.body }}
+        run: |
+          pr=$(printf '%s\n' "$BODY" | tr -d '\r' | grep -Eio '^Skills: *https://github\.com/tensorleap/skills/pull/[0-9]+' | head -1 | grep -Eo '[0-9]+$' || true)
+          git clone -q --depth 1 https://github.com/tensorleap/skills.git "$RUNNER_TEMP/skills"
+          if [ -n "$pr" ]; then
+            git -C "$RUNNER_TEMP/skills" fetch -q --depth 1 origin "pull/$pr/head"
+            git -C "$RUNNER_TEMP/skills" checkout -q FETCH_HEAD
+            echo "Checking against tensorleap/skills#$pr"
+          else
+            echo "Checking against tensorleap/skills main. A change that needs the skills updated: link the skills PR with 'Skills: <link>'."
+          fi
+
+      - name: JSON output fields on the base branch
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/base"
+          git archive "$BASE" | tar -x -C "$RUNNER_TEMP/base"
+          if [ -d "$RUNNER_TEMP/base/scripts/skillscheck" ]; then
+            (cd "$RUNNER_TEMP/base" && go run ./scripts/skillscheck fields) > "$RUNNER_TEMP/base-fields.json"
+          else
+            : > "$RUNNER_TEMP/base-fields.json"   # the base predates this check
+          fi
+
+      - name: The skills use only commands, flags and output fields this CLI has
+        run: go run ./scripts/skillscheck check "$RUNNER_TEMP/skills/skills" "$RUNNER_TEMP/base-fields.json"

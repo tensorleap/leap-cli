@@ -10,11 +10,38 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0   # the previous release tag, for the output-field comparison below
+
+      # leap mcp config installs this tag and the skills update to it; a missing tag leaves new setups without skills.
+      - name: The skills tag this CLI ships with exists
+        run: |
+          ref=$(tr -d '[:space:]' < pkg/version/skills-ref)
+          if ! git ls-remote --exit-code --tags https://github.com/tensorleap/skills.git "refs/tags/$ref" >/dev/null; then
+            echo "::error::pkg/version/skills-ref names '$ref', but tensorleap/skills has no such tag."
+            echo "Tag skills main first: git tag $ref && git push origin $ref"
+            exit 1
+          fi
 
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
           go-version-file: ./go.mod
+
+      # The skills ship pinned to this release, so they must work with it: no leap command or flag they
+      # call may be missing, and no JSON output field they read may have gone since the previous release.
+      - name: The skills this CLI ships with only use what it has
+        run: |
+          ref=$(tr -d '[:space:]' < pkg/version/skills-ref)
+          git clone -q --depth 1 --branch "$ref" https://github.com/tensorleap/skills.git "$RUNNER_TEMP/skills"
+          : > "$RUNNER_TEMP/prev-fields.json"
+          prev=$(git describe --tags --abbrev=0 --match 'v*' HEAD^ 2>/dev/null || true)
+          if [ -n "$prev" ] && git cat-file -e "$prev:scripts/skillscheck/main.go" 2>/dev/null; then
+            mkdir -p "$RUNNER_TEMP/prev"
+            git archive "$prev" | tar -x -C "$RUNNER_TEMP/prev"
+            (cd "$RUNNER_TEMP/prev" && go run ./scripts/skillscheck fields) > "$RUNNER_TEMP/prev-fields.json"
+          fi
+          go run ./scripts/skillscheck check "$RUNNER_TEMP/skills/skills" "$RUNNER_TEMP/prev-fields.json"
 
       - name: Install gox
         run: go install github.com/mitchellh/gox@latest

@@ -57,6 +57,7 @@ func init() {
 	RootCommand.AddCommand(root_cmd.NewPushCmd())
 	RootCommand.AddCommand(root_cmd.NewInitCmd())
 	RootCommand.AddCommand(root_cmd.NewPullCmd())
+	RootCommand.AddCommand(newVersionCmd())
 	RootCommand.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/tensorleap/config.yaml)")
 	RootCommand.PersistentFlags().StringVar(&apiKey, "apiKey", "", "Tensorleap Api key")
 	RootCommand.PersistentFlags().StringVar(&apiUrl, "apiUrl", "", "Tensorleap api url")

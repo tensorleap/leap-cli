@@ -2303,6 +2303,17 @@ func Test_tensorleapapi_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService UpdateCurationRunDescription", func(t *testing.T) {
+
+		t.Skip("skip test") // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.UpdateCurationRunDescription(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService UpdateDashboard", func(t *testing.T) {
 
 		t.Skip("skip test") // remove to run test

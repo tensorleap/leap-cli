@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**IdsOnly** | Pointer to **bool** |  | [optional] 
 **PageSize** | Pointer to **float64** |  | [optional] 
 **Cursor** | Pointer to **string** | Opaque pagination token; here it&#39;s a stringified &#x60;from&#x60; offset. | [optional] 
 **Filters** | Pointer to [**[]CollectionFilterSpec**](CollectionFilterSpec.md) |  | [optional] 
@@ -30,6 +31,31 @@ will change when the set of required properties is changed
 NewGetCollectionSampleOrderParamsWithDefaults instantiates a new GetCollectionSampleOrderParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetIdsOnly
+
+`func (o *GetCollectionSampleOrderParams) GetIdsOnly() bool`
+
+GetIdsOnly returns the IdsOnly field if non-nil, zero value otherwise.
+
+### GetIdsOnlyOk
+
+`func (o *GetCollectionSampleOrderParams) GetIdsOnlyOk() (*bool, bool)`
+
+GetIdsOnlyOk returns a tuple with the IdsOnly field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIdsOnly
+
+`func (o *GetCollectionSampleOrderParams) SetIdsOnly(v bool)`
+
+SetIdsOnly sets IdsOnly field to given value.
+
+### HasIdsOnly
+
+`func (o *GetCollectionSampleOrderParams) HasIdsOnly() bool`
+
+HasIdsOnly returns a boolean if a field has been set.
 
 ### GetPageSize
 

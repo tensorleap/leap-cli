@@ -4,7 +4,7 @@ info:
   license:
     name: SEE LICENSE IN LICENSE.md
   title: node-server
-  version: 11.0.195
+  version: 11.0.196
 servers:
 - url: /api/v2
 paths:
@@ -851,6 +851,21 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/DeleteManualInsightParams"
+        required: true
+      responses:
+        "204":
+          description: No content
+      security:
+      - jwt: []
+  /datasetcuration/updateCurationRunDescription:
+    post:
+      operationId: UpdateCurationRunDescription
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCurationRunDescriptionParams"
         required: true
       responses:
         "204":
@@ -14147,6 +14162,7 @@ components:
                 id: id
         latentSpaceType: latentSpaceType
         elementInstance: true
+        description: description
       properties:
         projectId:
           type: string
@@ -14165,6 +14181,8 @@ components:
           type: string
         elementInstance:
           type: boolean
+        description:
+          type: string
       required:
       - projectId
       - versionId
@@ -16202,6 +16220,7 @@ components:
             jobId: jobId
             error: error
         latentSpaceType: latentSpaceType
+        description: description
       properties:
         id:
           type: string
@@ -16240,6 +16259,8 @@ components:
         runProcess:
           $ref: "#/components/schemas/RunProcess"
         latentSpaceType:
+          type: string
+        description:
           type: string
       required:
       - createdAt
@@ -16799,6 +16820,7 @@ components:
               jobId: jobId
               error: error
           latentSpaceType: latentSpaceType
+          description: description
         - id: id
           jobId: jobId
           versionId: versionId
@@ -17342,6 +17364,7 @@ components:
               jobId: jobId
               error: error
           latentSpaceType: latentSpaceType
+          description: description
       properties:
         labels:
           items:
@@ -18733,6 +18756,7 @@ components:
               version:
                 name: name
                 id: id
+        description: description
       properties:
         projectId:
           type: string
@@ -18746,6 +18770,8 @@ components:
           items:
             $ref: "#/components/schemas/ESFilter"
           type: array
+        description:
+          type: string
       required:
       - projectId
       - sources
@@ -19658,6 +19684,7 @@ components:
               version:
                 name: name
                 id: id
+        description: description
       properties:
         projectId:
           type: string
@@ -19675,6 +19702,8 @@ components:
           items:
             $ref: "#/components/schemas/ESFilter"
           type: array
+        description:
+          type: string
       required:
       - projectId
       - simulationNames
@@ -21719,6 +21748,7 @@ components:
             status: pending
             jobId: jobId
             error: error
+        description: description
       properties:
         id:
           type: string
@@ -21774,6 +21804,8 @@ components:
           type: string
         runProcess:
           $ref: "#/components/schemas/RunProcess"
+        description:
+          type: string
       required:
       - canContinue
       - createdAt
@@ -23690,6 +23722,7 @@ components:
               status: pending
               jobId: jobId
               error: error
+          description: description
         - id: id
           jobId: jobId
           versionId: versionId
@@ -25590,6 +25623,7 @@ components:
               status: pending
               jobId: jobId
               error: error
+          description: description
       properties:
         syntheticData:
           items:
@@ -26083,6 +26117,7 @@ components:
         - prioritizedMetadataTags
         - prioritizedMetadataTags
         percentageOfSamplesToPrune: 0.8008281904610115
+        description: description
       properties:
         projectId:
           type: string
@@ -26103,6 +26138,8 @@ components:
         percentageOfSamplesToPrune:
           format: double
           type: number
+        description:
+          type: string
       required:
       - metadataTags
       - projectId
@@ -26657,6 +26694,7 @@ components:
             status: pending
             jobId: jobId
             error: error
+        description: description
       properties:
         id:
           type: string
@@ -26698,6 +26736,8 @@ components:
           type: number
         runProcess:
           $ref: "#/components/schemas/RunProcess"
+        description:
+          type: string
       required:
       - createdAt
       - createdBy
@@ -27259,6 +27299,7 @@ components:
               status: pending
               jobId: jobId
               error: error
+          description: description
         - id: id
           jobId: jobId
           versionId: versionId
@@ -27805,6 +27846,7 @@ components:
               status: pending
               jobId: jobId
               error: error
+          description: description
       properties:
         datasetBalancingList:
           items:
@@ -27851,6 +27893,7 @@ components:
         splitAcrossMetadata:
         - splitAcrossMetadata
         - splitAcrossMetadata
+        description: description
       properties:
         projectId:
           type: string
@@ -27868,6 +27911,8 @@ components:
           items:
             type: string
           type: array
+        description:
+          type: string
       required:
       - keepTogetherMetadata
       - projectId
@@ -27977,6 +28022,7 @@ components:
             status: pending
             jobId: jobId
             error: error
+        description: description
       properties:
         id:
           type: string
@@ -28015,6 +28061,8 @@ components:
           type: array
         runProcess:
           $ref: "#/components/schemas/RunProcess"
+        description:
+          type: string
       required:
       - createdAt
       - createdBy
@@ -28131,6 +28179,7 @@ components:
               status: pending
               jobId: jobId
               error: error
+          description: description
         - id: id
           jobId: jobId
           versionId: versionId
@@ -28230,6 +28279,7 @@ components:
               status: pending
               jobId: jobId
               error: error
+          description: description
       properties:
         datasetSplittingList:
           items:
@@ -29166,6 +29216,7 @@ components:
                 name: name
                 id: id
         elementInstance: true
+        description: description
       properties:
         projectId:
           type: string
@@ -29181,6 +29232,8 @@ components:
           type: array
         elementInstance:
           type: boolean
+        description:
+          type: string
       required:
       - groupAFilters
       - groupBFilters
@@ -30178,6 +30231,7 @@ components:
             status: pending
             jobId: jobId
             error: error
+        description: description
       properties:
         id:
           type: string
@@ -30212,6 +30266,8 @@ components:
           type: array
         runProcess:
           $ref: "#/components/schemas/RunProcess"
+        description:
+          type: string
       required:
       - createdAt
       - createdBy
@@ -31217,6 +31273,7 @@ components:
               status: pending
               jobId: jobId
               error: error
+          description: description
         - id: id
           jobId: jobId
           digest: digest
@@ -32205,6 +32262,7 @@ components:
               status: pending
               jobId: jobId
               error: error
+          description: description
       properties:
         domainGapList:
           items:
@@ -32693,6 +32751,7 @@ components:
                 id: id
         latentSpaceType: latentSpaceType
         elementInstance: true
+        description: description
       properties:
         projectId:
           type: string
@@ -32708,6 +32767,8 @@ components:
           type: string
         elementInstance:
           type: boolean
+        description:
+          type: string
       required:
       - projectId
       - versionId
@@ -33253,6 +33314,7 @@ components:
             status: pending
             jobId: jobId
             error: error
+        description: description
       properties:
         id:
           type: string
@@ -33281,6 +33343,8 @@ components:
           type: string
         runProcess:
           $ref: "#/components/schemas/RunProcess"
+        description:
+          type: string
       required:
       - createdAt
       - createdBy
@@ -33833,6 +33897,7 @@ components:
               status: pending
               jobId: jobId
               error: error
+          description: description
         - id: id
           jobId: jobId
           versionId: versionId
@@ -34371,6 +34436,7 @@ components:
               status: pending
               jobId: jobId
               error: error
+          description: description
       properties:
         unlabeledAnalysisList:
           items:
@@ -34858,6 +34924,7 @@ components:
                 name: name
                 id: id
         elementInstance: true
+        description: description
       properties:
         projectId:
           type: string
@@ -34869,6 +34936,8 @@ components:
           type: array
         elementInstance:
           type: boolean
+        description:
+          type: string
       required:
       - filters
       - projectId
@@ -35414,6 +35483,7 @@ components:
             jobId: jobId
             error: error
         insightFileUrl: insightFileUrl
+        description: description
       properties:
         id:
           type: string
@@ -35439,6 +35509,8 @@ components:
         runProcess:
           $ref: "#/components/schemas/RunProcess"
         insightFileUrl:
+          type: string
+        description:
           type: string
       required:
       - createdAt
@@ -35991,6 +36063,7 @@ components:
               jobId: jobId
               error: error
           insightFileUrl: insightFileUrl
+          description: description
         - id: id
           jobId: jobId
           versionId: versionId
@@ -36528,6 +36601,7 @@ components:
               jobId: jobId
               error: error
           insightFileUrl: insightFileUrl
+          description: description
       properties:
         manualInsightList:
           items:
@@ -36559,6 +36633,37 @@ components:
       required:
       - manualInsightId
       - projectId
+      type: object
+    CurationRunType:
+      enum:
+      - generatedLabel
+      - syntheticData
+      - datasetBalancing
+      - datasetSplitting
+      - domainGap
+      - unlabeledAnalysis
+      - manualInsight
+      type: string
+    UpdateCurationRunDescriptionParams:
+      additionalProperties: true
+      example:
+        projectId: projectId
+        runType: generatedLabel
+        runId: runId
+        description: description
+      properties:
+        projectId:
+          type: string
+        runType:
+          $ref: "#/components/schemas/CurationRunType"
+        runId:
+          type: string
+        description:
+          type: string
+      required:
+      - projectId
+      - runId
+      - runType
       type: object
     ContinueEvaluateParams:
       additionalProperties: true
@@ -39116,6 +39221,7 @@ components:
           rid: rid
         localBucketPath: localBucketPath
         installedServerVersion: installedServerVersion
+        skillsLevel: 5.637376656633329
       properties:
         clientStoragePrefixUrl:
           type: string
@@ -39136,6 +39242,9 @@ components:
           type: string
         installedServerVersion:
           type: string
+        skillsLevel:
+          format: double
+          type: number
       required:
       - clientStoragePrefixUrl
       - disableDatadogMetrics
@@ -45866,6 +45975,7 @@ components:
       type: object
     GetCollectionSampleOrderParams:
       example:
+        idsOnly: true
         pageSize: 0.8008281904610115
         cursor: cursor
         filters:
@@ -45896,6 +46006,8 @@ components:
         collectionId: collectionId
         projectId: projectId
       properties:
+        idsOnly:
+          type: boolean
         pageSize:
           format: double
           type: number
@@ -45957,6 +46069,7 @@ components:
       type: object
     GetVersionSampleOrderParams:
       example:
+        idsOnly: true
         pageSize: 0.8008281904610115
         cursor: cursor
         filters:
@@ -45986,6 +46099,8 @@ components:
         versionId: versionId
         projectId: projectId
       properties:
+        idsOnly:
+          type: boolean
         pageSize:
           format: double
           type: number
@@ -52163,6 +52278,45 @@ components:
       - training_length
       - validation_length
       type: object
+    FoundationInputInstance:
+      additionalProperties: true
+      example:
+        rgb_range:
+        - - 3.616076749251911
+          - 3.616076749251911
+        - - 3.616076749251911
+          - 3.616076749251911
+        rgb_channels:
+        - 2.027123023002322
+        - 2.027123023002322
+        dtype: dtype
+        wired_to_model: true
+        masks_encoder: masks_encoder
+      properties:
+        rgb_range:
+          items:
+            items:
+              format: double
+              type: number
+            type: array
+          type: array
+        rgb_channels:
+          items:
+            format: double
+            type: number
+          type: array
+        dtype:
+          type: string
+        wired_to_model:
+          type: boolean
+        masks_encoder:
+          type: string
+      required:
+      - dtype
+      - rgb_channels
+      - rgb_range
+      - wired_to_model
+      type: object
     CodeInputInstance:
       additionalProperties: true
       example:
@@ -52171,6 +52325,19 @@ components:
         - 7.061401241503109
         - 7.061401241503109
         channel_dim: 9.301444243932576
+        foundation:
+          rgb_range:
+          - - 3.616076749251911
+            - 3.616076749251911
+          - - 3.616076749251911
+            - 3.616076749251911
+          rgb_channels:
+          - 2.027123023002322
+          - 2.027123023002322
+          dtype: dtype
+          wired_to_model: true
+          masks_encoder: masks_encoder
+        frame_dim: 4.145608029883936
       properties:
         name:
           type: string
@@ -52180,6 +52347,11 @@ components:
             type: number
           type: array
         channel_dim:
+          format: double
+          type: number
+        foundation:
+          $ref: "#/components/schemas/FoundationInputInstance"
+        frame_dim:
           format: double
           type: number
       required:
@@ -52215,8 +52387,8 @@ components:
       example:
         name: name
         shape:
-        - 3.616076749251911
-        - 3.616076749251911
+        - 7.386281948385884
+        - 7.386281948385884
       properties:
         name:
           type: string
@@ -52272,7 +52444,7 @@ components:
         labels:
         - labels
         - labels
-        channel_dim: 2.027123023002322
+        channel_dim: 1.2315135367772556
       properties:
         name:
           type: string
@@ -52362,11 +52534,37 @@ components:
           - 7.061401241503109
           - 7.061401241503109
           channel_dim: 9.301444243932576
+          foundation:
+            rgb_range:
+            - - 3.616076749251911
+              - 3.616076749251911
+            - - 3.616076749251911
+              - 3.616076749251911
+            rgb_channels:
+            - 2.027123023002322
+            - 2.027123023002322
+            dtype: dtype
+            wired_to_model: true
+            masks_encoder: masks_encoder
+          frame_dim: 4.145608029883936
         - name: name
           shape:
           - 7.061401241503109
           - 7.061401241503109
           channel_dim: 9.301444243932576
+          foundation:
+            rgb_range:
+            - - 3.616076749251911
+              - 3.616076749251911
+            - - 3.616076749251911
+              - 3.616076749251911
+            rgb_channels:
+            - 2.027123023002322
+            - 2.027123023002322
+            dtype: dtype
+            wired_to_model: true
+            masks_encoder: masks_encoder
+          frame_dim: 4.145608029883936
         metadata:
         - name: name
           type: float
@@ -52377,12 +52575,12 @@ components:
         outputs:
         - name: name
           shape:
-          - 3.616076749251911
-          - 3.616076749251911
+          - 7.386281948385884
+          - 7.386281948385884
         - name: name
           shape:
-          - 3.616076749251911
-          - 3.616076749251911
+          - 7.386281948385884
+          - 7.386281948385884
         visualizers:
         - name: name
           type: Image
@@ -52399,12 +52597,12 @@ components:
           labels:
           - labels
           - labels
-          channel_dim: 2.027123023002322
+          channel_dim: 1.2315135367772556
         - name: name
           labels:
           - labels
           - labels
-          channel_dim: 2.027123023002322
+          channel_dim: 1.2315135367772556
         custom_losses:
         - name: name
           arg_names:
@@ -52660,11 +52858,37 @@ components:
             - 7.061401241503109
             - 7.061401241503109
             channel_dim: 9.301444243932576
+            foundation:
+              rgb_range:
+              - - 3.616076749251911
+                - 3.616076749251911
+              - - 3.616076749251911
+                - 3.616076749251911
+              rgb_channels:
+              - 2.027123023002322
+              - 2.027123023002322
+              dtype: dtype
+              wired_to_model: true
+              masks_encoder: masks_encoder
+            frame_dim: 4.145608029883936
           - name: name
             shape:
             - 7.061401241503109
             - 7.061401241503109
             channel_dim: 9.301444243932576
+            foundation:
+              rgb_range:
+              - - 3.616076749251911
+                - 3.616076749251911
+              - - 3.616076749251911
+                - 3.616076749251911
+              rgb_channels:
+              - 2.027123023002322
+              - 2.027123023002322
+              dtype: dtype
+              wired_to_model: true
+              masks_encoder: masks_encoder
+            frame_dim: 4.145608029883936
           metadata:
           - name: name
             type: float
@@ -52675,12 +52899,12 @@ components:
           outputs:
           - name: name
             shape:
-            - 3.616076749251911
-            - 3.616076749251911
+            - 7.386281948385884
+            - 7.386281948385884
           - name: name
             shape:
-            - 3.616076749251911
-            - 3.616076749251911
+            - 7.386281948385884
+            - 7.386281948385884
           visualizers:
           - name: name
             type: Image
@@ -52697,12 +52921,12 @@ components:
             labels:
             - labels
             - labels
-            channel_dim: 2.027123023002322
+            channel_dim: 1.2315135367772556
           - name: name
             labels:
             - labels
             - labels
-            channel_dim: 2.027123023002322
+            channel_dim: 1.2315135367772556
           custom_losses:
           - name: name
             arg_names:
@@ -52810,11 +53034,37 @@ components:
               - 7.061401241503109
               - 7.061401241503109
               channel_dim: 9.301444243932576
+              foundation:
+                rgb_range:
+                - - 3.616076749251911
+                  - 3.616076749251911
+                - - 3.616076749251911
+                  - 3.616076749251911
+                rgb_channels:
+                - 2.027123023002322
+                - 2.027123023002322
+                dtype: dtype
+                wired_to_model: true
+                masks_encoder: masks_encoder
+              frame_dim: 4.145608029883936
             - name: name
               shape:
               - 7.061401241503109
               - 7.061401241503109
               channel_dim: 9.301444243932576
+              foundation:
+                rgb_range:
+                - - 3.616076749251911
+                  - 3.616076749251911
+                - - 3.616076749251911
+                  - 3.616076749251911
+                rgb_channels:
+                - 2.027123023002322
+                - 2.027123023002322
+                dtype: dtype
+                wired_to_model: true
+                masks_encoder: masks_encoder
+              frame_dim: 4.145608029883936
             metadata:
             - name: name
               type: float
@@ -52825,12 +53075,12 @@ components:
             outputs:
             - name: name
               shape:
-              - 3.616076749251911
-              - 3.616076749251911
+              - 7.386281948385884
+              - 7.386281948385884
             - name: name
               shape:
-              - 3.616076749251911
-              - 3.616076749251911
+              - 7.386281948385884
+              - 7.386281948385884
             visualizers:
             - name: name
               type: Image
@@ -52847,12 +53097,12 @@ components:
               labels:
               - labels
               - labels
-              channel_dim: 2.027123023002322
+              channel_dim: 1.2315135367772556
             - name: name
               labels:
               - labels
               - labels
-              channel_dim: 2.027123023002322
+              channel_dim: 1.2315135367772556
             custom_losses:
             - name: name
               arg_names:
@@ -52982,11 +53232,37 @@ components:
                 - 7.061401241503109
                 - 7.061401241503109
                 channel_dim: 9.301444243932576
+                foundation:
+                  rgb_range:
+                  - - 3.616076749251911
+                    - 3.616076749251911
+                  - - 3.616076749251911
+                    - 3.616076749251911
+                  rgb_channels:
+                  - 2.027123023002322
+                  - 2.027123023002322
+                  dtype: dtype
+                  wired_to_model: true
+                  masks_encoder: masks_encoder
+                frame_dim: 4.145608029883936
               - name: name
                 shape:
                 - 7.061401241503109
                 - 7.061401241503109
                 channel_dim: 9.301444243932576
+                foundation:
+                  rgb_range:
+                  - - 3.616076749251911
+                    - 3.616076749251911
+                  - - 3.616076749251911
+                    - 3.616076749251911
+                  rgb_channels:
+                  - 2.027123023002322
+                  - 2.027123023002322
+                  dtype: dtype
+                  wired_to_model: true
+                  masks_encoder: masks_encoder
+                frame_dim: 4.145608029883936
               metadata:
               - name: name
                 type: float
@@ -52997,12 +53273,12 @@ components:
               outputs:
               - name: name
                 shape:
-                - 3.616076749251911
-                - 3.616076749251911
+                - 7.386281948385884
+                - 7.386281948385884
               - name: name
                 shape:
-                - 3.616076749251911
-                - 3.616076749251911
+                - 7.386281948385884
+                - 7.386281948385884
               visualizers:
               - name: name
                 type: Image
@@ -53019,12 +53295,12 @@ components:
                 labels:
                 - labels
                 - labels
-                channel_dim: 2.027123023002322
+                channel_dim: 1.2315135367772556
               - name: name
                 labels:
                 - labels
                 - labels
-                channel_dim: 2.027123023002322
+                channel_dim: 1.2315135367772556
               custom_losses:
               - name: name
                 arg_names:
@@ -53246,11 +53522,37 @@ components:
                 - 7.061401241503109
                 - 7.061401241503109
                 channel_dim: 9.301444243932576
+                foundation:
+                  rgb_range:
+                  - - 3.616076749251911
+                    - 3.616076749251911
+                  - - 3.616076749251911
+                    - 3.616076749251911
+                  rgb_channels:
+                  - 2.027123023002322
+                  - 2.027123023002322
+                  dtype: dtype
+                  wired_to_model: true
+                  masks_encoder: masks_encoder
+                frame_dim: 4.145608029883936
               - name: name
                 shape:
                 - 7.061401241503109
                 - 7.061401241503109
                 channel_dim: 9.301444243932576
+                foundation:
+                  rgb_range:
+                  - - 3.616076749251911
+                    - 3.616076749251911
+                  - - 3.616076749251911
+                    - 3.616076749251911
+                  rgb_channels:
+                  - 2.027123023002322
+                  - 2.027123023002322
+                  dtype: dtype
+                  wired_to_model: true
+                  masks_encoder: masks_encoder
+                frame_dim: 4.145608029883936
               metadata:
               - name: name
                 type: float
@@ -53261,12 +53563,12 @@ components:
               outputs:
               - name: name
                 shape:
-                - 3.616076749251911
-                - 3.616076749251911
+                - 7.386281948385884
+                - 7.386281948385884
               - name: name
                 shape:
-                - 3.616076749251911
-                - 3.616076749251911
+                - 7.386281948385884
+                - 7.386281948385884
               visualizers:
               - name: name
                 type: Image
@@ -53283,12 +53585,12 @@ components:
                 labels:
                 - labels
                 - labels
-                channel_dim: 2.027123023002322
+                channel_dim: 1.2315135367772556
               - name: name
                 labels:
                 - labels
                 - labels
-                channel_dim: 2.027123023002322
+                channel_dim: 1.2315135367772556
               custom_losses:
               - name: name
                 arg_names:

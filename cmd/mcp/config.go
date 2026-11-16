@@ -18,13 +18,13 @@ import (
 	"github.com/tensorleap/leap-cli/pkg/auth"
 	"github.com/tensorleap/leap-cli/pkg/hint"
 	mcpPkg "github.com/tensorleap/leap-cli/pkg/mcp"
+	"github.com/tensorleap/leap-cli/pkg/version"
 )
 
 const (
-	skillsInstaller   = "https://raw.githubusercontent.com/tensorleap/skills/main/install.sh"
-	skillsMarketplace = "tensorleap/skills"
-	marketplaceName   = "tensorleap"
-	analysisPlugin    = "analysis@tensorleap"
+	skillsRepo      = "tensorleap/skills"
+	marketplaceName = "tensorleap"
+	analysisPlugin  = "analysis@tensorleap"
 )
 
 // ponytail: the skills leap knows by name. A skill added later reaches skill folders with the next
@@ -374,7 +374,8 @@ func installSkills(out ui, a *assistant) {
 		out.ok("%s already has the Tensorleap skills (%s); they keep themselves up to date", a.title, a.skillsDir)
 		return
 	}
-	cmdline := fmt.Sprintf("curl -fsSL %s | sh -s -- --tool %s --global", skillsInstaller, a.skillsTool)
+	cmdline := fmt.Sprintf("curl -fsSL https://raw.githubusercontent.com/%s/%s/install.sh | sh -s -- --tool %s --global --ref %s",
+		skillsRepo, version.SkillsRef, a.skillsTool, version.SkillsRef)
 	if !onPath("curl") || !onPath("sh") {
 		out.warn("Skills not installed: this needs curl and sh. Install them with:")
 		out.command(cmdline)
@@ -383,6 +384,10 @@ func installSkills(out ui, a *assistant) {
 	var res []byte
 	var err error
 	spin(out.w, "Installing the Tensorleap skills…", func() { res, err = exec.Command("sh", "-c", cmdline).CombinedOutput() })
+	// curl | sh exits 0 when curl fetched nothing (offline, or a ref with no install.sh)
+	if err == nil && !hasSkills(a) {
+		err = fmt.Errorf("nothing was installed; check the connection and that tensorleap/skills has the tag %s", version.SkillsRef)
+	}
 	if err != nil {
 		out.warn("Skills not installed: %v", err)
 		out.detail("%s", strings.TrimSpace(string(res)))
@@ -443,7 +448,7 @@ func setupClaudeCode(out ui, entry serverEntry, envName string, withSkills bool)
 			var res []byte
 			var err error
 			spin(out.w, "Installing the Tensorleap plugins in Claude Code…", func() {
-				res, err = exec.Command("claude", "plugin", "marketplace", "add", skillsMarketplace).CombinedOutput()
+				res, err = exec.Command("claude", "plugin", "marketplace", "add", skillsMarketplace()).CombinedOutput()
 				if err != nil && bytes.Contains(bytes.ToLower(res), []byte("already")) {
 					err = nil
 				}
@@ -492,8 +497,14 @@ func setupClaudeCode(out ui, entry serverEntry, envName string, withSkills bool)
 	return nil
 }
 
+// skillsMarketplace pins Claude Code's marketplace to the skills this CLI ships with; the skills' own
+// self-update moves the pin when the CLI is upgraded.
+func skillsMarketplace() string {
+	return skillsRepo + "#" + version.SkillsRef
+}
+
 func printPluginCommands(out ui, plugins []string) {
-	out.command("/plugin marketplace add " + skillsMarketplace)
+	out.command("/plugin marketplace add " + skillsMarketplace())
 	out.command("/plugin marketplace update " + marketplaceName)
 	for _, p := range plugins {
 		out.command("/plugin install " + p)

@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **LicenseMetadata** | Pointer to [**LicenseMetadata**](LicenseMetadata.md) |  | [optional] 
 **LocalBucketPath** | Pointer to **string** |  | [optional] 
 **InstalledServerVersion** | Pointer to **string** |  | [optional] 
+**SkillsLevel** | Pointer to **float64** |  | [optional] 
 
 ## Methods
 
@@ -227,6 +228,31 @@ SetInstalledServerVersion sets InstalledServerVersion field to given value.
 `func (o *GetEnvironmentInfoResponse) HasInstalledServerVersion() bool`
 
 HasInstalledServerVersion returns a boolean if a field has been set.
+
+### GetSkillsLevel
+
+`func (o *GetEnvironmentInfoResponse) GetSkillsLevel() float64`
+
+GetSkillsLevel returns the SkillsLevel field if non-nil, zero value otherwise.
+
+### GetSkillsLevelOk
+
+`func (o *GetEnvironmentInfoResponse) GetSkillsLevelOk() (*float64, bool)`
+
+GetSkillsLevelOk returns a tuple with the SkillsLevel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSkillsLevel
+
+`func (o *GetEnvironmentInfoResponse) SetSkillsLevel(v float64)`
+
+SetSkillsLevel sets SkillsLevel field to given value.
+
+### HasSkillsLevel
+
+`func (o *GetEnvironmentInfoResponse) HasSkillsLevel() bool`
+
+HasSkillsLevel returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
