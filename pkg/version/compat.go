@@ -2,11 +2,43 @@ package version
 
 import (
 	"context"
+	_ "embed"
 	"fmt"
+	"strings"
+	"time"
 
 	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/log"
 )
+
+//go:embed skills-ref
+var skillsRefFile string
+
+// SkillsRef is the tensorleap/skills git tag this CLI ships with: skills install and update to exactly
+// this ref, so a skill never runs ahead of the CLI and server it was released with.
+var SkillsRef = strings.TrimSpace(skillsRefFile)
+
+type SkillsInfo struct {
+	Cli         string `json:"cli"`
+	ServerLevel *int   `json:"serverLevel"`
+	SkillsRef   string `json:"skillsRef"`
+}
+
+// GetSkillsInfo leaves ServerLevel nil when no server answers (not signed in, unreachable),
+// so the skills skip the server check. A server that answers without skillsLevel predates
+// it and counts as level 0.
+func GetSkillsInfo(ctx context.Context) SkillsInfo {
+	info := SkillsInfo{Cli: CliVersion, SkillsRef: SkillsRef}
+	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+	envInfo, _, err := api.ApiClient.GetEnvironmentInfo(ctx).Execute()
+	if err != nil || envInfo == nil {
+		return info
+	}
+	level := int(envInfo.GetSkillsLevel())
+	info.ServerLevel = &level
+	return info
+}
 
 // MinServerSchemaVersion is the lowest server schema version this CLI build is
 // compatible with. Bump it together with any CLI change that depends on server
