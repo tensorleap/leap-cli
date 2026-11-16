@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **VersionId** | **string** |  | 
 **Filters** | [**[]ESFilter**](ESFilter.md) |  | 
 **ElementInstance** | Pointer to **bool** |  | [optional] 
+**Description** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -112,6 +113,31 @@ SetElementInstance sets ElementInstance field to given value.
 `func (o *GenerateManualInsightParams) HasElementInstance() bool`
 
 HasElementInstance returns a boolean if a field has been set.
+
+### GetDescription
+
+`func (o *GenerateManualInsightParams) GetDescription() string`
+
+GetDescription returns the Description field if non-nil, zero value otherwise.
+
+### GetDescriptionOk
+
+`func (o *GenerateManualInsightParams) GetDescriptionOk() (*string, bool)`
+
+GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDescription
+
+`func (o *GenerateManualInsightParams) SetDescription(v string)`
+
+SetDescription sets Description field to given value.
+
+### HasDescription
+
+`func (o *GenerateManualInsightParams) HasDescription() bool`
+
+HasDescription returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

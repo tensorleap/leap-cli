@@ -7,6 +7,8 @@ Name | Type | Description | Notes
 **Name** | **string** |  | 
 **Shape** | **[]float64** |  | 
 **ChannelDim** | Pointer to **float64** |  | [optional] 
+**Foundation** | Pointer to [**FoundationInputInstance**](FoundationInputInstance.md) |  | [optional] 
+**FrameDim** | Pointer to **float64** |  | [optional] 
 
 ## Methods
 
@@ -91,6 +93,56 @@ SetChannelDim sets ChannelDim field to given value.
 `func (o *CodeInputInstance) HasChannelDim() bool`
 
 HasChannelDim returns a boolean if a field has been set.
+
+### GetFoundation
+
+`func (o *CodeInputInstance) GetFoundation() FoundationInputInstance`
+
+GetFoundation returns the Foundation field if non-nil, zero value otherwise.
+
+### GetFoundationOk
+
+`func (o *CodeInputInstance) GetFoundationOk() (*FoundationInputInstance, bool)`
+
+GetFoundationOk returns a tuple with the Foundation field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFoundation
+
+`func (o *CodeInputInstance) SetFoundation(v FoundationInputInstance)`
+
+SetFoundation sets Foundation field to given value.
+
+### HasFoundation
+
+`func (o *CodeInputInstance) HasFoundation() bool`
+
+HasFoundation returns a boolean if a field has been set.
+
+### GetFrameDim
+
+`func (o *CodeInputInstance) GetFrameDim() float64`
+
+GetFrameDim returns the FrameDim field if non-nil, zero value otherwise.
+
+### GetFrameDimOk
+
+`func (o *CodeInputInstance) GetFrameDimOk() (*float64, bool)`
+
+GetFrameDimOk returns a tuple with the FrameDim field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFrameDim
+
+`func (o *CodeInputInstance) SetFrameDim(v float64)`
+
+SetFrameDim sets FrameDim field to given value.
+
+### HasFrameDim
+
+`func (o *CodeInputInstance) HasFrameDim() bool`
+
+HasFrameDim returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

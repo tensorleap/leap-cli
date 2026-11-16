@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**IdsOnly** | Pointer to **bool** |  | [optional] 
 **PageSize** | Pointer to **float64** |  | [optional] 
 **Cursor** | Pointer to **string** |  | [optional] 
 **Filters** | Pointer to [**[]CollectionFilterSpec**](CollectionFilterSpec.md) |  | [optional] 
@@ -29,6 +30,31 @@ will change when the set of required properties is changed
 NewGetVersionSampleOrderParamsWithDefaults instantiates a new GetVersionSampleOrderParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetIdsOnly
+
+`func (o *GetVersionSampleOrderParams) GetIdsOnly() bool`
+
+GetIdsOnly returns the IdsOnly field if non-nil, zero value otherwise.
+
+### GetIdsOnlyOk
+
+`func (o *GetVersionSampleOrderParams) GetIdsOnlyOk() (*bool, bool)`
+
+GetIdsOnlyOk returns a tuple with the IdsOnly field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIdsOnly
+
+`func (o *GetVersionSampleOrderParams) SetIdsOnly(v bool)`
+
+SetIdsOnly sets IdsOnly field to given value.
+
+### HasIdsOnly
+
+`func (o *GetVersionSampleOrderParams) HasIdsOnly() bool`
+
+HasIdsOnly returns a boolean if a field has been set.
 
 ### GetPageSize
 

@@ -198,6 +198,7 @@ Method | HTTP request | Description
 [**TerminateAllJobs**](DefaultAPI.md#TerminateAllJobs) | **Post** /jobs/terminateAllJobs | 
 [**TerminateJob**](DefaultAPI.md#TerminateJob) | **Post** /jobs/terminateJob | 
 [**TrashSecretManager**](DefaultAPI.md#TrashSecretManager) | **Post** /secret-manager/trashSecretManager | 
+[**UpdateCurationRunDescription**](DefaultAPI.md#UpdateCurationRunDescription) | **Post** /datasetcuration/updateCurationRunDescription | 
 [**UpdateDashboard**](DefaultAPI.md#UpdateDashboard) | **Post** /dashboards/updateDashboard | 
 [**UpdateEngineSettings**](DefaultAPI.md#UpdateEngineSettings) | **Post** /settings/updateSetting | 
 [**UpdateEvaluateArtifact**](DefaultAPI.md#UpdateEvaluateArtifact) | **Post** /evaluate/updateEvaluateArtifact | 
@@ -12424,6 +12425,68 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateCurationRunDescription
+
+> UpdateCurationRunDescription(ctx).UpdateCurationRunDescriptionParams(updateCurationRunDescriptionParams).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/tensorleap/cli-go/pkg/tensorleapapi/tensorleapapi"
+)
+
+func main() {
+	updateCurationRunDescriptionParams := *openapiclient.NewUpdateCurationRunDescriptionParams("ProjectId_example", openapiclient.CurationRunType("generatedLabel"), "RunId_example") // UpdateCurationRunDescriptionParams | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.UpdateCurationRunDescription(context.Background()).UpdateCurationRunDescriptionParams(updateCurationRunDescriptionParams).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.UpdateCurationRunDescription``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateCurationRunDescriptionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **updateCurationRunDescriptionParams** | [**UpdateCurationRunDescriptionParams**](UpdateCurationRunDescriptionParams.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[jwt](../README.md#jwt)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

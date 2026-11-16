@@ -106,6 +106,7 @@ docs/CreateStreamingSamplesVisJobParams.md
 docs/CreateStreamingSamplesVisJobResponse.md
 docs/CreateTeamRequest.md
 docs/CreateTeamResponse.md
+docs/CurationRunType.md
 docs/CustomLayerInstance.md
 docs/CustomLossInstance.md
 docs/CustomMessageData.md
@@ -183,6 +184,7 @@ docs/FetchSimilarResponseReadyArtifacts.md
 docs/FilterDisplayData.md
 docs/FilterOperatorType.md
 docs/FilterVersion.md
+docs/FoundationInputInstance.md
 docs/GeneralMessageParams.md
 docs/GenerateAutoSyntheticDataParams.md
 docs/GenerateDatasetBalancingParams.md
@@ -558,6 +560,7 @@ docs/UnlabeledAnalysis.md
 docs/UnlabeledAnalysisJobParams.md
 docs/UnlabeledAnalysisResponse.md
 docs/UpdateAction.md
+docs/UpdateCurationRunDescriptionParams.md
 docs/UpdateDashboardParams.md
 docs/UpdateEvaluateArtifactParams.md
 docs/UpdateInsightDescriptionParams.md
@@ -705,6 +708,7 @@ model_create_streaming_samples_vis_job_params.go
 model_create_streaming_samples_vis_job_response.go
 model_create_team_request.go
 model_create_team_response.go
+model_curation_run_type.go
 model_custom_layer_instance.go
 model_custom_loss_instance.go
 model_custom_message_data.go
@@ -781,6 +785,7 @@ model_fetch_similar_response_ready_artifacts.go
 model_filter_display_data.go
 model_filter_operator_type.go
 model_filter_version.go
+model_foundation_input_instance.go
 model_general_message_params.go
 model_generate_auto_synthetic_data_params.go
 model_generate_dataset_balancing_params.go
@@ -1156,6 +1161,7 @@ model_unlabeled_analysis.go
 model_unlabeled_analysis_job_params.go
 model_unlabeled_analysis_response.go
 model_update_action.go
+model_update_curation_run_description_params.go
 model_update_dashboard_params.go
 model_update_evaluate_artifact_params.go
 model_update_insight_description_params.go
