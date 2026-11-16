@@ -30,7 +30,7 @@ type DecideResult struct {
 func (s *Server) addDecideTool(srv *sdk.Server) {
 	closed := false
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_decide_finding",
-		Description: "Record a person's decision on a finding of a published report on the Tensorleap server. Use it only when the person asked for that decision on that finding; never decide for them. It is recorded under their name and changes the finding's status for the whole team. acknowledge means they agree the finding is real and worth acting on (status Approved); archive sets it aside (Archived); reopen puts it back in review (InReview). Read the finding with tl_get_report first.",
+		Description: "Record a person's decision on a finding of a published report on the Tensorleap server. Call it only for a decision the person named for that finding. If they leave the choice to you (decide as you see fit, handle the rest), do not call it: list the decision you would record for each finding with a one-line reason, and record them only after the person says yes. It is recorded under their name and changes the finding's status for the whole team. acknowledge means they agree the finding is real and worth acting on (status Approved); archive sets it aside (Archived); reopen puts it back in review (InReview). Read the finding with tl_get_report first.",
 		Annotations: &sdk.ToolAnnotations{Title: "Decide on a finding", ReadOnlyHint: false, IdempotentHint: true, OpenWorldHint: &closed}},
 		s.decideFinding)
 }
