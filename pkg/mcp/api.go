@@ -39,6 +39,12 @@ type targetsResponse struct {
 	} `json:"projects"`
 }
 
+// routeMissing tells a server that predates a route from one that has it and answered 404 itself
+func routeMissing(err error) bool {
+	var apiErr *APIError
+	return errors.As(err, &apiErr) && apiErr.Status == 404 && strings.Contains(apiErr.Body, "Cannot POST")
+}
+
 func explain(err error) error {
 	var apiErr *APIError
 	if !errors.As(err, &apiErr) {
@@ -47,7 +53,7 @@ func explain(err error) error {
 	switch {
 	case apiErr.Status == 401:
 		return errors.New("the server rejected your API key; run `leap auth login` (or `leap auth select <env>`)")
-	case apiErr.Status == 404 && strings.Contains(apiErr.Body, "Cannot POST"):
+	case routeMissing(err):
 		return errors.New("this Tensorleap server is too old for AI assistants; upgrade the server")
 	case apiErr.Status >= 500:
 		return fmt.Errorf("the Tensorleap server failed on this request (%d): %s", apiErr.Status, serverMessage(apiErr.Body))

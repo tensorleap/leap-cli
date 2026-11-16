@@ -10,13 +10,16 @@ import (
 )
 
 // leap mcp is a bridge: the Tensorleap server hosts the MCP tools (/api/v2/mcp) and this process
-// relays them to an assistant over stdio, signed with the user's leap login. It adds the one tool a
-// server cannot offer, tl_export_analysis, which writes the analysis to the user's disk.
+// relays them to an assistant over stdio, signed with the user's leap login. It adds the tools a
+// server does not offer: tl_export_analysis and tl_publish_report work on the user's disk, and
+// tl_decide_finding changes state, which the server's own tools never do.
 
 const (
 	connectTimeout = 20 * time.Second
 	progressGrace  = 5 * time.Second
 )
+
+var localTools = []func(*Server, *sdk.Server){(*Server).addExportTool, (*Server).addPublishTool, (*Server).addDecideTool}
 
 type Server struct {
 	signin   func() (*Client, error)
@@ -142,8 +145,9 @@ func (s *Server) addTo(srv *sdk.Server, b *bridged) {
 			return remote.GetPrompt(ctx, req.Params)
 		})
 	}
-	s.addExportTool(srv)
-	s.addPublishTool(srv)
+	for _, add := range localTools {
+		add(s, srv)
+	}
 }
 
 func (s *Server) connected() bool {
@@ -204,14 +208,14 @@ func connectError(ctx context.Context, c *Client, err error) error {
 	return fmt.Errorf("this Tensorleap server (%s) has no MCP endpoint yet; upgrade the server (%v)", c.UIBase(), err)
 }
 
-// Probe connects the way an assistant will and counts the tools it would see; leap's own export tool included
+// Probe connects the way an assistant will and counts the tools it would see; leap's own tools included
 func Probe(ctx context.Context, c *Client) (int, error) {
 	remote, err := c.connect(ctx, "probe", nil)
 	if err != nil {
 		return 0, connectError(ctx, c, err)
 	}
 	defer remote.Close()
-	n := 1
+	n := len(localTools)
 	for _, err := range remote.Tools(ctx, nil) {
 		if err != nil {
 			return 0, err

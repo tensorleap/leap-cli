@@ -52,6 +52,43 @@ func TestPublishSendsTheReportAndReturnsItsLink(t *testing.T) {
 	}
 }
 
+func TestPublishUpdatesTheReportItIsGiven(t *testing.T) {
+	dir := t.TempDir()
+	writeReportFiles(t, dir, map[string]string{
+		"manifest.json": `{"projectId":"p1","versionId":"v1","version":"model"}`,
+		"report.html":   `<html></html>`,
+	})
+	f := &fakeTensorleap{}
+	s := &Server{client: NewClient(f.start(t).URL+"/api/v2", "k")}
+	publish := func(reportID string) PublishResult {
+		t.Helper()
+		_, res, err := s.publishReport(context.Background(), nil, PublishIn{Dir: dir, ReportID: reportID})
+		if err != nil {
+			t.Fatal(err)
+		}
+		return res
+	}
+
+	if res := publish(""); res.Updated || res.Note != "" {
+		t.Fatalf("a publish without reportId adds a report: %+v", res)
+	}
+	if _, sent := f.published["reportId"]; sent {
+		t.Fatalf("an unset reportId must be omitted, got %+v", f.published)
+	}
+	if res := publish("r1"); f.published["reportId"] != "r1" || !res.Updated || res.Note != "" || res.ReportID != "r1" {
+		t.Fatalf("the server updated the report it was given: %+v, sent %+v", res, f.published)
+	}
+	if res := publish("r0"); res.Updated || res.ReportID != "r1" || !strings.Contains(res.Note, "added a new report") || !strings.Contains(res.Note, "r0") {
+		t.Fatalf("a server that ignores reportId added a report, and the result must say so: %+v", res)
+	}
+
+	f.noUpdates = true
+	res := publish("r0")
+	if _, sent := f.published["reportId"]; sent || res.Updated || res.ReportID != "r1" || !strings.Contains(res.Note, "added a new report") {
+		t.Fatalf("a server that refuses reportId still gets the report, as a new one: %+v, sent %+v", res, f.published)
+	}
+}
+
 func TestPublishRefusesWhatIsNotAFinishedReport(t *testing.T) {
 	s := &Server{client: NewClient("http://x/api/v2", "k")}
 	publish := func(dir string) error {

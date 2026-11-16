@@ -27,6 +27,12 @@ type fakeTensorleap struct {
 	targets string
 	// the body of the last analysis-reports/publish call
 	published map[string]any
+	// a server that predates updating a report refuses the reportId field
+	noUpdates bool
+	// the analysis-reports/decide answer; without one the server predates the route
+	decision string
+	// the body of the last analysis-reports/decide call
+	decided map[string]any
 }
 
 // a node-server stand-in: the MCP endpoint served by go-sdk's own stateless handler, plus the REST calls leap mcp makes
@@ -73,7 +79,26 @@ func (f *fakeTensorleap) start(t *testing.T) *httptest.Server {
 		case "/api/v2/analysis-reports/publish":
 			f.published = map[string]any{}
 			_ = json.NewDecoder(r.Body).Decode(&f.published)
+			if _, sent := f.published["reportId"]; sent && f.noUpdates {
+				w.WriteHeader(http.StatusBadRequest)
+				_, _ = w.Write([]byte(`{"error":"\"reportId\" is an excess property and therefore is not allowed"}`))
+				return
+			}
 			_, _ = fmt.Fprintf(w, `{"report":{"cid":"r1","title":%q},"replaced":true,"linkPath":"/project/p1/dashboard?report=r1"}`, f.published["title"])
+		case "/api/v2/analysis-reports/decide":
+			if f.decision == "" {
+				w.WriteHeader(http.StatusNotFound)
+				_, _ = w.Write([]byte("Cannot POST /api/v2/analysis-reports/decide"))
+				return
+			}
+			f.decided = map[string]any{}
+			_ = json.NewDecoder(r.Body).Decode(&f.decided)
+			if f.decided["insightId"] == "gone" {
+				w.WriteHeader(http.StatusNotFound)
+				_, _ = w.Write([]byte(`{"error":"finding not found"}`))
+				return
+			}
+			_, _ = w.Write([]byte(f.decision))
 		case "/api/v2/analysis-export/listTargets":
 			_, _ = w.Write([]byte(f.targets))
 		case "/api/v2/analysis-export/exportBundle":
@@ -131,7 +156,7 @@ func TestBridgeRelaysTheServersToolsResourcesAndPrompts(t *testing.T) {
 		}
 		names = append(names, tool.Name)
 	}
-	if strings.Join(names, ",") != "tl_export_analysis,tl_publish_report,tl_status,tl_wait_for_job" {
+	if strings.Join(names, ",") != "tl_decide_finding,tl_export_analysis,tl_publish_report,tl_status,tl_wait_for_job" {
 		t.Fatalf("tools: %v", names)
 	}
 	res, err := session.CallTool(context.Background(), &sdk.CallToolParams{Name: "tl_status", Arguments: map[string]any{}})
@@ -390,7 +415,7 @@ func TestBridgeConnectsOnceSignedInWithoutARestart(t *testing.T) {
 		t.Fatalf("after sign-in tl_status connects and relays the server's answer and instructions: %q", textOf(res))
 	}
 	<-changed
-	if got := tools(); got != "tl_export_analysis,tl_publish_report,tl_status,tl_wait_for_job" {
+	if got := tools(); got != "tl_decide_finding,tl_export_analysis,tl_publish_report,tl_status,tl_wait_for_job" {
 		t.Fatalf("after sign-in: %s", got)
 	}
 	if res := status(); res.IsError || strings.Contains(textOf(res), "connected to Tensorleap now") || !strings.Contains(textOf(res), "a@b.c") {
