@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**RunName** | Pointer to **string** |  | [optional] 
 **ElementInstance** | Pointer to **bool** |  | [optional] 
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **InferenceArtifactId** | Pointer to **string** |  | [optional] 
@@ -28,6 +29,31 @@ will change when the set of required properties is changed
 NewInsightsJobParamsWithDefaults instantiates a new InsightsJobParams object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetRunName
+
+`func (o *InsightsJobParams) GetRunName() string`
+
+GetRunName returns the RunName field if non-nil, zero value otherwise.
+
+### GetRunNameOk
+
+`func (o *InsightsJobParams) GetRunNameOk() (*string, bool)`
+
+GetRunNameOk returns a tuple with the RunName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRunName
+
+`func (o *InsightsJobParams) SetRunName(v string)`
+
+SetRunName sets RunName field to given value.
+
+### HasRunName
+
+`func (o *InsightsJobParams) HasRunName() bool`
+
+HasRunName returns a boolean if a field has been set.
 
 ### GetElementInstance
 

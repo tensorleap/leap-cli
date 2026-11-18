@@ -49,6 +49,7 @@ Name | Type | Description | Notes
 **GroupBFilters** | [**[]ESFilter**](ESFilter.md) |  | 
 **GroupAFilters** | [**[]ESFilter**](ESFilter.md) |  | 
 **VisArtifactId** | **string** |  | 
+**RunName** | Pointer to **string** |  | [optional] 
 **SecretManagerId** | Pointer to **string** |  | [optional] 
 **CodeUrl** | **string** |  | 
 **CodeEntryFile** | **string** |  | 
@@ -1065,6 +1066,31 @@ and a boolean to check if the value has been set.
 
 SetVisArtifactId sets VisArtifactId field to given value.
 
+
+### GetRunName
+
+`func (o *JobParams) GetRunName() string`
+
+GetRunName returns the RunName field if non-nil, zero value otherwise.
+
+### GetRunNameOk
+
+`func (o *JobParams) GetRunNameOk() (*string, bool)`
+
+GetRunNameOk returns a tuple with the RunName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRunName
+
+`func (o *JobParams) SetRunName(v string)`
+
+SetRunName sets RunName field to given value.
+
+### HasRunName
+
+`func (o *JobParams) HasRunName() bool`
+
+HasRunName returns a boolean if a field has been set.
 
 ### GetSecretManagerId
 

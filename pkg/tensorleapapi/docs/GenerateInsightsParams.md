@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Filters** | Pointer to [**[]ESFilter**](ESFilter.md) |  | [optional] 
 **Refresh** | Pointer to **bool** |  | [optional] 
 **ElementInstance** | Pointer to **bool** |  | [optional] 
+**RunName** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -148,6 +149,31 @@ SetElementInstance sets ElementInstance field to given value.
 `func (o *GenerateInsightsParams) HasElementInstance() bool`
 
 HasElementInstance returns a boolean if a field has been set.
+
+### GetRunName
+
+`func (o *GenerateInsightsParams) GetRunName() string`
+
+GetRunName returns the RunName field if non-nil, zero value otherwise.
+
+### GetRunNameOk
+
+`func (o *GenerateInsightsParams) GetRunNameOk() (*string, bool)`
+
+GetRunNameOk returns a tuple with the RunName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRunName
+
+`func (o *GenerateInsightsParams) SetRunName(v string)`
+
+SetRunName sets RunName field to given value.
+
+### HasRunName
+
+`func (o *GenerateInsightsParams) HasRunName() bool`
+
+HasRunName returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

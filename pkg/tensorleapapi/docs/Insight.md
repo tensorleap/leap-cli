@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **Index** | **float64** |  | 
 **Status** | [**InsightStatus**](InsightStatus.md) |  | 
 **Description** | Pointer to **string** |  | [optional] 
+**RunName** | Pointer to **string** |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
 **UpdatedAt** | **time.Time** |  | 
 
@@ -161,6 +162,31 @@ SetDescription sets Description field to given value.
 `func (o *Insight) HasDescription() bool`
 
 HasDescription returns a boolean if a field has been set.
+
+### GetRunName
+
+`func (o *Insight) GetRunName() string`
+
+GetRunName returns the RunName field if non-nil, zero value otherwise.
+
+### GetRunNameOk
+
+`func (o *Insight) GetRunNameOk() (*string, bool)`
+
+GetRunNameOk returns a tuple with the RunName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRunName
+
+`func (o *Insight) SetRunName(v string)`
+
+SetRunName sets RunName field to given value.
+
+### HasRunName
+
+`func (o *Insight) HasRunName() bool`
+
+HasRunName returns a boolean if a field has been set.
 
 ### GetCreatedAt
 
