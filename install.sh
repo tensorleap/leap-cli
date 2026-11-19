@@ -313,5 +313,3 @@ testVersion
 trackEvent "cli_install_success" "\"bin_dir\":\"$BIN_DIR\",\"use_sudo\":\"$USE_SUDO\""
 
 cleanup
-
-leap -h
