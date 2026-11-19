@@ -17,8 +17,9 @@ assistant's chat:
 
   leap mcp config --license-token <token from the signup page>
 
-Claude Code gets the 'analysis' (MCP server and skill), 'installer', 'integration' and
-'optimization' plugins. Skills already installed are left alone; each keeps itself up to date.
+Claude Code gets the 'analysis' (MCP server and skill), 'installer', 'integration',
+'optimization' and 'troubleshooting' plugins. Skills already installed are left alone; each keeps
+itself up to date.
 Codex runs commands in a sandbox without network, so it would ask before every leap command; in a
 terminal leap offers to let it run them without asking (--codex-allow-leap does it without the
 question). Use --print to see the configuration without changing anything.
