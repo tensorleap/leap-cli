@@ -176,7 +176,7 @@ func TestOnlyMissingSkillsAndPluginsAreInstalled(t *testing.T) {
 	_ = os.MkdirAll(filepath.Join(dir, ".claude", "plugins"), 0o755)
 	_ = os.WriteFile(filepath.Join(dir, ".claude", "plugins", "installed_plugins.json"),
 		[]byte(`{"version":2,"plugins":{"analysis@tensorleap":[{"version":"0.3.1"}]}}`), 0o644)
-	if got := strings.Join(missingClaudePlugins(), ","); got != "installer@tensorleap,integration@tensorleap,optimization@tensorleap" {
+	if got := strings.Join(missingClaudePlugins(), ","); got != "installer@tensorleap,integration@tensorleap,optimization@tensorleap,troubleshooting@tensorleap" {
 		t.Fatalf("missing plugins: %s", got)
 	}
 }

@@ -30,8 +30,8 @@ const (
 // ponytail: the skills leap knows by name. A skill added later reaches skill folders with the next
 // self-update (it reinstalls them all); Claude Code gets a new plugin only once it is listed here.
 var (
-	skillNames    = []string{"tensorleap-analysis", "tensorleap-install", "tensorleap-integration-creation", "tensorleap-runtime-optimization"}
-	claudePlugins = []string{analysisPlugin, "installer@tensorleap", "integration@tensorleap", "optimization@tensorleap"}
+	skillNames    = []string{"tensorleap-analysis", "tensorleap-install", "tensorleap-integration-creation", "tensorleap-runtime-optimization", "tensorleap-troubleshoot"}
+	claudePlugins = []string{analysisPlugin, "installer@tensorleap", "integration@tensorleap", "optimization@tensorleap", "troubleshooting@tensorleap"}
 )
 
 // ErrShown is returned after a failure was already printed, so the CLI exits 1 without a second message
@@ -62,8 +62,9 @@ assistant's chat:
 
   leap mcp config --license-token <token from the signup page>
 
-Claude Code gets the 'analysis' (MCP server and skill), 'installer', 'integration' and
-'optimization' plugins. Skills already installed are left alone; each keeps itself up to date.
+Claude Code gets the 'analysis' (MCP server and skill), 'installer', 'integration',
+'optimization' and 'troubleshooting' plugins. Skills already installed are left alone; each keeps
+itself up to date.
 Codex runs commands in a sandbox without network, so it would ask before every leap command; in a
 terminal leap offers to let it run them without asking (--codex-allow-leap does it without the
 question). Cursor asks before each write to the install skill's notes (<data dir>/install-notes.md);
@@ -395,7 +396,7 @@ func installSkills(out ui, a *assistant) {
 		out.command(cmdline)
 		return
 	}
-	out.ok("Installed the Tensorleap skills in %s (analysis, install, integration, optimization)", a.skillsDir)
+	out.ok("Installed the Tensorleap skills in %s (analysis, install, integration, optimization, troubleshooting)", a.skillsDir)
 }
 
 func hasSkills(a *assistant) bool {
