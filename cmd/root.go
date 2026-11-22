@@ -78,8 +78,25 @@ func init() {
 	initConfig()
 }
 
+// unknownSubcommand reports a subcommand a command group doesn't have. cobra does that only for the
+// root: a group prints its help and exits 0, so `leap server check` looked like a check that passed
+func unknownSubcommand(osArgs []string) error {
+	cmd, args, err := RootCommand.Find(osArgs)
+	if err != nil || cmd == RootCommand || !cmd.HasSubCommands() || cmd.Args != nil {
+		return nil
+	}
+	if cmd.ParseFlags(args) != nil || cmd.Flags().NArg() == 0 {
+		return nil
+	}
+	return fmt.Errorf("unknown command %q for %q\nRun '%s --help' for usage", cmd.Flags().Arg(0), cmd.CommandPath(), cmd.CommandPath())
+}
+
 func Execute() {
-	if err := RootCommand.Execute(); err != nil {
+	err := unknownSubcommand(os.Args[1:])
+	if err == nil {
+		err = RootCommand.Execute()
+	}
+	if err != nil {
 		if err != mcp.ErrShown {
 			log.Error(api.HintVersionMismatch(err))
 		}
