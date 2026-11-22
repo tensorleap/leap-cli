@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/spf13/cobra"
 	"github.com/tensorleap/helm-charts/pkg/k3d"
+	"github.com/tensorleap/helm-charts/pkg/local"
 	"github.com/tensorleap/helm-charts/pkg/server"
 	"github.com/tensorleap/leap-cli/pkg/log"
 	"gopkg.in/yaml.v3"
@@ -15,6 +16,11 @@ func NewInfoCmd() *cobra.Command {
 		Short: "Server installation information",
 		Long:  "Server installation information",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			// Like the other server commands: the config's data_dir, else TL_DATA_DIR, else the default.
+			// TL_DATA_DIR alone is set only in login shells
+			if err := local.SetDataDir(configuredOrDefaultDataDir(), getConfigureDataDir()); err != nil {
+				return err
+			}
 			installationParams, err := server.LoadInstallationParamsFromPrevious()
 			if err == server.ErrNoInstallationParams {
 				log.Info("No installation information found")
