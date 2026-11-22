@@ -8,37 +8,49 @@ import (
 
 	"github.com/jedib0t/go-pretty/v6/text"
 	"github.com/samber/lo"
+	"github.com/tensorleap/leap-cli/pkg/api"
 	"github.com/tensorleap/leap-cli/pkg/tensorleapapi"
 )
 
-// GetJobFailureNotifications fetches and prints error and warning notifications
-// for a specific job since the given start time
+// GetJobFailureNotifications fetches what explains a job's failure since the given start time:
+// its error and warning notifications, and the reason attached to its status
 func GetJobFailureNotifications(ctx context.Context, jobId string, since time.Time) (*JobFailureNotificationReport, error) {
 	report := JobFailureNotificationReport{
 		JobId:         jobId,
 		Notifications: []NotificationReport{},
 	}
+	// Every level: explainsFailure decides, and a dead pod's reason is stored at Info
 	notifications, err := GetNotificationsByFilter(ctx, NotificationFilter{
-		JobId:             &jobId,
-		FromDate:          &since,
-		NotificationTypes: []MessageLevel{MessageLevelError, MessageLevelWarning},
+		JobId:    &jobId,
+		FromDate: &since,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch job notifications: %w", err)
 	}
 
-	filteredNotifications := FilterJobStatusNotifications(notifications)
-
-	report.Notifications = lo.Map(filteredNotifications, func(notification Notification, _ int) NotificationReport {
+	report.Notifications = lo.Map(lo.Filter(notifications, explainsFailure), func(notification Notification, _ int) NotificationReport {
 		return ToNotificationReport(notification)
 	})
 	return &report, nil
 }
 
-func FilterJobStatusNotifications(notifications []Notification) []Notification {
-	return lo.Filter(notifications, func(notification Notification, _ int) bool {
-		return notification.MessageData.Params.JobMessageParams == nil
-	})
+// A job-status notification describes the status it was raised for, so only a failed one counts
+// (not the queued notice), and only with its reason: node-server attaches one when a pod dies
+// (out of memory, image pull, crash loop)
+func explainsFailure(notification Notification, _ int) bool {
+	if jobStatus := notification.MessageData.Params.JobMessageParams; jobStatus != nil {
+		return api.IsJobFailed(jobStatus.JobStatus) && jobStatus.HasFailureInfo()
+	}
+	level := notification.MessageData.Level
+	return level == MessageLevelError || level == MessageLevelWarning
+}
+
+// A failed status is an error whatever level it was stored at
+func reportLevel(notification Notification) MessageLevel {
+	if jobStatus := notification.MessageData.Params.JobMessageParams; jobStatus != nil && api.IsJobFailed(jobStatus.JobStatus) {
+		return MessageLevelError
+	}
+	return notification.MessageData.Level
 }
 
 func levelWithColor(level MessageLevel) string {

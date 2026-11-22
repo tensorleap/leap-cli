@@ -30,7 +30,7 @@ type NotificationReport struct {
 func ToNotificationReport(notification Notification) NotificationReport {
 	message, extraMessage := getNotificationMessage(notification)
 	return NotificationReport{
-		Level:        notification.MessageData.Level,
+		Level:        reportLevel(notification),
 		Title:        notification.Title,
 		Message:      message,
 		ExtraMessage: extraMessage,
