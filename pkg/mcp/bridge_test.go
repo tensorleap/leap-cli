@@ -27,6 +27,8 @@ type fakeTensorleap struct {
 	targets string
 	// the body of the last analysis-reports/publish call
 	published map[string]any
+	// when set, the publish call is answered 400 with this body
+	publishRefusal string
 }
 
 // a node-server stand-in: the MCP endpoint served by go-sdk's own stateless handler, plus the REST calls leap mcp makes
@@ -71,6 +73,11 @@ func (f *fakeTensorleap) start(t *testing.T) *httptest.Server {
 			}
 			mcpHandler.ServeHTTP(w, r)
 		case "/api/v2/analysis-reports/publish":
+			if f.publishRefusal != "" {
+				w.WriteHeader(http.StatusBadRequest)
+				_, _ = w.Write([]byte(f.publishRefusal))
+				return
+			}
 			f.published = map[string]any{}
 			_ = json.NewDecoder(r.Body).Decode(&f.published)
 			_, _ = fmt.Fprintf(w, `{"report":{"cid":"r1","title":%q},"replaced":true,"linkPath":"/project/p1/dashboard?report=r1"}`, f.published["title"])

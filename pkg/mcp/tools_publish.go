@@ -14,10 +14,8 @@ import (
 	sdk "github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
-const maxReportBytes = 32 << 20
-
 type PublishIn struct {
-	Dir string `json:"dir" jsonschema:"absolute path of the export directory tl_export_analysis wrote, holding report.html (and report.md, report.json when written)"`
+	Dir string `json:"dir" jsonschema:"absolute path of the export directory tl_export_analysis wrote, holding the finished report.json"`
 }
 
 type PublishResult struct {
@@ -28,23 +26,21 @@ type PublishResult struct {
 
 // the report.json fields that name the report in the UI
 type reportSpec struct {
-	Project          string `json:"project"`
-	Version          string `json:"version"`
-	ExecutiveSummary string `json:"executive_summary"`
+	SchemaVersion json.RawMessage `json:"schemaVersion"`
+	Project       string          `json:"project"`
+	Version       string          `json:"version"`
+	Summary       string          `json:"summary"`
 }
 
 func (s *Server) addPublishTool(srv *sdk.Server) {
 	closed := false
 	sdk.AddTool(srv, &sdk.Tool{Name: "tl_publish_report",
-		Description: "Publish the finished report of an analysis export (report.html, plus report.md and report.json when present) to the Tensorleap server: the team finds it in the project's Reports tab in the UI and the returned link opens it. Every publish adds a new report in that tab. Call it after build-report and inline-html; dir is the export directory tl_export_analysis wrote.",
+		Description: "Publish the finished report of an analysis export (its report.json) to the Tensorleap server, which shows it in the project's Reports tab in the UI; the returned link opens it. Every publish adds a new report in that tab. Call it once report.json is written and checked; dir is the export directory tl_export_analysis wrote.",
 		Annotations: &sdk.ToolAnnotations{Title: "Publish report", ReadOnlyHint: false, IdempotentHint: true, OpenWorldHint: &closed}},
 		s.publishReport)
 }
 
-var (
-	imgSrcRe = regexp.MustCompile(`(?is)<img[^>]*?\ssrc="([^"]*)"`)
-	tagRe    = regexp.MustCompile(`<[^>]+>`)
-)
+var tagRe = regexp.MustCompile(`<[^>]+>`)
 
 func (s *Server) publishReport(ctx context.Context, _ *sdk.CallToolRequest, in PublishIn) (*sdk.CallToolResult, PublishResult, error) {
 	if !filepath.IsAbs(in.Dir) {
@@ -55,35 +51,29 @@ func (s *Server) publishReport(ctx context.Context, _ *sdk.CallToolRequest, in P
 	if raw, err := os.ReadFile(filepath.Join(dir, "manifest.json")); err != nil || json.Unmarshal(raw, &m) != nil || m.ProjectID == "" || m.VersionID == "" {
 		return nil, PublishResult{}, fmt.Errorf("%s holds no manifest.json written by tl_export_analysis; pass the export directory", dir)
 	}
-	page, err := os.ReadFile(filepath.Join(dir, "report.html"))
+	path := filepath.Join(dir, "report.json")
+	content, err := os.ReadFile(path)
 	if err != nil {
-		return nil, PublishResult{}, fmt.Errorf("no report.html in %s; run build-report and inline-html first", dir)
+		return nil, PublishResult{}, fmt.Errorf("no report.json in %s; write the report first", dir)
 	}
-	if len(page) > maxReportBytes {
-		return nil, PublishResult{}, errors.New("report.html is larger than 32 MB; re-run inline-html so its images are downscaled")
+	var spec reportSpec
+	if err := json.Unmarshal(content, &spec); err != nil {
+		return nil, PublishResult{}, fmt.Errorf("%s is not a report: %v", path, err)
 	}
-	for _, match := range imgSrcRe.FindAllSubmatch(page, -1) {
-		if src := string(match[1]); !strings.HasPrefix(src, "data:") {
-			return nil, PublishResult{}, fmt.Errorf("report.html still references an image file (%s); run inline-html first", truncate(src, 60))
-		}
+	if len(spec.SchemaVersion) == 0 {
+		// A skill copy that does not update itself (AGENTS.md, a copy committed to the project) can be older than this CLI.
+		return nil, PublishResult{}, fmt.Errorf("%s was written by an older analysis skill (it has no schemaVersion); update the Tensorleap skills to the ones this leap CLI ships with (`leap mcp config`, or reinstall a copy kept in the project), then write the report again", path)
 	}
-	req := map[string]any{"projectId": m.ProjectID, "versionId": m.VersionID, "html": string(page), "title": m.Version, "summary": ""}
-	if b, err := os.ReadFile(filepath.Join(dir, "report.json")); err == nil {
-		var spec reportSpec
-		if json.Unmarshal(b, &spec) == nil {
-			if spec.Project != "" && spec.Version != "" {
-				req["title"] = spec.Project + " / " + spec.Version
-			}
-			req["summary"] = plainText(spec.ExecutiveSummary)
-		}
-		req["json"] = string(b)
+	title := m.Version
+	if spec.Project != "" && spec.Version != "" {
+		title = spec.Project + " / " + spec.Version
 	}
-	if req["title"] == "" {
-		req["title"] = "Analysis report"
+	if title == "" {
+		title = "Analysis report"
 	}
-	if b, err := os.ReadFile(filepath.Join(dir, "report.md")); err == nil {
-		req["markdown"] = string(b)
-	}
+	// The server checks the content and names what is wrong with it, so it goes as written.
+	req := map[string]any{"projectId": m.ProjectID, "versionId": m.VersionID, "title": title,
+		"summary": plainText(spec.Summary), "content": json.RawMessage(content)}
 	var out struct {
 		Report struct {
 			Cid   string `json:"cid"`
@@ -93,15 +83,17 @@ func (s *Server) publishReport(ctx context.Context, _ *sdk.CallToolRequest, in P
 	}
 	if err := s.client.Post(ctx, "analysis-reports/publish", req, &out); err != nil {
 		var apiErr *APIError
-		if errors.As(err, &apiErr) && apiErr.Status == 404 && strings.Contains(apiErr.Body, "Cannot POST") {
-			return nil, PublishResult{}, fmt.Errorf("this Tensorleap server predates published reports; upgrade the server (the report stays at %s)", filepath.Join(dir, "report.html"))
+		// no publish endpoint at all, or one that still wants the report as an HTML file
+		if errors.As(err, &apiErr) && (apiErr.Status == 404 && strings.Contains(apiErr.Body, "Cannot POST") ||
+			apiErr.Status == 400 && strings.Contains(apiErr.Body, "required property 'html'")) {
+			return nil, PublishResult{}, fmt.Errorf("this Tensorleap server is too old to show this report; upgrade the server (the report stays at %s)", path)
 		}
 		return nil, PublishResult{}, explain(err)
 	}
 	return nil, PublishResult{Link: s.client.UIBase() + out.LinkPath, ReportID: out.Report.Cid, Title: out.Report.Title}, nil
 }
 
-// plainText flattens one of report.json's HTML fragments into one line of text
+// plainText flattens one of report.json's marked-up texts into one line of text
 func plainText(fragment string) string {
 	return strings.Join(strings.Fields(html.UnescapeString(tagRe.ReplaceAllString(fragment, " "))), " ")
 }
